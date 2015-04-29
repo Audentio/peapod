@@ -1,0 +1,21 @@
+{
+  "name": "peapod",
+  "version": "0.0.0",
+  "description": "UI Kit from Audentio Design",
+  "authors": [
+    "Audentio Design",
+    "LLC"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize.css": "~3.0.3",
+    "modernizr": "~2.8.3"
+  }
+}
