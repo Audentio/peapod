@@ -1,18 +1,32 @@
+/**
+ * @file General debugging functions
+ *
+ * @version ${ pkg.version }
+ * @author ${ pkg.author }
+ *
+ * @license ${ pkg.license }.
+ * @copyright ${ pkg.author }
+ */
+
+/**
+ * General Function to log performance related information and debug information
+ * @type {Object}
+ */
 peapod.debug = {
 	items: [],
 
 	out: function(){
-		console.log("Debug info goes here...")
+		console.log("Debug info goes here...");
 	},
 
 	log: function(msg){
-		if (peapod.vars.debug) console.log(msg)
+		if (peapod.vars.debug) console.log(msg);
 	},
 
 	spaceToLength: function(input, length) {
 		var result = input;
 		for (var i = input.length; i <= length; i++) {
-			result += " "
+			result += " ";
 		}
 		return result;
 	},
@@ -32,5 +46,5 @@ peapod.debug = {
 	round: function(num, points){
 		return Math.round(num * Math.pow(10, points)) / Math.pow(10, points);
 	}
-}
+};
 
