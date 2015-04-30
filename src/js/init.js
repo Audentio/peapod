@@ -12,8 +12,4 @@
  * Initialize peapod object
  */
 
-/**
- * @module PeaPod
- */
-
 var peapod = peapod || {};
