@@ -79,7 +79,7 @@ peapod.displaced = {
 	items: [],
 
 	initGet: function(){
-
+		
 	},
 
 	initSet: function(){
@@ -136,6 +136,148 @@ peapod.isSet = function(val){
 };
 
 /**
+ * Function to perform selectors
+ * @param  {string} sel  selector string
+ * @param  {function} func optional function to run on each element
+ * @param  {element} root root of selection, default to document if none set
+ * @return {array}      array of elements
+ */
+peapod.sel = function(sel, func, root){
+	if (!peapod.isSet(root)) root = document;
+	if (peapod.isSet(func)) return peapod.select.phrases(root, sel, func);
+	return peapod.select.phrases(root, sel);
+};
+
+/**
+ * @file File to extend selectors to be a bit more efficient in most cases
+ *
+ * @version ${ pkg.version }
+ * @author ${ pkg.author }
+ *
+ * @license ${ pkg.license }.
+ * @copyright ${ pkg.author }
+ *
+ */
+
+
+peapod.select = {
+	/**
+	 * Selector for a classname
+	 * @param  {element} root element to select from
+	 * @param  {string} sel  selector
+	 * @param  {function} func optional function to call on results
+	 * @return {array}      elements returned
+	 */
+	className: function(root, sel, func){
+		var eles = root.getElementsByClassName(sel);
+		if (peapod.isSet(eles)){
+			if (peapod.isSet(func)){
+				for (var i = 0, len = eles.length; i < len; i++){
+					func(eles[i]);
+				}
+			}
+			return eles;
+		}
+		return null;
+	},
+
+	/**
+	 * Selector for a classname
+	 * @param  {element} root element to select from
+	 * @param  {string} sel  selector
+	 * @param  {function} func optional function to call on results
+	 * @return {array}      elements returned
+	 */
+	classNames: function(root, sel, func){
+		var classes = "",
+			selSplit = sel.split(".");
+		for (var i = 1, len = selSplit.length; i < len; i++){
+			if (classes === ""){
+				classes = selSplit[i];
+			} else {
+				classes += " " + selSplit[i];
+			}
+		}
+		return peapod.select.className(root, classes, func);
+	},
+
+	/**
+	 * Selector for a tagname
+	 * @param  {element} root element to select from
+	 * @param  {string} sel  selector
+	 * @param  {function} func optional function to call on results
+	 * @return {array}      elements returned
+	 */
+	tagName: function(root, sel, func){
+		var eles = root.getElementsByTagName(sel);
+		if (peapod.isSet(eles)){
+			if (peapod.isSet(func)){
+				for (var i = 0, len = eles.length; i < len; i++){
+					func(eles[i]);
+				}
+			}
+			return eles;
+		}
+		return null;
+	},
+
+	/**
+	 * Selector for anything
+	 * @param  {element} root element to select from
+	 * @param  {string} sel  selector
+	 * @param  {function} func optional function to call on results
+	 * @return {array}      elements returned
+	 */
+	query: function(root, sel, func){
+		var eles = root.querySelectorAll(sel);
+		if (eles.length){
+			if (peapod.isSet(func)) {
+				for (var i = 0, len = eles.length; i < len; i++){
+					func(eles[i]);
+				}
+			}
+			return eles;
+		}
+		return null;
+	},
+
+	/**
+	 * Selector for a single word (no spaces or commas)
+	 * @param  {element} root element to select from
+	 * @param  {string} sel  selector
+	 * @param  {function} func optional function to call on results
+	 * @return {array}      elements returned
+	 */
+	word: function(root, sel, func){
+		if (sel.indexOf(".") !== -1){
+			var selSplit = sel.split(".");
+			if (selSplit[0].length === 0){
+				return peapod.select.classNames(root, sel, func);
+			} else {
+				peapod.select.query(root, sel, func);
+			}
+		} else {
+			return peapod.select.tagName(root, sel, func);
+		}
+		return null;
+	},
+
+	/**
+	 * Selector for a general phrase
+	 * @param  {element} root element to select from
+	 * @param  {string} sel  selector
+	 * @param  {function} func optional function to call on results
+	 * @return {array}      elements returned
+	 */
+	phrases: function(root, sel, func){
+		if (sel.indexOf(",") > -1 || sel.indexOf(" ") > -1 || sel.indexOf("!") > -1 || sel.indexOf("#") > -1 || sel.indexOf(">") > -1){
+			peapod.select.query(root, sel, func);
+		} else {
+			return peapod.select.word(root, sel, func);
+		}
+	}
+};
+/**
  * @file Main file for all js
  *
  * @version ${ pkg.version }
@@ -157,5 +299,3 @@ peapod.vars = {
 	performanceLog: true
 };
 
-
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluaXQuanMiLCJkZWJ1Zy5qcyIsImRpc3BsYWNlZC5qcyIsImdlbmVyYWwuanMiLCJtYWluLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQ2RBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQ2xEQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQzNCQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQzFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwiZmlsZSI6Im1haW4uanMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEBmaWxlIEZpbGUgdG8gaW5pdGlhbGl6ZSBwZWFwb2Qgb2JqZWN0XG4gKlxuICogQHZlcnNpb24gJHsgcGtnLnZlcnNpb24gfVxuICogQGF1dGhvciAkeyBwa2cuYXV0aG9yIH1cbiAqXG4gKiBAbGljZW5zZSAkeyBwa2cubGljZW5zZSB9LlxuICogQGNvcHlyaWdodCAkeyBwa2cuYXV0aG9yIH1cbiAqL1xuXG4vKipcbiAqIEluaXRpYWxpemUgcGVhcG9kIG9iamVjdFxuICovXG5cbnZhciBwZWFwb2QgPSBwZWFwb2QgfHwge307IiwiLyoqXG4gKiBAZmlsZSBHZW5lcmFsIGRlYnVnZ2luZyBmdW5jdGlvbnNcbiAqXG4gKiBAdmVyc2lvbiAkeyBwa2cudmVyc2lvbiB9XG4gKiBAYXV0aG9yICR7IHBrZy5hdXRob3IgfVxuICpcbiAqIEBsaWNlbnNlICR7IHBrZy5saWNlbnNlIH0uXG4gKiBAY29weXJpZ2h0ICR7IHBrZy5hdXRob3IgfVxuICovXG5cbi8qKlxuICogR2VuZXJhbCBGdW5jdGlvbiB0byBsb2cgcGVyZm9ybWFuY2UgcmVsYXRlZCBpbmZvcm1hdGlvbiBhbmQgZGVidWcgaW5mb3JtYXRpb25cbiAqIEB0eXBlIHtPYmplY3R9XG4gKi9cbnBlYXBvZC5kZWJ1ZyA9IHtcblx0aXRlbXM6IFtdLFxuXG5cdG91dDogZnVuY3Rpb24oKXtcblx0XHRjb25zb2xlLmxvZyhcIkRlYnVnIGluZm8gZ29lcyBoZXJlLi4uXCIpO1xuXHR9LFxuXG5cdGxvZzogZnVuY3Rpb24obXNnKXtcblx0XHRpZiAocGVhcG9kLnZhcnMuZGVidWcpIGNvbnNvbGUubG9nKG1zZyk7XG5cdH0sXG5cblx0c3BhY2VUb0xlbmd0aDogZnVuY3Rpb24oaW5wdXQsIGxlbmd0aCkge1xuXHRcdHZhciByZXN1bHQgPSBpbnB1dDtcblx0XHRmb3IgKHZhciBpID0gaW5wdXQubGVuZ3RoOyBpIDw9IGxlbmd0aDsgaSsrKSB7XG5cdFx0XHRyZXN1bHQgKz0gXCIgXCI7XG5cdFx0fVxuXHRcdHJldHVybiByZXN1bHQ7XG5cdH0sXG5cblx0dFN0YW1wOiBmdW5jdGlvbiAobGFiZWwsIGxldmVsLCBzdGFydFRpbWUpIHtcblx0XHRpZiAocGVhcG9kLnZhcnMucGVyZm9ybWFuY2VMb2cgJiYgc3RhcnRUaW1lICE9PSBudWxsKSBwZWFwb2QubG9nKGxhYmVsICsgXCI6IFwiICsgcGVhcG9kLnJvdW5kKHBlYXBvZC5kZWJ1Zy50aW1lKCkgLSBzdGFydFRpbWUsIDUpICsgXCIgbXNcIik7XG5cdH0sXG5cblx0dGltZTogZnVuY3Rpb24oZm9yY2Upe1xuXHRcdGlmIChmb3JjZSB8fCBwZWFwb2QudmFycy5wZXJmb3JtYW5jZUxvZykge1xuXHRcdFx0aWYgKCFwZWFwb2QuaXNTZXQod2luZG93LnBlcmZvcm1hbmNlKSkgcmV0dXJuIERhdGUubm93KCk7XG5cdFx0XHRyZXR1cm4gd2luZG93LnBlcmZvcm1hbmNlLm5vdyA/IChwZXJmb3JtYW5jZS5ub3coKSArIHBlcmZvcm1hbmNlLnRpbWluZy5uYXZpZ2F0aW9uU3RhcnQpIDogRGF0ZS5ub3coKTtcblx0XHR9XG5cdFx0cmV0dXJuIG51bGw7XG5cdH0sXG5cblx0cm91bmQ6IGZ1bmN0aW9uKG51bSwgcG9pbnRzKXtcblx0XHRyZXR1cm4gTWF0aC5yb3VuZChudW0gKiBNYXRoLnBvdygxMCwgcG9pbnRzKSkgLyBNYXRoLnBvdygxMCwgcG9pbnRzKTtcblx0fVxufTtcblxuIiwiLyoqXG4gKiBAZmlsZSBVdGlsaXR5IGZ1bmN0aW9ucyBmb3IgZGlzcGxhY2VkIGVsZW1lbnRzXG4gKlxuICogQHZlcnNpb24gJHsgcGtnLnZlcnNpb24gfVxuICogQGF1dGhvciAkeyBwa2cuYXV0aG9yIH1cbiAqXG4gKiBAbGljZW5zZSAkeyBwa2cubGljZW5zZSB9LlxuICogQGNvcHlyaWdodCAkeyBwa2cuYXV0aG9yIH1cbiAqL1xuXG5wZWFwb2QuZGlzcGxhY2VkID0ge1xuXHRuZWVkc0luaXQ6IHRydWUsXG5cdGl0ZW1zOiBbXSxcblxuXHRpbml0R2V0OiBmdW5jdGlvbigpe1xuXG5cdH0sXG5cblx0aW5pdFNldDogZnVuY3Rpb24oKXtcblxuXHR9LFxuXG5cdGluaXQ6IGZ1bmN0aW9uKCl7XG5cdFx0dmFyIHBkID0gcGVhcG9kLmRpc3BsYWNlZDtcblx0XHRwZC5pbml0R2V0KCk7XG5cdFx0cGQuaW5pdFNldCgpO1xuXHR9XG59OyIsIi8qKlxuICogQGZpbGUgR2VuZXJhbCB1dGlsaXR5IGZ1bmN0aW9uc1xuICpcbiAqIEB2ZXJzaW9uICR7IHBrZy52ZXJzaW9uIH1cbiAqIEBhdXRob3IgJHsgcGtnLmF1dGhvciB9XG4gKlxuICogQGxpY2Vuc2UgJHsgcGtnLmxpY2Vuc2UgfS5cbiAqIEBjb3B5cmlnaHQgJHsgcGtnLmF1dGhvciB9XG4gKlxuICovXG5cblxuLyoqXG4gKiBGdW5jdGlvbiB0byBjcmVhdGUgYSBjbGFzcyBuYW1lIGZvciB1c2UgaW4gdGhlIERPTVxuICogQGZ1bmN0aW9uIGNyZWF0ZXMgYSBjbGFzcyBuYW1lIGZvciB1c2UgaW4gdGhlIERPTVxuICogQHBhcmFtICB7c3RyaW5nfSB2YWwgIGJhc2UgY2xhc3MgbmFtZVxuICogQHBhcmFtICB7c3RyaW5nfSB0eXBlIG9wdGlvbiBmb3IgdGhlIHR5cGUgb2YgY2xhc3NuYW1lIHRvIGdlbmVyYXRlIChzdGF0ZSwgZ2VuZXJhbCwganMsIG9yIGJsYW5rKVxuICogQHJldHVybiB7c3RyaW5nfSAgICAgIHJlc3VsdGluZyBjbGFzcyBuYW1lXG4gKi9cbnBlYXBvZC5uYW1lID0gZnVuY3Rpb24odmFsLCB0eXBlKXtcblx0dmFyIGNzc1VuaXF1ZSA9IHBlYXBvZC52YXJzLmNzc1VuaXF1ZTtcblx0aWYgKHR5cGUgPT09IFwic3RhdGVcIil7XG5cdFx0cmV0dXJuIFwiaXMtXCIgKyB2YWwgKyBjc3NVbmlxdWU7XG5cdH0gZWxzZSBpZiAodHlwZSA9PT0gXCJnZW5lcmFsXCIpIHtcblx0XHRyZXR1cm4gdmFsICsgY3NzVW5pcXVlO1xuXHR9IGVsc2UgaWYgKHR5cGUgPT09IFwianNcIikge1xuXHRcdHJldHVybiBcImpzLVwiICsgdmFsICsgY3NzVW5pcXVlO1xuXHR9IGVsc2Uge1xuXHRcdHJldHVybiBcImpzLVwiICsgdmFsICsgY3NzVW5pcXVlO1xuXHR9XG59O1xuXG4vKipcbiAqIEZ1bmN0aW9uIHRvIHNlZSBpZiBhIHZhcmlhYmxlIGhhcyBiZWVuIHNldCB0byBhIHZhbHVlXG4gKiBAcGFyYW0gIHtzdHJpbmd9ICB2YWwgdmFyaWFibGVcbiAqIEByZXR1cm4ge0Jvb2xlYW59ICAgICBpZiBpdCdzIHNldFxuICovXG5wZWFwb2QuaXNTZXQgPSBmdW5jdGlvbih2YWwpe1xuXHRpZiAodHlwZW9mKHZhbCkgPT09IFwidW5kZWZpbmVkXCIpIHJldHVybiBmYWxzZTtcblx0aWYgKHZhbCA9PT0gbnVsbCkgcmV0dXJuIGZhbHNlO1xuXHRyZXR1cm4gdHJ1ZTtcbn07XG4iLCIvKipcbiAqIEBmaWxlIE1haW4gZmlsZSBmb3IgYWxsIGpzXG4gKlxuICogQHZlcnNpb24gJHsgcGtnLnZlcnNpb24gfVxuICogQGF1dGhvciAkeyBwa2cuYXV0aG9yIH1cbiAqXG4gKiBAbGljZW5zZSAkeyBwa2cubGljZW5zZSB9LlxuICogQGNvcHlyaWdodCAkeyBwa2cuYXV0aG9yIH1cbiAqL1xuXG4vKipcbiAqIERlY2xhcmUgdmFyaWFibGVzIHNldCBpbnNpZGUgdGhlIGZpbGVcbiAqIEB0eXBlIHtPYmplY3R9XG4gKi9cbnBlYXBvZC52YXJzID0ge1xuXHR2ZXJzaW9uOiAnMC4wLjAuMSBBbHBoYScsXG5cdG5lZWRzSW5pdDogdHJ1ZSxcblx0Y3NzVW5pcXVlOiAnLS1QJyxcblx0ZGVidWc6IHRydWUsXG5cdHBlcmZvcm1hbmNlTG9nOiB0cnVlXG59O1xuXG4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=

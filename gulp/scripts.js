@@ -21,7 +21,7 @@ gulp.task('process-scripts', function(){
 
 	//jsLint
 	jsFiles.pipe(jshint())
-		.pipe(jshint.reporter('default', { verbose: true }));
+		.pipe(jshint.reporter('default', { verbose: false }));
 
 	//jsDoc
 	var pkg = require('./../package.json'),

@@ -13,7 +13,7 @@ peapod.displaced = {
 	items: [],
 
 	initGet: function(){
-
+		
 	},
 
 	initSet: function(){

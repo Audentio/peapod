@@ -40,3 +40,16 @@ peapod.isSet = function(val){
 	if (val === null) return false;
 	return true;
 };
+
+/**
+ * Function to perform selectors
+ * @param  {string} sel  selector string
+ * @param  {function} func optional function to run on each element
+ * @param  {element} root root of selection, default to document if none set
+ * @return {array}      array of elements
+ */
+peapod.sel = function(sel, func, root){
+	if (!peapod.isSet(root)) root = document;
+	if (peapod.isSet(func)) return peapod.select.phrases(root, sel, func);
+	return peapod.select.phrases(root, sel);
+};
