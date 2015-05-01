@@ -13,7 +13,10 @@ gulp.task('processJs', function(){
 		jsdoc = require("gulp-jsdoc"),
 		jscs = require('gulp-jscs'),
 		notify = require('gulp-notify'),
-		replace = require('gulp-replace');
+		plumber = require('gulp-plumber'),
+		replace = require('gulp-replace'),
+		gulpif = require('gulp-if'),
+		buildPassed = true;
 
 
 	//Empty the built JS
@@ -22,15 +25,26 @@ gulp.task('processJs', function(){
 	});
 
 	var jsFiles = gulp.src(['src/js/init.js', 'src/js/util/*.js', 'src/js/components/*.js', 'src/js/main.js'])
+			.pipe(plumber({errorHandler: function(){
+				console.warn("JS Error in building jsFiles variable.")
+				buildPassed = false;
+			}}))
 			.pipe(replace('$pp', packageName));
 
 	//jsLint
-	jsFiles.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish', { verbose: false }))
-		.pipe(jshint.reporter('fail'));
+	jsFiles.pipe(plumber({errorHandler: function(){
+			console.warn("JS Error in jsLint.")
+			buildPassed = false;
+		}}))
+		.pipe(jshint())
+		.pipe(jshint.reporter('jshint-stylish', { verbose: false }));
 
     //JSCS
-    jsFiles.pipe(jscs({
+    jsFiles.pipe(plumber({errorHandler: function(){
+			console.warn("JS Error in JSCS.")
+			buildPassed = false;
+		}}))
+    	.pipe(jscs({
     		configPath: 'gulp/.jscsrc'
     	}));
 
@@ -54,25 +68,26 @@ gulp.task('processJs', function(){
 		    inverseNav      : true
 		};
 	gulp.src(['src/js/**/*.js', 'README.md'])
+		.pipe(plumber({errorHandler: function(){
+			console.warn("JS Error in building jsDoc.")
+			buildPassed = false;
+		}}))
 		.pipe(replace('$pp', packageName))
 		.pipe(template({pkg: pkg}))
 		.pipe(jsdoc.parser())
     	.pipe(jsdoc.generator('docs/js', tpl, opts));
 
-	//uncompressed js
-	jsFiles.pipe(concat('main.js'))
-		.pipe(gulp.dest('build/js/'));
-
 	//compressed js
-	jsFiles.pipe(sourcemaps.init())
+	jsFiles.pipe(plumber({errorHandler: function(){
+			console.warn("JS Error in building main.min.js .")
+			buildPassed = false;
+		}}))
+		.pipe(sourcemaps.init())
 		.pipe(concat('main.min.js'))
 		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('build/js/'))
-		.pipe(notify({
-            title: 'JS Builder',
-            message: 'Successfully built javascript.'
-        }));
+		.pipe(gulpif(buildPassed, notify({ title: 'JS Builder Passed', message: 'Successfully built javascript.' }), notify({ title: 'JS Builder Failed', message: 'Could not built javascript :(.' })));
 
 });
 
