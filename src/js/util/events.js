@@ -13,38 +13,50 @@ $pp.events = {
 	items: [],
 	currentId: 0,
 	
-	makeEvent: function(name, func, priority){
+	makeEvent: function(name, func, priority, once){
 		if (name.length > 0) items.push({
 			name: name, 
 			func: func, 
-			priority: priority, 
+			priority: priority,
+			once: once, 
 			id: $pp.events.currentId
 		});
 
 		$pp.events.currentId++;
 	},
 
-	bind: function(name, func, priority){
+	bind: function(name, func, priority, once){
+		if (!$pp.isSet(once)) once = false;
 		var pe = $pp.events;
 		if (name.indexOf(" ") > -1){
 			var names = name.split(" ");
 			for (var i = 0, len = names.length; i < len; i++){
-				pe.makeEvent(names[i], func, priority);
+				pe.makeEvent(names[i], func, priority, once);
 			}
 		} else {
-			pe.makeEvent(name, func, priority);
+			pe.makeEvent(name, func, priority, once);
 		}
 	},
 
-	unbind: function(){
+	unbind: function(name){
+		var pe = $pp.events,
+			newItems = [];
+		for (var i = 0, len = pe.items.length; i < len; i++){
+			var item = pe.items[i];
+			if (item.name !== name){
+				newItems.push(item);
+			} else {
 
+			}
+		}
+		$pp.events.items = newItems;
 	},
 
-	trigger: function(){
-
+	trigger: function(name){
+		window.dispatchEvent(new Event(name));
 	},
 
-	bindOnce: function(){
-
+	bindOnce: function(name, func, priority){
+		$pp.events.bind(name, func, priority, true);
 	}
 };

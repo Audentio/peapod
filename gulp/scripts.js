@@ -1,16 +1,18 @@
 var gulp = require('gulp'),
-	concat = require('gulp-concat'),
-	del = require('del'),
-	sourcemaps = require('gulp-sourcemaps')
 	packageName = "peapod";
 
 // Scripts Task
 // Lint, Concatenates, Uglifies
 gulp.task('process-scripts', function(){
 	var uglify = require('gulp-uglify'),
+		concat = require('gulp-concat'),
+		del = require('del'),
+		sourcemaps = require('gulp-sourcemaps')
 		template = require('gulp-template'),
 		jshint = require('gulp-jshint'),
 		jsdoc = require("gulp-jsdoc"),
+		jscs = require('gulp-jscs'),
+		notify = require('gulp-notify'),
 		replace = require('gulp-replace');
 
 
@@ -24,7 +26,21 @@ gulp.task('process-scripts', function(){
 
 	//jsLint
 	jsFiles.pipe(jshint())
-		.pipe(jshint.reporter('default', { verbose: false }));
+		.pipe(jshint.reporter('jshint-stylish', { verbose: false }))
+		.pipe(jshint.reporter('fail'))
+        .pipe(notify({
+            title: 'JSHint',
+            message: 'JSHint Passed.',
+        }));
+
+    //JSCS
+    jsFiles.pipe(jscs({
+    		configPath: 'gulp/.jscsrc'
+    	}))
+        .pipe(notify({
+            title: 'JSCS',
+            message: 'JSCS Passed.'
+        }));
 
 	//jsDoc
 	var pkg = require('./../package.json'),
@@ -60,7 +76,11 @@ gulp.task('process-scripts', function(){
 		.pipe(concat('main.min.js'))
 		.pipe(uglify())
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest('build/js/'));
+		.pipe(gulp.dest('build/js/'))
+		.pipe(notify({
+            title: 'JS Builder',
+            message: 'Successfully built javascript.'
+        }));
 
 });
 
