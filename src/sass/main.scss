@@ -8,20 +8,15 @@
 //
 
 
+$suffix: --PP;
 
-
-// Variables
-// <oooooooooooooooooooooooooooooooooooooooooooooooooooo>
-
-$prefix: pod--;
-
-.#{$prefix} {
-
-	&foo {
-		display: table;
-	}
-
-	&foo { 
-		display: table-cell; 
+.#{$suffix} {
+	@at-root {
+		.flex#{&} {
+			html.flexbox & {
+				display: flex;
+			}
+		}
 	}
 }
+
