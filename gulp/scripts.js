@@ -96,4 +96,4 @@ gulp.task('watchJs', function(){
 	gulp.watch('src/js/**/*.js', ['processJs']);
 });
 
-gulp.task('processScripts', ['processJs', 'watchJs'])
+gulp.task('scripts', ['processJs', 'watchJs'])

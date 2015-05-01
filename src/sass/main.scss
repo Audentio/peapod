@@ -1,22 +1,8 @@
-// Name:			Utility
-// Description:		Classes used for common styling tasks
-//
-// Compontent:		u-clearfix-*
-//					u-float-*
-//					u-vertical-align-*
-//					u-scrollable-*
-//
-
-
 $suffix: --PP;
 
-.#{$suffix} {
-	@at-root {
-		.flex#{&} {
-			html.flexbox & {
-				display: flex;
-			}
-		}
-	}
-}
+.flex#{$suffix} {background: red;}
+
+
+
+
 
