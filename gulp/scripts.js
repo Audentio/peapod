@@ -1,54 +1,33 @@
 var gulp = require('gulp'),
-	packageName = "peapod";
+	uglify = require('gulp-uglify'),
+	concat = require('gulp-concat'),
+	del = require('del'),
+	sourcemaps = require('gulp-sourcemaps')
+	template = require('gulp-template'),
+	jshint = require('gulp-jshint'),
+	jsdoc = require("gulp-jsdoc"),
+	jscs = require('gulp-jscs'),
+	notify = require('gulp-notify'),
+	plumber = require('gulp-plumber'),
+	replace = require('gulp-replace'),
+	gulpif = require('gulp-if'),
+	colors = require('colors');
+	packageName = "peapod",
+	debugMode = true;
+
+plumberError = function(label){
+	return {
+		errorHandler: function(msg){
+			console.log(msg.message);
+			console.log(label.toString().red.bold.underline);
+			notify({ title: 'JS Builder Failed', message: 'Could not built javascript :(. ' + label })
+		}
+	}
+}
 
 // Scripts Task
 // Lint, Concatenates, Uglifies
 gulp.task('processJs', function(){
-	var uglify = require('gulp-uglify'),
-		concat = require('gulp-concat'),
-		del = require('del'),
-		sourcemaps = require('gulp-sourcemaps')
-		template = require('gulp-template'),
-		jshint = require('gulp-jshint'),
-		jsdoc = require("gulp-jsdoc"),
-		jscs = require('gulp-jscs'),
-		notify = require('gulp-notify'),
-		plumber = require('gulp-plumber'),
-		replace = require('gulp-replace'),
-		gulpif = require('gulp-if'),
-		buildPassed = true;
-
-
-	//Empty the built JS
-	del(['./build/js/**/*.js'], function (err, deletedFiles) {
-	
-	});
-
-	var jsFiles = gulp.src(['src/js/init.js', 'src/js/util/*.js', 'src/js/components/*.js', 'src/js/main.js'])
-			.pipe(plumber({errorHandler: function(){
-				console.warn("JS Error in building jsFiles variable.")
-				buildPassed = false;
-			}}))
-			.pipe(replace('$pp', packageName));
-
-	//jsLint
-	jsFiles.pipe(plumber({errorHandler: function(){
-			console.warn("JS Error in jsLint.")
-			buildPassed = false;
-		}}))
-		.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish', { verbose: false }));
-
-    //JSCS
-    jsFiles.pipe(plumber({errorHandler: function(){
-			console.warn("JS Error in JSCS.")
-			buildPassed = false;
-		}}))
-    	.pipe(jscs({
-    		configPath: 'gulp/.jscsrc'
-    	}));
-
-	//jsDoc
 	var pkg = require('./../package.json'),
 		opts = {
 		    'private': true,
@@ -67,27 +46,38 @@ gulp.task('processJs', function(){
 		    collapseSymbols : true,
 		    inverseNav      : true
 		};
-	gulp.src(['src/js/**/*.js', 'README.md'])
-		.pipe(plumber({errorHandler: function(){
-			console.warn("JS Error in building jsDoc.")
-			buildPassed = false;
-		}}))
-		.pipe(replace('$pp', packageName))
-		.pipe(template({pkg: pkg}))
-		.pipe(jsdoc.parser())
-    	.pipe(jsdoc.generator('docs/js', tpl, opts));
 
-	//compressed js
-	jsFiles.pipe(plumber({errorHandler: function(){
-			console.warn("JS Error in building main.min.js .")
-			buildPassed = false;
-		}}))
+	//Empty the built JS
+	del(['./build/js/**/*.js'], function (err, deletedFiles) {
+		
+	});
+
+	gulp.src(['src/js/init.js', 'src/js/util/*.js', 'src/js/components/*.js', 'src/js/main.js'])
+		.pipe(plumber(plumberError("JS Error building jsFiles variable.")))
+		.pipe(replace('$pp', packageName))
+		.pipe(plumber.stop())
+		.pipe(plumber(plumberError("JS Error in jsLint."))) // jsLint
+		.pipe(jshint())
+		.pipe(jshint.reporter('jshint-stylish', { verbose: false }))
+		.pipe(plumber.stop())
+		.pipe(plumber(plumberError("JS Error in JSCS."))) // JSCS
+    	.pipe(jscs({
+    		configPath: 'gulp/.jscsrc'
+    	}))
+    	.pipe(plumber.stop())
+		.pipe(plumber(plumberError("JS Error in building main.min.js ."))) // output compressed js files
 		.pipe(gulpif(debugMode, sourcemaps.init()))
 		.pipe(concat('main.min.js'))
 		.pipe(uglify())
 		.pipe(gulpif(debugMode, sourcemaps.write()))
 		.pipe(gulp.dest('build/js/'))
-		.pipe(gulpif(buildPassed, notify({ title: 'JS Builder Passed', message: 'Successfully built javascript.' }), notify({ title: 'JS Builder Failed', message: 'Could not built javascript :(.' })));
+		.pipe(plumber.stop())
+		.pipe(plumber(plumberError("JS Error in jsDoc."))) // jsDoc
+		.pipe(template({pkg: pkg}))
+		.pipe(jsdoc.parser())
+		//.pipe(notify({ title: 'JS Builder Passed', message: 'Successfully built javascript.' }))
+    	.pipe(jsdoc.generator('docs/js', tpl, opts));
+
 
 });
 

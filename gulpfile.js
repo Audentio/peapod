@@ -1,6 +1,6 @@
 // Load Packages
 var gulp = require('gulp'),
-	requireDir = require('require-dir');
+	requireDir = require('require-dir'),
 	tasks = requireDir('./gulp');
 
 
