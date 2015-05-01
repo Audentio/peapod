@@ -3,7 +3,7 @@ var gulp = require('gulp'),
 
 // Scripts Task
 // Lint, Concatenates, Uglifies
-gulp.task('process-scripts', function(){
+gulp.task('processJs', function(){
 	var uglify = require('gulp-uglify'),
 		concat = require('gulp-concat'),
 		del = require('del'),
@@ -27,20 +27,12 @@ gulp.task('process-scripts', function(){
 	//jsLint
 	jsFiles.pipe(jshint())
 		.pipe(jshint.reporter('jshint-stylish', { verbose: false }))
-		.pipe(jshint.reporter('fail'))
-        .pipe(notify({
-            title: 'JSHint',
-            message: 'JSHint Passed.',
-        }));
+		.pipe(jshint.reporter('fail'));
 
     //JSCS
     jsFiles.pipe(jscs({
     		configPath: 'gulp/.jscsrc'
-    	}))
-        .pipe(notify({
-            title: 'JSCS',
-            message: 'JSCS Passed.'
-        }));
+    	}));
 
 	//jsDoc
 	var pkg = require('./../package.json'),
@@ -86,5 +78,7 @@ gulp.task('process-scripts', function(){
 
 // Watch Task for JS
 gulp.task('watchJs', function(){
-	gulp.watch('src/js/**/*.js', ['process-scripts']);
+	gulp.watch('src/js/**/*.js', ['processJs']);
 });
+
+gulp.task('processScripts', ['processJs', 'watchJs'])

@@ -34,4 +34,5 @@ gulp.task('watchStyles', function(){
 	gulp.watch('src/sass/**/*.scss', ['processStyles'])
 });
 
-gulp.task('default', ['processScripts', 'processStyles', 'watchJs', 'watchStyles']);
+
+gulp.task('default', ['processScripts', 'processStyles', 'watchCss']);

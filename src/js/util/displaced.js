@@ -12,15 +12,15 @@ $pp.displaced = {
 	needsInit: true,
 	items: [],
 
-	initGet: function(){
+	initGet: function() {
 
 	},
 
-	initSet: function(){
+	initSet: function() {
 
 	},
 
-	init: function(){
+	init: function() {
 		var pd = $pp.displaced;
 		pd.initGet();
 		pd.initSet();

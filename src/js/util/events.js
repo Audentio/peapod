@@ -12,25 +12,29 @@
 $pp.events = {
 	items: [],
 	currentId: 0,
-	
-	makeEvent: function(name, func, priority, once){
-		if (name.length > 0) items.push({
-			name: name, 
-			func: func, 
-			priority: priority,
-			once: once, 
-			id: $pp.events.currentId
-		});
+
+	makeEvent: function(name, func, priority, once) {
+		if (name.length > 0) {
+			items.push({
+				name: name,
+				func: func,
+				priority: priority,
+				once: once,
+				id: $pp.events.currentId
+			});
+		}
 
 		$pp.events.currentId++;
 	},
 
-	bind: function(name, func, priority, once){
-		if (!$pp.isSet(once)) once = false;
+	bind: function(name, func, priority, once) {
+		if (!$pp.isSet(once)) {
+			once = false;
+		}
 		var pe = $pp.events;
-		if (name.indexOf(" ") > -1){
-			var names = name.split(" ");
-			for (var i = 0, len = names.length; i < len; i++){
+		if (name.indexOf(' ') > -1) {
+			var names = name.split(' ');
+			for (var i = 0, len = names.length; i < len; i++) {
 				pe.makeEvent(names[i], func, priority, once);
 			}
 		} else {
@@ -38,12 +42,12 @@ $pp.events = {
 		}
 	},
 
-	unbind: function(name){
+	unbind: function(name) {
 		var pe = $pp.events,
 			newItems = [];
-		for (var i = 0, len = pe.items.length; i < len; i++){
+		for (var i = 0, len = pe.items.length; i < len; i++) {
 			var item = pe.items[i];
-			if (item.name !== name){
+			if (item.name !== name) {
 				newItems.push(item);
 			} else {
 
@@ -52,11 +56,11 @@ $pp.events = {
 		$pp.events.items = newItems;
 	},
 
-	trigger: function(name){
+	trigger: function(name) {
 		window.dispatchEvent(new Event(name));
 	},
 
-	bindOnce: function(name, func, priority){
+	bindOnce: function(name, func, priority) {
 		$pp.events.bind(name, func, priority, true);
 	}
 };

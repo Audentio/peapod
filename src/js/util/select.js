@@ -9,7 +9,6 @@
  *
  */
 
-
 peapod.select = {
 	/**
 	 * Selector for a classname
@@ -18,11 +17,11 @@ peapod.select = {
 	 * @param  {function} func optional function to call on results
 	 * @return {array}      elements returned
 	 */
-	className: function(root, sel, func){
+	className: function(root, sel, func) {
 		var eles = root.getElementsByClassName(sel);
-		if (peapod.isSet(eles)){
-			if (peapod.isSet(func)){
-				for (var i = 0, len = eles.length; i < len; i++){
+		if (peapod.isSet(eles)) {
+			if (peapod.isSet(func)) {
+				for (var i = 0, len = eles.length; i < len; i++) {
 					func(eles[i]);
 				}
 			}
@@ -38,14 +37,14 @@ peapod.select = {
 	 * @param  {function} func optional function to call on results
 	 * @return {array}      elements returned
 	 */
-	classNames: function(root, sel, func){
-		var classes = "",
-			selSplit = sel.split(".");
-		for (var i = 1, len = selSplit.length; i < len; i++){
-			if (classes === ""){
+	classNames: function(root, sel, func) {
+		var classes = '',
+			selSplit = sel.split('.');
+		for (var i = 1, len = selSplit.length; i < len; i++) {
+			if (classes === '') {
 				classes = selSplit[i];
 			} else {
-				classes += " " + selSplit[i];
+				classes += ' ' + selSplit[i];
 			}
 		}
 		return peapod.select.className(root, classes, func);
@@ -58,11 +57,11 @@ peapod.select = {
 	 * @param  {function} func optional function to call on results
 	 * @return {array}      elements returned
 	 */
-	tagName: function(root, sel, func){
+	tagName: function(root, sel, func) {
 		var eles = root.getElementsByTagName(sel);
-		if (peapod.isSet(eles)){
-			if (peapod.isSet(func)){
-				for (var i = 0, len = eles.length; i < len; i++){
+		if (peapod.isSet(eles)) {
+			if (peapod.isSet(func)) {
+				for (var i = 0, len = eles.length; i < len; i++) {
 					func(eles[i]);
 				}
 			}
@@ -78,11 +77,11 @@ peapod.select = {
 	 * @param  {function} func optional function to call on results
 	 * @return {array}      elements returned
 	 */
-	query: function(root, sel, func){
+	query: function(root, sel, func) {
 		var eles = root.querySelectorAll(sel);
-		if (eles.length){
+		if (eles.length) {
 			if (peapod.isSet(func)) {
-				for (var i = 0, len = eles.length; i < len; i++){
+				for (var i = 0, len = eles.length; i < len; i++) {
 					func(eles[i]);
 				}
 			}
@@ -98,10 +97,10 @@ peapod.select = {
 	 * @param  {function} func optional function to call on results
 	 * @return {array}      elements returned
 	 */
-	word: function(root, sel, func){
-		if (sel.indexOf(".") !== -1){
-			var selSplit = sel.split(".");
-			if (selSplit[0].length === 0){
+	word: function(root, sel, func) {
+		if (sel.indexOf('.') !== -1) {
+			var selSplit = sel.split('.');
+			if (selSplit[0].length === 0) {
 				return peapod.select.classNames(root, sel, func);
 			} else {
 				peapod.select.query(root, sel, func);
@@ -119,8 +118,8 @@ peapod.select = {
 	 * @param  {function} func optional function to call on results
 	 * @return {array}      elements returned
 	 */
-	phrases: function(root, sel, func){
-		if (sel.indexOf(",") > -1 || sel.indexOf(" ") > -1 || sel.indexOf("!") > -1 || sel.indexOf("#") > -1 || sel.indexOf(">") > -1){
+	phrases: function(root, sel, func) {
+		if (sel.indexOf(',') > -1 || sel.indexOf(' ') > -1 || sel.indexOf('!') > -1 || sel.indexOf('#') > -1 || sel.indexOf('>') > -1) {
 			peapod.select.query(root, sel, func);
 		} else {
 			return peapod.select.word(root, sel, func);
