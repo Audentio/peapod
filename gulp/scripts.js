@@ -82,10 +82,10 @@ gulp.task('processJs', function(){
 			console.warn("JS Error in building main.min.js .")
 			buildPassed = false;
 		}}))
-		.pipe(sourcemaps.init())
+		.pipe(gulpif(debugMode, sourcemaps.init()))
 		.pipe(concat('main.min.js'))
 		.pipe(uglify())
-		.pipe(sourcemaps.write())
+		.pipe(gulpif(debugMode, sourcemaps.write()))
 		.pipe(gulp.dest('build/js/'))
 		.pipe(gulpif(buildPassed, notify({ title: 'JS Builder Passed', message: 'Successfully built javascript.' }), notify({ title: 'JS Builder Failed', message: 'Could not built javascript :(.' })));
 
