@@ -31,7 +31,7 @@ gulp.task('processStyles', function(){
 
 // Watch Task for CSS
 gulp.task('watchStyles', function(){
-	gulp.watch('src/sass/**/*.scss', ['process-styles'])
+	gulp.watch('src/sass/**/*.scss', ['processStyles'])
 });
 
 gulp.task('default', ['processSripts', 'processStyles', 'watchJs', 'watchCss']);
