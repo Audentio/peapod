@@ -9,7 +9,6 @@
  *
  */
 
-
 /**
  * Function to create a class name for use in the DOM
  * @function creates a class name for use in the DOM
@@ -17,16 +16,16 @@
  * @param  {string} type option for the type of classname to generate (state, general, js, or blank)
  * @return {string}      resulting class name
  */
-$pp.name = function(val, type){
+$pp.name = function(val, type) {
 	var cssUnique = peapod.vars.cssUnique;
-	if (type === "state"){
-		return "is-" + val + cssUnique;
-	} else if (type === "general") {
+	if (type === 'state') {
+		return 'is-' + val + cssUnique;
+	} else if (type === 'general') {
 		return val + cssUnique;
-	} else if (type === "js") {
-		return "js-" + val + cssUnique;
+	} else if (type === 'js') {
+		return 'js-' + val + cssUnique;
 	} else {
-		return "js-" + val + cssUnique;
+		return 'js-' + val + cssUnique;
 	}
 };
 
@@ -35,9 +34,13 @@ $pp.name = function(val, type){
  * @param  {string}  val variable
  * @return {Boolean}     if it's set
  */
-$pp.isSet = function(val){
-	if (typeof(val) === "undefined") return false;
-	if (val === null) return false;
+$pp.isSet = function(val) {
+	if (typeof(val) === 'undefined') {
+		return false;
+	}
+	if (val === null) {
+		return false;
+	}
 	return true;
 };
 
@@ -48,9 +51,13 @@ $pp.isSet = function(val){
  * @param  {element} root root of selection, default to document if none set
  * @return {array}      array of elements
  */
-$pp.sel = function(sel, func, root){
-	if (!peapod.isSet(root)) root = document;
-	if (peapod.isSet(func)) return peapod.select.phrases(root, sel, func);
+$pp.sel = function(sel, func, root) {
+	if (!peapod.isSet(root)) {
+		root = document;
+	}
+	if (peapod.isSet(func)) {
+		return peapod.select.phrases(root, sel, func);
+	}
 	return peapod.select.phrases(root, sel);
 };
 
@@ -59,16 +66,16 @@ $pp.sel = function(sel, func, root){
  * @param  {array} items array of items to iterate over
  * @param  {function} func  function to perform
  * @param  {bool} useParam  set to false to not pass the item as a parameter for the function
- * @return {void}       
+ * @return {void}
  */
-$pp.forEach = function(items, func, useParam){
+$pp.forEach = function(items, func, useParam) {
 	var i = 0, len = items.length;
-	if (!useParam){
-		for (i; i < len; i++){
+	if (!useParam) {
+		for (i; i < len; i++) {
 			func();
 		}
 	} else {
-		for (i; i < len; i++){
+		for (i; i < len; i++) {
 			func(items[i]);
 		}
 	}

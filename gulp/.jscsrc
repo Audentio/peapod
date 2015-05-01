@@ -15,14 +15,13 @@
       "allowComments": true,
       "allowRegex": true
     },
-    "validateIndentation": 4,
+    "validateIndentation": "\t",
     "validateQuoteMarks": "'",
 
     "disallowMultipleLineStrings": true,
     "disallowMixedSpacesAndTabs": true,
     "disallowTrailingWhitespace": true,
     "disallowSpaceAfterPrefixUnaryOperators": true,
-    "disallowMultipleVarDecl": true,
     "disallowKeywordsOnNewLine": ["else"],
 
     "requireSpaceAfterKeywords": [
