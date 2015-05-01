@@ -1,17 +1,8 @@
 $suffix: --PP;
 
-#{$suffix} {
+.flex#{$suffix} {background: red;}
 
-	@at-root {
-		.flexContainer#{&} {
-			display: block;
 
-			html.flexbox & {
-				display: flex;
-			}
-		}	
-	}
-}
 
 
 
