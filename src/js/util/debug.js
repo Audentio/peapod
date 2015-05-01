@@ -12,7 +12,7 @@
  * General Function to log performance related information and debug information
  * @type {Object}
  */
-peapod.debug = {
+$pp.debug = {
 	items: [],
 
 	out: function(){
@@ -20,7 +20,7 @@ peapod.debug = {
 	},
 
 	log: function(msg){
-		if (peapod.vars.debug) console.log(msg);
+		if ($pp.vars.debug) console.log(msg);
 	},
 
 	spaceToLength: function(input, length) {
@@ -32,12 +32,12 @@ peapod.debug = {
 	},
 
 	tStamp: function (label, level, startTime) {
-		if (peapod.vars.performanceLog && startTime !== null) peapod.log(label + ": " + peapod.round(peapod.debug.time() - startTime, 5) + " ms");
+		if ($pp.vars.performanceLog && startTime !== null) $pp.log(label + ": " + $pp.round($pp.debug.time() - startTime, 5) + " ms");
 	},
 
 	time: function(force){
-		if (force || peapod.vars.performanceLog) {
-			if (!peapod.isSet(window.performance)) return Date.now();
+		if (force || $pp.vars.performanceLog) {
+			if (!$pp.isSet(window.performance)) return Date.now();
 			return window.performance.now ? (performance.now() + performance.timing.navigationStart) : Date.now();
 		}
 		return null;

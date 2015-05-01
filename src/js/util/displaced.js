@@ -8,12 +8,12 @@
  * @copyright ${ pkg.author }
  */
 
-peapod.displaced = {
+$pp.displaced = {
 	needsInit: true,
 	items: [],
 
 	initGet: function(){
-		
+
 	},
 
 	initSet: function(){
@@ -21,7 +21,7 @@ peapod.displaced = {
 	},
 
 	init: function(){
-		var pd = peapod.displaced;
+		var pd = $pp.displaced;
 		pd.initGet();
 		pd.initSet();
 	}

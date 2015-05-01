@@ -12,4 +12,4 @@
  * Initialize peapod object
  */
 
-var peapod = peapod || {};
+var $pp = $pp || {};

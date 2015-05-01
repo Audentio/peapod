@@ -1,7 +1,8 @@
 var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	del = require('del'),
-	sourcemaps = require('gulp-sourcemaps');
+	sourcemaps = require('gulp-sourcemaps')
+	packageName = "peapod";
 
 // Scripts Task
 // Lint, Concatenates, Uglifies
@@ -9,7 +10,8 @@ gulp.task('process-scripts', function(){
 	var uglify = require('gulp-uglify'),
 		template = require('gulp-template'),
 		jshint = require('gulp-jshint'),
-		jsdoc = require("gulp-jsdoc");
+		jsdoc = require("gulp-jsdoc"),
+		replace = require('gulp-replace');
 
 
 	//Empty the built JS
@@ -17,7 +19,8 @@ gulp.task('process-scripts', function(){
 	
 	});
 
-	var jsFiles = gulp.src(['src/js/init.js', 'src/js/util/*.js', 'src/js/components/*.js', 'src/js/main.js']);
+	var jsFiles = gulp.src(['src/js/init.js', 'src/js/util/*.js', 'src/js/components/*.js', 'src/js/main.js'])
+			.pipe(replace('$pp', packageName));
 
 	//jsLint
 	jsFiles.pipe(jshint())
@@ -43,6 +46,7 @@ gulp.task('process-scripts', function(){
 		    inverseNav      : true
 		};
 	gulp.src(['src/js/**/*.js', 'README.md'])
+		.pipe(replace('$pp', packageName))
 		.pipe(template({pkg: pkg}))
 		.pipe(jsdoc.parser())
     	.pipe(jsdoc.generator('docs/js', tpl, opts));

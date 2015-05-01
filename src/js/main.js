@@ -12,7 +12,7 @@
  * Declare variables set inside the file
  * @type {Object}
  */
-peapod.vars = {
+$pp.vars = {
 	version: '0.0.0.1 Alpha',
 	needsInit: true,
 	cssUnique: '--P',

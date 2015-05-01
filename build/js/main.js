@@ -79,7 +79,7 @@ peapod.displaced = {
 	items: [],
 
 	initGet: function(){
-		
+
 	},
 
 	initSet: function(){
@@ -90,6 +90,56 @@ peapod.displaced = {
 		var pd = peapod.displaced;
 		pd.initGet();
 		pd.initSet();
+	}
+};
+/**
+ * @file Controls synchronous and asynchronous events
+ *
+ * @version ${ pkg.version }
+ * @author ${ pkg.author }
+ *
+ * @license ${ pkg.license }.
+ * @copyright ${ pkg.author }
+ *
+ */
+
+peapod.events = {
+	items: [],
+	currentId: 0,
+	
+	makeEvent: function(name, func, priority){
+		if (name.length > 0) items.push({
+			name: name, 
+			func: func, 
+			priority: priority, 
+			id: peapod.events.currentId
+		});
+
+		peapod.events.currentId++;
+	},
+
+	bind: function(name, func, priority){
+		var pe = peapod.events;
+		if (name.indexOf(" ") > -1){
+			var names = name.split(" ");
+			for (var i = 0, len = names.length; i < len; i++){
+				pe.makeEvent(names[i], func, priority);
+			}
+		} else {
+			pe.makeEvent(name, func, priority);
+		}
+	},
+
+	unbind: function(){
+
+	},
+
+	trigger: function(){
+
+	},
+
+	bindOnce: function(){
+
 	}
 };
 /**
@@ -146,6 +196,26 @@ peapod.sel = function(sel, func, root){
 	if (!peapod.isSet(root)) root = document;
 	if (peapod.isSet(func)) return peapod.select.phrases(root, sel, func);
 	return peapod.select.phrases(root, sel);
+};
+
+/**
+ * Function to execute a function on each member of an array
+ * @param  {array} items array of items to iterate over
+ * @param  {function} func  function to perform
+ * @param  {bool} useParam  set to false to not pass the item as a parameter for the function
+ * @return {void}       
+ */
+peapod.forEach = function(items, func, useParam){
+	var i = 0, len = items.length;
+	if (!useParam){
+		for (i; i < len; i++){
+			func();
+		}
+	} else {
+		for (i; i < len; i++){
+			func(items[i]);
+		}
+	}
 };
 
 /**
