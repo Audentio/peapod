@@ -24,8 +24,8 @@ gulp.task('processStyles', function(){
 	.pipe(plumber())
 	.pipe(sass({ style: 'expanded' }))
 	.pipe(autoprefixer(browserSupport.styles))
-	.pipe(rename({suffix: '.min'}))
 	.pipe(minify())
+	.pipe(rename({ suffix: '.min' }))
 	.pipe(gulp.dest('./build/css/'));
 });
 
@@ -34,4 +34,4 @@ gulp.task('watchStyles', function(){
 	gulp.watch('src/sass/**/*.scss', ['processStyles'])
 });
 
-gulp.task('default', ['processScripts', 'processStyles', 'watchJs', 'watchCss']);
+gulp.task('default', ['processScripts', 'processStyles', 'watchJs', 'watchStyles']);
