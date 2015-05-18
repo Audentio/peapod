@@ -17,6 +17,7 @@ $pp.vars = {
 	needsInit: true,
 	cssUnique: '--P',
 	debug: true,
-	performanceLog: true
+	performanceLog: true,
+	uniqueId: 0
 };
 

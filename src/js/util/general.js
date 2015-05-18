@@ -30,6 +30,20 @@ $pp.name = function(val, type) {
 };
 
 /**
+ * Function to generate a unique ID
+ * @return {[type]} [description]
+ */
+$pp.uniqueId = function() {
+	var unique = $pp.name('uniqueID_' + $pp.vars.uniqueId);
+	$pp.vars.uniqueId++;
+	while ($pp.isSet(document.getElementById(unique))) {
+		unique = $pp.name('uniqueID_' + $pp.vars.uniqueId);
+		$pp.vars.uniqueId++;
+	}
+	return unique;
+};
+
+/**
  * Function to see if a variable has been set to a value
  * @param  {string}  val variable
  * @return {Boolean}     if it's set
@@ -79,4 +93,55 @@ $pp.forEach = function(items, func, useParam) {
 			func(items[i]);
 		}
 	}
+};
+
+/**
+ * Gets keys of an object or returns null
+ * @param  {object} obj object to get keys of
+ * @return {array}     keys of the object or null
+ */
+$pp.getKeys = function(obj) {
+	if (typeof(obj) === 'object') {
+		return Object.keys(obj);
+	}
+	return null;
+};
+
+/**
+ * Compares keys in global and local object and overrides any global keys with local keys
+ * @param {object} global global object, will be overwritten with local if local set
+ * @param {object} local  local object
+ */
+$pp.setDefaults = function(global, local) {
+	if ($pp.isSet(global) && $pp.isSet(local)) {
+		var keys = $pp.getKeys(local);
+		for (var i = 0, len = keys.length; i < len; i++) {
+			var key = keys[i];
+			if ($pp.isSet(global[key])) {
+				global[key] = local[key];
+			}
+		}
+	}
+	return global;
+};
+
+/**
+ * Function to see if an element has a given class
+ * @param  {element}  ele       element to check
+ * @param  {string}  className class to look for
+ * @return {Boolean}           if the element has the class
+ */
+$pp.hasClass = function(ele, className) {
+	if ($pp.isSet(ele) && className.length > 0) {
+		className = className.replace(' ', '').replace('.', '').split(',');
+		var classes = ele.className.split(' ');
+		for (var i = 0, len = className.length; i < len; i++) {
+			for (var j = 0, len2 = classes.length; j < len2; j++) {
+				if (classes[j] == className[i]) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 };
