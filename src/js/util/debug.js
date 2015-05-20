@@ -33,9 +33,13 @@ $pp.debug = {
 		return result;
 	},
 
-	tStamp: function(label, level, startTime) {
-		if ($pp.vars.performanceLog && startTime !== null) {
-			$pp.log(label + ': ' + $pp.round($pp.debug.time() - startTime, 5) + ' ms');
+	tStamp: function(label, level, startTime, force) {
+		if (($pp.vars.performanceLog || force) && startTime !== null) {
+			var prefix = '';
+			if (level === 1) {
+				prefix = '	';
+			}
+			$pp.debug.log(prefix + label + ': ' + $pp.debug.round($pp.debug.time() - startTime, 5) + ' ms');
 		}
 	},
 

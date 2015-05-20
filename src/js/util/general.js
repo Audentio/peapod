@@ -17,7 +17,7 @@
  * @return {string}      resulting class name
  */
 $pp.name = function(val, type) {
-	var cssUnique = peapod.vars.cssUnique;
+	var cssUnique = $pp.vars.cssUnique;
 	if (type === 'state') {
 		return 'is-' + val + cssUnique;
 	} else if (type === 'general') {
