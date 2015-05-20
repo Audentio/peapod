@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<script src="../../build/js/main.min.js"></script>
+
+		<script>
+			peapod.events.bind("DOMContentLoaded", function(){}, 10);
+			peapod.events.bindOnce("DOMContentLoaded", function(){}, -1);
+			peapod.events.bindOnce("DOMContentLoaded", function(){
+				var count = 0;
+				for (var i = 0; i < 100000000; i++) {
+					count++;
+				}
+			}, 11, true);
+			peapod.events.bind("unload", function(){console.log(456)}, 1)
+
+		</script>
+	</head>
+
+	<body>
+		<div class="test">Testing</div>
+		<div class="test test1">Testing</div>
+		<div class="test test2">Testing</div>
+		<div class="test test1">
+			Testing
+			<span class="test1">yep</span>
+		</div>
+	</body>
+
+</html>
