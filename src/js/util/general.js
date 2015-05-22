@@ -132,7 +132,7 @@ $pp.setDefaults = function(global, local) {
  * @return {Boolean}           if the element has the class
  */
 $pp.hasClass = function(ele, className) {
-	if ($pp.isSet(ele) && className.length > 0) {
+	if ($pp.isSet(ele) && $pp.isSet(className) && className.length > 0) {
 		className = className.replace(' ', '').replace('.', '').split(',');
 		var classes = ele.className.split(' ');
 		for (var i = 0, len = className.length; i < len; i++) {

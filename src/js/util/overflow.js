@@ -154,7 +154,7 @@ $pp.overflow = {
 
 		if (!$pp.overflow.needsInit) {
 			$pp.overflow.init();
-		} else {
+		} else if (!forceInit) {
 			$pp.overflow.addQueue.push({sel: classNames, defaults: defaults});
 		}
 	},

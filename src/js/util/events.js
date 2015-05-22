@@ -18,6 +18,33 @@ $pp.events = {
 	currentId: 0,
 	boundEvents: [],
 	debugEvents: [],
+	priority: {
+		first: -20000,
+		extreme: -10000,
+		high: -5000,
+		med: -3000,
+		low: -1000,
+		asyncFirst: 1,
+		asyncHigh: 1000,
+		asyncMed: 2000,
+		asyncLow: 3000
+	},
+
+	addList: function(name, funcs, priority, once, debug) {
+		var pe = $pp.events;
+
+		for (var i = 0, len = funcs.length; i < len; i++) {
+			pe.bind(name, funcs[i], pe.getPriority(priority), once, debug);
+		}
+	},
+
+	getPriority: function(name) {
+		if (!$pp.isSet($pp.events.priority[name])) {
+			name = 'low';
+		}
+		$pp.events.priority[name] += 1;
+		return $pp.events.priority[name] - 1;
+	},
 
 	/**
 	 * Internal use function to add an event to the array of events
@@ -31,6 +58,10 @@ $pp.events = {
 	makeEvent: function(name, func, priority, once, debug) {
 		var pe = $pp.events,
 			found = false;
+
+		if (priority === '') {
+			priority = pe.getPriority('low');
+		}
 
 		if (name.length > 0) {
 			$pp.events.items.push({
@@ -78,6 +109,9 @@ $pp.events = {
 	 * @return {void}
 	 */
 	bind: function(name, func, priority, once, debug) {
+		if (!$pp.isSet(priority)) {
+			priority = '';
+		}
 		if (!$pp.isSet(once)) {
 			once = false;
 		}
@@ -93,6 +127,24 @@ $pp.events = {
 		} else {
 			pe.makeEvent(name, func, priority, once, debug);
 		}
+	},
+
+	/**
+	 *  Function to add an event to the array of events and remove it after the first time it is triggered
+	 * @param  {string} name     name of trigger
+	 * @param  {function} func     function to run
+	 * @param  {int} priority priority of the event.  -1 happens async, then all sync events happen, then - happens
+	 * @param {bool} debug   if true, will output timestamps
+	 * @return {void}
+	 */
+	bindOnce: function(name, func, priority, debug) {
+		if (!$pp.isSet(priority)) {
+			priority = '';
+		}
+		if (!$pp.isSet(debug)) {
+			debug = false;
+		}
+		$pp.events.bind(name, func, priority, true, debug);
 	},
 
 	/**
@@ -235,7 +287,7 @@ $pp.events = {
 
 		item.func();
 		$pp.events.items[index].executing = false;
-		$pp.debug.tStamp(item.priority + '	' + item.name + ' (' + item.id + ')', 1, t, debug);
+		$pp.debug.tStamp($pp.debug.spaceToLength(item.priority, 8) + ' ' + $pp.debug.spaceToLength(item.name + ' (' + item.id + ') ', 26) + item.func.toString().split(' ').join('').replace('function(){', '').replace('}', '') + ' ', 1, t, debug);
 
 		if (last) {
 			if (item.priority > 1) {
@@ -258,17 +310,5 @@ $pp.events = {
 		window.setTimeout(function() {
 			$pp.events.executeFunc(index, debug, mainTimestamp, last);
 		}, 0);
-	},
-
-	/**
-	 *  Function to add an event to the array of events and remove it after the first time it is triggered
-	 * @param  {string} name     name of trigger
-	 * @param  {function} func     function to run
-	 * @param  {int} priority priority of the event.  -1 happens async, then all sync events happen, then - happens
-	 * @param {bool} debug   if true, will output timestamps
-	 * @return {void}
-	 */
-	bindOnce: function(name, func, priority, debug) {
-		$pp.events.bind(name, func, priority, true, debug);
 	}
 };

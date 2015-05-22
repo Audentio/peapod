@@ -27,7 +27,7 @@ $pp.debug = {
 
 	spaceToLength: function(input, length) {
 		var result = input;
-		for (var i = input.length; i <= length; i++) {
+		for (var i = input.toString().length; i <= length; i++) {
 			result += ' ';
 		}
 		return result;
@@ -38,8 +38,10 @@ $pp.debug = {
 			var prefix = '';
 			if (level === 1) {
 				prefix = '	';
+			} else if (level === 2) {
+				prefix = '		';
 			}
-			$pp.debug.log(prefix + label + ': ' + $pp.debug.round($pp.debug.time() - startTime, 5) + ' ms');
+			$pp.debug.log(prefix + $pp.debug.spaceToLength(label + ': ', 80) + $pp.debug.round($pp.debug.time(true) - startTime, 5) + ' ms');
 		}
 	},
 

@@ -23,6 +23,6 @@ $pp.vars = {
 	needsInit: true,
 	cssUnique: '--P',
 	debug: true,
-	performanceLog: true,
+	performanceLog: false,
 	uniqueId: 0,
 };
