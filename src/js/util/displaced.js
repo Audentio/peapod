@@ -11,7 +11,15 @@
 $pp.displaced = {
 	needsInit: true,
 	defaults: {
-
+		trigger: null,
+		altTriggers: [],
+		triggerClick: function() {
+			return true;
+		},
+		triggerHover: function() {
+			return true;
+		},
+		type: 'menu',
 	},
 	items: [],
 	addQueue: [],
@@ -68,25 +76,19 @@ $pp.displaced = {
 	}
 };
 
-function $ppDisplaced(ele, type, defaults) {
+function $ppDisplaced(ele, defaults) {
 	this.ele = ele;
-	this.type = type;
 	this.defaults = defaults;
-
 }
 
-$ppDisplaced.prototype = {
-	constructor: $ppDisplaced,
+$ppDisplaced.method('getEle', function() {
+	return this.ele;
+});
 
-	getEle: function() {
-		return this.ele;
-	},
+$ppDisplaced.method('getType', function() {
+	return this.type;
+});
 
-	getType: function() {
-		return this.type;
-	},
-
-	getDefaults: function() {
-		return this.defaults;
-	}
-};
+$ppDisplaced.method('getDefaults', function() {
+	return this.defaults;
+});
