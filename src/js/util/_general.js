@@ -131,35 +131,58 @@ $pp.getKeys = function(obj) {
  * @param {object} local  local object
  */
 $pp.setDefaults = function(global, local) {
-	if ($pp.isSet(global) && $pp.isSet(local)) {
+	var newDefault = $pp.clone(global);
+
+	if ($pp.isSet(newDefault) && $pp.isSet(local)) {
 		var keys = $pp.getKeys(local);
 		for (var i = 0, len = keys.length; i < len; i++) {
-			var key = keys[i];
-			if ($pp.isSet(global[key])) {
-				global[key] = local[key];
-			}
+			newDefault[keys[i]] = local[keys[i]];
 		}
 	}
-	return global;
+	return newDefault;
 };
 
 /**
  * Function to see if an element has a given class
  * @param  {element}  ele       element to check
- * @param  {string}  className class to look for
+ * @param  {string}  classNames class to look for
  * @return {Boolean}           if the element has the class
  */
-$pp.hasClass = function(ele, className) {
-	if ($pp.isSet(ele) && $pp.isSet(className) && className.length > 0) {
-		className = className.replace(' ', '').replace('.', '').split(',');
-		var classes = ele.className.split(' ');
-		for (var i = 0, len = className.length; i < len; i++) {
-			for (var j = 0, len2 = classes.length; j < len2; j++) {
-				if (classes[j] == className[i]) {
-					return true;
+$pp.hasClass = function(ele, classNames) {
+	if ($pp.isSet(ele) && $pp.isSet(classNames) && classNames.length > 0) {
+		classNames = classNames.replace(' ', '').replace('.', '').split(',');
+		var eleClass = ele.className;
+		if ($pp.isSet(eleClass)) {
+			var classes = eleClass.split(' ');
+			for (var i = 0, len = classNames.length; i < len; i++) {
+				for (var j = 0, len2 = classes.length; j < len2; j++) {
+					if (classes[j] == classNames[i]) {
+						return true;
+					}
 				}
 			}
 		}
 	}
 	return false;
+};
+
+$pp.clone = function(obj) {
+	var target = {};
+	for (var i in obj) {
+		if (obj.hasOwnProperty(i)) {
+			target[i] = obj[i];
+		}
+	}
+	return target;
+};
+
+$pp.removeChildren = function(ele, classNames) {
+	if ($pp.isSet(ele) && $pp.isSet(classNames) && classNames.length > 0) {
+		var children = ele.children;
+		for (var i = children.length; i >= 0; i--) {
+			if ($pp.hasClass(children[i], classNames)) {
+				ele.removeChild(children[i]);
+			}
+		}
+	}
 };

@@ -2,23 +2,34 @@ $pp.overflow = {
 	needsInit: true,
 	defaults: {
 		hideFirstClasses: $pp.name('overflowHideFirst'), // children with this class will hide first
-		hideLastClasses: $pp.name('overflowHideLast'), // children with this class will hide last
+		hideLastClasses: $pp.name('overflowHideLast') + ',' + $pp.name('menu'), // children with this class will hide last
 		noMenuClass: $pp.name('overflowNoMenu'), // if an elewrapper has this class children will be hidden without going to a menu
 		reverseOrder: true, // if true, hide from right to left
-		childWrapperSelector: '', // selector for uls.  Separate with commas if multiple
-		childSelector: '', // selector for lis.  Separate with commas if multiple. Leave blank to select all direct children
+		childWrapperSelector: $pp.name('overflowWrapper'), // selector for uls.  Separate with commas if multiple
+		//childSelector: $pp.name('overflowItem', 'general'), // selector for lis.  Separate with commas if multiple. Leave blank to select all direct children
+		childSelector: '',
 		constantChildrenWidth: true, // set to true if the widths of children won't change on resize, allows for optimizations
 		createOverflowTrigger: function() {
-			console.log('Must override defaults.createOverflowTrigger');
+			//console.log('Must override defaults.createOverflowTrigger');
+			var ele = document.createElement('LI');
+			ele.innerHTML = '<span class=\"' + $pp.name('displacedTrigger') + '\"><i class=\"fa fa-bars\"></i></span>';
+			return ele;
 		},
 		createOverflowContent: function() {
-			console.log('Must override defaults.createOverflowContent');
+			//console.log('Must override defaults.createOverflowContent');
+			var ele = document.createElement('UL');
+			ele.className = $pp.name('overflowMenu') + ' ' + $pp.name('displacedContent') + ' ' + $pp.name('menuContent', 'general');
+			return ele;
 		},
 		initMenu: function(trigger, content) {
-			console.log('Must override defaults.initMenu');
+			$pp.displaced.addParts(trigger.children, content, 'menu', {
+				positionPrimary: 'top',
+				positionSecondary: 'right',
+
+			});
 		},
 		childClick: function() {},
-		menuContentParent: '', // where to put the overflow menu's body, leave blank to append to wrapper parent
+		menuContentParent: '', // where to put the overflow menu's body, leave blank to append to wrapper
 		postMenuChildAdded: function(newItem) {},
 		preBuildMenus: function() {},
 		ignoreDivClass: $pp.name('ignoreOverflowDiv'),
@@ -96,7 +107,7 @@ $pp.overflow = {
 								var overflowContent = defaults.createOverflowContent();
 								overflowContent.style.display = 'none';
 								if (defaults.menuContentParent === '') {
-									sel[j].appendChild(overflowContent);
+									wrappersSel[l].appendChild(overflowContent);
 								} else {
 									defaults.menuContentParent.appendChild(overflowContent);
 								}
@@ -107,20 +118,22 @@ $pp.overflow = {
 									childEles = wrappersSel[l].getElementsByClassName(defaults.childSelector);
 								}
 								for (var m = 0, len5 = childEles.length; m < len5; m++) {
-									wrapperChildren.push(childEles[m]);
-									childHidden.push(false);
-									var currentPriority = 2;
-									if ($pp.hasClass(childEles[m], defaults.hideLastClasses)) {
-										currentPriority = 3;
-									} else if ($pp.hasClass(childEles[m], defaults.hideFirstClasses)) {
-										currentPriority = 1;
+									if (!$pp.hasClass(childEles[m], $pp.name('displacedContent'))) {
+										wrapperChildren.push(childEles[m]);
+										childHidden.push(false);
+										var currentPriority = 2;
+										if ($pp.hasClass(childEles[m], defaults.hideLastClasses)) {
+											currentPriority = 3;
+										} else if ($pp.hasClass(childEles[m], defaults.hideFirstClasses)) {
+											currentPriority = 1;
+										}
+										if (childEles[m] == overflowTrigger) { // never hide the trgger
+											currentPriority = 4;
+										}
+										childPriority.push(currentPriority);
+										childContent.push(childEles[m].childNodes);
+										childInMenu.push(false);
 									}
-									if (childEles[m] == overflowTrigger) { // never hide the trgger
-										currentPriority = 4;
-									}
-									childPriority.push(currentPriority);
-									childContent.push(childEles[m].childNodes);
-									childInMenu.push(false);
 								}
 
 								var menu = defaults.initMenu(overflowTrigger, overflowContent);
@@ -144,7 +157,9 @@ $pp.overflow = {
 							defaults: defaults,
 							needsCheck: true,
 							isOverflowing: false,
-							wrappers: wrappers
+							isOverflowingTrigger: false,
+							wrappers: wrappers,
+							numHiddenChildren: 0
 						};
 						$pp.overflow.items.push(item);
 					}
@@ -194,22 +209,26 @@ $pp.overflow = {
 
 	checkGet: function(index) {
 		var overflowing = false;
+		var overflowingTrigger = false;
 
 		for (var i = 0, len = $pp.overflow.items[index].wrappers.length; i < len; i++) {
+			var wrapperCoords = $pp.coords($pp.overflow.items[index].wrappers[i].parent, 'offset');
 			for (var j = 0, len2 = $pp.overflow.items[index].wrappers[i].children.length; j < len2; j++) {
 				var childIndex = ($pp.overflow.items[index].defaults.reverseOrder) ? len2 - j - 1 : j;
-
-				if (!$pp.overflow.items[index].wrappers[i].childHidden[childIndex]) { // todo other wrappers
+				if (!$pp.overflow.items[index].wrappers[i].childHidden[childIndex]) {
 					var coords = $pp.coords($pp.overflow.items[index].wrappers[i].children[childIndex], 'offset');
-					if (coords.offsetTop > coords.offsetHeight / 2) {
-						overflowing = true;
-						break;
+					if (coords.top > wrapperCoords.top + coords.height / 2) {
+						if ($pp.overflow.items[index].wrappers[i].children[childIndex] === $pp.overflow.items[index].wrappers[i].overflowTrigger) {
+							overflowingTrigger = true;
+						} else {
+							overflowing = true;
+						}
 					}
 				}
 			}
 		}
 
-		return overflowing;
+		return {overflowing: overflowing, overflowingTrigger: overflowingTrigger};
 	},
 
 	checkSet: function(index) {
@@ -220,6 +239,7 @@ $pp.overflow = {
 				nextChildIndex = $pp.overflow.wrapperNextToHide(item.wrappers[i], item.defaults.reverseOrder);
 
 			if (nextChildIndex > -1) {
+				$pp.overflow.items[index].numHiddenChildren++;
 				item.wrappers[i].children[nextChildIndex].style.display = 'none';
 				$pp.overflow.items[index].wrappers[i].childHidden[nextChildIndex] = true;
 				ret = true;
@@ -257,10 +277,7 @@ $pp.overflow = {
 				var newItem = document.createElement('LI');
 				for (var j = 0, len2 = wrapper.childContent[i].length; j < len2; j++) {
 					var newChild = wrapper.childContent[i][j].cloneNode(true);
-					if (newChild.id.length > 0) {
-						newChild.id = $pp.unique();
-					}
-
+					newChild.id = $pp.uniqueId();
 					newChild.onclick = $pp.overflow.items[itemIndex].defaults.childClick;
 
 					newItem.appendChild(newChild);
@@ -292,22 +309,38 @@ $pp.overflow = {
 		}
 
 		for (var i = 0, len = $pp.overflow.items.length; i < len; i++) {
+			if (resetChildren) {
+				$pp.overflow.items[i].numHiddenChildren = 0;
+			}
+
 			$pp.overflow.items[i].defaults.preResizeFunc();
 
 			$pp.overflow.items[i].needsCheck = true;
 			if (resetChildren) {
 				for (var j = 0, len2 = $pp.overflow.items[i].wrappers.length; j < len2; j++) {
+					var currentHiddenChildren = 0;
 					for (var k = 0, len3 = $pp.overflow.items[i].wrappers[j].childHidden.length; k < len3; k++) {
+						if ($pp.overflow.items[i].wrappers[j].children[k] !== $pp.overflow.items[i].wrappers[j].overflowTrigger) {
+							if ($pp.overflow.items[i].wrappers[j].childHidden[k]) {
+								currentHiddenChildren++;
+							}
+						}
 						$pp.overflow.items[i].wrappers[j].childHidden[k] = false;
 					}
 					$pp.overflow.styleChildren($pp.overflow.items[i].wrappers[j], 'invisible');
+					if (currentHiddenChildren == 1) {
+						$pp.overflow.items[i].wrappers[j].overflowTrigger.style.display = 'none';
+					}
 				}
+
 			}
 		}
 
 		for (i = 0, len = $pp.overflow.items.length; i < len; i++) {
 			if ($pp.overflow.items[i].needsCheck) {
-				$pp.overflow.items[i].isOverflowing = $pp.overflow.checkGet(i);
+				var overflows = $pp.overflow.checkGet(i);
+				$pp.overflow.items[i].isOverflowing = overflows.overflowing;
+				$pp.overflow.items[i].isOverflowingTrigger = overflows.overflowingTrigger;
 			}
 		}
 	},
@@ -316,7 +349,8 @@ $pp.overflow = {
 		var changeMade = false;
 
 		for (var i = 0, len = $pp.overflow.items.length; i < len; i++) {
-			if ($pp.overflow.items[i].isOverflowing) {
+
+			if ($pp.overflow.items[i].isOverflowing || ($pp.overflow.items[i].numHiddenChildren > 0 && $pp.overflow.items[i].isOverflowingTrigger)) {
 				if ($pp.overflow.checkSet(i)) {
 					changeMade = true;
 				}

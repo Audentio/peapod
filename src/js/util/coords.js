@@ -15,33 +15,37 @@
  * @param  {string} types comma separated list of what coordinates to get [clientrect]
  * @return {object}       object of requested coordinates
  */
-$pp.coords = function(ele, types) {
+$pp.coords = function(ele, type) {
 	var ret = {};
 
-	if ($pp.isSet(ele) && types.length > 0) {
+	if ($pp.isSet(ele) && $pp.isSet(type) && type.length > 0) {
 
-		types = types.toLowerCase().split(',');
-
-		for (var i = 0, len = types.length; i < len; i++) {
-			switch (types[i]) {
-				case 'clientrect':
-					var coords = ele.getBoundingClientRect();
-					ret.clientLeft = coords.left;
-					ret.clientRight = coords.right;
-					ret.clientTop = coords.top;
-					ret.clientBottom = coords.bottom;
-					ret.clientWidth = ret.clientRight - ret.clientLeft;
-					ret.clientHeight = ret.clientBottom - ret.clientTop;
-					break;
-				case 'offset':
-					ret.offsetLeft = ele.offsetLeft;
-					ret.offsetRight = ele.offsetRight;
-					ret.offsetTop = ele.offsetTop;
-					ret.offsetBottom = ele.offsetBottom;
-					ret.offsetWidth = ele.offsetWidth;
-					ret.offsetHeight = ele.offsetHeight;
-					break;
-			}
+		switch (type) {
+			case 'clientrect':
+				ret.left = ele.clientLeft;
+				ret.right = ele.clientLeft + ele.clientWidth;
+				ret.top = ele.clientTop;
+				ret.bottom = ele.clientTop + ele.clientHeight;
+				ret.width = ele.clientWidth;
+				ret.height = ele.clientHeight;
+				break;
+			case 'boundingclientrect':
+				var coords = ele.getBoundingClientRect();
+				ret.left = coords.left;
+				ret.right = coords.right;
+				ret.top = coords.top;
+				ret.bottom = coords.bottom;
+				ret.width = ret.clientRight - ret.clientLeft;
+				ret.height = ret.clientBottom - ret.clientTop;
+				break;
+			case 'offset':
+				ret.left = ele.offsetLeft;
+				ret.right = ele.offsetLeft + ele.offsetWidth;
+				ret.top = ele.offsetTop;
+				ret.bottom = ele.offsetTop + ele.offsetHeight;
+				ret.width = ele.offsetWidth;
+				ret.height = ele.offsetHeight;
+				break;
 		}
 	}
 
