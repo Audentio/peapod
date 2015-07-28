@@ -12,6 +12,7 @@ $pp.overflow = {
 		createOverflowTrigger: function() {
 			//console.log('Must override defaults.createOverflowTrigger');
 			var ele = document.createElement('LI');
+			ele.className = $pp.name('overflowMenuTrigger');
 			ele.innerHTML = '<span class=\"' + $pp.name('displacedTrigger') + '\"><i class=\"fa fa-bars\"></i></span>';
 			return ele;
 		},
@@ -33,7 +34,10 @@ $pp.overflow = {
 		postMenuChildAdded: function(newItem) {},
 		preBuildMenus: function() {},
 		ignoreDivClass: $pp.name('ignoreOverflowDiv'),
-		preResizeFunc: function() {}
+		preResizeFunc: function() {},
+		createOverflowContentAppend: function(overflowContent) {
+			return overflowContent;
+		}
 	},
 	items: [],
 	addQueue: [],
@@ -112,6 +116,8 @@ $pp.overflow = {
 									defaults.menuContentParent.appendChild(overflowContent);
 								}
 
+								var overflowContentAppend = defaults.createOverflowContentAppend(overflowContent);
+
 								if (defaults.childSelector === '') {
 									childEles = wrappersSel[l].children;
 								} else {
@@ -147,6 +153,7 @@ $pp.overflow = {
 									childInMenu: childInMenu,
 									overflowTrigger: overflowTrigger,
 									overflowContent: overflowContent,
+									overflowContentAppend: overflowContentAppend,
 									menu: menu
 								});
 							}
@@ -267,8 +274,8 @@ $pp.overflow = {
 	buildMenu: function(itemIndex, wrapperIndex) {
 		var hasContent = false;
 
-		while ($pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContent.lastChild) {
-			$pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContent.removeChild($pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContent.lastChild);
+		while ($pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContentAppend.lastChild) {
+			$pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContentAppend.removeChild($pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContentAppend.lastChild);
 		}
 
 		var wrapper = $pp.overflow.items[itemIndex].wrappers[wrapperIndex];
@@ -283,7 +290,7 @@ $pp.overflow = {
 					newItem.appendChild(newChild);
 				}
 
-				$pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContent.appendChild(newItem);
+				$pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContentAppend.appendChild(newItem);
 
 				$pp.overflow.items[itemIndex].defaults.postMenuChildAdded(newItem);
 
@@ -302,21 +309,21 @@ $pp.overflow = {
 		var resetChildren = false;
 		var winWidth = window.innerWidth;
 		if (winWidth != $pp.overflow.lastWidth || first) {
-			if (first && winWidth > $pp.overflow.lastWidth) {
+			if (first && (winWidth > $pp.overflow.lastWidth)) {
 				resetChildren = true;
 			}
 			$pp.overflow.lastWidth = winWidth;
 		}
 
 		for (var i = 0, len = $pp.overflow.items.length; i < len; i++) {
-			if (resetChildren) {
+			if (resetChildren || (!$pp.overflow.items[i].defaults.constantChildrenWidth && first)) {
 				$pp.overflow.items[i].numHiddenChildren = 0;
 			}
 
 			$pp.overflow.items[i].defaults.preResizeFunc();
 
 			$pp.overflow.items[i].needsCheck = true;
-			if (resetChildren) {
+			if (resetChildren || (!$pp.overflow.items[i].defaults.constantChildrenWidth && first)) {
 				for (var j = 0, len2 = $pp.overflow.items[i].wrappers.length; j < len2; j++) {
 					var currentHiddenChildren = 0;
 					for (var k = 0, len3 = $pp.overflow.items[i].wrappers[j].childHidden.length; k < len3; k++) {
@@ -328,7 +335,7 @@ $pp.overflow = {
 						$pp.overflow.items[i].wrappers[j].childHidden[k] = false;
 					}
 					$pp.overflow.styleChildren($pp.overflow.items[i].wrappers[j], 'invisible');
-					if (currentHiddenChildren == 1) {
+					if (currentHiddenChildren === 0) {
 						$pp.overflow.items[i].wrappers[j].overflowTrigger.style.display = 'none';
 					}
 				}

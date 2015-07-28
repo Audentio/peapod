@@ -58,8 +58,10 @@ $pp.displaced = {
 		contentParent: null,
 		ignoreClass: '',
 		forceAlwaysOpen: false,
+		closerClass: $pp.name('displacedCloser'),
 		enableArrows: true,
 		arrowClass: $pp.name('displacedArrow', 'general'),
+		ignoreScroll: false,
 		makeArrow: function(primary, secondary) {
 			if (primary == 'top') {
 				return '<i class=\"fa fa-chevron-down\"></i>';
@@ -78,24 +80,18 @@ $pp.displaced = {
 	addParts: function(triggers, content, type, defaults, forceInit) {
 		var pd = $pp.displaced;
 
-		if (forceInit || !pd.needsInit) {
-			defaults = $pp.setDefaults(pd.defaults, defaults);
-
-			var item = new $ppDisplaced(null, type, defaults);
-			item.addContent(content);
-			item.addTriggers(triggers);
-			$pp.displaced.items.push(item);
-		} else {
-			if (!$pp.isSet(defaults)) {
-				defaults = null;
-			}
+		if (!$pp.isSet(defaults)) {
+			defaults = null;
 		}
 
-		if (!pd.needsInit) {
-			pd.init();
-		} else if (!forceInit) {
-			$pp.displaced.addQueue.push({sel: classNames, type: type, defaults: defaults});
-		}
+		defaults = $pp.setDefaults(pd.defaults, defaults);
+
+		var item = new $ppDisplaced(null, type, defaults);
+		item.addContent(content);
+		item.addTriggers(triggers);
+		$pp.displaced.items.push(item);
+
+		pd.init();
 	},
 
 	add: function(classNames, type, defaults, forceInit) {
@@ -243,6 +239,7 @@ function $ppDisplaced(ele, type, defaults) {
 	this.ele = ele;
 	this.triggers = [];
 	this.content = null;
+	this.closer = null;
 	this.type = type;
 	this.hoverTimer = null;
 	this.state = 0;
@@ -290,7 +287,9 @@ $ppDisplaced.method('active', function() {
 		this.state = 1;
 		this.content.style.visibility = 'hidden';
 		this.content.style.display = 'block';
-		this.positionContent(this.getDefault('positionPrimary'), this.getDefault('positionSecondary'));
+		if (this.triggerUsed > -1) {
+			this.positionContent(this.triggers[this.triggerUsed], this.getDefault('positionPrimary'), this.getDefault('positionSecondary'), this.getDefault('ignoreScroll'));
+		}
 		this.content.style.visibility = '';
 		for (var i = 0, len = this.triggers.length; i < len; i++) {
 			this.triggers[i].classList.add(this.getDefault('activeTriggerClass'));
@@ -306,7 +305,7 @@ $ppDisplaced.method('displayArrow', function() {
 		this.content.style.display = 'block';
 		for (var i = 0, len = this.triggers.length; i < len; i++) {
 			this.triggerUsed = i;
-			this.positionContent(this.getDefault('positionPrimary'), this.getDefault('positionSecondary'), true);
+			this.positionContent(this.triggers[i], this.getDefault('positionPrimary'), this.getDefault('positionSecondary'), true);
 		}
 		this.triggerUsed = -1;
 		if (!this.getDefault('forceAlwaysOpen')) {
@@ -316,8 +315,8 @@ $ppDisplaced.method('displayArrow', function() {
 });
 
 // Makes a displaced element inactive (generally closes it)
-$ppDisplaced.method('inactive', function() {
-	if (this.state === 1 && !this.getDefault('forceAlwaysOpen')) {
+$ppDisplaced.method('inactive', function(override) {
+	if (this.state === 1 && (!this.getDefault('forceAlwaysOpen') || override === true)) {
 		this.state = 0;
 		this.content.style.display = 'none';
 		for (var i = 0, len = this.triggers.length; i < len; i++) {
@@ -358,112 +357,115 @@ $ppDisplaced.method('addTriggers', function(triggerEles) {
 	}
 });
 
-$ppDisplaced.method('positionContent', function(locationPrimary, locationSecondary, ignoreScroll) {
-	var triggerIndex = this.triggerUsed;
+$ppDisplaced.method('positionRelativeElement', function(ele) {
+	this.positionContent(ele, this.getDefault('positionPrimary'), this.getDefault('positionSecondary'));
+});
+
+$ppDisplaced.method('positionContent', function(relativeEle, locationPrimary, locationSecondary, ignoreScroll) {
 
 	if (!$pp.isSet(ignoreScroll)) {
 		ignoreScroll = false;
 	}
 
-	if (triggerIndex > -1) {
-		var triggerPos = $pp.coords(this.triggers[triggerIndex], 'offset'),
-			contentPos = $pp.coords(this.content, 'offset'),
-			checkedPos,
-			passed = false,
-			tryCount = 0;
+	var triggerPos = $pp.coords(relativeEle, 'offset'),
+		contentPos = $pp.coords(this.content, 'offset'),
+		checkedPos,
+		passed = false,
+		tryCount = 0;
 
-		while (!passed && tryCount < 17) {
-			passed = true;
-			var offCount = 0,
-				oldPrimary = locationPrimary,
-				oldSecondary = locationSecondary;
-			checkedPos = this.checkContentPosition(locationPrimary, locationSecondary, triggerPos, contentPos, ignoreScroll);
+	while (!passed && tryCount < 17) {
 
-			if (checkedPos.offLeft) {
-				offCount++;
-			}
-			if (checkedPos.offRight) {
-				offCount++;
-			}
-			if (checkedPos.offTop) {
-				offCount++;
-			}
-			if (checkedPos.offBottom) {
-				offCount++;
-			}
+		passed = true;
+		var offCount = 0,
+			oldPrimary = locationPrimary,
+			oldSecondary = locationSecondary;
+		checkedPos = this.checkContentPosition(locationPrimary, locationSecondary, triggerPos, contentPos, ignoreScroll);
 
-			if (offCount > 0) {
-				passed = false;
-			}
-
-			if (tryCount === 1) {
-				locationSecondary = this.flipLocation(locationPrimary, locationSecondary, false);
-			} else if (tryCount === 2) {
-				locationSecondary = this.flipLocation(locationPrimary, locationSecondary, false);
-			} else if (tryCount === 3) {
-				locationPrimary = 'top';
-				locationSecondary = 'center';
-			} else if (tryCount === 4) {
-				locationSecondary = 'left';
-			} else if (tryCount === 5) {
-				locationSecondary = 'right';
-			} else if (tryCount === 6) {
-				locationPrimary = 'bottom';
-				locationSecondary = 'center';
-			} else if (tryCount === 7) {
-				locationSecondary = 'left';
-			} else if (tryCount === 8) {
-				locationSecondary = 'right';
-			} else if (tryCount === 9) {
-				locationPrimary = 'left';
-				locationSecondary = 'center';
-			} else if (tryCount === 10) {
-				locationSecondary = 'top';
-			} else if (tryCount === 11) {
-				locationSecondary = 'bottom';
-			} else if (tryCount === 12) {
-				locationPrimary = 'right';
-				locationSecondary = 'center';
-			} else if (tryCount === 13) {
-				locationSecondary = 'top';
-			} else if (tryCount === 14) {
-				locationSecondary = 'bottom';
-			} else if (tryCount === 15) {
-				locationPrimary = 'top';
-				locationSecondary = 'left';
-			} else if (tryCount > 15) {
-				console.log('could not position :(');
-				passed = true;
-			}
-
-			if (passed) {
-				var triggerEle = this.triggers[this.triggerUsed];
-				if (this.getDefault('enableArrows') && $pp.isSet(triggerEle)) {
-					$pp.removeChildren(triggerEle, this.getDefault('arrowClass'));
-					var arrowEle = document.createElement('SPAN');
-					arrowEle.className = this.getDefault('arrowClass');
-					arrowEle.innerHTML = this.defaults.makeArrow(oldPrimary, oldSecondary);
-					triggerEle.appendChild(arrowEle);
-				}
-
-				this.content.style.top = checkedPos.topTarget;
-				this.content.style.left = checkedPos.leftTarget;
-				if (this.contentPrimaryClass.length) {
-					this.content.classList.remove(this.contentPrimaryClass);
-				}
-				if (this.contentSecondaryClass.length) {
-					this.content.classList.remove(this.contentSecondaryClass);
-				}
-				this.contentPrimaryClass = $pp.name(oldPrimary + 'DisplacedContentPrimary', 'state');
-				this.contentSecondaryClass = $pp.name(oldSecondary + 'DisplacedContentSecondary', 'state');
-				this.content.classList.add(this.contentPrimaryClass);
-				this.content.classList.add(this.contentSecondaryClass);
-				this.positionPrimary = oldPrimary;
-				this.positionSecondary = oldSecondary;
-			}
-
-			tryCount++;
+		if (checkedPos.offLeft) {
+			offCount++;
 		}
+		if (checkedPos.offRight) {
+			offCount++;
+		}
+		if (checkedPos.offTop) {
+			offCount++;
+		}
+		if (checkedPos.offBottom) {
+			offCount++;
+		}
+
+		if (offCount > 0) {
+			passed = false;
+		}
+
+		if (tryCount === 1) {
+			locationSecondary = this.flipLocation(locationPrimary, locationSecondary, false);
+		} else if (tryCount === 2) {
+			locationSecondary = this.flipLocation(locationPrimary, locationSecondary, false);
+		} else if (tryCount === 3) {
+			locationPrimary = 'top';
+			locationSecondary = 'center';
+		} else if (tryCount === 4) {
+			locationSecondary = 'left';
+		} else if (tryCount === 5) {
+			locationSecondary = 'right';
+		} else if (tryCount === 6) {
+			locationPrimary = 'bottom';
+			locationSecondary = 'center';
+		} else if (tryCount === 7) {
+			locationSecondary = 'left';
+		} else if (tryCount === 8) {
+			locationSecondary = 'right';
+		} else if (tryCount === 9) {
+			locationPrimary = 'left';
+			locationSecondary = 'center';
+		} else if (tryCount === 10) {
+			locationSecondary = 'top';
+		} else if (tryCount === 11) {
+			locationSecondary = 'bottom';
+		} else if (tryCount === 12) {
+			locationPrimary = 'right';
+			locationSecondary = 'center';
+		} else if (tryCount === 13) {
+			locationSecondary = 'top';
+		} else if (tryCount === 14) {
+			locationSecondary = 'bottom';
+		} else if (tryCount === 15) {
+			locationPrimary = 'top';
+			locationSecondary = 'left';
+		} else if (tryCount > 15) {
+			console.log('could not position :(');
+			passed = true;
+		}
+
+		if (passed) {
+			var triggerEle = this.triggers[this.triggerUsed];
+			if (this.getDefault('enableArrows') && $pp.isSet(triggerEle)) {
+				$pp.removeChildren(triggerEle, this.getDefault('arrowClass'));
+				var arrowEle = document.createElement('SPAN');
+				arrowEle.className = this.getDefault('arrowClass');
+				arrowEle.innerHTML = this.defaults.makeArrow(oldPrimary, oldSecondary);
+				triggerEle.appendChild(arrowEle);
+			}
+
+			this.content.style.top = checkedPos.topTarget + 'px';
+			this.content.style.left = checkedPos.leftTarget + 'px';
+
+			if (this.contentPrimaryClass.length) {
+				this.content.classList.remove(this.contentPrimaryClass);
+			}
+			if (this.contentSecondaryClass.length) {
+				this.content.classList.remove(this.contentSecondaryClass);
+			}
+			this.contentPrimaryClass = $pp.name(oldPrimary + 'DisplacedContentPrimary', 'state');
+			this.contentSecondaryClass = $pp.name(oldSecondary + 'DisplacedContentSecondary', 'state');
+			this.content.classList.add(this.contentPrimaryClass);
+			this.content.classList.add(this.contentSecondaryClass);
+			this.positionPrimary = oldPrimary;
+			this.positionSecondary = oldSecondary;
+		}
+
+		tryCount++;
 	}
 });
 
@@ -637,16 +639,25 @@ $ppDisplaced.method('initGet', function() {
 		this.addTriggers(triggerEles);
 		if (contentEle.length === 1) {
 			this.content = contentEle[0];
+			var closerEle = contentEle[0].getElementsByClassName(this.getDefault('closerClass'));
+			if (closerEle.length === 1) {
+				this.closer = closerEle[0];
+				this.closer.onclick = function() {
+					//this.inactive(true);
+					console.log(this);
+				};
+			}
 		}
 	} else {
 
 	}
 	//todo alt triggers
+	//todo make closerEle work for addParts
 });
 
 $ppDisplaced.method('initSet', function() {
 	if ($pp.isSet(this.content)) {
-		if (this.getDefault('contentParent') !== '') {
+		if (this.getDefault('contentParent') !== '' && $pp.isSet(this.getDefault('contentParent'))) {
 			if (!$pp.isSet(this.getDefault('contentParent'))) {
 				this.setDefault('contentParent', document.body);
 			}

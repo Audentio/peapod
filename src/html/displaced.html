@@ -6,6 +6,15 @@
 
 		<script>
 
+			
+			peapod.events.bind('DOMContentLoaded', function() {
+				var partsParent = document.getElementsByClassName('js-menuParts--P')[0];
+				peapod.displaced.addParts(
+					partsParent.getElementsByClassName('js-displacedTrigger--P'), 
+					partsParent.getElementsByClassName('js-displacedContent--P')[0],
+					'menu'
+				);
+			});
 			peapod.displaced.add("js-menu--P", 'menu', {
 
 			});
@@ -30,14 +39,15 @@
 				positionPrimary: 'bottom',
 				positionSecondary: 'center'
 			});
+
 			
 			peapod.events.bind('DOMContentLoaded', function() {peapod.displaced.init({
 				//positionPrimary: 'right',
 				//positionSecondary: 'center',
 				closeAllBeforeActive: true
 			});})
-			
 			peapod.overflow.add('navigationInner');
+			
 			peapod.overflow.add('navigationInnerXF');
 			peapod.events.bind('DOMContentLoaded', function() {peapod.overflow.init({
 
@@ -46,7 +56,6 @@
 		</script>
 
 		<style>
-
 			.is-displacedActive--P {
 				color: #F0F;
 			}
@@ -316,7 +325,7 @@
 				bottom: 40%;
 				left: 100%;
 			}
-
+	
 			.navigation, .navigationXF {
 				overflow: auto;
 			}
@@ -336,7 +345,10 @@
 				display: inline-block;
 				padding: 10px;
 				border: 1px solid;
+				height: 18px;
+				line-height: 18px;
 			}
+
 
 		</style>
 	</head>
@@ -345,6 +357,31 @@
 		
 		<h1>Dropdown Menu Example</h1>
 
+		<h4>Parts Test</h4>
+		<div class="js-menuParts--P">
+			<span class="js-displacedTrigger--P menuTrigger--P">
+				trigger a1
+			</span>
+			<div class="js-displacedContent--P menuContent--P">
+				<div class='innerWrapper'>
+					<div class="js-displacedCloser--P">
+						<i class="fa fa-close"></i>
+					</div>
+					<div class="test">Testing Testing</div>
+					<div class="test test1">Testing</div>
+					<div class="test test2">Testing Test</div>
+					<div class="test test2">Testing Test</div>
+					<div class="test test2">Testing Test</div>
+					<div class="test">
+						Testing
+						<span class="test1">yep</span>
+					</div>
+					<div class="test">Testing Testing</div>
+					<div class="test test1">Testing</div>
+				</div>
+			</div>
+		</div>
+
 		<h4>Right Bottom</h4>
 		<div class="js-menu1--P">
 			<span class="js-displacedTrigger--P menuTrigger--P">
@@ -352,6 +389,9 @@
 			</span>
 			<div class="js-displacedContent--P menuContent--P">
 				<div class='innerWrapper'>
+					<div class="js-displacedCloser--P">
+						<i class="fa fa-close"></i>
+					</div>
 					<div class="test">Testing Testing</div>
 					<div class="test test1">Testing</div>
 					<div class="test test2">Testing Test</div>

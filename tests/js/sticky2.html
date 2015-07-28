@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="../../build/js/main.min.js"></script>
+
+	<title>Sticky Test</title>
+
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	<style>
+		body {
+			margin: 0;
+		}
+
+		#userBar,
+		#navigation,
+		#logoBlock,
+		#footerBar,
+		#footerBar2 {
+			margin: 10px 0;
+		}
+
+		.wrapper {
+			padding: 10px;
+		}
+
+		#userBar .stickyWrapper{
+			background-color: #CFF;
+		}
+
+		#navigation .stickyWrapper{
+			background-color: #CCF;
+		}
+
+		#mainContainer {
+			float: left;
+			width: 100%;
+			margin-right: -300px;
+		}
+
+		#mainContent {
+			margin-right: 300px;
+		}
+
+		#sidebar,
+		#sidebar2,
+		#sidebar3 {
+			float: right;
+			margin-right: 10px;
+			margin-top: 10px;
+			width: 280px;
+		}
+
+		#sidebar .stickyWrapper,
+		#sidebar2 .stickyWrapper,
+		#sidebar3 .stickyWrapper {
+			width: 280px;
+			right: 10px;
+		}
+
+		#sidebar .stickyWrapper {
+			background-color: #FCC;
+		}
+
+		#sidebar2 .stickyWrapper {
+			background-color: #FCF;
+		}
+
+		#sidebar3 .stickyWrapper {
+			background-color: #F99;
+		}
+
+		#footerBar .stickyWrapper{
+			background-color: #CFC;
+		}
+
+		#footerBar2 .stickyWrapper{
+			background-color: #FFC;
+		}
+
+		footer {
+			clear: both;
+		}
+
+		#navigation .is-stickyActive--P,
+		#userBar .is-stickyActive--P,
+		#footerBar .is-stickyActive--P,
+		#footerBar2 .is-stickyActive--P  {
+			width: 100%;
+		}
+
+
+		#mainContainer {
+			background-color: #EEE;
+		}
+
+	</style>
+
+	<style>
+		.is-displacedActive--P {
+			color: #F0F;
+		}
+
+		.is-displacedActiveUsed--P {
+			color: #00F;
+		}
+
+		.menuTrigger--P {
+			padding: 10px;
+			display: inline-block;
+			border: solid 1px;
+			margin: 5px;
+			text-align: center;
+			width: 100px;
+		}
+
+		.menuContent--P {
+			position: absolute;
+			padding: 10px;
+			min-width: 200px;
+			border: solid 1px #0F0;
+			background-color: #CCC;
+			margin: 0;
+			z-index: 200;
+		}
+
+		
+		.is-leftDisplacedContentPrimary--P {
+			border-left-color: #FF0;
+		}
+		.is-rightDisplacedContentPrimary--P {
+			border-right-color: #FF0;
+		}
+		.is-topDisplacedContentPrimary--P {
+			border-top-color: #FF0;
+		}
+		.is-bottomDisplacedContentPrimary--P {
+			border-bottom-color: #FF0;
+		}
+
+		.is-leftDisplacedContentSecondary--P {
+			border-left-color: #0FF;
+		}
+		.is-rightDisplacedContentSecondary--P {
+			border-right-color: #0FF;
+		}
+		.is-topDisplacedContentSecondary--P {
+			border-top-color: #0FF;
+		}
+		.is-bottomDisplacedContentSecondary--P {
+			border-bottom-color: #0FF;
+		}
+
+		.navigation, .navigationXF {
+			overflow: auto;
+		}
+
+		.navigationWrapper, .navigationWrapperXF {
+			margin: 0;
+			padding: 0;
+		}
+
+		.navigationWrapper li, .navigationWrapperXF > li {
+			display: inline-block;
+			margin: 0;
+			float: left;
+		}
+
+		.navigationWrapper li, .navigationWrapperXF > li {
+			display: inline-block;
+			border: 1px solid;
+		}
+
+		.displacedArrow--P {
+			padding-right: 10px;
+		}
+
+		.overflowItem--P .js-displacedTrigger--P,
+		.overflowItem--P > a,
+		.js-overflowMenuTrigger--P .js-displacedTrigger--P {
+			padding: 10px;
+			display: inline-block;
+			height: 18px;
+			line-height: 18px;
+		}
+
+		#navigation {
+			position: relative;
+			z-index: 300;
+		}
+
+	</style>
+
+
+	<style>
+		.is-stickyActive--P,
+		.is-attachActive--P {
+			position: absolute;
+		}
+
+		.is-stickyActive--P {
+			z-index: 200;
+		}
+
+		.is-attachActive--P {
+			z-index: 100;
+		}
+
+		.is-stickyActive--P.is-allowFixed--P {
+			position: fixed;
+		}
+
+		.stickyWrapper {
+			transform: translateZ(0);
+		}
+	</style>
+
+	<script type="text/javascript">
+
+		peapod.displaced.add("js-menu--P", 'menu', {
+		});
+
+		peapod.events.bind('DOMContentLoaded', function() {peapod.displaced.init({
+			ignoreScroll: true
+		});})
+
+		peapod.overflow.add('navigationInnerXF');
+		peapod.events.bind('DOMContentLoaded', function() {peapod.overflow.init({
+			menuContentParent: document.body
+		});})
+
+
+		peapod.sticky.add("js-stickyUserBar--P", {
+			widthMinLandscape: 600,
+			widthMinPortrait: 600
+		});
+
+		peapod.sticky.add("js-stickyNavigation--P", {
+		});
+
+		peapod.sticky.add("js-stickySidebar--P", {
+			boundEle: 'mainContainer',
+		});
+
+		peapod.sticky.add("js-stickySidebar2--P", {
+			boundEle: 'mainContainer',
+		});
+
+		peapod.sticky.add("js-stickyFooterBar2--P", {
+			type: 'bottom'
+		});
+
+		peapod.sticky.add("js-stickyFooterBar--P", {
+			type: 'bottom'
+		});
+
+		peapod.events.bind('DOMContentLoaded', function() {peapod.sticky.init({
+			allowFixed: true
+		});})
+
+	</script>
+</head>
+<body>
+	<header>
+		<div id="navigation" class="js-stickyNavigation--P">
+			<div class="stickyWrapper js-stickyWrapper--P"><div class="">
+				<div class='navigationXF'>
+					<div class="navigationInnerXF">
+					
+						<ul class="navigationWrapperXF js-overflowWrapper--P">
+							<li class="js-menu--P overflowItem--P">
+								<span class="js-displacedTrigger--P">
+									<a href="#">Recently Updated</a>
+								</span>
+								<div class="js-displacedContent--P menuContent--P">
+									<div class='innerWrapper'>
+										<div class="test">Testing Testing</div>
+										<div class="test test1">Testing</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test">
+											Testing
+											<span class="test1">yep</span>
+										</div>
+										<div class="test">Testing Testing</div>
+										<div class="test test1">Testing</div>
+									</div>
+								</div>
+							</li>
+							<li class='overflowItem--P'><a href="#">Most Viewed</a></li>
+							<li class='overflowItem--P'><a href="#">Show un/answered</a></li>
+							<li class="js-menu--P overflowItem--P">
+								<span class="js-displacedTrigger--P">
+									<a href="#">Start Date</a>
+								</span>
+								<div class="js-displacedContent--P menuContent--P">
+									<div class='innerWrapper'>
+										<div class="test">Testing Testing</div>
+										<div class="test test1">Testing</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test">
+											Testing
+											<span class="test1">yep</span>
+										</div>
+										<div class="test">Testing Testing</div>
+										<div class="test test1">Testing</div>
+									</div>
+								</div>
+							</li>
+							<li class='overflowItem--P js-overflowHideFirst--P'><a href="#">This Long Item Hides First</a></li>
+							<li class="js-menu--P overflowItem--P">
+								<span class="js-displacedTrigger--P">
+									<a href="#">Most Replies</a>
+								</span>
+								<div class="js-displacedContent--P menuContent--P">
+									<div class='innerWrapper'>
+										<div class="test">Testing Testing</div>
+										<div class="test test1">Testing</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test test2">Testing Test</div>
+										<div class="test">
+											Testing
+											<span class="test1">yep</span>
+										</div>
+										<div class="test">Testing Testing</div>
+										<div class="test test1">Testing</div>
+									</div>
+								</div>
+							</li>
+							<li class='overflowItem--P'><a href="#">Custom</a></li>
+							<li class='overflowItem--P'><a href="#">And Another One</a></li>
+						</ul>
+					</div>
+				</div>
+			</div></div>
+		</div>
+		<div id="logoBlock">
+			<h1>Logo Block</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h1>Of Epic Length...</h1>
+			<h2>Interesting content goes here</h2>
+			<h3>Such as this...</h3>
+		</div>
+		<div id="userBar" class="js-stickyUserBar--P">
+			<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">User Bar (> 600px wide sticky)</div></div>
+		</div>
+	</header>
+
+	<div id="mainContainer" class="mainContainer"> 
+		<div id="mainContent">
+			<h1>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+				Test <br>
+			</h1>
+		</div>
+	</div>
+
+	<div id="sidebar" class="js-stickySidebar--P">
+		<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+		</div></div>
+	</div>
+
+	<div id="sidebar2">
+		<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+			Sidebar Content (Non sticky) <br>
+		</div></div>
+	</div>
+
+	<div id="sidebar3" class="js-stickySidebar2--P">
+		<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+		</div></div>
+	</div>
+
+	<footer>
+		<div>
+			<h3>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+				Pre Footer Content <br>
+			</h3>
+		</div>
+		<div id="footerBar" class="js-stickyFooterBar--P">
+			<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">Footer Bar</div></div>
+		</div>
+		<h1>
+			copywrite stuff goes here.
+		</h1>
+		<div id="footerBar2" class="js-stickyFooterBar2--P">
+			<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">Footer Bar 2</div></div>
+		</div>
+		yep <br>
+		yep <br>
+		yep <br>
+		yep <br>
+		yep <br>
+	</footer>
+</body>
+</html>

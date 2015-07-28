@@ -166,6 +166,14 @@ $pp.hasClass = function(ele, classNames) {
 	return false;
 };
 
+$pp.addClass = function(ele, className) {
+	ele.classList.add(className);
+};
+
+$pp.removeClass = function(ele, className) {
+	ele.classList.remove(className);
+};
+
 $pp.clone = function(obj) {
 	var target = {};
 	for (var i in obj) {

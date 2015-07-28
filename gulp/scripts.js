@@ -78,6 +78,11 @@ gulp.task('processJs', function(){
 		//.pipe(notify({ title: 'JS Builder Passed', message: 'Successfully built javascript.' }))
     	.pipe(jsdoc.generator('docs/js', tpl, opts));
 
+    gulp.src(['src/js/init.js', 'src/js/util/*.js', 'src/js/components/*.js', 'src/js/main.js'])
+		.pipe(replace('$pp', packageName))
+		.pipe(concat('main.js'))
+		.pipe(gulp.dest('build/js/'));
+
 
 });
 
