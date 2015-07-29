@@ -44,7 +44,9 @@
 
 		#sidebar,
 		#sidebar2,
-		#sidebar3 {
+		#sidebar3,
+		#sidebar4,
+		#sidebar5 {
 			float: right;
 			margin-right: 10px;
 			margin-top: 10px;
@@ -53,7 +55,9 @@
 
 		#sidebar .stickyWrapper,
 		#sidebar2 .stickyWrapper,
-		#sidebar3 .stickyWrapper {
+		#sidebar3 .stickyWrapper,
+		#sidebar4 .stickyWrapper,
+		#sidebar5 .stickyWrapper {
 			width: 280px;
 			right: 10px;
 		}
@@ -68,6 +72,14 @@
 
 		#sidebar3 .stickyWrapper {
 			background-color: #F99;
+		}
+
+		#sidebar4 .stickyWrapper {
+			background-color: #F66;
+		}
+
+		#sidebar5 .stickyWrapper {
+			background-color: #F33;
 		}
 
 		#footerBar .stickyWrapper{
@@ -229,6 +241,7 @@
 			menuContentParent: document.body
 		});})
 
+		peapod.events.bind('DOMContentLoaded', function() {peapod.overflow.resize();}) // why is this needed? TODO fix
 
 		peapod.sticky.add("js-stickyUserBar--P", {
 			widthMinLandscape: 600,
@@ -243,6 +256,12 @@
 		});
 
 		peapod.sticky.add("js-stickySidebar2--P", {
+			boundEle: 'mainContainer',
+			widthMinLandscape: 800,
+			widthMinPortrait: 800
+		});
+
+		peapod.sticky.add("js-stickySidebar3--P", {
 			boundEle: 'mainContainer',
 		});
 
@@ -425,17 +444,6 @@
 			Sidebar Content <br>
 			Sidebar Content <br>
 			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
 		</div></div>
 	</div>
 
@@ -445,8 +453,23 @@
 			Sidebar Content (Non sticky) <br>
 			Sidebar Content (Non sticky) <br>
 			Sidebar Content (Non sticky) <br>
-			Sidebar Content (Non sticky) <br>
-			Sidebar Content (Non sticky) <br>
+		</div></div>
+	</div>
+
+	<div id="sidebar3" class="js-stickySidebar2--P">
+		<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">
+			Sidebar Content (Sticky > 800px) <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+			Sidebar Content <br>
+		</div></div>
+	</div>
+
+	<div id="sidebar4">
+		<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">
 			Sidebar Content (Non sticky) <br>
 			Sidebar Content (Non sticky) <br>
 			Sidebar Content (Non sticky) <br>
@@ -454,11 +477,8 @@
 		</div></div>
 	</div>
 
-	<div id="sidebar3" class="js-stickySidebar2--P">
+	<div id="sidebar5" class="js-stickySidebar3--P">
 		<div class="stickyWrapper js-stickyWrapper--P"><div class="wrapper">
-			Sidebar Content <br>
-			Sidebar Content <br>
-			Sidebar Content <br>
 			Sidebar Content <br>
 			Sidebar Content <br>
 			Sidebar Content <br>

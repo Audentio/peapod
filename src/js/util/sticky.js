@@ -34,6 +34,24 @@ $pp.sticky = {
 	isLandscape: true,
 	updateNeeded: false,
 
+	toggleFixed: function(val) {
+		var ps = $pp.sticky;
+		for (var index = 0, len = ps.items.length; index < len; index++) {
+			$pp.sticky.items[index].lastPos = -1;
+			//$pp.sticky.items[index].state = 0;
+			//$pp.sticky.items[index].lastState = 0;
+			$pp.sticky.items[index].getWrapper().style.bottom = '';
+			$pp.sticky.items[index].getWrapper().style.top = '';
+			$pp.sticky.items[index].setDefault('allowFixed', val);
+			$pp.sticky.items[index].setFixed(val);
+		}
+		$pp.sticky.offsetTop = 0;
+		$pp.sticky.offsetBottom = 0;
+		$pp.sticky.updateNeeded = true;
+		ps.scrollGet();
+		ps.scrollSet();
+	},
+
 	add: function(classNames, defaults, forceInit) {
 		var ps = $pp.sticky;
 
@@ -75,13 +93,16 @@ $pp.sticky = {
 
 			for (itemIndex = 0, itemLen = unsortedItems.length; itemIndex < itemLen; itemIndex++) {
 				var best = (pos === 0) ? Number.MAX_VALUE : -1,
-					bestIndex = -1;
+					bestIndex = -1,
+					item,
+					coords,
+					testCoord;
 
 				if (pos === 0 && unsortedItems[itemIndex].getDefault('type') == posName) {
 					for (i = 0, len = unsortedItems.length; i < len; i++) {
-						var item = unsortedItems[i],
-							coords = item.coords,
-							testCoord = coords.top + (coords.height / 1000000);
+						item = unsortedItems[i];
+						coords = item.coords;
+						testCoord = coords.top + (coords.height / 1000000);
 
 						if (testCoord < best && sortedItems.indexOf(item) === -1) {
 							best = testCoord;
@@ -91,9 +112,9 @@ $pp.sticky = {
 					sortedItems.push(unsortedItems[bestIndex]);
 				} else if (pos === 1 && unsortedItems[itemIndex].getDefault('type') == posName) {
 					for (i = 0, len = unsortedItems.length; i < len; i++) {
-						var item = unsortedItems[i],
-							coords = item.coords,
-							testCoord = coords.bottom - (coords.height / 1000000);
+						item = unsortedItems[i];
+						coords = item.coords;
+						testCoord = coords.bottom - (coords.height / 1000000);
 
 						if (testCoord > best && sortedItems.indexOf(item) === -1) {
 							best = testCoord;
@@ -140,7 +161,8 @@ $pp.sticky = {
 	},
 
 	resizeGet: function() {
-		var ps = $pp.sticky;
+		var ps = $pp.sticky,
+			len = ps.items.length;
 
 		$pp.sticky.windowWidth = ps.getWindowWidth();
 		$pp.sticky.windowHeight = ps.getWindowHeight();
@@ -151,8 +173,18 @@ $pp.sticky = {
 			$pp.sticky.isLandscape = false;
 		}
 
-		for (var index = 0, len = ps.items.length; index < len; index++) {
+		for (var index = 0; index < len; index++) {
 			ps.items[index].resizeGet();
+		}
+
+		for (index = 0; index < len; index++) {
+			var attachedOffset = 0;
+			for (var eleIndex = index + 1; eleIndex < len; eleIndex++) {
+				if (ps.items[index].boundEle == ps.items[eleIndex].boundEle && ps.items[eleIndex].enabled) {
+					attachedOffset += ps.items[eleIndex].getDefault('stickyHeight');
+				}
+			}
+			ps.items[index].attachedOffset = attachedOffset;
 		}
 
 		ps.scrollGet();
@@ -167,10 +199,17 @@ $pp.sticky = {
 		ps.scrollSet();
 	},
 
+	resize: function() {
+		$pp.sticky.resizeGet();
+		$pp.sticky.resizeSet();
+	},
+
 	scrollGet: function() {
 		var ps = $pp.sticky,
 			currentOffsetTop = 0,
 			currentOffsetBottom = 0,
+			attachedOffset = 0,
+			attachedOffsetExtra = 0, // account for offset top / bottom of attached eles
 			changeMade = false;
 
 		$pp.sticky.scrollTop = ps.getScrollTop();
@@ -185,8 +224,9 @@ $pp.sticky = {
 					changeMade = true;
 				}
 
-				if (coords.height + currentOffsetTop + ps.scrollTop > item.boundCoords.bottom) {
+				if ((coords.height + currentOffsetTop + ps.scrollTop + attachedOffsetExtra) > (item.boundCoords.bottom - item.attachedOffset)) {
 					item.setState(2, changeMade);
+					attachedOffsetExtra += item.getDefault('stickyHeight');
 				} else {
 					item.setState(1, changeMade);
 					currentOffsetTop += item.getDefault('stickyHeight');
@@ -229,7 +269,7 @@ $pp.sticky = {
 				}
 			}
 
-			if (ps.updateNeeded && item.state === 1) {
+			if ((ps.updateNeeded || !item.getDefault('allowFixed')) && item.state !== 0) {
 				if (item.getDefault('type') == 'top') {
 					item.update(currentOffsetTop);
 					currentOffsetTop += item.getDefault('stickyHeight');
@@ -304,6 +344,7 @@ function $ppSticky(ele, defaults) {
 	this.firstSticky = false;
 	this.lastSticky = false;
 	this.offset = 0;
+	this.attachedOffset = 0;
 }
 
 // Get the wrapper element of the dispalced element
@@ -347,8 +388,8 @@ $ppSticky.method('setCoords', function() {
 });
 
 $ppSticky.method('update', function(pos) {
-	if (this.state === 1) {
-		if (this.getDefault('allowFixed')) {
+	if (this.state !== 0) {
+		if (this.getDefault('allowFixed') && this.state === 1) {
 			this.setPos(pos, this.getDefault('type'));
 		} else {
 			this.updateAbsolutePosition();
@@ -360,14 +401,18 @@ $ppSticky.method('updateAbsolutePosition', function(pos) {
 	if (this.state === 1) {
 		if (this.getDefault('type') == 'top') {
 			this.setPos(this.offset + $pp.sticky.scrollTop, this.getDefault('type'));
+			//this.getWrapper().style.backfaceVisibility = 'hidden';
+			//this.getWrapper().style.transition = 'transform 0.2s ease-in';
+			//this.getWrapper().style.transition = 'transform 0.2s ease-out 0.2s';
+			//this.getWrapper().style.transform = 'translate3d(0, ' + (this.offset + $pp.sticky.scrollTop - this.coords.top) + 'px, 0)';
 		} else {
 			this.setPos($pp.sticky.scrollBottom - this.offset - this.coords.height, 'top');
 		}
 	} else if (this.state === 2) {
 		if (this.getDefault('type') == 'top') {
-			this.setPos(this.boundCoords.bottom - this.coords.height, this.getDefault('type'));
+			this.setPos(this.boundCoords.bottom - this.coords.height - this.attachedOffset, this.getDefault('type'));
 		} else {
-			console.log(123);
+			console.log('write this Kyler');
 			this.setPos($pp.sticky.scrollBottom - this.offset - this.coords.height, 'top');
 		}
 	}
@@ -404,7 +449,9 @@ $ppSticky.method('unstick', function() {
 	this.getEle().style.height = '';
 	this.getWrapper().style.height = '';
 	this.offset = 0;
-	$pp.sticky.setOffset(this.getDefault('type'), -1 * this.getDefault('stickyHeight'));
+	if (this.enabled) {
+		$pp.sticky.setOffset(this.getDefault('type'), -1 * this.getDefault('stickyHeight'));
+	}
 	this.getWrapper().style.bottom = '';
 	this.getWrapper().style.top = '';
 	this.lastPos = -1;
