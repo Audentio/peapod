@@ -1,0 +1,26 @@
+@import "mixins";
+
+//Global config
+$radius: 2px;
+$elm-padding-v: 10px; //TBD
+$elm-padding-h: 16px; //TBD
+
+$transition-duration: 200ms; //global transition control
+
+//Typography
+$rem-base: 10px;
+$font-size-base: rem(13px);
+$font-size-sm: .85em;
+
+$font-family-base: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
+$font-family-monospace: Consolas, monospace;
+
+//Palette
+$brand-primary: #3498db;
+$brand-secondary: #1abc9c;
+$brand-success: #2ecc71;
+$brand-danger: #f44336;
+$brand-warning: #FFC107;
+
+//Button config
+$btn-radius: $radius;

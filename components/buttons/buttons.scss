@@ -1,0 +1,78 @@
+/*! Peapod Buttons
+ *  Copyright peapod(?) 2015
+ */
+
+/*Button base*/
+.btn {
+  display: inline-block;
+  
+  border-radius: $btn-radius;
+  border: 0px solid transparent;
+  
+  background-color: transparent;
+  
+  padding: $elm-padding-v $elm-padding-h; //TBD
+  
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  
+  text-transform: uppercase;
+  
+  transition: $transition-duration;
+  
+  &:hover, &:active {
+    cursor: pointer;
+    outline: 0;
+  }
+  
+  &--raised {
+    box-shadow: 0px 2px 3px rgba(0,0,0,.3);
+  }
+}
+
+//=============
+//Button styles
+//=============
+
+//This mixin will generate CSS for normal and hover/focus states
+
+@mixin btn-style(
+  //defaults
+  $background:#666,
+  $color:white
+  ){
+  
+  background-color: $background;
+  color: $color;
+  
+  &:hover, &:focus {
+    background-color: lighten($background, 12%);
+  }
+  
+}
+
+/*Default*/
+.btn-default {
+  @include btn-style;
+}
+
+/*Primary*/
+.btn-primary {
+  @include btn-style($brand-primary);
+}
+
+/*Success*/
+.btn-success {
+  @include btn-style($brand-success);
+}
+
+/*Danger*/
+.btn-danger {
+  @include btn-style($brand-danger);
+}
+
+/*Warning*/
+.btn-warning {
+  @include btn-style($brand-warning);
+}

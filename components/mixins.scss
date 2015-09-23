@@ -1,0 +1,11 @@
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+//Return rem
+@function rem($value){
+  @if ( strip-unit($value) == 0 ) { @return 0 } //Return 0 as-is
+  
+  @return (strip-unit($value) / strip-unit($rem-base)) * 1rem;
+  
+}
