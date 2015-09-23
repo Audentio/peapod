@@ -289,9 +289,6 @@ td,
 th {
   padding: 0; }
 
-body {
-  margin: 15px; }
-
 /*! Peapod Buttons
  *  Copyright peapod(?) 2015
  */
@@ -348,3 +345,6 @@ body {
   color: white; }
   .btn-warning:hover, .btn-warning:focus {
     background-color: #ffd044; }
+
+body {
+  margin: 15px; }

@@ -22,23 +22,23 @@ var plumberConfig = {errorHandler: function(err){
 // Component Task
 // Compiles component scss
 gulp.task('processComponents', function(){
-	gulp.src('components/components.scss')
+	gulp.src('src/components/examples/scss/main.scss')
 	.pipe(sourcemaps.init())
 	.pipe(plumber(plumberConfig))
 	.pipe(sass({ style: 'expanded', precision: 8 }))
 	.pipe(autoprefixer(browserSupport))
-  .pipe(gulp.dest('components'))
+  .pipe(gulp.dest('src/components/examples/css'))
 	.pipe(rename({ suffix: '.min' }))
 	.pipe(minify())
-  .pipe(gulp.dest('components'))
+  .pipe(gulp.dest('src/components/examples/css'))
   .pipe(browserSync.stream());
 });
 
 // Watch Task for components
 gulp.task('watchComponents', function(){
   browserSync.init();
-	gulp.watch('components/**/*.scss', ['processComponents']);
-	gulp.watch(['components/**/*.html','components/**/*.js']).on('change', browserSync.reload);
+	gulp.watch('src/**/*.scss', ['processComponents']);
+	gulp.watch(['src/components/**/*.html','src/components/**/*.js']).on('change', browserSync.reload);
 });
 
 gulp.task('components', ['processComponents', 'watchComponents'])

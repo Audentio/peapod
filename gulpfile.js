@@ -4,4 +4,4 @@ var gulp = require('gulp'),
 	tasks = requireDir('./gulp');
 
 
-gulp.task('default', ['scripts', 'styles']);
+gulp.task('default', ['scripts', 'styles', 'components']);
