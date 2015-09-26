@@ -1,5 +1,5 @@
 var gulp          = require('gulp'),
-    plumber       = require('gulp-plumber')
+    plumber       = require('gulp-plumber'),
     sass          = require('gulp-sass'),
     react         = require('gulp-react'),
     notify        = require('gulp-notify'),
@@ -12,9 +12,18 @@ var gulp          = require('gulp'),
 var browserSupport = ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'];
 
 //Notification on build error
-var plumberConfig = {errorHandler: function(err){
+var plumber_SASS = {errorHandler: function(err){
   notify.onError({
-    title:    "SASS",
+    title:    'SASS',
+    subtitle: "Compile failed!",
+    message:  "Error: <%= error.message %>",
+    sound:    "chord"
+  })(err);
+  this.emit('end');
+}};
+var plumber_JSX = {errorHandler: function(err){
+  notify.onError({
+    title:    'JSX',
     subtitle: "Compile failed!",
     message:  "Error: <%= error.message %>",
     sound:    "chord"
@@ -26,10 +35,11 @@ var plumberConfig = {errorHandler: function(err){
 // Compiles component scss
 // =======================
 gulp.task('components.SASS', function(){
+  
 	gulp.src('src/components/**/*.scss')
 	
   //Prevent errors from breaking watch process
-  .pipe(plumber(plumberConfig))
+  .pipe(plumber(plumber_SASS))
   
   //compile SASS
 	.pipe(sass({ style: 'expanded', includePaths: ['src/sass'] }))
@@ -55,7 +65,12 @@ gulp.task('components.HTML', function(){
 // Compile Component JSX
 // =====================
 gulp.task('components.JSX', function(){
+  
 	gulp.src('src/components/**/*.jsx')
+  
+  //Prevent errors from breaking watch process
+  .pipe(plumber(plumber_JSX))
+  
   .pipe(react())
   .pipe(gulp.dest('build/components'));
 });
@@ -65,9 +80,12 @@ gulp.task('components.JSX', function(){
 // =========================
 gulp.task('components.watch', function(){
   browserSync.init();
+
 	gulp.watch('src/**/*.scss', ['components.SASS']);
   
 	gulp.watch(['src/components/**/*.html'], ['components.HTML']);
+  
+	gulp.watch(['src/components/**/*.jsx'], ['components.JSX']);
   
   //Watch build directory
   //so browsersync doesn't reload before gulp operations
