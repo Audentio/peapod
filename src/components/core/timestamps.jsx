@@ -18,22 +18,22 @@ var Pea_liveTimestamp = React.createClass({
 	* @returns {Number} seconds elapsed
 	*/
 	timeElapsed: function(){
-		return Math.ceil( ( new Date().getTime() - this.timestamp.getTime() ) / 1000 )
+		//return Math.ceil( ( new Date().getTime() - this.timestamp.getTime() ) / 1000 )
+		return this.timestamp.fromNow();
 	},
 	
 	
 	getInitialState: function() {
 	
-		//create date object from datetime string. Skip if type != string
-		this.timestamp = (typeof this.props.time == 'string') ? new Date(this.props.time) : this.props.time
+		//create moment object from time property
+		this.timestamp = moment(this.props.time)
 		
 		return {
 			timeElapsed: this.timeElapsed()
 		};
 		
 	},
-
-
+	
 	componentDidMount: function(){
 	
 		var self = this;
@@ -41,7 +41,8 @@ var Pea_liveTimestamp = React.createClass({
 		//start repeater
 		this._timer = setInterval(function(){
 			self.setState({ timeElapsed: self.timeElapsed() })
-		}, 1000)
+			console.log(self.timeElapsed())
+		}, 1000*60)
 		
 	},
 	
@@ -55,9 +56,9 @@ var Pea_liveTimestamp = React.createClass({
 	
 	
 	render: function() {
-	
+		
 		return (
-			<span>{this.state.timeElapsed} seconds elapsed</span>
+			<span title={moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a')}>{this.state.timeElapsed}</span>
 		);
 		
 	}

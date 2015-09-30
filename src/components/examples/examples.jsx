@@ -46,7 +46,8 @@ React.render(
 		<h1>Microcomponents</h1>
 		
 		<h2>Timestamps</h2>
-		<strong>Live timestamp:</strong> <Pea_liveTimestamp time="Wed, 29 Sep 2015 12:12:32 GMT" />
+		Page loaded <Pea_liveTimestamp time={new Date().toISOString()} /><br />
+		2005 was <Pea_liveTimestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
 	</div>
 	
 	</div>
