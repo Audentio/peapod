@@ -1,22 +1,44 @@
-//Render Buttons
 React.render(
-  <div id="buttonExamples">
-    <h2>Flat</h2>
-    <PP_Button label="Button base" /> &nbsp;
-    <PP_Button label="Default" style="default" /> &nbsp;
-    <PP_Button label="Primary" style="primary" /> &nbsp;
-    <PP_Button label="Success" style="success" /> &nbsp;
-    <PP_Button label="Danger" style="danger" /> &nbsp;
-    <PP_Button label="Warning" style="warning" /> &nbsp;
-    
-    <br /><br />
-    <h2>Raised</h2>
-    <PP_Button label="Button base" raised={true} /> &nbsp;
-    <PP_Button label="Default" style="default" raised={true} /> &nbsp;
-    <PP_Button label="Primary" style="primary" raised={true} /> &nbsp;
-    <PP_Button label="Success" style="success" raised={true} /> &nbsp;
-    <PP_Button label="Danger" style="danger" raised={true} /> &nbsp;
-    <PP_Button label="Warning" style="warning" raised={true} /> &nbsp;
-  </div>,
-  document.body
+	<div>
+  <div className="section">
+		<h1>Buttons</h1>
+    <Pea_button label="Default" />
+    <Pea_button label="Primary" kind="primary" />
+    <Pea_button label="Success" kind="success" />
+    <Pea_button label="Danger" kind="danger" />
+    <Pea_button label="Warning" kind="warning" />
+		<br /><br />
+    <Pea_button href="http://peapod.io" label="Anchor/Link" kind="primary" />
+    <Pea_button style={{color:'white', backgroundColor: 'purple', textTransform: 'uppercase', fontWeight: 'bold'}} label="Custom" kind="default" />
+    <Pea_button label="Raised" kind="primary" raised={true} />
+    <Pea_button label="Round" kind="primary" round={true} />
+    <Pea_button label="Disabled" kind="primary" disabled={true} />
+		
+  </div>
+	
+	<div className="section">
+		<h1>Forms</h1>
+		
+		<h2>Text input</h2>
+		<Pea_textInput placeholder="Placeholder text..." />
+		<Pea_textInput style={{color:'blue'}} placeholder="Inherits color" />
+		<Pea_textInput value="Initial value" placeholder="Derp" />
+		<Pea_textInput style={{borderColor:'red'}} value="Custom border-color" />
+		
+		<h2>Checkbox</h2>
+		<Pea_checkbox label="Check this for glory" />
+		<br /><br />
+		<Pea_checkbox label="Checked by default." checked={true} />
+		<br /><br />
+		<strong>rainbow</strong>
+		<br /><br />
+		<Pea_checkbox kind="primary" checked={true} />
+		<Pea_checkbox kind="success" checked={true} /> 
+		<Pea_checkbox kind="danger" checked={true} /> 
+		<Pea_checkbox kind="warning" checked={true} />
+		
+	</div>
+	
+	</div>
+  , document.getElementById('mainContainer')
 );

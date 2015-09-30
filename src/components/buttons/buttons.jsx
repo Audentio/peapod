@@ -1,32 +1,57 @@
-var PP_Button = React.createClass({
+/*! Peapod v<%= package.version %>
+ *  Copyright Audentio <%= package.year %>
+ *  LICENCE: <%= package.licence %>
+ */
+ 
+var Pea_button = React.createClass({
     
   getDefaultProps: function() {
     return {
-      class: '',
-      label: 'Submit'
+      label: 'Submit',
+			kind: 'default' //btn-default
     };
   },
+	
+	handleClick: function() {
+		//--TBD
+		console.log(this.props);
+	},
   
   render: function() {
+	
+    var className = "btn btn-" + this.props.kind;
     
-    var ripple = function(){
-      //wut
+		if (this.props.className){ // className property exists
+		
+			// append ClassName added as property
+			className += " " + this.props.className
+			
+		}
+		
+		// Raised
+    if (this.props.raised) { 
+      className += " btn--raised"
     }
     
-    var styleClass = (this.props.style) ? "btn-"+this.props.style : "";
-    
-    if (this.props.raised) {
-      styleClass += " btn--raised"
+		// Round (pill)
+    if (this.props.round) {
+      className += " btn--round"
     }
     
+		// Disabled button
+    if (this.props.disabled) {
+      className += " btn--disabled"
+    }
+		
     //Anchor tag <a> if href specified
     if (this.props.href) {
       return (
         <a
           href={this.props.href}
-          className={"btn " + styleClass + this.props.class}
-          onClick={this.props.onClick}>
-          {this.props.label}
+          className={className}
+					style={this.props.style}
+          onClick={this.handleClick}>
+          {this.props.label} {this.props.children}
         </a>
       );
     }
@@ -35,8 +60,9 @@ var PP_Button = React.createClass({
     else {
       return (
         <button
-          className={"btn " + styleClass + this.props.class}
-          onClick={this.props.onClick}>
+          className={className}
+					style={this.props.style}
+          onClick={this.handleClick}>
           {this.props.label}
         </button>
       );

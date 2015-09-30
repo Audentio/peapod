@@ -1,7 +1,9 @@
 @import "../components/mixins/mixins";
 
 //Global config
+$suffix: --PP;
 $radius: 2px;
+$gutter: 15px;
 $elm-padding-v: 10px; //TBD
 $elm-padding-h: 16px; //TBD
 
@@ -11,6 +13,8 @@ $transition-duration: 200ms; //global transition control
 $rem-base: 10px;
 $font-size-base: rem(13px);
 $font-size-sm: .85em;
+
+$headings-weight: normal;
 
 $font-family-base: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
 $font-family-monospace: Consolas, monospace;

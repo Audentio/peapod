@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="examples.css" />
     
     <!-- Google font: Roboto -->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,400italic,300italic,500italic,700italic' rel='stylesheet' type='text/css'>
+    <!--<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,400italic,300italic,500italic,700italic' rel='stylesheet' type='text/css'>-->
 </head>
 
 <body>
@@ -21,21 +21,23 @@
   <div id="mainContainer">
     Loading...
   </div>
-
-    
-<!-- ReactJS -->
-<script src="../../../bower_components/react/react.min.js" type="text/javascript"></script>
-
-<!-- Component JS -->
-<script src="../buttons/buttons.js" type="text/javascript"></script>
-
-<!-- Render -->
-<script src="examples.js" type="text/javascript"></script> 
     
 <!-- BrowserSync -->
 <script type='text/javascript' id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.9.6.js'><\/script>".replace("HOST", location.hostname));
 //]]></script>
+
+<!-- ReactJS -->
+<script src="../../../bower_components/react/react.js" type="text/javascript"></script>
+
+<!-- Component JS -->
+<script src="../../../bower_components/lodash/lodash.js" type="text/javascript"></script>
+<script src="../core/core.js" type="text/javascript"></script>
+<script src="../buttons/buttons.js" type="text/javascript"></script>
+<script src="../forms/forms.js" type="text/javascript"></script>
+
+<!-- Render -->
+<script src="examples.js" type="text/javascript"></script> 
 
 </body>
 </html>
