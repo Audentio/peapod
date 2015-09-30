@@ -46,7 +46,8 @@ var Pea_liveTimestamp = React.createClass({
 	
 	
 	componentWillUnmount: function(){
-		alert('wa');
+		//stop repeater
+		window.clearTimeout( this._timer ) ;
 	},
 	
 	
