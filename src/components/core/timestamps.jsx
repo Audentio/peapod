@@ -40,7 +40,7 @@ var Pea_liveTimestamp = React.createClass({
 		
 		//start repeater
 		this._timer = setInterval(function(){
-			self.setState({ timeElapsed: self.state.timeElapsed+1 })
+			self.setState({ timeElapsed: self.timeElapsed() })
 		}, 1000)
 		
 	},
