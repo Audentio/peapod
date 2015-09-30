@@ -5,6 +5,10 @@
 
 ### Getting your hands dirty ###
 
+Prerequisites: 
+1. Nodejs ([download here](nodejs.org))
+2: bower (run `npm install bower -g`)
+
 **Clone the repo**
 ```
 git clone git@bitbucket.org:audentiodesign/peapod.git peapod
