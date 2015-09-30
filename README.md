@@ -7,7 +7,7 @@
 
 Prerequisites: 
 1. Nodejs ([download here](nodejs.org))
-2: bower (run `npm install bower -g`)
+2. bower (run `npm install bower -g`)
 
 **Clone the repo**
 ```
