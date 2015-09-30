@@ -1,6 +1,6 @@
 /*! Peapod v<%= package.version %>
  *  Copyright Audentio <%= package.year %>
- *  LICENCE: <%= package.licence %>
+ *  LICENSE: <%= package.licence %>
  */
  
 var peapod = {

@@ -1,6 +1,6 @@
 /*! Peapod v<%= package.version %>
  *  Copyright Audentio <%= package.year %>
- *  LICENCE: <%= package.licence %>
+ *  LICENSE: <%= package.licence %>
  */
  
  
@@ -9,7 +9,6 @@
 *
 * @element Pea_liveTimestamp
 * @property {(string|Object)} time - IETF-compliant RFC 2822 timestamp string or Date Object 
-* @property {string} author - The author of the book.
 */
 var Pea_liveTimestamp = React.createClass({
 	
@@ -36,18 +35,22 @@ var Pea_liveTimestamp = React.createClass({
 
 
 	componentDidMount: function(){
+	
 		var self = this;
 		
 		//start repeater
 		this._timer = setInterval(function(){
 			self.setState({ timeElapsed: self.state.timeElapsed+1 })
 		}, 1000)
+		
 	},
 	
 	
 	componentWillUnmount: function(){
+	
 		//stop repeater
 		window.clearTimeout( this._timer ) ;
+		
 	},
 	
 	
@@ -56,6 +59,7 @@ var Pea_liveTimestamp = React.createClass({
 		return (
 			<span>{this.state.timeElapsed} seconds elapsed</span>
 		);
+		
 	}
     
 });
