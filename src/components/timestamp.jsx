@@ -2,8 +2,10 @@
  *  Copyright Audentio <%= package.year %>
  *  LICENSE: <%= package.licence %>
  */
- 
- 
+
+import React from 'react';
+import moment from 'moment';
+
 /**
 * Create live timestamp from valid date.
 *
@@ -41,7 +43,6 @@ var Pea_liveTimestamp = React.createClass({
 		//start repeater
 		this._timer = setInterval(function(){
 			self.setState({ timeElapsed: self.timeElapsed() })
-			console.log(self.timeElapsed())
 		}, 1000*60)
 		
 	},
@@ -64,3 +65,6 @@ var Pea_liveTimestamp = React.createClass({
 	}
     
 });
+
+
+module.exports = Pea_liveTimestamp;

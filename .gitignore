@@ -6,6 +6,10 @@ docs
 
 build
 
+examples
+
+.vscode
+
 npm-debug.log
 .sass-cache
 

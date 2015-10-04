@@ -17,8 +17,8 @@
     "fastclick": "~1.0.6",
     "lodash": "~3.10.1",
     "modernizr": "~2.8.3",
-    "moment": "~2.10.6",
     "normalize.css": "~3.0.3",
+    "radium": "~0.14.1",
     "react": "~0.13.3"
   }
 }

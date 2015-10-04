@@ -105,4 +105,8 @@ gulp.task('components.watch', function(){
 	gulp.watch(['build/components/**/*.js','build/components/**/*.html']).on('change', function(e){browserSync.reload()});
 });
 
-gulp.task('components', ['components.SASS', 'components.JSX', 'components.HTML', 'components.watch'])
+//gulp.task('components', ['components.SASS', 'components.JSX', 'components.HTML', 'components.watch'])
+//SASS dropped, webpack handles JSX
+gulp.task('components', function(){
+  console.log('Run "webpack" to compile')
+})
