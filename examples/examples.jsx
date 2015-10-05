@@ -6,30 +6,12 @@ import _ from 'lodash';
 import Pea_core from 'components/core';
 
 //Peapod components
-import Pea_liveTimestamp from 'components/timestamp';
+import Pea_timestamp from 'components/timestamp';
 import Pea_button from 'components/button';
 import Pea_image from 'components/image';
 import Pea_input from 'components/forms/input';
 import Pea_checkbox from 'components/forms/checkbox';
 import Pea_section from 'components/section';
-
-//React.initializeTouchEvents(true);
-
-//override default button style
-_.merge(peapod_style.button, {
-
-	base: {
-		marginRight: 4,
-		marginBottom: 10
-	},
-	
-	//Primary button
-	primary: {
-		':hover': {
-			backgroundColor: '#333'
-		}
-	}
-});
 
 
 var sections = [];
@@ -74,8 +56,13 @@ sections.push(
 		<h1>Microcomponents</h1>
 		
 		<h2>Timestamps</h2>
-		Page loaded <Pea_liveTimestamp time={new Date().toISOString()} /><br />
-		2005 was <Pea_liveTimestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
+		Page loaded <Pea_timestamp time={new Date().toISOString()} /><br />
+		2005 was <Pea_timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
+		
+		<h2>Image</h2>
+		<Pea_image src="image.jpg" alt="Default suffix" caption="This is caption" />
+		&nbsp;
+		<Pea_image src="image.jpg" hidpi-suffix="-mySuffix" alt="Custom suffix" />
 	</div>
 )
 

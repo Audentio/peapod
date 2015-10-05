@@ -6,6 +6,7 @@
 window.peapod_style = {};
 
 peapod_style.config = {
+	'gutter'				: '15px',
 	'radius'				: '2px',
 	'el-padding-v'			: '10px',
 	'el-padding-h'			: '15px',
