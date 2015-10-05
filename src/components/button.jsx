@@ -10,7 +10,7 @@ import React from 'react';
 import Radium from 'radium';
 import 'components/theme';
 import Color from 'color';
-import 'components/mixins/styler';
+import Pea_Styler from 'components/mixins/styler';
  
 
 //generate style object for button kinds
