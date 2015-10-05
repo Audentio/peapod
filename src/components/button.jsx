@@ -116,6 +116,7 @@ var Pea_button = React.createClass({
       {
         global: generateKind('#444'),
         pastel: generateKind('#DDD', 'black'),
+        neon: generateKind('#FFF', 'black'),
         props: {
           kind: 'default'
         }
@@ -123,6 +124,7 @@ var Pea_button = React.createClass({
       {
         global: generateKind(peapod_style.config['brand-primary']),
         pastel: generateKind('#9FF', 'black'),
+        neon: generateKind('#0FF', 'black'),
         props: {
           kind: 'primary'
         }
@@ -130,6 +132,7 @@ var Pea_button = React.createClass({
       {
         global: generateKind(peapod_style.config['brand-success']),
         pastel: generateKind('#9F9', 'black'),
+        neon: generateKind('#0F0', 'black'),
         props: {
           kind: 'success'
         }
@@ -137,6 +140,7 @@ var Pea_button = React.createClass({
       {
         global: generateKind(peapod_style.config['brand-warning']),
         pastel: generateKind('#FF9', 'black'),
+        neon: generateKind('#FF0', 'black'),
         props: {
           kind: 'warning'
         }
@@ -144,6 +148,7 @@ var Pea_button = React.createClass({
       {
         global: generateKind(peapod_style.config['brand-danger']),
         pastel: generateKind('#F99', 'black'),
+        neon: generateKind('#F00', 'black'),
         props: {
           kind: 'danger'
         }
@@ -152,7 +157,7 @@ var Pea_button = React.createClass({
   },
   
   render: function() {
-    
+
     //Anchor tag <a> if href specified
     if (this.props.href) {
       return (

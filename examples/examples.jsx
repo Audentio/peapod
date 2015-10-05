@@ -11,6 +11,7 @@ import Pea_button from 'components/button';
 import Pea_image from 'components/image';
 import Pea_input from 'components/forms/input';
 import Pea_checkbox from 'components/forms/checkbox';
+import Pea_section from 'components/section';
 
 //React.initializeTouchEvents(true);
 
@@ -32,17 +33,18 @@ _.merge(peapod_style.button, {
 
 
 var sections = [];
+var buttonStyle = {marginRight: '10px'};
 
 //section: Buttons
 sections.push(
 	<div className="section" key={'buttons'}>
 		<h1>Buttons</h1>
 		
-		<Pea_button label="Default"/>
-		<Pea_button label="Primary" kind="primary" />
-		<Pea_button label="Success" kind="success" />
-		<Pea_button label="Danger" kind="danger" />
-		<Pea_button label="Warning" kind="warning" />
+		<Pea_button label="Default" style={buttonStyle} />
+		<Pea_button label="Primary" kind="primary" style={buttonStyle} />
+		<Pea_button label="Success" kind="success" style={buttonStyle} />
+		<Pea_button label="Danger" kind="danger" style={buttonStyle} />
+		<Pea_button label="Warning" kind="warning" style={buttonStyle} />
 		<br /><br />
 		<Pea_button onClick={function(){alert('test')}} label="onClick handler" />
 		<Pea_button href="http://peapod.io" label="Anchor/Link" kind="primary" />
@@ -51,12 +53,6 @@ sections.push(
 		<Pea_button label="Round" kind="primary" round={true} />
 		<Pea_button label="Disabled" kind="primary" disabled={true} />
 		<Pea_button kind="success" round={true} raised={true} />
-		<br /><br />
-		<Pea_button label="Default - Pastel Variables" vars='pastel'/>
-		<Pea_button label="Primary - Pastel Variables" kind="primary" vars='pastel'/>
-		<Pea_button label="Success - Pastel Variables" kind="success" vars='pastel'/>
-		<Pea_button label="Danger - Pastel Variables" kind="danger" vars='pastel'/>
-		<Pea_button label="Warning - Pastel Variables" kind="warning" vars='pastel'/>
 
 	</div>
 )
@@ -113,6 +109,27 @@ for(var x=0; x<repeatCount; x++){
 React.render(
 	<div>
 		{sections}
+		<Pea_section vars='pastel' title='Pastel Variable Section Test' >
+			<Pea_button label="Default"/>
+			<Pea_button label="Primary" kind="primary"/>
+			<Pea_button label="Success" kind="success"/>
+			<Pea_button label="Danger" kind="danger"/>
+			<Pea_button label="Warning" kind="warning"/>
+		</Pea_section>
+		<Pea_section title='Normal Variable Section Test' >
+			<Pea_button label="Default"/>
+			<Pea_button label="Primary" kind="primary"/>
+			<Pea_button label="Success" kind="success"/>
+			<Pea_button label="Danger" kind="danger"/>
+			<Pea_button label="Warning" kind="warning"/>
+		</Pea_section>
+		<Pea_section vars='neon' title='Neon Variable Section Test' >
+			<Pea_button label="Default"/>
+			<Pea_button label="Primary" kind="primary"/>
+			<Pea_button label="Success" kind="success"/>
+			<Pea_button label="Danger" kind="danger"/>
+			<Pea_button label="Warning" kind="warning"/>
+		</Pea_section>
 		<div style={{textAlign:'center'}}><br />{ButtonTest}</div>
 	</div>
 	, document.getElementById('mainContainer')

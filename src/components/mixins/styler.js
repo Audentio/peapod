@@ -30,6 +30,7 @@ Pea_Styler = {
     var vars = obj.props.vars || 'base',
       styles = obj.getBaseStyle(),
       result = [];
+
     for (var i = 0, len = styles.length; i < len; i++) {
       var style = styles[i],
         validProps = this.validateStyleProps(style.props, obj.props),
@@ -41,10 +42,10 @@ Pea_Styler = {
       }
     }
 
-    result.push(obj.props.style);
+    if (obj.props.style) result.push(obj.props.style);
 
     return result;
-  }
+  },
 }
 
 module.exports = Pea_Styler;
