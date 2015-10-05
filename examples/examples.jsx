@@ -38,7 +38,7 @@ sections.push(
 	<div className="section" key={'buttons'}>
 		<h1>Buttons</h1>
 		
-		<Pea_button label="Default" />
+		<Pea_button label="Default"/>
 		<Pea_button label="Primary" kind="primary" />
 		<Pea_button label="Success" kind="success" />
 		<Pea_button label="Danger" kind="danger" />
@@ -51,6 +51,13 @@ sections.push(
 		<Pea_button label="Round" kind="primary" round={true} />
 		<Pea_button label="Disabled" kind="primary" disabled={true} />
 		<Pea_button kind="success" round={true} raised={true} />
+		<br /><br />
+		<Pea_button label="Default - Pastel Variables" vars='pastel'/>
+		<Pea_button label="Primary - Pastel Variables" kind="primary" vars='pastel'/>
+		<Pea_button label="Success - Pastel Variables" kind="success" vars='pastel'/>
+		<Pea_button label="Danger - Pastel Variables" kind="danger" vars='pastel'/>
+		<Pea_button label="Warning - Pastel Variables" kind="warning" vars='pastel'/>
+
 	</div>
 )
 

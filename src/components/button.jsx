@@ -10,6 +10,7 @@ import React from 'react';
 import Radium from 'radium';
 import 'components/theme';
 import Color from 'color';
+import 'components/mixins/styler';
  
 
 //generate style object for button kinds
@@ -17,76 +18,24 @@ var generateKind = function(
   backgroundColor = '#444', 
   color = 'white'){
   
+  if (color == 'white') {
+    var hoverColor = Color(backgroundColor).lighten(0.2).rgbString();
+  } else {
+    var hoverColor = Color(backgroundColor).darken(0.2).rgbString();
+  }
+  
   return {
     backgroundColor: backgroundColor,
     color: color,
     
     ':hover': {
-      backgroundColor: Color(backgroundColor).lighten(0.2).rgbString()
+      backgroundColor: hoverColor
     }
   }
 }, 
 
-defaultStyle = {
-  
-  //BASE style
-  base: {
-    display: 'inline-block',
-    
-    borderRadius: peapod_style.config['radius'], //theme.js
-    border: '0px solid transparent',
-    
-    padding: peapod.elSize(), //theme.js
-    
-    textDecoration: 'none',
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-      
-    outline: 'none',
-    
-    transitionDuration: peapod_style.config['transition-duration'], //theme.js
-    
-    //base:hover
-    ':hover': {
-      cursor: 'pointer'
-    },
-    
-    //base:active
-    ':active': {
-      transform: 'scale(.92)',
-      transitionDuration: '.03s'
-    }
-    
-  },
-    
-  raised: {
-    boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2)'
-  },
-  
-  //PILL
-  round: {
-    borderRadius: '1000px'
-  },
-  
-  //KIND: default
-  'default': generateKind('#444'),
-  
-  //KIND: primary
-  primary: generateKind(peapod_style.config['brand-primary']),
-  
-  //KIND: success
-  success: generateKind(peapod_style.config['brand-success']),
-  
-  //KIND: warning
-  warning: generateKind(peapod_style.config['brand-warning']),
-  
-  //KIND: danger
-  danger: generateKind(peapod_style.config['brand-danger'])
-  
-},
 
 themeStyle = peapod_style.button = peapod_style.button || {};
-
 
 /**
 * Buttons component
@@ -98,6 +47,8 @@ themeStyle = peapod_style.button = peapod_style.button || {};
 * 
 */
 var Pea_button = React.createClass({
+
+  mixins: [Pea_Styler],
 
   //Validate props
   propTypes: {
@@ -114,25 +65,93 @@ var Pea_button = React.createClass({
 			kind: 'default'
     }
   },
-  
+
+  getBaseStyle: function() {
+    return [
+      {
+        global: {
+          display: 'inline-block',  
+
+          borderRadius: peapod_style.config['radius'], //theme.js
+          border: '0px solid transparent',
+          
+          padding: peapod.elSize(), //theme.js
+          
+          textDecoration: 'none',
+          fontFamily: 'inherit',
+          fontSize: 'inherit',
+            
+          outline: 'none',
+          
+          transitionDuration: peapod_style.config['transition-duration'], //theme.js
+          
+          //base:hover
+          ':hover': {
+            cursor: 'pointer'
+          },
+          
+          //base:active
+          ':active': {
+            transform: 'scale(.92)',
+            transitionDuration: '.03s'
+          }
+        }
+      },
+      {
+        global: {
+          boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2)'
+        },
+        props: {
+          raised: true
+        }
+      },
+      {
+        global: {
+          borderRadius: '1000px'
+        },
+        props: {
+          round: true
+        }
+      },
+      {
+        global: generateKind('#444'),
+        pastel: generateKind('#DDD', 'black'),
+        props: {
+          kind: 'default'
+        }
+      },
+      {
+        global: generateKind(peapod_style.config['brand-primary']),
+        pastel: generateKind('#9FF', 'black'),
+        props: {
+          kind: 'primary'
+        }
+      },
+      {
+        global: generateKind(peapod_style.config['brand-success']),
+        pastel: generateKind('#9F9', 'black'),
+        props: {
+          kind: 'success'
+        }
+      },
+      {
+        global: generateKind(peapod_style.config['brand-warning']),
+        pastel: generateKind('#FF9', 'black'),
+        props: {
+          kind: 'warning'
+        }
+      },
+      {
+        global: generateKind(peapod_style.config['brand-danger']),
+        pastel: generateKind('#F99', 'black'),
+        props: {
+          kind: 'danger'
+        }
+      }
+    ]
+  },
   
   render: function() {
-  
-    var style = [
-      defaultStyle.base,
-      this.props.kind && defaultStyle[this.props.kind],
-      this.props.raised && defaultStyle.raised,
-      this.props.round && defaultStyle.round,
-      
-      //Import from theme
-      themeStyle.base,
-      this.props.kind && themeStyle[this.props.kind],
-      this.props.raised && themeStyle.raised,
-      this.props.round && themeStyle.round,
-      
-      //style prop. Override everything
-      this.props.style
-    ];
     
     //Anchor tag <a> if href specified
     if (this.props.href) {
@@ -140,7 +159,7 @@ var Pea_button = React.createClass({
         <a
           href={this.props.href}
           className={this.props.className}
-					style={style}
+					style={Pea_Styler.getStyle(this)}
           onClick={this.props.onClick}>
           {this.props.label} {this.props.children}
         </a>
@@ -152,7 +171,7 @@ var Pea_button = React.createClass({
       return (
         <button
           className={this.props.className}
-					style={style}
+					style={Pea_Styler.getStyle(this)}
           onClick={this.props.onClick}>
           {this.props.label}
         </button>
