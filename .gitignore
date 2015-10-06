@@ -6,8 +6,6 @@ docs
 
 build
 
-examples_bundle.js
-
 .vscode
 
 npm-debug.log
