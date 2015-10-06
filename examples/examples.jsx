@@ -50,6 +50,8 @@ sections.push(
 	</div>
 )
 
+var imageStyle = {width:'200px',height:'200px'};
+
 //Section: Microcomponents
 sections.push(
 	<div className="section" key={'microcomponents'}>
@@ -60,9 +62,13 @@ sections.push(
 		2005 was <Pea_timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
 		
 		<h2>Image</h2>
-		<Pea_image src="image.jpg" alt="Default suffix" caption="This is caption" />
+		<Pea_image src="image.jpg" style={imageStyle} alt="Default suffix" caption="This is caption" />
 		&nbsp;
-		<Pea_image src="image.jpg" hidpi-suffix="-mySuffix" alt="Custom suffix" />
+		<Pea_image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','-mySuffix'] ]} alt="Custom suffix" />
+		&nbsp;
+		<Pea_image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
+		&nbsp;
+		<Pea_image src="image.jpg" style={imageStyle} alt="Default suffix" hidpi-data={false} caption="who needs HiDPI anyway?" />
 	</div>
 )
 

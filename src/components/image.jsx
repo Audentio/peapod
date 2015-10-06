@@ -37,8 +37,7 @@ captionStyle = {
 *
 * @element Pea_image
 * @param {string} src - Image URL ()
-* @param {bool} [has-hidpi=true] - Does the image have HiDPI version?
-* @param {string} [hidpi-suffix=@2x] - HiDPI version suffix
+* @param {(bool|Object)} [hidpi-data={"1.5":"@2x"}] - object map of pixel densities and prefixes. False to disable hidpi asset loading
 * @param {string} [alt] - alt attribute
 * @param {string} [caption] - Image caption
 */
@@ -46,8 +45,7 @@ var Pea_image = React.createClass({
   
 	propTypes: {
 		src: React.PropTypes.string.isRequired,
-		'has-hidpi': React.PropTypes.bool,
-		'hidpi-suffix': React.PropTypes.string,
+		'hidpi-data': React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.bool ]),
 		alt: React.PropTypes.string,
 		caption: React.PropTypes.string
 	},
@@ -55,8 +53,7 @@ var Pea_image = React.createClass({
 	//Default props
 	getDefaultProps: function() {
 		return {
-			'has-hidpi': true,
-			'hidpi-suffix': '@2x',
+			'hidpi-data': [['1.5', '@2x']],
 			block: false
 		}
 	},
@@ -64,14 +61,24 @@ var Pea_image = React.createClass({
 	componentWillMount: function(){
 		
 		//HiDPI check
-		var 
-		url = this.props.src.split('.'),
-		extension = url.splice(-1,1),
-		filePath = url.join('.'),
-		
-		hidpiRequired = (this.props['has-hidpi'] && window.devicePixelRatio && window.devicePixelRatio > 1.5);
-		
-		this.imageURL =  (hidpiRequired) ? filePath + this.props['hidpi-suffix'] + '.' + extension : this.props.src;
+		var hiDpiData = this.props['hidpi-data'];
+		if(hiDpiData) {
+			var 
+			url = this.props.src.split('.'),
+			extension = url.splice(-1,1),
+			filePath = url.join('.'),
+			suffix = '';
+			
+			hiDpiData.forEach(function(item){
+				suffix = ( window.devicePixelRatio >= Number(item[0]) ) ? item[1] : suffix;
+			})
+			
+			this.imageURL = filePath + suffix + '.' + extension;
+			
+		} 
+		else {
+			this.imageURL = this.props.src;
+		}
 		
 		
 		//Caption
