@@ -6,23 +6,25 @@
 ### Getting your hands dirty ###
 
 Prerequisites: 
+
 1. Nodejs ([download here](nodejs.org))
+
 2. bower (run `npm install bower -g`)
+
+*****
 
 **Clone the repo**
 ```
 git clone git@bitbucket.org:audentiodesign/peapod.git peapod
+cd peapod
 ```
-*Now open terminal in peapod root folder*
 
-
-**Install dependencies** -- run these commands
+**Install dependencies**
 ```
 npm install
-bower install
 ```
 
-**Build & watch** -- run components task in gulp
+**Build & watch examples**
 ```
-gulp components
+npm run examples-dev
 ```
