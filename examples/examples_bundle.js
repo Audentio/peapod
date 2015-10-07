@@ -164,9 +164,14 @@
 			null,
 			'Image'
 		),
+		_react2['default'].createElement(
+			'p',
+			null,
+			'(lazy load example below button test)'
+		),
 		_react2['default'].createElement(_componentsImage2['default'], { src: 'image.jpg', style: imageStyle, alt: 'Default suffix', caption: 'This is caption' }),
 		' ',
-		_react2['default'].createElement(_componentsImage2['default'], { src: 'image.jpg', style: imageStyle, 'hidpi-data': [['1.5', '-mySuffix']], alt: 'Custom suffix' }),
+		_react2['default'].createElement(_componentsImage2['default'], { src: 'image.jpg', style: imageStyle, 'hidpi-data': [['1.5', '-mySuffix']] }),
 		' ',
 		_react2['default'].createElement(_componentsImage2['default'], { src: 'image.jpg', style: imageStyle, 'hidpi-data': [['1.5', '@2x'], ['2', '@3x']], alt: 'Custom suffix', caption: 'Loads image@3x.jpg for pixeDensity 2 or higher' }),
 		' ',
@@ -231,7 +236,9 @@
 			{ style: { textAlign: 'center' } },
 			_react2['default'].createElement('br', null),
 			ButtonTest
-		)
+		),
+		_react2['default'].createElement('br', null),
+		_react2['default'].createElement(_componentsImage2['default'], { src: 'http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg', lazy: true, caption: 'Lazy load!', 'hidpi-data': false })
 	), document.getElementById('mainContainer'));
 
 /***/ },
@@ -48901,7 +48908,8 @@
 			backgroundColor: 'rgba(255, 255, 255, 0.5)',
 			width: '100%'
 		}
-	};
+	},
+	    blankImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=";
 
 	/**
 	* Image component: loads HiDPI images on retina devices
@@ -48919,15 +48927,54 @@
 			src: _react2['default'].PropTypes.string.isRequired,
 			'hidpi-data': _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.array, _react2['default'].PropTypes.bool]),
 			alt: _react2['default'].PropTypes.string,
-			caption: _react2['default'].PropTypes.string
+			caption: _react2['default'].PropTypes.string,
+			lazy: _react2['default'].PropTypes.bool
 		},
 
 		//Default props
 		getDefaultProps: function getDefaultProps() {
 			return {
 				'hidpi-data': [['1.5', '@2x']],
-				block: false
+				block: false,
+				lazy: false
 			};
+		},
+
+		getInitialState: function getInitialState() {
+			return {
+				visible: this.props.lazy ? false : true
+			};
+		},
+
+		checkVisibility: function checkVisibility() {
+			var bounds = this.getDOMNode().getBoundingClientRect(),
+			    scrollTop = window.pageYOffset,
+			    top = bounds.top + scrollTop,
+			    height = bounds.bottom - bounds.top;
+
+			if (top === 0 || top <= scrollTop + window.innerHeight && top + height > scrollTop) {
+				this.setState({ visible: true });
+				this.removeListener();
+			}
+		},
+
+		removeListener: function removeListener() {
+			window.removeEventListener('scroll', this.checkVisibility);
+		},
+
+		componentDidMount: function componentDidMount() {
+			this.checkVisibility();
+			if (this.props.lazy) {
+				window.addEventListener('scroll', this.checkVisibility);
+			}
+		},
+
+		componentDidUpdate: function componentDidUpdate() {
+			if (!this.state.visible) this.checkVisibility();
+		},
+
+		componentWillUnmount: function componentWillUnmount() {
+			this.removeListener();
 		},
 
 		componentWillMount: function componentWillMount() {
@@ -48962,7 +49009,7 @@
 			return _react2['default'].createElement(
 				'div',
 				{ style: imageContainerStyle.base },
-				_react2['default'].createElement('img', { src: this.imageURL, alt: this.props.alt, style: [imageStyle.base, this.props.style] }),
+				_react2['default'].createElement('img', { src: this.state.visible ? this.imageURL : blankImage, alt: this.props.alt, style: [imageStyle.base, this.props.style] }),
 				this.caption
 			);
 		}

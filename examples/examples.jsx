@@ -62,9 +62,10 @@ sections.push(
 		2005 was <Pea_timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
 		
 		<h2>Image</h2>
+		<p>(lazy load example below button test)</p>
 		<Pea_image src="image.jpg" style={imageStyle} alt="Default suffix" caption="This is caption" />
 		&nbsp;
-		<Pea_image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','-mySuffix'] ]} alt="Custom suffix" />
+		<Pea_image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','-mySuffix'] ]} />
 		&nbsp;
 		<Pea_image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
 		&nbsp;
@@ -124,6 +125,9 @@ React.render(
 			<Pea_button label="Warning" kind="warning"/>
 		</Pea_section>
 		<div style={{textAlign:'center'}}><br />{ButtonTest}</div>
+		<br />
+		<Pea_image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpi-data={false} />
+		
 	</div>
 	, document.getElementById('mainContainer')
 );

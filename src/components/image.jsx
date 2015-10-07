@@ -30,7 +30,9 @@ captionStyle = {
 		backgroundColor: 'rgba(255, 255, 255, 0.5)',
 		width: '100%'
 	}
-}
+},
+
+blankImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=";
 
 /**
 * Image component: loads HiDPI images on retina devices
@@ -47,15 +49,52 @@ var Pea_image = React.createClass({
 		src: React.PropTypes.string.isRequired,
 		'hidpi-data': React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.bool ]),
 		alt: React.PropTypes.string,
-		caption: React.PropTypes.string
+		caption: React.PropTypes.string,
+		lazy: React.PropTypes.bool
 	},
 
 	//Default props
 	getDefaultProps: function() {
 		return {
 			'hidpi-data': [['1.5', '@2x']],
-			block: false
+			block: false,
+			lazy: false
 		}
+	},
+	
+	getInitialState: function() {
+		return {
+			visible: (this.props.lazy) ? false : true
+		};
+	},
+	
+	checkVisibility: function() {
+		var bounds = this.getDOMNode().getBoundingClientRect(),
+			scrollTop = window.pageYOffset,
+			top = bounds.top + scrollTop,
+			height = bounds.bottom - bounds.top;
+
+		if(top === 0 || (top <= (scrollTop + window.innerHeight) && (top + height) > scrollTop)){
+			this.setState({visible: true});
+			this.removeListener();
+		}
+	},
+	
+	removeListener: function() {
+		window.removeEventListener('scroll', this.checkVisibility);
+	},
+	
+	componentDidMount: function() {
+		this.checkVisibility();
+		if(this.props.lazy) { window.addEventListener('scroll', this.checkVisibility) }
+	},
+	
+	componentDidUpdate: function() {
+		if(!this.state.visible) this.checkVisibility();
+	},
+	
+	componentWillUnmount: function() {
+		this.removeListener();
 	},
 	
 	componentWillMount: function(){
@@ -90,7 +129,7 @@ var Pea_image = React.createClass({
 		
 		return (
 			<div style={imageContainerStyle.base}>
-				<img src={this.imageURL} alt={this.props.alt} style={[imageStyle.base, this.props.style]} />
+				<img src={this.state.visible ? this.imageURL : blankImage} alt={this.props.alt} style={[imageStyle.base, this.props.style]} />
 				{this.caption}
 			</div>
 		);
