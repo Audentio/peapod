@@ -8,7 +8,8 @@ var Pea_core = (function(){
 	window.peapod = {
 		basePath: '/',
 		suffix: '',
-		style: {}
+		style: {},
+		options: {}
 	};
 
 })();

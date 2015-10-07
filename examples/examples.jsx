@@ -1,18 +1,16 @@
 import React from 'react';
-require('react-fastclick'); //no worky with radium
+import ReactDOM from 'react-dom';
 
 import _ from 'lodash';
 
+//Peapod
 import Pea_core from 'components/core';
-
-//Peapod components
 import Pea_timestamp from 'components/timestamp';
 import Pea_button from 'components/button';
 import Pea_image from 'components/image';
 import Pea_input from 'components/forms/input';
 import Pea_checkbox from 'components/forms/checkbox';
 import Pea_section from 'components/section';
-
 
 var sections = [];
 var buttonStyle = {marginRight: '10px'};
@@ -100,7 +98,7 @@ for(var x=0; x<repeatCount; x++){
 
 
 /* This is where everything comes together */
-React.render(
+ReactDOM.render(
 	<div>
 		{sections}
 		<Pea_section vars='pastel' title='Pastel Variable Section Test' >
