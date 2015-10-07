@@ -4,7 +4,8 @@
   "description": "UI Kit from Audentio Design.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "examples": "webpack",
+    "examples-dev": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -41,16 +42,11 @@
     "webpack": "^1.12.2"
   },
   "dependencies": {
-    "react": "^0.13.3",
-    "react-fastclick": "^1.0.3",
-    "radium": "^0.14.1",
+    "color": "^0.10.1",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
-    "color": "^0.10.1"
-  },
-  
-  "scripts": {
-    "examples": "webpack",
-    "examples-dev": "webpack --watch"
+    "radium": "^0.14.1",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
   }
 }
