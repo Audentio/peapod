@@ -18,6 +18,7 @@ var imageContainerStyle = {
 
 imageStyle = {
 	base: {
+		cursor: 'pointer',
 		display: 'block'
 	}
 },
@@ -31,6 +32,47 @@ captionStyle = {
 		left: 0,
 		backgroundColor: 'rgba(255, 255, 255, 0.5)',
 		width: '100%'
+	}
+},
+
+lightboxStyle = {
+	base: {
+		display: 'table',
+		cursor: 'pointer',
+		position: 'fixed',
+		zIndex: 999,
+		backgroundColor: 'rgba(0,0,0,0.8)',
+		width: '100%',
+		height: '100%',
+		top: 0,
+		left: 0,
+		transition: '300ms',
+		visibility: 'hidden',
+		opacity: 0
+	},
+
+	visible: {
+		visibility: 'visible',
+		opacity: 1
+	},
+
+	inner: {
+	  'display': 'table-cell',
+	  'text-align': 'center',
+	  'vertical-align': 'middle',
+	}
+},
+
+lightboxImageStyle = {
+	base: {
+		'max-width': '90%',
+		'max-height': '90%',
+		transition: '300ms',
+		transform: 'scale(0)',
+	},
+
+	visible: {
+		transform: 'none'
 	}
 };
 
@@ -48,7 +90,10 @@ var options = {
 	
 	//Multi-dimensional array defining prefixes for different device pixeDensity
 	//set false to disable hiDPI loading
-	hidpi: [['1.5', '@2x']]
+	hidpi: [['1.5', '@2x']],
+
+	//show enlarged image in lightbox
+	lightbox: true
 }
 
 //Merge with global options object
@@ -76,7 +121,8 @@ var Pea_image = React.createClass({
 		alt: React.PropTypes.string,
 		caption: React.PropTypes.string,
 		lazy: React.PropTypes.bool,
-		'lazy-distance': React.PropTypes.number
+		'lazy-distance': React.PropTypes.number,
+		lightbox: React.PropTypes.bool
 	},
 
 
@@ -84,17 +130,27 @@ var Pea_image = React.createClass({
 		return {
 			'hidpi-data': options.hidpi,
 			lazy: options.lazy,
-			'lazy-distance': options.lazyDistance
+			'lazy-distance': options.lazyDistance,
+			lightbox: options.lightbox
 		}
 	},
 	
 	
 	getInitialState: function() {
 		return {
-			visible: (this.props.lazy) ? false : true
+			visible: (this.props.lazy) ? false : true,
+			lightboxVisible: false
 		};
 	},
-	
+
+	//show lightbox
+	showLightbox: function(){
+		this.setState({lightboxVisible: true})
+	},
+
+	hideLightbox: function(){
+		this.setState({lightboxVisible: false})
+	},
 	
 	//Check if element is within the defined viewport range 
 	// -- {lazyDistance}px above and below current viewport
@@ -175,8 +231,16 @@ var Pea_image = React.createClass({
 		
 		return (
 			<div style={imageContainerStyle.base}>
-				<img src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt} style={[imageStyle.base, this.props.style]} />
+				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt} style={[imageStyle.base, this.props.style]} />
 				{this.caption}
+
+				{this.props.lightbox && 
+					<div style={[ lightboxStyle.base, this.state.lightboxVisible && lightboxStyle.visible ]} onClick={this.hideLightbox}>
+						<div style={lightboxStyle.inner}>
+							<img style={[ lightboxImageStyle.base, this.state.lightboxVisible && lightboxImageStyle.visible]} src={this.state.visible ? this.imageURL : options.blankImage} />
+						</div>
+					</div>
+				}
 			</div>
 		);
 	}
