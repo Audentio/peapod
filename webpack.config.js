@@ -35,7 +35,11 @@ module.exports = {
   
   //The very awesome browsersync
   plugins: [
-    new BrowserSyncPlugin()
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: 3005,
+      server: { baseDir: ['examples'] }
+    })
   ]
     
 };
