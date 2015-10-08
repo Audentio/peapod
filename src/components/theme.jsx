@@ -20,7 +20,6 @@ peapod_style.config = {
 	'brand-warning'			: '#FFC107'
 }
 
-
 // Element sizing
 peapod.elSize = function(size){
 

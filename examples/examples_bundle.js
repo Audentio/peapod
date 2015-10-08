@@ -238,7 +238,34 @@
 			ButtonTest
 		),
 		_react2['default'].createElement('br', null),
-		_react2['default'].createElement(_componentsImage2['default'], { src: 'http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg', lazy: true, caption: 'Lazy load!', 'hidpi-data': false })
+		_react2['default'].createElement(_componentsImage2['default'], { src: 'http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg', lazy: true, caption: 'Lazy load!', 'hidpi-data': false }),
+		_react2['default'].createElement(
+			_componentsSection2['default'],
+			{ vars: 'pastel', title: 'Pastel Variable Section Test' },
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Default' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Primary', kind: 'primary' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Success', kind: 'success' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Danger', kind: 'danger' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Warning', kind: 'warning' })
+		),
+		_react2['default'].createElement(
+			_componentsSection2['default'],
+			{ title: 'Normal Variable Section Test' },
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Default' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Primary', kind: 'primary' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Success', kind: 'success' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Danger', kind: 'danger' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Warning', kind: 'warning' })
+		),
+		_react2['default'].createElement(
+			_componentsSection2['default'],
+			{ vars: 'neon', title: 'Neon Variable Section Test' },
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Default' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Primary', kind: 'primary' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Success', kind: 'success' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Danger', kind: 'danger' }),
+			_react2['default'].createElement(_componentsButton2['default'], { label: 'Warning', kind: 'warning' })
+		)
 	), document.getElementById('mainContainer'));
 
 /***/ },
@@ -32164,7 +32191,7 @@
 
 /***/ },
 /* 160 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	/*! Peapod v<%= package.version %>
 	 *  Copyright Audentio <%= package.year %>
@@ -32173,15 +32200,59 @@
 
 	'use strict';
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _reactDom = __webpack_require__(157);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var Pea_core = (function () {
 
 		window.peapod = {
 			basePath: '/',
 			suffix: '',
 			style: {},
-			options: {}
+			options: {},
+			helper: {}
 		};
 	})();
+
+	//control page scrolling
+	//--
+	//disables touch scrolling on touch enabled devices
+	//uses css hax to disable scrolling without hiding scrollbar on no-touch devices
+	peapod.helper.scrolling = function (allowScroll) {
+
+		var html = document.documentElement;
+
+		//Touch device
+		if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0) {
+			var disableScroll = function disableScroll(e) {
+				e.preventDefault();
+			};
+			//TBD
+		}
+		//no-touch device
+		else {
+				if (!allowScroll) {
+					peapod.pageScrollPos = [window.pageXOffset, window.pageYOffset];
+				}
+
+				html.style.position = allowScroll ? '' : 'fixed';
+				html.style.top = allowScroll ? '' : -peapod.pageScrollPos[1] + 'px';
+				html.style.width = allowScroll ? '' : '100%';
+				html.style.overflowY = allowScroll ? '' : 'scroll';
+
+				if (allowScroll && peapod.pageScrollPos) {
+					window.scroll(peapod.pageScrollPos[0], peapod.pageScrollPos[1]);
+				}
+			}
+	};
+
+	//Key code map
+	peapod.helper.keymap = {
+		'esc': 27
+	};
 
 	module.exports = Pea_core;
 
@@ -48067,6 +48138,7 @@
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
+	//Style definitions
 	var imageContainerStyle = {
 		base: {
 			display: 'inline-block',
@@ -48112,17 +48184,17 @@
 		},
 
 		inner: {
-			'display': 'table-cell',
-			'text-align': 'center',
-			'vertical-align': 'middle'
+			display: 'table-cell',
+			textAlign: 'center',
+			verticalAlign: 'middle'
 		}
 	},
 	    lightboxImageStyle = {
 		base: {
-			'max-width': '90%',
-			'max-height': '90%',
+			maxWidth: '90%',
+			maxHeight: '90%',
 			transition: '300ms',
-			transform: 'scale(0)'
+			transform: 'scale(.7)'
 		},
 
 		visible: {
@@ -48130,7 +48202,7 @@
 		}
 	};
 
-	//Component options
+	//Component configuration
 	var options = {
 
 		//this acts as src for lazyLoaded images until they're loaded
@@ -48196,13 +48268,33 @@
 			};
 		},
 
+		keyHandler: function keyHandler(e) {
+			if (e.keyCode == peapod.helper.keymap['esc']) {
+				this.hideLightbox();
+			}
+		},
+
 		//show lightbox
 		showLightbox: function showLightbox() {
 			this.setState({ lightboxVisible: true });
+
+			//enable scrolling
+			peapod.helper.scrolling(false);
+
+			//add keyboard listener
+			window.addEventListener('keydown', this.keyHandler);
 		},
 
+		//hide lightbox
 		hideLightbox: function hideLightbox() {
 			this.setState({ lightboxVisible: false });
+
+			//enable scrolling
+			//document.documentElement.style.overflow = ''
+			peapod.helper.scrolling(true);
+
+			//remove keyboard listener
+			window.removeEventListener('keydown', this.keyHandler);
 		},
 
 		//Check if element is within the defined viewport range

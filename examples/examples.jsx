@@ -126,6 +126,27 @@ ReactDOM.render(
 		<br />
 		<Pea_image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpi-data={false} />
 		
+		<Pea_section vars='pastel' title='Pastel Variable Section Test' >
+			<Pea_button label="Default"/>
+			<Pea_button label="Primary" kind="primary"/>
+			<Pea_button label="Success" kind="success"/>
+			<Pea_button label="Danger" kind="danger"/>
+			<Pea_button label="Warning" kind="warning"/>
+		</Pea_section>
+		<Pea_section title='Normal Variable Section Test' >
+			<Pea_button label="Default"/>
+			<Pea_button label="Primary" kind="primary"/>
+			<Pea_button label="Success" kind="success"/>
+			<Pea_button label="Danger" kind="danger"/>
+			<Pea_button label="Warning" kind="warning"/>
+		</Pea_section>
+		<Pea_section vars='neon' title='Neon Variable Section Test' >
+			<Pea_button label="Default"/>
+			<Pea_button label="Primary" kind="primary"/>
+			<Pea_button label="Success" kind="success"/>
+			<Pea_button label="Danger" kind="danger"/>
+			<Pea_button label="Warning" kind="warning"/>
+		</Pea_section>
 	</div>
 	, document.getElementById('mainContainer')
 );

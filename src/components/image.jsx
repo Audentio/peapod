@@ -8,8 +8,9 @@ import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import _ from 'lodash';
 
-
-var imageContainerStyle = {
+//Style definitions
+var
+imageContainerStyle = {
 	base: {
 		display: 'inline-block',
 		position: 'relative'
@@ -57,18 +58,18 @@ lightboxStyle = {
 	},
 
 	inner: {
-	  'display': 'table-cell',
-	  'text-align': 'center',
-	  'vertical-align': 'middle',
+	  display: 'table-cell',
+	  textAlign: 'center',
+	  verticalAlign: 'middle',
 	}
 },
 
 lightboxImageStyle = {
 	base: {
-		'max-width': '90%',
-		'max-height': '90%',
+		maxWidth: '90%',
+		maxHeight: '90%',
 		transition: '300ms',
-		transform: 'scale(0)',
+		transform: 'scale(.7)',
 	},
 
 	visible: {
@@ -76,7 +77,7 @@ lightboxImageStyle = {
 	}
 };
 
-//Component options
+//Component configuration
 var options = {
 
 	//this acts as src for lazyLoaded images until they're loaded
@@ -143,13 +144,33 @@ var Pea_image = React.createClass({
 		};
 	},
 
+	keyHandler: function(e){
+		if(e.keyCode == peapod.helper.keymap['esc']){
+			this.hideLightbox();
+		}
+	},
+
 	//show lightbox
 	showLightbox: function(){
 		this.setState({lightboxVisible: true})
+
+		//enable scrolling
+		peapod.helper.scrolling(false)
+
+		//add keyboard listener
+		window.addEventListener('keydown', this.keyHandler)
 	},
 
+	//hide lightbox
 	hideLightbox: function(){
-		this.setState({lightboxVisible: false})
+		this.setState({lightboxVisible: false});
+
+		//enable scrolling
+		//document.documentElement.style.overflow = ''
+		peapod.helper.scrolling(true)
+
+		//remove keyboard listener
+		window.removeEventListener('keydown', this.keyHandler)
 	},
 	
 	//Check if element is within the defined viewport range 
@@ -174,7 +195,7 @@ var Pea_image = React.createClass({
 	},
 	
 	componentDidMount: function() {
-	
+
 		//initial check
 		this.checkVisibility();
 		
