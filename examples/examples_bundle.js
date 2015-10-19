@@ -78,15 +78,19 @@
 
 	var _componentsImage2 = _interopRequireDefault(_componentsImage);
 
-	var _componentsFormsInput = __webpack_require__(281);
+	var _componentsIcon = __webpack_require__(281);
+
+	var _componentsIcon2 = _interopRequireDefault(_componentsIcon);
+
+	var _componentsFormsInput = __webpack_require__(282);
 
 	var _componentsFormsInput2 = _interopRequireDefault(_componentsFormsInput);
 
-	var _componentsFormsCheckbox = __webpack_require__(282);
+	var _componentsFormsCheckbox = __webpack_require__(283);
 
 	var _componentsFormsCheckbox2 = _interopRequireDefault(_componentsFormsCheckbox);
 
-	var _componentsSection = __webpack_require__(283);
+	var _componentsSection = __webpack_require__(284);
 
 	var _componentsSection2 = _interopRequireDefault(_componentsSection);
 
@@ -138,6 +142,122 @@
 		_react2['default'].createElement(_componentsFormsCheckbox2['default'], { kind: 'primary', checked: true })
 	));
 
+	//Section: Icons
+	sections.push(_react2['default'].createElement(
+		'div',
+		{ className: 'section', key: 'icons' },
+		_react2['default'].createElement(
+			'h1',
+			null,
+			'Icons'
+		),
+		_react2['default'].createElement(
+			'h2',
+			null,
+			'Size & color'
+		),
+		_react2['default'].createElement(
+			'p',
+			null,
+			'Currently simply a layer of abstration over google material icons'
+		),
+		_react2['default'].createElement(
+			'span',
+			{ style: { fontSize: '24px' } },
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				null,
+				'home'
+			),
+			' ',
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ color: '#07ADD4' },
+				'assessment'
+			),
+			' ',
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ color: '#3F70E2' },
+				'polymer'
+			),
+			' ',
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ color: '#D53FD6' },
+				'question_answer'
+			),
+			' ',
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ color: '#FF6044' },
+				'whatshot'
+			)
+		),
+		_react2['default'].createElement(
+			'h2',
+			null,
+			'Animation'
+		),
+		_react2['default'].createElement(
+			'p',
+			null,
+			_react2['default'].createElement(
+				'code',
+				null,
+				'animation'
+			),
+			' prop [rotate, rotate_acw, pulse]'
+		),
+		_react2['default'].createElement(
+			'span',
+			{ style: { fontSize: '24px' } },
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ animation: 'rotate' },
+				'autorenew'
+			),
+			' ',
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ animation: 'rotate,.4s' },
+				'autorenew'
+			),
+			' ',
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ animation: 'pulse' },
+				'grade'
+			),
+			_react2['default'].createElement('br', null),
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ animation: 'pulse,1s', color: 'red', style: { fontSize: '48px' } },
+				'warning'
+			),
+			' ',
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ animation: 'pulse,.4s', color: 'red', style: { fontSize: '48px' } },
+				'play_circle_filled'
+			)
+		),
+		_react2['default'].createElement(
+			'p',
+			null,
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ animation: 'rotate,5s', style: { color: '#3947FF', marginRight: '-9px', animationDelay: '.3s', position: 'relative', top: '-6px', fontSize: '40px' } },
+				'settings'
+			),
+			_react2['default'].createElement(
+				_componentsIcon2['default'],
+				{ animation: 'rotate_acw,5s', style: { fontSize: '48px', color: '#EA4343' } },
+				'settings'
+			)
+		)
+	));
+
 	var imageStyle = { width: '200px', height: '200px' };
 
 	//Section: Microcomponents
@@ -171,7 +291,7 @@
 		),
 		_react2['default'].createElement(_componentsImage2['default'], { src: 'image.jpg', style: imageStyle, alt: 'Default suffix', caption: 'This is caption' }),
 		' ',
-		_react2['default'].createElement(_componentsImage2['default'], { src: 'image.jpg', style: imageStyle, 'hidpi-data': [['1.5', '-mySuffix']] }),
+		_react2['default'].createElement(_componentsImage2['default'], { src: 'image.jpg', lightbox: false, caption: 'lightbox disabled', style: imageStyle, 'hidpi-data': [['1.5', '-mySuffix']] }),
 		' ',
 		_react2['default'].createElement(_componentsImage2['default'], { src: 'image.jpg', style: imageStyle, 'hidpi-data': [['1.5', '@2x'], ['2', '@3x']], alt: 'Custom suffix', caption: 'Loads image@3x.jpg for pixeDensity 2 or higher' }),
 		' ',
@@ -48147,8 +48267,10 @@
 	},
 	    imageStyle = {
 		base: {
-			cursor: 'pointer',
 			display: 'block'
+		},
+		hasLightbox: {
+			cursor: 'pointer'
 		}
 	},
 	    captionStyle = {
@@ -48193,6 +48315,8 @@
 		base: {
 			maxWidth: '90%',
 			maxHeight: '90%',
+			maxWidth: '90vw',
+			maxHeight: '90vh',
 			transition: '300ms',
 			transform: 'scale(.7)'
 		},
@@ -48276,6 +48400,10 @@
 
 		//show lightbox
 		showLightbox: function showLightbox() {
+			if (!this.props.lightbox) {
+				return false;
+			}
+
 			this.setState({ lightboxVisible: true });
 
 			//enable scrolling
@@ -48377,7 +48505,8 @@
 			return _react2['default'].createElement(
 				'div',
 				{ style: imageContainerStyle.base },
-				_react2['default'].createElement('img', { onClick: this.showLightbox, src: this.state.visible ? this.imageURL : options.blankImage, alt: this.props.alt, style: [imageStyle.base, this.props.style] }),
+				_react2['default'].createElement('img', { onClick: this.showLightbox, src: this.state.visible ? this.imageURL : options.blankImage, alt: this.props.alt,
+					style: [imageStyle.base, this.props.lightbox && imageStyle.hasLightbox, this.props.style] }),
 				this.caption,
 				this.props.lightbox && _react2['default'].createElement(
 					'div',
@@ -48397,6 +48526,147 @@
 
 /***/ },
 /* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*! Peapod v<%= package.version %>
+	 *  Copyright Audentio <%= package.year %>
+	 *  LICENSE: <%= package.licence %>
+	 */
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(157);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _radium = __webpack_require__(250);
+
+	var _radium2 = _interopRequireDefault(_radium);
+
+	var _lodash = __webpack_require__(158);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	//Animations
+	//defined with ES6 string syntax
+	var anim = {
+		rotate: '\n\t' + _radium2['default'].keyframes({
+			'from': { transform: 'rotate(0deg)' },
+			'to': { transform: 'rotate(360deg)' }
+		}) + ' 1s linear 0s infinite\n\t',
+
+		rotate_acw: '\n\t' + _radium2['default'].keyframes({
+			'from': { transform: 'rotate(0deg)' },
+			'to': { transform: 'rotate(-360deg)' }
+		}) + ' 1s linear 0s infinite\n\t',
+
+		pulse: '\n\t' + _radium2['default'].keyframes({
+			'0%': { transform: 'scale(1)' },
+			'50%': { transform: 'scale(.8)' },
+			'100%': { transform: 'scale(1)' }
+		}) + ' 1s ease 0s infinite\n\t'
+	};
+
+	var styles = {
+		base: {
+			cursor: 'default'
+		}
+	};
+
+	//Component configuration
+	var options = {
+
+		//Default size
+		size: '1.1em'
+
+	};
+
+	//Merge with global options object
+	//global object overrides default settings defined above
+	if (peapod.options.Pea_icon) {
+		_lodash2['default'].merge(options, peapod.options.Pea_icon);
+	}
+
+	/**
+	* Icon component
+	*
+	* @element Pea_icon
+	* @param {string} animation - pre-defined animation
+	* @param {string} color - Icon color
+	* @param {string} label - Icon label (for tooltip and ARIA)
+	*/
+	var Pea_icon = _react2['default'].createClass({
+		displayName: 'Pea_icon',
+
+		propTypes: {
+			children: _react2['default'].PropTypes.string.isRequired,
+			animation: _react2['default'].PropTypes.string,
+			label: _react2['default'].PropTypes.string,
+			color: _react2['default'].PropTypes.string
+		},
+
+		getDefaultProps: function getDefaultProps() {
+			return {
+				size: options.size,
+				color: 'inherit'
+			};
+		},
+
+		componentWillMount: function componentWillMount() {
+
+			//load icon font
+			var stylesheet = document.getElementById('Peapod_IconFont_stylesheet');
+
+			if (!stylesheet) {
+				//check if <link> already exists
+
+				//Create
+				stylesheet = document.createElement('link');
+				stylesheet.id = "Peapod_IconFont_stylesheet";
+				stylesheet.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
+				stylesheet.rel = "stylesheet";
+
+				//append
+				document.head.appendChild(stylesheet);
+			}
+
+			//create anim string
+			if (this.props.animation) {
+				var animation = this.props.animation.split(','); //in case speed is also passed
+				var animation_name = animation[0];
+				var animation_speed = animation[1];
+
+				this.animationName = animation_name;
+
+				if (typeof anim[animation_name] == 'undefined')
+					//to-do: reactDOM reference
+					console.warn('Animation undefined:' + animation_name);
+
+				//set animation speed if defined
+				if (typeof animation_speed != 'undefined') this.animationSpeed = animation_speed;
+			}
+		},
+
+		render: function render() {
+			return _react2['default'].createElement(
+				'i',
+				{ className: 'material-icons', 'aria-label': this.props.label, title: this.props.label, style: [{ 'animation': anim[this.animationName] }, this.animationSpeed && { 'animationDuration': this.animationSpeed }, styles.base, { 'fontSize': this.props.size }, { 'color': this.props.color }, this.props.style] },
+				this.props.children
+			);
+		}
+
+	});
+
+	module.exports = (0, _radium2['default'])(Pea_icon);
+
+/***/ },
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* Copyright <%= package.year %>, Audentio, LLC.
@@ -48515,7 +48785,7 @@
 	module.exports = (0, _radium2['default'])(Pea_input);
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* Copyright <%= package.year %>, Audentio, LLC.
@@ -48589,7 +48859,7 @@
 	module.exports = Pea_checkbox;
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*! Peapod v<%= package.version %>

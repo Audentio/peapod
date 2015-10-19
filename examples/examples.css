@@ -34,6 +34,15 @@ h1 {
 	text-transform: uppercase;
 	margin-bottom: 1em;
 }
+
+h2 {
+	margin-top: 2em;
+	margin-bottom: .3em;
+}
+
+p {
+	margin-top: 0;
+}
 #mainContainer {
 	max-width: 1100px;
 	margin: auto;

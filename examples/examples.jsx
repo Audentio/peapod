@@ -8,6 +8,7 @@ import Pea_core from 'components/core';
 import Pea_timestamp from 'components/timestamp';
 import Pea_button from 'components/button';
 import Pea_image from 'components/image';
+import Pea_icon from 'components/icon';
 import Pea_input from 'components/forms/input';
 import Pea_checkbox from 'components/forms/checkbox';
 import Pea_section from 'components/section';
@@ -48,6 +49,39 @@ sections.push(
 	</div>
 )
 
+//Section: Icons
+sections.push(
+	<div className="section" key={'icons'}>
+		<h1>Icons</h1>
+
+		<h2>Size & color</h2>
+		<p>Currently simply a layer of abstration over google material icons</p>
+		<span style={{fontSize: '24px'}}>
+			<Pea_icon>home</Pea_icon>&nbsp;
+			<Pea_icon color="#07ADD4">assessment</Pea_icon>&nbsp;
+			<Pea_icon color="#3F70E2">polymer</Pea_icon>&nbsp;
+			<Pea_icon color="#D53FD6">question_answer</Pea_icon>&nbsp;
+			<Pea_icon color="#FF6044">whatshot</Pea_icon>
+		</span>
+
+		<h2>Animation</h2>
+		<p><code>animation</code> prop [rotate, rotate_acw, pulse]</p>
+		<span style={{fontSize: '24px'}}>
+			<Pea_icon animation="rotate">autorenew</Pea_icon>&nbsp;
+			<Pea_icon animation="rotate,.4s">autorenew</Pea_icon>&nbsp;
+			<Pea_icon animation="pulse">grade</Pea_icon><br />
+			<Pea_icon animation="pulse,1s" color="red" style={{fontSize: '48px'}}>warning</Pea_icon>&nbsp;
+			<Pea_icon animation="pulse,.4s" color="red" style={{fontSize: '48px'}}>play_circle_filled</Pea_icon>
+		</span>
+
+		<p>
+			<Pea_icon animation="rotate,5s" style={{color: '#3947FF', marginRight: '-9px', animationDelay: '.3s', position: 'relative', top: '-6px', fontSize: '40px'}}>settings</Pea_icon>
+			<Pea_icon animation="rotate_acw,5s" style={{fontSize: '48px', color: '#EA4343'}}>settings</Pea_icon>
+		</p>
+
+	</div>
+)
+
 var imageStyle = {width:'200px',height:'200px'};
 
 //Section: Microcomponents
@@ -58,12 +92,12 @@ sections.push(
 		<h2>Timestamps</h2>
 		Page loaded <Pea_timestamp time={new Date().toISOString()} /><br />
 		2005 was <Pea_timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
-		
+
 		<h2>Image</h2>
 		<p>(lazy load example below button test)</p>
 		<Pea_image src="image.jpg" style={imageStyle} alt="Default suffix" caption="This is caption" />
 		&nbsp;
-		<Pea_image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','-mySuffix'] ]} />
+		<Pea_image src="image.jpg" lightbox={false} caption="lightbox disabled" style={imageStyle} hidpi-data={[ ['1.5','-mySuffix'] ]} />
 		&nbsp;
 		<Pea_image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
 		&nbsp;
