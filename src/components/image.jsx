@@ -19,8 +19,10 @@ imageContainerStyle = {
 
 imageStyle = {
 	base: {
-		cursor: 'pointer',
 		display: 'block'
+	},
+	hasLightbox: {
+		cursor: 'pointer'
 	}
 },
 
@@ -68,6 +70,8 @@ lightboxImageStyle = {
 	base: {
 		maxWidth: '90%',
 		maxHeight: '90%',
+		maxWidth: '90vw',
+		maxHeight: '90vh',
 		transition: '300ms',
 		transform: 'scale(.7)',
 	},
@@ -152,6 +156,10 @@ var Pea_image = React.createClass({
 
 	//show lightbox
 	showLightbox: function(){
+		if(!this.props.lightbox){
+			return false;
+		}
+
 		this.setState({lightboxVisible: true})
 
 		//enable scrolling
@@ -252,7 +260,12 @@ var Pea_image = React.createClass({
 		
 		return (
 			<div style={imageContainerStyle.base}>
-				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt} style={[imageStyle.base, this.props.style]} />
+				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt} 
+				style={[
+					imageStyle.base, 
+					this.props.lightbox && imageStyle.hasLightbox, 
+					this.props.style
+				]} />
 				{this.caption}
 
 				{this.props.lightbox && 
