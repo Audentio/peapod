@@ -32337,6 +32337,24 @@
 		};
 	})();
 
+	//Create Component options
+	//
+	//@param {string} name - Component name
+	//@param {Object} [opts] - Default configuration for plugin
+	//@returns {Object} - Options object with default options overridden by peapod.options[component_name]
+	peapod.helper.options = function (name, opts) {
+
+		var options = opts || {};
+
+		//Merge with global options object
+		//global object overrides default settings defined above
+		if (peapod.options[name]) {
+			_.merge(options, peapod.options[name]);
+		}
+
+		return options;
+	};
+
 	//control page scrolling
 	//--
 	//disables touch scrolling on touch enabled devices
@@ -48290,7 +48308,7 @@
 			cursor: 'pointer',
 			position: 'fixed',
 			zIndex: 999,
-			backgroundColor: 'rgba(0,0,0,0.8)',
+			backgroundColor: 'rgba(0,0,0,0.75)',
 			width: '100%',
 			height: '100%',
 			top: 0,
@@ -48301,6 +48319,7 @@
 		},
 
 		visible: {
+			display: 'table',
 			visibility: 'visible',
 			opacity: 1
 		},
@@ -48327,7 +48346,7 @@
 	};
 
 	//Component configuration
-	var options = {
+	var options = peapod.helper.options('Pea_image', {
 
 		//this acts as src for lazyLoaded images until they're loaded
 		defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
@@ -48344,13 +48363,7 @@
 
 		//show enlarged image in lightbox
 		lightbox: true
-	};
-
-	//Merge with global options object
-	//global object overrides default settings defined above
-	if (peapod.options.Pea_image) {
-		_lodash2['default'].merge(options, peapod.options.Pea_image);
-	}
+	});
 
 	/**
 	* Image component: loads HiDPI images on retina devices
@@ -48556,21 +48569,21 @@
 	//Animations
 	//defined with ES6 string syntax
 	var anim = {
-		rotate: '\n\t' + _radium2['default'].keyframes({
+		rotate: '\n\t\t' + _radium2['default'].keyframes({
 			'from': { transform: 'rotate(0deg)' },
 			'to': { transform: 'rotate(360deg)' }
-		}) + ' 1s linear 0s infinite\n\t',
+		}) + ' 1s linear 0s infinite\n\t\t',
 
-		rotate_acw: '\n\t' + _radium2['default'].keyframes({
+		rotate_acw: '\n\t\t' + _radium2['default'].keyframes({
 			'from': { transform: 'rotate(0deg)' },
 			'to': { transform: 'rotate(-360deg)' }
-		}) + ' 1s linear 0s infinite\n\t',
+		}) + ' 1s linear 0s infinite\n\t\t',
 
-		pulse: '\n\t' + _radium2['default'].keyframes({
+		pulse: '\n\t\t' + _radium2['default'].keyframes({
 			'0%': { transform: 'scale(1)' },
 			'50%': { transform: 'scale(.8)' },
 			'100%': { transform: 'scale(1)' }
-		}) + ' 1s ease 0s infinite\n\t'
+		}) + ' 1s ease 0s infinite\n\t\t'
 	};
 
 	var styles = {
@@ -48580,18 +48593,12 @@
 	};
 
 	//Component configuration
-	var options = {
+	var options = peapod.helper.options('Pea_icon', {
 
 		//Default size
-		size: '1.1em'
+		size: '1em'
 
-	};
-
-	//Merge with global options object
-	//global object overrides default settings defined above
-	if (peapod.options.Pea_icon) {
-		_lodash2['default'].merge(options, peapod.options.Pea_icon);
-	}
+	});
 
 	/**
 	* Icon component

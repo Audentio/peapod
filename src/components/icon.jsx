@@ -12,29 +12,29 @@ import _ from 'lodash';
 //defined with ES6 string syntax
 var anim = {
 	rotate: 
-	`
-	${Radium.keyframes({
-		'from': {transform: 'rotate(0deg)'},
-		'to': {transform: 'rotate(360deg)'},
-	})} 1s linear 0s infinite
-	`,
+		`
+		${Radium.keyframes({
+			'from': {transform: 'rotate(0deg)'},
+			'to': {transform: 'rotate(360deg)'},
+		})} 1s linear 0s infinite
+		`,
 
 	rotate_acw: 
-	`
-	${Radium.keyframes({
-		'from': {transform: 'rotate(0deg)'},
-		'to': {transform: 'rotate(-360deg)'},
-	})} 1s linear 0s infinite
-	`,
+		`
+		${Radium.keyframes({
+			'from': {transform: 'rotate(0deg)'},
+			'to': {transform: 'rotate(-360deg)'},
+		})} 1s linear 0s infinite
+		`,
 
 	pulse:
-	`
-	${Radium.keyframes({
-		'0%': {transform: 'scale(1)'},
-		'50%': {transform: 'scale(.8)'},
-		'100%': {transform: 'scale(1)'}
-	})} 1s ease 0s infinite
-	`
+		`
+		${Radium.keyframes({
+			'0%': {transform: 'scale(1)'},
+			'50%': {transform: 'scale(.8)'},
+			'100%': {transform: 'scale(1)'}
+		})} 1s ease 0s infinite
+		`
 }
 
 var styles = {
@@ -44,18 +44,12 @@ var styles = {
 }
 
 //Component configuration
-var options = {
+var options = peapod.helper.options('Pea_icon', {
 
 	//Default size
-	size: '1.1em'
+	size: '1em'
 
-}
-
-//Merge with global options object
-//global object overrides default settings defined above
-if(peapod.options.Pea_icon) {
-	_.merge(options, peapod.options.Pea_icon);
-}
+})
 
 /**
 * Icon component

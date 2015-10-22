@@ -44,7 +44,7 @@ lightboxStyle = {
 		cursor: 'pointer',
 		position: 'fixed',
 		zIndex: 999,
-		backgroundColor: 'rgba(0,0,0,0.8)',
+		backgroundColor: 'rgba(0,0,0,0.75)',
 		width: '100%',
 		height: '100%',
 		top: 0,
@@ -55,6 +55,7 @@ lightboxStyle = {
 	},
 
 	visible: {
+		display: 'table',
 		visibility: 'visible',
 		opacity: 1
 	},
@@ -82,7 +83,7 @@ lightboxImageStyle = {
 };
 
 //Component configuration
-var options = {
+var options = peapod.helper.options('Pea_image', {
 
 	//this acts as src for lazyLoaded images until they're loaded
 	defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
@@ -99,13 +100,7 @@ var options = {
 
 	//show enlarged image in lightbox
 	lightbox: true
-}
-
-//Merge with global options object
-//global object overrides default settings defined above
-if(peapod.options.Pea_image) {
-	_.merge(options, peapod.options.Pea_image);
-}
+});
 
 /**
 * Image component: loads HiDPI images on retina devices
@@ -117,6 +112,8 @@ if(peapod.options.Pea_image) {
 * @param {string} [caption] - Image caption
 * @param {bool} [lazy] - Should the resource load lazily?
 * @param {Number} [lazy-distance] - Lazy images will be loaded when within this distance from viewport
+* @param {bool} [lightbox] - Enable lightbox on instance
+* @param {bool} [lightbox-animation] - Animated lightbox (ability to turn off for specific high-res images)
 */
 var Pea_image = React.createClass({
 
@@ -127,6 +124,7 @@ var Pea_image = React.createClass({
 		caption: React.PropTypes.string,
 		lazy: React.PropTypes.bool,
 		'lazy-distance': React.PropTypes.number,
+		lightbox: React.PropTypes.bool,
 		lightbox: React.PropTypes.bool
 	},
 

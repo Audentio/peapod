@@ -14,8 +14,28 @@ var Pea_core = (function(){
 		options: {},
 		helper: {}
 	};
-
+	
 })();
+
+
+//Create Component options
+//
+//@param {string} name - Component name
+//@param {Object} [opts] - Default configuration for plugin
+//@returns {Object} - Options object with default options overridden by peapod.options[component_name]
+peapod.helper.options = function(name, opts){
+
+	var options = opts || {};
+
+	//Merge with global options object
+	//global object overrides default settings defined above
+	if(peapod.options[name]) {
+		_.merge(options, peapod.options[name]);
+	}
+
+	return options;
+
+}
 
 //control page scrolling
 //--
