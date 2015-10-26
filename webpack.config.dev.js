@@ -1,21 +1,14 @@
-// webpack.config.js
-// Generate bundle file for examples
 var webpack = require('webpack');
 var path = require('path');
-//var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-module.exports = {
+
+var config = {
   devtool: 'eval',
-  
+  cache: true,
   entry: [
-	'webpack-hot-middleware/client',
+	  'webpack-hot-middleware/client',
     './examples/examples.jsx'
   ],
-  
-  /*
-  output: {
-    publicPath: './examples/',
-    filename: 'examples_bundle.js'
-  },*/
+
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'examples_bundle.js',
@@ -26,32 +19,36 @@ module.exports = {
   // Resolve source directories so we can avoid writing
   // ../../wherever/module
   resolve: {
+    unsafeCache: true,
     modulesDirectories: ['node_modules', './src'],
     extensions: ['', '.js', '.jsx', '.json']
   },
-  
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
-  
+
   module: {
-    preLoaders: [{ test: /\.json$/, loader: 'json'}],
-    
+    preLoaders: [{
+      test: /\.json$/,
+      loader: 'json'
+    }],
+
     loaders: [
-      //JSX files go through Babel
-      { test: /\.jsx$/, loaders: ['react-hot','babel-loader'] }
+
+      //JSX files go through hotloader and Babel
+      {
+        test: /\.jsx$/,
+        include: [
+         path.resolve(__dirname, "src/components"),
+         path.resolve(__dirname, "examples")
+        ],
+        loaders: ['react-hot','babel-loader']
+      }
     ]
   }
-  
-  /*
-  //The very awesome browsersync
-  plugins: [
-    new BrowserSyncPlugin({
-      host: 'localhost',
-      port: 3005,
-      server: { baseDir: ['examples'] }
-    })
-  ]*/
-    
+
 };
+
+module.exports = config;
