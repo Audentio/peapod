@@ -6,33 +6,33 @@
 
 
 //Dependencies
-import React from 'react';
-import Radium from 'radium';
-import 'components/theme';
-import Color from 'color';
-import Pea_Styler from 'components/mixins/styler';
- 
+import React from 'react'
+import Radium from 'radium'
+import 'peapod/theme'
+import Color from 'color'
+import Pea_Styler from 'peapod/mixins/styler'
+
 
 //generate style object for button kinds
 var generateKind = function(
-  backgroundColor = '#444', 
+  backgroundColor = '#444',
   color = 'white'){
-  
+
   if (color == 'white') {
     var hoverColor = Color(backgroundColor).lighten(0.2).rgbString();
   } else {
     var hoverColor = Color(backgroundColor).darken(0.2).rgbString();
   }
-  
+
   return {
     backgroundColor: backgroundColor,
     color: color,
-    
+
     ':hover': {
       backgroundColor: hoverColor
     }
   }
-}, 
+},
 
 
 themeStyle = peapod_style.button = peapod_style.button || {};
@@ -41,10 +41,10 @@ themeStyle = peapod_style.button = peapod_style.button || {};
 * Buttons component
 *
 * @element Pea_button
-* 
+*
 * @param {string} [label=Submit] - Button label text
 * @param {string} [kind=default] - Generic button style/state (danger/warning/success)
-* 
+*
 */
 var Pea_button = React.createClass({
 
@@ -57,7 +57,7 @@ var Pea_button = React.createClass({
     href: React.PropTypes.string,
     disabled: React.PropTypes.bool
   },
-  
+
   //Default props
   getDefaultProps: function() {
     return {
@@ -70,26 +70,26 @@ var Pea_button = React.createClass({
     return [
       {
         global: {
-          display: 'inline-block',  
+          display: 'inline-block',
 
           borderRadius: peapod_style.config['radius'], //theme.js
           border: '0px solid transparent',
-          
+
           padding: peapod.elSize(), //theme.js
-          
+
           textDecoration: 'none',
           fontFamily: 'inherit',
           fontSize: 'inherit',
-            
+
           outline: 'none',
-          
+
           transitionDuration: peapod_style.config['transition-duration'], //theme.js
-          
+
           //base:hover
           ':hover': {
             cursor: 'pointer'
           },
-          
+
           //base:active
           ':active': {
             transform: 'scale(.92)',
@@ -155,7 +155,7 @@ var Pea_button = React.createClass({
       }
     ]
   },
-  
+
   render: function() {
 
     //Anchor tag <a> if href specified
@@ -166,11 +166,11 @@ var Pea_button = React.createClass({
           className={this.props.className}
 					style={Pea_Styler.getStyle(this)}
           onClick={this.props.onClick}>
-          {this.props.label} {this.props.children}
+          {this.props.label} {this.props.children} {this.props.seconds}
         </a>
       );
     }
-    
+
     //Default: <button> tag
     else {
       return (
@@ -178,12 +178,12 @@ var Pea_button = React.createClass({
           className={this.props.className}
 					style={Pea_Styler.getStyle(this)}
           onClick={this.props.onClick}>
-          {this.props.label}
+          {this.props.label} {this.props.seconds}
         </button>
       );
     }
   }
-    
+
 });
 
 module.exports = Radium(Pea_button);

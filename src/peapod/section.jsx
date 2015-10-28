@@ -2,10 +2,10 @@
  *  Copyright Audentio <%= package.year %>
  *  LICENSE: <%= package.licence %>
  */
- 
+
 import React from 'react';
 import Radium from 'radium';
-import Pea_Styler from 'components/mixins/styler';
+import Pea_Styler from 'peapod/mixins/styler';
 
 var Pea_section = React.createClass({
   mixins: [Pea_Styler],
@@ -43,7 +43,7 @@ var Pea_section = React.createClass({
 		</div>
       );
 	}
-    
+
 });
 
 module.exports = Radium(Pea_section);

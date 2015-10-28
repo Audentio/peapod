@@ -1,26 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import _ from 'lodash';
+import _ from 'lodash'
 
 //Peapod
-import Pea_core from 'components/core';
-import Pea_timestamp from 'components/timestamp';
-import Pea_button from 'components/button';
-import Pea_image from 'components/image';
-import Pea_icon from 'components/icon';
-import Pea_input from 'components/forms/input';
-import Pea_checkbox from 'components/forms/checkbox';
-import Pea_section from 'components/section';
+import Pea_core from 'peapod/core'
+import Pea_timestamp from 'peapod/timestamp'
+import Pea_button from 'peapod/button'
+import Pea_image from 'peapod/image'
+import Pea_icon from 'peapod/icon'
+import Pea_input from 'peapod/forms/input'
+import Pea_checkbox from 'peapod/forms/checkbox'
+import Pea_section from 'peapod/section'
+import { Pea_animation } from 'peapod/animation'
 
 var sections = [];
 var buttonStyle = {marginRight: '10px'};
+
+class Testcomponent extends React.Component{
+	render() {
+		return(
+			<div>HOLwA {this.props.test}</div>
+		)
+	}
+};
 
 //section: Buttons
 sections.push(
 	<div className="section" key={'buttons'}>
 		<h1>Buttons</h1>
-		
+
 		<Pea_button label="Default" style={buttonStyle} />
 		<Pea_button label="Primary" kind="primary" style={buttonStyle} />
 		<Pea_button label="Success" kind="success" style={buttonStyle} />
@@ -42,7 +51,7 @@ sections.push(
 sections.push(
 	<div className="section" key={'forms'}>
 		<h1>Forms</h1>
-		
+
 		<h2>Text input</h2>
 		<Pea_input placeholder="Placeholder..." />
 		<Pea_checkbox kind="primary" checked={true} />
@@ -64,8 +73,25 @@ sections.push(
 			<Pea_icon color="#FF6044">whatshot</Pea_icon>
 		</span>
 
-		<h2>Animation</h2>
+	</div>
+)
+
+
+//Compose animateable button with Pea_animation HOC
+//Pea_icon is already composed with it
+
+var AnimBtn = Pea_animation(Pea_button)
+
+sections.push(
+	<div className="section" key={'Animation'}>
+		<h1>Animation</h1>
+		<p>Animated components composed with Pea_animation HOC</p>
 		<p><code>animation</code> prop [rotate, rotate_acw, pulse]</p>
+
+		<AnimBtn animation="pulse, 1s" />
+
+		<br />
+
 		<span style={{fontSize: '24px'}}>
 			<Pea_icon animation="rotate">autorenew</Pea_icon>&nbsp;
 			<Pea_icon animation="rotate,.4s">autorenew</Pea_icon>&nbsp;
@@ -78,7 +104,6 @@ sections.push(
 			<Pea_icon animation="rotate,5s" style={{color: '#3947FF', marginRight: '-9px', animationDelay: '.3s', position: 'relative', top: '-6px', fontSize: '40px'}}>settings</Pea_icon>
 			<Pea_icon animation="rotate_acw,5s" style={{fontSize: '48px', color: '#EA4343'}}>settings</Pea_icon>
 		</p>
-
 	</div>
 )
 
@@ -88,14 +113,14 @@ var imageStyle = {width:'200px',height:'200px'};
 sections.push(
 	<div className="section" key={'microcomponents'}>
 		<h1>Microcomponents</h1>
-		
+
 		<h2>Timestamps</h2>
 		Page loaded <Pea_timestamp time={new Date().toISOString()} /><br />
 		2005 was <Pea_timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
 
 		<h2>Image</h2>
 		<p>(lazy load example below button test)</p>
-		<Pea_image src="image.jpg" style={imageStyle} alt="Default suffix" caption="This is caption" />
+		<Pea_image src="image.jpg" lightbox-animation={false} caption="lightbox without animation" style={imageStyle} />
 		&nbsp;
 		<Pea_image src="image.jpg" lightbox={false} caption="lightbox disabled" style={imageStyle} hidpi-data={[ ['1.5','-mySuffix'] ]} />
 		&nbsp;
@@ -108,7 +133,7 @@ sections.push(
 
 
 /*******************
- * STRAIN TEST 
+ * STRAIN TEST
  * Increase {repeatCount} till your browser chokes
  * why? The dark overlord commands so
  *******************/
@@ -122,7 +147,7 @@ customStyleTest = {
 	borderRadius: 0,
 	marginBottom: 1,
 	marginRight: 1,
-	
+
 	':hover' : { backgroundColor: 'red' }
 };
 for(var x=0; x<repeatCount; x++){
@@ -132,7 +157,7 @@ for(var x=0; x<repeatCount; x++){
 
 
 /* This is where everything comes together */
-ReactDOM.render(
+var examples_render = ReactDOM.render(
 	<div>
 		{sections}
 		<Pea_section vars='pastel' title='Pastel Variable Section Test' >
@@ -159,7 +184,7 @@ ReactDOM.render(
 		<div style={{textAlign:'center'}}><br />{ButtonTest}</div>
 		<br />
 		<Pea_image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpi-data={false} />
-		
+
 		<Pea_section vars='pastel' title='Pastel Variable Section Test' >
 			<Pea_button label="Default"/>
 			<Pea_button label="Primary" kind="primary"/>

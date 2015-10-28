@@ -6,7 +6,7 @@
 import ReactDOM from 'react-dom';
 
 var Pea_core = (function(){
- 
+
 	window.peapod = {
 		basePath: '/',
 		suffix: '',
@@ -14,7 +14,7 @@ var Pea_core = (function(){
 		options: {},
 		helper: {}
 	};
-	
+
 })();
 
 

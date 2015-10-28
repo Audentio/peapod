@@ -9,7 +9,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import 'components/theme';
+import 'peapod/theme';
 
 
 var defaultStyle = {
@@ -18,7 +18,7 @@ var defaultStyle = {
 		position: 'relative',
 		border: '1px solid #ddd'
 	},
-	
+
 	inputElement: {
 		fontSize: 'inherit',
 		fontFamily: 'inherit',
@@ -30,7 +30,7 @@ var defaultStyle = {
 		padding: '10px',
 		lineHeight: 'inherit'
 	},
-	
+
 	inputPlaceholder: {
 		fontSize: 'inherit',
 		fontFamily: 'inherit',
@@ -53,11 +53,11 @@ themeStyle = peapod_style.input = peapod_style.input || {};
 * Multipurpose Input component
 *
 * @element Pea_input
-* 
+*
 * @param {string} [type=text] - Input type
 * @param {string} [value] - Input value
 * @param {string} [placeholder] - Placeholder text
-* 
+*
 */
 var Pea_input = React.createClass({
 
@@ -74,34 +74,34 @@ var Pea_input = React.createClass({
 			placeholder: (this.props.value && this.props.value.length > 1) ? undefined : this.props.placeholder //undefined if value prop exists
 		};
 	},
-	
+
 	onChangeHandler: function(e){
-	
+
 		var VALUE = e.target.value,
 			PLACEHOLDER = ( VALUE.length > 0 ) ? '' : this.props.placeholder;
-		
+
 		this.setState({  value:VALUE , placeholder:PLACEHOLDER });
-		
+
 	},
-	
+
 	onFocusHandler: function(e){
 		this.setState({ focus: true })
 	},
-	
+
 	render: function() {
 		var self = this;
 		return (
-			<div style={[ defaultStyle.inputWrapper, themeStyle.inputWrapper]} 
+			<div style={[ defaultStyle.inputWrapper, themeStyle.inputWrapper]}
 				 className={this.props.className}>
-				 
+
 				<span style={[ defaultStyle.inputPlaceholder, themeStyle.inputPlaceholder ]}>{this.state.placeholder}</span>
-				
-				<input onFocus={this.onFocusHandler} style={[ defaultStyle.inputElement, themeStyle.inputElement ]} 
+
+				<input onFocus={this.onFocusHandler} style={[ defaultStyle.inputElement, themeStyle.inputElement ]}
 					   type="text" value={this.state.value} onChange={this.onChangeHandler} />
 			</div>
 		);
 	}
-    
+
 });
 
 

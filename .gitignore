@@ -8,6 +8,8 @@ build
 
 .vscode
 
+stats.json
+
 npm-debug.log
 .sass-cache
 
