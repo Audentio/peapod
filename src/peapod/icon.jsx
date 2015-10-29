@@ -2,40 +2,12 @@
  *  Copyright Audentio <%= package.year %>
  *  LICENSE: <%= package.licence %>
  */
- 
-import React from 'react';	
-import ReactDOM from 'react-dom';	
+
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import _ from 'lodash';
-
-//Animations
-//defined with ES6 string syntax
-var anim = {
-	rotate: 
-		`
-		${Radium.keyframes({
-			'from': {transform: 'rotate(0deg)'},
-			'to': {transform: 'rotate(360deg)'},
-		})} 1s linear 0s infinite
-		`,
-
-	rotate_acw: 
-		`
-		${Radium.keyframes({
-			'from': {transform: 'rotate(0deg)'},
-			'to': {transform: 'rotate(-360deg)'},
-		})} 1s linear 0s infinite
-		`,
-
-	pulse:
-		`
-		${Radium.keyframes({
-			'0%': {transform: 'scale(1)'},
-			'50%': {transform: 'scale(.8)'},
-			'100%': {transform: 'scale(1)'}
-		})} 1s ease 0s infinite
-		`
-}
+import { Pea_animation } from 'peapod/animation';
 
 var styles = {
 	base: {
@@ -75,7 +47,7 @@ var Pea_icon = React.createClass({
 			color: 'inherit'
 		}
 	},
-	
+
 	componentWillMount: function(){
 
 		//load icon font
@@ -93,30 +65,11 @@ var Pea_icon = React.createClass({
 			document.head.appendChild(stylesheet);
 		}
 
-		//create anim string
-		if(this.props.animation){
-			var animation = this.props.animation.split(','); //in case speed is also passed
-			var animation_name = animation[0];
-			var animation_speed = animation[1];
-
-			this.animationName = animation_name;
-
-			if(typeof anim[animation_name] == 'undefined')
-				//to-do: reactDOM reference
-				console.warn('Animation undefined:' + animation_name);
-
-			//set animation speed if defined
-			if(typeof animation_speed != 'undefined')
-				this.animationSpeed = animation_speed
-		}
-
 	},
-	
+
 	render: function() {
 		return (
 			<i className="material-icons" aria-label={this.props.label} title={this.props.label} style={[
-				{'animation': anim[this.animationName]},
-				this.animationSpeed && {'animationDuration': this.animationSpeed},
 				styles.base,
 				{'fontSize': this.props.size},
 				{'color': this.props.color},
@@ -124,7 +77,7 @@ var Pea_icon = React.createClass({
 			]}>{this.props.children}</i>
 		);
 	}
-    
+
 });
 
-module.exports = Radium(Pea_icon);
+module.exports = Pea_animation(Radium(Pea_icon));

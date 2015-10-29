@@ -41,7 +41,7 @@ var config = {
       {
         test: /\.jsx$/,
         include: [
-         path.resolve(__dirname, "src/components"),
+         path.resolve(__dirname, "src/peapod"),
          path.resolve(__dirname, "examples")
         ],
         loaders: ['react-hot','babel-loader']
