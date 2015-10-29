@@ -12,24 +12,24 @@ import Pea_icon from 'components/icon';
 import Pea_input from 'components/forms/input';
 import Pea_checkbox from 'components/forms/checkbox';
 import Pea_section from 'components/section';
+import Pea_external from 'components/external';
 
 var sections = [];
-var buttonStyle = {marginRight: '10px'};
 
 //section: Buttons
 sections.push(
 	<div className="section" key={'buttons'}>
 		<h1>Buttons</h1>
 		
-		<Pea_button label="Default" style={buttonStyle} />
-		<Pea_button label="Primary" kind="primary" style={buttonStyle} />
-		<Pea_button label="Success" kind="success" style={buttonStyle} />
-		<Pea_button label="Danger" kind="danger" style={buttonStyle} />
-		<Pea_button label="Warning" kind="warning" style={buttonStyle} />
+		<Pea_button label="Default" />
+		<Pea_button label="Primary" kind="primary" />
+		<Pea_button label="Success" kind="success" />
+		<Pea_button label="Danger" kind="danger" />
+		<Pea_button label="Warning" kind="warning" />
 		<br /><br />
 		<Pea_button onClick={function(){alert('test')}} label="onClick handler" />
 		<Pea_button href="http://peapod.io" label="Anchor/Link" kind="primary" />
-		<Pea_button style={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
+		<Pea_button getStyle={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
 		<Pea_button label="Raised" kind="primary" raised={true} />
 		<Pea_button label="Round" kind="primary" round={true} />
 		<Pea_button label="Disabled" kind="primary" disabled={true} />
@@ -114,7 +114,7 @@ sections.push(
  *******************/
 
 //Rpeat button markup for performance test
-var repeatCount = 405,
+var repeatCount = 5,
 ButtonTest = [],
 
 customStyleTest = {
@@ -132,10 +132,12 @@ for(var x=0; x<repeatCount; x++){
 
 
 /* This is where everything comes together */
+
 ReactDOM.render(
 	<div>
+	
 		{sections}
-		<Pea_section vars='pastel' title='Pastel Variable Section Test' >
+		<Pea_section varSet='pastel' title='Pastel Variable Section Test' >
 			<Pea_button label="Default"/>
 			<Pea_button label="Primary" kind="primary"/>
 			<Pea_button label="Success" kind="success"/>
@@ -149,7 +151,7 @@ ReactDOM.render(
 			<Pea_button label="Danger" kind="danger"/>
 			<Pea_button label="Warning" kind="warning"/>
 		</Pea_section>
-		<Pea_section vars='neon' title='Neon Variable Section Test' >
+		<Pea_section varSet='neon' title='Neon Variable Section Test' >
 			<Pea_button label="Default"/>
 			<Pea_button label="Primary" kind="primary"/>
 			<Pea_button label="Success" kind="success"/>
@@ -160,7 +162,7 @@ ReactDOM.render(
 		<br />
 		<Pea_image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpi-data={false} />
 		
-		<Pea_section vars='pastel' title='Pastel Variable Section Test' >
+		<Pea_section varSet='pastel' title='Pastel Variable Section Test' >
 			<Pea_button label="Default"/>
 			<Pea_button label="Primary" kind="primary"/>
 			<Pea_button label="Success" kind="success"/>
@@ -174,7 +176,24 @@ ReactDOM.render(
 			<Pea_button label="Danger" kind="danger"/>
 			<Pea_button label="Warning" kind="warning"/>
 		</Pea_section>
-		<Pea_section vars='neon' title='Neon Variable Section Test' >
+		<Pea_section varSet='neon' title='Neon Variable Section Test' >
+			<Pea_button label="Default"/>
+			<Pea_button label="Primary" kind="primary"/>
+			<Pea_button label="Success" kind="success"/>
+			<Pea_button label="Danger" kind="danger"/>
+			<Pea_button label="Warning" kind="warning"/>
+		</Pea_section>
+
+		<Pea_external getID="externalContent" />
+	</div>
+	, document.getElementById('mainContainer')
+);
+
+
+/*
+ReactDOM.render(
+	<div>
+		<Pea_section varSet='neon' title='Neon Variable Section Test' >
 			<Pea_button label="Default"/>
 			<Pea_button label="Primary" kind="primary"/>
 			<Pea_button label="Success" kind="success"/>
@@ -184,3 +203,16 @@ ReactDOM.render(
 	</div>
 	, document.getElementById('mainContainer')
 );
+*/
+
+/*
+ReactDOM.render(
+	<div>
+		<Pea_section title='Variable Section Test' >
+			<Pea_button label="Default"/>
+			<Pea_button label="Primary" kind="primary"/>
+		</Pea_section>
+	</div>
+	, document.getElementById('mainContainer')
+);
+*/

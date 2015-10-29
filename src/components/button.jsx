@@ -11,13 +11,20 @@ import Radium from 'radium';
 import 'components/theme';
 import Color from 'color';
 import Pea_Styler from 'components/mixins/styler';
+import Pea_Vars from 'components/mixins/vars';
  
 
 //generate style object for button kinds
-var generateKind = function(
-  backgroundColor = '#444', 
-  color = 'white'){
-  
+var generateKind = function(backgroundColor = '#444', color = 'white') {
+
+  if (typeof(backgroundColor) == "object") {
+    backgroundColor = backgroundColor[backgroundColor.length - 1].val;
+  }
+
+  if (typeof(color) == "object") {
+    color = color[color.length - 1].val;
+  }
+
   if (color == 'white') {
     var hoverColor = Color(backgroundColor).lighten(0.2).rgbString();
   } else {
@@ -70,9 +77,10 @@ var Pea_button = React.createClass({
     return [
       {
         global: {
-          display: 'inline-block',  
+          display: 'inline-block',
+          margin: '1px',
 
-          borderRadius: peapod_style.config['radius'], //theme.js
+          borderRadius: Pea_Vars.get('radius', 'global'), //theme.js
           border: '0px solid transparent',
           
           padding: peapod.elSize(), //theme.js
@@ -83,7 +91,7 @@ var Pea_button = React.createClass({
             
           outline: 'none',
           
-          transitionDuration: peapod_style.config['transition-duration'], //theme.js
+          transitionDuration: Pea_Vars.get('transition-duration', 'global'), //theme.js
           
           //base:hover
           ':hover': {
@@ -114,41 +122,41 @@ var Pea_button = React.createClass({
         }
       },
       {
-        global: generateKind('#444'),
-        pastel: generateKind('#DDD', 'black'),
-        neon: generateKind('#FFF', 'black'),
+        global: generateKind(Pea_Vars.get('brand-default', 'global')),
+        pastel: generateKind(Pea_Vars.get('brand-default', 'pastel'), Pea_Vars.get('text-dark', 'pastel')),
+        neon: generateKind(Pea_Vars.get('brand-default', 'neon'), Pea_Vars.get('text-dark', 'neon')),
         props: {
           kind: 'default'
         }
       },
       {
-        global: generateKind(peapod_style.config['brand-primary']),
-        pastel: generateKind('#9FF', 'black'),
-        neon: generateKind('#0FF', 'black'),
+        global: generateKind(Pea_Vars.get('brand-primary', 'global')),
+        pastel: generateKind(Pea_Vars.get('brand-primary', 'pastel'), Pea_Vars.get('text-dark', 'pastel')),
+        neon: generateKind(Pea_Vars.get('brand-primary', 'neon'), Pea_Vars.get('text-dark', 'neon')),
         props: {
           kind: 'primary'
         }
       },
       {
-        global: generateKind(peapod_style.config['brand-success']),
-        pastel: generateKind('#9F9', 'black'),
-        neon: generateKind('#0F0', 'black'),
+        global: generateKind(Pea_Vars.get('brand-success', 'global')),
+        pastel: generateKind(Pea_Vars.get('brand-success', 'pastel'), Pea_Vars.get('text-dark', 'pastel')),
+        neon: generateKind(Pea_Vars.get('brand-success', 'neon'), Pea_Vars.get('text-dark', 'neon')),
         props: {
           kind: 'success'
         }
       },
       {
-        global: generateKind(peapod_style.config['brand-warning']),
-        pastel: generateKind('#FF9', 'black'),
-        neon: generateKind('#FF0', 'black'),
+        global: generateKind(Pea_Vars.get('brand-warning', 'global')),
+        pastel: generateKind(Pea_Vars.get('brand-warning', 'pastel'), Pea_Vars.get('text-dark', 'pastel')),
+        neon: generateKind(Pea_Vars.get('brand-warning', 'neon'), Pea_Vars.get('text-dark', 'neon')),
         props: {
           kind: 'warning'
         }
       },
       {
-        global: generateKind(peapod_style.config['brand-danger']),
-        pastel: generateKind('#F99', 'black'),
-        neon: generateKind('#F00', 'black'),
+        global: generateKind(Pea_Vars.get('brand-danger', 'global')),
+        pastel: generateKind(Pea_Vars.get('brand-danger', 'pastel'), Pea_Vars.get('text-dark', 'pastel')),
+        neon: generateKind(Pea_Vars.get('brand-danger', 'neon'), Pea_Vars.get('text-dark', 'neon')),
         props: {
           kind: 'danger'
         }
