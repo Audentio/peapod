@@ -39,7 +39,7 @@ sections.push(
 		<br /><br />
 		<Pea_button onClick={function(){alert('test')}} label="onClick handler" />
 		<Pea_button href="http://peapod.io" label="Anchor/Link" kind="primary" />
-		<Pea_button getStyle={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
+		<Pea_button style={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
 		<Pea_button label="Raised" kind="primary" raised={true} />
 		<Pea_button label="Round" kind="primary" round={true} />
 		<Pea_button label="Disabled" kind="primary" disabled={true} />

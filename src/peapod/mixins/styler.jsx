@@ -56,7 +56,7 @@ window.peapod_styler = {
 			if (source == "base") {
 				source = obj.getBaseStyle();
 			} else if (source == "local") {
-				source = obj.props.getStyle;
+				source = obj.props.style;
 				if (typeof(source) !== 'undefined') source = [{global: source}]
 			} else {
 				source = source[componentName];

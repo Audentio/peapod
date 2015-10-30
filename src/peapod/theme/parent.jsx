@@ -30,6 +30,7 @@ var generateKind = function(
 }
 
 module.exports = {
+  /*
   Pea_button: [
     {
       neon: generateKind(Pea_Vars.get('brand-pink', 'neon'), Pea_Vars.get('text-dark', 'neon')),
@@ -38,4 +39,5 @@ module.exports = {
       }
     }
   ]
+  */
 }
