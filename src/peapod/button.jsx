@@ -165,18 +165,13 @@ var Pea_button = React.createClass({
   },
 
   render: function() {
-    var btnStyle = Pea_Styler.getStyle(this);
-    var test = [4,4]
-    console.log(btnStyle)
-
     //Anchor tag <a> if href specified
     if (this.props.href) {
-      console.log('')
       return (
         <a
           href={this.props.href}
           className={this.props.className}
-					style={btnStyle}
+					style={Pea_Styler.getStyle(this)}
           onClick={this.props.onClick}>
           {this.props.label} {this.props.children} {this.props.seconds}
         </a>
@@ -188,7 +183,7 @@ var Pea_button = React.createClass({
       return (
         <button
           className={this.props.className}
-					style={btnStyle}
+					style={Pea_Styler.getStyle(this)}
           onClick={this.props.onClick}>
           {this.props.label} {this.props.seconds}
         </button>

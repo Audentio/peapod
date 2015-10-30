@@ -25,6 +25,7 @@ class Testcomponent extends React.Component{
 	}
 };
 
+
 //section: Buttons
 sections.push(
 	<div className="section" key={'buttons'}>
@@ -81,7 +82,9 @@ sections.push(
 //Compose animateable button with Pea_animation HOC
 //Pea_icon is already composed with it
 
-var AnimIcon = Pea_animation(Pea_image)
+
+var AnimatedButton = Pea_animation(Pea_button);
+var AnimatedInput = Pea_animation(Pea_input);
 
 sections.push(
 	<div className="section" key={'Animation'}>
@@ -89,7 +92,8 @@ sections.push(
 		<p>Animated components composed with Pea_animation HOC</p>
 		<p><code>animation</code> prop [rotate, rotate_acw, pulse]</p>
 
-<AnimIcon src="image.jpg" lightbox-animation={false} caption="lightbox without animation" style={imageStyle} />
+		<AnimatedButton label="BouncyButton" style={{backgroundColor: 'indianred'}} animation="bounce, .7s" />
+		<AnimatedInput value="Crazy input" animation="pulse, .4s" />
 
 		<br />
 
