@@ -3,10 +3,10 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import base from 'components/theme/baseVars';
-import parent from 'components/theme/parentVars';
-import current from 'components/theme/currentVars';
-import override from 'components/theme/overrideVars';
+import base from 'peapod/theme/baseVars';
+import parent from 'peapod/theme/parentVars';
+import current from 'peapod/theme/currentVars';
+import override from 'peapod/theme/overrideVars';
 
 window.peapod_vars = {
 	sources: [base, parent, current, override],

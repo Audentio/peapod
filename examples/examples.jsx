@@ -4,15 +4,15 @@ import ReactDOM from 'react-dom'
 import _ from 'lodash'
 
 //Peapod
-import Pea_core from 'components/core';
-import Pea_timestamp from 'components/timestamp';
-import Pea_button from 'components/button';
-import Pea_image from 'components/image';
-import Pea_icon from 'components/icon';
-import Pea_input from 'components/forms/input';
-import Pea_checkbox from 'components/forms/checkbox';
-import Pea_section from 'components/section';
-import Pea_external from 'components/external';
+import Pea_core from 'peapod/core';
+import Pea_timestamp from 'peapod/timestamp';
+import Pea_button from 'peapod/button';
+import Pea_image from 'peapod/image';
+import Pea_icon from 'peapod/icon';
+import Pea_input from 'peapod/forms/input';
+import Pea_checkbox from 'peapod/forms/checkbox';
+import Pea_section from 'peapod/section';
+import Pea_external from 'peapod/external';
 import { Pea_animation } from 'peapod/animation'
 
 var sections = [];
@@ -81,7 +81,7 @@ sections.push(
 //Compose animateable button with Pea_animation HOC
 //Pea_icon is already composed with it
 
-var AnimBtn = Pea_animation(Pea_button)
+var AnimIcon = Pea_animation(Pea_image)
 
 sections.push(
 	<div className="section" key={'Animation'}>
@@ -89,7 +89,7 @@ sections.push(
 		<p>Animated components composed with Pea_animation HOC</p>
 		<p><code>animation</code> prop [rotate, rotate_acw, pulse]</p>
 
-		<AnimBtn animation="pulse, 1s" />
+<AnimIcon src="image.jpg" lightbox-animation={false} caption="lightbox without animation" style={imageStyle} />
 
 		<br />
 

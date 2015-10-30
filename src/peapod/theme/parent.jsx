@@ -1,5 +1,5 @@
 import Color from 'color';
-import Pea_Vars from 'components/mixins/vars';
+import Pea_Vars from 'peapod/mixins/vars';
 
 var generateKind = function(
   backgroundColor = '#444', 

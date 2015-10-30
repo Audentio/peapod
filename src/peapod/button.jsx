@@ -6,13 +6,12 @@
 
 
 //Dependencies
-<<<<<<< HEAD:src/components/button.jsx
 import React from 'react';
 import Radium from 'radium';
 import 'peapod/theme';
 import Color from 'color';
-import Pea_Styler from 'components/mixins/styler';
-import Pea_Vars from 'components/mixins/vars';
+import Pea_Styler from 'peapod/mixins/styler';
+import Pea_Vars from 'peapod/mixins/vars';
  
 
 //generate style object for button kinds
@@ -88,6 +87,7 @@ var Pea_button = React.createClass({
           textDecoration: 'none',
           fontFamily: 'inherit',
           fontSize: 'inherit',
+          lineHeight: 'inherit',
 
           outline: 'none',
           
@@ -165,14 +165,18 @@ var Pea_button = React.createClass({
   },
 
   render: function() {
+    var btnStyle = Pea_Styler.getStyle(this);
+    var test = [4,4]
+    console.log(btnStyle)
 
     //Anchor tag <a> if href specified
     if (this.props.href) {
+      console.log('')
       return (
         <a
           href={this.props.href}
           className={this.props.className}
-					style={Pea_Styler.getStyle(this)}
+					style={btnStyle}
           onClick={this.props.onClick}>
           {this.props.label} {this.props.children} {this.props.seconds}
         </a>
@@ -184,7 +188,7 @@ var Pea_button = React.createClass({
       return (
         <button
           className={this.props.className}
-					style={Pea_Styler.getStyle(this)}
+					style={btnStyle}
           onClick={this.props.onClick}>
           {this.props.label} {this.props.seconds}
         </button>

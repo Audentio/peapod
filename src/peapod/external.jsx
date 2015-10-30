@@ -6,7 +6,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
-import Pea_Styler from 'components/mixins/styler';
+import Pea_Styler from 'peapod/mixins/styler';
 
 var Pea_section = React.createClass({
 
@@ -20,8 +20,6 @@ var Pea_section = React.createClass({
         node.innerHTML = document.getElementById(this.props.getID).innerHTML;
         ele.style.display = 'none';
       }
-      
-
   }
     
 });

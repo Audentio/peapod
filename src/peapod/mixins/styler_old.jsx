@@ -4,10 +4,10 @@
  */
 
 import React from 'react';
-import base from 'components/theme/base';
-import parent from 'components/theme/parent';
-import current from 'components/theme/current';
-import override from 'components/theme/override';
+import base from 'peapod/theme/base';
+import parent from 'peapod/theme/parent';
+import current from 'peapod/theme/current';
+import override from 'peapod/theme/override';
 
 module.exports = {
     validateStyleProps: function(styleProps, props) {
