@@ -91,7 +91,7 @@ var Pea_input = React.createClass({
 	render: function() {
 		var self = this;
 		return (
-			<div style={[ defaultStyle.inputWrapper, themeStyle.inputWrapper]}
+			<div style={[ defaultStyle.inputWrapper, themeStyle.inputWrapper, this.props.style]}
 				 className={this.props.className}>
 
 				<span style={[ defaultStyle.inputPlaceholder, themeStyle.inputPlaceholder ]}>{this.state.placeholder}</span>

@@ -38,6 +38,15 @@ var anim = {
             '50%': {transform: 'scale(.8)'},
             '100%': {transform: 'scale(1)'}
         })} 1s ease 0s infinite
+        `,
+
+    bounce:
+        `
+        ${Radium.keyframes({
+            '0%': {transform: 'translateY(0)'},
+            '50%': {transform: 'translateY(-10px)'},
+            '100%': {transform: 'translateY(0)'}
+        })} 1s ease 0s infinite
         `
 }
 
@@ -71,12 +80,12 @@ export var Pea_animation = ComposedComponent => class extends React.Component {
     render() {
 
         var {animation, ...props} = this.props; //this.props.animation wont be passed down
-
-        return <ComposedComponent {...props} style={[
-            {'animation': anim[this.animationName]},
-            this.animationSpeed && {'animationDuration': this.animationSpeed},
-            this.props.style
-        ]} />;
+        var _style = _.merge( {}, 
+                {'animation': anim[this.animationName]},
+                this.animationSpeed && {'animationDuration': this.animationSpeed},
+                this.props.style
+            )
+        return <ComposedComponent {...props} style={_style} />;
     }
 
 }

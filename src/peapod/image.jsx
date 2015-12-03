@@ -266,13 +266,12 @@ var Pea_image = React.createClass({
 	render: function() {
 
 		return (
-			<div style={imageContainerStyle.base}>
+			<div style={[imageContainerStyle.base, this.props.style]}>
 
 				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
 				style={[
 					imageStyle.base,
-					this.props.lightbox && imageStyle.hasLightbox,
-					this.props.style
+					this.props.lightbox && imageStyle.hasLightbox
 				]} />
 				{this.caption}
 
