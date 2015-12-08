@@ -12,7 +12,7 @@ import 'peapod/theme';
 import Color from 'color';
 import Pea_Styler from 'peapod/mixins/styler';
 import Pea_Vars from 'peapod/mixins/vars';
- 
+
 
 //generate style object for button kinds
 var generateKind = function(backgroundColor = '#444', color = 'white') {
@@ -90,9 +90,9 @@ var Pea_button = React.createClass({
           lineHeight: 'inherit',
 
           outline: 'none',
-          
+
           transitionDuration: Pea_Vars.get('transition-duration', 'global'), //theme.js
-          
+
           //base:hover
           ':hover': {
             cursor: 'pointer'
@@ -160,6 +160,12 @@ var Pea_button = React.createClass({
         props: {
           kind: 'danger'
         }
+      },
+      {
+        global: {
+          color: 'red'
+        },
+        childEle: "testChild"
       }
     ]
   },
@@ -186,6 +192,7 @@ var Pea_button = React.createClass({
 					style={Pea_Styler.getStyle(this)}
           onClick={this.props.onClick}>
           {this.props.label} {this.props.seconds}
+          <span style={Pea_Styler.getStyle(this, 'testChild')}>test</span>
         </button>
       );
     }

@@ -45,11 +45,12 @@ window.peapod_styler = {
         return true;
     },
 
-	getStyle: function(obj) {
+	getStyle: function(obj, childEle) {
 		var result = [],
 			style = {},
 			componentName = obj.props.styleLike || obj.constructor.displayName,
-			varSet = obj.props.varSet || 'base';
+			varSet = obj.props.varSet || 'base',
+			childEle = childEle || "";
 
 		for (var i = 0, len = peapod_styler.sources.length; i < len; i++) {
 			var source = peapod_styler.sources[i];
@@ -63,7 +64,7 @@ window.peapod_styler = {
 			}
 
 			if (typeof(source) !== 'undefined') {
-				source = peapod_styler.filterStateProps(source, obj);
+				source = peapod_styler.filterStateProps(source, obj, childEle);
 				for (var j = 0, len2 = source.length; j < len2; j++) {
 					result.push(source[j]);
 				}
@@ -93,16 +94,17 @@ window.peapod_styler = {
 		return Object.assign(tree, leaf);
 	},
 
-	filterStateProps: function(styles, obj) {
+	filterStateProps: function(styles, obj, childEle) {
 		var result = [],
 			varSet = obj.props.varSet || 'base';
 
 		for (var i = 0, len = styles.length; i < len; i++) {
             var style = styles[i],
                 validProps = peapod_styler.validateStyleProps(style.props, obj.props),
-                validState = peapod_styler.validateStyleState(style.state, obj.state);
+                validState = peapod_styler.validateStyleState(style.state, obj.state),
+								validChild = (typeof(style.childEle) === 'undefined' && childEle == '') || style.childEle == childEle || style.childEle == "global";
 
-            if (validProps && validState) {
+            if (validProps && validState && validChild) {
                 if (style.global) result.push(style.global);
                 if (style[varSet]) result.push(style[varSet]);
             }
