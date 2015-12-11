@@ -7,12 +7,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import { Pea_animation } from './animation.jsx';
-
-var styles = {
-	base: {
-		cursor: 'default'
-	}
-}
+var Pea_Styler = require('./mixins/styler.jsx');
+var Pea_Vars = require('./mixins/vars.jsx');
 
 /**
 * Icon component
@@ -58,14 +54,23 @@ var Pea_icon = React.createClass({
 
 	},
 
+	getBaseStyle: function() {
+		return [
+			{
+				global: {
+					cursor: 'default',
+					fontSize: 'getProp:size',
+					color: 'getProp:color'
+				}
+			}
+		];
+	},
+
 	render: function() {
 		return (
-			<i className="material-icons" aria-label={this.props.label} title={this.props.label} style={[
-				styles.base,
-				{'fontSize': this.props.size},
-				{'color': this.props.color},
-				this.props.style
-			]}>{this.props.children}</i>
+			<i className="material-icons" aria-label={this.props.label} title={this.props.label} style={Pea_Styler.getStyle(this)}>
+				{this.props.children}
+			</i>
 		);
 	}
 

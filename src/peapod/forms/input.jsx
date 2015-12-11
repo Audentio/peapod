@@ -9,39 +9,9 @@
 import React from 'react';
 import Radium from 'radium';
 
-var defaultStyle = {
-	inputWrapper: {
-		display: 'inline-block',
-		position: 'relative',
-		border: '1px solid #ddd'
-	},
-
-	inputElement: {
-		fontSize: 'inherit',
-		fontFamily: 'inherit',
-		backgroundColor: 'transparent',
-		position: 'relative',
-		zIndex: 2,
-		border: 0,
-		outline: 0,
-		padding: '10px',
-		lineHeight: 'inherit'
-	},
-
-	inputPlaceholder: {
-		fontSize: 'inherit',
-		fontFamily: 'inherit',
-		color: 'inherit',
-		opacity: '.5',
-		zIndex: 1,
-		padding: '10px',
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		width: '100%',
-		height: '100%'
-	}
-}
+var Pea_Styler = require('../mixins/styler.jsx');
+var Pea_Vars = require('../mixins/vars.jsx');
+var Pea_icon = require('../icon.jsx');
 
 /**
 * Multipurpose Input component
@@ -82,16 +52,65 @@ var Pea_input = React.createClass({
 		this.setState({ focus: true })
 	},
 
+	getBaseStyle: function() {
+		return [
+			{
+				childEle: 'wrapper',
+				global: {
+					display: 'inline-block',
+					position: 'relative',
+					border: '1px solid #ddd'
+				}
+			}, {
+				global: {
+					fontSize: 'inherit',
+					fontFamily: 'inherit',
+					color: 'inherit',
+					backgroundColor: 'transparent',
+					position: 'relative',
+					zIndex: 2,
+					border: 0,
+					outline: 0,
+					paddingLeft: '10px',
+					paddingRight: '10px',
+					lineHeight: 'inherit',
+					width: '100%',
+				}
+			}, {
+				childEle: 'placeholder',
+				global: {
+					fontSize: 'inherit',
+					fontFamily: 'inherit',
+					color: 'inherit',
+					zIndex: 1,
+					paddingLeft: '10px',
+					paddingRight: '10px',
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					width: '100%',
+					height: '100%'
+				}
+			}, {
+				childEle: 'icon',
+				global: {
+					marginLeft: '4px',
+					marginRight: '4px',
+					lineHeight: 'inherit'
+				}
+			}
+		]
+	},
+
 	render: function() {
-		var self = this;
 		return (
-			<div style={[ defaultStyle.inputWrapper, this.props.style]}
+			<div style={Pea_Styler.getStyle(this, 'wrapper')}
 				 className={this.props.className}>
 
-				<span style={[ defaultStyle.inputPlaceholder ]}>{this.state.placeholder}</span>
+				<span style={Pea_Styler.getStyle(this, 'placeholder')}>{<Pea_icon style={Pea_Styler.getStyle(this, 'icon')}>{this.props.icon}</Pea_icon>}{this.state.placeholder}</span>
 
-				<input onFocus={this.onFocusHandler} style={[ defaultStyle.inputElement ]}
-					   type="text" value={this.state.value} onChange={this.onChangeHandler} />
+				<input ref={this.props.ref} type={this.props.type} onFocus={this.onFocusHandler} style={Pea_Styler.getStyle(this)}
+					   value={this.state.value} onChange={this.onChangeHandler} />
 			</div>
 		);
 	}

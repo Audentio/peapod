@@ -1,7 +1,7 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
 import React from 'react';
 //import ReactDOM from 'react-dom';
@@ -9,85 +9,6 @@ import Radium from 'radium';
 import core from './core.jsx';
 var Pea_Styler = require('./mixins/styler.jsx');
 var Pea_Vars = require('./mixins/vars.jsx');
-
-//Style definitions
-var
-imageContainerStyle = {
-	base: {
-		display: 'inline-block',
-		position: 'relative'
-	}
-},
-
-imageStyle = {
-	base: {
-		display: 'block'
-	},
-	hasLightbox: {
-		cursor: 'pointer'
-	}
-},
-
-captionStyle = {
-	base: {
-		display: 'block',
-		padding: '6px 10px',
-		position: 'absolute',
-		bottom: 0,
-		left: 0,
-		backgroundColor: 'rgba(255, 255, 255, 0.5)',
-		width: '100%'
-	}
-},
-
-lightboxStyle = {
-	base: {
-		display: 'table',
-		cursor: 'pointer',
-		position: 'fixed',
-		zIndex: 999,
-		backgroundColor: 'rgba(0,0,0,0.75)',
-		width: '100%',
-		height: '100%',
-		top: 0,
-		left: 0,
-		transition: '300ms',
-		visibility: 'hidden',
-		opacity: 0,
-		display: 'none'
-	},
-
-	animated: {
-		display: 'table',
-	},
-
-	visible: {
-		display: 'table',
-		visibility: 'visible',
-		opacity: 1
-	},
-
-	inner: {
-	  display: 'table-cell',
-	  textAlign: 'center',
-	  verticalAlign: 'middle',
-	}
-},
-
-lightboxImageStyle = {
-	base: {
-		maxWidth: '90%',
-		maxHeight: '90%',
-		maxWidth: '90vw',
-		maxHeight: '90vh',
-		transition: '400ms ease',
-		transform: 'scale(.7)',
-	},
-
-	visible: {
-		transform: 'none'
-	}
-};
 
 /**
 * Image component: loads HiDPI images on retina devices
@@ -173,13 +94,13 @@ var Pea_image = React.createClass({
 	checkVisibility: function() {
 		/*
 		var bounds = ReactDOM.findDOMNode(this).getBoundingClientRect(),
-			scrollTop = window.pageYOffset,
-			top = bounds.top + scrollTop,
-			height = bounds.bottom - bounds.top;
+		scrollTop = window.pageYOffset,
+		top = bounds.top + scrollTop,
+		height = bounds.bottom - bounds.top;
 
 		if(top === 0 || (top <= (scrollTop + window.innerHeight + options.lazyDistance) && (top + height + options.lazyDistance) > scrollTop)){
-			this.setState({visible: true});
-			this.removeListener(); //stop listening, the show is over
+		this.setState({visible: true});
+		this.removeListener(); //stop listening, the show is over
 		}
 		*/
 
@@ -243,44 +164,121 @@ var Pea_image = React.createClass({
 		}
 
 		//Caption
-		this.caption = (this.props.caption) ? <span style={captionStyle.base}>{this.props.caption}</span> : undefined;
+		this.caption = (this.props.caption) ? <span style={Pea_Styler.getStyle(this, 'caption')}>{this.props.caption}</span> : undefined;
 
 	},
 
+	getBaseStyle: function() {
+		return [
+			{
+				childEle: 'wrapper',
+				global: {
+					display: 'inline-block',
+					position: 'relative'
+				}
+			}, {
+				global: {
+					display: 'block'
+				}
+			}, {
+				props: {
+					lightbox: 'true'
+				},
+				global: {
+					cursor: 'pointer'
+				}
+			}, {
+				childEle: 'caption',
+				global: {
+					display: 'block',
+					padding: '6px 10px',
+					position: 'absolute',
+					bottom: 0,
+					left: 0,
+					backgroundColor: 'rgba(255, 255, 255, 0.5)',
+					width: '100%'
+				}
+			}, {
+				childEle: 'lightbox',
+				global: {
+					display: 'table',
+					cursor: 'pointer',
+					position: 'fixed',
+					zIndex: 999,
+					backgroundColor: 'rgba(0,0,0,0.75)',
+					width: '100%',
+					height: '100%',
+					top: 0,
+					left: 0,
+					transition: '300ms',
+					visibility: 'hidden',
+					opacity: 0,
+					display: 'none'
+				}
+			}, {
+				childEle: 'lightbox',
+				props: {
+					'lightbox-animation': 'true'
+				},
+				global: {
+					display: 'table'
+				}
+			}, {
+				childEle: 'lightbox',
+				state: {
+					visible: 'true'
+				},
+				global: {
+					display: 'table',
+					visibility: 'visible',
+					opacity: 1
+				}
+			}, {
+				childEle: 'lightboxInner',
+				global: {
+					display: 'table-cell',
+					textAlign: 'center',
+					verticalAlign: 'middle'
+				}
+			}, {
+				childEle: 'lightboxImage',
+				global: {
+					maxWidth: '90%',
+					maxHeight: '90%',
+					maxWidth: '90vw',
+					maxHeight: '90vh',
+					transition: '400ms ease',
+					transform: 'scale(.7)',
+				}
+			}, {
+				childEle: 'lightboxImage',
+				state: {
+					lightboxVisible: 'true'
+				},
+				global: {
+					transform: 'none'
+				}
+			}
+		]
+	},
+
 	render: function() {
-
 		return (
-			<div style={[imageContainerStyle.base, this.props.style]}>
-
+			<div style={Pea_Styler.getStyle(this, 'wrapper')}>
 				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
-				style={[
-					imageStyle.base,
-					this.props.lightbox && imageStyle.hasLightbox
-				]} />
+					style={Pea_Styler.getStyle(this)} />
 				{this.caption}
 
 				{this.props.lightbox &&
-					<div style={[
-						lightboxStyle.base,
-							this.props['lightbox-animation'] && lightboxStyle.animated,
-							this.state.lightboxVisible && lightboxStyle.visible
-						]} onClick={this.hideLightbox}>
-
-						<div style={lightboxStyle.inner}>
-
-							<img style={[
-								lightboxImageStyle.base,
-								this.state.lightboxVisible && lightboxImageStyle.visible,
-							]} src={this.state.visible ? this.imageURL : options.blankImage} />
-
+					<div style={Pea_Styler.getStyle(this, 'lightbox')} onClick={this.hideLightbox}>
+						<div style={Pea_Styler.getStyle(this, 'lightboxInner')}>
+							<img style={Pea_Styler.getStyle(this, 'lightboxImage')} src={this.state.visible ? this.imageURL : options.blankImage} />
 						</div>
-
 					</div>
 				}
 			</div>
 		);
 	}
-
 });
 
 export default Radium(Pea_image);

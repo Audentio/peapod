@@ -45,11 +45,12 @@ window.peapod_styler = window.peapod_styler || {
         return true;
     },
 
-	getStyle: function(obj) {
+	getStyle: function(obj, childEle) {
 		var result = [],
 			style = {},
 			componentName = obj.props.styleLike || obj.constructor.displayName,
-			varSet = obj.props.varSet || 'base';
+			varSet = obj.props.varSet || 'base',
+			childEle = childEle || "";
 
 		for (var i = 0, len = peapod_styler.sources.length; i < len; i++) {
 			var source = peapod_styler.sources[i];
@@ -57,13 +58,21 @@ window.peapod_styler = window.peapod_styler || {
 				source = obj.getBaseStyle();
 			} else if (source == "local") {
 				source = obj.props.style;
-				if (typeof(source) !== 'undefined') source = [{global: source}]
+				var localStyle = obj.props.localStyle; // can fully style components
+				if (typeof(source) !== 'undefined' && typeof(localStyle) !== 'undefined') {
+					localStyle.push({global: source});
+					source = localStyle;
+				} else if (typeof(source) !== 'undefined') {
+					source = [{global: source}]
+				} else if (typeof(localStyle) !== 'undefined') {
+					source = localStyle
+				}
 			} else {
 				source = source[componentName];
 			}
 
 			if (typeof(source) !== 'undefined') {
-				source = peapod_styler.filterStateProps(source, obj);
+				source = peapod_styler.filterStateProps(source, obj, childEle);
 				for (var j = 0, len2 = source.length; j < len2; j++) {
 					result.push(source[j]);
 				}
@@ -80,7 +89,22 @@ window.peapod_styler = window.peapod_styler || {
 							break;
 						}
 					}
+				} else if (typeof(computedVar) == 'string'){
+					if (computedVar.indexOf('getProp:') > -1) {
+						if (computedVar.indexOf('getProp: ') > -1) {
+							computedVar = obj.props[computedVar.replace('getProp: ', '')];
+						} else {
+							computedVar = obj.props[computedVar.replace('getProp:', '')];
+						}
+					} else if (computedVar.indexOf('getState:') > -1) {
+						if (computedVar.indexOf('getState: ') > -1) {
+							computedVar = obj.state[computedVar.replace('getState: ', '')];
+						} else {
+							computedVar = obj.state[computedVar.replace('getState:', '')];
+						}
+					}
 				}
+
 
 				style[Object.keys(result[i])[ruleIndex]] = computedVar;
 			}
@@ -93,16 +117,17 @@ window.peapod_styler = window.peapod_styler || {
 		return Object.assign(tree, leaf);
 	},
 
-	filterStateProps: function(styles, obj) {
+	filterStateProps: function(styles, obj, childEle) {
 		var result = [],
 			varSet = obj.props.varSet || 'base';
 
 		for (var i = 0, len = styles.length; i < len; i++) {
             var style = styles[i],
                 validProps = peapod_styler.validateStyleProps(style.props, obj.props),
-                validState = peapod_styler.validateStyleState(style.state, obj.state);
+                validState = peapod_styler.validateStyleState(style.state, obj.state),
+				validChild = (typeof(style.childEle) === 'undefined' && childEle == '') || style.childEle == childEle || style.childEle == "global";
 
-            if (validProps && validState) {
+            if (validProps && validState && validChild) {
                 if (style.global) result.push(style.global);
                 if (style[varSet]) result.push(style[varSet]);
             }

@@ -6,6 +6,8 @@
 import React from 'react';
 import moment from 'moment';
 
+var Pea_Styler = require('./mixins/styler.jsx');
+var Pea_Vars = require('./mixins/vars.jsx');
 
 /**
 * Create live timestamp from valid date.
@@ -55,11 +57,20 @@ var Pea_liveTimestamp = React.createClass({
 
 	},
 
+	getBaseStyle: function() {
+		return [
+			{
+				global: {
+
+				}
+			}
+		]
+	},
 
 	render: function() {
 
 		return (
-			<span title={ moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a') }>
+			<span style={Pea_Styler.getStyle(this)} title={ moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a') }>
 				{this.state.timeElapsed}
 			</span>
 		)

@@ -11,6 +11,7 @@ import React from 'react';
 import Radium from 'radium';
 import './theme';
 import Color from 'color';
+<<<<<<< HEAD
 import Pea_Styler from './mixins/styler.jsx';
 import Pea_Vars from './mixins/vars.jsx';
 */
@@ -20,6 +21,7 @@ var Radium = require('radium');
 var Color = require('color');
 var Pea_Styler = require('./mixins/styler.jsx');
 var Pea_Vars = require('./mixins/vars.jsx');
+
 
 //generate style object for button kinds
 var generateKind = function(backgroundColor = '#444', color = 'white') {
