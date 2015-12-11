@@ -6,13 +6,20 @@
 
 
 //Dependencies
+/*
 import React from 'react';
 import Radium from 'radium';
-import 'peapod/theme';
+import './theme';
 import Color from 'color';
-import Pea_Styler from 'peapod/mixins/styler';
-import Pea_Vars from 'peapod/mixins/vars';
- 
+import Pea_Styler from './mixins/styler.jsx';
+import Pea_Vars from './mixins/vars.jsx';
+*/
+
+var React = require('react');
+var Radium = require('radium');
+var Color = require('color');
+var Pea_Styler = require('./mixins/styler.jsx');
+var Pea_Vars = require('./mixins/vars.jsx');
 
 //generate style object for button kinds
 var generateKind = function(backgroundColor = '#444', color = 'white') {
@@ -39,10 +46,7 @@ var generateKind = function(backgroundColor = '#444', color = 'white') {
       backgroundColor: hoverColor
     }
   }
-},
-
-
-themeStyle = peapod_style.button = peapod_style.button || {};
+};
 
 /**
 * Buttons component
@@ -82,17 +86,15 @@ var Pea_button = React.createClass({
           borderRadius: Pea_Vars.get('radius', 'global'), //theme.js
           border: '0px solid transparent',
 
-          padding: peapod.elSize(), //theme.js
-
           textDecoration: 'none',
           fontFamily: 'inherit',
           fontSize: 'inherit',
           lineHeight: 'inherit',
 
           outline: 'none',
-          
+
           transitionDuration: Pea_Vars.get('transition-duration', 'global'), //theme.js
-          
+
           //base:hover
           ':hover': {
             cursor: 'pointer'
@@ -167,15 +169,9 @@ var Pea_button = React.createClass({
   render: function() {
     //Anchor tag <a> if href specified
     if (this.props.href) {
-      return (
-        <a
-          href={this.props.href}
-          className={this.props.className}
-					style={Pea_Styler.getStyle(this)}
-          onClick={this.props.onClick}>
+      return (<a href={this.props.href} className={this.props.className} style={Pea_Styler.getStyle(this)} onClick={this.props.onClick}>
           {this.props.label} {this.props.children} {this.props.seconds}
-        </a>
-      );
+        </a>);
     }
 
     //Default: <button> tag

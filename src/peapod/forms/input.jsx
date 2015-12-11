@@ -9,9 +9,6 @@
 import React from 'react';
 import Radium from 'radium';
 
-import 'peapod/theme';
-
-
 var defaultStyle = {
 	inputWrapper: {
 		display: 'inline-block',
@@ -44,10 +41,7 @@ var defaultStyle = {
 		width: '100%',
 		height: '100%'
 	}
-},
-
-themeStyle = peapod_style.input = peapod_style.input || {};
-
+}
 
 /**
 * Multipurpose Input component
@@ -91,12 +85,12 @@ var Pea_input = React.createClass({
 	render: function() {
 		var self = this;
 		return (
-			<div style={[ defaultStyle.inputWrapper, themeStyle.inputWrapper, this.props.style]}
+			<div style={[ defaultStyle.inputWrapper, this.props.style]}
 				 className={this.props.className}>
 
-				<span style={[ defaultStyle.inputPlaceholder, themeStyle.inputPlaceholder ]}>{this.state.placeholder}</span>
+				<span style={[ defaultStyle.inputPlaceholder ]}>{this.state.placeholder}</span>
 
-				<input onFocus={this.onFocusHandler} style={[ defaultStyle.inputElement, themeStyle.inputElement ]}
+				<input onFocus={this.onFocusHandler} style={[ defaultStyle.inputElement ]}
 					   type="text" value={this.state.value} onChange={this.onChangeHandler} />
 			</div>
 		);

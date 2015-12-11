@@ -3,12 +3,16 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import base from 'peapod/theme/baseVars';
-import parent from 'peapod/theme/parentVars';
-import current from 'peapod/theme/currentVars';
-import override from 'peapod/theme/overrideVars';
+//import base from '../theme/baseVars.jsx';
+var base = require('../theme/baseVars.jsx');
+//import parent from '../theme/parentVars.jsx';
+var parent = require('../theme/parentVars.jsx');
+//import current from '../theme/currentVars.jsx';
+var current = require('../theme/currentVars.jsx');
+//import override from '../theme/overrideVars.jsx';
+var override = require('../theme/overrideVars.jsx');
 
-window.peapod_vars = {
+window.peapod_vars = window.peapod_vars || {
 	sources: [base, parent, current, override],
 
 	get: function(name, varSetOverride) {
@@ -17,7 +21,7 @@ window.peapod_vars = {
 
 		for (var sourceIndex = 0, sourceLen = peapod_vars.sources.length; sourceIndex < sourceLen; sourceIndex++) {
 			var source = peapod_vars.sources[sourceIndex];
-			
+
 			if (typeof(source) !== 'undefined') {
 				var vars = source;
 				if (typeof(vars) !== 'undefined') {

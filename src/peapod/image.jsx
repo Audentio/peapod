@@ -4,9 +4,11 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import Radium from 'radium';
-import _ from 'lodash';
+import core from './core.jsx';
+var Pea_Styler = require('./mixins/styler.jsx');
+var Pea_Vars = require('./mixins/vars.jsx');
 
 //Style definitions
 var
@@ -87,29 +89,6 @@ lightboxImageStyle = {
 	}
 };
 
-//Component configuration
-var options = peapod.helper.options('Pea_image', {
-
-	//this acts as src for lazyLoaded images until they're loaded
-	defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
-
-	//lazy loading
-	lazy: false,
-
-	//load image if distance from viewport is smaller than this
-	lazyDistance: 500,
-
-	//Multi-dimensional array defining prefixes for different device pixeDensity
-	//set false to disable hiDPI loading
-	hidpi: [['1.5', '@2x']],
-
-	//show enlarged image in lightbox
-	lightbox: true,
-
-	//Animate Lightbox entry-exit
-	'lightbox-animation': true
-});
-
 /**
 * Image component: loads HiDPI images on retina devices
 *
@@ -124,6 +103,7 @@ var options = peapod.helper.options('Pea_image', {
 * @param {bool} [lightbox-animation] - Animated lightbox (ability to turn off for specific high-res images)
 */
 var Pea_image = React.createClass({
+	mixins: [Pea_Styler],
 
 	propTypes: {
 		src: React.PropTypes.string.isRequired,
@@ -139,11 +119,11 @@ var Pea_image = React.createClass({
 
 	getDefaultProps: function() {
 		return {
-			'hidpi-data': options.hidpi,
-			lazy: options.lazy,
-			'lazy-distance': options.lazyDistance,
-			lightbox: options.lightbox,
-			'lightbox-animation': options['lightbox-animation']
+			'hidpi-data': [['1.5', '@2x']],
+			lazy: false,
+			'lazy-distance': 500,
+			lightbox: false,
+			'lightbox-animation': true
 		}
 	},
 
@@ -191,7 +171,7 @@ var Pea_image = React.createClass({
 	//Check if element is within the defined viewport range
 	// -- {lazyDistance}px above and below current viewport
 	checkVisibility: function() {
-
+		/*
 		var bounds = ReactDOM.findDOMNode(this).getBoundingClientRect(),
 			scrollTop = window.pageYOffset,
 			top = bounds.top + scrollTop,
@@ -201,6 +181,10 @@ var Pea_image = React.createClass({
 			this.setState({visible: true});
 			this.removeListener(); //stop listening, the show is over
 		}
+		*/
+
+		//Kyler, look into how to not duplicate ReactDOM here
+		this.setState({visible: true});
 
 	},
 

@@ -8,6 +8,8 @@ import ReactDOM from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
 import Radium from 'radium';
 
+import _ from 'lodash'
+
 /**
 * Animation wrapper: Add animation prop to components
 *
@@ -22,7 +24,7 @@ var anim = {
             'to': {transform: 'rotate(360deg)'},
         })} 1s linear 0s infinite
         `,
-    
+
     rotate_acw:
         `
         ${Radium.keyframes({
@@ -60,7 +62,7 @@ export var Pea_animation = ComposedComponent => class extends React.Component {
     componentWillMount() {
 
         if(this.props.animation){
-            
+
             var animation = this.props.animation.split(','); //in case speed is also passed
             var animation_name = animation[0];
             var animation_speed = animation[1];
@@ -80,7 +82,7 @@ export var Pea_animation = ComposedComponent => class extends React.Component {
     render() {
 
         var {animation, ...props} = this.props; //this.props.animation wont be passed down
-        var _style = _.merge( {}, 
+        var _style = _.merge( {},
                 {'animation': anim[this.animationName]},
                 this.animationSpeed && {'animationDuration': this.animationSpeed},
                 this.props.style

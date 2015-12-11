@@ -3,13 +3,13 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import React from 'react';
-import base from 'peapod/theme/base';
-import parent from 'peapod/theme/parent';
-import current from 'peapod/theme/current';
-import override from 'peapod/theme/override';
+var React = require('react');
+var base = require('../theme/base.jsx');
+var parent = require('../theme/parent.jsx');
+var current = require('../theme/current.jsx');
+var override = require('../theme/override.jsx');
 
-window.peapod_styler = {
+window.peapod_styler = window.peapod_styler || {
 	sources: [base, "base", parent, current, "local", override],
 
 	processChildren: function(props) {

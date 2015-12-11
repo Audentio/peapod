@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Radium from 'radium';
-import Pea_Styler from 'peapod/mixins/styler';
+import Pea_Styler from './mixins/styler.jsx';
 
 var Pea_section = React.createClass({
   mixins: [Pea_Styler],

@@ -2,11 +2,11 @@
  *  Copyright Audentio <%= package.year %>
  *  LICENSE: <%= package.licence %>
  */
- 
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
-import Pea_Styler from 'peapod/mixins/styler';
+import Pea_Styler from './mixins/styler.jsx';
 
 var Pea_section = React.createClass({
 
@@ -21,7 +21,7 @@ var Pea_section = React.createClass({
         ele.style.display = 'none';
       }
   }
-    
+
 });
 
 module.exports = Radium(Pea_section);

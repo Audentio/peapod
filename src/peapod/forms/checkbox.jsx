@@ -8,9 +8,6 @@
 //Dependencies
 import React from 'react';
 
-import 'peapod/theme';
-
-
 /**
 * Checkbox component
 *

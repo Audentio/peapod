@@ -6,22 +6,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
-import _ from 'lodash';
-import { Pea_animation } from 'peapod/animation';
+import { Pea_animation } from './animation.jsx';
 
 var styles = {
 	base: {
 		cursor: 'default'
 	}
 }
-
-//Component configuration
-var options = peapod.helper.options('Pea_icon', {
-
-	//Default size
-	size: '1em'
-
-})
 
 /**
 * Icon component
@@ -43,7 +34,7 @@ var Pea_icon = React.createClass({
 
 	getDefaultProps: function() {
 		return {
-			size: options.size,
+			size: '1em',
 			color: 'inherit'
 		}
 	},

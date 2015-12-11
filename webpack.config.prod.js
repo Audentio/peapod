@@ -1,34 +1,29 @@
 var path = require('path');
-var webpack = require('webpack');
+var node_modules_dir = path.resolve(__dirname, 'node_modules');
 
-module.exports = {
-  devtool: 'source-map',
-  entry: [
-    './src/index'
-  ],
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+var config = {
+  entry: {
+      styler: [path.resolve(__dirname, 'src/peapod/mixins/styler.jsx')],
+      components: path.resolve(__dirname, 'src/peapod/components.jsx'),
+      vars:  [path.resolve(__dirname, 'src/peapod/mixins/vars.jsx')]
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      }
-    })
-  ],
-  module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'src')
-    }]
-  }
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js'
+  },
+  resolve: {
+   extensions: ['', '.js', '.jsx', 'index.js', 'index.jsx', '.json', 'index.json']
+ },
+
+ module: {
+   preLoaders: [
+       { test: /\.json$/, loader: 'json'},
+   ],
+   loaders: [
+       { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
+       { test: /\.jsx$/, exclude: /node_modules/, loader: 'babel'}
+   ]
+ },
 };
+
+module.exports = config;
