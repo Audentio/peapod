@@ -291,7 +291,7 @@ module.exports = {
 		font: {
 			family: {
 				primary: 'Lato-Regular',
-				secondary: 'Lato-Regular',
+				secondary: 'Lato-Light',
 				tertiary: 'Lato-Regular'
 			},
 			size: {
@@ -487,11 +487,21 @@ module.exports = {
 
 		//Grid
 		grid: {
+			breakpoints: {
+				small: '610',
+				medium: '800',
+				large: '1024',
+				xlarge: '1500'
+			},
 			xsmall: '@media (min-width: 1px)',
 			small: '@media (min-width: 610px)',
 			medium: '@media (min-width: 800px)',
 			large: '@media (min-width: 1024px)',
-			xlarge: '@media (min-width: 1500px)'
+			xlarge: '@media (min-width: 1500px)',
+			smallLt: '@media (max-width: 610px)',
+			mediumLt: '@media (max-width: 800px)',
+			largeLt: '@media (max-width: 1024px)',
+			xlargeLt: '@media (max-width: 1500px)'
 		}
 	}
 }

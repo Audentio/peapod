@@ -11,6 +11,7 @@ import Pod_icon from './icon.jsx';
 import Pod_input from './forms/input.jsx';
 import Pod_checkbox from './forms/checkbox.jsx';
 import Pod_grid from './grid.jsx';
+import Pod_div from './div.jsx';
 import Pod_gridCell from './gridCell.jsx';
 import Pod_section from './section.jsx';
 import Pod_external from './external.jsx';
@@ -25,6 +26,7 @@ window.Pod = window.Pod || {
     icon: Pod_icon,
 	grid: Pod_grid,
 	gridCell: Pod_gridCell,
+	div: Pod_div,
     input: Pod_input,
     checkbox: Pod_checkbox,
     section: Pod_section,
