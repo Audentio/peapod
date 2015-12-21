@@ -6,9 +6,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
-import Pea_Styler from './mixins/styler.jsx';
+import Pod_Styler from './mixins/styler.jsx';
 
-var Pea_section = React.createClass({
+var Pod_section = React.createClass({
 
   render: function() {
     return <div />;
@@ -24,4 +24,4 @@ var Pea_section = React.createClass({
 
 });
 
-module.exports = Radium(Pea_section);
+module.exports = Radium(Pod_section);

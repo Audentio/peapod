@@ -5,7 +5,7 @@
 
 import ReactDOM from 'react-dom';
 
-var Pea_core = (function(){
+var Pod_core = (function(){
 
 	window.peapod = {
 		basePath: '/',
@@ -75,4 +75,4 @@ peapod.helper.keymap = {
 	'esc': 27
 }
 
-module.exports = Pea_core;
+module.exports = Pod_core;

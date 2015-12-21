@@ -32326,7 +32326,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var Pea_core = (function () {
+	var Pod_core = (function () {
 
 		window.peapod = {
 			basePath: '/',
@@ -32392,7 +32392,7 @@
 		'esc': 27
 	};
 
-	module.exports = Pea_core;
+	module.exports = Pod_core;
 
 /***/ },
 /* 161 */
@@ -32418,11 +32418,11 @@
 	/**
 	* Create live timestamp from valid date.
 	*
-	* @element Pea_liveTimestamp
+	* @element Pod_liveTimestamp
 	* @property {(string|Object)} time - IETF-compliant RFC 2822 timestamp string or Date Object 
 	*/
-	var Pea_liveTimestamp = _react2['default'].createClass({
-		displayName: 'Pea_liveTimestamp',
+	var Pod_liveTimestamp = _react2['default'].createClass({
+		displayName: 'Pod_liveTimestamp',
 
 		/**
 	 * return the amount of seconds elapsed since {this.props.time}
@@ -32471,7 +32471,7 @@
 
 	});
 
-	module.exports = Pea_liveTimestamp;
+	module.exports = Pod_liveTimestamp;
 
 /***/ },
 /* 162 */
@@ -43975,14 +43975,14 @@
 	/**
 	* Buttons component
 	*
-	* @element Pea_button
+	* @element Pod_button
 	* 
 	* @param {string} [label=Submit] - Button label text
 	* @param {string} [kind=default] - Generic button style/state (danger/warning/success)
 	* 
 	*/
-	var Pea_button = _react2['default'].createClass({
-	  displayName: 'Pea_button',
+	var Pod_button = _react2['default'].createClass({
+	  displayName: 'Pod_button',
 
 	  mixins: [_componentsMixinsStyler2['default']],
 
@@ -44115,7 +44115,7 @@
 
 	});
 
-	module.exports = (0, _radium2['default'])(Pea_button);
+	module.exports = (0, _radium2['default'])(Pod_button);
 
 /***/ },
 /* 250 */
@@ -48346,7 +48346,7 @@
 	};
 
 	//Component configuration
-	var options = peapod.helper.options('Pea_image', {
+	var options = peapod.helper.options('Pod_image', {
 
 		//this acts as src for lazyLoaded images until they're loaded
 		defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
@@ -48368,7 +48368,7 @@
 	/**
 	* Image component: loads HiDPI images on retina devices
 	*
-	* @element Pea_image
+	* @element Pod_image
 	* @param {string} src - Image URL ()
 	* @param {(bool|Object)} [hidpi-data] - object map of pixel densities and prefixes. False to disable hidpi asset loading
 	* @param {string} [alt] - alt attribute
@@ -48376,8 +48376,8 @@
 	* @param {bool} [lazy] - Should the resource load lazily?
 	* @param {Number} [lazy-distance] - Lazy images will be loaded when within this distance from viewport
 	*/
-	var Pea_image = _react2['default'].createClass({
-		displayName: 'Pea_image',
+	var Pod_image = _react2['default'].createClass({
+		displayName: 'Pod_image',
 
 		propTypes: {
 			src: _react2['default'].PropTypes.string.isRequired,
@@ -48535,7 +48535,7 @@
 
 	});
 
-	module.exports = (0, _radium2['default'])(Pea_image);
+	module.exports = (0, _radium2['default'])(Pod_image);
 
 /***/ },
 /* 281 */
@@ -48593,7 +48593,7 @@
 	};
 
 	//Component configuration
-	var options = peapod.helper.options('Pea_icon', {
+	var options = peapod.helper.options('Pod_icon', {
 
 		//Default size
 		size: '1em'
@@ -48603,13 +48603,13 @@
 	/**
 	* Icon component
 	*
-	* @element Pea_icon
+	* @element Pod_icon
 	* @param {string} animation - pre-defined animation
 	* @param {string} color - Icon color
 	* @param {string} label - Icon label (for tooltip and ARIA)
 	*/
-	var Pea_icon = _react2['default'].createClass({
-		displayName: 'Pea_icon',
+	var Pod_icon = _react2['default'].createClass({
+		displayName: 'Pod_icon',
 
 		propTypes: {
 			children: _react2['default'].PropTypes.string.isRequired,
@@ -48670,7 +48670,7 @@
 
 	});
 
-	module.exports = (0, _radium2['default'])(Pea_icon);
+	module.exports = (0, _radium2['default'])(Pod_icon);
 
 /***/ },
 /* 282 */
@@ -48735,15 +48735,15 @@
 	/**
 	* Multipurpose Input component
 	*
-	* @element Pea_input
+	* @element Pod_input
 	* 
 	* @param {string} [type=text] - Input type
 	* @param {string} [value] - Input value
 	* @param {string} [placeholder] - Placeholder text
 	* 
 	*/
-	var Pea_input = _react2['default'].createClass({
-		displayName: 'Pea_input',
+	var Pod_input = _react2['default'].createClass({
+		displayName: 'Pod_input',
 
 		//Validate props
 		propTypes: {
@@ -48789,7 +48789,7 @@
 
 	});
 
-	module.exports = (0, _radium2['default'])(Pea_input);
+	module.exports = (0, _radium2['default'])(Pod_input);
 
 /***/ },
 /* 283 */
@@ -48815,33 +48815,33 @@
 	/**
 	* Checkbox component
 	*
-	* @element Pea_checkbox
+	* @element Pod_checkbox
 	* 
 	* @param {bool} [checked=false] - checkbox state
 	* @param {string} [label] - checkbox label text
 	* 
 	*/
 
-	var Pea_checkbox = _react2['default'].createClass({
-		displayName: 'Pea_checkbox',
+	var Pod_checkbox = _react2['default'].createClass({
+		displayName: 'Pod_checkbox',
 
 		getInitialState: function getInitialState() {
 			return {
 				checked: this.props.checked,
-				className: this.props.checked ? "Pea_checkbox Pea_checkbox--checked" : "Pea_checkbox"
+				className: this.props.checked ? "Pod_checkbox Pod_checkbox--checked" : "Pod_checkbox"
 			};
 		},
 
 		onChangeHandler: function onChangeHandler(e) {
 
 			this.setState({
-				className: e.target.checked ? "Pea_checkbox Pea_checkbox--checked" : "Pea_checkbox",
+				className: e.target.checked ? "Pod_checkbox Pod_checkbox--checked" : "Pod_checkbox",
 				checked: e.target.checked
 			});
 		},
 
 		render: function render() {
-			var className = this.props.kind ? ' Pea_checkbox--' + this.props.kind : '';
+			var className = this.props.kind ? ' Pod_checkbox--' + this.props.kind : '';
 			var labelStyle = this.props.label ? {} : { display: 'none' };
 
 			return _react2['default'].createElement(
@@ -48849,21 +48849,21 @@
 				{ className: this.state.className + className },
 				_react2['default'].createElement(
 					'span',
-					{ className: 'Pea_checkbox__box' },
-					_react2['default'].createElement('input', { onChange: this.onChangeHandler, className: 'Pea_checkbox__input', type: 'checkbox', checked: this.state.checked }),
-					_react2['default'].createElement('span', { className: 'Pea_checkbox__icon' }),
-					_react2['default'].createElement('span', { className: 'Pea_checkbox__base' })
+					{ className: 'Pod_checkbox__box' },
+					_react2['default'].createElement('input', { onChange: this.onChangeHandler, className: 'Pod_checkbox__input', type: 'checkbox', checked: this.state.checked }),
+					_react2['default'].createElement('span', { className: 'Pod_checkbox__icon' }),
+					_react2['default'].createElement('span', { className: 'Pod_checkbox__base' })
 				),
 				_react2['default'].createElement(
 					'span',
-					{ style: labelStyle, className: 'Pea_checkbox__label' },
+					{ style: labelStyle, className: 'Pod_checkbox__label' },
 					this.props.label
 				)
 			);
 		}
 	});
 
-	module.exports = Pea_checkbox;
+	module.exports = Pod_checkbox;
 
 /***/ },
 /* 284 */
@@ -48890,8 +48890,8 @@
 
 	var _componentsMixinsStyler2 = _interopRequireDefault(_componentsMixinsStyler);
 
-	var Pea_section = _react2['default'].createClass({
-	  displayName: 'Pea_section',
+	var Pod_section = _react2['default'].createClass({
+	  displayName: 'Pod_section',
 
 	  mixins: [_componentsMixinsStyler2['default']],
 
@@ -48930,7 +48930,7 @@
 
 	});
 
-	module.exports = (0, _radium2['default'])(Pea_section);
+	module.exports = (0, _radium2['default'])(Pod_section);
 
 /***/ }
 /******/ ]);

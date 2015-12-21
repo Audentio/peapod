@@ -9,26 +9,27 @@ var parent = require('../theme/parent.jsx');
 var current = require('../theme/current.jsx');
 var override = require('../theme/override.jsx');
 
-window.peapod_styler = window.peapod_styler || {
+window.Pod_Styler = window.Pod_Styler || {
 	sources: [base, "base", parent, current, "local", override],
-
-	processChildren: function(props) {
-    	if (props.varSet) {
-    		var children = [];
-    		for (var i = 0, len = props.children.length; i < len; i++) {
-    			children.push(React.cloneElement(props.children[i], {varSet: props.varSet, key: i}));
-    		}
-    		return children;
-    	}
-    	return props.children;
-    },
+	stylePropName: 'styler',
 
 	validateStyleProps: function(styleProps, props) {
-        if (styleProps) {
+		if (styleProps) {
             var keys = Object.keys(styleProps);
             for (var i = 0, len = keys.length; i < len; i++) {
-                var key = keys[i];
-                if (props[key] == undefined || props[key] != styleProps[key]) return false;
+                var key = keys[i],
+					val = props[key];
+				if (typeof(val) == 'undefined') {
+					return false;
+				} else if (typeof(styleProps[key]) == 'object'){
+					if (styleProps[key].length == 2) {
+						if (!Pod_Styler.compareValArray(styleProps[key][0], val, styleProps[key][1])) return false;
+					} else {
+						return false;
+					}
+				} else {
+					if (val != styleProps[key]) return false;
+				}
             }
         }
         return true;
@@ -38,27 +39,66 @@ window.peapod_styler = window.peapod_styler || {
         if (styleState) {
             var keys = Object.keys(styleState);
             for (var i = 0, len = keys.length; i < len; i++) {
-                var key = keys[i];
-                if (state[key] == undefined || state[key] != styleState[key]) return false;
+                var key = keys[i],
+					val = state[key];
+				if (typeof(val) == 'undefined') {
+					return false;
+				} else if (typeof(styleState[key]) == 'object'){
+					if (styleState[key].length == 2) {
+						if (!Pod_Styler.compareValArray(styleState[key][0], val, styleState[key][1])) return false;
+					} else {
+						return false;
+					}
+				} else {
+					if (val != styleState[key]) return false;
+				}
             }
         }
         return true;
     },
 
+	compareValArray: function(comparison, val, comparisonVal) {
+		if (comparison == "==") {
+			if (!(val == comparisonVal)) return false
+		} else if (comparison == "!=") {
+			if (!(val != comparisonVal)) return false
+		} else if (comparison == ">") {
+			if (!(val > comparisonVal)) return false
+		} else if (comparison == ">=") {
+			if (!(val >= comparisonVal)) return false
+		} else if (comparison == "<") {
+			if (!(val < comparisonVal)) return false
+		} else if (comparison == "<=") {
+			if (!(val <= comparisonVal)) return false
+		}
+		return true;
+	},
+
+	// entry to getStyle method for non-peapod components
+	style: function(data, childEle) {
+		data.constructor.displayName = "global";
+		return this.getStyle(data, childEle);
+	},
+
 	getStyle: function(obj, childEle) {
 		var result = [],
 			style = {},
-			componentName = obj.props.styleLike || obj.constructor.displayName,
-			varSet = obj.props.varSet || 'base',
+			styleProps = obj.props[Pod_Styler.stylePropName] || {},
+			componentName = styleProps.styleLike || obj.constructor.displayName,
+			varSet = styleProps.varSet || 'base',
 			childEle = childEle || "";
 
-		for (var i = 0, len = peapod_styler.sources.length; i < len; i++) {
-			var source = peapod_styler.sources[i];
+		for (var i = 0, len = Pod_Styler.sources.length; i < len; i++) {
+			var source = Pod_Styler.sources[i];
 			if (source == "base") {
-				source = obj.getBaseStyle();
+				if (typeof(obj.getBaseStyle) == 'function') {
+					source = obj.getBaseStyle();
+				} else {
+					source = undefined;
+				}
 			} else if (source == "local") {
-				source = obj.props.style;
-				var localStyle = obj.props.localStyle; // can fully style components
+				source = styleProps.style;
+				var localStyle = styleProps.localStyle; // can fully style components
 				if (typeof(source) !== 'undefined' && typeof(localStyle) !== 'undefined') {
 					localStyle.push({global: source});
 					source = localStyle;
@@ -72,7 +112,7 @@ window.peapod_styler = window.peapod_styler || {
 			}
 
 			if (typeof(source) !== 'undefined') {
-				source = peapod_styler.filterStateProps(source, obj, childEle);
+				source = Pod_Styler.filterStateProps(source, obj, childEle);
 				for (var j = 0, len2 = source.length; j < len2; j++) {
 					result.push(source[j]);
 				}
@@ -90,7 +130,9 @@ window.peapod_styler = window.peapod_styler || {
 						}
 					}
 				} else if (typeof(computedVar) == 'string'){
-					if (computedVar.indexOf('getProp:') > -1) {
+					if (computedVar.indexOf('$') > -1) {
+						computedVar = Pod_Vars.get(computedVar.replace('$', ''), varSet);
+					} else if (computedVar.indexOf('getProp:') > -1) {
 						if (computedVar.indexOf('getProp: ') > -1) {
 							computedVar = obj.props[computedVar.replace('getProp: ', '')];
 						} else {
@@ -102,11 +144,20 @@ window.peapod_styler = window.peapod_styler || {
 						} else {
 							computedVar = obj.state[computedVar.replace('getState:', '')];
 						}
+					} else if (computedVar.indexOf('getStyle:') > -1) {
+						if (computedVar.indexOf('getStyle: ') > -1) {
+							computedVar = styleProps[computedVar.replace('getStyle: ', '')];
+						} else {
+							computedVar = styleProps[computedVar.replace('getStyle:', '')];
+						}
 					}
 				}
 
-
-				style[Object.keys(result[i])[ruleIndex]] = computedVar;
+				if (typeof(computedVar) == 'object' && typeof(style[Object.keys(result[i])[ruleIndex]]) !== 'undefined') { // merge style objects
+					style[Object.keys(result[i])[ruleIndex]] = Object.assign(style[Object.keys(result[i])[ruleIndex]], computedVar);
+				} else {
+					style[Object.keys(result[i])[ruleIndex]] = computedVar;
+				}
 			}
 		}
 
@@ -119,12 +170,13 @@ window.peapod_styler = window.peapod_styler || {
 
 	filterStateProps: function(styles, obj, childEle) {
 		var result = [],
-			varSet = obj.props.varSet || 'base';
+			styleProps = obj.props[Pod_Styler.stylePropName] || {},
+			varSet = styleProps.varSet || 'base';
 
 		for (var i = 0, len = styles.length; i < len; i++) {
             var style = styles[i],
-                validProps = peapod_styler.validateStyleProps(style.props, obj.props),
-                validState = peapod_styler.validateStyleState(style.state, obj.state),
+                validProps = Pod_Styler.validateStyleProps(style.props, styleProps),
+                validState = Pod_Styler.validateStyleState(style.state, obj.state),
 				validChild = (typeof(style.childEle) === 'undefined' && childEle == '') || style.childEle == childEle || style.childEle == "global";
 
             if (validProps && validState && validChild) {
@@ -138,4 +190,4 @@ window.peapod_styler = window.peapod_styler || {
 };
 
 
-module.exports = peapod_styler;
+module.exports = Pod_Styler;

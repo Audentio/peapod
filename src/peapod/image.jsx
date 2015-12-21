@@ -7,13 +7,13 @@ import React from 'react';
 //import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import core from './core.jsx';
-var Pea_Styler = require('./mixins/styler.jsx');
-var Pea_Vars = require('./mixins/vars.jsx');
+var Pod_Styler = require('./mixins/styler.jsx');
+var Pod_Vars = require('./mixins/vars.jsx');
 
 /**
 * Image component: loads HiDPI images on retina devices
 *
-* @element Pea_image
+* @element Pod_image
 * @param {string} src - Image URL ()
 * @param {(bool|Object)} [hidpi-data] - object map of pixel densities and prefixes. False to disable hidpi asset loading
 * @param {string} [alt] - alt attribute
@@ -23,9 +23,7 @@ var Pea_Vars = require('./mixins/vars.jsx');
 * @param {bool} [lightbox] - Enable lightbox on instance
 * @param {bool} [lightbox-animation] - Animated lightbox (ability to turn off for specific high-res images)
 */
-var Pea_image = React.createClass({
-	mixins: [Pea_Styler],
-
+var Pod_image = React.createClass({
 	propTypes: {
 		src: React.PropTypes.string.isRequired,
 		'hidpi-data': React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.bool ]),
@@ -164,115 +162,21 @@ var Pea_image = React.createClass({
 		}
 
 		//Caption
-		this.caption = (this.props.caption) ? <span style={Pea_Styler.getStyle(this, 'caption')}>{this.props.caption}</span> : undefined;
+		this.caption = (this.props.caption) ? <span style={Pod_Styler.getStyle(this, 'caption')}>{this.props.caption}</span> : undefined;
 
-	},
-
-	getBaseStyle: function() {
-		return [
-			{
-				childEle: 'wrapper',
-				global: {
-					display: 'inline-block',
-					position: 'relative'
-				}
-			}, {
-				global: {
-					display: 'block'
-				}
-			}, {
-				props: {
-					lightbox: 'true'
-				},
-				global: {
-					cursor: 'pointer'
-				}
-			}, {
-				childEle: 'caption',
-				global: {
-					display: 'block',
-					padding: '6px 10px',
-					position: 'absolute',
-					bottom: 0,
-					left: 0,
-					backgroundColor: 'rgba(255, 255, 255, 0.5)',
-					width: '100%'
-				}
-			}, {
-				childEle: 'lightbox',
-				global: {
-					display: 'table',
-					cursor: 'pointer',
-					position: 'fixed',
-					zIndex: 999,
-					backgroundColor: 'rgba(0,0,0,0.75)',
-					width: '100%',
-					height: '100%',
-					top: 0,
-					left: 0,
-					transition: '300ms',
-					visibility: 'hidden',
-					opacity: 0,
-					display: 'none'
-				}
-			}, {
-				childEle: 'lightbox',
-				props: {
-					'lightbox-animation': 'true'
-				},
-				global: {
-					display: 'table'
-				}
-			}, {
-				childEle: 'lightbox',
-				state: {
-					visible: 'true'
-				},
-				global: {
-					display: 'table',
-					visibility: 'visible',
-					opacity: 1
-				}
-			}, {
-				childEle: 'lightboxInner',
-				global: {
-					display: 'table-cell',
-					textAlign: 'center',
-					verticalAlign: 'middle'
-				}
-			}, {
-				childEle: 'lightboxImage',
-				global: {
-					maxWidth: '90%',
-					maxHeight: '90%',
-					maxWidth: '90vw',
-					maxHeight: '90vh',
-					transition: '400ms ease',
-					transform: 'scale(.7)',
-				}
-			}, {
-				childEle: 'lightboxImage',
-				state: {
-					lightboxVisible: 'true'
-				},
-				global: {
-					transform: 'none'
-				}
-			}
-		]
 	},
 
 	render: function() {
 		return (
-			<div style={Pea_Styler.getStyle(this, 'wrapper')}>
+			<div style={Pod_Styler.getStyle(this, 'wrapper')}>
 				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
-					style={Pea_Styler.getStyle(this)} />
+					style={Pod_Styler.getStyle(this)} />
 				{this.caption}
 
 				{this.props.lightbox &&
-					<div style={Pea_Styler.getStyle(this, 'lightbox')} onClick={this.hideLightbox}>
-						<div style={Pea_Styler.getStyle(this, 'lightboxInner')}>
-							<img style={Pea_Styler.getStyle(this, 'lightboxImage')} src={this.state.visible ? this.imageURL : options.blankImage} />
+					<div style={Pod_Styler.getStyle(this, 'lightbox')} onClick={this.hideLightbox}>
+						<div style={Pod_Styler.getStyle(this, 'lightboxInner')}>
+							<img style={Pod_Styler.getStyle(this, 'lightboxImage')} src={this.state.visible ? this.imageURL : options.blankImage} />
 						</div>
 					</div>
 				}
@@ -281,4 +185,4 @@ var Pea_image = React.createClass({
 	}
 });
 
-export default Radium(Pea_image);
+export default Radium(Pod_image);

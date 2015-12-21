@@ -55,7 +55,7 @@ var anim = {
 /* Animation wrapper function
  */
 @Radium
-export var Pea_animation = ComposedComponent => class extends React.Component {
+export var Pod_animation = ComposedComponent => class extends React.Component {
 
     static displayName = ComposedComponent.displayName;
 

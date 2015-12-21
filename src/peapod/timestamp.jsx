@@ -6,16 +6,16 @@
 import React from 'react';
 import moment from 'moment';
 
-var Pea_Styler = require('./mixins/styler.jsx');
-var Pea_Vars = require('./mixins/vars.jsx');
+var Pod_Styler = require('./mixins/styler.jsx');
+var Pod_Vars = require('./mixins/vars.jsx');
 
 /**
 * Create live timestamp from valid date.
 *
-* @element Pea_liveTimestamp
+* @element Pod_liveTimestamp
 * @property {(string|Object)} time - IETF-compliant RFC 2822 timestamp string or Date Object
 */
-var Pea_liveTimestamp = React.createClass({
+var Pod_liveTimestamp = React.createClass({
 
 
 	/* returns the amount of seconds elapsed since {this.props.time} */
@@ -57,20 +57,10 @@ var Pea_liveTimestamp = React.createClass({
 
 	},
 
-	getBaseStyle: function() {
-		return [
-			{
-				global: {
-
-				}
-			}
-		]
-	},
-
 	render: function() {
 
 		return (
-			<span style={Pea_Styler.getStyle(this)} title={ moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a') }>
+			<span style={Pod_Styler.getStyle(this)} title={ moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a') }>
 				{this.state.timeElapsed}
 			</span>
 		)
@@ -81,4 +71,4 @@ var Pea_liveTimestamp = React.createClass({
 });
 
 
-module.exports = Pea_liveTimestamp;
+module.exports = Pod_liveTimestamp;

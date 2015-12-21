@@ -6,19 +6,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
-import { Pea_animation } from './animation.jsx';
-var Pea_Styler = require('./mixins/styler.jsx');
-var Pea_Vars = require('./mixins/vars.jsx');
+import { Pod_animation } from './animation.jsx';
+var Pod_Styler = require('./mixins/styler.jsx');
+var Pod_Vars = require('./mixins/vars.jsx');
 
 /**
 * Icon component
 *
-* @element Pea_icon
+* @element Pod_icon
 * @param {string} animation - pre-defined animation
 * @param {string} color - Icon color
 * @param {string} label - Icon label (for tooltip and ARIA)
 */
-var Pea_icon = React.createClass({
+var Pod_icon = React.createClass({
 
 	propTypes: {
 		children: 		React.PropTypes.string.isRequired,
@@ -30,7 +30,7 @@ var Pea_icon = React.createClass({
 
 	getDefaultProps: function() {
 		return {
-			size: '1em',
+			size: '1rem',
 			color: 'inherit'
 		}
 	},
@@ -54,21 +54,9 @@ var Pea_icon = React.createClass({
 
 	},
 
-	getBaseStyle: function() {
-		return [
-			{
-				global: {
-					cursor: 'default',
-					fontSize: 'getProp:size',
-					color: 'getProp:color'
-				}
-			}
-		];
-	},
-
 	render: function() {
 		return (
-			<i className="material-icons" aria-label={this.props.label} title={this.props.label} style={Pea_Styler.getStyle(this)}>
+			<i className="material-icons" aria-label={this.props.label} title={this.props.label} style={Pod_Styler.getStyle(this)}>
 				{this.props.children}
 			</i>
 		);
@@ -76,4 +64,4 @@ var Pea_icon = React.createClass({
 
 });
 
-module.exports = Pea_animation(Radium(Pea_icon));
+module.exports = Pod_animation(Radium(Pod_icon));

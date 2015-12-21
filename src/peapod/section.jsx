@@ -5,39 +5,12 @@
 
 import React from 'react';
 import Radium from 'radium';
-import Pea_Styler from './mixins/styler.jsx';
+import Pod_Styler from './mixins/styler.jsx';
 
-var Pea_section = React.createClass({
-  mixins: [Pea_Styler],
-
-  getBaseStyle: function() {
-    return [
-      {
-        global: {
-          color: 'black',
-          backgroundColor: 'white'
-        },
-        pastel: {
-        	color: 'white',
-        	backgroundColor: '#333'
-        },
-        neon: {
-        	color: '#F0F',
-        	backgroundColor: '#000'
-        }
-      },
-      {
-
-      }
-    ]
-  },
-
+var Pod_section = React.createClass({
   render: function() {
-
-  	var newChildren = Pea_Styler.processChildren(this.props);
-
     return (
-        <div className="section" key={'buttons2'} vars={this.props.vars} style={Pea_Styler.getStyle(this)} >
+        <div className="section" key={'buttons2'} vars={this.props.vars} style={Pod_Styler.getStyle(this)} >
 			<h1>{this.props.title}</h1>
 			{newChildren}
 		</div>
@@ -46,4 +19,4 @@ var Pea_section = React.createClass({
 
 });
 
-module.exports = Radium(Pea_section);
+module.exports = Radium(Pod_section);

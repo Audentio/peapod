@@ -8,46 +8,33 @@
 //Dependencies
 import React from 'react';
 import Radium from 'radium';
-import 'peapod/theme';
 import Color from 'color';
-import Pea_Styler from 'peapod/mixins/styler';
-import Pea_Vars from 'peapod/mixins/vars';
- 
+import Pod_Styler from 'peapod/mixins/styler';
+import Pod_Vars from 'peapod/mixins/vars';
+
 /**
 * Template component
 *
-* @element Pea_template
+* @element Pod_template
 *
 */
-var Pea_template = React.createClass({
-
-  mixins: [Pea_Styler],
+var Pod_template = React.createClass({
 
   //Validate props
   propTypes: {
-    
+
   },
 
   //Default props
   getDefaultProps: function() {
     return {
-      
+
     }
   },
 
-  getBaseStyle: function() {
-    return [
-      {
-        global: {
-          
-        }
-      }
-    ]
-  },
-
   render: function() {
-    var componentStyle = Pea_Styler.getStyle(this);
-    
+    var componentStyle = Pod_Styler.getStyle(this);
+
     return (
       <div
         className={this.props.className}
@@ -60,4 +47,4 @@ var Pea_template = React.createClass({
 
 });
 
-module.exports = Radium(Pea_template);
+module.exports = Radium(Pod_template);

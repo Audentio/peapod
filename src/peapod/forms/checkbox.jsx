@@ -8,49 +8,53 @@
 //Dependencies
 import React from 'react';
 
+var Pod_Styler = require('../mixins/styler.jsx');
+var Pod_Vars = require('../mixins/vars.jsx');
+var Pod_icon = require('../icon.jsx');
 /**
 * Checkbox component
 *
-* @element Pea_checkbox
+* @element Pod_checkbox
 *
 * @param {bool} [checked=false] - checkbox state
 * @param {string} [label] - checkbox label text
 *
 */
 
-var Pea_checkbox = React.createClass({
+var Pod_checkbox = React.createClass({
 	getInitialState: function() {
 		return {
 			checked: this.props.checked,
-			className: (this.props.checked) ? "Pea_checkbox Pea_checkbox--checked" : "Pea_checkbox"
+			className: (this.props.checked) ? "Pod_checkbox Pod_checkbox--checked" : "Pod_checkbox"
 		}
 	},
 
 	onChangeHandler: function(e){
 
 		this.setState({
-			className: (e.target.checked) ? "Pea_checkbox Pea_checkbox--checked" : "Pea_checkbox",
+			className: (e.target.checked) ? "Pod_checkbox Pod_checkbox--checked" : "Pod_checkbox",
 			checked: e.target.checked
 		})
 
 	},
 
 	render: function(){
-		var className = (this.props.kind) ? ' Pea_checkbox--'+this.props.kind : '';
 		var labelStyle = (this.props.label) ? {}:{display:'none'};
+		var icon = (this.props.icon) ?
+			<Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>{this.props.icon}</Pod_icon> :
+			<Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>check</Pod_icon>;
 
 		return (
-			<label className={this.state.className + className}>
-				<span className="Pea_checkbox__box">
-					<input onChange={this.onChangeHandler} className="Pea_checkbox__input" type="checkbox" checked={this.state.checked} />
-					<span className="Pea_checkbox__icon"></span>
-					<span className="Pea_checkbox__base"></span>
+			<label style={Pod_Styler.getStyle(this, 'wrapper')}>
+				<span style={Pod_Styler.getStyle(this, 'box')}>
+					<input style={Pod_Styler.getStyle(this, 'input')} onChange={this.onChangeHandler} className="Pod_checkbox__input" type="checkbox" checked={this.state.checked} />
+					<span style={Pod_Styler.getStyle(this)}></span>
+					{icon}
 				</span>
-
-				<span style={labelStyle} className="Pea_checkbox__label">{this.props.label}</span>
+				<span style={Pod_Styler.getStyle(this, 'label')} >{this.props.label}</span>
 			</label>
 		);
 	}
 })
 
-module.exports = Pea_checkbox;
+module.exports = Pod_checkbox;

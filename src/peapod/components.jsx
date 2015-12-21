@@ -3,29 +3,36 @@
 //import _ from 'lodash'
 
 //Peapod
-//import Pea_core from './core.jsx';
-import Pea_timestamp from './timestamp.jsx';
-import Pea_button from './button.jsx';
-import Pea_image from './image.jsx';
-import Pea_icon from './icon.jsx';
-import Pea_input from './forms/input.jsx';
-import Pea_checkbox from './forms/checkbox.jsx';
-import Pea_section from './section.jsx';
-import Pea_external from './external.jsx';
-import { Pea_animation } from './animation.jsx'
+//import Pod_core from './core.jsx';
+import Pod_timestamp from './timestamp.jsx';
+import Pod_button from './button.jsx';
+import Pod_image from './image.jsx';
+import Pod_icon from './icon.jsx';
+import Pod_input from './forms/input.jsx';
+import Pod_checkbox from './forms/checkbox.jsx';
+import Pod_grid from './grid.jsx';
+import Pod_gridCell from './gridCell.jsx';
+import Pod_section from './section.jsx';
+import Pod_external from './external.jsx';
+import { Pod_animation } from './animation.jsx'
 
 var sections = [];
 
-window.peapod_components = window.peapod_components || {
-    timestamp: Pea_timestamp,
-    button: Pea_button,
-    image: Pea_image,
-    icon: Pea_icon,
-    input: Pea_input,
-    checkbox: Pea_checkbox,
-    section: Pea_section,
-    external: Pea_external,
-    animation: Pea_animation
+window.Pod = window.Pod || {
+    timestamp: Pod_timestamp,
+    button: Pod_button,
+    image: Pod_image,
+    icon: Pod_icon,
+	grid: Pod_grid,
+	gridCell: Pod_gridCell,
+    input: Pod_input,
+    checkbox: Pod_checkbox,
+    section: Pod_section,
+    external: Pod_external,
+    animation: Pod_animation
 }
 
-module.exports = peapod_components;
+window.Pod_Vars = window.Pod_Vars || require('./mixins/vars.jsx');
+window.Pod_Styler = window.Pod_Styler || require('./mixins/styler.jsx');
+
+module.exports = [Pod, Pod_Vars, Pod_Styler];

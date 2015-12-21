@@ -12,26 +12,55 @@ var current = require('../theme/currentVars.jsx');
 //import override from '../theme/overrideVars.jsx';
 var override = require('../theme/overrideVars.jsx');
 
-window.peapod_vars = window.peapod_vars || {
+window.Pod_Vars = window.Pod_Vars || {
 	sources: [base, parent, current, override],
 
-	get: function(name, varSetOverride) {
-		var results = [],
-			onlyBase = true;
+	processResult: function(val, varSetOverride, depth) {
+		if (typeof(val) == 'string' && val.indexOf('$') == 0 && depth < 20) {
+			return Pod_Vars.get(val.replace('$', ''), varSetOverride, depth + 1); // recursively try to find
+		} else {
+			if (depth == 20) {
+				throw "Max variable depth of 20 reached.  Do you have a circular variable reference?";
+			}
+			return val;
+		}
+	},
 
-		for (var sourceIndex = 0, sourceLen = peapod_vars.sources.length; sourceIndex < sourceLen; sourceIndex++) {
-			var source = peapod_vars.sources[sourceIndex];
+	getVarFromSource: function(source, varSet, name) {
+		var splitName = name.split('.'),
+			currentSource = source[varSet];
+
+		for (var i = 0, len = splitName.length; i < len; i++) {
+			if (typeof(currentSource) !== 'undefined') {
+				currentSource = currentSource[splitName[i]];
+			} else {
+				return undefined;
+			}
+		}
+		return currentSource;
+	},
+
+	get: function(name, varSetOverride, getDepth) {
+		var results = [],
+			onlyBase = true,
+			depth = getDepth || 0;
+
+		for (var sourceIndex = 0, sourceLen = Pod_Vars.sources.length; sourceIndex < sourceLen; sourceIndex++) {
+			var source = Pod_Vars.sources[sourceIndex];
 
 			if (typeof(source) !== 'undefined') {
 				var vars = source;
 				if (typeof(vars) !== 'undefined') {
 					for (var i = 0, len = Object.keys(vars).length; i < len; i++) {
-						var varSet = Object.keys(vars)[i];
-						if (typeof(vars[varSet][name]) !== 'undefined' && (typeof(varSetOverride) === 'undefined' || (typeof(varSetOverride) !== 'undefined' && (varSetOverride == varSet || varSet == 'global' || varSet == 'base')))) {
+						var varSet = Object.keys(vars)[i],
+							varVal = Pod_Vars.getVarFromSource(vars, varSet, name);
+
+						if (typeof(varVal) !== 'undefined' && typeof(varVal) !== 'function' && (typeof(varSetOverride) === 'undefined' || (typeof(varSetOverride) !== 'undefined' && (varSetOverride == varSet || varSet == 'global' || varSet == 'base')))) {
 							if (varSet !== 'global' && varSet !== 'base') onlyBase = false;
+							var val = Pod_Vars.processResult(varVal, varSet, depth);
 							results.push({
 								vars: varSet,
-								val: vars[varSet][name]
+								val: val
 							});
 						}
 					}
@@ -50,11 +79,16 @@ window.peapod_vars = window.peapod_vars || {
 			}
 		}
 
-		if (onlyBase || results.length == 1) return results[results.length - 1].val;
+		if (onlyBase || results.length == 1) {
+			if (results.length == 0) {
+				throw "Unable to find variable named: " + name;
+			}
+			return results[results.length - 1].val;
+		}
 
 		return results;
 	}
 };
 
 
-module.exports = peapod_vars;
+module.exports = Pod_Vars;

@@ -1,6 +1,6 @@
 /*
 var Color = require('color');
-var Pea_Vars = require('../mixins/vars.jsx');
+var Pod_Vars = require('../mixins/vars.jsx');
 
 var generateKind = function(
   backgroundColor = '#444',
@@ -31,9 +31,9 @@ var generateKind = function(
 }
 
 module.exports = {
-  Pea_button: [
+  Pod_button: [
     {
-      neon: generateKind(Pea_Vars.get('brand-pink', 'neon'), Pea_Vars.get('text-dark', 'neon')),
+      neon: generateKind(Pod_Vars.get('brand-pink', 'neon'), Pod_Vars.get('text-dark', 'neon')),
       props: {
         kind: 'warning'
       }
