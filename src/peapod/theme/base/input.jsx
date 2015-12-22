@@ -2,7 +2,7 @@ var Pod_Vars = require('../../mixins/vars.jsx');
 
 module.exports = [
 	{
-		childEle: 'wrapper',
+		subComponent: 'wrapper',
 		global: {
 			display: 'inline-block',
 			position: 'relative',
@@ -11,15 +11,24 @@ module.exports = [
 			borderStyle: '$input.border.style',
 			borderColor: '$input.border.color',
 			height: '$input.height',
-			lineHeight: '$input.lineHeight'
+			lineHeight: '$input.lineHeight',
+			background: '$input.color.background',
+		}
+	}, {
+		subComponent: 'wrapper',
+		state: {
+			focus: true
+		},
+		global: {
+			background: '$input.color.backgroundFocus'
 		}
 	}, {
 		global: {
 			fontSize: '$input.font.size',
 			fontFamily: '$input.font.family',
 			color: '$input.color.text',
-			backgroundColor: '$input.color.background',
 			position: 'relative',
+			background: 'transparent',
 			zIndex: 2,
 			border: 0,
 			outline: 0,
@@ -29,7 +38,7 @@ module.exports = [
 			width: 'calc(100% - ' + Pod_Vars.get('input.padding.left') + ' - ' + Pod_Vars.get('input.padding.right') + ')',
 		}
 	}, {
-		childEle: 'placeholder',
+		subComponent: 'placeholder',
 		global: {
 			fontSize: '$input.font.size',
 			fontFamily: '$input.font.family',
@@ -44,7 +53,7 @@ module.exports = [
 			height: '100%'
 		}
 	}, {
-		childEle: 'icon',
+		subComponent: 'icon',
 		global: {
 			marginLeft: '4px',
 			marginRight: '4px',

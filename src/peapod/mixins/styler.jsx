@@ -41,6 +41,7 @@ window.Pod_Styler = window.Pod_Styler || {
             for (var i = 0, len = keys.length; i < len; i++) {
                 var key = keys[i],
 					val = state[key];
+
 				if (typeof(val) == 'undefined') {
 					return false;
 				} else if (typeof(styleState[key]) == 'object'){
@@ -75,18 +76,18 @@ window.Pod_Styler = window.Pod_Styler || {
 	},
 
 	// entry to getStyle method for non-peapod components
-	style: function(data, childEle) {
+	style: function(data, subComponent) {
 		data.constructor.displayName = "global";
-		return this.getStyle(data, childEle);
+		return this.getStyle(data, subComponent);
 	},
 
-	getStyle: function(obj, childEle) {
+	getStyle: function(obj, subComponent) {
 		var result = [],
 			style = {},
 			styleProps = obj.props[Pod_Styler.stylePropName] || {},
 			componentName = styleProps.styleLike || obj.constructor.displayName,
 			varSet = styleProps.varSet || 'base',
-			childEle = childEle || "";
+			subComponent = subComponent || "";
 
 		for (var i = 0, len = Pod_Styler.sources.length; i < len; i++) {
 			var source = Pod_Styler.sources[i];
@@ -112,7 +113,7 @@ window.Pod_Styler = window.Pod_Styler || {
 			}
 
 			if (typeof(source) !== 'undefined') {
-				source = Pod_Styler.filterStateProps(source, obj, childEle);
+				source = Pod_Styler.filterStateProps(source, obj, subComponent);
 				for (var j = 0, len2 = source.length; j < len2; j++) {
 					result.push(source[j]);
 				}
@@ -122,41 +123,19 @@ window.Pod_Styler = window.Pod_Styler || {
 		for (var i = 0, len = result.length; i < len; i++) {
 			for (var ruleIndex = 0, ruleLen = Object.keys(result[i]).length; ruleIndex < ruleLen; ruleIndex++) {
 				var computedVar = result[i][Object.keys(result[i])[ruleIndex]];
-				if (typeof(computedVar) == 'array') {
-					for (var computedIndex = computedVar.length - 1; computedIndex >= 0; computedIndex--) {
-						if (computedVar[computedIndex].vars == varSet || computedVar[computedIndex].vars == "global") {
-							computedVar = computedVar[computedIndex].val;
-							break;
-						}
+				if (typeof(computedVar) == 'object') { // merge style objects
+					for (var varIndex = 0, varLen = Object.keys(computedVar).length; varIndex < varLen; varIndex++) {
+						computedVar[Object.keys(computedVar)[varIndex]] = Pod_Styler.parseVariableValue(computedVar[Object.keys(computedVar)[varIndex]], obj, varSet);
 					}
-				} else if (typeof(computedVar) == 'string'){
-					if (computedVar.indexOf('$') > -1) {
-						computedVar = Pod_Vars.get(computedVar.replace('$', ''), varSet);
-					} else if (computedVar.indexOf('getProp:') > -1) {
-						if (computedVar.indexOf('getProp: ') > -1) {
-							computedVar = obj.props[computedVar.replace('getProp: ', '')];
-						} else {
-							computedVar = obj.props[computedVar.replace('getProp:', '')];
-						}
-					} else if (computedVar.indexOf('getState:') > -1) {
-						if (computedVar.indexOf('getState: ') > -1) {
-							computedVar = obj.state[computedVar.replace('getState: ', '')];
-						} else {
-							computedVar = obj.state[computedVar.replace('getState:', '')];
-						}
-					} else if (computedVar.indexOf('getStyle:') > -1) {
-						if (computedVar.indexOf('getStyle: ') > -1) {
-							computedVar = styleProps[computedVar.replace('getStyle: ', '')];
-						} else {
-							computedVar = styleProps[computedVar.replace('getStyle:', '')];
-						}
-					}
-				}
 
-				if (typeof(computedVar) == 'object' && typeof(style[Object.keys(result[i])[ruleIndex]]) !== 'undefined') { // merge style objects
-					style[Object.keys(result[i])[ruleIndex]] = Object.assign(style[Object.keys(result[i])[ruleIndex]], computedVar);
+					if (typeof(style[Object.keys(result[i])[ruleIndex]]) !== 'undefined') { // merge if key already exists
+						style[Object.keys(result[i])[ruleIndex]] = Object.assign(style[Object.keys(result[i])[ruleIndex]], computedVar);
+					} else { // otherwise add the key
+						style[Object.keys(result[i])[ruleIndex]] = computedVar;
+					}
+
 				} else {
-					style[Object.keys(result[i])[ruleIndex]] = computedVar;
+					style[Object.keys(result[i])[ruleIndex]] = Pod_Styler.parseVariableValue(computedVar, obj, varSet);
 				}
 			}
 		}
@@ -164,20 +143,58 @@ window.Pod_Styler = window.Pod_Styler || {
 		return style;
 	},
 
+	parseVariableValue: function(computedVar, obj, varSet) {
+		var styleProps = obj.props[Pod_Styler.stylePropName] || {};
+
+		if (typeof(computedVar) == 'array') {
+			for (var computedIndex = computedVar.length - 1; computedIndex >= 0; computedIndex--) { // go through in reverse order to find most specific
+				if (computedVar[computedIndex].vars == varSet || computedVar[computedIndex].vars == "global") {
+					computedVar = computedVar[computedIndex].val;
+					break;
+				}
+			}
+		}
+
+		if (typeof(computedVar) == 'string') {
+			if (computedVar.indexOf('$') > -1) {
+				computedVar = Pod_Vars.get(computedVar.replace('$', ''), varSet);
+			} else if (computedVar.indexOf('getProp:') > -1) {
+				if (computedVar.indexOf('getProp: ') > -1) {
+					computedVar = obj.props[computedVar.replace('getProp: ', '')];
+				} else {
+					computedVar = obj.props[computedVar.replace('getProp:', '')];
+				}
+			} else if (computedVar.indexOf('getState:') > -1) {
+				if (computedVar.indexOf('getState: ') > -1) {
+					computedVar = obj.state[computedVar.replace('getState: ', '')];
+				} else {
+					computedVar = obj.state[computedVar.replace('getState:', '')];
+				}
+			} else if (computedVar.indexOf('getStyle:') > -1) {
+				if (computedVar.indexOf('getStyle: ') > -1) {
+					computedVar = styleProps[computedVar.replace('getStyle: ', '')];
+				} else {
+					computedVar = styleProps[computedVar.replace('getStyle:', '')];
+				}
+			}
+		}
+		return computedVar;
+	},
+
 	mergeStyles: function(tree, leaf) {
 		return Object.assign(tree, leaf);
 	},
 
-	filterStateProps: function(styles, obj, childEle) {
+	filterStateProps: function(styles, obj, subComponent) {
 		var result = [],
 			styleProps = obj.props[Pod_Styler.stylePropName] || {},
 			varSet = styleProps.varSet || 'base';
 
 		for (var i = 0, len = styles.length; i < len; i++) {
             var style = styles[i],
-                validProps = Pod_Styler.validateStyleProps(style.props, styleProps),
+                validProps = Pod_Styler.validateStyleProps(style.styler, styleProps),
                 validState = Pod_Styler.validateStyleState(style.state, obj.state),
-				validChild = (typeof(style.childEle) === 'undefined' && childEle == '') || style.childEle == childEle || style.childEle == "global";
+				validChild = (typeof(style.subComponent) === 'undefined' && subComponent == '') || style.subComponent == subComponent || style.subComponent == "global";
 
             if (validProps && validState && validChild) {
                 if (style.global) result.push(style.global);

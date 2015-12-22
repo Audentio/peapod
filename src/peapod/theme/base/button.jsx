@@ -28,7 +28,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			raised: true
 		},
 		global: {
@@ -36,7 +36,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			block: true
 		},
 		global: {
@@ -44,7 +44,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			round: true
 		},
 		global: {
@@ -52,7 +52,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			kind: 'general'
 		},
 		global: {
@@ -69,7 +69,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			kind: 'primary'
 		},
 		global: {
@@ -84,7 +84,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			kind: 'warning'
 		},
 		global: {
@@ -98,7 +98,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			kind: 'info'
 		},
 		global: {
@@ -115,7 +115,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			kind: 'danger'
 		},
 		global: {
@@ -132,7 +132,7 @@ module.exports = [
 		}
 	},
 	{
-		props: {
+		styler: {
 			kind: 'success'
 		},
 		global: {

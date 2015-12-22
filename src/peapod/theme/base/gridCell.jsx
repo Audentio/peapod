@@ -3,7 +3,7 @@ var Pod_Vars = require('../../mixins/vars.jsx');
 var style = [
 	//flex item order
 	{
-		props: { order: ['!=', ''] },
+		styler: { order: ['!=', ''] },
 		global: {
 			order: 'getStyle:order'
 		}
@@ -11,8 +11,7 @@ var style = [
 
 	//flex item flex
 	{
-		childEle: 'global',
-		props: { flex: ['!=', ''] },
+		styler: { flex: ['!=', ''] },
 		global: {
 			flex: 'getStyle:flex'
 		}
@@ -25,7 +24,7 @@ var style = [
 var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	style.push({
-		props: { alignSelf: choices[choiceIndex] },
+		styler: { alignSelf: choices[choiceIndex] },
 		global: {
 			alignSelf: choices[choiceIndex]
 		}
@@ -38,13 +37,13 @@ var sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'],
 for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
 	for (var i = 0; i < 13; i++) { // loop through size values
 		style.push({
-			props: { [abbrevs[sizeIndex]]: i },
+			styler: { [abbrevs[sizeIndex]]: i },
 			global: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
 			}
 		})
 		style.push({
-			props: { [abbrevs[sizeIndex] + 'Push']: i },
+			styler: { [abbrevs[sizeIndex] + 'Push']: i },
 			global: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',
@@ -53,7 +52,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 			}
 		})
 		style.push({
-			props: { [abbrevs[sizeIndex] + 'Pull']: i },
+			styler: { [abbrevs[sizeIndex] + 'Pull']: i },
 			global: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',

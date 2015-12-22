@@ -15,7 +15,7 @@ var style = [
 
 	//flex item order
 	{
-		props: { order: ['!=', ''] },
+		styler: { order: ['!=', ''] },
 		global: {
 			order: 'getStyle:order'
 		}
@@ -23,8 +23,7 @@ var style = [
 
 	//flex item flex
 	{
-		childEle: 'global',
-		props: { flex: ['!=', ''] },
+		styler: { flex: ['!=', ''] },
 		global: {
 			flex: 'getStyle:flex'
 		}
@@ -36,7 +35,7 @@ var style = [
 var choices = ['row', 'row-reverse', 'column', 'column-reverse'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	style.push({
-		props: { flexDirection: choices[choiceIndex] },
+		styler: { flexDirection: choices[choiceIndex] },
 		global: {
 			flexDirection: choices[choiceIndex]
 		}
@@ -47,7 +46,7 @@ for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop
 var choices = ['nowrap', 'wrap', 'wrap-reverse'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	style.push({
-		props: { flexWrap: choices[choiceIndex] },
+		styler: { flexWrap: choices[choiceIndex] },
 		global: {
 			flexWrap: choices[choiceIndex]
 		}
@@ -58,7 +57,7 @@ for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop
 var choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	style.push({
-		props: { justifyContent: choices[choiceIndex] },
+		styler: { justifyContent: choices[choiceIndex] },
 		global: {
 			justifyContent: choices[choiceIndex]
 		}
@@ -69,7 +68,7 @@ for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop
 var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	style.push({
-		props: { alignItems: choices[choiceIndex] },
+		styler: { alignItems: choices[choiceIndex] },
 		global: {
 			alignItems: choices[choiceIndex]
 		}
@@ -80,7 +79,7 @@ for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop
 var choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	style.push({
-		props: { alignContent: choices[choiceIndex] },
+		styler: { alignContent: choices[choiceIndex] },
 		global: {
 			alignContent: choices[choiceIndex]
 		}
@@ -91,7 +90,7 @@ for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop
 var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	style.push({
-		props: { alignSelf: choices[choiceIndex] },
+		styler: { alignSelf: choices[choiceIndex] },
 		global: {
 			alignSelf: choices[choiceIndex]
 		}
@@ -104,13 +103,13 @@ var sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'],
 for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
 	for (var i = 0; i < 13; i++) { // loop through size values
 		style.push({
-			props: { [abbrevs[sizeIndex]]: i },
+			styler: { [abbrevs[sizeIndex]]: i },
 			global: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
 			}
 		})
 		style.push({
-			props: { [abbrevs[sizeIndex] + 'Push']: i },
+			styler: { [abbrevs[sizeIndex] + 'Push']: i },
 			global: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',
@@ -119,7 +118,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 			}
 		})
 		style.push({
-			props: { [abbrevs[sizeIndex] + 'Pull']: i },
+			styler: { [abbrevs[sizeIndex] + 'Pull']: i },
 			global: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',

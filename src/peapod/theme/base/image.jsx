@@ -2,7 +2,7 @@ var Pod_Vars = require('../../mixins/vars.jsx');
 
 module.exports = [
 	{
-		childEle: 'wrapper',
+		subComponent: 'wrapper',
 		global: {
 			display: 'inline-block',
 			position: 'relative'
@@ -12,14 +12,14 @@ module.exports = [
 			display: 'block'
 		}
 	}, {
-		props: {
+		styler: {
 			lightbox: 'true'
 		},
 		global: {
 			cursor: 'pointer'
 		}
 	}, {
-		childEle: 'caption',
+		subComponent: 'caption',
 		global: {
 			display: 'block',
 			padding: '6px 10px',
@@ -30,7 +30,7 @@ module.exports = [
 			width: '100%'
 		}
 	}, {
-		childEle: 'lightbox',
+		subComponent: 'lightbox',
 		global: {
 			display: 'table',
 			cursor: 'pointer',
@@ -47,15 +47,15 @@ module.exports = [
 			display: 'none'
 		}
 	}, {
-		childEle: 'lightbox',
-		props: {
+		subComponent: 'lightbox',
+		styler: {
 			'lightbox-animation': 'true'
 		},
 		global: {
 			display: 'table'
 		}
 	}, {
-		childEle: 'lightbox',
+		subComponent: 'lightbox',
 		state: {
 			visible: 'true'
 		},
@@ -65,14 +65,14 @@ module.exports = [
 			opacity: 1
 		}
 	}, {
-		childEle: 'lightboxInner',
+		subComponent: 'lightboxInner',
 		global: {
 			display: 'table-cell',
 			textAlign: 'center',
 			verticalAlign: 'middle'
 		}
 	}, {
-		childEle: 'lightboxImage',
+		subComponent: 'lightboxImage',
 		global: {
 			maxWidth: '90%',
 			maxHeight: '90%',
@@ -82,7 +82,7 @@ module.exports = [
 			transform: 'scale(.7)',
 		}
 	}, {
-		childEle: 'lightboxImage',
+		subComponent: 'lightboxImage',
 		state: {
 			lightboxVisible: 'true'
 		},

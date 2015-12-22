@@ -36,6 +36,7 @@ var Pod_input = React.createClass({
 	getInitialState: function() {
 		return {
 			value: this.props.value,
+			focus: false,
 			placeholder: (this.props.value && this.props.value.length > 1) ? undefined : this.props.placeholder //undefined if value prop exists
 		};
 	},
@@ -49,8 +50,12 @@ var Pod_input = React.createClass({
 
 	},
 
-	onFocusHandler: function(e){
+	onFocus: function(e){
 		this.setState({ focus: true })
+	},
+
+	onBlur: function(e){
+		this.setState({ focus: false })
 	},
 
 	getValue: function() {
@@ -59,7 +64,7 @@ var Pod_input = React.createClass({
 
 	render: function() {
 		return (
-			<div style={Pod_Styler.getStyle(this, 'wrapper')}
+			<div onFocus={this.onFocus} onBlur={this.onBlur} style={Pod_Styler.getStyle(this, 'wrapper')}
 				 className={this.props.className}>
 
 				<span style={Pod_Styler.getStyle(this, 'placeholder')}>{<Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>{this.props.icon}</Pod_icon>}{this.state.placeholder}</span>

@@ -2,7 +2,7 @@ var Pod_Vars = require('../../mixins/vars.jsx');
 
 module.exports = [
 	{
-		childEle: 'wrapper',
+		subComponent: 'wrapper',
 		global: {
 			display: 'flex',
 			alignItems: 'center'
@@ -29,18 +29,18 @@ module.exports = [
 			borderColor: '$checkbox.border.colorChecked',
 		}
 	}, {
-		childEle: 'box',
+		subComponent: 'box',
 		global: {
 			position: 'relative',
 			cursor: 'pointer',
 		}
 	}, {
-		childEle: 'input',
+		subComponent: 'input',
 		global: {
 			display: 'none'
 		}
 	}, {
-		childEle: 'icon',
+		subComponent: 'icon',
 		global: {
 			color: '$checkbox.color.icon',
 			position: 'absolute',
@@ -50,7 +50,7 @@ module.exports = [
 			display: 'none'
 		}
 	}, {
-		childEle: 'icon',
+		subComponent: 'icon',
 		state: {
 			checked: true
 		},
@@ -58,10 +58,11 @@ module.exports = [
 			display: 'inline-block'
 		}
 	}, {
-		childEle: 'label',
+		subComponent: 'label',
 		global: {
 			fontFamily: '$checkbox.font.family',
 			fontSize: '$checkbox.font.size',
+			color: '$checkbox.color.text'
 		}
 	}
 ]

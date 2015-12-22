@@ -7,14 +7,14 @@ module.exports = [
 			color: '$icon.color'
 		}
 	}, {
-		props: {
+		styler: {
 			size: ['!=', '']
 		},
 		global: {
 			fontSize: 'getStyle:size',
 		}
 	}, {
-		props: {
+		styler: {
 			color: ['!=', '']
 		},
 		global: {

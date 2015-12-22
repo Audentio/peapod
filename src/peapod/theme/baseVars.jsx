@@ -425,13 +425,13 @@ module.exports = {
 			width: '1.5rem',
 			height: '$checkbox.width',
 			color: {
-				text: '$color.text.white',
-				background: 'transparent',
+				text: '$color.text.dark',
+				background: '$palette.grey50',
 				backgroundChecked: '$color.primary.base',
 				icon: '$color.text.white'
 			},
 			border: {
-				color: '$checkbox.color.text',
+				color: '$palette.grey200',
 				colorChecked: '$checkbox.color.backgroundChecked',
 				radius: '$border.radius.large',
 				width: '1px',
@@ -446,9 +446,10 @@ module.exports = {
 		//Input
 		input: {
 			color: {
-				text: '$color.text.white',
-				placeholder: '$input.color.text',
-				background: 'transparent',
+				text: '$palette.grey400',
+				placeholder: '$palette.grey500',
+				background: '$palette.grey50',
+				backgroundFocus: '$palette.grey100',
 				icon: '$input.color.text'
 			},
 			height: '4.5rem',
@@ -498,10 +499,64 @@ module.exports = {
 			medium: '@media (min-width: 800px)',
 			large: '@media (min-width: 1024px)',
 			xlarge: '@media (min-width: 1500px)',
-			smallLt: '@media (max-width: 610px)',
-			mediumLt: '@media (max-width: 800px)',
-			largeLt: '@media (max-width: 1024px)',
-			xlargeLt: '@media (max-width: 1500px)'
+			smallLt: '@media (max-width: 609px)',
+			mediumLt: '@media (max-width: 799px)',
+			largeLt: '@media (max-width: 1023px)',
+			xlargeLt: '@media (max-width: 1499px)'
+		},
+
+		//Panels
+		panel: {
+			color: {
+				purple: {
+					dark: '#686F9D',
+					base: '#838CC7',
+					light: '#979DCE'
+				},
+				teal: {
+					dark: '#428E94',
+					base: '#58B3B9',
+					light: '#7ABEC4'
+				},
+				pink: {
+					dark: '#934473',
+					base: '#B95890',
+					light: '#C376A1'
+				},
+				redDark: {
+					dark: '#CC4A43',
+					base: '#EE655E',
+					light: '#F18375'
+				},
+				orangeDark: {
+					dark: '#D6714B',
+					base: '#EE855E',
+					light: '#EF9976'
+				}
+			}
+		}
+	},
+	dark: {
+		checkbox: {
+			color: {
+				text: '$color.text.white',
+				background: 'transparent'
+			},
+			border: {
+				color: '$checkbox.color.text'
+			}
+		},
+		input: {
+			color: {
+				text: '$color.text.white',
+				placeholder: '$input.color.text',
+				background: 'transparent',
+				backgroundFocus: 'rgba(255, 255, 255, 0.1)',
+				icon: '$input.color.text'
+			},
+			border: {
+				color: '$palette.grey200',
+			}
 		}
 	}
 }
