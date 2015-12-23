@@ -4,10 +4,10 @@
  */
 
 var React = require('react');
-var base = require('../theme/base.jsx');
-var parent = require('../theme/parent.jsx');
-var current = require('../theme/current.jsx');
-var override = require('../theme/override.jsx');
+var base = require('./theme/base.jsx');
+var parent = require('./theme/parent.jsx');
+var current = require('./theme/current.jsx');
+var override = require('./theme/override.jsx');
 
 window.Pod_Styler = window.Pod_Styler || {
 	sources: [base, "base", parent, current, "local", override],

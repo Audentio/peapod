@@ -3,14 +3,10 @@
  *  LICENSE: <%= package.licence %>
  */
 
-//import base from '../theme/baseVars.jsx';
-var base = require('../theme/baseVars.jsx');
-//import parent from '../theme/parentVars.jsx';
-var parent = require('../theme/parentVars.jsx');
-//import current from '../theme/currentVars.jsx';
-var current = require('../theme/currentVars.jsx');
-//import override from '../theme/overrideVars.jsx';
-var override = require('../theme/overrideVars.jsx');
+var base = require('./theme/baseVars.jsx');
+var parent = require('./theme/parentVars.jsx');
+var current = require('./theme/currentVars.jsx');
+var override = require('./theme/overrideVars.jsx');
 
 window.Pod_Vars = window.Pod_Vars || {
 	sources: [base, parent, current, override],

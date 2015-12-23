@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Radium from 'radium';
-import Pod_Styler from './mixins/styler.jsx';
+import Pod_Styler from '../styler.jsx';
 
 var Pod_section = React.createClass({
   render: function() {

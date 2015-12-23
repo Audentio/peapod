@@ -6,7 +6,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
-var Pod_Styler = require('./mixins/styler.jsx');
+var Pod_Styler = require('../styler.jsx');
 
 
 var Pod_gridCell = React.createClass({

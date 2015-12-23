@@ -1,4 +1,4 @@
-var Pod_Vars = require('../../mixins/vars.jsx');
+var Pod_Vars = require('../../vars.jsx');
 
 var style = [
 	//flex item order

@@ -6,8 +6,8 @@
 import React from 'react';
 import moment from 'moment';
 
-var Pod_Styler = require('./mixins/styler.jsx');
-var Pod_Vars = require('./mixins/vars.jsx');
+var Pod_Styler = require('../styler.jsx');
+var Pod_Vars = require('../vars.jsx');
 
 /**
 * Create live timestamp from valid date.

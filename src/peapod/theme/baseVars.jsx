@@ -534,7 +534,44 @@ module.exports = {
 					light: '#EF9976'
 				}
 			}
+		},
+
+		//Tables
+		table: {
+			color: {
+				lightRow: {
+					background: 'transparent',
+					color: '$color.text.body',
+					hover: '$palette.blueGrey100'
+				},
+				darkRow: {
+					background: '$color.base.table',
+					color: '$color.text.body',
+					hover: '$palette.blueGrey100'
+				},
+				header: {
+					background: '#525F6D',
+					color: '$color.text.white',
+					hover: '#525F6D'
+				}
+			},
+			border: {
+				color: '$palette.grey200',
+				radius: '0',
+				width: '1px',
+				style: 'solid'
+			},
+			gutter: {
+				vertical: '$gutter.internal',
+				horizontal: '$gutter.small'
+			},
+			font: {
+				family: 'inherit',
+				size: '$font.size.normal'
+			}
 		}
+
+
 	},
 	dark: {
 		checkbox: {

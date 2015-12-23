@@ -4,18 +4,21 @@
 
 //Peapod
 //import Pod_core from './core.jsx';
-import Pod_timestamp from './timestamp.jsx';
-import Pod_button from './button.jsx';
-import Pod_image from './image.jsx';
-import Pod_icon from './icon.jsx';
-import Pod_input from './forms/input.jsx';
-import Pod_checkbox from './forms/checkbox.jsx';
-import Pod_grid from './grid.jsx';
-import Pod_div from './div.jsx';
-import Pod_gridCell from './gridCell.jsx';
-import Pod_section from './section.jsx';
-import Pod_external from './external.jsx';
-import { Pod_animation } from './animation.jsx'
+import Pod_timestamp from './components/timestamp.jsx';
+import Pod_button from './components/button.jsx';
+import Pod_image from './components/image.jsx';
+import Pod_icon from './components/icon.jsx';
+import Pod_input from './components/input.jsx';
+import Pod_checkbox from './components/checkbox.jsx';
+import Pod_grid from './components/grid.jsx';
+import Pod_div from './components/div.jsx';
+import Pod_gridCell from './components/gridCell.jsx';
+import Pod_table from './components/table.jsx';
+import Pod_tableRow from './components/tableRow.jsx';
+import Pod_tableCell from './components/tableCell.jsx';
+import Pod_section from './components/section.jsx';
+import Pod_external from './components/external.jsx';
+import { Pod_animation } from './components/animation.jsx';
 
 var sections = [];
 
@@ -27,6 +30,9 @@ window.Pod = window.Pod || {
 	grid: Pod_grid,
 	gridCell: Pod_gridCell,
 	div: Pod_div,
+	table: Pod_table,
+	tableRow: Pod_tableRow,
+	tableCell: Pod_tableCell,
     input: Pod_input,
     checkbox: Pod_checkbox,
     section: Pod_section,
@@ -34,7 +40,7 @@ window.Pod = window.Pod || {
     animation: Pod_animation
 }
 
-window.Pod_Vars = window.Pod_Vars || require('./mixins/vars.jsx');
-window.Pod_Styler = window.Pod_Styler || require('./mixins/styler.jsx');
+window.Pod_Vars = window.Pod_Vars || require('./vars.jsx');
+window.Pod_Styler = window.Pod_Styler || require('./styler.jsx');
 
 module.exports = [Pod, Pod_Vars, Pod_Styler];

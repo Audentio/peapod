@@ -8,7 +8,7 @@
 var React = require('react');
 var Radium = require('radium');
 var Color = require('color');
-var Pod_Styler = require('./mixins/styler.jsx');
+var Pod_Styler = require('../styler.jsx');
 
 /**
 * Buttons component

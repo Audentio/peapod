@@ -8,9 +8,9 @@
 //Dependencies
 import React from 'react';
 
-var Pod_Styler = require('../mixins/styler.jsx');
-var Pod_Vars = require('../mixins/vars.jsx');
-var Pod_icon = require('../icon.jsx');
+var Pod_Styler = require('../styler.jsx');
+var Pod_Vars = require('../vars.jsx');
+var Pod_icon = require('./icon.jsx');
 /**
 * Checkbox component
 *

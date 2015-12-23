@@ -9,8 +9,8 @@
 import React from 'react';
 import Radium from 'radium';
 import Color from 'color';
-import Pod_Styler from 'peapod/mixins/styler';
-import Pod_Vars from 'peapod/mixins/vars';
+import Pod_Styler from '../styler';
+import Pod_Vars from '../vars';
 
 /**
 * Template component
@@ -33,12 +33,8 @@ var Pod_template = React.createClass({
   },
 
   render: function() {
-    var componentStyle = Pod_Styler.getStyle(this);
-
     return (
-      <div
-        className={this.props.className}
-				style={componentStyle}
+      <div style={Pod_Styler.getStyle(this)}
         {this.props.children}>
       </div>
     );

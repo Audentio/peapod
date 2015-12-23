@@ -6,10 +6,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
-var Pod_Styler = require('./mixins/styler.jsx');
+var Pod_Styler = require('../styler.jsx');
 
 
-var Pod_grid = React.createClass({
+var Pod_tableRow = React.createClass({
 	render: function() {
 		return (
 			<div style={Pod_Styler.getStyle(this)}>
@@ -20,4 +20,4 @@ var Pod_grid = React.createClass({
 
 });
 
-module.exports = Radium(Pod_grid);
+module.exports = Radium(Pod_tableRow);

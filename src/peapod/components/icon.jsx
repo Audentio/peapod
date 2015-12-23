@@ -7,8 +7,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import { Pod_animation } from './animation.jsx';
-var Pod_Styler = require('./mixins/styler.jsx');
-var Pod_Vars = require('./mixins/vars.jsx');
+var Pod_Styler = require('../styler.jsx');
+var Pod_Vars = require('../vars.jsx');
 
 /**
 * Icon component

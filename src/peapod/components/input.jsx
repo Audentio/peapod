@@ -10,9 +10,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 
-var Pod_Styler = require('../mixins/styler.jsx');
-var Pod_Vars = require('../mixins/vars.jsx');
-var Pod_icon = require('../icon.jsx');
+var Pod_Styler = require('../styler.jsx');
+var Pod_Vars = require('../vars.jsx');
+var Pod_icon = require('./icon.jsx');
 
 /**
 * Multipurpose Input component

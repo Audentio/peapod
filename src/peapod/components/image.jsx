@@ -6,9 +6,8 @@
 import React from 'react';
 //import ReactDOM from 'react-dom';
 import Radium from 'radium';
-import core from './core.jsx';
-var Pod_Styler = require('./mixins/styler.jsx');
-var Pod_Vars = require('./mixins/vars.jsx');
+var Pod_Styler = require('../styler.jsx');
+var Pod_Vars = require('../vars.jsx');
 
 /**
 * Image component: loads HiDPI images on retina devices
