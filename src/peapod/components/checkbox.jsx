@@ -25,17 +25,34 @@ var Pod_checkbox = React.createClass({
 	getInitialState: function() {
 		return {
 			checked: this.props.checked,
-			className: (this.props.checked) ? "Pod_checkbox Pod_checkbox--checked" : "Pod_checkbox"
 		}
 	},
 
 	onChangeHandler: function(e){
+		if (typeof(this.props.onChange) !== 'undefined') this.props.onChange(e.target.checked);
 
+		this.setChecked(e.target.checked);
+	},
+
+	setChecked: function(state) {
 		this.setState({
-			className: (e.target.checked) ? "Pod_checkbox Pod_checkbox--checked" : "Pod_checkbox",
-			checked: e.target.checked
+			checked: state
 		})
+	},
 
+	getDefaultProps: function() {
+		return {
+			setChecked: function() {
+				this.setChecked(true);
+			},
+			setUnchecked: function() {
+				this.setChecked(false);
+			}
+		}
+	},
+
+	componentWillMount: function() {
+		if (typeof(this.props.onChange) !== 'undefined') this.props.onChange(this.state.checked);
 	},
 
 	render: function(){

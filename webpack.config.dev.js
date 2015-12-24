@@ -1,55 +1,29 @@
-var webpack = require('webpack');
 var path = require('path');
+var node_modules_dir = path.resolve(__dirname, 'node_modules');
 
 var config = {
-  devtool: 'eval',
-  cache: true,
-  entry: [
-	  'webpack-hot-middleware/client',
-    './examples/examples.jsx'
-  ],
-
+  entry: {
+      styler: [path.resolve(__dirname, 'src/peapod/styler.jsx')],
+      components: path.resolve(__dirname, 'src/peapod/components.jsx'),
+      vars:  [path.resolve(__dirname, 'src/peapod/vars.jsx')]
+  },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'examples_bundle.js',
-    publicPath: '/static/'
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js'
   },
-
-
-  // Resolve source directories so we can avoid writing
-  // ../../wherever/module
   resolve: {
-    unsafeCache: true,
-    modulesDirectories: ['node_modules', './src'],
-    extensions: ['', '.js', '.jsx', '.json']
-  },
+   extensions: ['', '.js', '.jsx', 'index.js', 'index.jsx', '.json', 'index.json']
+ },
 
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
-
-  module: {
-    preLoaders: [{
-      test: /\.json$/,
-      loader: 'json'
-    }],
-
-    loaders: [
-
-      //JSX files go through hotloader and Babel
-      {
-        test: /\.jsx$/,
-        include: [
-         path.resolve(__dirname, "src/peapod"),
-         path.resolve(__dirname, "src/components"),
-         path.resolve(__dirname, "examples")
-        ],
-        loaders: ['react-hot','babel-loader']
-      }
-    ]
-  }
-
+ module: {
+   preLoaders: [
+       { test: /\.json$/, loader: 'json'},
+   ],
+   loaders: [
+       { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
+       { test: /\.jsx$/, exclude: /node_modules/, loader: 'babel'}
+   ]
+ },
 };
 
 module.exports = config;

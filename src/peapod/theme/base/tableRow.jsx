@@ -4,9 +4,6 @@ module.exports = [
 			display: 'table-row',
 			color: '$table.color.lightRow.color',
 			background: '$table.color.lightRow.background',
-			':hover': {
-				background: '$table.color.lightRow.hover'
-			}
 		}
 	},
 	{
@@ -16,8 +13,35 @@ module.exports = [
 		global: {
 			color: '$table.color.darkRow.color',
 			background: '$table.color.darkRow.background',
+		}
+	}, {
+		styler: {
+			header: false
+		},
+		global: {
+			':hover': {
+				background: '$table.color.lightRow.hover'
+			}
+		}
+	}, {
+		styler: {
+			dark: true,
+			header: false
+		},
+		global: {
 			':hover': {
 				background: '$table.color.darkRow.hover'
+			}
+		}
+	}, {
+		styler: {
+			checked: true
+		},
+		global: {
+			color: '$table.color.checked.color',
+			background: '$table.color.checked.background',
+			':hover': {
+				background: '$table.color.checked.hover'
 			}
 		}
 	}, {

@@ -553,6 +553,17 @@ module.exports = {
 					background: '#525F6D',
 					color: '$color.text.white',
 					hover: '#525F6D'
+				},
+				checked: {
+					background: '$palette.blueGrey200',
+					color: '$color.text.dark',
+					hover: '$palette.blueGrey300'
+				},
+				columnHovered: {
+					background: '$palette.blueGrey100',
+					color: '$color.text.body',
+					headerBackground: '$color.base.active',
+					headerColor: '$table.color.header.color'
 				}
 			},
 			border: {
