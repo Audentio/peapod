@@ -2,6 +2,19 @@ var Pod_Vars = require('../../vars.jsx');
 
 module.exports = [
 	{
+		subComponent: 'outerWrapper',
+		global: {
+			display: 'inline-block',
+		}
+	}, {
+		subComponent: 'outerWrapper',
+		styler: {
+			block: true
+		},
+		global: {
+			display: 'block',
+		}
+	}, {
 		subComponent: 'wrapper',
 		global: {
 			display: 'flex',

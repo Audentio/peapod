@@ -10,8 +10,10 @@ var Pod_grid = require('./base/grid.jsx');
 var Pod_gridCell = require('./base/gridCell.jsx');
 var Pod_div = require('./base/div.jsx');
 var Pod_table = require('./base/table.jsx');
+var Pod_tableInner = require('./base/tableInner.jsx');
 var Pod_tableRow = require('./base/tableRow.jsx');
 var Pod_tableCell = require('./base/tableCell.jsx');
+var Pod_tableControls = require('./base/tableControls.jsx');
 
 module.exports = {
 	Pod_button: Pod_button,
@@ -25,6 +27,8 @@ module.exports = {
 	Pod_gridCell: Pod_gridCell,
 	Pod_div: Pod_div,
 	Pod_table: Pod_table,
+	Pod_tableInner: Pod_tableInner,
 	Pod_tableRow: Pod_tableRow,
-	Pod_tableCell: Pod_tableCell
+	Pod_tableCell: Pod_tableCell,
+	Pod_tableControls: Pod_tableControls
 }

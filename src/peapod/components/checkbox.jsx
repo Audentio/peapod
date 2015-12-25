@@ -24,7 +24,7 @@ var Pod_icon = require('./icon.jsx');
 var Pod_checkbox = React.createClass({
 	getInitialState: function() {
 		return {
-			checked: this.props.checked,
+			checked: this.props.checked == true,
 		}
 	},
 
@@ -51,6 +51,14 @@ var Pod_checkbox = React.createClass({
 		}
 	},
 
+	componentWillReceiveProps: function(nextProps) {
+		if (typeof(nextProps.checked) !== 'undefined') {
+			this.setState({
+				checked: nextProps.checked == true
+			})
+		}
+	},
+
 	componentWillMount: function() {
 		if (typeof(this.props.onChange) !== 'undefined') this.props.onChange(this.state.checked);
 	},
@@ -62,14 +70,16 @@ var Pod_checkbox = React.createClass({
 			<Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>check</Pod_icon>;
 
 		return (
-			<label style={Pod_Styler.getStyle(this, 'wrapper')}>
-				<span style={Pod_Styler.getStyle(this, 'box')}>
-					<input style={Pod_Styler.getStyle(this, 'input')} onChange={this.onChangeHandler} className="Pod_checkbox__input" type="checkbox" checked={this.state.checked} />
-					<span style={Pod_Styler.getStyle(this)}></span>
-					{icon}
-				</span>
-				<span style={Pod_Styler.getStyle(this, 'label')} >{this.props.label}</span>
-			</label>
+			<div style={Pod_Styler.getStyle(this, 'outerWrapper')}>
+				<label style={Pod_Styler.getStyle(this, 'wrapper')}>
+					<span style={Pod_Styler.getStyle(this, 'box')}>
+						<input style={Pod_Styler.getStyle(this, 'input')} onChange={this.onChangeHandler} className="Pod_checkbox__input" type="checkbox" checked={this.state.checked} />
+						<span style={Pod_Styler.getStyle(this)}></span>
+						{icon}
+					</span>
+					<span style={Pod_Styler.getStyle(this, 'label')} >{this.props.label}</span>
+				</label>
+			</div>
 		);
 	}
 })

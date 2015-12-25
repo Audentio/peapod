@@ -12,6 +12,8 @@ var override = require('./theme/override.jsx');
 window.Pod_Styler = window.Pod_Styler || {
 	sources: [base, "base", parent, current, "local", override],
 	stylePropName: 'styler',
+	cache: {},
+	varCache: {},
 
 	validateStyleProps: function(styleProps, props) {
 		if (styleProps) {
@@ -81,13 +83,43 @@ window.Pod_Styler = window.Pod_Styler || {
 		return this.getStyle(data, subComponent);
 	},
 
+	getStyleFromCache: function(obj, componentName, subComponent) {
+		if (typeof(this.cache[componentName]) == 'undefined') this.cache[componentName] = {};
+		if (typeof(this.cache[componentName][subComponent]) == 'undefined') this.cache[componentName][subComponent] = [];
+		for (var i = 0, len = this.cache[componentName][subComponent].length; i < len; i++) {
+			var cacheVal = this.cache[componentName][subComponent][i];
+			if (obj.props.styler == cacheVal.props && obj.state == cacheVal.state) return cacheVal.style;
+		}
+		return false;
+	},
+
+	addStyleToCache: function(obj, componentName, subComponent, style) {
+		if (typeof(this.cache[componentName]) == 'undefined') this.cache[componentName] = {};
+		if (typeof(this.cache[componentName][subComponent]) == 'undefined') this.cache[componentName][subComponent] = [];
+		for (var i = 0, len = this.cache[componentName][subComponent].length; i < len; i++) {
+			var cacheVal = this.cache[componentName][subComponent][i];
+			if (obj.props.styler == cacheVal.props && obj.state == cacheVal.state) return false;
+		}
+		if (len > 20) this.cache[componentName][subComponent].shift(); // prune more than 20 elements to conserve memory
+		this.cache[componentName][subComponent].push({props: obj.props.styler, state: obj.state, style: style});
+	},
+
 	getStyle: function(obj, subComponent) {
+		//var timer = window.performance.now();
+
 		var result = [],
 			style = {},
 			styleProps = obj.props[Pod_Styler.stylePropName] || {},
 			componentName = styleProps.styleLike || obj.constructor.displayName,
 			varSet = styleProps.varSet || 'base',
 			subComponent = subComponent || "";
+
+		var cacheVal = this.getStyleFromCache(obj, componentName, subComponent || "_");
+		if (cacheVal !== false) {
+			//console.log("~ " + (window.performance.now() - timer))
+			return cacheVal;
+		}
+
 
 		for (var i = 0, len = Pod_Styler.sources.length; i < len; i++) {
 			var source = Pod_Styler.sources[i];
@@ -140,6 +172,8 @@ window.Pod_Styler = window.Pod_Styler || {
 			}
 		}
 
+		this.addStyleToCache(obj, componentName, subComponent || "_", style);
+		//console.log(window.performance.now() - timer)
 		return style;
 	},
 
@@ -157,7 +191,13 @@ window.Pod_Styler = window.Pod_Styler || {
 
 		if (typeof(computedVar) == 'string') {
 			if (computedVar.indexOf('$') > -1) {
-				computedVar = Pod_Vars.get(computedVar.replace('$', ''), varSet);
+				var computedKey = computedVar;
+				if (typeof(this.varCache[computedVar + '_' + varSet]) == 'undefined') {
+					computedVar = Pod_Vars.get(computedVar.replace('$', ''), varSet);
+					this.varCache[computedKey + '_' + varSet] = computedVar;
+				} else {
+					computedVar = this.varCache[computedKey + '_' + varSet]; // get variable from cache rather than parse string
+				}
 			} else if (computedVar.indexOf('getProp:') > -1) {
 				if (computedVar.indexOf('getProp: ') > -1) {
 					computedVar = obj.props[computedVar.replace('getProp: ', '')];

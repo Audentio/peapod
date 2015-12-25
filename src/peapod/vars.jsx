@@ -10,6 +10,7 @@ var override = require('./theme/overrideVars.jsx');
 
 window.Pod_Vars = window.Pod_Vars || {
 	sources: [base, parent, current, override],
+	cache: {},
 
 	processResult: function(val, varSetOverride, depth) {
 		if (typeof(val) == 'string' && val.indexOf('$') == 0 && depth < 20) {

@@ -564,6 +564,10 @@ module.exports = {
 					color: '$color.text.body',
 					headerBackground: '$color.base.active',
 					headerColor: '$table.color.header.color'
+				},
+				controls: {
+					background: '#647383',
+					color: '#ABBAC9'
 				}
 			},
 			border: {

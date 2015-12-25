@@ -18,6 +18,7 @@ import Pod_tableRow from './components/tableRow.jsx';
 import Pod_tableCell from './components/tableCell.jsx';
 import Pod_section from './components/section.jsx';
 import Pod_external from './components/external.jsx';
+import Pod_paginator from './components/paginator.jsx';
 import { Pod_animation } from './components/animation.jsx';
 
 var sections = [];
@@ -37,7 +38,8 @@ window.Pod = window.Pod || {
     checkbox: Pod_checkbox,
     section: Pod_section,
     external: Pod_external,
-    animation: Pod_animation
+    animation: Pod_animation,
+	paginator: Pod_paginator
 }
 
 window.Pod_Vars = window.Pod_Vars || require('./vars.jsx');
