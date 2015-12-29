@@ -11,8 +11,10 @@ var Pod_Styler = require('../styler.jsx');
 
 var Pod_div = React.createClass({
 	render: function() {
+		var {styler, children, ...other} = this.props;
+
 		return (
-			<div style={Pod_Styler.getStyle(this)}>
+			<div {...other} style={Pod_Styler.getStyle(this)}>
 				{this.props.children}
 			</div>
 		);

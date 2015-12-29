@@ -60,7 +60,8 @@ module.exports = [
 			top: '50%',
 			transform: 'translateY(-50%)',
 			left: '2px',
-			display: 'none'
+			display: 'none',
+			fontSize: '$checkbox.font.size',
 		}
 	}, {
 		subComponent: 'icon',

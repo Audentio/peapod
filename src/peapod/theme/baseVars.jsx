@@ -400,6 +400,12 @@ module.exports = {
 				text: {
 					light: '$color.text.white',
 					dark: '$color.text.dark'
+				},
+				base: {
+					background: '#778A9D',
+					color: '#ABBAC9',
+					hover: 'red',
+					active: 'blue'
 				}
 			},
 			border: {
@@ -542,12 +548,12 @@ module.exports = {
 				lightRow: {
 					background: 'transparent',
 					color: '$color.text.body',
-					hover: '$palette.blueGrey100'
+					hover: '#EDF0F4'
 				},
 				darkRow: {
 					background: '$color.base.table',
 					color: '$color.text.body',
-					hover: '$palette.blueGrey100'
+					hover: '#EDF0F4'
 				},
 				header: {
 					background: '#525F6D',
@@ -555,12 +561,12 @@ module.exports = {
 					hover: '#525F6D'
 				},
 				checked: {
-					background: '$palette.blueGrey200',
+					background: '#E6E9ED',
 					color: '$color.text.dark',
 					hover: '$palette.blueGrey300'
 				},
 				columnHovered: {
-					background: '$palette.blueGrey100',
+					background: '#EDF0F4',
 					color: '$color.text.body',
 					headerBackground: '$color.base.active',
 					headerColor: '$table.color.header.color'
@@ -568,11 +574,14 @@ module.exports = {
 				controls: {
 					background: '#647383',
 					color: '#ABBAC9'
+				},
+				editIcon: {
+					color: '#ABBAC7'
 				}
 			},
 			border: {
 				color: '$palette.grey200',
-				radius: '0',
+				radius: '$border.radius.large',
 				width: '1px',
 				style: 'solid'
 			},
@@ -582,9 +591,29 @@ module.exports = {
 			},
 			font: {
 				family: 'inherit',
-				size: '$font.size.normal'
+				size: '$font.size.normal',
+				headerFamily: '$font.family.secondary',
+				headerSize: '$font.size.xsmall'
+			},
+			headerHeight: '5rem',
+			footerHeight: '5rem'
+		},
+
+
+		//Paginator
+		paginator: {
+			border: {
+				color: '#778A9D',
+				width: '1px',
+				style: 'solid'
+			},
+			font: {
+				family: 'inherit',
+				size: '$font.size.normal',
+				triggerSize: '$font.size.xlarge'
 			}
-		}
+		},
+
 
 
 	},

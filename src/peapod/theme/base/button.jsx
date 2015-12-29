@@ -70,6 +70,21 @@ module.exports = [
 	},
 	{
 		styler: {
+			kind: 'base'
+		},
+		global: {
+			backgroundColor: '$button.color.base.background',
+			color: '$button.color.base.color',
+			':hover': {
+				backgroundColor: 'button.color.base.hover'
+			},
+			':active': {
+				backgroundColor: 'button.color.base.active'
+			}
+		}
+	},
+	{
+		styler: {
 			kind: 'primary'
 		},
 		global: {

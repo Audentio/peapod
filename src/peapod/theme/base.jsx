@@ -14,6 +14,7 @@ var Pod_tableInner = require('./base/tableInner.jsx');
 var Pod_tableRow = require('./base/tableRow.jsx');
 var Pod_tableCell = require('./base/tableCell.jsx');
 var Pod_tableControls = require('./base/tableControls.jsx');
+var Pod_paginator = require('./base/paginator.jsx');
 
 module.exports = {
 	Pod_button: Pod_button,
@@ -30,5 +31,6 @@ module.exports = {
 	Pod_tableInner: Pod_tableInner,
 	Pod_tableRow: Pod_tableRow,
 	Pod_tableCell: Pod_tableCell,
-	Pod_tableControls: Pod_tableControls
+	Pod_tableControls: Pod_tableControls,
+	Pod_paginator: Pod_paginator
 }

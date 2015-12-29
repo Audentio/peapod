@@ -2,7 +2,8 @@ module.exports = [
 	{
 		global: {
 			width: '100%',
-			borderRadius: '$table.border.radius'
+			borderRadius: '$table.border.radius',
+			overflow: 'hidden'
 		}
 	}, {
 		subComponent: 'footer',

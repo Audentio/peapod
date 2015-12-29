@@ -13,6 +13,7 @@ module.exports = [
 			display: 'table-row',
 			color: '$table.color.lightRow.color',
 			background: '$table.color.lightRow.background',
+			fontSize: '$table.font.size'
 		}
 	}, {
 		subComponent: 'row',
@@ -39,7 +40,10 @@ module.exports = [
 		},
 		global: {
 			color: '$table.color.header.color',
-			background: '$table.color.header.background'
+			background: '$table.color.header.background',
+			fontFamily: '$table.font.headerFamily',
+			fontSize: '$table.font.headerSize',
+			textTransform: 'uppercase'
 		}
 	}, {
 		subComponent: 'row',
@@ -61,7 +65,7 @@ module.exports = [
 			paddingBottom: '$table.gutter.vertical',
 			paddingLeft: '$table.gutter.horizontal',
 			paddingRight: '$table.gutter.horizontal',
-			fontSize: '$table.font.size',
+			fontSize: 'inherit',
 			fontFamily: '$table.font.family',
 			borderWidth: '$table.border.width',
 			borderStyle: '$table.border.style',
@@ -88,11 +92,33 @@ module.exports = [
 	}, {
 		subComponent: 'cell',
 		styler: {
+			hovered: true,
+			sortable: true
+		},
+		global: {
+			color: '$table.color.columnHovered.color',
+			background: '$table.color.columnHovered.background',
+		}
+	}, {
+		subComponent: 'cell',
+		styler: {
 			header: true,
 		},
 		global: {
 			borderLeftWidth: 0,
 			borderRightWidth: 0,
+		}
+	}, {
+		subComponent: 'cell',
+		styler: {
+			header: true,
+			hovered: true,
+			sortable: true
+		},
+		global: {
+			color: '$table.color.columnHovered.headerColor',
+			background: '$table.color.columnHovered.headerBackground',
+			cursor: 'pointer'
 		}
 	}
 ]

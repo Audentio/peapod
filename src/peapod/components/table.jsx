@@ -14,11 +14,15 @@ var isPlainObject = lodash.isPlainObject;
 var isUndefined = lodash.isUndefined;
 var isFunction = lodash.isFunction;
 var findIndex = require('lodash/array/findIndex');
+var sorter = lodash.sortByOrder;
+var sortByOrder = require('lodash/collection/sortByOrder');
 
 var Button = require('./button.jsx')
 var Checkbox = require('./checkbox.jsx')
 var Icon = require('./icon.jsx')
 var Paginator = require('./paginator.jsx')
+var Grid = require('./grid.jsx');
+var Div = require('./div.jsx');
 
 
 var Pod_tableInner = React.createClass({
@@ -99,7 +103,9 @@ var Pod_tableInner = React.createClass({
 														styler: {
 															styleLike: 'Pod_tableInner',
 															firstCell: j == 0,
-															centered: column.centered == true
+															centered: column.centered == true,
+															hovered: column.hovered == true,
+															sortable: column.sortable == true
 														}
 													}}, 'cell')}
 												>
@@ -147,22 +153,34 @@ var Pod_tableColumnNames = React.createClass({
 				}
 			}}, 'row')}>
 				{columns.map( function(column, i) {
-					//apply any onEvent specidied to cell
+					//apply any onEvent specified to cell
 					var columnHeader = reduce(config, function(result, v, k){
 						result[k] = k.indexOf('on') === 0 ? v.bind(null, column) : v;
 						return result;
 					}, {});
 
+					var arrowStyler = {
+						style: {
+							fontSize: '$font.size.large',
+							float: 'right',
+							lineHeight: '$table.font.headerSize'
+						}
+					}
+
 					return (
-						<div key={i + '-header'}
+						<div key={i + '-header'} {...columnHeader}
 							style={Pod_Styler.getStyle({props: {
 								styler: {
 									styleLike: 'Pod_tableInner',
-									header: true
+									header: true,
+									hovered: column.hovered == true,
+									sortable: column.sortable == true,
+									sortAsc: column.sort == 'asc',
+									sortDesc: column.sort == 'desc'
 								}
 							}}, 'cell')}
 						>
-							{column.header}
+							{column.header}{column.sort == 'desc' ? <Icon styler={arrowStyler}>arrow_drop_down</Icon> : ''}{column.sort == 'asc' ? <Icon styler={arrowStyler}>arrow_drop_up</Icon> : ''}
 						</div>
 					)
 				})
@@ -186,17 +204,58 @@ var Pod_table = React.createClass({
 			header: {
 				onClick: function(column) {
 					console.log(column);
-					sortColumn(
-						this.state.columns,
-						column,
-						this.setState.bind(this)
-					)
-				}
+					var columns = this.state.columns;
+					for (var i = 0; i < columns.length; i++) {
+						if (columns[i] == column) {
+							if (columns[i].sort == '' || typeof(columns[i].sort) == 'undefined') {
+								columns[i].sort = 'desc';
+							} else if (columns[i].sort == 'desc') {
+								columns[i].sort = 'asc';
+							} else {
+								columns[i].sort = '';
+								column = null;
+							}
+						} else {
+							columns[i].sort = '';
+						}
+					}
+
+					this.setState({
+						columns: columns,
+						sortingColumn: column
+					})
+				}.bind(this),
+				onMouseEnter: function(column) {
+					var columns = this.state.columns,
+						newColumn = column;
+
+					newColumn.hovered = true;
+					for (var i = 0; i < columns.length; i++) {
+						if (columns[i] == column) {
+							columns[i] = newColumn;
+						}
+					}
+
+					this.setState({
+						columns: columns
+					})
+				}.bind(this),
+				onMouseLeave: function(column) {
+					var columns = this.state.columns;
+					for (var i = 0; i < columns.length; i++) {
+						columns[i].hovered = false;
+					}
+
+					this.setState({
+						columns: columns
+					})
+				}.bind(this)
 			},
 			sortingColumn: null,
+			sortingOrder: 'asc',
 			pagination: {
 				page: 0,
-				perPage: 30
+				perPage: 20
 			},
 			columns: [
 				{
@@ -278,7 +337,11 @@ var Pod_table = React.createClass({
 						}
 						return {
 							value: (
-								<Icon onClick={edit.bind(this)}>settings</Icon>
+								<Icon onClick={edit.bind(this)} styler={{
+										style: {
+											color: '$table.color.editIcon.color'
+										}
+									}}>settings</Icon>
 							)
 						}
 					}.bind(this),
@@ -313,52 +376,109 @@ var Pod_table = React.createClass({
 
 	},
 
+	sortColumn: function(data, column, order) {
+		if (!column) {
+			return data;
+		}
+
+		var ascending = column.sort === 'asc' ? 'desc' : 'asc';
+
+		return sortByOrder(data, [column.property], [ascending])
+	},
+
 	render: function() {
 		var columns = this.state.columns,
 			pagination = this.state.pagination,
 			data = this.state.data,
-			hoveredRow = this.state.hoveredRow;
+			hoveredRow = this.state.hoveredRow,
+			sortingColumn = this.state.sortingColumn || null;
 
 		if (this.state.search.query) {
-			// Kyler write this, reduce dataset based on query
+			//data = Search.search(data, columns, this.state.search.column, this.state.search.query)
 		}
 
-		// data = sortColumn.sort(data, this.state.sortingColumn, sortByOrder) // Kyler fix this for sortingColumn
+		data = this.sortColumn(data, sortingColumn, '')
 
-		var paginated = Paginator.paginate(data, pagination); // Kyler, add in Paginator
+		var paginated = Paginator.paginate(data, pagination); // subset current page's data
+
+		var topButtonStyle = {
+			display: 'inline-block',
+			height: '2.5rem',
+			lineHeight: '1.1rem',
+			fontSize: '1.1rem',
+			paddingLeft: '$gutter.small',
+			paddingRight: '$gutter.small',
+			margin: '$gutter.internal'
+		}
+
 
 		return (
 			<div style={Pod_Styler.getStyle(this)}>
 				<Pod_tableControls>
-					<Checkbox styler={{
-							style: {
-								display: 'inline-block'
-							}
-						}}
-						onChange={this.checkAll}></Checkbox>
-					<Button styler={{
-							kind: 'primary',
-							round: true,
-							style:{
-								display: 'inline-block'
-							}
-					}}>All Users</Button>
-					<Button styler={{
-							kind: 'base',
-							round: true,
-							style:{
-								display: 'inline-block'
-							}
-					}}>Active</Button>
-					<Button styler={{
-							kind: 'base',
-							round: true,
-							style:{
-								display: 'inline-block'
-							}
-					}}>Banned</Button>
-					Filter By
-					<Icon>search</Icon>
+					<Grid styler={{justifyContent: 'space-between', style: {height: '$table.headerHeight', lineHeight: '$table.headerHeight'}}}>
+						<div>
+							<Div styler={{
+									style: {
+										display: 'inline-block',
+										marginLeft: '$gutter.internal',
+										marginRight: '$gutter.internal'
+									}
+								}}>
+								<Checkbox styler={{
+										varSet: 'dark'
+									}}
+									onChange={this.checkAll}></Checkbox>
+							</Div>
+							<Button styler={{
+									kind: 'primary',
+									round: true,
+									style: topButtonStyle
+							}}>All Users</Button>
+							<Button styler={{
+									kind: 'base',
+									round: true,
+									style: topButtonStyle
+							}}>Active</Button>
+							<Button styler={{
+									kind: 'base',
+									round: true,
+									style: topButtonStyle
+							}}>Banned</Button>
+						</div>
+						<div>
+							<Div styler={{
+									style: {
+										display: 'inline-block',
+										lineHeight: '$table.headerHeight',
+										paddingLeft: '$gutter.internal',
+										paddingRight: '$gutter.internal',
+										height: '$table.headerHeight'
+									}
+								}}>Filter By</Div>
+
+							<Div styler={{
+									style: {
+										display: 'inline-block',
+										borderLeftWidth: '1px',
+										borderLeftStyle: 'solid',
+										borderLeftColor: '#778A9D',
+										height: '$table.headerHeight',
+
+									}
+								}}>
+								<Icon styler={{
+										style: {
+											height: '$table.headerHeight',
+											fontSize: '$font.size.xxlarge',
+											lineHeight: '$table.headerHeight',
+											paddingLeft: '$gutter.small',
+											paddingRight: '$gutter.small'
+										}
+									}}>
+									search</Icon>
+							</Div>
+						</div>
+					</Grid>
 				</Pod_tableControls>
 				<Pod_tableInner style={Pod_Styler.getStyle(this)}
 					data={paginated.data}
@@ -367,7 +487,7 @@ var Pod_table = React.createClass({
 					hoveredRow = {hoveredRow}
 					row={function(d, rowIndex) {
 						return {
-							onMouseEnter: function(e) {
+							onMouseEnter: function() {
 								this.setState({hoveredRow: rowIndex})
 							}.bind(this),
 							onMouseLeave: function() {
@@ -377,22 +497,42 @@ var Pod_table = React.createClass({
 					}.bind(this)}
 					>
 					<div style={Pod_Styler.getStyle(this, 'footer')}>
-						Ban User Dropdown
-						<Paginator
-							page={paginated.page}
-							pages={paginated.pages}
-							perPage={paginated.perPage}
-							total={paginated.total}
-							onSelect={this.onSelect}
-						/>
+						<Grid styler={{
+								justifyContent: 'space-between',
+								style: {height: '$table.footerHeight', lineHeight: '$table.footerHeight'}
+							}}>
+							<div>
+								Ban User Dropdown
+							</div>
+							<Paginator
+								page={paginated.page}
+								pages={paginated.pages}
+								perPage={paginated.perPage}
+								total={paginated.total}
+								clickPrevious={this.clickPrevious}
+								clickNext={this.clickNext}
+							/>
+						</Grid>
 					</div>
 				</Pod_tableInner>
 			</div>
 		);
 	},
 
-	onSelect: function(page) {
-		console.log(page);
+	clickPrevious: function() {
+		this.changePage(this.state.pagination.page - 1)
+	},
+
+	clickNext: function() {
+		this.changePage(this.state.pagination.page + 1)
+	},
+
+	changePage: function(page) {
+		if (page >= 0  && page < Math.ceil(this.state.data.length / this.state.pagination.perPage))
+		this.setState({pagination: {
+			page: page,
+			perPage: this.state.pagination.perPage
+		}});
 	}
 
 });
