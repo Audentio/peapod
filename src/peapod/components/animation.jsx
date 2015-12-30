@@ -5,7 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import shallowCompare from 'react/lib/shallowCompare';
+//import shallowCompare from 'react/lib/shallowCompare';
 import Radium from 'radium';
 
 import _ from 'lodash'

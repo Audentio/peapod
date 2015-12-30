@@ -1,9 +1,10 @@
 //import React from 'react'
 //import ReactDOM from 'react-dom'
-//import _ from 'lodash'
+import _ from 'lodash'
 
 //Peapod
 //import Pod_core from './core.jsx';
+import Pod_core from './components/core.jsx';
 import Pod_timestamp from './components/timestamp.jsx';
 import Pod_button from './components/button.jsx';
 import Pod_image from './components/image.jsx';
@@ -23,24 +24,24 @@ import { Pod_animation } from './components/animation.jsx';
 
 var sections = [];
 
-window.Pod = window.Pod || {
+_.merge(Pod, {
     timestamp: Pod_timestamp,
     button: Pod_button,
     image: Pod_image,
     icon: Pod_icon,
-	grid: Pod_grid,
-	gridCell: Pod_gridCell,
-	div: Pod_div,
-	table: Pod_table,
-	tableRow: Pod_tableRow,
-	tableCell: Pod_tableCell,
+    grid: Pod_grid,
+    gridCell: Pod_gridCell,
+    div: Pod_div,
+    table: Pod_table,
+    tableRow: Pod_tableRow,
+    tableCell: Pod_tableCell,
     input: Pod_input,
     checkbox: Pod_checkbox,
     section: Pod_section,
     external: Pod_external,
     animation: Pod_animation,
-	paginator: Pod_paginator
-}
+    paginator: Pod_paginator
+});
 
 window.Pod_Vars = window.Pod_Vars || require('./vars.jsx');
 window.Pod_Styler = window.Pod_Styler || require('./styler.jsx');
