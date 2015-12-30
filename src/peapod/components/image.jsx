@@ -4,10 +4,32 @@
 */
 
 import React from 'react';
-//import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 import Radium from 'radium';
 var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
+
+var options = Pod.helper.options('Pea_image', {
+
+	//this acts as src for lazyLoaded images until they're loaded
+	defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
+
+	//lazy loading
+	lazy: false,
+
+	//load image if distance from viewport is smaller than this
+	lazyDistance: 500,
+
+	//Multi-dimensional array defining prefixes for different device pixeDensity
+	//set false to disable hiDPI loading
+	hidpi: [['1.5', '@2x']],
+
+	//show enlarged image in lightbox
+	lightbox: true,
+
+	//Animate Lightbox entry-exit
+	'lightbox-animation': true
+});
 
 /**
 * Image component: loads HiDPI images on retina devices
@@ -89,7 +111,7 @@ var Pod_image = React.createClass({
 	//Check if element is within the defined viewport range
 	// -- {lazyDistance}px above and below current viewport
 	checkVisibility: function() {
-		/*
+		
 		var bounds = ReactDOM.findDOMNode(this).getBoundingClientRect(),
 		scrollTop = window.pageYOffset,
 		top = bounds.top + scrollTop,
@@ -99,10 +121,9 @@ var Pod_image = React.createClass({
 		this.setState({visible: true});
 		this.removeListener(); //stop listening, the show is over
 		}
-		*/
 
 		//Kyler, look into how to not duplicate ReactDOM here
-		this.setState({visible: true});
+		//this.setState({visible: true});
 
 	},
 
