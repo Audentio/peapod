@@ -293,7 +293,7 @@ var Pod_table = React.createClass({
 				},
 				{
 					column: 'id',
-					comparison: '>',
+					comparison: '<',
 					value: '80'
 				}
 			],

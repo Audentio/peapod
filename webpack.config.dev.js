@@ -20,8 +20,15 @@ var config = {
        { test: /\.json$/, loader: 'json'},
    ],
    loaders: [
-       { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
-       { test: /\.jsx$/, exclude: /node_modules/, loader: 'babel'}
+       {
+		   test: /(\.js|\.jsx)$/,
+		   exclude: /node_modules/,
+		   loader: 'babel',
+		   query: {
+		      presets: ["es2015", "react", "stage-0"],
+		      plugins: ['transform-runtime']
+		    }
+	   }
    ]
  },
 };
