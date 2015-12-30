@@ -76,10 +76,10 @@ module.exports = [
 			backgroundColor: '$button.color.base.background',
 			color: '$button.color.base.color',
 			':hover': {
-				backgroundColor: 'button.color.base.hover'
+				backgroundColor: '$button.color.base.hover'
 			},
 			':active': {
-				backgroundColor: 'button.color.base.active'
+				backgroundColor: '$button.color.base.active'
 			}
 		}
 	},

@@ -24,5 +24,13 @@ module.exports = [
 			borderLeftWidth: '$paginator.border.width',
 			borderRightWidth: '$paginator.border.width'
 		}
+	}, {
+		subComponent: 'label',
+		styler: {
+			onePage: true
+		},
+		global: {
+			borderRightWidth: '0'
+		}
 	}
 ]

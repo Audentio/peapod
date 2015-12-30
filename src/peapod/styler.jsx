@@ -38,7 +38,7 @@ window.Pod_Styler = window.Pod_Styler || {
     },
 
     validateStyleState: function(styleState, state) {
-        if (styleState) {
+		if (styleState && state) {
             var keys = Object.keys(styleState);
             for (var i = 0, len = keys.length; i < len; i++) {
                 var key = keys[i],

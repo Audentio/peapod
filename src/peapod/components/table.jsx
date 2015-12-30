@@ -25,6 +25,79 @@ var Grid = require('./grid.jsx');
 var Div = require('./div.jsx');
 
 
+
+var topButtonStyle = {
+	display: 'inline-block',
+	height: '2.5rem',
+	lineHeight: '1.1rem',
+	fontSize: '1.1rem',
+	paddingLeft: '$gutter.small',
+	paddingRight: '$gutter.small',
+	margin: '$gutter.internal'
+}
+
+/*
+var Pod_tableRow = React.createClass({
+	shouldComponentUpdate: function(nextProps, nextState) {
+		return nextProps !== this.props
+	},
+
+	render: function() {
+		var index = this.props.index,
+			row = this.props.row,
+			hovered = this.props.hovered
+
+		return (
+			<div {...rowProps(row, i)}
+				style={Pod_Styler.getStyle({props: {
+					styler: {
+						styleLike: 'Pod_tableInner',
+						dark: index % 2 == 1,
+						firstRow: index == 0,
+						checked: row.checked == true,
+						hovered: hovered == index
+					}
+				}}, 'row')}
+			> {this.props.children} </div>
+		)
+	}
+})
+*/
+
+var Pod_tableCell = React.createClass({
+
+	shouldComponentUpdate: function(nextProps, nextState) {
+		return nextProps !== this.props
+	},
+
+	render: function() {
+		var column = this.props.column,
+			index = this.props.index;
+
+		return (
+			<div {...this.props}
+				style={Pod_Styler.getStyle({props: {
+					styler: {
+						styleLike: 'Pod_tableInner',
+						firstCell: index == 0,
+						centered: column.centered == true,
+						hovered: column.hovered == true,
+						sortable: column.sortable == true,
+						sortAsc: column.sort == 'asc',
+						sortDesc: column.sort == 'desc',
+						sortAsc: column.sort == 'asc',
+						sortDesc: column.sort == 'desc',
+						header: this.props.header == true
+					}
+				}}, 'cell')}
+			>
+				{this.props.children}
+			</div>
+		)
+	}
+})
+
+
 var Pod_tableInner = React.createClass({
 	propTypes: {
 		columnNames: React.PropTypes.oneOfType([
@@ -98,19 +171,7 @@ var Pod_tableInner = React.createClass({
 											content = content || {};
 
 											return (
-												<div key={j + '-cell'}
-													style={Pod_Styler.getStyle({props: {
-														styler: {
-															styleLike: 'Pod_tableInner',
-															firstCell: j == 0,
-															centered: column.centered == true,
-															hovered: column.hovered == true,
-															sortable: column.sortable == true
-														}
-													}}, 'cell')}
-												>
-													{content.value}
-												</div>
+												<Pod_tableCell key={j + '-cell'} column={column} index={j}>{content.value}</Pod_tableCell>
 											)
 										})
 									}
@@ -168,24 +229,51 @@ var Pod_tableColumnNames = React.createClass({
 					}
 
 					return (
-						<div key={i + '-header'} {...columnHeader}
-							style={Pod_Styler.getStyle({props: {
-								styler: {
-									styleLike: 'Pod_tableInner',
-									header: true,
-									hovered: column.hovered == true,
-									sortable: column.sortable == true,
-									sortAsc: column.sort == 'asc',
-									sortDesc: column.sort == 'desc'
-								}
-							}}, 'cell')}
-						>
+						<Pod_tableCell key={i + '-header'} column={column} header={true} {...columnHeader}>
 							{column.header}{column.sort == 'desc' ? <Icon styler={arrowStyler}>arrow_drop_down</Icon> : ''}{column.sort == 'asc' ? <Icon styler={arrowStyler}>arrow_drop_up</Icon> : ''}
-						</div>
+						</Pod_tableCell>
 					)
 				})
 			}
 			</div>
+		)
+	}
+})
+
+var Pod_tableQuery = React.createClass({
+	render: function() {
+		var queries = this.props.queries || [],
+			removeQuery = this.props.removeQuery || function() {};
+
+		var buttons = queries.map(function(query, i) {
+			if (query.display == false) return '';
+
+			return (
+				<div key={'tableQuery_' + query.column + '_' + query.value} style={{display: 'inline-block'}}>
+					{(i > 0) ? 'and' : ''}
+					<Button styler={{
+							kind: 'base',
+							round: true,
+							style: topButtonStyle
+						}}>
+							<Grid>
+								<div>'{query.column}' {query.comparison} '{query.value}'</div>
+								<Icon onClick={removeQuery.bind(null, i)} styler={{
+									style: {
+										color: '$color.text.white',
+										marginLeft: '$gutter.internal'
+									}
+								}}>close</Icon>
+							</Grid>
+						</Button>
+				</div>
+			)
+		})
+
+		return (
+			<Div styler={{style: {display: 'inline-block'}}}>
+				Filter By {buttons}
+			</Div>
 		)
 	}
 })
@@ -197,33 +285,42 @@ var Pod_table = React.createClass({
 		return {
 			data: data,
 			hoveredRow: -1,
-			search: {
-				column: '',
-				query: ''
-			},
+			search: [
+				{
+					column: 'country',
+					comparison: 'contains',
+					value: 'a'
+				},
+				{
+					column: 'id',
+					comparison: '>',
+					value: '80'
+				}
+			],
 			header: {
 				onClick: function(column) {
-					console.log(column);
 					var columns = this.state.columns;
-					for (var i = 0; i < columns.length; i++) {
-						if (columns[i] == column) {
-							if (columns[i].sort == '' || typeof(columns[i].sort) == 'undefined') {
-								columns[i].sort = 'desc';
-							} else if (columns[i].sort == 'desc') {
-								columns[i].sort = 'asc';
+					if (column.sortable) {
+						for (var i = 0; i < columns.length; i++) {
+							if (columns[i] == column) {
+								if (columns[i].sort == '' || typeof(columns[i].sort) == 'undefined') {
+									columns[i].sort = 'desc';
+								} else if (columns[i].sort == 'desc') {
+									columns[i].sort = 'asc';
+								} else {
+									columns[i].sort = '';
+									column = null;
+								}
 							} else {
 								columns[i].sort = '';
-								column = null;
 							}
-						} else {
-							columns[i].sort = '';
 						}
-					}
 
-					this.setState({
-						columns: columns,
-						sortingColumn: column
-					})
+						this.setState({
+							columns: columns,
+							sortingColumn: column
+						})
+					}
 				}.bind(this),
 				onMouseEnter: function(column) {
 					var columns = this.state.columns,
@@ -255,7 +352,7 @@ var Pod_table = React.createClass({
 			sortingOrder: 'asc',
 			pagination: {
 				page: 0,
-				perPage: 20
+				perPage: 30
 			},
 			columns: [
 				{
@@ -386,31 +483,128 @@ var Pod_table = React.createClass({
 		return sortByOrder(data, [column.property], [ascending])
 	},
 
-	render: function() {
-		var columns = this.state.columns,
-			pagination = this.state.pagination,
-			data = this.state.data,
-			hoveredRow = this.state.hoveredRow,
-			sortingColumn = this.state.sortingColumn || null;
+	filterData: function(data, query) {
+		var filtered = [];
+		for (var i = 0, len = data.length; i < len; i++) {
+			if (query.comparison == '<') {
+				if (data[i][query.column] < query.value) {
+					filtered.push(data[i])
+				}
+			} else if (query.comparison == '<=') {
+				if (data[i][query.column] <= query.value) {
+					filtered.push(data[i])
+				}
+			} else if (query.comparison == '>') {
+				if (data[i][query.column] > query.value) {
+					filtered.push(data[i])
+				}
+			} else if (query.comparison == '>=') {
+				if (data[i][query.column] >= query.value) {
+					filtered.push(data[i])
+				}
+			} else if (query.comparison == '!=') {
+				if (data[i][query.column] != query.value) {
+					filtered.push(data[i])
+				}
+			} else if (query.comparison == '==') {
+				if (data[i][query.column] == query.value) {
+					filtered.push(data[i])
+				}
+			} else if (query.comparison == 'contains') {
+				if (data[i][query.column].indexOf(query.value) > -1) {
+					filtered.push(data[i])
+				}
+			} else if (query.comparison == 'excludes') {
+				if (data[i][query.column].indexOf(query.value) == -1) {
+					filtered.push(data[i])
+				}
+			}
 
-		if (this.state.search.query) {
-			//data = Search.search(data, columns, this.state.search.column, this.state.search.query)
+		}
+
+		return filtered;
+	},
+
+	addBannedFilter: function() {
+		this.addQuery('group', '==', 'Banned', false)
+	},
+
+	search: function(data, columns, queries) {
+		var filtered = data;
+		for (var i = 0, len = queries.length; i < len; i++) {
+			filtered = this.filterData(filtered, queries[i]);
+		}
+		return filtered;
+	},
+
+	getTableData: function() {
+		var columns = this.state.columns,
+			data = this.state.data,
+			pagination = this.state.pagination,
+			sortingColumn = this.state.sortingColumn || null,
+			queries = this.state.search;
+
+		if (queries.length) {
+			data = this.search(data, columns, queries)
 		}
 
 		data = this.sortColumn(data, sortingColumn, '')
 
-		var paginated = Paginator.paginate(data, pagination); // subset current page's data
+		return Paginator.paginate(data, pagination); // subset current page's data
+	},
 
-		var topButtonStyle = {
-			display: 'inline-block',
-			height: '2.5rem',
-			lineHeight: '1.1rem',
-			fontSize: '1.1rem',
-			paddingLeft: '$gutter.small',
-			paddingRight: '$gutter.small',
-			margin: '$gutter.internal'
+	addQuery: function(column, comparison, value, display) {
+		var search = this.state.search,
+			queryExists = false,
+			newQuery = {
+				column: column,
+				comparison: comparison,
+				value: value,
+				display: display !== false
+			};
+
+		for (var i = 0, len = search.length; i < len; i++) {
+			console.log(search[i])
+			if (search[i] == newQuery) queryExists = true;
 		}
 
+		if (!queryExists) {
+			search.push(newQuery)
+
+			this.setState({search: search});
+		}
+	},
+
+	removeQuery: function(index) {
+		var newQueries = [],
+			queries = this.state.search;
+
+		for (var i = 0, len = queries.length; i < len; i++) {
+			if (i !== index) newQueries.push(queries[i])
+		}
+
+		this.setState({search: newQueries});
+	},
+
+	render: function() {
+		var columns = this.state.columns,
+			pagination = this.state.pagination,
+			hoveredRow = this.state.hoveredRow,
+			queries = this.state.search,
+			bannedOnly = false,
+			activeOnly = false,
+			allUsers = true;
+
+		for (var i = 0, len = queries.length; i < len; i++) {
+			var query = queries[i];
+			if (query.column == 'group' && query.comparison == '==' && query.value == 'Banned') {
+				bannedOnly = true,
+				allUsers = false;
+				activeOnly = false;
+			}
+		}
+
+		var paginated = this.getTableData();
 
 		return (
 			<div style={Pod_Styler.getStyle(this)}>
@@ -430,31 +624,24 @@ var Pod_table = React.createClass({
 									onChange={this.checkAll}></Checkbox>
 							</Div>
 							<Button styler={{
-									kind: 'primary',
+									kind: allUsers ? 'primary' : 'base',
 									round: true,
 									style: topButtonStyle
 							}}>All Users</Button>
 							<Button styler={{
-									kind: 'base',
+									kind: activeOnly ? 'primary' : 'base',
 									round: true,
 									style: topButtonStyle
 							}}>Active</Button>
 							<Button styler={{
-									kind: 'base',
+									kind: bannedOnly ? 'primary' : 'base',
 									round: true,
 									style: topButtonStyle
-							}}>Banned</Button>
+							}}
+							onClick={this.addBannedFilter} >Banned</Button>
 						</div>
-						<div>
-							<Div styler={{
-									style: {
-										display: 'inline-block',
-										lineHeight: '$table.headerHeight',
-										paddingLeft: '$gutter.internal',
-										paddingRight: '$gutter.internal',
-										height: '$table.headerHeight'
-									}
-								}}>Filter By</Div>
+						<Grid>
+							<Pod_tableQuery queries={queries} removeQuery={this.removeQuery}/>
 
 							<Div styler={{
 									style: {
@@ -477,7 +664,7 @@ var Pod_table = React.createClass({
 									}}>
 									search</Icon>
 							</Div>
-						</div>
+						</Grid>
 					</Grid>
 				</Pod_tableControls>
 				<Pod_tableInner style={Pod_Styler.getStyle(this)}
@@ -511,6 +698,9 @@ var Pod_table = React.createClass({
 								total={paginated.total}
 								clickPrevious={this.clickPrevious}
 								clickNext={this.clickNext}
+								styler={{
+									onePage: paginated.pages == 1 && paginated.page == 0
+								}}
 							/>
 						</Grid>
 					</div>
@@ -528,7 +718,7 @@ var Pod_table = React.createClass({
 	},
 
 	changePage: function(page) {
-		if (page >= 0  && page < Math.ceil(this.state.data.length / this.state.pagination.perPage))
+		if (page >= 0  && page < (this.getTableData().total / this.state.pagination.perPage))
 		this.setState({pagination: {
 			page: page,
 			perPage: this.state.pagination.perPage
