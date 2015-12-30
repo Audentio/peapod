@@ -64,4 +64,6 @@ var Pod_icon = React.createClass({
 
 });
 
-module.exports = Pod_animation(Radium(Pod_icon));
+module.exports = Radium(Pod_icon);
+
+//module.exports = Pod_animation(Radium(Pod_icon));

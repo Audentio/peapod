@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 //import shallowCompare from 'react/lib/shallowCompare';
 import Radium from 'radium';
 
-import _ from 'lodash'
+var _ = require('lodash')
 
 /**
 * Animation wrapper: Add animation prop to components
@@ -54,8 +54,8 @@ var anim = {
 
 /* Animation wrapper function
  */
-@Radium
-export var Pod_animation = ComposedComponent => class extends React.Component {
+
+var Pod_animation = ComposedComponent => class extends React.Component {
 
     static displayName = ComposedComponent.displayName;
 
@@ -91,3 +91,5 @@ export var Pod_animation = ComposedComponent => class extends React.Component {
     }
 
 }
+
+module.exports = Radium(Pod_animation);
