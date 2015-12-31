@@ -24,263 +24,23 @@ var Paginator = require('./paginator.jsx')
 var Grid = require('./grid.jsx');
 var Div = require('./div.jsx');
 
-
-
-var topButtonStyle = {
-	display: 'inline-block',
-	height: '2.5rem',
-	lineHeight: '1.1rem',
-	fontSize: '1.1rem',
-	paddingLeft: '$gutter.small',
-	paddingRight: '$gutter.small',
-	margin: '$gutter.internal'
-}
-
-/*
-var Pod_tableRow = React.createClass({
-	shouldComponentUpdate: function(nextProps, nextState) {
-		return nextProps !== this.props
-	},
-
-	render: function() {
-		var index = this.props.index,
-			row = this.props.row,
-			hovered = this.props.hovered
-
-		return (
-			<div {...rowProps(row, i)}
-				style={Pod_Styler.getStyle({props: {
-					styler: {
-						styleLike: 'Pod_tableInner',
-						dark: index % 2 == 1,
-						firstRow: index == 0,
-						checked: row.checked == true,
-						hovered: hovered == index
-					}
-				}}, 'row')}
-			> {this.props.children} </div>
-		)
-	}
-})
-*/
-
-var Pod_tableCell = React.createClass({
-
-	shouldComponentUpdate: function(nextProps, nextState) {
-		return nextProps !== this.props
-	},
-
-	render: function() {
-		var column = this.props.column,
-			index = this.props.index;
-
-		return (
-			<div {...this.props}
-				style={Pod_Styler.getStyle({props: {
-					styler: {
-						styleLike: 'Pod_tableInner',
-						firstCell: index == 0,
-						centered: column.centered == true,
-						hovered: column.hovered == true,
-						sortable: column.sortable == true,
-						sortAsc: column.sort == 'asc',
-						sortDesc: column.sort == 'desc',
-						sortAsc: column.sort == 'asc',
-						sortDesc: column.sort == 'desc',
-						header: this.props.header == true
-					}
-				}}, 'cell')}
-			>
-				{this.props.children}
-			</div>
-		)
-	}
-})
-
-
-var Pod_tableInner = React.createClass({
-	propTypes: {
-		columnNames: React.PropTypes.oneOfType([
-            React.PropTypes.object,
-            React.PropTypes.func
-        ]),
-		data: React.PropTypes.array,
-		columns: React.PropTypes.array,
-		row: React.PropTypes.func,
-		children: React.PropTypes.object,
-		rowKey: React.PropTypes.string,
-		hoveredRow: React.PropTypes.number
-	},
-
-	render: function() {
-		var columnNames = this.props.columnNames;
-		var data = this.props.data;
-		var columns = this.props.columns;
-		var rowKey = this.props.rowKey;
-		var rowProps = this.props.row || function() {};
-		var hoveredRow = this.props.hoveredRow;
-
-		return (
-			<div>
-				<div style={Pod_Styler.getStyle(this)}>
-					{isFunction(columnNames) ? columnNames(columns) : <Pod_tableColumnNames config={columnNames} columns={columns} />}
-					{
-						data.map(function(row, i) {
-							return (
-								<div key={(row[rowKey] || i) + '-row'} {...rowProps(row, i)}
-									style={Pod_Styler.getStyle({props: {
-										styler: {
-											styleLike: 'Pod_tableInner',
-											dark: i % 2 == 1,
-											firstRow: i == 0,
-											checked: row.checked == true,
-											hovered: hoveredRow == i
-										}
-									}}, 'row')}
-								>
-									{
-										columns.map(function(column, j) {
-											var property = column.property,
-											value = row[property],
-											cell = column.cell || function(a) {return a},
-											content;
-
-											content = reduce([value].concat(cell), (v, fn) => {
-												if(v && React.isValidElement(v.value)) {
-													return v;
-												}
-
-												if(!isPlainObject(value) && isPlainObject(v)) {
-													return merge(v, {
-														value: fn(v.value, data, i, property)
-													});
-												}
-
-												var val = fn(v, data, i, property);
-
-												if(val && !isUndefined(val.value)) {
-													return val;
-												}
-
-												// formatter shortcut
-												return {
-													value: val
-												};
-											});
-
-											content = content || {};
-
-											return (
-												<Pod_tableCell key={j + '-cell'} column={column} index={j}>{content.value}</Pod_tableCell>
-											)
-										})
-									}
-								</div>
-							)
-						})
-					}
-				</div>
-				{this.props.children}
-			</div>
-		);
-	}
-})
-
-var Pod_tableControls = React.createClass({
-	render: function() {
-		return (
-			<div style={Pod_Styler.getStyle(this)}>
-				{this.props.children}
-			</div>
-		);
-	}
-})
-
-var Pod_tableColumnNames = React.createClass({
-	propTypes: {
-		config: React.PropTypes.object,
-		columns: React.PropTypes.array
-	},
-
-	render: function() {
-		const config = this.props.config;
-		const columns = this.props.columns;
-
-		return (
-			<div style={Pod_Styler.getStyle({props: {
-				styler: {
-					styleLike: 'Pod_tableInner',
-					header: true
-				}
-			}}, 'row')}>
-				{columns.map( function(column, i) {
-					//apply any onEvent specified to cell
-					var columnHeader = reduce(config, function(result, v, k){
-						result[k] = k.indexOf('on') === 0 ? v.bind(null, column) : v;
-						return result;
-					}, {});
-
-					var arrowStyler = {
-						style: {
-							fontSize: '$font.size.large',
-							float: 'right',
-							lineHeight: '$table.font.headerSize'
-						}
-					}
-
-					return (
-						<Pod_tableCell key={i + '-header'} column={column} header={true} {...columnHeader}>
-							{column.header}{column.sort == 'desc' ? <Icon styler={arrowStyler}>arrow_drop_down</Icon> : ''}{column.sort == 'asc' ? <Icon styler={arrowStyler}>arrow_drop_up</Icon> : ''}
-						</Pod_tableCell>
-					)
-				})
-			}
-			</div>
-		)
-	}
-})
-
-var Pod_tableQuery = React.createClass({
-	render: function() {
-		var queries = this.props.queries || [],
-			removeQuery = this.props.removeQuery || function() {};
-
-		var buttons = queries.map(function(query, i) {
-			if (query.display == false) return '';
-
-			return (
-				<div key={'tableQuery_' + query.column + '_' + query.value} style={{display: 'inline-block'}}>
-					{(i > 0) ? 'and' : ''}
-					<Button styler={{
-							kind: 'base',
-							round: true,
-							style: topButtonStyle
-						}}>
-							<Grid>
-								<div>'{query.column}' {query.comparison} '{query.value}'</div>
-								<Icon onClick={removeQuery.bind(null, i)} styler={{
-									style: {
-										color: '$color.text.white',
-										marginLeft: '$gutter.internal'
-									}
-								}}>close</Icon>
-							</Grid>
-						</Button>
-				</div>
-			)
-		})
-
-		return (
-			<Div styler={{style: {display: 'inline-block'}}}>
-				Filter By {buttons}
-			</Div>
-		)
-	}
-})
+var Pod_tableCell = require('./tableCell.jsx');
+var Pod_tableQuery = require('./tableQuery.jsx');
+var Pod_tableInner = require('./tableInner.jsx');
+var Pod_tablePresets = require('./tablePresets.jsx');
+var Pod_tableControls = require('./tableControls.jsx');
+var Pod_tableHeader = require('./tableHeader.jsx');
 
 var Pod_table = React.createClass({
+
 	getInitialState: function() {
 		var data = this.props.data;
+		var columns = this.props.columns;
+		var presets = this.props.presets;
+
+		for (var i = 0, len = columns.length; i < len; i++) {
+			if (isFunction(columns[i].cell)) columns[i].cell = columns[i].cell.bind(this); // bind cell functions
+		}
 
 		return {
 			data: data,
@@ -354,100 +114,8 @@ var Pod_table = React.createClass({
 				page: 0,
 				perPage: 30
 			},
-			columns: [
-				{
-					property: '',
-					header: '',
-					cell: function(value, celldata, rowIndex) {
-						var idx = findIndex(this.state.data, {
-							id: celldata[rowIndex].id
-						})
-
-						var edit = function(val) {
-							if (typeof(val) !== 'undefined') {
-								this.state.data[idx].checked = val;
-								this.setState({
-									data: this.state.data
-								})
-							}
-						}
-						return {
-							value: (
-								<Checkbox checked={this.state.data[idx].checked} onChange={edit.bind(this)}></Checkbox>
-							)
-						}
-					}.bind(this),
-					sortable: false,
-					centered: true,
-					hidden: '',
-					fixed: ''
-				}, {
-					property: 'id',
-					header: 'ID',
-					cell: '',
-					sortable: true,
-					centered: false,
-					hidden: '',
-					fixed: ''
-				}, {
-					property: 'name',
-					header: 'Username',
-					cell: '',
-					sortable: true,
-					centered: false,
-					hidden: '',
-					fixed: ''
-				}, {
-					property: 'email',
-					header: 'Email',
-					cell: '',
-					sortable: true,
-					centered: false,
-					hidden: '',
-					fixed: ''
-				}, {
-					property: 'group',
-					header: 'Group',
-					cell: '',
-					sortable: true,
-					centered: false,
-					hidden: '',
-					fixed: ''
-				}, {
-					property: 'country',
-					header: 'Country',
-					cell: '',
-					sortable: true,
-					centered: false,
-					hidden: '',
-					fixed: ''
-				}, {
-					property: '',
-					header: '',
-					cell: function(value, celldata, rowIndex) {
-						var idx = findIndex(this.state.data, {
-							id: celldata[rowIndex].id
-						})
-
-						var edit = function() {
-							alert('Write Edit Modal for id: ' + idx);
-						}
-						return {
-							value: (
-								<Icon onClick={edit.bind(this)} styler={{
-										style: {
-											color: '$table.color.editIcon.color'
-										}
-									}}>settings</Icon>
-							)
-						}
-					}.bind(this),
-					sortable: false,
-					centered: true,
-					hidden: '',
-					fixed: ''
-				}
-			]
+			columns: columns,
+			presets: presets
 		}
 	},
 
@@ -456,7 +124,7 @@ var Pod_table = React.createClass({
 		var columns = this.state.columns;
 		// return if you don't want a header
 		return (
-			<Pod_tableColumnNames config={headerConfig} columns={columns} />
+			<Pod_tableHeader config={headerConfig} columns={columns} />
 		)
 	},
 
@@ -464,7 +132,7 @@ var Pod_table = React.createClass({
 		var data = this.state.data;
 
 		for (var i = 0, len = data.length; i < len; i++) {
-			data[i].checked = val;
+			if (data[i].visible && data[i].canEdit == true) data[i].checked = val;
 		}
 
 		this.setState({
@@ -514,19 +182,9 @@ var Pod_table = React.createClass({
 				if (data[i][query.column].indexOf(query.value) > -1) {
 					filtered.push(data[i])
 				}
-			} else if (query.comparison == 'excludes') {
-				if (data[i][query.column].indexOf(query.value) == -1) {
-					filtered.push(data[i])
-				}
 			}
-
 		}
-
 		return filtered;
-	},
-
-	addBannedFilter: function() {
-		this.addQuery('group', '==', 'Banned', false)
 	},
 
 	search: function(data, columns, queries) {
@@ -550,7 +208,45 @@ var Pod_table = React.createClass({
 
 		data = this.sortColumn(data, sortingColumn, '')
 
+		var newState = this.state.data
+		for (var i = 0, len = this.state.data.length; i < len; i++) {
+			var found = false;
+			for (var j = 0, len2 = data.length; j < len2; j++) {
+				if (this.state.data[i] == data[j]) {
+					found = true;
+					break;
+				}
+			}
+			if (found) {
+				newState[i].visible = true;
+			} else {
+				newState[i].visible = false;
+			}
+		}
+
+		if (newState != this.state.data) this.setState({
+			data: newState
+		})
+
 		return Paginator.paginate(data, pagination); // subset current page's data
+	},
+
+	addQueryOnePerColumn: function(column, comparison, value, display) {
+		var newQueries = [],
+			queries = this.state.search,
+			newQuery = {
+				column: column,
+				comparison: comparison,
+				value: value,
+				display: display !== false
+			};
+
+		for (var i = 0, len = queries.length; i < len; i++) {
+			if (queries[i].column !== column) newQueries.push(queries[i])
+		}
+
+		newQueries.push(newQuery)
+		this.setState({search: newQueries});
 	},
 
 	addQuery: function(column, comparison, value, display) {
@@ -564,15 +260,24 @@ var Pod_table = React.createClass({
 			};
 
 		for (var i = 0, len = search.length; i < len; i++) {
-			console.log(search[i])
-			if (search[i] == newQuery) queryExists = true;
+			if (search[i].column == newQuery.column && search[i].comparison == newQuery.comparison && search[i].value == newQuery.value) queryExists = true;
 		}
 
-		if (!queryExists) {
+		if (!queryExists) { // don't add the same query multiple times
 			search.push(newQuery)
-
 			this.setState({search: search});
 		}
+	},
+
+	removeColumnQuery: function(column) {
+		var newQueries = [],
+			queries = this.state.search;
+
+		for (var i = 0, len = queries.length; i < len; i++) {
+			if (queries[i].column !== column) newQueries.push(queries[i])
+		}
+
+		this.setState({search: newQueries});
 	},
 
 	removeQuery: function(index) {
@@ -590,19 +295,7 @@ var Pod_table = React.createClass({
 		var columns = this.state.columns,
 			pagination = this.state.pagination,
 			hoveredRow = this.state.hoveredRow,
-			queries = this.state.search,
-			bannedOnly = false,
-			activeOnly = false,
-			allUsers = true;
-
-		for (var i = 0, len = queries.length; i < len; i++) {
-			var query = queries[i];
-			if (query.column == 'group' && query.comparison == '==' && query.value == 'Banned') {
-				bannedOnly = true,
-				allUsers = false;
-				activeOnly = false;
-			}
-		}
+			queries = this.state.search;
 
 		var paginated = this.getTableData();
 
@@ -623,22 +316,7 @@ var Pod_table = React.createClass({
 									}}
 									onChange={this.checkAll}></Checkbox>
 							</Div>
-							<Button styler={{
-									kind: allUsers ? 'primary' : 'base',
-									round: true,
-									style: topButtonStyle
-							}}>All Users</Button>
-							<Button styler={{
-									kind: activeOnly ? 'primary' : 'base',
-									round: true,
-									style: topButtonStyle
-							}}>Active</Button>
-							<Button styler={{
-									kind: bannedOnly ? 'primary' : 'base',
-									round: true,
-									style: topButtonStyle
-							}}
-							onClick={this.addBannedFilter} >Banned</Button>
+							<Pod_tablePresets queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/>
 						</div>
 						<Grid>
 							<Pod_tableQuery queries={queries} removeQuery={this.removeQuery}/>
@@ -683,28 +361,30 @@ var Pod_table = React.createClass({
 						}
 					}.bind(this)}
 					>
-					<div style={Pod_Styler.getStyle(this, 'footer')}>
-						<Grid styler={{
-								justifyContent: 'space-between',
-								style: {height: '$table.footerHeight', lineHeight: '$table.footerHeight'}
-							}}>
-							<div>
-								Ban User Dropdown
-							</div>
-							<Paginator
-								page={paginated.page}
-								pages={paginated.pages}
-								perPage={paginated.perPage}
-								total={paginated.total}
-								clickPrevious={this.clickPrevious}
-								clickNext={this.clickNext}
-								styler={{
-									onePage: paginated.pages == 1 && paginated.page == 0
-								}}
-							/>
-						</Grid>
-					</div>
+
 				</Pod_tableInner>
+				<div style={Pod_Styler.getStyle(this, 'footer')}>
+					<Grid styler={{
+							justifyContent: 'space-between',
+							style: {height: '$table.footerHeight', lineHeight: '$table.footerHeight'}
+						}}>
+						<div>
+							Ban User Dropdown
+						</div>
+						<Paginator
+							page={paginated.page}
+							pages={paginated.pages}
+							perPage={paginated.perPage}
+							total={paginated.total}
+							clickPrevious={this.clickPrevious}
+							clickNext={this.clickNext}
+							styler={{
+								onePage: paginated.pages == 1 && paginated.page == 0
+							}}
+						/>
+					</Grid>
+				</div>
+
 			</div>
 		);
 	},

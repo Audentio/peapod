@@ -58,13 +58,16 @@ module.exports = [
 		global: {
 			backgroundColor: '$color.general.base',
 			borderColor: '$palette.grey200',
+			borderWidth: '1px',
 			':hover': {
 				backgroundColor: '$color.general.hover',
-				borderColor: '$palette.grey300'
+				borderColor: '$palette.grey300',
+				color: '$button.color.text.dark',
 			},
 			':active': {
 				backgroundColor: '$color.general.active',
-				borderColor: '$palette.grey400'
+				borderColor: '$palette.grey400',
+				color: '$button.color.text.dark',
 			}
 		}
 	},
@@ -76,10 +79,12 @@ module.exports = [
 			backgroundColor: '$button.color.base.background',
 			color: '$button.color.base.color',
 			':hover': {
-				backgroundColor: '$button.color.base.hover'
+				backgroundColor: '$button.color.base.hover',
+				color: '$button.color.text.light',
 			},
 			':active': {
-				backgroundColor: '$button.color.base.active'
+				backgroundColor: '$button.color.base.active',
+				color: '$button.color.text.light',
 			}
 		}
 	},

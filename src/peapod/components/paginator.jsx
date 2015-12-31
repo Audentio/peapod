@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import Radium from 'radium';
 
 var Pod_Styler = require('../styler.jsx');
-var Pod_Vars = require('../vars.jsx');
 
 var Icon = require('./icon.jsx');
 var Grid = require('./grid.jsx');

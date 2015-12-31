@@ -6,20 +6,13 @@ module.exports = [
 			paddingBottom: '$table.gutter.vertical',
 			paddingLeft: '$table.gutter.horizontal',
 			paddingRight: '$table.gutter.horizontal',
-			fontSize: '$table.font.size',
+			fontSize: 'inherit',
 			fontFamily: '$table.font.family',
 			borderWidth: '$table.border.width',
 			borderStyle: '$table.border.style',
 			borderColor: '$table.border.color',
 			borderLeftWidth: 0,
 			borderTopWidth: 0
-		}
-	}, {
-		styler: {
-			centered: true
-		},
-		global: {
-			textAlign: 'center'
 		}
 	}, {
 		styler: {
@@ -30,8 +23,23 @@ module.exports = [
 		}
 	}, {
 		styler: {
+			centered: true
+		},
+		global: {
+			textAlign: 'center'
+		}
+	}, {
+		styler: {
+			hovered: true,
+			sortable: true
+		},
+		global: {
+			color: '$table.color.columnHovered.color',
+			background: '$table.color.columnHovered.background',
+		}
+	}, {
+		styler: {
 			header: true,
-			borderlessHeader: true
 		},
 		global: {
 			borderLeftWidth: 0,
@@ -39,20 +47,14 @@ module.exports = [
 		}
 	}, {
 		styler: {
-			columnHovered: true
+			header: true,
+			hovered: true,
+			sortable: true
 		},
 		global: {
-			background: '$table.color.columnHovered.background',
-			color: '$table.color.columnHovered.color'
-		}
-	}, {
-		styler: {
-			columnHovered: true,
-			header: true
-		},
-		global: {
+			color: '$table.color.columnHovered.headerColor',
 			background: '$table.color.columnHovered.headerBackground',
-			color: '$table.color.columnHovered.headerColor'
+			cursor: 'pointer'
 		}
 	}
 ]

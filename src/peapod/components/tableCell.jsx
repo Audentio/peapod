@@ -9,18 +9,36 @@ import Radium from 'radium';
 var Pod_Styler = require('../styler.jsx');
 
 var Pod_tableCell = React.createClass({
+
+	shouldComponentUpdate: function(nextProps, nextState) {
+		return nextProps !== this.props
+	},
+
 	render: function() {
-		var mouseEnter = (this.props.onMouseEnter) ? this.props.onMouseEnter : '',
-			mouseLeave = (this.props.onMouseLeave) ? this.props.onMouseLeave : '',
-			column = '' + this.props.styler.column;
+		var column = this.props.column,
+			index = this.props.index;
 
 		return (
-			<div data-table-column={column} onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} style={Pod_Styler.getStyle(this)}>
+			<div {...this.props}
+				style={Pod_Styler.getStyle({props: {
+					styler: {
+						styleLike: 'Pod_tableCell',
+						firstCell: index == 0,
+						centered: column.centered == true,
+						hovered: column.hovered == true,
+						sortable: column.sortable == true,
+						sortAsc: column.sort == 'asc',
+						sortDesc: column.sort == 'desc',
+						sortAsc: column.sort == 'asc',
+						sortDesc: column.sort == 'desc',
+						header: this.props.header == true
+					}
+				}})}
+			>
 				{this.props.children}
 			</div>
-		);
+		)
 	}
-
-});
+})
 
 module.exports = Radium(Pod_tableCell);

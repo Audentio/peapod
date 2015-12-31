@@ -404,8 +404,8 @@ module.exports = {
 				base: {
 					background: '#778A9D',
 					color: '#ABBAC9',
-					hover: 'red',
-					active: 'blue'
+					hover: '$color.primary.hover',
+					active: '$color.primary.active'
 				}
 			},
 			border: {
