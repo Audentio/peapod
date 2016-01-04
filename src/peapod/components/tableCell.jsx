@@ -8,10 +8,13 @@ import ReactDOM from 'react-dom';
 import Radium from 'radium';
 var Pod_Styler = require('../styler.jsx');
 
+var lodash = require('lodash')
+
 var Pod_tableCell = React.createClass({
 
 	shouldComponentUpdate: function(nextProps, nextState) {
-		return nextProps !== this.props
+		return true;
+		//return !lodash.isEqual(nextProps, this.props)
 	},
 
 	render: function() {

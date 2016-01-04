@@ -9,6 +9,8 @@ var parent = require('./theme/parent.jsx');
 var current = require('./theme/current.jsx');
 var override = require('./theme/override.jsx');
 
+var lodash = require('lodash')
+
 window.Pod_Styler = window.Pod_Styler || {
 	sources: [base, "base", parent, current, "local", override],
 	stylePropName: 'styler',
@@ -83,12 +85,16 @@ window.Pod_Styler = window.Pod_Styler || {
 		return this.getStyle(data, subComponent);
 	},
 
+	checkCacheEquality: function(obj, cacheVal) {
+		return lodash.isEqual(obj.props.styler, cacheVal.styler) && lodash.isEqual(obj.state, cacheVal.state);
+	},
+
 	getStyleFromCache: function(obj, componentName, subComponent) {
 		if (typeof(this.cache[componentName]) == 'undefined') this.cache[componentName] = {};
 		if (typeof(this.cache[componentName][subComponent]) == 'undefined') this.cache[componentName][subComponent] = [];
 		for (var i = 0, len = this.cache[componentName][subComponent].length; i < len; i++) {
 			var cacheVal = this.cache[componentName][subComponent][i];
-			if (obj.props.styler == cacheVal.props && obj.state == cacheVal.state) return cacheVal.style;
+			if (this.checkCacheEquality(obj, cacheVal)) return cacheVal.style;
 		}
 		return false;
 	},
@@ -98,10 +104,10 @@ window.Pod_Styler = window.Pod_Styler || {
 		if (typeof(this.cache[componentName][subComponent]) == 'undefined') this.cache[componentName][subComponent] = [];
 		for (var i = 0, len = this.cache[componentName][subComponent].length; i < len; i++) {
 			var cacheVal = this.cache[componentName][subComponent][i];
-			if (obj.props.styler == cacheVal.props && obj.state == cacheVal.state) return false;
+			if (this.checkCacheEquality(obj, cacheVal)) return false;
 		}
 		if (len > 20) this.cache[componentName][subComponent].shift(); // prune more than 20 elements to conserve memory
-		this.cache[componentName][subComponent].push({props: obj.props.styler, state: obj.state, style: style});
+		this.cache[componentName][subComponent].push({styler: obj.props.styler, state: obj.state, style: style});
 	},
 
 	getStyle: function(obj, subComponent) {
@@ -116,7 +122,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
 		var cacheVal = this.getStyleFromCache(obj, componentName, subComponent || "_");
 		if (cacheVal !== false) {
-			//console.log("~ " + (window.performance.now() - timer))
+			//console.log('~~~Used Cache for ' + componentName + ' ' + subComponent + ' ' + (window.performance.now() - timer))
 			return cacheVal;
 		}
 
@@ -173,7 +179,7 @@ window.Pod_Styler = window.Pod_Styler || {
 		}
 
 		this.addStyleToCache(obj, componentName, subComponent || "_", style);
-		//console.log(window.performance.now() - timer)
+		//console.log(componentName + ' ' + subComponent + ' ' + (window.performance.now() - timer))
 		return style;
 	},
 

@@ -2,28 +2,50 @@ var path = require('path');
 var node_modules_dir = path.resolve(__dirname, 'node_modules');
 
 var config = {
-  entry: {
-      styler: [path.resolve(__dirname, 'src/peapod/styler.jsx')],
-      components: path.resolve(__dirname, 'src/peapod/components.jsx'),
-      vars:  [path.resolve(__dirname, 'src/peapod/vars.jsx')]
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
-  },
-  resolve: {
-   extensions: ['', '.js', '.jsx', 'index.js', 'index.jsx', '.json', 'index.json']
- },
+	devtool: "#inline-source-map",
+	entry: {
+		styler: [path.resolve(__dirname, 'src/peapod/styler.jsx')],
+		components: path.resolve(__dirname, 'src/peapod/components.jsx'),
+		vars:  [path.resolve(__dirname, 'src/peapod/vars.jsx')]
+	},
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: '[name].js',
+		library: 'Peapod',
+    	libraryTarget: 'umd'
+	},
+	resolve: {
+		extensions: ['', '.js', '.jsx', 'index.js', 'index.jsx', '.json', 'index.json']
+	},
 
- module: {
-   preLoaders: [
-       { test: /\.json$/, loader: 'json'},
-   ],
-   loaders: [
-       { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
-       { test: /\.jsx$/, exclude: /node_modules/, loader: 'babel'}
-   ]
- },
+	externals: [
+		{
+			'react': {
+				root: 'React',
+				commonjs2: 'react',
+				commonjs: 'react',
+				amd: 'react'
+			}
+		},
+		{
+			'react-dom': {
+				root: 'ReactDOM',
+				commonjs2: 'react-dom',
+				commonjs: 'react-dom',
+				amd: 'react-dom'
+			}
+		}
+	],
+
+	module: {
+		preLoaders: [
+			{ test: /\.json$/, loader: 'json'},
+		],
+		loaders: [
+			{ test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
+			{ test: /\.jsx$/, exclude: /node_modules/, loader: 'babel'}
+		]
+	},
 };
 
 module.exports = config;
