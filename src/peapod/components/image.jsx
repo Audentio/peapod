@@ -28,7 +28,7 @@ var options = Pod.helper.options('Pea_image', {
 	lightbox: true,
 
 	//Animate Lightbox entry-exit
-	'lightbox-animation': true
+	lightboxAnimation: true
 });
 
 /**
@@ -59,11 +59,11 @@ var Pod_image = React.createClass({
 
 	getDefaultProps: function() {
 		return {
-			'hidpi-data': [['1.5', '@2x']],
-			lazy: false,
-			'lazy-distance': 500,
-			lightbox: false,
-			'lightbox-animation': true
+			'hidpi-data': options.hidpi,
+			'lazy': options.lazy,
+			'lazy-distance': options.lazyDistance,
+			'lightbox': options.lightbox,
+			'lightbox-animation': options.lightboxAnimation
 		}
 	},
 
@@ -76,13 +76,14 @@ var Pod_image = React.createClass({
 	},
 
 	keyHandler: function(e){
-		if(e.keyCode == peapod.helper.keymap['esc']){
+		if(e.keyCode == Pod.helper.keymap['esc']){
 			this.hideLightbox();
 		}
 	},
 
 	//show lightbox
 	showLightbox: function(){
+
 		if(!this.props.lightbox){
 			return false;
 		}
@@ -90,7 +91,7 @@ var Pod_image = React.createClass({
 		this.setState({lightboxVisible: true})
 
 		//enable scrolling
-		peapod.helper.scrolling(false)
+		Pod.helper.scrolling(false)
 
 		//add keyboard listener
 		window.addEventListener('keydown', this.keyHandler)
@@ -102,7 +103,7 @@ var Pod_image = React.createClass({
 
 		//enable scrolling
 		//document.documentElement.style.overflow = ''
-		peapod.helper.scrolling(true)
+		Pod.helper.scrolling(true)
 
 		//remove keyboard listener
 		window.removeEventListener('keydown', this.keyHandler)
@@ -110,7 +111,7 @@ var Pod_image = React.createClass({
 
 	//Check if element is within the defined viewport range
 	// -- {lazyDistance}px above and below current viewport
-	checkVisibility: function() {
+	lazyCheck: function() {
 		
 		var bounds = ReactDOM.findDOMNode(this).getBoundingClientRect(),
 		scrollTop = window.pageYOffset,
@@ -118,33 +119,30 @@ var Pod_image = React.createClass({
 		height = bounds.bottom - bounds.top;
 
 		if(top === 0 || (top <= (scrollTop + window.innerHeight + options.lazyDistance) && (top + height + options.lazyDistance) > scrollTop)){
-		this.setState({visible: true});
-		this.removeListener(); //stop listening, the show is over
+			this.setState({visible: true});
+			this.removeListener(); //stop listening, the show is over
 		}
-
-		//Kyler, look into how to not duplicate ReactDOM here
-		//this.setState({visible: true});
 
 	},
 
 	removeListener: function() {
-		window.removeEventListener('scroll', this.checkVisibility);
-		window.removeEventListener('resize', this.checkVisibility);
+		window.removeEventListener('scroll', this.lazyCheck);
+		window.removeEventListener('resize', this.lazyCheck);
 	},
 
 	componentDidMount: function() {
 
 		//initial check
-		this.checkVisibility();
+		this.lazyCheck();
 
 		//start listening for viewport events
-		if(this.props.lazy) { window.addEventListener('scroll', this.checkVisibility) }
+		if(this.props.lazy) { window.addEventListener('scroll', this.lazyCheck) }
 
 	},
 
 	//re-check on update
 	componentDidUpdate: function() {
-		if(!this.state.visible) this.checkVisibility();
+		if(!this.state.visible) this.lazyCheck();
 	},
 
 	//stop listening if component is about to unmount
@@ -193,7 +191,7 @@ var Pod_image = React.createClass({
 					style={Pod_Styler.getStyle(this)} />
 				{this.caption}
 
-				{this.props.lightbox &&
+				{
 					<div style={Pod_Styler.getStyle(this, 'lightbox')} onClick={this.hideLightbox}>
 						<div style={Pod_Styler.getStyle(this, 'lightboxInner')}>
 							<img style={Pod_Styler.getStyle(this, 'lightboxImage')} src={this.state.visible ? this.imageURL : options.blankImage} />

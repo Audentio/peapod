@@ -52,16 +52,16 @@ Pod.helper.scrolling = function(allowScroll){
 	//no-touch device
 	else {
 		if(!allowScroll){
-			peapod.pageScrollPos = [window.pageXOffset, window.pageYOffset];
+			Pod.pageScrollPos = [window.pageXOffset, window.pageYOffset];
 		}
 
 		html.style.position 	= (allowScroll) ? '' : 'fixed';
-		html.style.top 			= (allowScroll) ? '' : -(peapod.pageScrollPos[1]) + 'px';
+		html.style.top 			= (allowScroll) ? '' : -(Pod.pageScrollPos[1]) + 'px';
 		html.style.width 		= (allowScroll) ? '' : '100%';
 		html.style.overflowY 	= (allowScroll) ? '' : 'scroll';
 
-		if(allowScroll && peapod.pageScrollPos){
-			window.scroll(peapod.pageScrollPos[0],peapod.pageScrollPos[1])
+		if(allowScroll && Pod.pageScrollPos){
+			window.scroll(Pod.pageScrollPos[0],Pod.pageScrollPos[1])
 		}
 	}
 

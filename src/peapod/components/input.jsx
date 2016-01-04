@@ -67,7 +67,7 @@ var Pod_input = React.createClass({
 			<div onFocus={this.onFocus} onBlur={this.onBlur} style={Pod_Styler.getStyle(this, 'wrapper')}
 				 className={this.props.className}>
 
-				<span style={Pod_Styler.getStyle(this, 'placeholder')}>{<Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>{this.props.icon}</Pod_icon>}{this.state.placeholder}</span>
+				<span style={Pod_Styler.getStyle(this, 'placeholder')}>{this.props.icon && <Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>{this.props.icon}</Pod_icon>}{this.state.placeholder}</span>
 
 				<input type={this.props.type} onFocus={this.onFocusHandler} style={Pod_Styler.getStyle(this)}
 					   value={this.state.value} onChange={this.onChangeHandler} />

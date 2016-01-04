@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom'
 
 import _ from 'lodash'
 
-console.log('test')
-
 //Peapod
 import 'peapod/vars'
 import 'peapod/styler'
@@ -29,15 +27,15 @@ sections.push(
 		<h1>Buttons</h1>
 
 		<Pod.button label="Default" />
-		<Pod.button label="Primary" kind="primary" />
-		<Pod.button label="Success" kind="success" />
-		<Pod.button label="Danger" kind="danger" />
-		<Pod.button label="Warning" kind="warning" />
+		<Pod.button label="Primary" styler={{kind:'primary'}} />
+		<Pod.button label="Success" styler={{kind:'success'}} />
+		<Pod.button label="Danger" styler={{kind:'danger'}} />
+		<Pod.button label="Warning" styler={{kind:'warning'}} />
 
 		<br /><br />
 		<Pod.button onClick={function(){alert('test')}} label="onClick handler" />
 		<Pod.button href="http://peapod.io" label="Anchor/Link" kind="primary" />
-		<Pod.button style={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
+		<Pod.button styler={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
 		<Pod.button label="Raised" kind="primary" raised={true} />
 		<Pod.button label="Round" kind="primary" round={true} />
 		<Pod.button label="Disabled" kind="primary" disabled={true} />
@@ -76,22 +74,11 @@ sections.push(
 )
 
 
-//Compose animateable button with Pod.animation HOC
-//Pod.icon is already composed with it
-
-
-var AnimatedButton = Pod.animation(Pod.button);
-var AnimatedInput = Pod.animation(Pod.input);
-
 sections.push(
 	<div className="section" key={'Animation'}>
 		<h1>Animation</h1>
 		<p>Animated components composed with Pod.animation HOC</p>
 		<p><code>animation</code> prop [rotate, rotate_acw, pulse]</p>
-
-		<AnimatedButton label="BouncyButton" style={{backgroundColor: 'indianred'}} animation="bounce, .7s" />
-		<AnimatedInput value="Crazy input" animation="pulse, .4s" />
-
 		<br />
 
 		<span style={{fontSize: '24px'}}>
@@ -117,18 +104,18 @@ sections.push(
 		<h1>Microcomponents</h1>
 
 		<h2>Timestamps</h2>
-		Page loaded <Pod.timestamp time={new Date().toISOString()} /><br />
+		Page loaded <Pod.timestamp time={new Date().toISOString()} /> (updates automatically)<br />
 		2005 was <Pod.timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
 
 		<h2>Image</h2>
 		<p>(lazy load example below button test)</p>
-		<Pod.image src="image.jpg" lightbox-animation={false} caption="lightbox without animation" style={imageStyle} />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} lightbox-animation={false} caption="lightbox without animation" />
 		&nbsp;
-		<Pod.image src="image.jpg" lightbox={false} caption="lightbox disabled" style={imageStyle} hidpi-data={[ ['1.5','-mySuffix'] ]} />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} lightbox={false} caption="lightbox disabled" hidpi-data={[ ['1.5','-mySuffix'] ]} />
 		&nbsp;
-		<Pod.image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} hidpi-data={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
 		&nbsp;
-		<Pod.image src="image.jpg" style={imageStyle} alt="Default suffix" hidpi-data={false} caption="who needs HiDPI anyway?" />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} alt="Default suffix" hidpi-data={false} caption="who needs HiDPI anyway?" />
 	</div>
 )
 
