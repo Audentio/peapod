@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom'
 
 import _ from 'lodash'
 
-console.log('test')
-
 //Peapod
 import 'peapod/vars'
 import 'peapod/styler'

@@ -12,8 +12,8 @@ module.exports = [
 			display: 'block'
 		}
 	}, {
-		styler: {
-			lightbox: 'true'
+		props: {
+			lightbox: true
 		},
 		global: {
 			cursor: 'pointer'
@@ -48,8 +48,8 @@ module.exports = [
 		}
 	}, {
 		subComponent: 'lightbox',
-		styler: {
-			'lightbox-animation': 'true'
+		props: {
+			'lightbox-animation': true
 		},
 		global: {
 			display: 'table'
@@ -57,7 +57,7 @@ module.exports = [
 	}, {
 		subComponent: 'lightbox',
 		state: {
-			visible: 'true'
+			lightboxVisible: true
 		},
 		global: {
 			display: 'table',
@@ -84,7 +84,7 @@ module.exports = [
 	}, {
 		subComponent: 'lightboxImage',
 		state: {
-			lightboxVisible: 'true'
+			lightboxVisible: true
 		},
 		global: {
 			transform: 'none'
