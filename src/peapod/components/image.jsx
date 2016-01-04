@@ -31,6 +31,8 @@ var options = Pod.helper.options('Pea_image', {
 	'lightbox-animation': true
 });
 
+console.log(options);
+
 /**
 * Image component: loads HiDPI images on retina devices
 *

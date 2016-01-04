@@ -106,18 +106,18 @@ sections.push(
 		<h1>Microcomponents</h1>
 
 		<h2>Timestamps</h2>
-		Page loaded <Pod.timestamp time={new Date().toISOString()} /><br />
+		Page loaded <Pod.timestamp time={new Date().toISOString()} /> (updates automatically)<br />
 		2005 was <Pod.timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
 
 		<h2>Image</h2>
 		<p>(lazy load example below button test)</p>
-		<Pod.image src="image.jpg" lightbox-animation={false} caption="lightbox without animation" style={imageStyle} />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} lightbox-animation={false} caption="lightbox without animation" />
 		&nbsp;
-		<Pod.image src="image.jpg" lightbox={false} caption="lightbox disabled" style={imageStyle} hidpi-data={[ ['1.5','-mySuffix'] ]} />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} lightbox={false} caption="lightbox disabled" hidpi-data={[ ['1.5','-mySuffix'] ]} />
 		&nbsp;
-		<Pod.image src="image.jpg" style={imageStyle} hidpi-data={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} hidpi-data={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
 		&nbsp;
-		<Pod.image src="image.jpg" style={imageStyle} alt="Default suffix" hidpi-data={false} caption="who needs HiDPI anyway?" />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} alt="Default suffix" hidpi-data={false} caption="who needs HiDPI anyway?" />
 	</div>
 )
 
