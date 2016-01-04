@@ -29,15 +29,15 @@ sections.push(
 		<h1>Buttons</h1>
 
 		<Pod.button label="Default" />
-		<Pod.button label="Primary" kind="primary" />
-		<Pod.button label="Success" kind="success" />
-		<Pod.button label="Danger" kind="danger" />
-		<Pod.button label="Warning" kind="warning" />
+		<Pod.button label="Primary" styler={{kind:'primary'}} />
+		<Pod.button label="Success" styler={{kind:'success'}} />
+		<Pod.button label="Danger" styler={{kind:'danger'}} />
+		<Pod.button label="Warning" styler={{kind:'warning'}} />
 
 		<br /><br />
 		<Pod.button onClick={function(){alert('test')}} label="onClick handler" />
 		<Pod.button href="http://peapod.io" label="Anchor/Link" kind="primary" />
-		<Pod.button style={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
+		<Pod.button styler={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
 		<Pod.button label="Raised" kind="primary" raised={true} />
 		<Pod.button label="Round" kind="primary" round={true} />
 		<Pod.button label="Disabled" kind="primary" disabled={true} />
@@ -76,22 +76,11 @@ sections.push(
 )
 
 
-//Compose animateable button with Pod.animation HOC
-//Pod.icon is already composed with it
-
-
-var AnimatedButton = Pod.animation(Pod.button);
-var AnimatedInput = Pod.animation(Pod.input);
-
 sections.push(
 	<div className="section" key={'Animation'}>
 		<h1>Animation</h1>
 		<p>Animated components composed with Pod.animation HOC</p>
 		<p><code>animation</code> prop [rotate, rotate_acw, pulse]</p>
-
-		<AnimatedButton label="BouncyButton" style={{backgroundColor: 'indianred'}} animation="bounce, .7s" />
-		<AnimatedInput value="Crazy input" animation="pulse, .4s" />
-
 		<br />
 
 		<span style={{fontSize: '24px'}}>
