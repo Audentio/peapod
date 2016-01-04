@@ -13,6 +13,8 @@ module.exports = [
 			fontFamily: '$button.font.family',
 			fontSize: '$button.font.size',
 			lineHeight: '$button.lineHeight',
+			paddingTop: 0, //override UA stylesheet
+			paddingBottom: 0, //override UA stylesheet
 			height: '$button.height',
 			textAlign: 'center',
 			outline: 'none',
