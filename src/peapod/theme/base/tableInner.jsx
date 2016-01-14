@@ -3,7 +3,7 @@ module.exports = [
 		global: {
 			display: 'table',
 			width: '100%',
-
+			fontSize: '$table.font.size'
 		}
 	},
 
@@ -13,8 +13,7 @@ module.exports = [
 		global: {
 			display: 'table-row',
 			color: '$table.color.lightRow.color',
-			background: '$table.color.lightRow.background',
-			fontSize: '$table.font.size'
+			background: '$table.color.lightRow.background'
 		}
 	}, {
 		subComponent: 'row',

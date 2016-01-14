@@ -56,5 +56,15 @@ module.exports = [
 			background: '$table.color.columnHovered.headerBackground',
 			cursor: 'pointer'
 		}
+	}, {
+		styler: {
+			noData: true
+		},
+		global: {
+			borderLeftWidth: 0,
+			borderRightWidth: 0,
+			borderBottomWidth: 0,
+			borderTopWidth: 0
+		}
 	}
 ]

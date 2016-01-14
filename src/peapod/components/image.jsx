@@ -112,7 +112,11 @@ var Pod_image = React.createClass({
 	//Check if element is within the defined viewport range
 	// -- {lazyDistance}px above and below current viewport
 	lazyCheck: function() {
-		
+
+		// @tushar, this doesn't work in pinto currently
+		this.setState({visible: true});
+
+		/*
 		var bounds = ReactDOM.findDOMNode(this).getBoundingClientRect(),
 		scrollTop = window.pageYOffset,
 		top = bounds.top + scrollTop,
@@ -122,7 +126,7 @@ var Pod_image = React.createClass({
 			this.setState({visible: true});
 			this.removeListener(); //stop listening, the show is over
 		}
-
+		*/
 	},
 
 	removeListener: function() {

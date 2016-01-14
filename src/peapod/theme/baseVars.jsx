@@ -614,6 +614,15 @@ module.exports = {
 			}
 		},
 
+		portal: {
+			font: {
+				family: '$font.family.primary'
+			},
+			dropdown: {
+				width: '20rem'
+			}
+		}
+
 
 
 	},

@@ -23,6 +23,7 @@ var Icon = require('./icon.jsx')
 var Paginator = require('./paginator.jsx')
 var Grid = require('./grid.jsx');
 var Div = require('./div.jsx');
+var Portal = require('./portal.jsx');
 
 var Pod_tableCell = require('./tableCell.jsx');
 var Pod_tableQuery = require('./tableQuery.jsx');
@@ -31,10 +32,12 @@ var Pod_tablePresets = require('./tablePresets.jsx');
 var Pod_tableControls = require('./tableControls.jsx');
 var Pod_tableHeader = require('./tableHeader.jsx');
 
+
 var Pod_table = React.createClass({
 
 	getInitialState: function() {
 		var data = this.props.data;
+		var isFetching = this.props.isFetching;
 		var columns = this.props.columns;
 		var presets = this.props.presets;
 
@@ -43,7 +46,8 @@ var Pod_table = React.createClass({
 		}
 
 		return {
-			data: data,
+			data: lodash.values(data),
+			isFetching: isFetching,
 			hoveredRow: -1,
 			search: [
 				{
@@ -119,6 +123,12 @@ var Pod_table = React.createClass({
 		}
 	},
 
+	componentWillReceiveProps: function(nextProps) {
+		var data = lodash.values(nextProps.data);
+
+		this.setState({data: data})
+	},
+
 	makeHeader: function() {
 		var headerConfig = this.state.header;
 		var columns = this.state.columns;
@@ -131,14 +141,15 @@ var Pod_table = React.createClass({
 	checkAll: function(val) {
 		var data = this.state.data;
 
-		for (var i = 0, len = data.length; i < len; i++) {
-			if (data[i].visible && data[i].canEdit == true) data[i].checked = val;
+		if (typeof(data) !== 'undefined') {
+			for (var i = 0, len = data.length; i < len; i++) {
+				if (data[i].visible && data[i].can_edit == true) data[i].checked = val;
+			}
+
+			this.setState({
+				data: data
+			})
 		}
-
-		this.setState({
-			data: data
-		})
-
 	},
 
 	sortColumn: function(data, column, order) {
@@ -153,34 +164,38 @@ var Pod_table = React.createClass({
 
 	filterData: function(data, query) {
 		var filtered = [];
-		for (var i = 0, len = data.length; i < len; i++) {
-			if (query.comparison == '<') {
-				if (data[i][query.column] < query.value) {
-					filtered.push(data[i])
-				}
-			} else if (query.comparison == '<=') {
-				if (data[i][query.column] <= query.value) {
-					filtered.push(data[i])
-				}
-			} else if (query.comparison == '>') {
-				if (data[i][query.column] > query.value) {
-					filtered.push(data[i])
-				}
-			} else if (query.comparison == '>=') {
-				if (data[i][query.column] >= query.value) {
-					filtered.push(data[i])
-				}
-			} else if (query.comparison == '!=') {
-				if (data[i][query.column] != query.value) {
-					filtered.push(data[i])
-				}
-			} else if (query.comparison == '==') {
-				if (data[i][query.column] == query.value) {
-					filtered.push(data[i])
-				}
-			} else if (query.comparison == 'contains') {
-				if (data[i][query.column].indexOf(query.value) > -1) {
-					filtered.push(data[i])
+		if (typeof(data) !== 'undefined') {
+			for (var i = 0, len = data.length; i < len; i++) {
+				if (typeof(data[i]) !== 'undefined' && typeof(data[i][query.column]) !== 'undefined' && data[i][query.column] !== null) {
+					if (query.comparison == '<') {
+						if (data[i][query.column] < query.value) {
+							filtered.push(data[i])
+						}
+					} else if (query.comparison == '<=') {
+						if (data[i][query.column] <= query.value) {
+							filtered.push(data[i])
+						}
+					} else if (query.comparison == '>') {
+						if (data[i][query.column] > query.value) {
+							filtered.push(data[i])
+						}
+					} else if (query.comparison == '>=') {
+						if (data[i][query.column] >= query.value) {
+							filtered.push(data[i])
+						}
+					} else if (query.comparison == '!=') {
+						if (data[i][query.column] != query.value) {
+							filtered.push(data[i])
+						}
+					} else if (query.comparison == '==') {
+						if (data[i][query.column] == query.value) {
+							filtered.push(data[i])
+						}
+					} else if (query.comparison == 'contains') {
+						if (data[i][query.column].indexOf(query.value) > -1) {
+							filtered.push(data[i])
+						}
+					}
 				}
 			}
 		}
@@ -208,19 +223,22 @@ var Pod_table = React.createClass({
 
 		data = this.sortColumn(data, sortingColumn, '')
 
-		var newState = this.state.data
-		for (var i = 0, len = this.state.data.length; i < len; i++) {
-			var found = false;
-			for (var j = 0, len2 = data.length; j < len2; j++) {
-				if (this.state.data[i] == data[j]) {
-					found = true;
-					break;
+		var newState = this.state.data;
+
+		if (typeof(newState) !== 'undefined') {
+			for (var i = 0, len = this.state.data.length; i < len; i++) {
+				var found = false;
+				for (var j = 0, len2 = data.length; j < len2; j++) {
+					if (this.state.data[i] == data[j]) {
+						found = true;
+						break;
+					}
 				}
-			}
-			if (found) {
-				newState[i].visible = true;
-			} else {
-				newState[i].visible = false;
+				if (found) {
+					newState[i].visible = true;
+				} else {
+					newState[i].visible = false;
+				}
 			}
 		}
 
@@ -299,6 +317,24 @@ var Pod_table = React.createClass({
 
 		var paginated = this.getTableData();
 
+		var userActionsTrigger = <span>User Actions</span>;
+
+
+		var statusStyle = Pod_Styler.getStyle({props: {
+			styler: {
+				styleLike: 'Pod_tableCell',
+				style: {
+					borderLeft: 'none',
+					borderRight: 'none',
+					borderTop: 'none',
+					borderBottom: 'none',
+					display: 'block',
+					fontSize: '$table.font.size'
+				}
+			}}});
+		var isFetching = (this.props.isFetching) ? <div style={statusStyle}>Loading Data...</div>: null;
+		var noData = (paginated.data.length == 0 && !this.props.isFetching) ? <div style={statusStyle}>No Data</div>: null;
+
 		return (
 			<div style={Pod_Styler.getStyle(this)}>
 				<Pod_tableControls>
@@ -361,16 +397,35 @@ var Pod_table = React.createClass({
 						}
 					}.bind(this)}
 					>
-
+						<div>
+							{noData}
+							{isFetching}
+						</div>
 				</Pod_tableInner>
 				<div style={Pod_Styler.getStyle(this, 'footer')}>
 					<Grid styler={{
 							justifyContent: 'space-between',
 							style: {height: '$table.footerHeight', lineHeight: '$table.footerHeight'}
 						}}>
-						<div>
-							Ban User Dropdown
-						</div>
+
+						<Div styler={{style:{marginLeft: '$gutter.small',}}}>
+							<Button styler={{
+									kind: 'base',
+									style: {
+										fontSize: '$font.size.xsmall',
+										height: '2.5rem',
+										lineHeight: '2.5rem',
+
+									}
+								}}>
+								<Portal closeOnEsc closeOnOutsideClick trigger={userActionsTrigger}>
+									<div style={{backgroundColor: '#CCC'}}>
+										<span>Pseudo Modal</span>
+										<Button styler={{style:{display: 'block'}}}>Yep</Button>
+									</div>
+								</Portal>
+								</Button>
+						</Div>
 						<Paginator
 							page={paginated.page}
 							pages={paginated.pages}

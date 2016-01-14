@@ -12,9 +12,9 @@ var Button = require('./button.jsx')
 var Icon = require('./icon.jsx')
 var Grid = require('./grid.jsx');
 var Div = require('./div.jsx');
+var Portal = require('./portal.jsx');
 
 var topButtonStyle = {
-	display: 'inline-block',
 	height: '2.5rem',
 	lineHeight: '1.1rem',
 	fontSize: '1.1rem',
@@ -26,14 +26,21 @@ var topButtonStyle = {
 var Pod_tableQuery = React.createClass({
 	render: function() {
 		var queries = this.props.queries || [],
-			removeQuery = this.props.removeQuery || function() {};
+			removeQuery = this.props.removeQuery || function() {},
+			noQueries = (queries.length == 0) ? <div>No Queries</div> : null;
 
-		var buttons = queries.map(function(query, i) {
+		var content = queries.map(function(query, i) {
 			if (query.display == false) return '';
 
 			return (
-				<div key={'tableQuery_' + query.column + '_' + query.value} style={{display: 'inline-block'}}>
-					{(i > 0) ? 'and' : ''}
+				<Div key={'tableQuery_' + query.column + '_' + query.value} styler={{
+						style: {
+							display: 'block',
+							borderBottomColor: '$table.color.controls.color',
+							borderBottomWidth: '1px',
+							borderBottomStyle: 'solid'
+						}
+					}}>
 					<Button styler={{
 							kind: 'base',
 							round: true,
@@ -49,13 +56,25 @@ var Pod_tableQuery = React.createClass({
 								}}>close</Icon>
 							</Grid>
 						</Button>
-				</div>
+				</Div>
 			)
 		})
 
 		return (
 			<Div styler={{style: {display: 'inline-block'}}}>
-				Filter By {buttons}
+				<Portal closeOnOutsideClick trigger={<div>Filter By</div>}>
+					<Div styler={{
+							style: {
+								backgroundColor: '$table.color.controls.background',
+								borderTopColor: '$table.color.controls.color',
+								borderTopWidth: '1px',
+								borderTopStyle: 'solid'
+							}
+						}}>
+						{content}
+						{noQueries}
+					</Div>
+				</Portal>
 			</Div>
 		)
 	}

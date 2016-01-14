@@ -15,6 +15,7 @@ var isUndefined = lodash.isUndefined;
 var isFunction = lodash.isFunction;
 
 var Pod_tableRow = require('./tableRow.jsx');
+var Pod_tableCell = require('./tableCell.jsx');
 
 var Pod_tableInner = React.createClass({
 	propTypes: {

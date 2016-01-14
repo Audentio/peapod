@@ -11,7 +11,6 @@ import ReactDOM from 'react-dom';
 import Radium from 'radium';
 
 var Pod_Styler = require('../styler.jsx');
-var Pod_Vars = require('../vars.jsx');
 var Pod_icon = require('./icon.jsx');
 
 /**
@@ -42,12 +41,10 @@ var Pod_input = React.createClass({
 	},
 
 	onChangeHandler: function(e){
+		var value = e.target.value,
+			placeholder = ( value.length > 0 ) ? '' : this.props.placeholder;
 
-		var VALUE = e.target.value,
-			PLACEHOLDER = ( VALUE.length > 0 ) ? '' : this.props.placeholder;
-
-		this.setState({  value:VALUE , placeholder:PLACEHOLDER });
-
+		this.setState({ value: value , placeholder: placeholder });
 	},
 
 	onFocus: function(e){
@@ -56,10 +53,6 @@ var Pod_input = React.createClass({
 
 	onBlur: function(e){
 		this.setState({ focus: false })
-	},
-
-	getValue: function() {
-		return this.state.value;
 	},
 
 	render: function() {

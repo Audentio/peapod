@@ -11,11 +11,15 @@ var override = require('./theme/override.jsx');
 
 var lodash = require('lodash')
 
+var debugInfo = true; // requires patched Radium
+
 window.Pod_Styler = window.Pod_Styler || {
 	sources: [base, "base", parent, current, "local", override],
 	stylePropName: 'styler',
+	enableCache: true,
 	cache: {},
 	varCache: {},
+	maxCacheLength: 20,
 
 	validateStyleProps: function(styleProps, props) {
 		if (styleProps) {
@@ -86,7 +90,21 @@ window.Pod_Styler = window.Pod_Styler || {
 	},
 
 	checkCacheEquality: function(obj, cacheVal) {
-		return lodash.isEqual(obj.props.styler, cacheVal.styler) && lodash.isEqual(obj.state, cacheVal.state);
+		var stylerEqual = lodash.isEqual(obj.props.styler, cacheVal.styler),
+			stateEqual = lodash.isEqual(obj.state, cacheVal.state),
+			radiumEqual = obj.state;
+
+		if ((typeof(obj.state) === 'undefined') && (typeof(cacheVal.state) === 'undefined')) {
+			radiumEqual = true;
+		} else if ((obj.state == null) && (cacheVal.state == null)) {
+			radiumEqual = true;
+		} else if ((typeof(obj.state) === 'undefined' || obj.state == null) || (typeof(cacheVal.state) === 'undefined' || cacheVal.state == null)) {
+			radiumEqual = false;
+		} else {
+			radiumEqual = obj.state._radiumStyleState == cacheVal.state._radiumStyleState;
+		}
+
+		return stylerEqual && stateEqual && radiumEqual;
 	},
 
 	getStyleFromCache: function(obj, componentName, subComponent) {
@@ -94,7 +112,9 @@ window.Pod_Styler = window.Pod_Styler || {
 		if (typeof(this.cache[componentName][subComponent]) == 'undefined') this.cache[componentName][subComponent] = [];
 		for (var i = 0, len = this.cache[componentName][subComponent].length; i < len; i++) {
 			var cacheVal = this.cache[componentName][subComponent][i];
-			if (this.checkCacheEquality(obj, cacheVal)) return cacheVal.style;
+			if (this.checkCacheEquality(obj, cacheVal)) {
+				return cacheVal.style;
+			}
 		}
 		return false;
 	},
@@ -106,7 +126,7 @@ window.Pod_Styler = window.Pod_Styler || {
 			var cacheVal = this.cache[componentName][subComponent][i];
 			if (this.checkCacheEquality(obj, cacheVal)) return false;
 		}
-		if (len > 20) this.cache[componentName][subComponent].shift(); // prune more than 20 elements to conserve memory
+		if (len > Pod_Styler.maxCacheLength) this.cache[componentName][subComponent].shift(); // prune more than 20 elements to conserve memory
 		this.cache[componentName][subComponent].push({styler: obj.props.styler, state: obj.state, style: style});
 	},
 
@@ -120,12 +140,13 @@ window.Pod_Styler = window.Pod_Styler || {
 			varSet = styleProps.varSet || 'base',
 			subComponent = subComponent || "";
 
-		var cacheVal = this.getStyleFromCache(obj, componentName, subComponent || "_");
-		if (cacheVal !== false) {
-			//console.log('~~~Used Cache for ' + componentName + ' ' + subComponent + ' ' + (window.performance.now() - timer))
-			return cacheVal;
+		if (Pod_Styler.enableCache) {
+			var cacheVal = this.getStyleFromCache(obj, componentName, subComponent || "_");
+			if (cacheVal !== false) {
+				//console.log('~~~Used Cache for ' + componentName + ' ' + subComponent + ' ' + (window.performance.now() - timer))
+				return cacheVal;
+			}
 		}
-
 
 		for (var i = 0, len = Pod_Styler.sources.length; i < len; i++) {
 			var source = Pod_Styler.sources[i];
@@ -158,6 +179,10 @@ window.Pod_Styler = window.Pod_Styler || {
 			}
 		}
 
+		if (debugInfo) {
+			style['/*pod_debug'] = componentName + '>' + subComponent + '*/';
+		}
+
 		for (var i = 0, len = result.length; i < len; i++) {
 			for (var ruleIndex = 0, ruleLen = Object.keys(result[i]).length; ruleIndex < ruleLen; ruleIndex++) {
 				var computedVar = result[i][Object.keys(result[i])[ruleIndex]];
@@ -177,8 +202,9 @@ window.Pod_Styler = window.Pod_Styler || {
 				}
 			}
 		}
-
-		this.addStyleToCache(obj, componentName, subComponent || "_", style);
+		if (Pod_Styler.enableCache) {
+			this.addStyleToCache(obj, componentName, subComponent || "_", style);
+		}
 		//console.log(componentName + ' ' + subComponent + ' ' + (window.performance.now() - timer))
 		return style;
 	},

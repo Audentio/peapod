@@ -8,7 +8,8 @@ import ReactDOM from 'react-dom';
 import Radium from 'radium';
 var Pod_Styler = require('../styler.jsx');
 
-var Button = require('./button.jsx')
+var Button = require('./button.jsx');
+var Portal = require('./portal.jsx')
 
 var topButtonStyle = {
 	display: 'inline-block',
@@ -84,43 +85,45 @@ var Pod_tablePresets = React.createClass({
 			queries = this.props.queries,
 			addQuery = this.props.addQuery,
 			removeQuery = this.props.removeQuery,
-			addQueryOnePerColumn = this.props.addQueryOnePerColumn;
+			addQueryOnePerColumn = this.props.addQueryOnePerColumn,
+			presetButtons = presets.map(function(preset, index) {
+				var onClick = function() {
+					if (typeof(preset.addQuery) !== 'undefined') {
+						for (var i = 0, len = preset.addQuery.length; i < len; i++) {
+							var query = preset.addQuery[i];
+							addQuery(query.column, query.comparison, query.value, query.display)
+						}
+					}
+
+					if (typeof(preset.removeQuery) !== 'undefined') {
+						for (var i = 0, len = preset.removeQuery.length; i < len; i++) {
+							var query = preset.removeQuery[i];
+							removeQuery(query.column)
+						}
+					}
+
+					if (typeof(preset.addQueryOnePerColumn) !== 'undefined') {
+						for (var i = 0, len = preset.addQueryOnePerColumn.length; i < len; i++) {
+							var query = preset.addQueryOnePerColumn[i];
+							addQueryOnePerColumn(query.column, query.comparison, query.value, query.display)
+						}
+					}
+				}.bind(this);
+
+				return (
+					<Button key={'preset-' + index} styler={{
+							kind: this.checkPresetConditions(index) == true ? 'primary' : 'base',
+							round: true,
+							style: topButtonStyle
+					}}
+					onClick={onClick} >{preset.label}</Button>
+				)
+			}.bind(this)),
+			presetContainer = (window.innerWidth > 800) ? presetButtons : <Portal trigger={<div>Presets</div>}><div>{presetButtons}</div></Portal>;
 
 		return (
 			<div style={{display: 'inline-block'}}>
-				{presets.map(function(preset, index) {
-					var onClick = function() {
-						if (typeof(preset.addQuery) !== 'undefined') {
-							for (var i = 0, len = preset.addQuery.length; i < len; i++) {
-								var query = preset.addQuery[i];
-								addQuery(query.column, query.comparison, query.value, query.display)
-							}
-						}
-
-						if (typeof(preset.removeQuery) !== 'undefined') {
-							for (var i = 0, len = preset.removeQuery.length; i < len; i++) {
-								var query = preset.removeQuery[i];
-								removeQuery(query.column)
-							}
-						}
-
-						if (typeof(preset.addQueryOnePerColumn) !== 'undefined') {
-							for (var i = 0, len = preset.addQueryOnePerColumn.length; i < len; i++) {
-								var query = preset.addQueryOnePerColumn[i];
-								addQueryOnePerColumn(query.column, query.comparison, query.value, query.display)
-							}
-						}
-					}.bind(this);
-
-					return (
-						<Button key={'preset-' + index} styler={{
-								kind: this.checkPresetConditions(index) == true ? 'primary' : 'base',
-								round: true,
-								style: topButtonStyle
-						}}
-						onClick={onClick} >{preset.label}</Button>
-					)
-				}.bind(this))}
+				{presetContainer}
 			</div>
 		);
 	}

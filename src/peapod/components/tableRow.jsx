@@ -74,7 +74,7 @@ var Pod_tableRow = React.createClass({
 						});
 
 						content = content || {};
-						if (row.canEdit != true && (property == 'edit' || property == 'checkbox')) {
+						if (row.can_edit != true && (property == 'edit' || property == 'checkbox')) {
 							content = {};
 						}
 

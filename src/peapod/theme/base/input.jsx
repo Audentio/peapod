@@ -2,6 +2,21 @@ var Pod_Vars = require('../../vars.jsx');
 
 module.exports = [
 	{
+		global: {
+			fontSize: '$input.font.size',
+			fontFamily: '$input.font.family',
+			color: '$input.color.text',
+			position: 'relative',
+			background: 'transparent',
+			zIndex: 2,
+			border: 0,
+			outline: 0,
+			paddingLeft: '$input.padding.left',
+			paddingRight: '$input.padding.right',
+			lineHeight: 'inherit',
+			width: 'calc(100% - ' + Pod_Vars.get('input.padding.left') + ' - ' + Pod_Vars.get('input.padding.right') + ')',
+		}
+	}, {
 		subComponent: 'wrapper',
 		global: {
 			display: 'inline-block',
@@ -21,21 +36,6 @@ module.exports = [
 		},
 		global: {
 			background: '$input.color.backgroundFocus'
-		}
-	}, {
-		global: {
-			fontSize: '$input.font.size',
-			fontFamily: '$input.font.family',
-			color: '$input.color.text',
-			position: 'relative',
-			background: 'transparent',
-			zIndex: 2,
-			border: 0,
-			outline: 0,
-			paddingLeft: '$input.padding.left',
-			paddingRight: '$input.padding.right',
-			lineHeight: 'inherit',
-			width: 'calc(100% - ' + Pod_Vars.get('input.padding.left') + ' - ' + Pod_Vars.get('input.padding.right') + ')',
 		}
 	}, {
 		subComponent: 'placeholder',
