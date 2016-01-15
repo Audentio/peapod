@@ -2,7 +2,7 @@
 //import ReactDOM from 'react-dom'
 import _ from 'lodash'
 
-import Pod_Wraper from './wrapper.jsx';
+import Pod_Wrapper from './wrapper.jsx';
 
 //Peapod
 //import Pod_core from './core.jsx';
@@ -56,7 +56,7 @@ _.merge(Pod, {
 var keys = Object.keys(Pod);
 for (var i = 0, len = keys.length; i < len; i++) {
 	var key = keys[i];
-	Pod[key] = Pod_Wraper(Pod[key]);
+	Pod[key] = Pod_Wrapper(Pod[key]);
 }
 
 
