@@ -24,6 +24,8 @@ import Pod_external from './components/external.jsx';
 import Pod_paginator from './components/paginator.jsx';
 import Pod_portal from './components/portal.jsx';
 import Pod_label from './components/label.jsx';
+import Pod_hr from './components/hr.jsx';
+import Pod_paragraph from './components/paragraph.jsx';
 import { Pod_animation } from './components/animation.jsx';
 
 var sections = [];
@@ -45,8 +47,10 @@ _.merge(Pod, {
     external: Pod_external,
     animation: Pod_animation,
     paginator: Pod_paginator,
-	portal: Pod_portal,
-	label: Pod_label
+    portal: Pod_portal,
+    label: Pod_label,
+    hr: Pod_hr,
+    p: Pod_paragraph
 });
 
 var keys = Object.keys(Pod);

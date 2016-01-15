@@ -120,14 +120,32 @@ sections.push(
 )
 
 sections.push(
-	<div key="test_section">
-		<h1>Test Section</h1>
+	<div key="labels">
+		<h1>Label</h1>
 		<Pod.label icon="settings" styler={{
 				kind: 'success',
 				disabled: true,
 				round: true
 			}}>Test Label</Pod.label>
 	</div>
+)
+
+sections.push(
+	<Pod.section key="typography">
+		<h1>Typography</h1>
+		<h4>Paragraph</h4>
+		<Pod.p>
+			This is a paragraph. This is a paragraph. This is a paragraph.
+			This is a paragraph. This is a paragraph. This is a paragraph.
+			This is a paragraph. This is a paragraph. This is a paragraph.
+			This is a paragraph. This is a paragraph. This is a paragraph.
+			This is a paragraph. This is a paragraph. This is a paragraph.
+			This is a paragraph. This is a paragraph.
+		</Pod.p>
+
+		<h4>Horizontal Rule </h4>
+		<Pod.hr height="1" />
+	</Pod.section>
 )
 
 /*******************

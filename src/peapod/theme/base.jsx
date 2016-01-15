@@ -17,6 +17,8 @@ var Pod_tableControls = require('./base/tableControls.jsx');
 var Pod_paginator = require('./base/paginator.jsx');
 var Pod_portal = require('./base/portal.jsx');
 var Pod_label = require('./base/label.jsx');
+var Pod_hr = require('./base/hr.jsx');
+var Pod_paragraph = require('./base/paragraph.jsx');
 
 module.exports = {
 	Pod_button: Pod_button,
@@ -36,5 +38,7 @@ module.exports = {
 	Pod_tableControls: Pod_tableControls,
 	Pod_paginator: Pod_paginator,
 	Pod_portal: Pod_portal,
-	Pod_label: Pod_label
+	Pod_label: Pod_label,
+	Pod_hr: Pod_hr,
+	Pod_paragraph: Pod_paragraph
 }

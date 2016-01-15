@@ -9,7 +9,8 @@ module.exports = [
 		}
 	}, {
 		global: {
-			display: 'block'
+			display: 'block',
+			maxWidth: '100%'
 		}
 	}, {
 		props: {

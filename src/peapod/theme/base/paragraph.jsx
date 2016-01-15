@@ -3,7 +3,7 @@ var Pod_Vars = require('../../vars.jsx');
 module.exports = [
 	{
 		global: {
-			color: 'green'
+            marginBottom: '$gutter.internal'
 		}
 	}
 ]
