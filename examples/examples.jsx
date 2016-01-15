@@ -119,7 +119,16 @@ sections.push(
 	</div>
 )
 
-
+sections.push(
+	<div key="test_section">
+		<h1>Test Section</h1>
+		<Pod.label icon="settings" styler={{
+				kind: 'success',
+				disabled: true,
+				round: true
+			}}>Test Label</Pod.label>
+	</div>
+)
 
 /*******************
  * STRAIN TEST
@@ -149,7 +158,7 @@ for(var x=0; x<repeatCount; x++){
 
 var examples_render = ReactDOM.render(
 	<div>
-	
+
 		{sections}
 
 		<div style={{textAlign:'center'}}><br />{ButtonTest}</div>
@@ -157,8 +166,8 @@ var examples_render = ReactDOM.render(
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<Pod.image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpi-data={false} />	
-		
+		<Pod.image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpi-data={false} />
+
 	</div>
 	, document.getElementById('mainContainer')
 );

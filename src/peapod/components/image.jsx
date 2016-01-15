@@ -5,7 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
+
 var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
 
@@ -207,4 +207,4 @@ var Pod_image = React.createClass({
 	}
 });
 
-export default Radium(Pod_image);
+module.exports = Pod_image;

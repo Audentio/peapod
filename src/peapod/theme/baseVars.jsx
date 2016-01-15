@@ -621,6 +621,12 @@ module.exports = {
 			dropdown: {
 				width: '20rem'
 			}
+		},
+
+		label: {
+			color: {
+				text: '$color.text.white'
+			}
 		}
 
 

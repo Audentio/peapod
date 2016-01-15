@@ -92,4 +92,4 @@ var Pod_animation = ComposedComponent => class extends React.Component {
 
 }
 
-module.exports = Radium(Pod_animation);
+module.exports = Pod_animation;

@@ -179,10 +179,6 @@ window.Pod_Styler = window.Pod_Styler || {
 			}
 		}
 
-		if (debugInfo) {
-			style['/*pod_debug'] = componentName + '>' + subComponent + '*/';
-		}
-
 		for (var i = 0, len = result.length; i < len; i++) {
 			for (var ruleIndex = 0, ruleLen = Object.keys(result[i]).length; ruleIndex < ruleLen; ruleIndex++) {
 				var computedVar = result[i][Object.keys(result[i])[ruleIndex]];

@@ -6,7 +6,7 @@
 
 
 var React = require('react');
-var Radium = require('radium');
+
 var Color = require('color');
 var Pod_Styler = require('../styler.jsx');
 
@@ -62,4 +62,4 @@ var Pod_button = React.createClass({
 
 });
 
-module.exports = Radium(Pod_button);
+module.exports = Pod_button;

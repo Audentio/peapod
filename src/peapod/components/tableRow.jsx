@@ -5,7 +5,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
 var Pod_Styler = require('../styler.jsx');
 
 var lodash = require('lodash')
@@ -89,4 +88,4 @@ var Pod_tableRow = React.createClass({
 
 });
 
-module.exports = Radium(Pod_tableRow);
+module.exports = Pod_tableRow;

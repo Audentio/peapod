@@ -5,7 +5,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
 import Pod_Styler from '../styler.jsx';
 
 var Pod_section = React.createClass({
@@ -24,4 +23,4 @@ var Pod_section = React.createClass({
 
 });
 
-module.exports = Radium(Pod_section);
+module.exports = Pod_section;

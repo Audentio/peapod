@@ -17,58 +17,42 @@ var Pod_Vars = require('../vars.jsx');
 */
 var Pod_liveTimestamp = React.createClass({
 
-
 	/* returns the amount of seconds elapsed since {this.props.time} */
 	timeElapsed: function(){
 		return this.timestamp.fromNow();
 	},
 
-
 	getInitialState: function() {
-
 		//create moment object from time property
 		this.timestamp = moment(this.props.time)
 
 		return {
 			timeElapsed: this.timeElapsed()
 		}
-
 	},
 
-
 	componentDidMount: function(){
-
 		let self = this;
-
 		//start repeater
 		this._timer = setInterval(function(){
 			self.setState({
 				timeElapsed: self.timeElapsed()
 			})
 		}, 1000*60) //60 seconds
-
 	},
 
-
 	componentWillUnmount: function(){
-
 		//stop repeater
 		window.clearTimeout( this._timer )
-
 	},
 
 	render: function() {
-
 		return (
 			<span style={Pod_Styler.getStyle(this)} title={ moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a') }>
 				{this.state.timeElapsed}
 			</span>
 		)
-
 	}
-
-
 });
-
 
 module.exports = Pod_liveTimestamp;

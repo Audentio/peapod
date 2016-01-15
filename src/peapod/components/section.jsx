@@ -4,13 +4,12 @@
  */
 
 import React from 'react';
-import Radium from 'radium';
 import Pod_Styler from '../styler.jsx';
 
 var Pod_section = React.createClass({
   render: function() {
     return (
-        <div className="section" key={'buttons2'} vars={this.props.vars} style={Pod_Styler.getStyle(this)} >
+        <div varSet={this.props.varSet} style={Pod_Styler.getStyle(this)} >
 			<h1>{this.props.title}</h1>
 			{newChildren}
 		</div>
@@ -19,4 +18,4 @@ var Pod_section = React.createClass({
 
 });
 
-module.exports = Radium(Pod_section);
+module.exports = Pod_section;

@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
 
 var Pod_Styler = require('../styler.jsx');
 var Pod_icon = require('./icon.jsx');
@@ -71,4 +70,4 @@ var Pod_input = React.createClass({
 });
 
 
-module.exports = Radium(Pod_input);
+module.exports = Pod_input;

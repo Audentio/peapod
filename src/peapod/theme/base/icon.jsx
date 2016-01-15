@@ -4,7 +4,6 @@ module.exports = [
 		global: {
 			cursor: 'default',
 			fontSize: '$icon.font.size',
-			color: '$icon.color'
 		}
 	}, {
 		styler: {
@@ -18,7 +17,7 @@ module.exports = [
 			color: ['!=', '']
 		},
 		global: {
-			fontSize: 'getStyle:color',
+			color: 'getStyle:color',
 		}
 	}
 ]

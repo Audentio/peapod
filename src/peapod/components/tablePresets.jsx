@@ -5,7 +5,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
 var Pod_Styler = require('../styler.jsx');
 
 var Button = require('./button.jsx');
@@ -129,4 +128,4 @@ var Pod_tablePresets = React.createClass({
 	}
 })
 
-module.exports = Radium(Pod_tablePresets);
+module.exports = Pod_tablePresets;

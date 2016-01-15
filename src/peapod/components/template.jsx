@@ -1,16 +1,15 @@
 /* Copyright <%= package.year %>, Audentio, LLC.
- * All rights reserved.
- *
- * LICENSE: <%= package.licence %>
- */
+* All rights reserved.
+*
+* LICENSE: <%= package.licence %>
+*/
 
 
 //Dependencies
 import React from 'react';
-import Radium from 'radium';
-import Color from 'color';
-import Pod_Styler from '../styler';
-import Pod_Vars from '../vars';
+import ReactDOM from 'react-dom';
+
+var Pod_Styler = require('../styler.jsx');
 
 /**
 * Template component
@@ -20,27 +19,33 @@ import Pod_Vars from '../vars';
 */
 var Pod_template = React.createClass({
 
-  //Validate props
-  propTypes: {
+	//Validate props
+	propTypes: {
 
-  },
+	},
 
-  //Default props
-  getDefaultProps: function() {
-    return {
+	getInitialState: function() {
+		return {
 
-    }
-  },
+		}
+	},
 
-  render: function() {
-    return (
-      <div style={Pod_Styler.getStyle(this)}
-        {this.props.children}>
-      </div>
-    );
+	//Default props
+	getDefaultProps: function() {
+		return {
 
-  }
+		}
+	},
+
+	render: function() {
+		return (
+			<div style={Pod_Styler.getStyle(this)}
+				{this.props.children}>
+			</div>
+		);
+
+	}
 
 });
 
-module.exports = Radium(Pod_template);
+module.exports = Pod_template;

@@ -2,6 +2,8 @@
 //import ReactDOM from 'react-dom'
 import _ from 'lodash'
 
+import Pod_Wraper from './wrapper.jsx';
+
 //Peapod
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
@@ -21,6 +23,7 @@ import Pod_section from './components/section.jsx';
 import Pod_external from './components/external.jsx';
 import Pod_paginator from './components/paginator.jsx';
 import Pod_portal from './components/portal.jsx';
+import Pod_label from './components/label.jsx';
 import { Pod_animation } from './components/animation.jsx';
 
 var sections = [];
@@ -42,8 +45,16 @@ _.merge(Pod, {
     external: Pod_external,
     animation: Pod_animation,
     paginator: Pod_paginator,
-	portal: Pod_portal
+	portal: Pod_portal,
+	label: Pod_label
 });
+
+var keys = Object.keys(Pod);
+for (var i = 0, len = keys.length; i < len; i++) {
+	var key = keys[i];
+	Pod[key] = Pod_Wraper(Pod[key]);
+}
+
 
 window.Pod_Vars = window.Pod_Vars || require('./vars.jsx');
 window.Pod_Styler = window.Pod_Styler || require('./styler.jsx');

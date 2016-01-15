@@ -1,5 +1,4 @@
 import React from 'react';
-import Radium from 'radium';
 import ReactDOM, {findDOMNode} from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
 
@@ -214,4 +213,4 @@ var Pod_Portal = React.createClass({
 	},
 })
 
-module.exports = Radium(Pod_Portal);
+module.exports = Pod_Portal;

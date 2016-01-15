@@ -5,7 +5,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
 var Pod_Styler = require('../styler.jsx');
 
 
@@ -20,4 +19,4 @@ var Pod_gridCell = React.createClass({
 
 });
 
-module.exports = Radium(Pod_gridCell);
+module.exports = Pod_gridCell;
