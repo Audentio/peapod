@@ -1,10 +1,12 @@
-// require vars.jsx if you want to reference variables, for example, safe to add all the time
-var Pod_Vars = require('../../vars.jsx');
+import {Sheet} from '../../stylesheet.jsx';
 
-module.exports = [
-	{
-		global: {
+var sheet = new Sheet,
+	main = sheet.addMain();
 
-		}
-	}
-]
+//Conditions
+
+
+//Variables
+sheet.setValues({});
+
+module.exports = sheet;

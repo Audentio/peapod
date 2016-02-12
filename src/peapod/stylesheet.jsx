@@ -175,9 +175,9 @@ class Condition {
 				objVal = instanceVal[key],
 				selVal = conditionVal[key];
 
-			if (typeof(selVal[key]) == 'object') {
-				if (selVal[key].length == 2) {
-					if (!this.compareValArray(selVal[key][0], val, selVal[key][1])) return false;
+			if (typeof(selVal) == 'object') {
+				if (selVal.length == 2) {
+					if (!this.compareValArray(selVal[0], objVal, selVal[1])) return false;
 				} else {
 					return false;
 				}

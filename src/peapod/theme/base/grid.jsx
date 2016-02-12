@@ -28,37 +28,32 @@ sheet.setValues({
 	}
 });
 
+main.addSelector({
+	common: {
+		display: 'flex',
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		justifyContent: 'flex-start',
+		alignItems: 'stretch',
+		alignContent: 'stretch'
+	}
+});
 
-var style = [
-	//base style
-	{
-		global: {
-			display: 'flex',
-			flexDirection: 'row',
-			flexWrap: 'wrap',
-			justifyContent: 'flex-start',
-			alignItems: 'stretch',
-			alignContent: 'stretch'
-		}
-	},
+sheet.addCondition('orderSet').addStyler({order: ['!=', '']});
+main.addSelector({
+	when: ['orderSet'],
+	common: {
+		order: 'getStyler:order'
+	}
+});
 
-	//flex item order
-	{
-		styler: { order: ['!=', ''] },
-		global: {
-			order: 'getStyler:order'
-		}
-	},
-
-	//flex item flex
-	{
-		styler: { flex: ['!=', ''] },
-		global: {
-			flex: 'getStyler:flex'
-		}
-	},
-
-]
+sheet.addCondition('flexSet').addStyler({flex: ['!=', '']});
+main.addSelector({
+	when: ['flexSet'],
+	common: {
+		flex: 'getStyler:flex'
+	}
+});
 
 //flex-direction
 var choices = ['row', 'row-reverse', 'column', 'column-reverse'];
@@ -169,4 +164,4 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 	}
 }
 
-module.exports = style;
+module.exports = sheet;

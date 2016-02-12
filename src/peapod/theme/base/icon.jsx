@@ -1,6 +1,7 @@
 import {Sheet} from '../../stylesheet.jsx';
 
-var sheet = new Sheet;
+var sheet = new Sheet,
+	main = sheet.addMain();
 
 //Variables
 sheet.setValues({
@@ -14,26 +15,25 @@ sheet.setValues({
 	}
 });
 
+sheet.addCondition('sizeSet').addStyler({size: ['!=', '']});
+sheet.addCondition('colorSet').addStyler({color: ['!=', '']});
 
-module.exports = [
-	{
-		global: {
-			cursor: 'default',
-			fontSize: '$icon.font.size',
-		}
-	}, {
-		styler: {
-			size: ['!=', '']
-		},
-		global: {
-			fontSize: 'getStyler:size',
-		}
-	}, {
-		styler: {
-			color: ['!=', '']
-		},
-		global: {
-			color: 'getStyler:color',
-		}
+main.addSelector({
+	common: {
+		cursor: 'default',
+		fontSize: '$icon.font.size',
 	}
-]
+}).addSelector({
+	when: ['sizeSet'],
+	common: {
+		fontSize: 'getStyler:size',
+	}
+}).addSelector({
+	when: ['colorSet'],
+	common: {
+		color: 'getStyler:color',
+	}
+})
+
+
+module.exports = sheet;

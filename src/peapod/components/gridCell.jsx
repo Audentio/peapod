@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
 
 
-var Pod_gridCell = React.createClass({
+var GridCell = React.createClass({
 	render: function() {
 		return (
 			<div style={Pod_Styler.getStyle(this)}>
@@ -19,4 +19,4 @@ var Pod_gridCell = React.createClass({
 
 });
 
-module.exports = Pod_gridCell;
+module.exports = GridCell;

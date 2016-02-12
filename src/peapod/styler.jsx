@@ -8,7 +8,7 @@ var React = require('react');
 var lodash = require('lodash')
 
 var debugInfo = false; // requires patched Radium
-var enableMissingStyleWarning = true;
+var enableMissingStyleWarning = false;
 
 /*
 
@@ -547,7 +547,7 @@ window.Pod_Styler = window.Pod_Styler || {
 		} else if (computedVar.indexOf('getState:') > -1) {
 			computedVar = obj.state[computedVar.replace('getState:', '')];
 		} else if (computedVar.indexOf('getStyler:') > -1) {
-			computedVar = styler[computedVar.replace('getStyler:', '')];
+			computedVar = obj.styler[computedVar.replace('getStyler:', '')];
 		} else if (computedVar.indexOf('getContext:') > -1) {
 			computedVar = obj.context[computedVar.replace('getContext:', '')];
 		}

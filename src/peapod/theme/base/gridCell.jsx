@@ -1,34 +1,37 @@
 var Pod_Vars = require('../../vars.jsx');
 
-var style = [
-	//flex item order
-	{
-		styler: { order: ['!=', ''] },
-		global: {
-			order: 'getStyler:order'
-		}
-	},
+import {Sheet} from '../../stylesheet.jsx';
 
-	//flex item flex
-	{
-		styler: { flex: ['!=', ''] },
-		global: {
-			flex: 'getStyler:flex'
-		}
-	},
+var sheet = new Sheet,
+	main = sheet.addMain();
 
-]
 
+sheet.addCondition('orderSet').addStyler({order: ['!=', '']});
+main.addSelector({
+	when: ['orderSet'],
+	common: {
+		order: 'getStyler:order'
+	}
+});
+
+sheet.addCondition('flexSet').addStyler({flex: ['!=', '']});
+main.addSelector({
+	when: ['flexSet'],
+	common: {
+		flex: 'getStyler:flex'
+	}
+});
 
 //flex item align-self
 var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
-	style.push({
-		styler: { alignSelf: choices[choiceIndex] },
-		global: {
+	sheet.addCondition('alignSelf_' + choices[choiceIndex]).addStyler({alignSelf: choices[choiceIndex]});
+	main.addSelector({
+		when: ['alignSelf_' + choices[choiceIndex]],
+		common: {
 			alignSelf: choices[choiceIndex]
 		}
-	})
+	});
 }
 
 var sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'],
@@ -36,31 +39,36 @@ var sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'],
 
 for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
 	for (var i = 0; i < 13; i++) { // loop through size values
-		style.push({
-			styler: { [abbrevs[sizeIndex]]: i },
-			global: {
+		sheet.addCondition([abbrevs[sizeIndex]] + '_' + i).addStyler({[abbrevs[sizeIndex]]: i});
+		main.addSelector({
+			when: [[abbrevs[sizeIndex]] + '_' + i],
+			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
 			}
-		})
-		style.push({
-			styler: { [abbrevs[sizeIndex] + 'Push']: i },
-			global: {
+		});
+
+		sheet.addCondition([abbrevs[sizeIndex]] + 'Push_' + i).addStyler({[abbrevs[sizeIndex] + 'Push']: i});
+		main.addSelector({
+			when: [[abbrevs[sizeIndex]] + 'Push_' + i],
+			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',
 					left: (100 * (i / 12)) + '%'
 				}
 			}
-		})
-		style.push({
-			styler: { [abbrevs[sizeIndex] + 'Pull']: i },
-			global: {
+		});
+
+		sheet.addCondition([abbrevs[sizeIndex]] + 'Pull_' + i).addStyler({[abbrevs[sizeIndex] + 'Pull']: i});
+		main.addSelector({
+			when: [[abbrevs[sizeIndex]] + 'Pull_' + i],
+			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',
 					left: (-100 * (i / 12)) + '%'
 				}
 			}
-		})
+		});
 	}
 }
 
-module.exports = style;
+module.exports = sheet;

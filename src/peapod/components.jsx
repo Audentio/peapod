@@ -8,7 +8,7 @@ import Pod_Wrapper from './wrapper.jsx';
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = ['Checkbox', 'Button', 'Grid'],
+var components = ['Button', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon'],
 	req = require.context('./components', false, /^\.\/.*\.jsx$/);
 	//Pod = {};
 
@@ -29,7 +29,7 @@ import Pod_input from './components/input.jsx';
 import Checkbox from './components/checkbox.jsx';
 import Grid from './components/grid.jsx';
 import Pod_div from './components/div.jsx';
-import Pod_gridCell from './components/gridCell.jsx';
+import GridCell from './components/gridcell.jsx';
 import Pod_table from './components/table.jsx';
 import Pod_tableRow from './components/tableRow.jsx';
 import Pod_tableCell from './components/tableCell.jsx';
@@ -49,7 +49,7 @@ _.merge(Pod, {
     image: Pod_image,
     icon: Pod_icon,
     grid: Grid,
-    gridCell: Pod_gridCell,
+    gridCell: GridCell,
     div: Pod_div,
     table: Pod_table,
     tableRow: Pod_tableRow,

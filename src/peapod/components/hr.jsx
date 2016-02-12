@@ -17,7 +17,7 @@ var Pod_Styler = require('../styler.jsx');
 * @element Pod_hr
 *
 */
-var Pod_hr = React.createClass({
+var Hr = React.createClass({
 
 	render: function() {
 		return (
@@ -28,4 +28,4 @@ var Pod_hr = React.createClass({
 
 });
 
-module.exports = Pod_hr;
+module.exports = Hr;

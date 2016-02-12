@@ -17,7 +17,7 @@ var Pod_Vars = require('../vars.jsx');
 * @param {string} color - Icon color
 * @param {string} label - Icon label (for tooltip and ARIA)
 */
-var Pod_icon = React.createClass({
+var Icon = React.createClass({
 
 	propTypes: {
 		children: 		React.PropTypes.string.isRequired,
@@ -63,6 +63,6 @@ var Pod_icon = React.createClass({
 
 });
 
-module.exports = Pod_icon;
+module.exports = Icon;
 
 //module.exports = Pod_animation(Radium(Pod_icon)); // @Tushar, this currently causes issues with things

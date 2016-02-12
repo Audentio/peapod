@@ -64,10 +64,10 @@ sections.push(
 		<p>Currently simply a layer of abstration over google material icons</p>
 		<span style={{fontSize: '24px'}}>
 			<Pod.icon>home</Pod.icon>&nbsp;
-			<Pod.icon color="#07ADD4">assessment</Pod.icon>&nbsp;
-			<Pod.icon color="#3F70E2">polymer</Pod.icon>&nbsp;
-			<Pod.icon color="#D53FD6">question_answer</Pod.icon>&nbsp;
-			<Pod.icon color="#FF6044">whatshot</Pod.icon>
+			<Pod.icon styler={{color: "#07ADD4"}}>assessment</Pod.icon>&nbsp;
+			<Pod.icon styler={{color: "#3F70E2"}}>polymer</Pod.icon>&nbsp;
+			<Pod.icon styler={{color: "#D53FD6"}}>question_answer</Pod.icon>&nbsp;
+			<Pod.icon styler={{color: "#FF6044"}}>whatshot</Pod.icon>
 		</span>
 
 	</div>
