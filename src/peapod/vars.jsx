@@ -6,14 +6,12 @@
 var lodash = require('lodash')
 
 var base = require('./theme/baseVars.jsx');
-var parent = require('./theme/parentVars.jsx');
-var current = require('./theme/currentVars.jsx');
 var override = require('./theme/overrideVars.jsx');
 
 var maxDepth = 20;
 
 window.Pod_Vars = window.Pod_Vars || {
-	sources: [base, parent, current, override],
+	sources: [base, override],
 	cache: {},
 
 	register: function(vars, level = 0) {
@@ -60,8 +58,12 @@ window.Pod_Vars = window.Pod_Vars || {
 						var varSet = Object.keys(vars)[i],
 							varVal = Pod_Vars.getVarFromSource(vars, varSet, name);
 
-						if (typeof(varVal) !== 'undefined' && typeof(varVal) !== 'function' && (typeof(varSetOverride) === 'undefined' || (typeof(varSetOverride) !== 'undefined' && (varSetOverride == varSet || varSet == 'global' || varSet == 'normal')))) {
-							if (varSet !== 'global' && varSet !== 'normal') onlyBase = false;
+						var setVarVal = typeof(varVal) !== 'undefined',
+							notAFunction = typeof(varVal) !== 'function',
+							setVarSetOverride = typeof(varSetOverride) === 'undefined';
+
+						if (typeof(varVal) !== 'undefined' && typeof(varVal) !== 'function' && (setVarSetOverride || (typeof(varSetOverride) !== 'undefined' && (varSetOverride == varSet || varSet == 'common' || varSet == 'normal')))) {
+							if (varSet !== 'common' && varSet !== 'normal') onlyBase = false;
 							var val = Pod_Vars.processResult(varVal, varSet, depth);
 							results.push({
 								vars: varSet,
@@ -75,12 +77,12 @@ window.Pod_Vars = window.Pod_Vars || {
 
 		if (typeof(varSetOverride) !== 'undefined') {
 			for (var i = results.length - 1; i >= 0; i--) {
-				if (varSetOverride == 'global' && results[i].vars == 'normal') return results[i].val
+				if (varSetOverride == 'common' && results[i].vars == 'normal') return results[i].val
 				if (results[i].vars == varSetOverride) return results[i].val;
 			}
 
 			for (var i = results.length - 1; i >= 0; i--) {
-				if (results[i].vars == 'global') return results[i].val;
+				if (results[i].vars == 'common') return results[i].val;
 			}
 		}
 

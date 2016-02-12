@@ -17,7 +17,7 @@ var Pod_Styler = require('../styler.jsx');
 * @element Pod_template
 *
 */
-var Pod_paragraph = React.createClass({
+var Paragraph = React.createClass({
 
 	render: function() {
 		return (
@@ -30,4 +30,4 @@ var Pod_paragraph = React.createClass({
 
 });
 
-module.exports = Pod_paragraph;
+module.exports = Paragraph;

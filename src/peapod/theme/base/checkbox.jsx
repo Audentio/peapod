@@ -16,7 +16,7 @@ sheet.addCondition('hovered').addStyler({hovered: true});
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		checkbox: {
 			width: '1.5rem',
 			height: '$checkbox.width',

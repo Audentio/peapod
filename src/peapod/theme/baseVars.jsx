@@ -1,5 +1,5 @@
 module.exports = {
-	global: {
+	common: {
 		//Palette - from https://www.google.com/design/spec/style/color.html#color-color-palette
 		/*
 		function camelize(str) {

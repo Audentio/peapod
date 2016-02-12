@@ -10,7 +10,7 @@ sheet.addCondition('focused').addStyler({focus: true});
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		input: {
 			color: {
 				text: '$palette.grey400',

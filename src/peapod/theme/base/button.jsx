@@ -19,7 +19,7 @@ sheet.addCondition('kindSuccess').addStyler({kind: 'success'});
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		button: {
 			color: {
 				text: {

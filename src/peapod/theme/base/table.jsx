@@ -4,7 +4,7 @@ var sheet = new Sheet;
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		table: {
 			color: {
 				lightRow: {

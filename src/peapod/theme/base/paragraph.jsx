@@ -1,9 +1,15 @@
-var Pod_Vars = require('../../vars.jsx');
+import {Sheet} from '../../stylesheet.jsx';
 
-module.exports = [
-	{
-		global: {
-            marginBottom: '$gutter.internal'
-		}
-	}
-]
+var sheet = new Sheet,
+	main = sheet.addMain();
+
+//Conditions
+
+//Variables
+sheet.setValues({});
+
+main.addSelector({
+	marginBottom: '$gutter.internal'
+})
+
+module.exports = sheet;

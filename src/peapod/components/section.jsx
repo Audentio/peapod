@@ -6,7 +6,7 @@
 import React from 'react';
 import Pod_Styler from '../styler.jsx';
 
-var Pod_section = React.createClass({
+var Section = React.createClass({
   render: function() {
     return (
         <section varSet={this.props.varSet} style={Pod_Styler.getStyle(this)} >
@@ -17,4 +17,4 @@ var Pod_section = React.createClass({
 
 });
 
-module.exports = Pod_section;
+module.exports = Section;

@@ -4,7 +4,7 @@ var sheet = new Sheet;
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		image: {
 			color: {
 				captionBackground: 'rgba(255, 255, 255, 0.5)',

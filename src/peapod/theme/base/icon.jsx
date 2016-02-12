@@ -5,7 +5,7 @@ var sheet = new Sheet,
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		icon: {
 			font: {
 				size: 'inherit'

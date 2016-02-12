@@ -17,7 +17,7 @@ function isNodeInRoot(node, root) {
 	return false;
 }
 
-var Pod_Portal = React.createClass({
+var Portal = React.createClass({
 
 	propTypes: {
 		className: React.PropTypes.string,
@@ -97,7 +97,7 @@ var Pod_Portal = React.createClass({
 		var trigger = this.trigger,
 			styler = Pod_Styler.getStyle({props: {
 				styler: {
-					styleLike: 'Pod_portal'
+					styleLike: 'Portal'
 				}
 			}});
 
@@ -213,4 +213,4 @@ var Pod_Portal = React.createClass({
 	},
 })
 
-module.exports = Pod_Portal;
+module.exports = Portal;

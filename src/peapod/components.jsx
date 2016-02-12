@@ -8,7 +8,7 @@ import Pod_Wrapper from './wrapper.jsx';
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = ['Button', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input'],
+var components = ['Button', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Paginator', 'Paragraph', 'Portal', 'Section'],
 	req = require.context('./components', false, /^\.\/.*\.jsx$/);
 	//Pod = {};
 

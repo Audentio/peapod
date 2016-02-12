@@ -1,10 +1,11 @@
 import {Sheet} from '../../stylesheet.jsx';
 
-var sheet = new Sheet;
+var sheet = new Sheet,
+	main = sheet.addMain();
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		portal: {
 			font: {
 				family: '$font.family.primary'
@@ -16,12 +17,11 @@ sheet.setValues({
 	}
 });
 
-
-module.exports = [
-	{
-		global: {
-			fontFamily: '$portal.font.family',
-			width: '$portal.dropdown.width'
-		}
+main.addSelector({
+	common: {
+		fontFamily: '$portal.font.family',
+		width: '$portal.dropdown.width'
 	}
-]
+})
+
+module.exports = sheet;

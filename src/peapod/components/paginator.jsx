@@ -25,7 +25,7 @@ function paginate(data, o) {
     };
 }
 
-var Pod_paginator = React.createClass({
+var Paginator = React.createClass({
 
 	render: function() {
 		var page = this.props.page,
@@ -57,6 +57,6 @@ var Pod_paginator = React.createClass({
 	}
 })
 
-Pod_paginator.paginate = paginate;
+Paginator.paginate = paginate;
 
-module.exports = Pod_paginator;
+module.exports = Paginator;

@@ -7,7 +7,7 @@ var sheet = new Sheet,
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		grid: {
 			breakpoints: {
 				small: '610',

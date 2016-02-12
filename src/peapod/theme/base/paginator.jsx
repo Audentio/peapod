@@ -1,10 +1,15 @@
 import {Sheet} from '../../stylesheet.jsx';
 
-var sheet = new Sheet;
+var sheet = new Sheet,
+	main = sheet.addMain(),
+	trigger = sheet.addPart('trigger'),
+	label = sheet.addPart('label');
+
+sheet.addCondition('onePage').addStyler({onePage: true});
 
 //Variables
 sheet.setValues({
-	global: {
+	common: {
 		paginator: {
 			border: {
 				color: '#778A9D',
@@ -20,39 +25,39 @@ sheet.setValues({
 	}
 });
 
-module.exports = [
-	{
-		global: {
-			fontSize: '$paginator.font.size',
-			fontFamily: '$paginator.font.family',
-			display: 'inline-block'
-		}
-	}, {
-		part: 'trigger',
-		global: {
-			paddingLeft: '$gutter.internal',
-			paddingRight: '$gutter.internal',
-			fontSize: '$paginator.font.triggerSize'
-		}
-	}, {
-		part: 'label',
-		global: {
-			paddingLeft: '$gutter.internal',
-			paddingRight: '$gutter.internal',
-			borderColor: '$paginator.border.color',
-			borderStyle: '$paginator.border.style',
-			borderTopWidth: '0',
-			borderBottomWidth: '0',
-			borderLeftWidth: '$paginator.border.width',
-			borderRightWidth: '$paginator.border.width'
-		}
-	}, {
-		part: 'label',
-		styler: {
-			onePage: true
-		},
-		global: {
-			borderRightWidth: '0'
-		}
+main.addSelector({
+	common: {
+		fontSize: '$paginator.font.size',
+		fontFamily: '$paginator.font.family',
+		display: 'inline-block'
 	}
-]
+});
+
+trigger.addSelector({
+	common: {
+		paddingLeft: '$gutter.internal',
+		paddingRight: '$gutter.internal',
+		fontSize: '$paginator.font.triggerSize'
+	}
+});
+
+label.addSelector({
+	common: {
+		paddingLeft: '$gutter.internal',
+		paddingRight: '$gutter.internal',
+		borderColor: '$paginator.border.color',
+		borderStyle: '$paginator.border.style',
+		borderTopWidth: '0',
+		borderBottomWidth: '0',
+		borderLeftWidth: '$paginator.border.width',
+		borderRightWidth: '$paginator.border.width'
+	}
+}).addSelector({
+	when: ['onePage'],
+	common: {
+		borderRightWidth: '0'
+
+	}
+});
+
+module.exports = sheet;
