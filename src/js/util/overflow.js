@@ -37,6 +37,11 @@ $pp.overflow = {
 		preResizeFunc: function() {},
 		createOverflowContentAppend: function(overflowContent) {
 			return overflowContent;
+		},
+		createOverflowInner: function() {
+			var ele = document.createElement('DIV');
+			ele.className = $pp.name('overflowMenuInner');
+			return ele;
 		}
 	},
 	items: [],
@@ -108,8 +113,10 @@ $pp.overflow = {
 								var overflowTrigger = defaults.createOverflowTrigger();
 								wrappersSel[l].appendChild(overflowTrigger);
 
-								var overflowContent = defaults.createOverflowContent();
+								var overflowContent = defaults.createOverflowContent(),
+									overflowInner = defaults.createOverflowInner();
 								overflowContent.style.display = 'none';
+								overflowContent.appendChild(overflowInner);
 								if (defaults.menuContentParent === '') {
 									wrappersSel[l].appendChild(overflowContent);
 								} else {
@@ -153,6 +160,7 @@ $pp.overflow = {
 									childInMenu: childInMenu,
 									overflowTrigger: overflowTrigger,
 									overflowContent: overflowContent,
+									overflowInner: overflowInner,
 									overflowContentAppend: overflowContentAppend,
 									menu: menu
 								});
@@ -191,8 +199,12 @@ $pp.overflow = {
 				ele.style.visibility = '';
 				if (wrapper.childHidden[i]) {
 					ele.style.display = 'none';
+					$pp.addClass(ele, $pp.name('hiddenOverflowItem'));
+					$pp.removeClass(ele, $pp.name('visibleOverflowItem'));
 				} else {
 					ele.style.display = '';
+					$pp.removeClass(ele, $pp.name('hiddenOverflowItem'));
+					$pp.addClass(ele, $pp.name('visibleOverflowItem'));
 				}
 			}
 		}
@@ -274,8 +286,8 @@ $pp.overflow = {
 	buildMenu: function(itemIndex, wrapperIndex) {
 		var hasContent = false;
 
-		while ($pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContentAppend.lastChild) {
-			$pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContentAppend.removeChild($pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContentAppend.lastChild);
+		while ($pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowInner.lastChild) {
+			$pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowInner.removeChild($pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowInner.lastChild);
 		}
 
 		var wrapper = $pp.overflow.items[itemIndex].wrappers[wrapperIndex];
@@ -290,7 +302,7 @@ $pp.overflow = {
 					newItem.appendChild(newChild);
 				}
 
-				$pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowContentAppend.appendChild(newItem);
+				$pp.overflow.items[itemIndex].wrappers[wrapperIndex].overflowInner.appendChild(newItem);
 
 				$pp.overflow.items[itemIndex].defaults.postMenuChildAdded(newItem);
 

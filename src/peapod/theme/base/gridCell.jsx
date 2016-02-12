@@ -5,7 +5,7 @@ var style = [
 	{
 		styler: { order: ['!=', ''] },
 		global: {
-			order: 'getStyle:order'
+			order: 'getStyler:order'
 		}
 	},
 
@@ -13,7 +13,7 @@ var style = [
 	{
 		styler: { flex: ['!=', ''] },
 		global: {
-			flex: 'getStyle:flex'
+			flex: 'getStyler:flex'
 		}
 	},
 

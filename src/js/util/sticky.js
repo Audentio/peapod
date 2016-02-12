@@ -449,9 +449,9 @@ $ppSticky.method('unstick', function() {
 	this.getEle().style.height = '';
 	this.getWrapper().style.height = '';
 	this.offset = 0;
-	if (this.enabled) {
-		$pp.sticky.setOffset(this.getDefault('type'), -1 * this.getDefault('stickyHeight'));
-	}
+	//if (this.enabled) {
+	$pp.sticky.setOffset(this.getDefault('type'), -1 * this.getDefault('stickyHeight'));
+	//}
 	this.getWrapper().style.bottom = '';
 	this.getWrapper().style.top = '';
 	this.lastPos = -1;
@@ -492,6 +492,12 @@ $ppSticky.method('resizeGet', function() {
 });
 
 $ppSticky.method('resizeSet', function() {
+	if (this.enabled && this.boundEle !== document.body && this.boundEle !== null) {
+		this.wrapper.style.width = this.coords.width + 'px';
+	} else {
+		this.wrapper.style.width = '';
+	}
+
 });
 
 $ppSticky.method('initGet', function() {

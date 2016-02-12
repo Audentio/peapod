@@ -9,14 +9,14 @@ module.exports = [
 
 
 	{
-		subComponent: 'row',
+		part: 'row',
 		global: {
 			display: 'table-row',
 			color: '$table.color.lightRow.color',
 			background: '$table.color.lightRow.background'
 		}
 	}, {
-		subComponent: 'row',
+		part: 'row',
 		styler: {
 			dark: true
 		},
@@ -25,7 +25,7 @@ module.exports = [
 			background: '$table.color.darkRow.background',
 		}
 	}, {
-		subComponent: 'row',
+		part: 'row',
 		styler: {
 			hovered: true
 		},
@@ -34,7 +34,7 @@ module.exports = [
 			background: '$table.color.darkRow.hover',
 		}
 	}, {
-		subComponent: 'row',
+		part: 'row',
 		styler: {
 			header: true
 		},
@@ -46,7 +46,7 @@ module.exports = [
 			textTransform: 'uppercase'
 		}
 	}, {
-		subComponent: 'row',
+		part: 'row',
 		styler: {
 			checked: true
 		},

@@ -1,5 +1,34 @@
 var Pod_Vars = require('../../vars.jsx');
 
+import {Sheet} from '../../stylesheet.jsx';
+
+var sheet = new Sheet,
+	main = sheet.addMain();
+
+//Variables
+sheet.setValues({
+	global: {
+		grid: {
+			breakpoints: {
+				small: '610',
+				medium: '800',
+				large: '1024',
+				xlarge: '1500'
+			},
+			xsmall: '@media (min-width: 1px)',
+			small: '@media (min-width: 610px)',
+			medium: '@media (min-width: 800px)',
+			large: '@media (min-width: 1024px)',
+			xlarge: '@media (min-width: 1500px)',
+			smallLt: '@media (max-width: 609px)',
+			mediumLt: '@media (max-width: 799px)',
+			largeLt: '@media (max-width: 1023px)',
+			xlargeLt: '@media (max-width: 1499px)'
+		},
+	}
+});
+
+
 var style = [
 	//base style
 	{
@@ -17,7 +46,7 @@ var style = [
 	{
 		styler: { order: ['!=', ''] },
 		global: {
-			order: 'getStyle:order'
+			order: 'getStyler:order'
 		}
 	},
 
@@ -25,7 +54,7 @@ var style = [
 	{
 		styler: { flex: ['!=', ''] },
 		global: {
-			flex: 'getStyle:flex'
+			flex: 'getStyler:flex'
 		}
 	},
 
@@ -34,67 +63,73 @@ var style = [
 //flex-direction
 var choices = ['row', 'row-reverse', 'column', 'column-reverse'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
-	style.push({
-		styler: { flexDirection: choices[choiceIndex] },
-		global: {
+	sheet.addCondition('flexDirection_' + choices[choiceIndex]).addStyler({flexDirection: choices[choiceIndex]});
+	main.addSelector({
+		when: ['flexDirection_' + choices[choiceIndex]],
+		common: {
 			flexDirection: choices[choiceIndex]
 		}
-	})
+	});
 }
 
 //flex-wrap
 var choices = ['nowrap', 'wrap', 'wrap-reverse'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
-	style.push({
-		styler: { flexWrap: choices[choiceIndex] },
-		global: {
+	sheet.addCondition('flexWrap_' + choices[choiceIndex]).addStyler({flexWrap: choices[choiceIndex]});
+	main.addSelector({
+		when: ['flexWrap_' + choices[choiceIndex]],
+		common: {
 			flexWrap: choices[choiceIndex]
 		}
-	})
+	});
 }
 
 //justify-content
 var choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
-	style.push({
-		styler: { justifyContent: choices[choiceIndex] },
-		global: {
+	sheet.addCondition('justifyContent_' + choices[choiceIndex]).addStyler({justifyContent: choices[choiceIndex]});
+	main.addSelector({
+		when: ['justifyContent_' + choices[choiceIndex]],
+		common: {
 			justifyContent: choices[choiceIndex]
 		}
-	})
+	});
 }
 
 //align-items
 var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
-	style.push({
-		styler: { alignItems: choices[choiceIndex] },
-		global: {
+	sheet.addCondition('alignItems_' + choices[choiceIndex]).addStyler({alignItems: choices[choiceIndex]});
+	main.addSelector({
+		when: ['alignItems_' + choices[choiceIndex]],
+		common: {
 			alignItems: choices[choiceIndex]
 		}
-	})
+	});
 }
 
 //align-content
 var choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
-	style.push({
-		styler: { alignContent: choices[choiceIndex] },
-		global: {
+	sheet.addCondition('alignContent_' + choices[choiceIndex]).addStyler({alignContent: choices[choiceIndex]});
+	main.addSelector({
+		when: ['alignContent_' + choices[choiceIndex]],
+		common: {
 			alignContent: choices[choiceIndex]
 		}
-	})
+	});
 }
 
 //flex item align-self
 var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
-	style.push({
-		styler: { alignSelf: choices[choiceIndex] },
-		global: {
+	sheet.addCondition('alignSelf_' + choices[choiceIndex]).addStyler({alignSelf: choices[choiceIndex]});
+	main.addSelector({
+		when: ['alignSelf_' + choices[choiceIndex]],
+		common: {
 			alignSelf: choices[choiceIndex]
 		}
-	})
+	});
 }
 
 var sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'],
@@ -102,30 +137,35 @@ var sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'],
 
 for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
 	for (var i = 0; i < 13; i++) { // loop through size values
-		style.push({
-			styler: { [abbrevs[sizeIndex]]: i },
-			global: {
+		sheet.addCondition([abbrevs[sizeIndex]] + '_' + i).addStyler({[abbrevs[sizeIndex]]: i});
+		main.addSelector({
+			when: [[abbrevs[sizeIndex]] + '_' + i],
+			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
 			}
-		})
-		style.push({
-			styler: { [abbrevs[sizeIndex] + 'Push']: i },
-			global: {
+		});
+
+		sheet.addCondition([abbrevs[sizeIndex]] + 'Push_' + i).addStyler({[abbrevs[sizeIndex] + 'Push']: i});
+		main.addSelector({
+			when: [[abbrevs[sizeIndex]] + 'Push_' + i],
+			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',
 					left: (100 * (i / 12)) + '%'
 				}
 			}
-		})
-		style.push({
-			styler: { [abbrevs[sizeIndex] + 'Pull']: i },
-			global: {
+		});
+
+		sheet.addCondition([abbrevs[sizeIndex]] + 'Pull_' + i).addStyler({[abbrevs[sizeIndex] + 'Pull']: i});
+		main.addSelector({
+			when: [[abbrevs[sizeIndex]] + 'Pull_' + i],
+			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',
 					left: (-100 * (i / 12)) + '%'
 				}
 			}
-		})
+		});
 	}
 }
 

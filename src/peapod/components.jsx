@@ -7,13 +7,27 @@ import Pod_Wrapper from './wrapper.jsx';
 //Peapod
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
+
+var components = ['Checkbox', 'Button', 'Grid'],
+	req = require.context('./components', false, /^\.\/.*\.jsx$/);
+	//Pod = {};
+
+for (var i = 0, len = components.length; i < len; i++) {
+	var component = components[i];
+	//Pod[component] = Pod_Wrapper(req('./' + component.toLowerCase() + '.jsx'))
+}
+
+
+
+
+// below here can be removed after all components are refactored
 import Pod_timestamp from './components/timestamp.jsx';
-import Pod_button from './components/button.jsx';
+import Button from './components/button.jsx';
 import Pod_image from './components/image.jsx';
 import Pod_icon from './components/icon.jsx';
 import Pod_input from './components/input.jsx';
-import Pod_checkbox from './components/checkbox.jsx';
-import Pod_grid from './components/grid.jsx';
+import Checkbox from './components/checkbox.jsx';
+import Grid from './components/grid.jsx';
 import Pod_div from './components/div.jsx';
 import Pod_gridCell from './components/gridCell.jsx';
 import Pod_table from './components/table.jsx';
@@ -26,23 +40,22 @@ import Pod_portal from './components/portal.jsx';
 import Pod_label from './components/label.jsx';
 import Pod_hr from './components/hr.jsx';
 import Pod_paragraph from './components/paragraph.jsx';
+import Pod_tabs from './components/tabs.jsx';
 import { Pod_animation } from './components/animation.jsx';
-
-var sections = [];
 
 _.merge(Pod, {
     timestamp: Pod_timestamp,
-    button: Pod_button,
+    button: Button,
     image: Pod_image,
     icon: Pod_icon,
-    grid: Pod_grid,
+    grid: Grid,
     gridCell: Pod_gridCell,
     div: Pod_div,
     table: Pod_table,
     tableRow: Pod_tableRow,
     tableCell: Pod_tableCell,
     input: Pod_input,
-    checkbox: Pod_checkbox,
+    checkbox: Checkbox,
     section: Pod_section,
     external: Pod_external,
     animation: Pod_animation,
@@ -50,7 +63,8 @@ _.merge(Pod, {
     portal: Pod_portal,
     label: Pod_label,
     hr: Pod_hr,
-    p: Pod_paragraph
+    p: Pod_paragraph,
+	tabs: Pod_tabs
 });
 
 var keys = Object.keys(Pod);
@@ -58,9 +72,19 @@ for (var i = 0, len = keys.length; i < len; i++) {
 	var key = keys[i];
 	Pod[key] = Pod_Wrapper(Pod[key]);
 }
+// don't remove below here
+
+
+
+
 
 
 window.Pod_Vars = window.Pod_Vars || require('./vars.jsx');
 window.Pod_Styler = window.Pod_Styler || require('./styler.jsx');
+
+
+
+var base = require('./theme/base.jsx');
+base(components);
 
 module.exports = [Pod, Pod_Vars, Pod_Styler];

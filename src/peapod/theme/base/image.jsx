@@ -1,8 +1,22 @@
-var Pod_Vars = require('../../vars.jsx');
+import {Sheet} from '../../stylesheet.jsx';
+
+var sheet = new Sheet;
+
+//Variables
+sheet.setValues({
+	global: {
+		image: {
+			color: {
+				captionBackground: 'rgba(255, 255, 255, 0.5)',
+				lightboxBackground: 'rgba(0,0,0,0.75)'
+			}
+		},
+	}
+});
 
 module.exports = [
 	{
-		subComponent: 'wrapper',
+		part: 'wrapper',
 		global: {
 			display: 'inline-block',
 			position: 'relative'
@@ -20,7 +34,7 @@ module.exports = [
 			cursor: 'pointer'
 		}
 	}, {
-		subComponent: 'caption',
+		part: 'caption',
 		global: {
 			display: 'block',
 			padding: '6px 10px',
@@ -31,7 +45,7 @@ module.exports = [
 			width: '100%'
 		}
 	}, {
-		subComponent: 'lightbox',
+		part: 'lightbox',
 		global: {
 			display: 'table',
 			cursor: 'pointer',
@@ -48,7 +62,7 @@ module.exports = [
 			display: 'none'
 		}
 	}, {
-		subComponent: 'lightbox',
+		part: 'lightbox',
 		props: {
 			'lightbox-animation': true
 		},
@@ -56,7 +70,7 @@ module.exports = [
 			display: 'table'
 		}
 	}, {
-		subComponent: 'lightbox',
+		part: 'lightbox',
 		state: {
 			lightboxVisible: true
 		},
@@ -66,14 +80,14 @@ module.exports = [
 			opacity: 1
 		}
 	}, {
-		subComponent: 'lightboxInner',
+		part: 'lightboxInner',
 		global: {
 			display: 'table-cell',
 			textAlign: 'center',
 			verticalAlign: 'middle'
 		}
 	}, {
-		subComponent: 'lightboxImage',
+		part: 'lightboxImage',
 		global: {
 			maxWidth: '90%',
 			maxHeight: '90%',
@@ -83,7 +97,7 @@ module.exports = [
 			transform: 'scale(.7)',
 		}
 	}, {
-		subComponent: 'lightboxImage',
+		part: 'lightboxImage',
 		state: {
 			lightboxVisible: true
 		},

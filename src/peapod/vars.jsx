@@ -3,21 +3,29 @@
  *  LICENSE: <%= package.licence %>
  */
 
+var lodash = require('lodash')
+
 var base = require('./theme/baseVars.jsx');
 var parent = require('./theme/parentVars.jsx');
 var current = require('./theme/currentVars.jsx');
 var override = require('./theme/overrideVars.jsx');
 
+var maxDepth = 20;
+
 window.Pod_Vars = window.Pod_Vars || {
 	sources: [base, parent, current, override],
 	cache: {},
+
+	register: function(vars, level = 0) {
+		this.sources[level] = lodash.merge(this.sources[level], vars);
+	},
 
 	processResult: function(val, varSetOverride, depth) {
 		if (typeof(val) == 'string' && val.indexOf('$') == 0 && depth < 20) {
 			return Pod_Vars.get(val.replace('$', ''), varSetOverride, depth + 1); // recursively try to find
 		} else {
-			if (depth == 20) {
-				throw "Max variable depth of 20 reached.  Do you have a circular variable reference?";
+			if (depth >= maxDepth) {
+				throw "Max variable depth of " + maxDepth + " reached.  Do you have a circular variable reference?";
 			}
 			return val;
 		}
@@ -52,8 +60,8 @@ window.Pod_Vars = window.Pod_Vars || {
 						var varSet = Object.keys(vars)[i],
 							varVal = Pod_Vars.getVarFromSource(vars, varSet, name);
 
-						if (typeof(varVal) !== 'undefined' && typeof(varVal) !== 'function' && (typeof(varSetOverride) === 'undefined' || (typeof(varSetOverride) !== 'undefined' && (varSetOverride == varSet || varSet == 'global' || varSet == 'base')))) {
-							if (varSet !== 'global' && varSet !== 'base') onlyBase = false;
+						if (typeof(varVal) !== 'undefined' && typeof(varVal) !== 'function' && (typeof(varSetOverride) === 'undefined' || (typeof(varSetOverride) !== 'undefined' && (varSetOverride == varSet || varSet == 'global' || varSet == 'normal')))) {
+							if (varSet !== 'global' && varSet !== 'normal') onlyBase = false;
 							var val = Pod_Vars.processResult(varVal, varSet, depth);
 							results.push({
 								vars: varSet,
@@ -67,7 +75,7 @@ window.Pod_Vars = window.Pod_Vars || {
 
 		if (typeof(varSetOverride) !== 'undefined') {
 			for (var i = results.length - 1; i >= 0; i--) {
-				if (varSetOverride == 'global' && results[i].vars == 'base') return results[i].val
+				if (varSetOverride == 'global' && results[i].vars == 'normal') return results[i].val
 				if (results[i].vars == varSetOverride) return results[i].val;
 			}
 

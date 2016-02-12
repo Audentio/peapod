@@ -35,11 +35,11 @@ sections.push(
 		<br /><br />
 		<Pod.button onClick={function(){alert('test')}} label="onClick handler" />
 		<Pod.button href="http://peapod.io" label="Anchor/Link" kind="primary" />
-		<Pod.button styler={{color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}} label="Custom" kind="default" />
-		<Pod.button label="Raised" kind="primary" raised={true} />
-		<Pod.button label="Round" kind="primary" round={true} />
-		<Pod.button label="Disabled" kind="primary" disabled={true} />
-		<Pod.button kind="success" round={true} raised={true} />
+		<Pod.button styler={{kind: "default", style: {color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}}} label="Custom" />
+		<Pod.button label="Raised" styler={{kind: "primary", raised: true}} />
+		<Pod.button label="Round" styler={{kind: "primary", round: true}} />
+		<Pod.button label="Disabled" styler={{kind:"primary", disabled: true}} />
+		<Pod.button styler={{kind: "success", round:true, raised: true}} />
 
 	</div>
 )
@@ -50,7 +50,7 @@ sections.push(
 		<h1>Forms</h1>
 
 		<h2>Text input</h2>
-		<Pod.input placeholder="Placeholder..." />
+		<Pod.input placeholder="Placeholder..." styler={{placeholderStyle: {color: 'red'}}}/>
 		<Pod.checkbox kind="primary" checked={true} />
 	</div>
 )
@@ -148,6 +148,24 @@ sections.push(
 	</Pod.section>
 )
 
+var tabs = [
+	{
+		trigger: "tab 1",
+		content: "Tab 1 content",
+	},
+	{
+		trigger: "tab 2",
+		content: "Tab 2 content"
+	}
+]
+
+sections.push(
+	<Pod.section key="test">
+		<Pod.tabs tabs={tabs} activeTab={1}></Pod.tabs>
+		<Pod.div>Testing</Pod.div>
+	</Pod.section>
+)
+
 /*******************
  * STRAIN TEST
  * Increase {repeatCount} till your browser chokes
@@ -163,6 +181,7 @@ customStyleTest = {
 	borderRadius: 0,
 	marginBottom: 1,
 	marginRight: 1,
+	display: 'block',
 
 	':hover' : { backgroundColor: 'red' }
 };

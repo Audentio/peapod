@@ -1,3 +1,18 @@
+import {Sheet} from '../../stylesheet.jsx';
+
+var sheet = new Sheet;
+
+//Variables
+sheet.setValues({
+	global: {
+		label: {
+			color: {
+				text: '$color.text.white'
+			}
+		}
+	}
+});
+
 module.exports = [
 	{
 		global: {
@@ -56,9 +71,9 @@ module.exports = [
 			backgroundColor: '$color.base.base'
 		}
 	}, {
-		subComponent: 'icon',
+		part: 'icon',
 		global: {
-			
+
 		}
 	}
 ]

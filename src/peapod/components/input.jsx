@@ -41,7 +41,10 @@ var Pod_input = React.createClass({
 
 	onChangeHandler: function(e){
 		var value = e.target.value,
-			placeholder = ( value.length > 0 ) ? '' : this.props.placeholder;
+			placeholder = ( value.length > 0 ) ? '' : this.props.placeholder,
+			callback = this.props.callback || function() {};
+
+		callback(value)
 
 		this.setState({ value: value , placeholder: placeholder });
 	},
@@ -61,7 +64,7 @@ var Pod_input = React.createClass({
 
 				<span style={Pod_Styler.getStyle(this, 'placeholder')}>{this.props.icon && <Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>{this.props.icon}</Pod_icon>}{this.state.placeholder}</span>
 
-				<input type={this.props.type} onFocus={this.onFocusHandler} style={Pod_Styler.getStyle(this)}
+				<input name={this.props.name} type={this.props.type} onFocus={this.onFocusHandler} style={Pod_Styler.getStyle(this)}
 					   value={this.state.value} onChange={this.onChangeHandler} />
 			</div>
 		);

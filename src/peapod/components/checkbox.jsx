@@ -14,14 +14,14 @@ var Pod_icon = require('./icon.jsx');
 /**
 * Checkbox component
 *
-* @element Pod_checkbox
+* @element Checkbox
 *
 * @param {bool} [checked=false] - checkbox state
 * @param {string} [label] - checkbox label text
 *
 */
 
-var Pod_checkbox = React.createClass({
+var Checkbox = React.createClass({
 	getInitialState: function() {
 		return {
 			checked: this.props.checked == true,
@@ -84,4 +84,4 @@ var Pod_checkbox = React.createClass({
 	}
 })
 
-module.exports = Pod_checkbox;
+module.exports = Checkbox;

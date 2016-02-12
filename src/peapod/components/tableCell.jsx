@@ -21,8 +21,7 @@ var Pod_tableCell = React.createClass({
 				centered: false,
 				hovered: false,
 				sort: '',
-				header: false,
-				noData: true
+				header: false
 			},
 			index = this.props.index;
 
@@ -39,7 +38,6 @@ var Pod_tableCell = React.createClass({
 						sortDesc: column.sort == 'desc',
 						sortAsc: column.sort == 'asc',
 						sortDesc: column.sort == 'desc',
-						noData: column.noData == true,
 						header: this.props.header == true
 					}
 				}})}

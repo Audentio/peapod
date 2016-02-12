@@ -48,7 +48,7 @@ var Pod_table = React.createClass({
 			data: lodash.values(data),
 			isFetching: isFetching,
 			hoveredRow: -1,
-			search: [
+			search: [/*
 				{
 					column: 'country',
 					comparison: 'contains',
@@ -59,7 +59,7 @@ var Pod_table = React.createClass({
 					comparison: '<',
 					value: '80'
 				}
-			],
+			*/],
 			header: {
 				onClick: function(column) {
 					var columns = this.state.columns;

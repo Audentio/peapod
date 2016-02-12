@@ -7,7 +7,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
 
-
 var Pod_div = React.createClass({
 	render: function() {
 		var {styler, children, ...other} = this.props;

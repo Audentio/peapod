@@ -5,7 +5,6 @@ var gulp = require('gulp'),
 	sourcemaps = require('gulp-sourcemaps')
 	template = require('gulp-template'),
 	jshint = require('gulp-jshint'),
-	jsdoc = require("gulp-jsdoc"),
 	jscs = require('gulp-jscs'),
 	notify = require('gulp-notify'),
 	plumber = require('gulp-plumber'),
@@ -49,7 +48,7 @@ gulp.task('processJs', function(){
 
 	//Empty the built JS
 	del(['./build/js/**/*.js'], function (err, deletedFiles) {
-		
+
 	});
 
 	gulp.src(['src/js/init.js', 'src/js/util/*.js', 'src/js/components/*.js', 'src/js/main.js'])
@@ -74,9 +73,6 @@ gulp.task('processJs', function(){
 		.pipe(plumber.stop())
 		.pipe(plumber(plumberError("JS Error in jsDoc."))) // jsDoc
 		.pipe(template({pkg: pkg}))
-		.pipe(jsdoc.parser())
-		//.pipe(notify({ title: 'JS Builder Passed', message: 'Successfully built javascript.' }))
-    	.pipe(jsdoc.generator('docs/js', tpl, opts));
 
     gulp.src(['src/js/init.js', 'src/js/util/*.js', 'src/js/components/*.js', 'src/js/main.js'])
 		.pipe(replace('$pp', packageName))

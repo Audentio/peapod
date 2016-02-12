@@ -19,7 +19,7 @@ var Pod_Styler = require('../styler.jsx');
 * @param {string} [kind=default] - Generic button style/state (danger/warning/success)
 *
 */
-var Pod_button = React.createClass({
+var Button = React.createClass({
 
 	//Validate props
 	propTypes: {
@@ -62,4 +62,4 @@ var Pod_button = React.createClass({
 
 });
 
-module.exports = Pod_button;
+module.exports = Button;

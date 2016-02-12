@@ -5,18 +5,14 @@
 */
 
 
+
+/*
 //Dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.jsx');
 
-/**
-* Template component
-*
-* @element Pod_template
-*
-*/
 var Pod_template = React.createClass({
 
 	//Validate props
@@ -49,3 +45,4 @@ var Pod_template = React.createClass({
 });
 
 module.exports = Pod_template;
+*/

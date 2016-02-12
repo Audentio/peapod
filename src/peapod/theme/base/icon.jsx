@@ -1,3 +1,19 @@
+import {Sheet} from '../../stylesheet.jsx';
+
+var sheet = new Sheet;
+
+//Variables
+sheet.setValues({
+	global: {
+		icon: {
+			font: {
+				size: 'inherit'
+			},
+			color: 'inherit'
+		},
+	}
+});
+
 
 module.exports = [
 	{
@@ -10,14 +26,14 @@ module.exports = [
 			size: ['!=', '']
 		},
 		global: {
-			fontSize: 'getStyle:size',
+			fontSize: 'getStyler:size',
 		}
 	}, {
 		styler: {
 			color: ['!=', '']
 		},
 		global: {
-			color: 'getStyle:color',
+			color: 'getStyler:color',
 		}
 	}
 ]
