@@ -22,7 +22,7 @@ var Pod_icon = require('./icon.jsx');
 * @param {string} [placeholder] - Placeholder text
 *
 */
-var Pod_input = React.createClass({
+var Input = React.createClass({
 
 	//Validate props
 	propTypes: {
@@ -73,4 +73,4 @@ var Pod_input = React.createClass({
 });
 
 
-module.exports = Pod_input;
+module.exports = Input;

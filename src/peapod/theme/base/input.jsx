@@ -1,6 +1,12 @@
 import {Sheet} from '../../stylesheet.jsx';
 
-var sheet = new Sheet;
+var sheet = new Sheet,
+	main = sheet.addMain(),
+	wrapper = sheet.addPart('wrapper'),
+	placeholder = sheet.addPart('placeholder'),
+	icon = sheet.addPart('icon');
+
+sheet.addCondition('focused').addStyler({focus: true});
 
 //Variables
 sheet.setValues({
@@ -47,65 +53,66 @@ sheet.setValues({
 	}
 });
 
-module.exports = [
-	{
-		global: {
-			fontSize: '$input.font.size',
-			fontFamily: '$input.font.family',
-			color: '$input.color.text',
-			position: 'relative',
-			background: 'transparent',
-			zIndex: 2,
-			border: 0,
-			outline: 0,
-			paddingLeft: '$input.padding.left',
-			paddingRight: '$input.padding.right',
-			lineHeight: 'inherit',
-			width: 'calc(100% - {$input.padding.left} - {$input.padding.right})',
-		}
-	}, {
-		part: 'wrapper',
-		global: {
-			display: 'inline-block',
-			position: 'relative',
-			borderRadius: '$input.border.radius',
-			borderWidth: '$input.border.width',
-			borderStyle: '$input.border.style',
-			borderColor: '$input.border.color',
-			height: '$input.height',
-			lineHeight: '$input.lineHeight',
-			background: '$input.color.background',
-		}
-	}, {
-		part: 'wrapper',
-		state: {
-			focus: true
-		},
-		global: {
-			background: '$input.color.backgroundFocus'
-		}
-	}, {
-		part: 'placeholder',
-		global: {
-			fontSize: '$input.font.size',
-			fontFamily: '$input.font.family',
-			color: '$input.color.placeholder',
-			zIndex: 1,
-			paddingLeft: '$input.padding.left',
-			paddingRight: '$input.padding.right',
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: 'calc(100% - {$input.padding.left} - {$input.padding.right})',
-			height: '100%'
-		}
-	}, {
-		part: 'icon',
-		global: {
-			marginLeft: '4px',
-			marginRight: '4px',
-			color: '$input.color.icon',
-			lineHeight: 'inherit'
-		}
+
+main.addSelector({
+	common: {
+		fontSize: '$input.font.size',
+		fontFamily: '$input.font.family',
+		color: '$input.color.text',
+		position: 'relative',
+		background: 'transparent',
+		zIndex: 2,
+		border: 0,
+		outline: 0,
+		paddingLeft: '$input.padding.left',
+		paddingRight: '$input.padding.right',
+		lineHeight: 'inherit',
+		width: 'calc(100% - {$input.padding.left} - {$input.padding.right})',
 	}
-]
+});
+
+wrapper.addSelector({
+	common: {
+		display: 'inline-block',
+		position: 'relative',
+		borderRadius: '$input.border.radius',
+		borderWidth: '$input.border.width',
+		borderStyle: '$input.border.style',
+		borderColor: '$input.border.color',
+		height: '$input.height',
+		lineHeight: '$input.lineHeight',
+		background: '$input.color.background',
+	}
+}).addSelector({
+	when: ['focused'],
+	common: {
+		background: '$input.color.backgroundFocus'
+	}
+});
+
+placeholder.addSelector({
+	common: {
+		fontSize: '$input.font.size',
+		fontFamily: '$input.font.family',
+		color: '$input.color.placeholder',
+		zIndex: 1,
+		paddingLeft: '$input.padding.left',
+		paddingRight: '$input.padding.right',
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: 'calc(100% - {$input.padding.left} - {$input.padding.right})',
+		height: '100%'
+	}
+});
+
+icon.addSelector({
+	common: {
+		marginLeft: '4px',
+		marginRight: '4px',
+		color: '$input.color.icon',
+		lineHeight: 'inherit'
+	}
+})
+
+module.exports = sheet;
