@@ -9,7 +9,7 @@ var Pod_Styler = require('../styler.jsx');
 
 var lodash = require('lodash')
 
-var Pod_tableCell = React.createClass({
+var TableCell = React.createClass({
 
 	shouldComponentUpdate: function(nextProps, nextState) {
 		return true;
@@ -29,7 +29,7 @@ var Pod_tableCell = React.createClass({
 			<div {...this.props}
 				style={Pod_Styler.getStyle({props: {
 					styler: {
-						styleLike: 'Pod_tableCell',
+						styleLike: 'TableCell',
 						firstCell: index == 0,
 						centered: column.centered == true,
 						hovered: column.hovered == true,
@@ -48,4 +48,4 @@ var Pod_tableCell = React.createClass({
 	}
 })
 
-module.exports = Pod_tableCell;
+module.exports = TableCell;

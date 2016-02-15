@@ -22,7 +22,7 @@ var topButtonStyle = {
 	margin: '$gutter.internal'
 }
 
-var Pod_tableQuery = React.createClass({
+var TableQuery = React.createClass({
 	render: function() {
 		var queries = this.props.queries || [],
 			removeQuery = this.props.removeQuery || function() {},
@@ -79,4 +79,4 @@ var Pod_tableQuery = React.createClass({
 	}
 })
 
-module.exports = Pod_tableQuery;
+module.exports = TableQuery;

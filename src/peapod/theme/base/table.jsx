@@ -1,6 +1,8 @@
 import {Sheet} from '../../stylesheet.jsx';
 
-var sheet = new Sheet;
+var sheet = new Sheet,
+	main = sheet.addMain(),
+	footer = sheet.addPart('footer');
 
 //Variables
 sheet.setValues({
@@ -63,18 +65,19 @@ sheet.setValues({
 	}
 });
 
-module.exports = [
-	{
-		global: {
-			width: '100%',
-			borderRadius: '$table.border.radius',
-			overflowX: 'auto'
-		}
-	}, {
-		part: 'footer',
-		global: {
-			background: '$table.color.controls.background',
-			color: '$table.color.controls.color'
-		}
+main.addSelector({
+	common: {
+		width: '100%',
+		borderRadius: '$table.border.radius',
+		overflowX: 'auto'
 	}
-]
+});
+
+footer.addSelector({
+	common: {
+		background: '$table.color.controls.background',
+		color: '$table.color.controls.color'
+	}
+});
+
+module.exports = sheet;

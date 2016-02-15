@@ -12,9 +12,9 @@ var reduce = lodash.reduce;
 var isPlainObject = lodash.isPlainObject;
 var isUndefined = lodash.isUndefined;
 
-var Pod_tableCell = require('./tableCell.jsx');
+var TableCell = require('./tableCell.jsx');
 
-var Pod_tableRow = React.createClass({
+var TableRow = React.createClass({
 
 	shouldComponentUpdate: function(nextProps, nextState) {
 		//return true;
@@ -34,7 +34,7 @@ var Pod_tableRow = React.createClass({
 			<div {...rowProps(row, i)}
 				style={Pod_Styler.getStyle({props: {
 					styler: {
-						styleLike: 'Pod_tableInner',
+						styleLike: 'TableInner',
 						dark: i % 2 == 1,
 						firstRow: i == 0,
 						checked: row.checked == true,
@@ -78,7 +78,7 @@ var Pod_tableRow = React.createClass({
 						}
 
 						return (
-							<Pod_tableCell key={j + '-cell'} column={column} index={j}>{content.value}</Pod_tableCell>
+							<TableCell key={j + '-cell'} column={column} index={j}>{content.value}</TableCell>
 						)
 					})
 				}
@@ -88,4 +88,4 @@ var Pod_tableRow = React.createClass({
 
 });
 
-module.exports = Pod_tableRow;
+module.exports = TableRow;

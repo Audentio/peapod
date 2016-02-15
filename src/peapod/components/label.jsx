@@ -4,7 +4,7 @@ var Pod_Styler = require('../styler.jsx');
 
 import Pod_icon from './icon.jsx';
 
-var Pod_label = React.createClass({
+var Label = React.createClass({
 
 	render: function() {
 
@@ -18,4 +18,4 @@ var Pod_label = React.createClass({
 	}
 });
 
-module.exports = Pod_label;
+module.exports = Label;

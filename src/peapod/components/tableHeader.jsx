@@ -10,11 +10,11 @@ var Pod_Styler = require('../styler.jsx');
 var lodash = require('lodash')
 var reduce = lodash.reduce;
 
-var Pod_tableCell = require('./tableCell.jsx');
+var TableCell = require('./tableCell.jsx');
 
 var Icon = require('./icon.jsx')
 
-var Pod_tableHeader = React.createClass({
+var TableHeader = React.createClass({
 	propTypes: {
 		config: React.PropTypes.object,
 		columns: React.PropTypes.array
@@ -27,7 +27,7 @@ var Pod_tableHeader = React.createClass({
 		return (
 			<div style={Pod_Styler.getStyle({props: {
 				styler: {
-					styleLike: 'Pod_tableInner',
+					styleLike: 'TableInner',
 					header: true
 				}
 			}}, 'row')}>
@@ -47,9 +47,9 @@ var Pod_tableHeader = React.createClass({
 					}
 
 					return (
-						<Pod_tableCell key={i + '-header'} column={column} header={true} {...columnHeader}>
+						<TableCell key={i + '-header'} column={column} header={true} {...columnHeader}>
 							{column.header}{column.sort == 'desc' ? <Icon styler={arrowStyler}>arrow_drop_down</Icon> : ''}{column.sort == 'asc' ? <Icon styler={arrowStyler}>arrow_drop_up</Icon> : ''}
-						</Pod_tableCell>
+						</TableCell>
 					)
 				})
 			}
@@ -58,4 +58,4 @@ var Pod_tableHeader = React.createClass({
 	}
 })
 
-module.exports = Pod_tableHeader;
+module.exports = TableHeader;

@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Pod_Styler from '../styler.jsx';
 
-var Pod_section = React.createClass({
+var External = React.createClass({
 
   render: function() {
     return <div />;
@@ -23,4 +23,4 @@ var Pod_section = React.createClass({
 
 });
 
-module.exports = Pod_section;
+module.exports = External;

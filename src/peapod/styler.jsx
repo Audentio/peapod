@@ -320,7 +320,7 @@ window.Pod_Styler = window.Pod_Styler || {
 				stylesheet = null;
 
 			try {
-				stylesheet = requireFunc('./' + componentName.toLowerCase() + '.jsx');
+				stylesheet = requireFunc('./' + componentName.charAt(0).toLowerCase() + componentName.slice(1) + '.jsx');
 			} catch(err) {
 				if (err.code !== 'MODULE_NOT_FOUND') {
 					throw err; // Re-throw not "Module not found" errors

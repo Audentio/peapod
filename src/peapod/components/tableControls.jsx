@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
 
 
-var Pod_tableControls = React.createClass({
+var TableControls = React.createClass({
 	render: function() {
 		return (
 			<div style={Pod_Styler.getStyle(this)}>
@@ -18,4 +18,4 @@ var Pod_tableControls = React.createClass({
 	}
 })
 
-module.exports = Pod_tableControls;
+module.exports = TableControls;

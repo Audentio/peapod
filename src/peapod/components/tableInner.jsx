@@ -13,10 +13,10 @@ var isPlainObject = lodash.isPlainObject;
 var isUndefined = lodash.isUndefined;
 var isFunction = lodash.isFunction;
 
-var Pod_tableRow = require('./tableRow.jsx');
-var Pod_tableCell = require('./tableCell.jsx');
+var TableRow = require('./tableRow.jsx');
+var TableCell = require('./tableCell.jsx');
 
-var Pod_tableInner = React.createClass({
+var TableInner = React.createClass({
 	propTypes: {
 		columnNames: React.PropTypes.oneOfType([
             React.PropTypes.object,
@@ -46,11 +46,11 @@ var Pod_tableInner = React.createClass({
 		return (
 			<div style={{overflowX: 'auto'}}>
 				<div style={Pod_Styler.getStyle(this)}>
-					{isFunction(columnNames) ? columnNames(columns) : <Pod_tableHeader config={columnNames} columns={columns} />}
+					{isFunction(columnNames) ? columnNames(columns) : <TableHeader config={columnNames} columns={columns} />}
 					{
 						data.map(function(row, i) {
 							return (
-								<Pod_tableRow key={(row[rowKey] || i) + '-row'}
+								<TableRow key={(row[rowKey] || i) + '-row'}
 									row={row}
 									rowKey={rowKey}
 									i={i}
@@ -69,4 +69,4 @@ var Pod_tableInner = React.createClass({
 	}
 })
 
-module.exports = Pod_tableInner;
+module.exports = TableInner;

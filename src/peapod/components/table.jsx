@@ -24,15 +24,15 @@ var Grid = require('./grid.jsx');
 var Div = require('./div.jsx');
 var Portal = require('./portal.jsx');
 
-var Pod_tableCell = require('./tableCell.jsx');
-var Pod_tableQuery = require('./tableQuery.jsx');
-var Pod_tableInner = require('./tableInner.jsx');
-var Pod_tablePresets = require('./tablePresets.jsx');
-var Pod_tableControls = require('./tableControls.jsx');
-var Pod_tableHeader = require('./tableHeader.jsx');
+var TableCell = require('./tableCell.jsx');
+var TableQuery = require('./tableQuery.jsx');
+var TableInner = require('./tableInner.jsx');
+var TablePresets = require('./tablePresets.jsx');
+var TableControls = require('./tableControls.jsx');
+var TableHeader = require('./tableHeader.jsx');
 
 
-var Pod_table = React.createClass({
+var Table = React.createClass({
 
 	getInitialState: function() {
 		var data = this.props.data;
@@ -133,7 +133,7 @@ var Pod_table = React.createClass({
 		var columns = this.state.columns;
 		// return if you don't want a header
 		return (
-			<Pod_tableHeader config={headerConfig} columns={columns} />
+			<TableHeader config={headerConfig} columns={columns} />
 		)
 	},
 
@@ -321,7 +321,7 @@ var Pod_table = React.createClass({
 
 		var statusStyle = Pod_Styler.getStyle({props: {
 			styler: {
-				styleLike: 'Pod_tableCell',
+				styleLike: 'TableCell',
 				style: {
 					borderLeft: 'none',
 					borderRight: 'none',
@@ -336,7 +336,7 @@ var Pod_table = React.createClass({
 
 		return (
 			<div style={Pod_Styler.getStyle(this)}>
-				<Pod_tableControls>
+				<TableControls>
 					<Grid styler={{justifyContent: 'space-between', style: {height: '$table.headerHeight', lineHeight: '$table.headerHeight'}}}>
 						<div>
 							<Div styler={{
@@ -351,10 +351,10 @@ var Pod_table = React.createClass({
 									}}
 									onChange={this.checkAll}></Checkbox>
 							</Div>
-							<Pod_tablePresets queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/>
+							<TablePresets queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/>
 						</div>
 						<Grid>
-							<Pod_tableQuery queries={queries} removeQuery={this.removeQuery}/>
+							<TableQuery queries={queries} removeQuery={this.removeQuery}/>
 
 							<Div styler={{
 									style: {
@@ -379,8 +379,8 @@ var Pod_table = React.createClass({
 							</Div>
 						</Grid>
 					</Grid>
-				</Pod_tableControls>
-				<Pod_tableInner style={Pod_Styler.getStyle(this)}
+				</TableControls>
+				<TableInner style={Pod_Styler.getStyle(this)}
 					data={paginated.data}
 					columns={columns}
 					columnNames={this.makeHeader}
@@ -400,7 +400,7 @@ var Pod_table = React.createClass({
 							{noData}
 							{isFetching}
 						</div>
-				</Pod_tableInner>
+				</TableInner>
 				<div style={Pod_Styler.getStyle(this, 'footer')}>
 					<Grid styler={{
 							justifyContent: 'space-between',
@@ -461,4 +461,4 @@ var Pod_table = React.createClass({
 
 });
 
-module.exports = Pod_table;
+module.exports = Table;

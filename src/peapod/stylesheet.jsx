@@ -346,7 +346,9 @@ class Sheet {
 	}
 
 	getStyling(instance, part, scene = 'normal', conditions) {
-		return this.parts[part].getPartStyling(instance, scene, conditions);
+		var partObj = this.parts[part];
+		if (typeof(partObj) == 'undefined') throw "Could not find Part named " + part + '.'
+		return partObj.getPartStyling(instance, scene, conditions);
 	}
 }
 

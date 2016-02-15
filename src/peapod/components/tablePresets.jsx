@@ -20,7 +20,7 @@ var topButtonStyle = {
 	margin: '$gutter.internal'
 }
 
-var Pod_tablePresets = React.createClass({
+var TablePresets = React.createClass({
 	getInitialState: function() {
 		return {
 			presets: this.props.presets
@@ -128,4 +128,4 @@ var Pod_tablePresets = React.createClass({
 	}
 })
 
-module.exports = Pod_tablePresets;
+module.exports = TablePresets;
