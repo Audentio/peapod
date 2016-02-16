@@ -5,17 +5,17 @@
 
 ### Getting your hands dirty ###
 
-Prerequisites: 
+*Requires nodejs installed*
 
-1. Nodejs ([download here](nodejs.org))
+[download here](nodejs.org))
 
-2. bower (run `npm install bower -g`)
+Homebrew users can `brew install node`
 
 *****
 
-**Clone the repo**
+**Clone the repo and navigate to peapod**
 ```
-git clone git@bitbucket.org:audentiodesign/peapod.git peapod
+git clone git@github.com:AudentioDesign/peapod.git peapod
 cd peapod
 ```
 
