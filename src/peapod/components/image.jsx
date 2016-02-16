@@ -8,8 +8,10 @@ import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
+import Pod_helper from '../helper.jsx'
+var Icon = require('./icon.jsx');
 
-var options = Pod.helper.options('Pea_image', {
+var options = Pod_helper.options('Pea_image', {
 
 	//this acts as src for lazyLoaded images until they're loaded
 	defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
@@ -40,30 +42,31 @@ var options = Pod.helper.options('Pea_image', {
 * @param {string} [alt] - alt attribute
 * @param {string} [caption] - Image caption
 * @param {bool} [lazy] - Should the resource load lazily?
-* @param {Number} [lazy-distance] - Lazy images will be loaded when within this distance from viewport
+* @param {Number} [lazyDistance] - Lazy images will be loaded when within this distance from viewport
 * @param {bool} [lightbox] - Enable lightbox on instance
-* @param {bool} [lightbox-animation] - Animated lightbox (ability to turn off for specific high-res images)
+* @param {bool} [lightboxAnimation] - Animated lightbox (ability to turn off for specific high-res images)
 */
-var Pod_image = React.createClass({
+var Image = React.createClass({
 	propTypes: {
 		src: React.PropTypes.string.isRequired,
-		'hidpi-data': React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.bool ]),
+		hidpiData: React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.bool ]),
 		alt: React.PropTypes.string,
 		caption: React.PropTypes.string,
 		lazy: React.PropTypes.bool,
-		'lazy-distance': React.PropTypes.number,
+		lazyDistance: React.PropTypes.number,
 		lightbox: React.PropTypes.bool,
-		'lightbox-animation': React.PropTypes.bool
+		lightboxAnimation: React.PropTypes.bool
 	},
 
 
 	getDefaultProps: function() {
 		return {
-			'hidpi-data': options.hidpi,
-			'lazy': options.lazy,
-			'lazy-distance': options.lazyDistance,
-			'lightbox': options.lightbox,
-			'lightbox-animation': options.lightboxAnimation
+			hidpiData: options.hidpi,
+			lazy: options.lazy,
+			lazyDistance: options.lazyDistance,
+			lightbox: options.lightbox,
+			styler: options.styler,
+			lightboxAnimation: options.lightboxAnimation
 		}
 	},
 
@@ -76,7 +79,7 @@ var Pod_image = React.createClass({
 	},
 
 	keyHandler: function(e){
-		if(e.keyCode == Pod.helper.keymap['esc']){
+		if(e.keyCode == Pod_helper.keymap['esc']){
 			this.hideLightbox();
 		}
 	},
@@ -91,7 +94,7 @@ var Pod_image = React.createClass({
 		this.setState({lightboxVisible: true})
 
 		//enable scrolling
-		Pod.helper.scrolling(false)
+		Pod_helper.scrolling(false)
 
 		//add keyboard listener
 		window.addEventListener('keydown', this.keyHandler)
@@ -99,24 +102,40 @@ var Pod_image = React.createClass({
 
 	//hide lightbox
 	hideLightbox: function(){
+
 		this.setState({lightboxVisible: false});
 
 		//enable scrolling
 		//document.documentElement.style.overflow = ''
-		Pod.helper.scrolling(true)
+		Pod_helper.scrolling(true)
 
 		//remove keyboard listener
 		window.removeEventListener('keydown', this.keyHandler)
+	},
+
+	//Onclick handler
+	//decides whether to hide or not
+	lightboxOnClick: function(e){
+
+		//overlay is clicked
+		//hide
+		if(e.target.tagName != 'IMG'){
+			this.hideLightbox();
+		}
+
+		//If image is clicked
+		//Open image in browser tab
+		else {
+			var newWindow = window.open(e.target.src, '_blank')
+			newWindow.focus();
+		}
+
 	},
 
 	//Check if element is within the defined viewport range
 	// -- {lazyDistance}px above and below current viewport
 	lazyCheck: function() {
 
-		// @tushar, this doesn't work in pinto currently
-		this.setState({visible: true});
-
-		/*
 		var bounds = ReactDOM.findDOMNode(this).getBoundingClientRect(),
 		scrollTop = window.pageYOffset,
 		top = bounds.top + scrollTop,
@@ -126,7 +145,11 @@ var Pod_image = React.createClass({
 			this.setState({visible: true});
 			this.removeListener(); //stop listening, the show is over
 		}
-		*/
+
+	},
+
+	doNothing: function(){
+		return false
 	},
 
 	removeListener: function() {
@@ -157,7 +180,8 @@ var Pod_image = React.createClass({
 
 	componentWillMount: function(){
 
-		var hiDpiData = this.props['hidpi-data'];
+		var hiDpiData = this.props.hidpiData;
+
 		if(hiDpiData) { //hiDPI resource is available
 
 			//break down the url
@@ -183,9 +207,6 @@ var Pod_image = React.createClass({
 			this.imageURL = this.props.src;
 		}
 
-		//Caption
-		this.caption = (this.props.caption) ? <span style={Pod_Styler.getStyle(this, 'caption')}>{this.props.caption}</span> : undefined;
-
 	},
 
 	render: function() {
@@ -193,12 +214,20 @@ var Pod_image = React.createClass({
 			<div style={Pod_Styler.getStyle(this, 'wrapper')}>
 				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
 					style={Pod_Styler.getStyle(this)} />
-				{this.caption}
 
-				{
-					<div style={Pod_Styler.getStyle(this, 'lightbox')} onClick={this.hideLightbox}>
+				{this.props.caption &&
+					<span style={Pod_Styler.getStyle(this, 'caption')}>{this.props.caption}</span>
+				}
+
+				{this.props.lightbox &&
+					<div style={Pod_Styler.getStyle(this, 'lightbox')} onClick={this.lightboxOnClick}>
 						<div style={Pod_Styler.getStyle(this, 'lightboxInner')}>
 							<img style={Pod_Styler.getStyle(this, 'lightboxImage')} src={this.state.visible ? this.imageURL : options.blankImage} />
+						</div>
+						<div style={Pod_Styler.getStyle(this, 'lightboxActions')}>
+							<Icon styler={{style:Pod_Styler.getStyle(this, 'lightboxAction')}}>close</Icon>
+							<Icon onClick={this.doNothing} styler={{style:Pod_Styler.getStyle(this, 'lightboxAction')}}>file_download</Icon>
+							<Icon styler={{style:Pod_Styler.getStyle(this, 'lightboxAction')}}>open_in_new</Icon>
 						</div>
 					</div>
 				}
@@ -207,4 +236,4 @@ var Pod_image = React.createClass({
 	}
 });
 
-module.exports = Pod_image;
+module.exports = Image;

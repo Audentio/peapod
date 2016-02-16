@@ -73,7 +73,7 @@ sections.push(
 	</div>
 )
 
-
+/* Alerts
 sections.push(
 	<div className="section" key={'Animation'}>
 		<h1>Animation</h1>
@@ -95,9 +95,68 @@ sections.push(
 		</p>
 	</div>
 )
+*/
+
+
+//Alerts
+var restoreAlerts = function(){
+	for(var item in localStorage){
+		if(item.indexOf('Pod_alert_')>=0){
+			localStorage.removeItem(item);
+			var name = item.split('Pod_alert_')[1].split('_hidden')[0];
+		}
+
+		window.location.reload()
+	}
+}
+sections.push(
+	<div className="section" key={'Alerts'}>
+		<h1>Alerts</h1>
+		<p><Pod.button onClick={restoreAlerts} label="Restore all alerts" /></p>
+
+		<Pod.alert dismissable={true} id="generalAlert">Jim quickly realized that the beautiful gowns are expensive.</Pod.alert>
+		<Pod.alert styler={{kind: 'info'}} dismissable={true} id="infoAlert">Jim quickly realized that the beautiful gowns are expensive.</Pod.alert>
+		<Pod.alert styler={{kind: 'success'}} dismissable={true} id="successAlert">Jim quickly realized that the beautiful gowns are expensive.</Pod.alert>
+		<Pod.alert styler={{kind: 'warning'}} dismissable={true} id="warningAlert">Jim quickly realized that the beautiful gowns are expensive.</Pod.alert>
+		<Pod.alert styler={{kind: 'danger'}} dismissable={true} id="dangerAlert">Jim quickly realized that the beautiful gowns are expensive.</Pod.alert>
+	</div>
+)
+
+// Notifications
+//================================
+var restoreNotifs = function(){
+	for(var item in localStorage){
+		if(item.indexOf('Pod_notification_')>=0){
+			localStorage.removeItem(item);
+			var name = item.split('Pod_notification_')[1].split('_hidden')[0];
+		}
+
+		window.location.reload()
+	}
+}
+sections.push(
+	<div className="section" key={"notifications"}>
+		<h1>Notifications</h1>
+
+		<p><Pod.button onClick={restoreNotifs} label="Restore all notifications" /></p>
+
+		<Pod.notification>Hello there!</Pod.notification>
+		<Pod.notification dismissable={true} title="Long notification!" styler={{kind: "danger"}} id="notif_danger">
+			Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box
+		</Pod.notification>
+		<Pod.notification dismissable={true} title="Long notification!" styler={{kind: "info"}} id="notif_info">
+			Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box
+		</Pod.notification>
+		<Pod.notification dismissable={true} title="Long notification!" styler={{kind: "warning"}} id="notif_warning">
+			Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box
+		</Pod.notification>
+		<Pod.notification dismissable={true} title="Long notification!" styler={{kind: "success"}} id="notif_success">
+			Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box
+		</Pod.notification>
+	</div>
+)
 
 var imageStyle = {width:'200px',height:'200px'};
-
 //Section: Microcomponents
 sections.push(
 	<div className="section" key={'microcomponents'}>
@@ -109,13 +168,13 @@ sections.push(
 
 		<h2>Image</h2>
 		<p>(lazy load example below button test)</p>
-		<Pod.image src="image.jpg" styler={{style:imageStyle}} lightbox-animation={false} caption="lightbox without animation" />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} lightboxAnimation={false} caption="lightbox without animation" />
 		&nbsp;
-		<Pod.image src="image.jpg" styler={{style:imageStyle}} lightbox={false} caption="lightbox disabled" hidpi-data={[ ['1.5','-mySuffix'] ]} />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} lightbox={false} caption="lightbox disabled" hidpiData={[ ['1.5','-mySuffix'] ]} />
 		&nbsp;
-		<Pod.image src="image.jpg" styler={{style:imageStyle}} hidpi-data={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} alt="Custom suffix" caption="Loads image@3x.jpg for pixeDensity 2 or higher" />
 		&nbsp;
-		<Pod.image src="image.jpg" styler={{style:imageStyle}} alt="Default suffix" hidpi-data={false} caption="who needs HiDPI anyway?" />
+		<Pod.image src="image.jpg" styler={{style:imageStyle}} alt="Default suffix" hidpiData={false} caption="who needs HiDPI anyway?" />
 	</div>
 )
 
@@ -203,7 +262,7 @@ var examples_render = ReactDOM.render(
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<Pod.image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpi-data={false} />
+		<Pod.image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpiData={false} />
 
 	</div>
 	, document.getElementById('mainContainer')
