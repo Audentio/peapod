@@ -44,7 +44,22 @@ body {
 
 .Pod_textInput,
 .btn,
-.Pod_checkbox {
-	margin-right: 10px;
-	margin-bottom: 10px;
+.Pod_checkbox,
+button {
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+h1 {
+	font-size: 16px;
+	font-weight: normal;
+	margin-bottom: 1.5em;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+h1:after {
+	content: "";
+    display: block;
+    border-bottom: 2px solid #73AEF7;
+    width: 40px;
 }

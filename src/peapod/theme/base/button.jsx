@@ -71,6 +71,7 @@ main.addSelector({
 		height: '$button.height',
 		textAlign: 'center',
 		outline: 'none',
+		cursor: 'pointer',
 		color: '$button.color.text.dark',
 
 		//base:active

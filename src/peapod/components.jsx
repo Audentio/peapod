@@ -8,10 +8,10 @@ import Pod_Wrapper from './wrapper.jsx';
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = ['Button', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Paginator', 'Paragraph', 'Portal', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'],
+var components = ['Alert', 'Notification','Button', 'Image', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Paginator', 'Paragraph', 'Portal', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'],
 	req = require.context('./components', false, /^\.\/.*\.jsx$/);
 
-window.Pod = {};
+window.Pod = {options:{}};
 
 
 
@@ -20,13 +20,13 @@ window.Pod = {};
 
 // below here can be removed after all components are refactored
 import Pod_timestamp from './components/timestamp.jsx';
-import Pod_image from './components/image.jsx';
+//import Pod_image from './components/image.jsx';
 import Paragraph from './components/paragraph.jsx';
 import { Pod_animation } from './components/animation.jsx';
 
 _.merge(Pod, {
     timestamp: Pod_timestamp,
-    image: Pod_image,
+    //image: Pod_image,
     animation: Pod_animation,
     p: Paragraph,
 });
