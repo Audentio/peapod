@@ -6,6 +6,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
 
 
 var TableControls = React.createClass({
@@ -18,4 +19,4 @@ var TableControls = React.createClass({
 	}
 })
 
-module.exports = TableControls;
+module.exports = Wrapper(TableControls);

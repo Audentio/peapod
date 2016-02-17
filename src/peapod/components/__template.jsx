@@ -12,6 +12,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 var Pod_template = React.createClass({
 
@@ -44,5 +46,5 @@ var Pod_template = React.createClass({
 
 });
 
-module.exports = Pod_template;
+module.exports = Wrapper(Pod_template);
 */

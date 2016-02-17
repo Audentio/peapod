@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 var Button = require('./button.jsx')
 var Icon = require('./icon.jsx')
@@ -79,4 +81,4 @@ var TableQuery = React.createClass({
 	}
 })
 
-module.exports = TableQuery;
+module.exports = Wrapper(TableQuery);

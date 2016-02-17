@@ -21,7 +21,10 @@ var config = {
   resolve: {
     unsafeCache: true,
     modulesDirectories: ['node_modules', './src'],
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['', '.js', '.jsx', '.json'],
+	alias: {
+		react: path.resolve('./node_modules/react'),
+	},
   },
 
   plugins: [

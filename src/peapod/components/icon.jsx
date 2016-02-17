@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import { Pod_animation } from './animation.jsx';
 var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
+var Wrapper = require('../wrapper.jsx')
 
 /**
 * Icon component
@@ -63,6 +64,6 @@ var Icon = React.createClass({
 
 });
 
-module.exports = Icon;
+module.exports = Wrapper(Icon);
 
 //module.exports = Pod_animation(Radium(Pod_icon)); // @Tushar, this currently causes issues with things

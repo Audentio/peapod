@@ -9,6 +9,8 @@ import moment from 'moment'
 
 var Pod_Styler = require('../styler.jsx')
 var Pod_Vars = require('../vars.jsx')
+var Wrapper = require('../wrapper.jsx')
+
 
 
 /**
@@ -110,4 +112,4 @@ var Notification = React.createClass({
 });
 
 
-module.exports = Notification
+module.exports = Wrapper(Notification)

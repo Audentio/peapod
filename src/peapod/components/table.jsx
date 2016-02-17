@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 var lodash = require('lodash')
 var reduce = lodash.reduce;
@@ -461,4 +463,4 @@ var Table = React.createClass({
 
 });
 
-module.exports = Table;
+module.exports = Wrapper(Table);

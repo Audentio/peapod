@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 var Div = React.createClass({
 	render: function() {
@@ -20,4 +22,4 @@ var Div = React.createClass({
 
 });
 
-module.exports = Div;
+module.exports = Wrapper(Div);

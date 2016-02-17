@@ -1,5 +1,7 @@
 import {merge as lodashMerge} from "lodash";
 import Pod_Vars from './vars.jsx';
+var React = require('react');
+
 
 var pod_debug = false; // if true, will add a debug object to the inline style produced
 
@@ -100,6 +102,21 @@ class Part {
 		}
 
 		return styling;
+	}
+
+	doc() {
+		var selectorResult = [];
+
+		for (var i = 0, len = this.selectors.length; i < len; i++) {
+			selectorResult.push(this.selectors[i].doc(i));
+		}
+
+		return (
+			<div key={this.name}>
+				<h4>Part: {this.name}</h4>
+				{selectorResult}
+			</div>
+		);
 	}
 }
 
@@ -215,6 +232,55 @@ class Condition {
 
 		return validStyler && validState & validProps && validContext;
 	}
+
+	subDoc(input, name) {
+		if (input == null) return null;
+		var keys = Object.keys(input),
+			result = [];
+		for (var i = 0, len = keys.length; i < len; i ++) {
+			var key = keys[i],
+				keyVal = input[key];
+
+			if (keyVal == true) {
+				keyVal = "true";
+			} else if (keyVal == false) {
+				keyVal = "false"
+			} else if (typeof(keyVal) == 'object') {
+				keyVal = keyVal[0] + ' "' + keyVal[1] + '"'
+			} else {
+				keyVal = '"' + keyVal + '"';
+			}
+
+			result.push(
+				<div key={i} style={{paddingLeft: '20px'}}>
+					{key} : {keyVal}
+				</div>
+			)
+		}
+		return (
+			<div key={name} style={{paddingLeft: '20px'}}>
+				<h5>{name}:</h5>
+				{result}
+			</div>
+		)
+	}
+
+	doc(sheetName, name) {
+		var styler = this.subDoc(this.styler, "Styler"),
+			state = this.subDoc(this.state, "State"),
+			props = this.subDoc(this.props, "Props"),
+			context = this.subDoc(this.context, "Context");
+
+		return (
+			<div key={name}>
+				{name}: <Pod.button styler={this.styler}></Pod.button>
+				{styler}
+				{state}
+				{props}
+				{context}
+			</div>
+		)
+	}
 }
 
 // A selector (condition and style)
@@ -292,6 +358,18 @@ class Selector {
 		}
 		return null;
 	}
+
+	doc(i) {
+		var when = (this.when == null) ? null : <span>When: {this.when.toString()} - </span>
+
+		return (
+			<div style={{paddingLeft: '20px'}} key={i}>
+				<pre>
+					{when}{JSON.stringify(this.scenes, null, 4)}
+				</pre>
+			</div>
+		)
+	}
 }
 
 // actual Styling
@@ -349,6 +427,43 @@ class Sheet {
 		var partObj = this.parts[part];
 		if (typeof(partObj) == 'undefined') throw "Could not find Part named " + part + '.'
 		return partObj.getPartStyling(instance, scene, conditions);
+	}
+
+	doc(sheetName) {
+		var partsResult = [],
+			parts = this.getParts(),
+			partNames = Object.keys(parts),
+			conditionResults = [],
+			conditions = this.getConditions(),
+			conditionNames = Object.keys(conditions),
+			variables = JSON.stringify(this.getValues(), null, 4);
+
+		for (var i = 0, len = conditionNames.length; i < len; i++) {
+			conditionResults.push(conditions[conditionNames[i]].doc(sheetName, conditionNames[i]));
+		}
+
+		for (var i = 0, len = partNames.length; i < len; i++) {
+			partsResult.push(parts[partNames[i]].doc());
+		}
+
+		return (
+			<div style={{paddingLeft: '20px'}}>
+				<h4>Variables:</h4>
+				<div key="variables" style={{paddingLeft: '20px'}}>
+					<pre>
+						{variables}
+					</pre>
+				</div>
+				<h4>Conditions:</h4>
+				<div key="conditions" style={{paddingLeft: '20px'}}>
+					{conditionResults}
+				</div>
+				<h4>Parts:</h4>
+				<div key="parts" style={{paddingLeft: '20px'}}>
+					{partsResult}
+				</div>
+			</div>
+		)
 	}
 }
 

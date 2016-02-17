@@ -9,6 +9,8 @@ var React = require('react');
 
 var Color = require('color');
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 /**
 * Buttons component
@@ -62,4 +64,4 @@ var Button = React.createClass({
 
 });
 
-module.exports = Button;
+module.exports = Wrapper(Button);

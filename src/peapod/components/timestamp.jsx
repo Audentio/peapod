@@ -8,6 +8,8 @@ import moment from 'moment';
 
 var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 /**
 * Create live timestamp from valid date.
@@ -55,4 +57,4 @@ var Pod_liveTimestamp = React.createClass({
 	}
 });
 
-module.exports = Pod_liveTimestamp;
+module.exports = Wrapper(Pod_liveTimestamp);
