@@ -255,7 +255,10 @@ for(var x=0; x<repeatCount; x++){
 var examples_render = ReactDOM.render(
 	<div>
 
+
 		{sections}
+
+		<div>{Pod_Styler.doc()}</div>
 
 		<div style={{textAlign:'center'}}><br />{ButtonTest}</div>
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />

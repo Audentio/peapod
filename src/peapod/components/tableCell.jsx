@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 var lodash = require('lodash')
 
@@ -48,4 +50,4 @@ var TableCell = React.createClass({
 	}
 })
 
-module.exports = TableCell;
+module.exports = Wrapper(TableCell);

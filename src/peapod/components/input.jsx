@@ -11,6 +11,8 @@ import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.jsx');
 var Pod_icon = require('./icon.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 /**
 * Multipurpose Input component
@@ -73,4 +75,4 @@ var Input = React.createClass({
 });
 
 
-module.exports = Input;
+module.exports = Wrapper(Input);

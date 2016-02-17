@@ -8,6 +8,8 @@ import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 import Pod_helper from '../helper.jsx'
 var Icon = require('./icon.jsx');
 
@@ -225,9 +227,9 @@ var Image = React.createClass({
 							<img style={Pod_Styler.getStyle(this, 'lightboxImage')} src={this.state.visible ? this.imageURL : options.blankImage} />
 						</div>
 						<div style={Pod_Styler.getStyle(this, 'lightboxActions')}>
-							<Icon styler={{style:Pod_Styler.getStyle(this, 'lightboxAction')}}>close</Icon>
-							<Icon onClick={this.doNothing} styler={{style:Pod_Styler.getStyle(this, 'lightboxAction')}}>file_download</Icon>
-							<Icon styler={{style:Pod_Styler.getStyle(this, 'lightboxAction')}}>open_in_new</Icon>
+							<Icon style={Pod_Styler.getStyle(this, 'lightboxAction')}>close</Icon>
+							<Icon onClick={this.doNothing} style={Pod_Styler.getStyle(this, 'lightboxAction')}>file_download</Icon>
+							<Icon style={Pod_Styler.getStyle(this, 'lightboxAction')}>open_in_new</Icon>
 						</div>
 					</div>
 				}
@@ -236,4 +238,4 @@ var Image = React.createClass({
 	}
 });
 
-module.exports = Image;
+module.exports = Wrapper(Image);

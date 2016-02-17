@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 
 var Grid = React.createClass({
@@ -19,4 +21,4 @@ var Grid = React.createClass({
 
 });
 
-module.exports = Grid;
+module.exports = Wrapper(Grid);

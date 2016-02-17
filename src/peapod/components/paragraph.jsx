@@ -10,6 +10,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 /**
 * Template component
@@ -30,4 +32,4 @@ var Paragraph = React.createClass({
 
 });
 
-module.exports = Paragraph;
+module.exports = Wrapper(Paragraph);

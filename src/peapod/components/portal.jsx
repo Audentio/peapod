@@ -3,6 +3,8 @@ import ReactDOM, {findDOMNode} from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
 
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 var Grid = require('./grid.jsx');
 var Icon = require('./icon.jsx');
@@ -213,4 +215,4 @@ var Portal = React.createClass({
 	},
 })
 
-module.exports = Portal;
+module.exports = Wrapper(Portal);

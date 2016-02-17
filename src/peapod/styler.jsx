@@ -312,6 +312,43 @@ window.Pod_Styler = window.Pod_Styler || {
 	varCache: {},
 	maxCacheLength: 20,
 
+	doc: function() {
+		var libraries = Pod_Styler.getLibraryStack(),
+			libraryResult = [];
+		for (var i = 0, len = libraries.length; i < len; i++) {
+			var library = libraries[i];
+			if (library.type !== 'local') {
+				var components = library.components,
+					componentNames = library.componentNames,
+					componentResults = [];
+
+				for (var componentIndex = 0, componentLen = componentNames.length; componentIndex < componentLen; componentIndex++) {
+					var componentName = componentNames[componentIndex],
+						component = components[componentName];
+					componentResults.push(
+						<div key={componentIndex} style={{paddingLeft: '20px'}}>
+							<h3>Component: {componentName}</h3>
+							{component.doc(componentName)}
+						</div>
+					);
+				}
+				libraryResult.push(
+					<div key={i}>
+						<h2>Library: {library.name}</h2>
+						{componentResults}
+					</div>
+				);
+			}
+
+		}
+		return (
+			<div>
+				<h1>Peapod Self-Documentation (Work in Progress)</h1>
+				{libraryResult}
+			</div>
+		)
+	},
+
 	// registers a library
 	addLibrary: function(parentName, libraryName, componentNames, requireFunc) {
 		let components = {};
@@ -345,7 +382,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
 	// changes the library in use
 	setLibrary: function(name) {
-		Pod_Styler.currentStyle = name;
+		Pod_Styler.currentLibrary = name;
 	},
 
 	// gets the stack of libraries
@@ -434,6 +471,10 @@ window.Pod_Styler = window.Pod_Styler || {
 	// make inline css from sources array
 	processSources: function(obj, scene, sources) {
 		var style = {};
+
+		if (typeof(obj.props.style) !== 'undefined') {
+			style = obj.props.style;
+		}
 
 		for (var i = 0, len = sources.length; i < len; i++) {
 			for (var ruleIndex = 0, ruleLen = Object.keys(sources[i]).length; ruleIndex < ruleLen; ruleIndex++) {

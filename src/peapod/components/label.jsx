@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 import Pod_icon from './icon.jsx';
 
@@ -18,4 +20,4 @@ var Label = React.createClass({
 	}
 });
 
-module.exports = Label;
+module.exports = Wrapper(Label);

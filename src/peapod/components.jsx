@@ -8,7 +8,7 @@ import Pod_Wrapper from './wrapper.jsx';
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = ['Alert', 'Notification','Button', 'Image', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Paginator', 'Paragraph', 'Portal', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'],
+var components = ['Alert','Button', 'Image', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Notification', 'Paginator', 'Paragraph', 'Portal', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'],
 	req = require.context('./components', false, /^\.\/.*\.jsx$/);
 
 window.Pod = {options:{}};
@@ -44,7 +44,7 @@ for (var i = 0, len = keys.length; i < len; i++) {
 for (var i = 0, len = components.length; i < len; i++) {
 	var component = components[i],
 		componentName = component.charAt(0).toLowerCase() + component.slice(1);
-	window.Pod[componentName] = Pod_Wrapper(req('./' + componentName + '.jsx'))
+	window.Pod[componentName] = req('./' + componentName + '.jsx');
 }
 
 window.Pod_Vars = window.Pod_Vars || require('./vars.jsx');
@@ -55,4 +55,6 @@ window.Pod_Styler = window.Pod_Styler || require('./styler.jsx');
 var base = require('./theme/base.jsx');
 base(components);
 
-module.exports = [Pod, Pod_Vars, Pod_Styler];
+module.exports = [Pod, Pod_Vars, Pod_Styler, components];
+
+console.log(exports);

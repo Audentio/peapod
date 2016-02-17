@@ -11,6 +11,8 @@ import React from 'react';
 var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
 var Pod_icon = require('./icon.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 /**
 * Checkbox component
 *
@@ -84,4 +86,4 @@ var Checkbox = React.createClass({
 	}
 })
 
-module.exports = Checkbox;
+module.exports = Wrapper(Checkbox);

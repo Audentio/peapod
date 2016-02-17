@@ -9,6 +9,8 @@ import ReactDOM from 'react-dom';
 import Radium from 'radium';
 
 var _ = require('lodash')
+var Wrapper = require('../wrapper.jsx')
+
 
 /**
 * Animation wrapper: Add animation prop to components
@@ -92,4 +94,4 @@ var Pod_animation = ComposedComponent => class extends React.Component {
 
 }
 
-module.exports = Pod_animation;
+module.exports = Wrapper(Pod_animation);

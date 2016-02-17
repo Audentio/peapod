@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 var Button = require('./button.jsx');
 var Portal = require('./portal.jsx')
@@ -128,4 +130,4 @@ var TablePresets = React.createClass({
 	}
 })
 
-module.exports = TablePresets;
+module.exports = Wrapper(TablePresets);

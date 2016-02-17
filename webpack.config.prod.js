@@ -12,10 +12,13 @@ var config = {
 		path: path.resolve(__dirname, 'dist'),
 		filename: '[name].js',
 		library: 'Peapod',
-    	libraryTarget: 'umd'
+		libraryTarget: 'umd'
 	},
 	resolve: {
-		extensions: ['', '.js', '.jsx', 'index.js', 'index.jsx', '.json', 'index.json']
+		extensions: ['', '.js', '.jsx', 'index.js', 'index.jsx', '.json', 'index.json'],
+		alias: {
+			react: path.resolve('./node_modules/react'),
+		},
 	},
 
 	externals: [

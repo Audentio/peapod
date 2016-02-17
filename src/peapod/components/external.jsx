@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Pod_Styler from '../styler.jsx';
+var Wrapper = require('../wrapper.jsx')
+
 
 var External = React.createClass({
 
@@ -23,4 +25,4 @@ var External = React.createClass({
 
 });
 
-module.exports = External;
+module.exports = Wrapper(External);

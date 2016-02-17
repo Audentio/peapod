@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.jsx');
+var Wrapper = require('../wrapper.jsx')
+
 
 var Icon = require('./icon.jsx');
 var Grid = require('./grid.jsx');
@@ -59,4 +61,4 @@ var Paginator = React.createClass({
 
 Paginator.paginate = paginate;
 
-module.exports = Paginator;
+module.exports = Wrapper(Paginator);
