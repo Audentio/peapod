@@ -7,6 +7,7 @@ var sheet = new Sheet,
 sheet.addCondition('firstCell').addStyler({firstCell: true});
 sheet.addCondition('centered').addStyler({centered: true});
 sheet.addCondition('hovered').addStyler({hovered: true});
+sheet.addCondition('header').addStyler({header: true});
 sheet.addCondition('sortable').addStyler({sortable: true});
 sheet.addCondition('noData').addStyler({noData: true})
 

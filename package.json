@@ -6,6 +6,7 @@
   "scripts": {
     "examples": "webpack",
     "examples-dev": "node devServer.js",
+	"doc": "node docServer.js",
     "lint": "eslint src",
     "dev": "NODE_ENV=production | webpack --config webpack.config.prod.js --progress --colors --watch",
     "deploy": "NODE_ENV=production | webpack -p --config webpack.config.prod.js"

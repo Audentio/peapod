@@ -68,6 +68,7 @@ var Alert = React.createClass({
 
 	getDefaultProps: function(){
 		return {
+			dismissable: true,
 			styler: {
 				kind: 'general'
 			}
