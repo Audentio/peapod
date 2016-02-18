@@ -1,4 +1,4 @@
-# PeaPod #
+# Peapod #
 *Framework for future projects.*
 
 [Info (google docs)](https://docs.google.com/document/d/1RKFhEU76kpXBHOnvb6ZaBhkcybudp5kcNoiw24PhwCM/edit)
@@ -27,4 +27,14 @@ npm install
 **Build & watch examples**
 ```
 npm run examples-dev
+```
+
+**Build & watch documentation**
+```
+npm run doc
+```
+
+**Build & watch for external use**
+```
+npm run dev
 ```
