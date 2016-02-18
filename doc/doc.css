@@ -1,0 +1,65 @@
+
+body {
+	font-size: 13px;
+	font-family: -apple-system, roboto, sans-serif;
+	background: #eee;
+	line-height: 1.4;
+
+	padding: 20px;
+}
+
+.section {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 50px;
+}
+
+#mainContainer {
+	max-width: 1100px;
+	margin: auto;
+	background: #fff;
+}
+#mainLoader {
+	border: 2px solid green;
+	color: green;
+	padding: 50px;
+	position: absolute;
+	top: 20%; left: 0; right: 0;
+	max-width: 50%;
+	margin: 0 auto;
+	text-align: center;
+}
+.special-button {
+	transition: 0s;
+	background: #ccc;
+	color: #333;
+	text-transform: uppercase;
+	font-weight: 500;
+
+	&:hover {
+		background: #aaa;
+		color: white;
+	}
+}
+
+.Pod_textInput,
+.btn,
+.Pod_checkbox,
+button {
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+h1 {
+	font-size: 16px;
+	font-weight: normal;
+	margin-bottom: 1.5em;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+h1:after {
+	content: "";
+    display: block;
+    border-bottom: 2px solid #73AEF7;
+    width: 40px;
+}

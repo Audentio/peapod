@@ -312,43 +312,6 @@ window.Pod_Styler = window.Pod_Styler || {
 	varCache: {},
 	maxCacheLength: 20,
 
-	doc: function() {
-		var libraries = Pod_Styler.getLibraryStack(),
-			libraryResult = [];
-		for (var i = 0, len = libraries.length; i < len; i++) {
-			var library = libraries[i];
-			if (library.type !== 'local') {
-				var components = library.components,
-					componentNames = library.componentNames,
-					componentResults = [];
-
-				for (var componentIndex = 0, componentLen = componentNames.length; componentIndex < componentLen; componentIndex++) {
-					var componentName = componentNames[componentIndex],
-						component = components[componentName];
-					componentResults.push(
-						<div key={componentIndex} style={{paddingLeft: '20px'}}>
-							<h3>Component: {componentName}</h3>
-							{component.doc(componentName)}
-						</div>
-					);
-				}
-				libraryResult.push(
-					<div key={i}>
-						<h2>Library: {library.name}</h2>
-						{componentResults}
-					</div>
-				);
-			}
-
-		}
-		return (
-			<div>
-				<h1>Peapod Self-Documentation (Work in Progress)</h1>
-				{libraryResult}
-			</div>
-		)
-	},
-
 	// registers a library
 	addLibrary: function(parentName, libraryName, componentNames, requireFunc) {
 		let components = {};
