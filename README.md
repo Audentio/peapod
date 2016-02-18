@@ -13,9 +13,9 @@ Homebrew users can `brew install node`
 
 *****
 
-**Clone the repo and navigate to peapod**
+**Fork the repo, then Clone your fork and navigate to peapod**
 ```
-git clone git@github.com:AudentioDesign/peapod.git peapod
+git clone git@github.com:{YourAccount}/peapod.git peapod
 cd peapod
 ```
 
@@ -23,6 +23,8 @@ cd peapod
 ```
 npm install
 ```
+
+*****
 
 **Build & watch examples**
 ```
