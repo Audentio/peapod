@@ -56,5 +56,3 @@ var base = require('./theme/base.jsx');
 base(components);
 
 module.exports = [Pod, Pod_Vars, Pod_Styler, components];
-
-console.log(exports);
