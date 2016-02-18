@@ -7,7 +7,7 @@
 
 *Requires nodejs installed*
 
-[download here](nodejs.org))
+[download here](nodejs.org)
 
 Homebrew users can `brew install node`
 
@@ -28,13 +28,13 @@ npm install
 ```
 npm run examples-dev
 ```
-Then visit [http://localhost:3000](http://localhost:3000)).
+Then visit [http://localhost:3000](http://localhost:3000).
 
 **Build & watch documentation**
 ```
 npm run doc
 ```
-Then visit [http://localhost:3001](http://localhost:3001)).
+Then visit [http://localhost:3001](http://localhost:3001).
 
 **Build & watch for external use**
 ```
