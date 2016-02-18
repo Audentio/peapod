@@ -28,11 +28,13 @@ npm install
 ```
 npm run examples-dev
 ```
+Then visit `http://localhost:3000`.
 
 **Build & watch documentation**
 ```
 npm run doc
 ```
+Then visit `http://localhost:3001`.
 
 **Build & watch for external use**
 ```
