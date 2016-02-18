@@ -9,7 +9,7 @@ var Wrapper = require('../wrapper.jsx')
 var TabTriggers = React.createClass({
 	render: function() {
 		return (
-			<div>
+			<div style={this.props.style}>
 				{this.props.children}
 			</div>
 		)
@@ -29,7 +29,7 @@ var TabTrigger = React.createClass({
 var TabPanels = React.createClass({
 	render: function() {
 		return (
-			<div>
+			<div style={this.props.style}>
 				{this.props.children}
 			</div>
 		)

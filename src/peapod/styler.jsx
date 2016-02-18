@@ -312,43 +312,6 @@ window.Pod_Styler = window.Pod_Styler || {
 	varCache: {},
 	maxCacheLength: 20,
 
-	doc: function() {
-		var libraries = Pod_Styler.getLibraryStack(),
-			libraryResult = [];
-		for (var i = 0, len = libraries.length; i < len; i++) {
-			var library = libraries[i];
-			if (library.type !== 'local') {
-				var components = library.components,
-					componentNames = library.componentNames,
-					componentResults = [];
-
-				for (var componentIndex = 0, componentLen = componentNames.length; componentIndex < componentLen; componentIndex++) {
-					var componentName = componentNames[componentIndex],
-						component = components[componentName];
-					componentResults.push(
-						<div key={componentIndex} style={{paddingLeft: '20px'}}>
-							<h3>Component: {componentName}</h3>
-							{component.doc(componentName)}
-						</div>
-					);
-				}
-				libraryResult.push(
-					<div key={i}>
-						<h2>Library: {library.name}</h2>
-						{componentResults}
-					</div>
-				);
-			}
-
-		}
-		return (
-			<div>
-				<h1>Peapod Self-Documentation (Work in Progress)</h1>
-				{libraryResult}
-			</div>
-		)
-	},
-
 	// registers a library
 	addLibrary: function(parentName, libraryName, componentNames, requireFunc) {
 		let components = {};
@@ -546,12 +509,12 @@ window.Pod_Styler = window.Pod_Styler || {
 		return style;
 	},
 
-	parseVariableValue: function(computedVar, obj, varSet) {
+	parseVariableValue: function(computedVar, obj, scene) {
 		var styler = obj.styler || {};
 
 		if (typeof(computedVar) == 'array') {
 			for (var computedIndex = computedVar.length - 1; computedIndex >= 0; computedIndex--) { // go through in reverse order to find most specific
-				if (computedVar[computedIndex].vars == varSet || computedVar[computedIndex].vars == "global") {
+				if (computedVar[computedIndex].vars == scene || computedVar[computedIndex].vars == "global") {
 					computedVar = computedVar[computedIndex].val;
 					break;
 				}
@@ -559,29 +522,29 @@ window.Pod_Styler = window.Pod_Styler || {
 		}
 
 		if (typeof(computedVar) == 'string') {
-			computedVar = Pod_Styler.processVariableString(computedVar, obj, varSet);
+			computedVar = Pod_Styler.processVariableString(computedVar, obj, scene);
 		}
 		return computedVar;
 	},
 
-	processVariableString: function(computedVar, obj, varSet) {
+	processVariableString: function(computedVar, obj, scene) {
 		if (computedVar.indexOf('$') > -1) {
 			var computedKey = computedVar;
-			if (typeof(this.varCache[computedVar + '_' + varSet]) == 'undefined') {
+			if (typeof(this.varCache[computedVar + '_' + scene]) == 'undefined') {
 				if (computedVar.indexOf('{') > -1 && computedVar.indexOf('}') > -1) { // RegEx based Pod_Vars.get
 					var regEx = /\{\$\S*\}/g,
 						matches = computedVar.match(regEx);
 
 					for (var i = 0, len = matches.length; i < len; i++) {
 						var match = matches[i];
-					    computedVar = computedVar.replace(match, Pod_Vars.get(match.replace('{$', '').replace('}', '')), varSet);
+					    computedVar = computedVar.replace(match, Pod_Vars.get(match.replace('{$', '').replace('}', ''), scene));
 					}
 				} else { // simple Pod_Vars.get on whole value
-					computedVar = Pod_Vars.get(computedVar.replace('$', ''), varSet);
+					computedVar = Pod_Vars.get(computedVar.replace('$', ''), scene);
 				}
-				this.varCache[computedKey + '_' + varSet] = computedVar;
+				this.varCache[computedKey + '_' + scene] = computedVar;
 			} else {
-				computedVar = this.varCache[computedKey + '_' + varSet]; // get variable from cache rather than parse string
+				computedVar = this.varCache[computedKey + '_' + scene]; // get variable from cache rather than parse string
 			}
 		} else if (computedVar.indexOf('getProp:') > -1) {
 			computedVar = obj.props[computedVar.replace('getProp:', '')];

@@ -49,6 +49,11 @@ var options = Pod_helper.options('Pea_image', {
 * @param {bool} [lightboxAnimation] - Animated lightbox (ability to turn off for specific high-res images)
 */
 var Image = React.createClass({
+
+	docDefault: {
+		src: 'test.jpg'
+	},
+
 	propTypes: {
 		src: React.PropTypes.string.isRequired,
 		hidpiData: React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.bool ]),
