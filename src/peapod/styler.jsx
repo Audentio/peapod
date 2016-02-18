@@ -574,7 +574,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
 					for (var i = 0, len = matches.length; i < len; i++) {
 						var match = matches[i];
-					    computedVar = computedVar.replace(match, Pod_Vars.get(match.replace('{$', '').replace('}', '')), varSet);
+					    computedVar = computedVar.replace(match, Pod_Vars.get(match.replace('{$', '').replace('}', '')));
 					}
 				} else { // simple Pod_Vars.get on whole value
 					computedVar = Pod_Vars.get(computedVar.replace('$', ''), varSet);
