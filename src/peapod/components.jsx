@@ -8,14 +8,10 @@ import Pod_Wrapper from './wrapper.jsx';
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = ['Alert','Button', 'Image', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Notification', 'Paginator', 'Paragraph', 'Portal', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'],
+var components = ['Progress','Alert','Button', 'Photo', 'Checkbox', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Notification', 'Paginator', 'Paragraph', 'Portal', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'],
 	req = require.context('./components', false, /^\.\/.*\.jsx$/);
 
 window.Pod = {options:{}};
-
-
-
-
 
 
 // below here can be removed after all components are refactored

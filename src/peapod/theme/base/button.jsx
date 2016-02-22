@@ -7,6 +7,7 @@ var sheet = new Sheet,
 sheet.addCondition('raised').addStyler({raised: true});
 sheet.addCondition('block').addStyler({block: true});
 sheet.addCondition('round').addStyler({round: true});
+sheet.addCondition('disabled').addStyler({disabled: true});
 
 sheet.addCondition('kindGeneral').addStyler({kind: 'general'});
 sheet.addCondition('kindBase').addStyler({kind: 'base'});
@@ -39,7 +40,7 @@ sheet.setValues({
 				width: '$border.width',
 				style: '$border.style'
 			},
-			height: '3.6rem',
+			height: '3rem',
 			lineHeight: '$button.height',
 			font: {
 				family: 'inherit',
@@ -66,8 +67,7 @@ main.addSelector({
 		fontFamily: '$button.font.family',
 		fontSize: '$button.font.size',
 		lineHeight: '$button.lineHeight',
-		paddingTop: 0, //override UA stylesheet
-		paddingBottom: 0, //override UA stylesheet
+		padding: '0 6px',
 		height: '$button.height',
 		textAlign: 'center',
 		outline: 'none',
@@ -189,6 +189,12 @@ main.addSelector({
 			color: '$button.color.text.light'
 		}
 	}
-});
+}).addSelector({
+	when: 'disabled',
+	common: {
+		opacity: '.7',
+		pointerEvents: 'none'
+	}
+})
 
 module.exports = sheet;
