@@ -23,9 +23,7 @@ var Progress = React.createClass({
 	propTypes: {
 		value: 			React.PropTypes.number,
 		max: 			React.PropTypes.number,
-		stroke:			React.PropTypes.number,
-		size:			React.PropTypes.number,
-		type:			React.PropTypes.string
+		stroke:			React.PropTypes.number
 	},
 
 	getDefaultProps() {

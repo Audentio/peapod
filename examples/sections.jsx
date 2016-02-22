@@ -132,7 +132,7 @@ sections.push(
 		<br /> <Progressing /> <br />
 
 		<p style={{marginBottom: '8px'}}>Indeterminate (No props passed. value defaults to -1 which renders indeterminate progress)</p>
-		<Pod.progress indeterminate={true} />
+		<Pod.progress />
 	</div>
 )
 

@@ -13,16 +13,7 @@ sheet.addCondition('kindInfo').addStyler({kind: 'info'})
 sheet.addCondition('kindWarning').addStyler({kind: 'warning'});
 sheet.addCondition('kindDanger').addStyler({kind: 'danger'});
 sheet.addCondition('kindSecondary').addStyler({kind: 'secondary'});
-sheet.addCondition('indeterminate').addProps({indeterminate: true});
-
-//Variables
-sheet.setValues({
-	common: {
-		progress: {
-            height: '4px'
-        }
-	}
-});
+sheet.addCondition('indeterminate').addProps({value: ['<','0']});
 
 /*
 var indeterminateKeyframes = Radium.keyframes({
@@ -32,11 +23,10 @@ var indeterminateKeyframes = Radium.keyframes({
 
 var indeterminateKeyframes = Radium.keyframes({
 	'0%': {
-		transform: 'scaleX(.5) translate3d(-100%, 0,0)'
+		transform: 'translate3d(-100%, 0,0)'
 	},
 	'100%': {
-		transform: 'scaleX(.5) translate3d(200%, 0,0)',
-		animationTimingFunction: 'steps(1, end)'
+		transform: 'translate3d(200%, 0,0)'
 	}
 }, 'indeterminate');
 
@@ -50,11 +40,6 @@ main.addSelector({
         overflow: 'hidden',
         borderRadius: '2px',
         backgroundColor: '$palette.grey200'
-	}
-}).addSelector({
-	when: 'indeterminate',
-	common: {
-		height: '4px'
 	}
 })
 
@@ -108,6 +93,8 @@ progress.addSelector({
 progress.addSelector({
 	when: 'indeterminate',
 	common: {
+		backfaceVisibility: 'hidden',
+		width: '50%',
 		animation: 'x 1500ms cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s infinite',
 		animationName: indeterminateKeyframes,
 	}

@@ -1,7 +1,10 @@
 
 body {
 	font-size: 13px;
-	font-family: -apple-system, Helvetica Neue, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	background: #eee;
 	line-height: 1.4;
 
