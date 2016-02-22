@@ -56,7 +56,7 @@ var Icon = React.createClass({
 
 	render: function() {
 		return (
-			<i className="material-icons" onClick={this.props.onClick} aria-label={this.props.label} title={this.props.label} style={Pod_Styler.getStyle(this)}>
+			<i {...this.props} className="material-icons" onClick={this.props.onClick} aria-label={this.props.label} title={this.props.label} style={Pod_Styler.getStyle(this)}>
 				{this.props.children}
 			</i>
 		);

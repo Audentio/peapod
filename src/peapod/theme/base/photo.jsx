@@ -23,8 +23,9 @@ sheet.setValues({
 	common: {
 		image: {
 			color: {
-				captionBackground: 'rgba(255, 255, 255, 0.5)',
-				lightboxBackground: 'rgba(0,0,0,0.9)'
+				//captionBackground: 'rgba(255, 255, 255, 0.5)',
+				captionBackground: '$palette.grey200',
+				lightboxBackground: 'rgba(0,0,0,0.85)'
 			}
 		},
 	}
@@ -76,18 +77,23 @@ caption.addSelector({
 	common: {
 		display: 'block',
 		padding: '6px 10px',
-		position: 'absolute',
+		//position: 'absolute',
+		fontSize: '$font.size.small',
 		bottom: 0,
 		left: 0,
 		backgroundColor: '$image.color.captionBackground',
 		width: '100%'
+	}
+}).addSelector({
+	when: 'hovered',
+	common: {
+		opacity: '1'
 	}
 })
 
 lightbox.addSelector({
 	common: {
 		display: 'table',
-		cursor: 'pointer',
 		position: 'fixed',
 		zIndex: 999,
 		backgroundColor: '$image.color.lightboxBackground',
@@ -127,13 +133,18 @@ lightboxImage.addSelector({
 		maxWidth: '90%',
 		maxHeight: '90%',
 		maxWidth: '90vw',
-		maxHeight: '90vh'
+		maxHeight: '90vh',
+		transition: '.2s'
+	}
+}).addSelector({
+	when: ['lightboxAnimation'],
+	common: {
+		transform: 'scale(.9)'
 	}
 }).addSelector({
 	when: ['lightboxVisible','lightboxAnimation'],
 	common: {
-		animation: 'x 750ms linear both',
-		animationName: smackKeyframes,
+		transform: 'none'
 	}
 })
 
@@ -149,12 +160,13 @@ lightboxActions.addSelector({
 
 lightboxAction.addSelector({
 	common: {
-		display: 'block',
-		cursor: 'pointer',
-		opacity: '.6',
-		marginBottom: '8px',
+		display: 'inline-block',
+		opacity: '.5',
+		padding: '8px',
+		marginLeft: '2px',
 
 		':hover': {
+			cursor: 'pointer',
 			opacity: '1'
 		}
 	}

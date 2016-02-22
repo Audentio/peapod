@@ -41,8 +41,6 @@ var Pod_helper = {
     //disables scrolling on non-touch devices without hiding scrollbar
     scrolling: function(allowScroll){
 
-    	var  html = document.documentElement;
-
     	//Touch
     	if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
     		var disableScroll = function(e){
@@ -51,22 +49,72 @@ var Pod_helper = {
     		//TBD
     	}
 
-    	//no-touch
-    	else {
-    		if(!allowScroll){
-    			Pod.pageScrollPos = [window.pageXOffset, window.pageYOffset];
-    		}
+        document.body.style.overflowY = (allowScroll) ? 'scroll' : 'hidden';
 
-    		html.style.position 	= (allowScroll) ? '' : 'fixed';
-    		html.style.top 			= (allowScroll) ? '' : -(Pod.pageScrollPos[1]) + 'px';
-    		html.style.width 		= (allowScroll) ? '' : '100%';
-    		html.style.overflowY 	= (allowScroll) ? '' : 'scroll';
+    },
 
-    		if(allowScroll && Pod.pageScrollPos){
-    			window.scroll(Pod.pageScrollPos[0],Pod.pageScrollPos[1])
-    		}
-    	}
+    fullscreen: {
 
+        isAvailable: function(){
+            return (
+                document.fullscreenEnabled ||
+                document.msFullscreenEnabled ||
+                document.mozFullscreenEnabled ||
+                document.webkitFullscreenEnabled
+            )
+        },
+
+        isEnabled: function(){
+            return (
+                document.fullscreenElement ||
+                document.msFullscreenElement ||
+                document.mozFullScreenElement ||
+                document.webkitFullscreenElement
+            )
+        },
+
+        enter: function(elem){
+            elem = (elem instanceof HTMLElement) ? elem : document.documentElement;
+
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+            }
+        },
+
+        exit: function(){
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        },
+
+        toggle: function(){
+            if (Pod_helper.fullscreen.isEnabled()) {
+                Pod_helper.fullscreen.exit()
+            } else {
+                Pod_helper.fullscreen.enter()
+            }
+        },
+
+        lastScrollPos: null
+    },
+
+    downloadFile: function(url, filename){
+        var downLink = document.createElement('a');
+        downLink.href = url;
+        downLink.download = filename || url.substring(url.lastIndexOf('/')+1, url.length);
+        downLink.click();
     }
 }
 

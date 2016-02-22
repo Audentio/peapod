@@ -297,7 +297,7 @@ module.exports = {
 			size: {
 				xsmall: '1.1rem',
 				small: '1.2rem',
-				normal: '1.4rem',
+				normal: '1.3rem',
 				large: '1.6rem',
 				xlarge: '1.8rem',
 				xxlarge: '2.4rem',
