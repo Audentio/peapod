@@ -100,7 +100,6 @@ class Part {
 				result: styling
 			}
 		}
-
 		return styling;
 	}
 }
@@ -261,7 +260,14 @@ class Selector {
 
 	// check if a single condition is true
 	checkCondition(instance, conditionName, conditions) {
-		let condition = conditions[conditionName];
+		let condition = null,
+			desired = true;
+		if (conditionName.indexOf('!') > -1) {
+			desired = false;
+			conditon = conditions[conditionName.replace('!', '')]
+		} else {
+			condition = conditions[conditionName];
+		}
 
 		if (typeof(condition) == 'undefined') {
 			console.warn('No definition for condition: ' + conditionName);
@@ -313,6 +319,8 @@ class Sheet {
 		this.values = {};
 		this.parts = {},
 		this.conditions = {};
+		this.doc = "";
+		this.docDefault = null;
 	}
 
 	setValues(values = {}) {
@@ -347,10 +355,26 @@ class Sheet {
 		return condition;
 	}
 
+	addDoc(data) {
+		this.doc = data;
+	}
+
+	addDocDefault(data) {
+		this.docDefault = data;
+	}
+
 	getStyling(instance, part, scene = 'normal', conditions) {
 		var partObj = this.parts[part];
 		if (typeof(partObj) == 'undefined') throw "Could not find Part named " + part + '.'
 		return partObj.getPartStyling(instance, scene, conditions);
+	}
+
+	getDoc() {
+		return this.doc;
+	}
+
+	getDocDefault() {
+		return this.docDefault;
 	}
 }
 

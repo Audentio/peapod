@@ -312,8 +312,24 @@ window.Pod_Styler = window.Pod_Styler || {
 	varCache: {},
 	maxCacheLength: 20,
 
+	removeLibrary: function(libraryName) {
+		for (var i = 0, len = Pod_Styler.libraries.length; i < len; i++) {
+			var library = Pod_Styler.libraries[i];
+			if (library.name == libraryName) {
+				console.log('Removing Library: ' + libraryName);
+				Pod_Styler.libraries.splice(i, 1);
+				len = len - 1;
+				i = i - 1;
+			}
+		}
+	},
+
 	// registers a library
 	addLibrary: function(parentName, libraryName, componentNames, requireFunc) {
+		console.log('Adding Library ' + libraryName);
+		Pod_Styler.varCache = {};
+		Pod_Styler.removeLibrary(libraryName);
+
 		let components = {};
 		for (let i = 0, len = componentNames.length; i < len; i++) {
 			let componentName = componentNames[i],
@@ -514,7 +530,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
 		if (typeof(computedVar) == 'array') {
 			for (var computedIndex = computedVar.length - 1; computedIndex >= 0; computedIndex--) { // go through in reverse order to find most specific
-				if (computedVar[computedIndex].vars == scene || computedVar[computedIndex].vars == "global") {
+				if (computedVar[computedIndex].vars == scene || computedVar[computedIndex].vars == "common") {
 					computedVar = computedVar[computedIndex].val;
 					break;
 				}

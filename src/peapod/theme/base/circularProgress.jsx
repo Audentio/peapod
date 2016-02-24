@@ -11,6 +11,11 @@ var sheet = new Sheet,
 	content = sheet.addPart('content'),
 	contentInner = sheet.addPart('contentInner');
 
+sheet.addDocDefault({
+	value: Math.random() * 100,
+	children: '%'
+})
+
 //Conditions
 sheet.addCondition('kindPrimary').addStyler({kind: 'primary'});
 sheet.addCondition('kindSuccess').addStyler({kind: 'success'});

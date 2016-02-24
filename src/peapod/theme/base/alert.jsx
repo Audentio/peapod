@@ -7,6 +7,9 @@ var sheet = new Sheet,
     message = sheet.addPart('message'),
     dismissIcon = sheet.addPart('dismissIcon');
 
+sheet.addDoc(`# Purpose
+	A component to make alerts.`)
+
 sheet.addCondition('kindGeneral').addStyler({kind: 'general'});
 sheet.addCondition('kindInfo').addStyler({kind: 'info'});
 sheet.addCondition('kindSuccess').addStyler({kind: 'success'});
@@ -18,7 +21,7 @@ sheet.setValues({
 	common: {
 		alert: {
 			background: {
-				general: 'lightgray',
+				general: '$palette.grey300',
                 success: '$palette.lightGreen100',
                 warning: '$palette.yellow100',
                 info: '$palette.blue100',

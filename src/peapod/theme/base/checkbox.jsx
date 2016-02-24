@@ -116,7 +116,7 @@ icon.addSelector({
 		position: 'absolute',
 		top: '50%',
 		transform: 'translateY(-50%)',
-		left: '2px',
+		left: '1px',
 		display: 'none',
 		fontSize: '$checkbox.font.size',
 	}
