@@ -7,7 +7,8 @@ var sheet = new Sheet,
     message = sheet.addPart('message'),
     dismissIcon = sheet.addPart('dismissIcon');
 
-sheet.addDoc("A component to make alerts.")
+sheet.addDoc(`# Purpose
+	A component to make alerts.`)
 
 sheet.addCondition('kindGeneral').addStyler({kind: 'general'});
 sheet.addCondition('kindInfo').addStyler({kind: 'info'});
