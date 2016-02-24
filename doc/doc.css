@@ -63,3 +63,9 @@ h1:after {
     border-bottom: 2px solid #73AEF7;
     width: 40px;
 }
+
+h2 {
+	font-size: 14px;
+	font-weight: normal;
+	letter-spacing: 1px;
+}

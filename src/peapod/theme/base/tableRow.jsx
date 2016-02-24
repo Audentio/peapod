@@ -4,8 +4,7 @@ var sheet = new Sheet,
 	main = sheet.addMain();
 
 //Conditions
-sheet.addCondition('dark').addStyler({darl: true});
-sheet.addCondition('notHeader').addStyler({header: false});
+sheet.addCondition('dark').addStyler({dark: true});
 sheet.addCondition('header').addStyler({header: true});
 sheet.addCondition('checked').addStyler({checked: true});
 
@@ -25,14 +24,14 @@ main.addSelector({
 		background: '$table.color.darkRow.background',
 	}
 }).addSelector({
-	when: ['notHeader'],
+	when: ['!header'],
 	common: {
 		':hover': {
 			background: '$table.color.lightRow.hover'
 		}
 	}
 }).addSelector({
-	when: ['dark', 'notHeader'],
+	when: ['dark', '!header'],
 	common: {
 		':hover': {
 			background: '$table.color.darkRow.hover'

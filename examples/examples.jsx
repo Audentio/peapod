@@ -252,17 +252,29 @@ for(var x=0; x<repeatCount; x++){
 
 /* This is where everything comes together */
 
+var ExampleContent = React.createClass({
+
+	render: function() {
+		window._peapodRoot = this;
+
+		return (
+			<div>
+				{sections}
+
+				<div style={{textAlign:'center'}}><br />{ButtonTest}</div>
+				<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+				<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+				<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+				<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+				<Pod.image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpiData={false} />
+			</div>
+		)
+	}
+})
+
 var examples_render = ReactDOM.render(
 	<div>
-		{sections}
-
-		<div style={{textAlign:'center'}}><br />{ButtonTest}</div>
-		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<Pod.image src="http://h.fastcompany.net/multisite_files/fastcompany/poster/2015/06/3047491-poster-p-1-go-behind-the-scenes-of-mr-robot-usa-networks-timely-new-hacker-drama.jpg" lazy={true} caption="Lazy load!" hidpiData={false} />
-
+		<ExampleContent />
 	</div>
 	, document.getElementById('mainContainer')
 );
