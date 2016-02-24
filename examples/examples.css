@@ -1,7 +1,10 @@
 
 body {
 	font-size: 13px;
-	font-family: -apple-system, roboto, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	background: #eee;
 	line-height: 1.4;
 
@@ -9,9 +12,8 @@ body {
 }
 
 .section {
-  padding: 15px;
+  padding: 25px 15px;
   border-bottom: 1px solid #ddd;
-  padding-bottom: 50px;
 }
 
 #mainContainer {

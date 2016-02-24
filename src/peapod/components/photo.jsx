@@ -10,10 +10,10 @@ var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
 var Wrapper = require('../wrapper.jsx')
 
+import Icon from './icon.jsx'
 import Pod_helper from '../helper.jsx'
-var Icon = require('./icon.jsx');
 
-var options = Pod_helper.options('Pea_image', {
+var options = Pod_helper.options('Pea_photo', {
 
 	//this acts as src for lazyLoaded images until they're loaded
 	defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
@@ -35,6 +35,7 @@ var options = Pod_helper.options('Pea_image', {
 	lightboxAnimation: true
 });
 
+
 /**
 * Image component: loads HiDPI images on retina devices
 *
@@ -48,7 +49,7 @@ var options = Pod_helper.options('Pea_image', {
 * @param {bool} [lightbox] - Enable lightbox on instance
 * @param {bool} [lightboxAnimation] - Animated lightbox (ability to turn off for specific high-res images)
 */
-var Image = React.createClass({
+var Photo = React.createClass({
 
 	docDefault: {
 		src: 'test.jpg'
@@ -81,13 +82,24 @@ var Image = React.createClass({
 	getInitialState: function() {
 		return {
 			visible: (this.props.lazy) ? false : true,
-			lightboxVisible: false
+			lightboxVisible: false,
+			fullscreenIcon: (Pod_helper.fullscreen.isEnabled()) ? 'fullscreen_exit' : 'fullscreen'
 		};
 	},
 
 	keyHandler: function(e){
 		if(e.keyCode == Pod_helper.keymap['esc']){
 			this.hideLightbox();
+		}
+	},
+
+	toggleFullscreen: function(){
+		Pod_helper.fullscreen.toggle()
+
+		if(Pod_helper.fullscreen.isEnabled()){
+			this.setState({fullscreenIcon: 'fullscreen_exit'})
+		} else {
+			this.setState({fullscreenIcon: 'fullscreen'})
 		}
 	},
 
@@ -108,16 +120,39 @@ var Image = React.createClass({
 	},
 
 	//hide lightbox
+	//uses setTimeout to delay hiding lightbox - page scrolls to top without that.
 	hideLightbox: function(){
+		/*
+		var delay = 0, _this = this;
+
+		if( Pod_helper.fullscreen.isEnabled() ) {
+			delay = 100;
+			Pod_helper.fullscreen.exit()
+		}
+
+		setTimeout(function(){
+			_this.setState({lightboxVisible: false});
+
+			//enable scrolling
+			//document.documentElement.style.overflow = ''
+			Pod_helper.scrolling(true)
+
+			//remove keyboard listener
+			window.removeEventListener('keydown', _this.keyHandler)
+		}, delay)*/
+
+		if( Pod_helper.fullscreen.isEnabled() ) {
+			Pod_helper.fullscreen.exit();
+			this.setState({fullscreenIcon: 'fullscreen'});
+		}
 
 		this.setState({lightboxVisible: false});
 
-		//enable scrolling
-		//document.documentElement.style.overflow = ''
 		Pod_helper.scrolling(true)
 
 		//remove keyboard listener
 		window.removeEventListener('keydown', this.keyHandler)
+
 	},
 
 	//Onclick handler
@@ -153,10 +188,6 @@ var Image = React.createClass({
 			this.removeListener(); //stop listening, the show is over
 		}
 
-	},
-
-	doNothing: function(){
-		return false
 	},
 
 	removeListener: function() {
@@ -216,25 +247,47 @@ var Image = React.createClass({
 
 	},
 
+	downloadFile: function(){
+		Pod_helper.downloadFile(this.imageURL)
+	},
+
+	openInNew: function(){
+		if( Pod_helper.fullscreen.isEnabled() ) {
+			Pod_helper.fullscreen.exit();
+			this.setState({fullscreenIcon: 'fullscreen'});
+		}
+		var newTab = window.open(this.imageURL, '_blank');
+  		newTab.focus();
+	},
+
 	render: function() {
 		return (
 			<div style={Pod_Styler.getStyle(this, 'wrapper')}>
 				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
 					style={Pod_Styler.getStyle(this)} />
 
-				{this.props.caption &&
+				{	this.props.caption &&
 					<span style={Pod_Styler.getStyle(this, 'caption')}>{this.props.caption}</span>
 				}
 
-				{this.props.lightbox &&
-					<div style={Pod_Styler.getStyle(this, 'lightbox')} onClick={this.lightboxOnClick}>
+				{	((this.props.lightbox && this.state.lightboxVisible) || this.props.lightboxAnimation) &&
+					<div style={Pod_Styler.getStyle(this, 'lightbox')}>
+
 						<div style={Pod_Styler.getStyle(this, 'lightboxInner')}>
 							<img style={Pod_Styler.getStyle(this, 'lightboxImage')} src={this.state.visible ? this.imageURL : options.blankImage} />
 						</div>
+
 						<div style={Pod_Styler.getStyle(this, 'lightboxActions')}>
-							<Icon style={Pod_Styler.getStyle(this, 'lightboxAction')}>close</Icon>
-							<Icon onClick={this.doNothing} style={Pod_Styler.getStyle(this, 'lightboxAction')}>file_download</Icon>
-							<Icon style={Pod_Styler.getStyle(this, 'lightboxAction')}>open_in_new</Icon>
+							<Icon style={Pod_Styler.getStyle(this, 'lightboxAction')} onClick={this.hideLightbox}>close</Icon>
+							{	Pod_helper.fullscreen.isAvailable() &&
+								<Icon style={Pod_Styler.getStyle(this, 'lightboxAction')} onClick={this.toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
+							}
+
+							{	this.props.allowDownload &&
+								<Icon onClick={this.downloadFile} style={Pod_Styler.getStyle(this, 'lightboxAction')}>file_download</Icon> }
+
+							<Icon onClick={this.openInNew} style={Pod_Styler.getStyle(this, 'lightboxAction')}>open_in_new</Icon>
+
 						</div>
 					</div>
 				}
@@ -243,4 +296,4 @@ var Image = React.createClass({
 	}
 });
 
-module.exports = Wrapper(Image);
+module.exports = Wrapper(Photo)

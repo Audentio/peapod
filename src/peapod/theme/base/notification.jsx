@@ -87,11 +87,11 @@ dismissIcon.addSelector({
 		borderRadius: '50%',
 		fontSize: '1.4rem',
 		color: 'white',
-		backgroundColor: 'rgba(255, 255, 255, 0.35)',
+		backgroundColor: 'rgba(255, 255, 255, 0.2)',
 		cursor: 'pointer',
 
 		':hover': {
-			backgroundColor: 'rgba(255, 255, 255, 0.2)'
+			backgroundColor: 'rgba(255, 255, 255, 0.35)'
 		}
     }
 })

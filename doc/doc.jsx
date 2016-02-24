@@ -72,7 +72,7 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 
 var renderComponent = function(sheetName, condition) {
 	var Component = Pod[sheetName.charAt(0).toLowerCase() + sheetName.slice(1)],
-		showComponents = "Alert,Button,Checkbox,Div,Hr,Input,Label,Paragraph";
+		showComponents = "Alert,Button,Checkbox,Div,Hr,Input,Label,Paragraph,Progress";
 
 	if (showComponents.indexOf(sheetName) > -1) {
 		return 	<Component styler={condition.styler}>Test {sheetName}</Component>

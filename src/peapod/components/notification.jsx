@@ -17,7 +17,7 @@ var Wrapper = require('../wrapper.jsx')
 * Notifications component
 *
 * @element Pod_notification
-* @param {boolean} [dismissable=true] - Allow user to dismiss notification
+* @param {boolean} [dismissable=true] - Allow user to dismiss the notification
 * @param {string} [ID] - Unique identifier for persistent state storage
 *
 */
