@@ -14,19 +14,23 @@ sheet.addCondition('kindWarning').addStyler({kind: 'warning'});
 sheet.addCondition('kindDanger').addStyler({kind: 'danger'});
 sheet.addCondition('kindSecondary').addStyler({kind: 'secondary'});
 sheet.addCondition('indeterminate').addProps({value: ['<','0']});
+sheet.addCondition('strokeSet').addStyler({stroke: ['>', '0']});
 
-/*
-var indeterminateKeyframes = Radium.keyframes({
-	'0%': { transform: 'scaleX(.25) translateX(-100%)' },
-	'100%': { transform: 'scaleX(.25) translateX(400%)', animationTimingFunction: 'steps(1, end)' },
-}, 'indeterminate');*/
+//Variables
+sheet.setValues({
+	common: {
+		progress: {
+			height: 4
+		}
+	}
+});
 
 var indeterminateKeyframes = Radium.keyframes({
 	'0%': {
 		transform: 'translate3d(-100%, 0,0)'
 	},
 	'100%': {
-		transform: 'translate3d(200%, 0,0)'
+		transform: 'translate3d(105%, 0,0)'
 	}
 }, 'indeterminate');
 
@@ -36,10 +40,16 @@ main.addSelector({
 		position: 'relative',
 		zIndex: '1',
         width: '100%',
+		height: '$progress.height',
         marginBottom: '$gutter.internal',
         overflow: 'hidden',
         borderRadius: '2px',
         backgroundColor: '$palette.grey200'
+	}
+}).addSelector({
+	when: ['strokeSet'],
+	common: {
+		height: 'getStyler:stroke'
 	}
 })
 
@@ -90,12 +100,19 @@ progress.addSelector({
     }
 });
 
+var generateGradient = function(color) {
+	return `linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)`
+}
+
 progress.addSelector({
 	when: 'indeterminate',
 	common: {
+		//backgroundColor: 'transparent',
+		WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)',
 		backfaceVisibility: 'hidden',
-		width: '50%',
-		animation: 'x 1500ms cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s infinite',
+		width: '100%',
+		//animation: 'x 1500ms cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s infinite',
+		animation: 'x 1500ms ease 0s infinite',
 		animationName: indeterminateKeyframes,
 	}
 });
