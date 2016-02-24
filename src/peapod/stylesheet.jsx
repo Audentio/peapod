@@ -320,6 +320,7 @@ class Sheet {
 		this.parts = {},
 		this.conditions = {};
 		this.doc = "";
+		this.docDefault = null;
 	}
 
 	setValues(values = {}) {
@@ -358,6 +359,10 @@ class Sheet {
 		this.doc = data;
 	}
 
+	addDocDefault(data) {
+		this.docDefault = data;
+	}
+
 	getStyling(instance, part, scene = 'normal', conditions) {
 		var partObj = this.parts[part];
 		if (typeof(partObj) == 'undefined') throw "Could not find Part named " + part + '.'
@@ -366,6 +371,10 @@ class Sheet {
 
 	getDoc() {
 		return this.doc;
+	}
+
+	getDocDefault() {
+		return this.docDefault;
 	}
 }
 

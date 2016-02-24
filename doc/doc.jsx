@@ -70,12 +70,22 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 	);
 }
 
-var renderComponent = function(sheetName, condition) {
+var renderComponent = function(sheetName, condition, stylesheet) {
 	var Component = Pod[sheetName.charAt(0).toLowerCase() + sheetName.slice(1)],
-		showComponents = "Alert,Button,Checkbox,Div,Hr,Input,Label,Paragraph,Progress";
+		showComponents = "Alert,Button,Checkbox,CircularProgress,Div,Hr,Input,Label,Paragraph,Progress",
+		docDefault = stylesheet.getDocDefault(),
+		defaults = {},
+		defaultChildren = "Test " + sheetName;
+
+	if (docDefault !== null) {
+		defaults = docDefault;
+		if (typeof(docDefault.children) !== 'undefined') {
+			defaultChildren = docDefault.children;
+		}
+	}
 
 	if (showComponents.indexOf(sheetName) > -1) {
-		return 	<Component styler={condition.styler}>Test {sheetName}</Component>
+		return 	<Component styler={condition.styler} {...defaults}>{defaultChildren}</Component>
 	} else {
 		return <span>(Could not render)</span>
 	}
@@ -174,12 +184,12 @@ var ConditionDoc = React.createClass({
 		)
 	},
 
-	doc: function(condition, sheetName, name) {
+	doc: function(condition, sheetName, name, stylesheet) {
 		var styler = this.subDoc(condition.styler, "Styler"),
 			state = this.subDoc(condition.state, "State"),
 			props = this.subDoc(condition.props, "Props"),
 			context = this.subDoc(condition.context, "Context"),
-			renderedComponent = renderComponent(sheetName, condition);
+			renderedComponent = renderComponent(sheetName, condition, stylesheet);
 
 
 		return (
@@ -200,7 +210,7 @@ var ConditionDoc = React.createClass({
 
 	render: function() {
 		return (
-			this.doc(this.props.condition, this.props.sheetName, this.props.conditionName)
+			this.doc(this.props.condition, this.props.sheetName, this.props.conditionName, this.props.stylesheet)
 		)
 	}
 })
@@ -231,7 +241,7 @@ var ComponentDoc = React.createClass({
 		}
 
 		for (var i = 0, len = conditionNames.length; i < len; i++) {
-			conditionResults.push(<ConditionDoc key={i} condition={conditions[conditionNames[i]]} sheetName={sheetName} conditionName={conditionNames[i]} />);
+			conditionResults.push(<ConditionDoc key={i} stylesheet={component} condition={conditions[conditionNames[i]]} sheetName={sheetName} conditionName={conditionNames[i]} />);
 		}
 
 		for (var i = 0, len = partNames.length; i < len; i++) {
@@ -279,7 +289,7 @@ var ComponentDoc = React.createClass({
 			}
 		}
 
-		var renderedComponent = renderComponent(sheetName, sandboxCondition)
+		var renderedComponent = renderComponent(sheetName, sandboxCondition, component)
 
 		var sandboxResults = <div>
 			{sandboxDoc}

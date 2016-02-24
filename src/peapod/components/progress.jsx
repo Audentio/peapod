@@ -16,32 +16,29 @@ import Wrapper from '../wrapper.jsx'
 * @element Pod_icon
 * @param {number} [vaulue=-1] - Progress value. Negative values render indeterminate progress
 * @param {string} [max=100] - Max value. Default is 100 so `value` is basically a percentage unless max is changed
-* @param {string} [stroke] - height/stroke width in px
 */
 var Progress = React.createClass({
 
 	propTypes: {
 		value: 			React.PropTypes.number,
-		max: 			React.PropTypes.number,
-		stroke:			React.PropTypes.number
+		max: 			React.PropTypes.number
 	},
 
 	getDefaultProps() {
 		return {
 			value: -1,
-			max: 100,
-			stroke: 4
-        }
+			max: 100
+		}
 	},
 
 	getScale() {
-		let progress = (this.props.value < 0) ? 0 : this.props.value;
+		var progress = (this.props.value < 0) ? 0 : this.props.value;
 		return progress/this.props.max
 	},
 
 	render() {
 		var style_main = 		Pod_Styler.getStyle(this),
-			style_progress = 	[ Pod_Styler.getStyle(this, 'progress'), { transform: 'scaleX('+this.getScale()+')', height: this.props.stroke } ], //Radium array
+			style_progress = 	[ Pod_Styler.getStyle(this, 'progress'), { transform: 'scaleX('+this.getScale()+')' } ],
 			style_hidden = 		{display: 'none'};
 
 

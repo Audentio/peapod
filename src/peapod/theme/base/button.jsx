@@ -8,6 +8,7 @@ sheet.addCondition('raised').addStyler({raised: true});
 sheet.addCondition('block').addStyler({block: true});
 sheet.addCondition('round').addStyler({round: true});
 sheet.addCondition('disabled').addStyler({disabled: true});
+sheet.addCondition('notDisabled').addStyler({disabled: undefined});
 
 sheet.addCondition('kindGeneral').addStyler({kind: 'general'});
 sheet.addCondition('kindBase').addStyler({kind: 'base'});
@@ -29,7 +30,7 @@ sheet.setValues({
 				},
 				base: {
 					background: '#778A9D',
-					color: '#ABBAC9',
+					color: 'white',
 					hover: '$color.primary.hover',
 					active: '$color.primary.active'
 				}
@@ -71,14 +72,23 @@ main.addSelector({
 		height: '$button.height',
 		textAlign: 'center',
 		outline: 'none',
-		cursor: 'pointer',
 		color: '$button.color.text.dark',
+	}
+}).addSelector({
+	when: ['notDisabled'],
+	common: {
+		cursor: 'pointer',
 
-		//base:active
 		':active': {
 			transform: 'scale({$button.transition.scale})',
 			transitionDuration: '$button.transition.duration'
 		}
+	}
+}).addSelector({
+	when: 'disabled',
+	common: {
+		cursor: 'not-allowed',
+		opacity: '.7'
 	}
 }).addSelector({
 	when: ['raised'],
@@ -95,12 +105,18 @@ main.addSelector({
 	common: {
 		borderRadius: '10000px'
 	}
-}).addSelector({
+})
+
+.addSelector({
 	when: ['kindGeneral'],
 	common: {
 		backgroundColor: '$color.general.base',
 		borderColor: '$palette.grey200',
-		borderWidth: '1px',
+		borderWidth: '1px'
+	}
+}).addSelector({
+	when: ['kindGeneral', 'notDisabled'],
+	common: {
 		':hover': {
 			backgroundColor: '$color.general.hover',
 			borderColor: '$palette.grey300',
@@ -112,11 +128,17 @@ main.addSelector({
 			color: '$button.color.text.dark',
 		}
 	}
-}).addSelector({
+})
+
+.addSelector({
 	when: ['kindBase'],
 	common: {
 		backgroundColor: '$button.color.base.background',
-		color: '$button.color.base.color',
+		color: '$button.color.base.color'
+	}
+}).addSelector({
+	when: ['kindBase', 'notDisabled'],
+	common: {
 		':hover': {
 			backgroundColor: '$button.color.base.hover',
 			color: '$button.color.text.light',
@@ -126,11 +148,17 @@ main.addSelector({
 			color: '$button.color.text.light',
 		}
 	}
-}).addSelector({
+})
+
+.addSelector({
 	when: ['kindPrimary'],
 	common: {
 		backgroundColor: '$color.primary.base',
-		color: '$button.color.text.light',
+		color: '$button.color.text.light'
+	}
+}).addSelector({
+	when: ['kindPrimary', 'notDisabled'],
+	common: {
 		':hover': {
 			backgroundColor: '$color.primary.hover',
 		},
@@ -138,10 +166,16 @@ main.addSelector({
 			backgroundColor: '$color.primary.active',
 		}
 	}
-}).addSelector({
+})
+
+.addSelector({
 	when: ['kindWarning'],
 	common: {
-		backgroundColor: '$color.warning.base',
+		backgroundColor: '$color.warning.base'
+	}
+}).addSelector({
+	when: ['kindWarning', 'notDisabled'],
+	common: {
 		':hover': {
 			backgroundColor: '$color.warning.hover',
 		},
@@ -149,11 +183,17 @@ main.addSelector({
 			backgroundColor: '$color.warning.active',
 		}
 	}
-}).addSelector({
+})
+
+.addSelector({
 	when: ['kindInfo'],
 	common: {
 		backgroundColor: '$color.info.base',
-		color: '$button.color.text.light',
+		color: '$button.color.text.light'
+	}
+}).addSelector({
+	when: ['kindInfo', 'notDisabled'],
+	common: {
 		':hover': {
 			backgroundColor: '$color.info.hover',
 			color: '$button.color.text.dark',
@@ -163,11 +203,17 @@ main.addSelector({
 			color: '$button.color.text.light',
 		}
 	}
-}).addSelector({
+})
+
+.addSelector({
 	when: ['kindDanger'],
 	common: {
 		backgroundColor: '$color.danger.base',
-		color: '$button.color.text.light',
+		color: '$button.color.text.light'
+	}
+}).addSelector({
+	when: ['kindDanger', 'notDisabled'],
+	common: {
 		':hover': {
 			backgroundColor: '$color.danger.hover',
 			color: '$button.color.text.dark',
@@ -177,10 +223,16 @@ main.addSelector({
 			color: '$button.color.text.light',
 		}
 	}
-}).addSelector({
+})
+
+.addSelector({
 	when: ['kindSuccess'],
 	common: {
-		backgroundColor: '$color.success.base',
+		backgroundColor: '$color.success.base'
+	}
+}).addSelector({
+	when: ['kindSuccess', 'notDisabled'],
+	common: {
 		':hover': {
 			backgroundColor: '$color.success.hover',
 		},
@@ -188,12 +240,6 @@ main.addSelector({
 			backgroundColor: '$color.success.active',
 			color: '$button.color.text.light'
 		}
-	}
-}).addSelector({
-	when: 'disabled',
-	common: {
-		opacity: '.7',
-		pointerEvents: 'none'
 	}
 })
 
