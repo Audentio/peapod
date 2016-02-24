@@ -68,11 +68,11 @@ var ProgressExamples = React.createClass({
 				<p style={{marginBottom: '8px'}}><strong>Examples: </strong>Click on these to randomize [or <a href="#" onClick={this.goNuts}>Go nuts</a>]</p>
 
 				<Pod.grid>
-					<Pod.gridCell styler={{lg:6}}>
+					<Pod.gridCell styler={{md:12, lg:6}}>
 						{this.state.bars}
 					</Pod.gridCell>
 
-					<Pod.gridCell styler={{lg:6}}>
+					<Pod.gridCell styler={{md:12, lg:6}}>
 						{this.state.circles}
 					</Pod.gridCell>
 				</Pod.grid>
@@ -173,13 +173,13 @@ sections.push(
 
 		<p style={{marginBottom: '8px'}}>Different strokes (styler prop)</p>
 		<Pod.grid>
-			<Pod.gridCell styler={{lg:6}}>
+			<Pod.gridCell styler={{md:12, lg:6}}>
 				<Pod.progress styler={{kind:'info', stroke: 2}} value={rand()} />
 				<Pod.progress styler={{kind:'info', stroke: 8}} value={rand()} />
 				<Pod.progress styler={{kind:'info', stroke: 12}} value={rand()} />
 			</Pod.gridCell>
 
-			<Pod.gridCell styler={{lg:6}}>
+			<Pod.gridCell styler={{md:12, lg:6}}>
 				<Pod.circularProgress styler={{kind:'danger', stroke: 2, style:{marginLeft: 15}}} value={rand()} />
 				<Pod.circularProgress styler={{kind:'danger', stroke: 8, style:{marginLeft: 15}}} value={rand()} />
 				<Pod.circularProgress styler={{kind:'danger', stroke: 12, style:{marginLeft: 15}}} value={rand()} />
