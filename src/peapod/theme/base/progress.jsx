@@ -47,7 +47,7 @@ main.addSelector({
         backgroundColor: '$palette.grey200'
 	}
 }).addSelector({
-	when: ['strokeSet'],
+	condition: ['strokeSet'],
 	common: {
 		height: 'getStyler:stroke'
 	}
@@ -63,37 +63,37 @@ progress.addSelector({
         transition: '.2s'
     }
 }).addSelector({
-    when: 'kindPrimary',
+    condition: 'kindPrimary',
     common: {
         fill: '$color.primary.base',
 		backgroundColor: '$color.primary.base'
     }
 }).addSelector({
-    when: 'kindSuccess',
+    condition: 'kindSuccess',
     common: {
         fill: '$color.success.base',
 		backgroundColor: '$color.success.base'
     }
 }).addSelector({
-    when: 'kindInfo',
+    condition: 'kindInfo',
     common: {
         fill: '$color.info.base',
 		backgroundColor: '$color.info.base'
     }
 }).addSelector({
-    when: 'kindWarning',
+    condition: 'kindWarning',
     common: {
         fill: '$color.warning.active',
 		backgroundColor: '$color.warning.active'
     }
 }).addSelector({
-    when: 'kindDanger',
+    condition: 'kindDanger',
     common: {
         fill: '$color.danger.base',
 		backgroundColor: '$color.danger.base'
     }
 }).addSelector({
-    when: 'kindSecondary',
+    condition: 'kindSecondary',
     common: {
         fill: '$color.secondary.base',
 		backgroundColor: '$color.secondary.base'
@@ -105,7 +105,7 @@ var generateGradient = function(color) {
 }
 
 progress.addSelector({
-	when: 'indeterminate',
+	condition: 'indeterminate',
 	common: {
 		//backgroundColor: 'transparent',
 		WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)',

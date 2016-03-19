@@ -25,7 +25,7 @@ main.addSelector({
 		padding: '$gutter.internal'
 	}
 }).addSelector({
-	when: ['round'],
+	condition: ['round'],
 	common: {
 		borderRadius: '1000px'
 	}
@@ -35,7 +35,7 @@ var choices = ['success', 'danger', 'info', 'warning', 'secondary', 'base'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	sheet.addCondition('kind_' + choices[choiceIndex]).addStyler({kind: choices[choiceIndex]});
 	main.addSelector({
-		when: ['kind_' + choices[choiceIndex]],
+		condition: ['kind_' + choices[choiceIndex]],
 		common: {
 			backgroundColor: '$color.' + choices[choiceIndex] + '.base'
 		}

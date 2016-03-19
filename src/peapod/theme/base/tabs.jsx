@@ -4,10 +4,8 @@ var sheet = new Sheet,
 	main = sheet.addMain(),
 	trigger = sheet.addPart('trigger'),
 	panel = sheet.addPart('panel'),
-	wrapper = sheet.addPart('wrapper'),
 	triggers = sheet.addPart('triggers'),
-	panels = sheet.addPart('panels'),
-	wrapper = sheet.addPart('wrapper');
+	panels = sheet.addPart('panels');
 
 //Conditions
 sheet.addCondition('active').addStyler({active: true});
@@ -17,28 +15,35 @@ sheet.addCondition('inactive').addStyler({active: false});
 sheet.setValues({});
 
 //Selectors
+main.addSelector({
+	common: {
+		borderLeft: '10px solid {$color.primary.base}'
+	}
+});
+
 trigger.addSelector({
 	common: {
 		display: 'inline-block',
 		padding: '$gutter.internal',
 		backgroundColor: '$color.base.hover',
 		color: '#FFF',
-		marginRight: '1px'
+		marginRight: '1px',
+		cursor: 'pointer',
 	}
 }).addSelector({
-	when: ['active'],
+	condition: ['active'],
 	common: {
 		color: '#FFF',
-		backgroundColor: '$color.base.base'
+		backgroundColor: '$color.base.base',
 	}
 });
 
 panel.addSelector({
-	when: ['inactive'],
+	condition: ['inactive'],
 	common: {
 		display: 'none'
 	}
-})
+});
 
 triggers.addSelector({
 	common: {
@@ -46,18 +51,12 @@ triggers.addSelector({
 		marginTop: '{$gutter.internal}',
 		padding: '0 {$gutter.internal}',
 	}
-})
+});
 
 panels.addSelector({
 	common: {
 		padding: '{$gutter.internal}',
 	}
 });
-
-wrapper.addSelector({
-	common: {
-		borderLeft: '10px solid {$color.primary.base}'
-	}
-})
 
 module.exports = sheet;

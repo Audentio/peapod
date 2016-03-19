@@ -17,6 +17,7 @@ sections.push(
 		<Pod.button label="Raised" styler={{kind: "primary", raised: true}} />
 		<Pod.button label="Round" styler={{kind: "primary", round: true}} />
 		<Pod.button label="Disabled" styler={{kind:"primary", disabled: true}} />
+
 		<Pod.button styler={{kind: "success", round:true, raised: true}} />
 		<Pod.button styler={{kind: "base"}} onClick={function(){alert('test')}} label="onClick handler" />
 		<Pod.button styler={{kind: "default", style: {color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}}} label="Custom" />
@@ -214,7 +215,7 @@ sections.push(
 
 		<h2>Text input</h2>
 		<Pod.input placeholder="Placeholder..." styler={{placeholderStyle: {color: 'red'}}}/>
-		<Pod.checkbox kind="primary" checked={true} />
+		<Pod.checkbox checked={true} />
 	</div>
 )
 

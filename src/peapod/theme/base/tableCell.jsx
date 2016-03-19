@@ -30,36 +30,36 @@ main.addSelector({
 		borderTopWidth: 0
 	}
 }).addSelector({
-	when: ['firstCell'],
+	condition: ['firstCell'],
 	common: {
 		borderLeftWidth: '$table.border.width'
 	}
 }).addSelector({
-	when: ['centered'],
+	condition: ['centered'],
 	common: {
 		textAlign: 'center'
 	}
 }).addSelector({
-	when: ['hovered', 'sortable'],
+	condition: ['hovered', 'sortable'],
 	common: {
 		color: '$table.color.columnHovered.color',
 		background: '$table.color.columnHovered.background',
 	}
 }).addSelector({
-	when: ['header'],
+	condition: ['header'],
 	common: {
 		borderLeftWidth: 0,
 		borderRightWidth: 0,
 	}
 }).addSelector({
-	when: ['header', 'hovered', 'sortable'],
+	condition: ['header', 'hovered', 'sortable'],
 	common: {
 		color: '$table.color.columnHovered.headerColor',
 		background: '$table.color.columnHovered.headerBackground',
 		cursor: 'pointer'
 	}
 }).addSelector({
-	when: ['noData'],
+	condition: ['noData'],
 	common: {
 		borderLeftWidth: 0,
 		borderRightWidth: 0,

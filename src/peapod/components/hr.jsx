@@ -22,8 +22,9 @@ var Wrapper = require('../wrapper.jsx')
 var Hr = React.createClass({
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
 		return (
-			<hr style={Pod_Styler.getStyle(this)} />
+			<hr style={style.main} />
 		);
 
 	}

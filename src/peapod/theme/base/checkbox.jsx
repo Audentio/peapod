@@ -2,7 +2,7 @@ import {Sheet} from '../../stylesheet.jsx';
 
 var sheet = new Sheet,
 	main = sheet.addMain(),
-	outerWrapper = sheet.addPart('outerWrapper'),
+	innerBox = sheet.addPart('innerBox'),
 	wrapper = sheet.addPart('wrapper'),
 	box = sheet.addPart('box'),
 	input = sheet.addPart('input'),
@@ -53,7 +53,7 @@ sheet.setValues({
 });
 
 //Root
-main.addSelector({
+innerBox.addSelector({
 	common: {
 		width: '$checkbox.width',
 		height: '$checkbox.height',
@@ -67,7 +67,7 @@ main.addSelector({
 		verticalAlign: 'middle',
 	}
 }).addSelector({
-	when: ['checked'],
+	condition: ['checked'],
 	common: {
 		backgroundColor: '$checkbox.color.backgroundChecked',
 		borderColor: '$checkbox.border.colorChecked',
@@ -75,12 +75,12 @@ main.addSelector({
 });
 
 //Outer Wrapper
-outerWrapper.addSelector({
+main.addSelector({
 	common: {
 		display: 'inline-block',
 	}
 }).addSelector({
-	when: 'block',
+	condition: 'block',
 	common: {
 		display: 'block',
 	}
@@ -121,7 +121,7 @@ icon.addSelector({
 		fontSize: '$checkbox.font.size',
 	}
 }).addSelector({
-	when: 'checked',
+	condition: 'checked',
 	common: {
 		display: 'inline-block'
 	}

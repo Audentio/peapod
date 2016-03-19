@@ -24,12 +24,12 @@ main.addSelector({
 		fontSize: '$icon.font.size',
 	}
 }).addSelector({
-	when: ['sizeSet'],
+	condition: ['sizeSet'],
 	common: {
 		fontSize: 'getStyler:size',
 	}
 }).addSelector({
-	when: ['colorSet'],
+	condition: ['colorSet'],
 	common: {
 		color: 'getStyler:color',
 	}

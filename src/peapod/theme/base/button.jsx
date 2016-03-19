@@ -75,7 +75,7 @@ main.addSelector({
 		color: '$button.color.text.dark',
 	}
 }).addSelector({
-	when: ['notDisabled'],
+	condition: ['notDisabled'],
 	common: {
 		cursor: 'pointer',
 
@@ -85,37 +85,37 @@ main.addSelector({
 		}
 	}
 }).addSelector({
-	when: 'disabled',
+	condition: 'disabled',
 	common: {
 		cursor: 'not-allowed',
 		opacity: '.7'
 	}
 }).addSelector({
-	when: ['raised'],
+	condition: ['raised'],
 	common: {
 		boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2)'
 	}
 }).addSelector({
-	when: ['block'],
+	condition: ['block'],
 	common: {
 		display: 'block'
 	}
 }).addSelector({
-	when: ['round'],
+	condition: ['round'],
 	common: {
 		borderRadius: '10000px'
 	}
 })
 
 .addSelector({
-	when: ['kindGeneral'],
+	condition: ['kindGeneral'],
 	common: {
 		backgroundColor: '$color.general.base',
 		borderColor: '$palette.grey200',
 		borderWidth: '1px'
 	}
 }).addSelector({
-	when: ['kindGeneral', 'notDisabled'],
+	condition: ['kindGeneral', 'notDisabled'],
 	common: {
 		':hover': {
 			backgroundColor: '$color.general.hover',
@@ -131,13 +131,13 @@ main.addSelector({
 })
 
 .addSelector({
-	when: ['kindBase'],
+	condition: ['kindBase'],
 	common: {
 		backgroundColor: '$button.color.base.background',
 		color: '$button.color.base.color'
 	}
 }).addSelector({
-	when: ['kindBase', 'notDisabled'],
+	condition: ['kindBase', 'notDisabled'],
 	common: {
 		':hover': {
 			backgroundColor: '$button.color.base.hover',
@@ -151,13 +151,13 @@ main.addSelector({
 })
 
 .addSelector({
-	when: ['kindPrimary'],
+	condition: ['kindPrimary'],
 	common: {
 		backgroundColor: '$color.primary.base',
 		color: '$button.color.text.light'
 	}
 }).addSelector({
-	when: ['kindPrimary', 'notDisabled'],
+	condition: ['kindPrimary', 'notDisabled'],
 	common: {
 		':hover': {
 			backgroundColor: '$color.primary.hover',
@@ -169,12 +169,12 @@ main.addSelector({
 })
 
 .addSelector({
-	when: ['kindWarning'],
+	condition: ['kindWarning'],
 	common: {
 		backgroundColor: '$color.warning.base'
 	}
 }).addSelector({
-	when: ['kindWarning', 'notDisabled'],
+	condition: ['kindWarning', 'notDisabled'],
 	common: {
 		':hover': {
 			backgroundColor: '$color.warning.hover',
@@ -186,13 +186,13 @@ main.addSelector({
 })
 
 .addSelector({
-	when: ['kindInfo'],
+	condition: ['kindInfo'],
 	common: {
 		backgroundColor: '$color.info.base',
 		color: '$button.color.text.light'
 	}
 }).addSelector({
-	when: ['kindInfo', 'notDisabled'],
+	condition: ['kindInfo', 'notDisabled'],
 	common: {
 		':hover': {
 			backgroundColor: '$color.info.hover',
@@ -206,13 +206,13 @@ main.addSelector({
 })
 
 .addSelector({
-	when: ['kindDanger'],
+	condition: ['kindDanger'],
 	common: {
 		backgroundColor: '$color.danger.base',
 		color: '$button.color.text.light'
 	}
 }).addSelector({
-	when: ['kindDanger', 'notDisabled'],
+	condition: ['kindDanger', 'notDisabled'],
 	common: {
 		':hover': {
 			backgroundColor: '$color.danger.hover',
@@ -226,12 +226,12 @@ main.addSelector({
 })
 
 .addSelector({
-	when: ['kindSuccess'],
+	condition: ['kindSuccess'],
 	common: {
 		backgroundColor: '$color.success.base'
 	}
 }).addSelector({
-	when: ['kindSuccess', 'notDisabled'],
+	condition: ['kindSuccess', 'notDisabled'],
 	common: {
 		':hover': {
 			backgroundColor: '$color.success.hover',

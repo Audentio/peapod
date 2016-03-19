@@ -31,23 +31,18 @@ var CircularProgress = React.createClass({
     },
 
     render() {
-		var style_main = Pod_Styler.getStyle(this),
-			style_track = Pod_Styler.getStyle(this, 'track'),
-			style_mask = Pod_Styler.getStyle(this, 'mask'),
-			style_circle = [Pod_Styler.getStyle(this, 'circle'), this.getTransform()],
-			style_content = Pod_Styler.getStyle(this, 'content'),
-			style_contentInner = Pod_Styler.getStyle(this, 'contentInner')
+		var style = Pod_Styler.getStyle(this);
 
         return (
-            <div style={style_main}>
+            <div style={style.main}>
 
-                <div style={style_track}></div>
+                <div style={style.track}></div>
 
-            	<div style={[style_mask, this.getTransform()]}><div style={style_circle}></div></div>
-				<div style={style_mask}><div style={style_circle}></div></div>
+            	<div style={[style.mask, this.getTransform()]}><div style={style.circle}></div></div>
+				<div style={style.mask}><div style={style.circle}></div></div>
 
-                <div style={style_content}>
-                    <div style={style_contentInner}>
+                <div style={style.content}>
+                    <div style={style.contentInner}>
                         {this.props.children}
                     </div>
                 </div>

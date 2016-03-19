@@ -84,19 +84,20 @@ var Alert = React.createClass({
 
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
 
 		return (
-			<div style={Pod_Styler.getStyle(this, 'wrapper')} id={this.props.id}>
+			<div style={style.main} id={this.props.id}>
 			{
 				!this.state.dismissed &&
 
-				<div style={Pod_Styler.getStyle(this)}>
+				<div style={style.wrapper}>
 
-					<span style={Pod_Styler.getStyle(this, 'message')}>
+					<span style={style.message}>
 						{this.props.children}
 					</span>
 					{this.props.dismissable &&
-						<Pod.icon onClick={this.dismiss} styler={{style:Pod_Styler.getStyle(this, 'dismissIcon')}} color="#07ADD4">close</Pod.icon>
+						<Pod.icon onClick={this.dismiss} styler={{style:style.dismissIcon}} color="#07ADD4">close</Pod.icon>
 					}
 				</div>
 			}

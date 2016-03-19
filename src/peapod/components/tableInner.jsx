@@ -38,6 +38,8 @@ var TableInner = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		var columnNames = this.props.columnNames;
 		var data = this.props.data;
 		var columns = this.props.columns;
@@ -47,7 +49,7 @@ var TableInner = React.createClass({
 
 		return (
 			<div style={{overflowX: 'auto'}}>
-				<div style={Pod_Styler.getStyle(this)}>
+				<div style={style.main}>
 					{isFunction(columnNames) ? columnNames(columns) : <TableHeader config={columnNames} columns={columns} />}
 					{
 						data.map(function(row, i) {

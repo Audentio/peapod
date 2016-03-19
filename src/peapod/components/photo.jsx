@@ -261,32 +261,34 @@ var Photo = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		return (
-			<div style={Pod_Styler.getStyle(this, 'wrapper')}>
+			<div style={style.main}>
 				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
-					style={Pod_Styler.getStyle(this)} />
+					style={style.image} />
 
 				{	this.props.caption &&
-					<span style={Pod_Styler.getStyle(this, 'caption')}>{this.props.caption}</span>
+					<span style={style.caption}>{this.props.caption}</span>
 				}
 
 				{	((this.props.lightbox && this.state.lightboxVisible) || this.props.lightboxAnimation) &&
-					<div style={Pod_Styler.getStyle(this, 'lightbox')}>
+					<div style={style.lightbox}>
 
-						<div style={Pod_Styler.getStyle(this, 'lightboxInner')}>
-							<img style={Pod_Styler.getStyle(this, 'lightboxImage')} src={this.state.visible ? this.imageURL : options.blankImage} />
+						<div style={style.lightboxInner}>
+							<img style={style.lightboxImage} src={this.state.visible ? this.imageURL : options.blankImage} />
 						</div>
 
-						<div style={Pod_Styler.getStyle(this, 'lightboxActions')}>
-							<Icon style={Pod_Styler.getStyle(this, 'lightboxAction')} onClick={this.hideLightbox}>close</Icon>
+						<div style={style.lightboxActions}>
+							<Icon style={style.lightboxAction} onClick={this.hideLightbox}>close</Icon>
 							{	Pod_helper.fullscreen.isAvailable() &&
-								<Icon style={Pod_Styler.getStyle(this, 'lightboxAction')} onClick={this.toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
+								<Icon style={style.lightboxAction} onClick={this.toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
 							}
 
 							{	this.props.allowDownload &&
-								<Icon onClick={this.downloadFile} style={Pod_Styler.getStyle(this, 'lightboxAction')}>file_download</Icon> }
+								<Icon onClick={this.downloadFile} style={style.lightboxAction}>file_download</Icon> }
 
-							<Icon onClick={this.openInNew} style={Pod_Styler.getStyle(this, 'lightboxAction')}>open_in_new</Icon>
+							<Icon onClick={this.openInNew} style={style.lightboxAction}>open_in_new</Icon>
 
 						</div>
 					</div>

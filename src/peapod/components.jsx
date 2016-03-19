@@ -49,7 +49,6 @@ var init = function() {
 	base(components);
 }
 
-
 if (module.hot) {
 	module.hot.accept();
 

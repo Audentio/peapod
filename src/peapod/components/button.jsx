@@ -41,10 +41,12 @@ var Button = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		//Anchor tag <a> if href specified
 		if (this.props.href) {
 			return (
-				<a href={this.props.href} style={Pod_Styler.getStyle(this)} onClick={this.props.onClick}>
+				<a href={this.props.href} style={style.main} onClick={this.props.onClick}>
 					{this.props.children || this.props.label}
 				</a>
 			);
@@ -54,7 +56,7 @@ var Button = React.createClass({
 		else {
 			return (
 				<button
-					style={Pod_Styler.getStyle(this)}
+					style={style.main}
 					onClick={this.props.onClick}>
 					{this.props.children || this.props.label}
 				</button>

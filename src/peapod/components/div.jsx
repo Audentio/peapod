@@ -11,10 +11,11 @@ var Wrapper = require('../wrapper.jsx')
 
 var Div = React.createClass({
 	render: function() {
-		var {styler, children, ...other} = this.props;
+		var {styler, children, ...other} = this.props,
+			style = Pod_Styler.getStyle(this);
 
 		return (
-			<div {...other} style={Pod_Styler.getStyle(this)}>
+			<div {...other} style={style.main}>
 				{this.props.children}
 			</div>
 		);

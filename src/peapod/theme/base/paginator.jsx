@@ -53,7 +53,7 @@ label.addSelector({
 		borderRightWidth: '$paginator.border.width'
 	}
 }).addSelector({
-	when: ['onePage'],
+	condition: ['onePage'],
 	common: {
 		borderRightWidth: '0'
 

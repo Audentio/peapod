@@ -28,19 +28,19 @@ row.addSelector({
 		background: '$table.color.lightRow.background'
 	}
 }).addSelector({
-	when: ['dark'],
+	condition: ['dark'],
 	common: {
 		color: '$table.color.darkRow.color',
 		background: '$table.color.darkRow.background',
 	}
 }).addSelector({
-	when: ['hovered'],
+	condition: ['hovered'],
 	common: {
 		color: '$table.color.darkRow.color',
 		background: '$table.color.darkRow.hover',
 	}
 }).addSelector({
-	when: ['header'],
+	condition: ['header'],
 	common: {
 		color: '$table.color.header.color',
 		background: '$table.color.header.background',
@@ -49,7 +49,7 @@ row.addSelector({
 		textTransform: 'uppercase'
 	}
 }).addSelector({
-	when: ['checked'],
+	condition: ['checked'],
 	common: {
 		color: '$table.color.checked.color',
 		background: '$table.color.checked.background',

@@ -60,13 +60,17 @@ var Input = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		return (
-			<div onFocus={this.onFocus} onBlur={this.onBlur} style={Pod_Styler.getStyle(this, 'wrapper')}
-				 className={this.props.className}>
+			<div onFocus={this.onFocus} onBlur={this.onBlur} style={style.main} className={this.props.className}>
 
-				<span style={Pod_Styler.getStyle(this, 'placeholder')}>{this.props.icon && <Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>{this.props.icon}</Pod_icon>}{this.state.placeholder}</span>
+				<span style={style.placeholder}>
+					{this.props.icon && <Pod_icon styler={{style: style.icon}}>{this.props.icon}</Pod_icon>}
+					{this.state.placeholder}
+				</span>
 
-				<input name={this.props.name} type={this.props.type} onFocus={this.onFocusHandler} style={Pod_Styler.getStyle(this)}
+				<input name={this.props.name} type={this.props.type} onFocus={this.onFocusHandler} style={style.input}
 					   value={this.state.value} onChange={this.onChangeHandler} />
 			</div>
 		);

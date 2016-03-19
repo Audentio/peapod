@@ -51,7 +51,7 @@ main.addSelector({
 		overflow: 'hidden'
 	}
 }).addSelector({
-	when: 'sizeSet',
+	condition: 'sizeSet',
 	common: {
 		width: 'getStyler:size',
 		height: 'getStyler:size',
@@ -88,7 +88,7 @@ track.addSelector({
 		borderRadius: '50%'
 	}
 }).addSelector({
-	when: 'strokeSet',
+	condition: 'strokeSet',
 	common: {
 		borderWidth: 'getStyler:stroke'
 	}
@@ -117,37 +117,37 @@ circle.addSelector({
 		borderRadius: '50%',
 	})
 }).addSelector({
-	when: 'strokeSet',
+	condition: 'strokeSet',
 	common: {
 		borderWidth: 'getStyler:stroke'
 	}
 }).addSelector({
-    when: 'kindPrimary',
+    condition: 'kindPrimary',
     common: {
 		borderColor: '$color.primary.base'
     }
 }).addSelector({
-    when: 'kindSuccess',
+    condition: 'kindSuccess',
     common: {
 		borderColor: '$color.success.base'
     }
 }).addSelector({
-    when: 'kindInfo',
+    condition: 'kindInfo',
     common: {
 		borderColor: '$color.info.base'
     }
 }).addSelector({
-    when: 'kindWarning',
+    condition: 'kindWarning',
     common: {
 		borderColor: '$color.warning.active'
     }
 }).addSelector({
-    when: 'kindDanger',
+    condition: 'kindDanger',
     common: {
 		borderColor: '$color.danger.base'
     }
 }).addSelector({
-    when: 'kindSecondary',
+    condition: 'kindSecondary',
     common: {
 		borderColor: '$color.secondary.base'
     }

@@ -104,7 +104,8 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 
 var renderComponent = function(sheetName, condition, stylesheet) {
 	var Component = Pod[sheetName.charAt(0).toLowerCase() + sheetName.slice(1)],
-		showComponents = "Alert,Button,Checkbox,CircularProgress,Div,Hr,Input,Label,Paragraph,Progress",
+		//showComponents = "Alert,Button,Checkbox,CircularProgress,Div,Hr,Input,Label,Paragraph,Progress",
+		showComponents = "Button",
 		docDefault = stylesheet.getDocDefault(),
 		defaults = {},
 		defaultChildren = "Test " + sheetName;

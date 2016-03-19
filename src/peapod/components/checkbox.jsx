@@ -66,20 +66,20 @@ var Checkbox = React.createClass({
 	},
 
 	render: function(){
-		var labelStyle = (this.props.label) ? {}:{display:'none'};
-		var icon = (this.props.icon) ?
-			<Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>{this.props.icon}</Pod_icon> :
-			<Pod_icon styler={{style: Pod_Styler.getStyle(this, 'icon')}}>check</Pod_icon>;
+		var style = Pod_Styler.getStyle(this),
+			icon = (this.props.icon) ?
+			<Pod_icon styler={{style: style.icon}}>{this.props.icon}</Pod_icon> :
+			<Pod_icon styler={{style: style.icon}}>check</Pod_icon>;
 
 		return (
-			<div style={Pod_Styler.getStyle(this, 'outerWrapper')}>
-				<label style={Pod_Styler.getStyle(this, 'wrapper')}>
-					<span style={Pod_Styler.getStyle(this, 'box')}>
-						<input style={Pod_Styler.getStyle(this, 'input')} onChange={this.onChangeHandler} className="Pod_checkbox__input" type="checkbox" checked={this.state.checked} />
-						<span style={Pod_Styler.getStyle(this)}></span>
+			<div style={style.main}>
+				<label style={style.wrapper}>
+					<span style={style.box}>
+						<input style={style.input} onChange={this.onChangeHandler} className="Pod_checkbox__input" type="checkbox" checked={this.state.checked} />
+						<span style={style.innerBox}></span>
 						{icon}
 					</span>
-					<span style={Pod_Styler.getStyle(this, 'label')} >{this.props.label}</span>
+					<span style={style.label} >{this.props.label}</span>
 				</label>
 			</div>
 		);

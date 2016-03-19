@@ -31,7 +31,7 @@ sheet.setValues({
 	}
 });
 
-main.addSelector({
+wrapper.addSelector({
     common: {
         fontSize: '13px',
         position: 'relative',
@@ -40,27 +40,27 @@ main.addSelector({
         marginBottom: '$gutter.internal'
     }
 }).addSelector({
-    when: 'kindGeneral',
+    condition: 'kindGeneral',
     common: {
         backgroundColor: '$alert.background.general'
     }
 }).addSelector({
-    when: 'kindSuccess',
+    condition: 'kindSuccess',
     common: {
         backgroundColor: '$alert.background.success'
     }
 }).addSelector({
-    when: 'kindInfo',
+    condition: 'kindInfo',
     common: {
         backgroundColor: '$alert.background.info'
     }
 }).addSelector({
-    when: 'kindWarning',
+    condition: 'kindWarning',
     common: {
         backgroundColor: '$alert.background.warning'
     }
 }).addSelector({
-    when: 'kindDanger',
+    condition: 'kindDanger',
     common: {
         backgroundColor: '$alert.background.danger'
     }
