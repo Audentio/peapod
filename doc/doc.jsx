@@ -355,7 +355,7 @@ var ComponentDoc = React.createClass({
 			<div key={sheetName} style={{paddingLeft: '20px', margin: '40px 0'}}>
 				<h1 style={{marginBottom: '10px'}}>Component: {sheetName}</h1>
 				<div>
-					<Pod.tabs tabs={tabs} activeTab={1}></Pod.tabs>
+					<Pod.tabs tabs={tabs} activeTab={0}></Pod.tabs>
 				</div>
 			</div>
 		)

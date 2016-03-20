@@ -8,7 +8,7 @@ var sheet = new Sheet,
 
 sheet.addCondition('orderSet').addStyler({order: ['!=', '']});
 main.addSelector({
-	when: ['orderSet'],
+	condition: ['orderSet'],
 	common: {
 		order: 'getStyler:order'
 	}
@@ -16,7 +16,7 @@ main.addSelector({
 
 sheet.addCondition('flexSet').addStyler({flex: ['!=', '']});
 main.addSelector({
-	when: ['flexSet'],
+	condition: ['flexSet'],
 	common: {
 		flex: 'getStyler:flex'
 	}
@@ -27,7 +27,7 @@ var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	sheet.addCondition('alignSelf_' + choices[choiceIndex]).addStyler({alignSelf: choices[choiceIndex]});
 	main.addSelector({
-		when: ['alignSelf_' + choices[choiceIndex]],
+		condition: ['alignSelf_' + choices[choiceIndex]],
 		common: {
 			alignSelf: choices[choiceIndex]
 		}
@@ -41,7 +41,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 	for (var i = 0; i < 13; i++) { // loop through size values
 		sheet.addCondition([abbrevs[sizeIndex]] + '_' + i).addStyler({[abbrevs[sizeIndex]]: i});
 		main.addSelector({
-			when: [[abbrevs[sizeIndex]] + '_' + i],
+			condition: [[abbrevs[sizeIndex]] + '_' + i],
 			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
 			}
@@ -49,7 +49,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 
 		sheet.addCondition([abbrevs[sizeIndex]] + 'Push_' + i).addStyler({[abbrevs[sizeIndex] + 'Push']: i});
 		main.addSelector({
-			when: [[abbrevs[sizeIndex]] + 'Push_' + i],
+			condition: [[abbrevs[sizeIndex]] + 'Push_' + i],
 			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',
@@ -60,7 +60,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 
 		sheet.addCondition([abbrevs[sizeIndex]] + 'Pull_' + i).addStyler({[abbrevs[sizeIndex] + 'Pull']: i});
 		main.addSelector({
-			when: [[abbrevs[sizeIndex]] + 'Pull_' + i],
+			condition: [[abbrevs[sizeIndex]] + 'Pull_' + i],
 			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',

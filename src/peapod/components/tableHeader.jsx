@@ -23,16 +23,18 @@ var TableHeader = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle({props: {
+			styler: {
+				styleLike: 'TableInner',
+				header: true
+			}
+		}});
+
 		const config = this.props.config;
 		const columns = this.props.columns;
 
 		return (
-			<div style={Pod_Styler.getStyle({props: {
-				styler: {
-					styleLike: 'TableInner',
-					header: true
-				}
-			}}, 'row')}>
+			<div style={style.row}>
 				{columns.map( function(column, i) {
 					//apply any onEvent specified to cell
 					var columnHeader = reduce(config, function(result, v, k){

@@ -26,6 +26,8 @@ var topButtonStyle = {
 
 var TableQuery = React.createClass({
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		var queries = this.props.queries || [],
 			removeQuery = this.props.removeQuery || function() {},
 			noQueries = (queries.length == 0) ? <div>No Queries</div> : null;

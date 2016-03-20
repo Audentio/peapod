@@ -18,27 +18,27 @@ main.addSelector({
 		background: '$table.color.lightRow.background',
 	}
 }).addSelector({
-	when: ['dark'],
+	condition: ['dark'],
 	common: {
 		color: '$table.color.darkRow.color',
 		background: '$table.color.darkRow.background',
 	}
 }).addSelector({
-	when: ['!header'],
+	condition: ['!header'],
 	common: {
 		':hover': {
 			background: '$table.color.lightRow.hover'
 		}
 	}
 }).addSelector({
-	when: ['dark', '!header'],
+	condition: ['dark', '!header'],
 	common: {
 		':hover': {
 			background: '$table.color.darkRow.hover'
 		}
 	}
 }).addSelector({
-	when: ['checked'],
+	condition: ['checked'],
 	common: {
 		color: '$table.color.checked.color',
 		background: '$table.color.checked.background',
@@ -47,7 +47,7 @@ main.addSelector({
 		}
 	}
 }).addSelector({
-	when: ['header'],
+	condition: ['header'],
 	common: {
 		color: '$table.color.header.color',
 		background: '$table.color.header.background',

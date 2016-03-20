@@ -19,6 +19,21 @@ var TableCell = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle({props: {
+			styler: {
+				styleLike: 'TableCell',
+				firstCell: index == 0,
+				centered: column.centered == true,
+				hovered: column.hovered == true,
+				sortable: column.sortable == true,
+				sortAsc: column.sort == 'asc',
+				sortDesc: column.sort == 'desc',
+				sortAsc: column.sort == 'asc',
+				sortDesc: column.sort == 'desc',
+				header: this.props.header == true
+			}
+		}})
+
 		var column = this.props.column || {
 				centered: false,
 				hovered: false,
@@ -29,20 +44,7 @@ var TableCell = React.createClass({
 
 		return (
 			<div {...this.props}
-				style={Pod_Styler.getStyle({props: {
-					styler: {
-						styleLike: 'TableCell',
-						firstCell: index == 0,
-						centered: column.centered == true,
-						hovered: column.hovered == true,
-						sortable: column.sortable == true,
-						sortAsc: column.sort == 'asc',
-						sortDesc: column.sort == 'desc',
-						sortAsc: column.sort == 'asc',
-						sortDesc: column.sort == 'desc',
-						header: this.props.header == true
-					}
-				}})}
+				style={style.main}
 			>
 				{this.props.children}
 			</div>

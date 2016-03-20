@@ -82,6 +82,8 @@ var TablePresets = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		var presets = this.state.presets,
 			queries = this.props.queries,
 			addQuery = this.props.addQuery,

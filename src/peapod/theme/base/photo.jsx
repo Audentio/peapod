@@ -2,9 +2,9 @@ import {Sheet} from '../../stylesheet.jsx';
 import Radium from 'radium';
 
 var sheet = new Sheet,
-	image = sheet.addMain(),
+	main = sheet.addMain(),
 	caption = sheet.addPart('caption'),
-	wrapper = sheet.addPart('wrapper'),
+	image = sheet.addPart('image'),
 	lightbox = sheet.addPart('lightbox'),
 	lightboxInner = sheet.addPart('lightboxInner'),
 	lightboxImage = sheet.addPart('lightboxImage'),
@@ -54,7 +54,7 @@ var smackKeyframes = Radium.keyframes({
   '100%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
 }, 'smack');
 
-wrapper.addSelector({
+main.addSelector({
 	common: {
 		display: 'inline-block',
 		position: 'relative'
@@ -67,7 +67,7 @@ image.addSelector({
 		maxWidth: '100%'
 	}
 }).addSelector({
-	when: 'hasLightbox',
+	condition: 'hasLightbox',
 	common: {
 		cursor: 'pointer'
 	}
@@ -85,7 +85,7 @@ caption.addSelector({
 		width: '100%'
 	}
 }).addSelector({
-	when: 'hovered',
+	condition: 'hovered',
 	common: {
 		opacity: '1'
 	}
@@ -107,12 +107,12 @@ lightbox.addSelector({
 		display: 'none'
 	}
 }).addSelector({
-	when: 'lightboxAnimation',
+	condition: 'lightboxAnimation',
 	common: {
 		display: 'table'
 	}
 }).addSelector({
-	when: 'lightboxVisible',
+	condition: 'lightboxVisible',
 	common: {
 		display: 'table',
 		visibility: 'visible',
@@ -137,12 +137,12 @@ lightboxImage.addSelector({
 		transition: '.2s'
 	}
 }).addSelector({
-	when: ['lightboxAnimation'],
+	condition: ['lightboxAnimation'],
 	common: {
 		transform: 'scale(.9)'
 	}
 }).addSelector({
-	when: ['lightboxVisible','lightboxAnimation'],
+	condition: ['lightboxVisible','lightboxAnimation'],
 	common: {
 		transform: 'none'
 	}

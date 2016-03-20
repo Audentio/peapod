@@ -24,6 +24,16 @@ var TableRow = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle({props: {
+			styler: {
+				styleLike: 'TableInner',
+				dark: i % 2 == 1,
+				firstRow: i == 0,
+				checked: row.checked == true,
+				hovered: hoveredRow == i
+			}
+		}});
+
 		var row = this.props.row,
 			rowKey = this.props.rowKey,
 			i = this.props.i,
@@ -34,15 +44,7 @@ var TableRow = React.createClass({
 
 		return (
 			<div {...rowProps(row, i)}
-				style={Pod_Styler.getStyle({props: {
-					styler: {
-						styleLike: 'TableInner',
-						dark: i % 2 == 1,
-						firstRow: i == 0,
-						checked: row.checked == true,
-						hovered: hoveredRow == i
-					}
-				}}, 'row')}
+				style={style.row}
 			>
 				{
 					columns.map(function(column, j) {

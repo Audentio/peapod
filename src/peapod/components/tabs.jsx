@@ -76,37 +76,39 @@ var Tabs = React.createClass({
 
 	render: function() {
 		var tabs = this.props.tabs || [],
-			activeTab = this.state.activeTab;
+			activeTab = this.state.activeTab,
+			style = Pod_Styler.getStyle(this);
 
 		return (
-			<div style={Pod_Styler.getStyle(this, 'wrapper')}>
-				<TabTriggers style={Pod_Styler.getStyle(this, 'triggers')}>
+			<div style={style.main}>
+				<TabTriggers style={style.triggers}>
 					{tabs.map(function(tab, i){
 						var key = tab.key || i,
 							active = (key == activeTab),
 							boundClick = this.setTab.bind(this, i),
-							tabStyle = Pod_Styler.getStyle({}, 'trigger', {
+							tabStyle = Pod_Styler.getStyle({}, {
 								styleLike: 'Tabs',
 								active: active
 							});
 
 						return (
-							<TabTrigger onClick={boundClick} key={'tabTrigger_' + key} target={key} style={tabStyle}>
+							<TabTrigger onClick={boundClick} key={'tabTrigger_' + key} target={key} style={tabStyle.trigger}>
 								{tab.trigger}
 							</TabTrigger>
 						)
 					}.bind(this))}
 				</TabTriggers>
-				<TabPanels style={Pod_Styler.getStyle(this, 'panels')}>
+				<TabPanels style={style.panels}>
 					{tabs.map(function(tab, i){
 						var key = tab.key || i,
-							active = (key == activeTab);
-
-						return (
-							<TabPanel key={'tabPanel_' + i} reference={key} style={Pod_Styler.getStyle({}, 'panel', {
+							active = (key == activeTab),
+							panelStyle = Pod_Styler.getStyle({}, {
 								styleLike: 'Tabs',
 								active: active
-							})}>
+							});
+
+						return (
+							<TabPanel key={'tabPanel_' + i} reference={key} style={panelStyle.panel}>
 								{tab.content}
 							</TabPanel>
 						)

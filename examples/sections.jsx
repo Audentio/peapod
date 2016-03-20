@@ -17,6 +17,7 @@ sections.push(
 		<Pod.button label="Raised" styler={{kind: "primary", raised: true}} />
 		<Pod.button label="Round" styler={{kind: "primary", round: true}} />
 		<Pod.button label="Disabled" styler={{kind:"primary", disabled: true}} />
+
 		<Pod.button styler={{kind: "success", round:true, raised: true}} />
 		<Pod.button styler={{kind: "base"}} onClick={function(){alert('test')}} label="onClick handler" />
 		<Pod.button styler={{kind: "default", style: {color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}}} label="Custom" />
@@ -68,11 +69,11 @@ var ProgressExamples = React.createClass({
 				<p style={{marginBottom: '8px'}}><strong>Examples: </strong>Click on these to randomize [or <a href="#" onClick={this.goNuts}>Go nuts</a>]</p>
 
 				<Pod.grid>
-					<Pod.gridCell styler={{lg:6}}>
+					<Pod.gridCell styler={{md:12, lg:6}}>
 						{this.state.bars}
 					</Pod.gridCell>
 
-					<Pod.gridCell styler={{lg:6}}>
+					<Pod.gridCell styler={{md:12, lg:6}}>
 						{this.state.circles}
 					</Pod.gridCell>
 				</Pod.grid>
@@ -173,13 +174,13 @@ sections.push(
 
 		<p style={{marginBottom: '8px'}}>Different strokes (styler prop)</p>
 		<Pod.grid>
-			<Pod.gridCell styler={{lg:6}}>
+			<Pod.gridCell styler={{md:12, lg:6}}>
 				<Pod.progress styler={{kind:'info', stroke: 2}} value={rand()} />
 				<Pod.progress styler={{kind:'info', stroke: 8}} value={rand()} />
 				<Pod.progress styler={{kind:'info', stroke: 12}} value={rand()} />
 			</Pod.gridCell>
 
-			<Pod.gridCell styler={{lg:6}}>
+			<Pod.gridCell styler={{md:12, lg:6}}>
 				<Pod.circularProgress styler={{kind:'danger', stroke: 2, style:{marginLeft: 15}}} value={rand()} />
 				<Pod.circularProgress styler={{kind:'danger', stroke: 8, style:{marginLeft: 15}}} value={rand()} />
 				<Pod.circularProgress styler={{kind:'danger', stroke: 12, style:{marginLeft: 15}}} value={rand()} />
@@ -214,7 +215,7 @@ sections.push(
 
 		<h2>Text input</h2>
 		<Pod.input placeholder="Placeholder..." styler={{placeholderStyle: {color: 'red'}}}/>
-		<Pod.checkbox kind="primary" checked={true} />
+		<Pod.checkbox checked={true} />
 	</div>
 )
 
@@ -319,14 +320,14 @@ sections.push(
 	<Pod.section key="typography">
 		<h1>Typography</h1>
 		<h4>Paragraph</h4>
-		<Pod.p>
+		<Pod.paragraph>
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph.
-		</Pod.p>
+		</Pod.paragraph>
 
 		<h4>Horizontal Rule </h4>
 		<Pod.hr height="1" />

@@ -30,6 +30,8 @@ function paginate(data, o) {
 var Paginator = React.createClass({
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		var page = this.props.page,
 			pages = this.props.pages,
 			perPage = this.props.perPage,
@@ -38,17 +40,17 @@ var Paginator = React.createClass({
 			lastItem = ((page + 1) * perPage) > total ? total : (page + 1) * perPage,
 			nextTrigger = this.props.nextTrigger || <Icon>chevron_right</Icon>,
 			previousTrigger = this.props.previousTrigger || <Icon>chevron_left</Icon>,
-			previous = page > 0 ? (<div key='previous' onClick={this.props.clickPrevious} style={Pod_Styler.getStyle(this, 'trigger')}>
+			previous = page > 0 ? (<div key='previous' onClick={this.props.clickPrevious} style={style.trigger}>
 					{previousTrigger}
 				</div>) : '',
-			next = pages > page + 1 ? (<div key='next' onClick={this.props.clickNext} style={Pod_Styler.getStyle(this, 'trigger')}>
+			next = pages > page + 1 ? (<div key='next' onClick={this.props.clickNext} style={style.trigger}>
 				{nextTrigger}
 			</div>) : '';
 
 		return (
-			<div style={Pod_Styler.getStyle(this)}>
+			<div style={style.main}>
 				<Grid>
-					<div style={Pod_Styler.getStyle(this, 'label')}>
+					<div style={style.label}>
 						{firstItem}-{lastItem} of {total}
 					</div>
 					{previous}

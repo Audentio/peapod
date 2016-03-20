@@ -32,12 +32,12 @@ class Part {
 			let selector = this.selectors[i],
 				debugStyling = selector.getStyling(scene),
 				selectorConditions = selector.checkConditions(instance, conditions),
-				selectorWhen = selector.getWhen(),
+				selectorCondition = selector.getCondition(),
 				selectorValid = [];
 
-			if (selectorWhen !== null) {
-				for (let whenIndex = 0, whenLen = selectorWhen.length; whenIndex < whenLen; whenIndex++) {
-					let conditionName = whenIndex[whenIndex],
+			if (selectorCondition !== null) {
+				for (let conditionIndex = 0, conditionLen = selectorCondition.length; conditionIndex < conditionLen; conditionIndex++) {
+					let conditionName = conditionIndex[conditionIndex],
 						condition = conditions[conditionName],
 						conditionValid = selector.checkCondition(condition);
 					selectorValid.push({
@@ -58,7 +58,7 @@ class Part {
 				selectorPart: this.name,
 				selectorScene: scene,
 				selectorIndex: i,
-				selectorWhen: selector.getWhen(),
+				selectorCondition: selector.getCondition(),
 				selectorValid: selectorValid,
 				selectorApplied: selectorConditions,
 				selectorStyling: debugStyling
@@ -221,15 +221,15 @@ class Condition {
 // A selector (condition and style)
 class Selector {
 	constructor(selector) {
-		var when = selector.when,
-			whenType = typeof(when),
+		var condition = selector.condition,
+			conditionType = typeof(condition),
 			keys = Object.keys(selector);
-		if (whenType == 'undefined') {
-			this.when = null;
-		} else if (whenType == 'string') {
-			this.when = [when]
+		if (conditionType == 'undefined') {
+			this.condition = null;
+		} else if (conditionType == 'string') {
+			this.condition = [condition]
 		} else {
-			this.when = when;
+			this.condition = condition;
 		}
 
 		this.scenes = {};
@@ -237,21 +237,21 @@ class Selector {
 		for (var i = 0, len = keys.length; i < len; i++) {
 			var scene = keys[i];
 
-			if (scene !== 'when') {
+			if (scene !== 'condition') {
 				this.scenes[scene] = new Style(selector[scene]);
 			}
 		}
 	}
 
-	getWhen() {
-		return this.when;
+	getCondition() {
+		return this.condition;
 	}
 
 	// check if all conditions for selector are true for component instance
 	checkConditions(instance, conditions) {
-		if (this.when !== null ) {
-			for (let i = 0, len = this.when.length; i < len; i++) {
-				let condition = this.checkCondition(instance, this.when[i], conditions);
+		if (this.condition !== null ) {
+			for (let i = 0, len = this.condition.length; i < len; i++) {
+				let condition = this.checkCondition(instance, this.condition[i], conditions);
 				if (!condition) return false;
 			}
 		}
@@ -367,6 +367,18 @@ class Sheet {
 		var partObj = this.parts[part];
 		if (typeof(partObj) == 'undefined') throw "Could not find Part named " + part + '.'
 		return partObj.getPartStyling(instance, scene, conditions);
+	}
+
+	getAllStyling(instance, scene = 'normal', conditions) {
+		let result = {},
+			partKeys = Object.keys(this.parts);
+
+		for (var i = 0, len = partKeys.length; i < len; i++) {
+			var partName = partKeys[i];
+			result[partName] = this.parts[partName].getPartStyling(instance, scene, conditions);
+		}
+
+		return result;
 	}
 
 	getDoc() {

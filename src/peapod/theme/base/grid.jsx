@@ -41,7 +41,7 @@ main.addSelector({
 
 sheet.addCondition('orderSet').addStyler({order: ['!=', '']});
 main.addSelector({
-	when: ['orderSet'],
+	condition: ['orderSet'],
 	common: {
 		order: 'getStyler:order'
 	}
@@ -49,7 +49,7 @@ main.addSelector({
 
 sheet.addCondition('flexSet').addStyler({flex: ['!=', '']});
 main.addSelector({
-	when: ['flexSet'],
+	condition: ['flexSet'],
 	common: {
 		flex: 'getStyler:flex'
 	}
@@ -60,7 +60,7 @@ var choices = ['row', 'row-reverse', 'column', 'column-reverse'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	sheet.addCondition('flexDirection_' + choices[choiceIndex]).addStyler({flexDirection: choices[choiceIndex]});
 	main.addSelector({
-		when: ['flexDirection_' + choices[choiceIndex]],
+		condition: ['flexDirection_' + choices[choiceIndex]],
 		common: {
 			flexDirection: choices[choiceIndex]
 		}
@@ -72,7 +72,7 @@ var choices = ['nowrap', 'wrap', 'wrap-reverse'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	sheet.addCondition('flexWrap_' + choices[choiceIndex]).addStyler({flexWrap: choices[choiceIndex]});
 	main.addSelector({
-		when: ['flexWrap_' + choices[choiceIndex]],
+		condition: ['flexWrap_' + choices[choiceIndex]],
 		common: {
 			flexWrap: choices[choiceIndex]
 		}
@@ -84,7 +84,7 @@ var choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-aroun
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	sheet.addCondition('justifyContent_' + choices[choiceIndex]).addStyler({justifyContent: choices[choiceIndex]});
 	main.addSelector({
-		when: ['justifyContent_' + choices[choiceIndex]],
+		condition: ['justifyContent_' + choices[choiceIndex]],
 		common: {
 			justifyContent: choices[choiceIndex]
 		}
@@ -96,7 +96,7 @@ var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	sheet.addCondition('alignItems_' + choices[choiceIndex]).addStyler({alignItems: choices[choiceIndex]});
 	main.addSelector({
-		when: ['alignItems_' + choices[choiceIndex]],
+		condition: ['alignItems_' + choices[choiceIndex]],
 		common: {
 			alignItems: choices[choiceIndex]
 		}
@@ -108,7 +108,7 @@ var choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-aroun
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	sheet.addCondition('alignContent_' + choices[choiceIndex]).addStyler({alignContent: choices[choiceIndex]});
 	main.addSelector({
-		when: ['alignContent_' + choices[choiceIndex]],
+		condition: ['alignContent_' + choices[choiceIndex]],
 		common: {
 			alignContent: choices[choiceIndex]
 		}
@@ -120,7 +120,7 @@ var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
 	sheet.addCondition('alignSelf_' + choices[choiceIndex]).addStyler({alignSelf: choices[choiceIndex]});
 	main.addSelector({
-		when: ['alignSelf_' + choices[choiceIndex]],
+		condition: ['alignSelf_' + choices[choiceIndex]],
 		common: {
 			alignSelf: choices[choiceIndex]
 		}
@@ -134,7 +134,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 	for (var i = 0; i < 13; i++) { // loop through size values
 		sheet.addCondition([abbrevs[sizeIndex]] + '_' + i).addStyler({[abbrevs[sizeIndex]]: i});
 		main.addSelector({
-			when: [[abbrevs[sizeIndex]] + '_' + i],
+			condition: [[abbrevs[sizeIndex]] + '_' + i],
 			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
 			}
@@ -142,7 +142,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 
 		sheet.addCondition([abbrevs[sizeIndex]] + 'Push_' + i).addStyler({[abbrevs[sizeIndex] + 'Push']: i});
 		main.addSelector({
-			when: [[abbrevs[sizeIndex]] + 'Push_' + i],
+			condition: [[abbrevs[sizeIndex]] + 'Push_' + i],
 			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',
@@ -153,7 +153,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 
 		sheet.addCondition([abbrevs[sizeIndex]] + 'Pull_' + i).addStyler({[abbrevs[sizeIndex] + 'Pull']: i});
 		main.addSelector({
-			when: [[abbrevs[sizeIndex]] + 'Pull_' + i],
+			condition: [[abbrevs[sizeIndex]] + 'Pull_' + i],
 			common: {
 				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
 					position: 'relative',

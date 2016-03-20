@@ -6,12 +6,11 @@
 var lodash = require('lodash')
 
 var base = require('./theme/baseVars.jsx');
-var override = require('./theme/overrideVars.jsx');
 
 var maxDepth = 20;
 
 window.Pod_Vars = window.Pod_Vars || {
-	sources: [base, override],
+	sources: [base],
 	cache: {},
 
 	register: function(vars, level = 0) {
@@ -50,7 +49,6 @@ window.Pod_Vars = window.Pod_Vars || {
 
 		for (var sourceIndex = 0, sourceLen = Pod_Vars.sources.length; sourceIndex < sourceLen; sourceIndex++) {
 			var source = Pod_Vars.sources[sourceIndex];
-
 			if (typeof(source) !== 'undefined') {
 				var vars = source;
 				if (typeof(vars) !== 'undefined') {

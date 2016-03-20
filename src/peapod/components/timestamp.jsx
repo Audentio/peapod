@@ -49,8 +49,10 @@ var Pod_liveTimestamp = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		return (
-			<span style={Pod_Styler.getStyle(this)} title={ moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a') }>
+			<span style={style.main} title={ moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a') }>
 				{this.state.timeElapsed}
 			</span>
 		)

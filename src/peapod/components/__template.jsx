@@ -36,8 +36,9 @@ var Pod_template = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
 		return (
-			<div style={Pod_Styler.getStyle(this)}
+			<div style={style.main}
 				{this.props.children}>
 			</div>
 		);

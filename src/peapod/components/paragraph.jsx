@@ -22,8 +22,10 @@ var Wrapper = require('../wrapper.jsx')
 var Paragraph = React.createClass({
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		return (
-			<p style={Pod_Styler.getStyle(this)}>
+			<p style={style.main}>
 				{this.props.children}
 			</p>
 		);

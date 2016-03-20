@@ -8,31 +8,14 @@ import Pod_Wrapper from './wrapper.jsx';
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = ['Alert','Button', 'Checkbox', 'CircularProgress', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Notification', 'Paginator', 'Paragraph', 'Photo', 'Portal', 'Progress', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'];
+var components = ['Alert', 'Button', 'Checkbox', 'CircularProgress', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Notification', 'Paginator', 'Paragraph', 'Photo', 'Portal', 'Progress', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'];
 
 window.Pod = {options:{}};
 
-
-// below here can be removed after all components are refactored
-import Pod_timestamp from './components/timestamp.jsx';
-//import Pod_image from './components/image.jsx';
-import Paragraph from './components/paragraph.jsx';
-import { Pod_animation } from './components/animation.jsx';
-
 _.merge(Pod, {
-    timestamp: Pod_timestamp,
-    //image: Pod_image,
-    animation: Pod_animation,
-    p: Paragraph,
+    timestamp: require('./components/timestamp.jsx'),
+    animation: require('./components/animation.jsx'),
 });
-
-var keys = Object.keys(Pod);
-for (var i = 0, len = keys.length; i < len; i++) {
-	var key = keys[i];
-	Pod[key] = Pod_Wrapper(Pod[key]);
-}
-// don't remove below here
-
 
 var init = function() {
 	var req = require.context('./components', false, /^\.\/.*\.jsx$/);
@@ -49,7 +32,6 @@ var init = function() {
 	base(components);
 }
 
-
 if (module.hot) {
 	module.hot.accept();
 
@@ -58,5 +40,7 @@ if (module.hot) {
 		window._peapodRoot.forceUpdate();
 	}
 }
+
+init();
 
 module.exports = [Pod, Pod_Vars, Pod_Styler, components];

@@ -2,7 +2,7 @@ import {Sheet} from '../../stylesheet.jsx';
 
 var sheet = new Sheet,
 	main = sheet.addMain(),
-	wrapper = sheet.addPart('wrapper'),
+	input = sheet.addPart('input'),
 	placeholder = sheet.addPart('placeholder'),
 	icon = sheet.addPart('icon');
 
@@ -54,7 +54,7 @@ sheet.setValues({
 });
 
 
-main.addSelector({
+input.addSelector({
 	common: {
 		fontSize: '$input.font.size',
 		fontFamily: '$input.font.family',
@@ -71,7 +71,7 @@ main.addSelector({
 	}
 });
 
-wrapper.addSelector({
+main.addSelector({
 	common: {
 		display: 'inline-block',
 		position: 'relative',
@@ -84,7 +84,7 @@ wrapper.addSelector({
 		background: '$input.color.background',
 	}
 }).addSelector({
-	when: ['focused'],
+	condition: ['focused'],
 	common: {
 		background: '$input.color.backgroundFocus'
 	}

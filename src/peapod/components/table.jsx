@@ -311,6 +311,8 @@ var Table = React.createClass({
 	},
 
 	render: function() {
+		var style = Pod_Styler.getStyle(this);
+
 		var columns = this.state.columns,
 			pagination = this.state.pagination,
 			hoveredRow = this.state.hoveredRow,
@@ -337,7 +339,7 @@ var Table = React.createClass({
 		var noData = (paginated.data.length == 0 && !this.props.isFetching) ? <div style={statusStyle}>No Data</div>: null;
 
 		return (
-			<div style={Pod_Styler.getStyle(this)}>
+			<div style={style.main}>
 				<TableControls>
 					<Grid styler={{justifyContent: 'space-between', style: {height: '$table.headerHeight', lineHeight: '$table.headerHeight'}}}>
 						<div>
@@ -382,7 +384,7 @@ var Table = React.createClass({
 						</Grid>
 					</Grid>
 				</TableControls>
-				<TableInner style={Pod_Styler.getStyle(this)}
+				<TableInner style={style.main}
 					data={paginated.data}
 					columns={columns}
 					columnNames={this.makeHeader}
@@ -403,7 +405,7 @@ var Table = React.createClass({
 							{isFetching}
 						</div>
 				</TableInner>
-				<div style={Pod_Styler.getStyle(this, 'footer')}>
+				<div style={style.footer}>
 					<Grid styler={{
 							justifyContent: 'space-between',
 							style: {height: '$table.footerHeight', lineHeight: '$table.footerHeight'}

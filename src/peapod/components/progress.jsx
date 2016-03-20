@@ -37,14 +37,11 @@ var Progress = React.createClass({
 	},
 
 	render() {
-		var style_main = 		Pod_Styler.getStyle(this),
-			style_progress = 	[ Pod_Styler.getStyle(this, 'progress'), { transform: 'scaleX('+this.getScale()+')' } ],
-			style_hidden = 		{display: 'none'};
-
-
+		var style = Pod_Styler.getStyle(this);
+		
 		return (
-			<div style={style_main}>
-			    <div style={style_progress}></div>
+			<div style={style.main}>
+			    <div style={style.progress}></div>
 			</div>
 		)
 	}
