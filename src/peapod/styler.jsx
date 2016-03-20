@@ -189,29 +189,41 @@ window.Pod_Styler = window.Pod_Styler || {
 					var ruleKeys = Object.keys(part);
 					for (var ruleIndex = 0, ruleLen = ruleKeys.length; ruleIndex < ruleLen; ruleIndex++) {
 						var ruleKey = ruleKeys[ruleIndex],
+							computedRuleKey = Pod_Styler.parseVariableValue(ruleKey, obj, scene),
 							computedVar = part[ruleKey];
+
 						if (typeof(computedVar) == 'object') { // merge style objects
 							for (var varIndex = 0, varLen = Object.keys(computedVar).length; varIndex < varLen; varIndex++) {
 								computedVar[Object.keys(computedVar)[varIndex]] = Pod_Styler.parseVariableValue(computedVar[Object.keys(computedVar)[varIndex]], obj, scene);
 							}
 
 							if (typeof(partStyle[ruleKey]) !== 'undefined') { // merge if key already exists
-								partStyle[ruleKey] = Object.assign(partStyle[ruleKey], computedVar);
+								partStyle[computedRuleKey] = Object.assign(partStyle[computedRuleKey], computedVar);
 							} else { // otherwise add the key
-								partStyle[ruleKey] = computedVar;
+								partStyle[computedRuleKey] = computedVar;
 							}
 
 						} else {
 							var resultVar = Pod_Styler.parseVariableValue(computedVar, obj, scene);
 							if (typeof(resultVar) == 'string'){
-								if (typeof(partStyle[ruleKey]) == 'string' && partStyle[ruleKey].indexOf('!') > -1) {
-									if (resultVar.indexOf('!') == -1) {
+								if (typeof(partStyle[ruleKey]) == 'string' && partStyle[ruleKey].indexOf('!important') > -1) {
+									if (resultVar.indexOf('!important') == -1) {
 										console.warn("You have overridden the styling '" + ruleKey + ": " + partStyle[ruleKey] + "' with '" + ruleKey + ": " + resultVar + "' in " + componentName + "-" + partKey + " which could cause significant styling errors.  This must be changed to '" + ruleKey + ": " + resultVar + "!' to indicate you are sure you want to override this value.");
 									}
 								}
 							}
+						}
 
-							partStyle[ruleKey] = resultVar;
+						if (typeof(resultVar) == 'string') {
+							if (resultVar.indexOf('!unset') == -1) {
+								partStyle[computedRuleKey] = resultVar;
+							} else {
+								if (computedRuleKey == 'all') {
+									partStyle = {};
+								}
+							}
+						} else {
+							partStyle[computedRuleKey] = resultVar;
 						}
 					}
 				}
@@ -248,11 +260,54 @@ window.Pod_Styler = window.Pod_Styler || {
 		return obj;
 	},
 
+	getStyleFromCache: function(obj, componentName) {
+		if (typeof(this.cache[componentName]) == 'undefined') this.cache[componentName] = [];
+		for (var i = 0, len = this.cache[componentName].length; i < len; i++) {
+			var cacheVal = this.cache[componentName][i];
+			if (this.checkCacheEquality(obj, cacheVal)) {
+				return cacheVal.style;
+			}
+		}
+		return false;
+	},
+
+	addStyleToCache: function(obj, style) {
+		var componentName = obj.componentName;
+
+		if (typeof(Pod_Styler.cache[componentName]) == 'undefined') Pod_Styler.cache[componentName] = [];
+		for (var i = 0, len = Pod_Styler.cache[componentName].length; i < len; i++) {
+			var cacheVal = Pod_Styler.cache[componentName][i];
+			if (Pod_Styler.checkCacheEquality(obj, cacheVal)) return false;
+		}
+		if (len > Pod_Styler.maxCacheLength) Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
+		Pod_Styler.cache[componentName].push({obj: obj, style: style});
+	},
+
+	checkCacheEquality: function(obj, cacheVal) {
+		var stylerEqual = lodash.isEqual(obj.styler, cacheVal.styler),
+			stateEqual = lodash.isEqual(obj.state, cacheVal.state),
+			propsEqual = lodash.isEqual(obj.props, cacheVal.props),
+			contextEqual = lodash.isEqual(obj.context, cacheVal.context),
+			radiumEqual = false;
+
+		if ((typeof(obj.state) === 'undefined') && (typeof(cacheVal.state) === 'undefined')) {
+			radiumEqual = true;
+		} else if ((obj.state == null) && (cacheVal.state == null)) {
+			radiumEqual = true;
+		} else if ((typeof(obj.state) === 'undefined' || obj.state == null) || (typeof(cacheVal.state) === 'undefined' || cacheVal.state == null)) {
+			radiumEqual = false;
+		} else {
+			radiumEqual = obj.state._radiumStyleState == cacheVal.state._radiumStyleState;
+		}
+
+		return stylerEqual && stateEqual && propsEqual && contextEqual && radiumEqual;
+	},
+
 	getStyle: function(instance, localStyler = {}) {
 		var obj = Pod_Styler.makeInstanceObj(instance, localStyler);
 
 		if (typeof(localStyler) == 'string') {
-			console.error("Using old `getStyle` syntax in " + obj.componentName);
+			console.error("Using old `Pod_Styler.getStyle` syntax in " + obj.componentName);
 		}
 
 		if (Pod_Styler.enableCache) {
@@ -266,7 +321,7 @@ window.Pod_Styler = window.Pod_Styler || {
 		var style = Pod_Styler.processSources(obj, sources);
 
 		if (Pod_Styler.enableCache) {
-			this.addStyleToCache(obj, obj.componentName, style);
+			this.addStyleToCache(obj, style);
 		}
 		return style;
 	},

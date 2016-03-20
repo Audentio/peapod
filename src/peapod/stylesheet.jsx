@@ -377,7 +377,7 @@ class Sheet {
 			var partName = partKeys[i];
 			result[partName] = this.parts[partName].getPartStyling(instance, scene, conditions);
 		}
-		
+
 		return result;
 	}
 

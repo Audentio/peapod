@@ -228,7 +228,7 @@ main.addSelector({
 .addSelector({
 	condition: ['kindSuccess'],
 	common: {
-		backgroundColor: '$color.success.base'
+		backgroundColor: '$color.success.base',
 	}
 }).addSelector({
 	condition: ['kindSuccess', 'notDisabled'],

@@ -320,14 +320,14 @@ sections.push(
 	<Pod.section key="typography">
 		<h1>Typography</h1>
 		<h4>Paragraph</h4>
-		<Pod.p>
+		<Pod.paragraph>
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph.
-		</Pod.p>
+		</Pod.paragraph>
 
 		<h4>Horizontal Rule </h4>
 		<Pod.hr height="1" />
