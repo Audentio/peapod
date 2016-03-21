@@ -98,6 +98,12 @@ window.Pod_Styler = window.Pod_Styler || {
 			components: {},
 			name: '_local'
 		});
+		//apply pre local styling to very beginning of stack
+		stack.unshift({
+			type: 'local',
+			components: {},
+			name: '_preLocal'
+		});
 
 		if (depth >= 30) throw "Maximum Library stack size reached."
 
@@ -140,21 +146,22 @@ window.Pod_Styler = window.Pod_Styler || {
 				source = null;
 			if (library.type == "local") {
 				var localStyle = {},
-					partKeys = Object.keys(parts);
+					partKeys = Object.keys(parts),
+					suffix = (library.name == '_preLocal') ? 'Pre' : '';
 
-				for (var i = 0, len = partKeys.length; i < len; i++) {
-					var part = partKeys[i];
+				for (var partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
+					var part = partKeys[partIndex];
 
-					if (part == 'main' && typeof(obj.styler.mainStyle) == 'undefined') {
+					if (part == 'main' && typeof(obj.styler.mainStyle) == 'undefined' && suffix == '') {
 						if (typeof(obj.styler.style) !== 'undefined') localStyle[part] = obj.styler.style;
 					} else {
-						if (typeof(obj.styler[part + 'Style']) !== 'undefined') localStyle[part] = obj.styler[part + 'Style'];
+						if (typeof(obj.styler[part + 'Style' + suffix]) !== 'undefined') localStyle[part] = obj.styler[part + 'Style' + suffix];
 					}
 				}
 
 				if (Object.keys(localStyle).length > 0) source = localStyle; // if a localStyle was applied, then make it the source
 			} else {
-				var sourceSheet = libraries[i].components[componentName];
+				var sourceSheet = library.components[componentName];
 				if (sourceSheet !== null) {
 					if (typeof(sourceSheet) == 'undefined') {
 						if (enableMissingStyleWarning) console.warn('Could not find styling for ' + componentName + ' in ' + library.name + '.')
