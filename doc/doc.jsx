@@ -80,7 +80,7 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 
 		try {
 			var color = Color(colorValue)
-			if (colorValue != 0) {
+			if (parseInt(colorValue) != colorValue) {
 				colorBlock = <span> <span style={{verticalAlign: 'middle', border: 'solid 1px black', backgroundColor: colorValue, width: '14px', height: '14px', display: 'inline-block'}}> </span></span>
 			}
 		} catch(err) {
