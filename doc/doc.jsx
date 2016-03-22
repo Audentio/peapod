@@ -84,7 +84,7 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 				colorBlock = <span> <span style={{verticalAlign: 'middle', border: 'solid 1px black', backgroundColor: colorValue, width: '14px', height: '14px', display: 'inline-block'}}> </span></span>
 			}
 		} catch(err) {
-
+			// couldn't make valid color, but don't really care for this, just don't output anything
 		}
 
 		styles.push(

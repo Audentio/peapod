@@ -352,6 +352,7 @@ window.Pod_Styler = window.Pod_Styler || {
 	},
 
 	processVariableString: function(computedVar, obj, scene) {
+
 		if (computedVar.indexOf('$') > -1) {
 			var computedKey = computedVar;
 			if (typeof(this.varCache[computedVar + '_' + scene]) == 'undefined') {

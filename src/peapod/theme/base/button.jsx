@@ -18,7 +18,6 @@ sheet.addCondition('kindInfo').addStyler({kind: 'info'});
 sheet.addCondition('kindDanger').addStyler({kind: 'danger'});
 sheet.addCondition('kindSuccess').addStyler({kind: 'success'});
 
-
 //Variables
 sheet.setValues({
 	common: {
@@ -49,7 +48,8 @@ sheet.setValues({
 			},
 			transition: {
 				duration: '150ms',
-				scale: '0.92'
+				scale: '0.92',
+
 			}
 		}
 	}
