@@ -34,7 +34,17 @@ window.Pod_Vars = window.Pod_Vars || {
 
 		for (var i = 0, len = splitName.length; i < len; i++) {
 			if (typeof(currentSource) !== 'undefined') {
-				currentSource = currentSource[splitName[i]];
+				var nextSource = currentSource[splitName[i]];
+				if (typeof(nextSource) !== 'function') {
+					currentSource = nextSource;
+				} else {
+					if (name == 'button.font.size') {
+						console.log(splitName[i])
+						console.log(currentSource);
+					}
+					return nextSource(varSet);
+				}
+
 			} else {
 				return undefined;
 			}

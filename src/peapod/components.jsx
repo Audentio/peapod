@@ -34,9 +34,8 @@ var init = function() {
 
 if (module.hot) {
 	module.hot.accept();
-
-	init();
 	if (typeof(window._peapodRoot) !== 'undefined'){
+		init();
 		window._peapodRoot.forceUpdate();
 	}
 }
