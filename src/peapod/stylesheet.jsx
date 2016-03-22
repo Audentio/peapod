@@ -118,6 +118,7 @@ class Condition {
 		this.state = null;
 		this.props = null;
 		this.contest = null;
+		this.func = null;
 	}
 
 	addStyler(obj) {
@@ -137,6 +138,11 @@ class Condition {
 
 	addContext(obj) {
 		this.context = obj;
+		return this;
+	}
+
+	addFunction(obj) {
+		this.func = obj;
 		return this;
 	}
 
@@ -212,9 +218,14 @@ class Condition {
 		let validStyler = this.checkType('styler', instance),
 			validState = this.checkType('state', instance),
 			validProps = this.checkType('props', instance),
-			validContext = this.checkType('context', instance);
+			validContext = this.checkType('context', instance),
+			validFunction = true;
 
-		return validStyler && validState & validProps && validContext;
+		if (this.func !== null) {
+			validFunction = this.func(instance);
+		}
+
+		return validStyler && validState & validProps && validContext && validFunction;
 	}
 }
 
