@@ -18,12 +18,6 @@ sheet.addCondition('kindInfo').addStyler({kind: 'info'});
 sheet.addCondition('kindDanger').addStyler({kind: 'danger'});
 sheet.addCondition('kindSuccess').addStyler({kind: 'success'});
 
-sheet.addCondition('kindFancy').addFunction(function(obj){
-	if (obj.styler.kind == 'base' || obj.styler.raised == true) return true;
-	return false;
-});
-
-
 //Variables
 sheet.setValues({
 	common: {
