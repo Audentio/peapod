@@ -26,10 +26,17 @@ class Heading extends React.Component {
 
         var tagname = this.props.kind;
 
-        return React.createElement(tagname, {style: style[tagname]}, this.props.children)
-
+        return React.createElement(
+            tagname,
+            {style: style[tagname]},
+            this.props.children
+        )
     }
 
+};
+
+Heading.defaultProps = {
+    kind: 'h1'
 };
 
 module.exports = Wrapper(Heading);
