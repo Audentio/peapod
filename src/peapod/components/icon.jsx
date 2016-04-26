@@ -6,6 +6,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Pod_animation } from './animation.jsx';
+import Pod_Helper from '../helper.jsx'
 var Pod_Styler = require('../styler.jsx');
 var Pod_Vars = require('../vars.jsx');
 var Wrapper = require('../wrapper.jsx')
@@ -37,20 +38,7 @@ var Icon = React.createClass({
 
 	componentWillMount: function(){
 
-		//load icon font
-		var stylesheet = document.getElementById('Peapod_IconFont_stylesheet');
-
-		if(!stylesheet){ //check if <link> already exists
-
-			//Create
-			stylesheet = document.createElement('link');
-			stylesheet.id = "Peapod_IconFont_stylesheet";
-			stylesheet.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
-			stylesheet.rel = "stylesheet";
-
-			//append
-			document.head.appendChild(stylesheet);
-		}
+		Pod_Helper.addStylesheet('IconFont', '//fonts.googleapis.com/icon?family=Material+Icons')
 
 	},
 
