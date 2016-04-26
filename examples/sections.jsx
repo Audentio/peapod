@@ -1,6 +1,57 @@
 import React from 'react'
+import 'peapod/components'
+import Paragraph from 'peapod/components/paragraph'
+import Strong from 'peapod/components/strong'
+import Code from 'peapod/components/code'
 
 var sections = []
+
+//Section: Forms
+sections.push(
+	<div className="section" key={'forms'}>
+		<h1>Forms</h1>
+
+		<Paragraph>Placeholder can by styled with <Code>placeholderStyle</Code> styler prop</Paragraph>
+		<Pod.input placeholder="Styled placeholders" styler={{placeholderStyle: {color: 'red', opacity: '.4', textDecoration: 'underline'}}}/> <br />
+
+		<Paragraph>Basic Input types</Paragraph>
+		<Pod.input placeholder="text" styler={{scene:'material'}} /> <br />
+		<Pod.input placeholder="password" type="password" styler={{scene:'material'}} /> <br />
+		<Pod.input placeholder="number" type="number" styler={{scene:'material'}} /> <br />
+		<Paragraph>URL: Protocol <Code>http</Code> is added <Code>onBlur</Code> if none specificed</Paragraph>
+		<Pod.input placeholder="URL (http(s)/ftp)" type="url" styler={{scene:'material'}} validate validationResponse={{invalid: 'Not a valid URL', valid: 'way to go!'}} /> <br />
+
+		<br />
+
+		<Paragraph><Strong>Validation</Strong>: doesn't run until blur. Thereafter it runs <Code>onChange</Code></Paragraph>
+
+		<Pod.input placeholder="email (required)" type="email" required validate /> <br />
+		<Pod.input placeholder="email (optional)" type="email" styler={{scene:'material'}} validate /> <br />
+		<br />
+
+
+
+		<Pod.checkbox kind="primary" checked={true} />
+
+		<br /><br />
+
+		<Paragraph>Radio</Paragraph>
+		<div>
+			<Pod.radio id="ra1" group="group1" label="item 1" />
+			<Pod.radio id="ra2" group="group1" label="item 2" />
+			<Pod.radio id="ra3" group="group1" label="item 3" />
+			<Pod.radio id="ra4" group="group1" label="item 4" />
+		</div>
+		<Pod.hr styler={{style:{width:100,margin: '15px 0'}}} />
+		<div>
+			<Pod.radio group="group2" label="item A" />
+			<Pod.radio group="group2" label="item B" />
+			<Pod.radio group="group2" label="item C" />
+			<Pod.radio group="group2" label="item D" />
+		</div>
+
+	</div>
+)
 
 //Section: Buttons
 sections.push(
@@ -17,10 +68,8 @@ sections.push(
 		<Pod.button label="Raised" styler={{kind: "primary", raised: true}} />
 		<Pod.button label="Round" styler={{kind: "primary", round: true}} />
 		<Pod.button label="Disabled" styler={{kind:"primary", disabled: true}} />
-
 		<Pod.button styler={{kind: "success", round:true, raised: true}} />
 		<Pod.button styler={{kind: "base"}} onClick={function(){alert('test')}} label="onClick handler" />
-		<Pod.button styler={{kind: "default", style: {color:'white', backgroundColor: 'purple', borderRadius: '2px 20px 2px 20px', fontWeight: 'bold', ':hover':{borderRadius: '20px 2px 20px 2px'}}}} label="Custom" />
 		<Pod.button styler={{kind: "base"}} href="http://peapod.io" label="Anchor/Link" kind="primary" />
 	</div>
 )
@@ -69,11 +118,11 @@ var ProgressExamples = React.createClass({
 				<p style={{marginBottom: '8px'}}><strong>Examples: </strong>Click on these to randomize [or <a href="#" onClick={this.goNuts}>Go nuts</a>]</p>
 
 				<Pod.grid>
-					<Pod.gridCell styler={{md:12, lg:6}}>
+					<Pod.gridCell styler={{lg:6}}>
 						{this.state.bars}
 					</Pod.gridCell>
 
-					<Pod.gridCell styler={{md:12, lg:6}}>
+					<Pod.gridCell styler={{lg:6}}>
 						{this.state.circles}
 					</Pod.gridCell>
 				</Pod.grid>
@@ -174,13 +223,13 @@ sections.push(
 
 		<p style={{marginBottom: '8px'}}>Different strokes (styler prop)</p>
 		<Pod.grid>
-			<Pod.gridCell styler={{md:12, lg:6}}>
+			<Pod.gridCell styler={{lg:6}}>
 				<Pod.progress styler={{kind:'info', stroke: 2}} value={rand()} />
 				<Pod.progress styler={{kind:'info', stroke: 8}} value={rand()} />
 				<Pod.progress styler={{kind:'info', stroke: 12}} value={rand()} />
 			</Pod.gridCell>
 
-			<Pod.gridCell styler={{md:12, lg:6}}>
+			<Pod.gridCell styler={{lg:6}}>
 				<Pod.circularProgress styler={{kind:'danger', stroke: 2, style:{marginLeft: 15}}} value={rand()} />
 				<Pod.circularProgress styler={{kind:'danger', stroke: 8, style:{marginLeft: 15}}} value={rand()} />
 				<Pod.circularProgress styler={{kind:'danger', stroke: 12, style:{marginLeft: 15}}} value={rand()} />
@@ -207,17 +256,6 @@ sections.push(
 		<Pod.photo src="image.png" styler={{style:imageStyle}} alt="Default suffix" hidpiData={false} caption="HiDPI disabled" />
 	</div>
 );
-
-//Section: Forms
-sections.push(
-	<div className="section" key={'forms'}>
-		<h1>Forms</h1>
-
-		<h2>Text input</h2>
-		<Pod.input placeholder="Placeholder..." styler={{placeholderStyle: {color: 'red'}}}/>
-		<Pod.checkbox checked={true} />
-	</div>
-)
 
 //Section: Icons
 sections.push(
@@ -289,7 +327,7 @@ sections.push(
 			Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box
 		</Pod.notification>
 		<Pod.notification dismissable={true} title="Long notification!" styler={{kind: "success"}} id="notif_success">
-			Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box Twelve ziggurats quickly jumped a finch box
+			Twelve ziggurats quickly jumped a finch box Twelve ziggurats quikly jumped a finch box Twelve ziggurats quickly jumped a finch box
 		</Pod.notification>
 	</div>
 )
@@ -301,7 +339,7 @@ sections.push(
 
 		<h2>Timestamps</h2>
 		Page loaded <Pod.timestamp time={new Date().toISOString()} /> (updates automatically)<br />
-		2005 was <Pod.timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
+	2005 was <Pod.timestamp time={new Date("Thu, 05 Apr 2005 05:05:05 GMT")} />
 	</div>
 )
 
@@ -316,8 +354,69 @@ sections.push(
 	</div>
 )
 
+var codeExample__javascript = `function $initHighlight(block, flags) {
+  try {
+    if (block.className.search(/\bno\-highlight\b/) != -1)
+      return processBlock(block.function, true, 0x0F) + ' class=""';
+  } catch (e) {
+    /* handle exception */
+    var e4x =
+        <div>Example
+            <p>1234</p></div>;
+  }
+  for (var i = 0 / 2; i < classes.length; i++) { // "0 / 2" should not be parsed as regexp
+    if (checkCondition(classes[i]) === undefined)
+      return /\d+[\s/]/g;
+  }
+  console.log(Array.every(classes, Boolean));
+}`;
+var codeExample__css = `
+@import url('print.css');
+@page:right {
+ margin: 1cm 2cm 1.3cm 4cm;
+}
+
+@font-face {
+  font-family: Chunkfive; src: url('Chunkfive.otf');
+}
+
+div.text,
+#content,
+li[lang=ru] {
+  font: Tahoma, Chunkfive, sans-serif;
+  background: url('hatch.png') /* wtf? */;  color: #F0F0F0 !important;
+  width: 100%;
+}`;
+var codeExample__cpp = `#include <iostream>
+#define IABS(x) ((x) < 0 ? -(x) : (x))
+
+int main(int argc, char *argv[]) {
+
+  /* An annoying "Hello World" example */
+  for (auto i = 0; i < 0xFFFF; i++)
+    cout << "Hello, World!" << endl;
+
+  char c = '\n';
+  unordered_map <string, vector<string> > m;
+  m["key"] = "\\\\"; // this is an error
+
+  return -2e3 + 12l;
+}`;
+var codeExample__python = `@requires_authorization
+def somefunc(param1='', param2=0):
+    r'''A docstring'''
+    if param1 > param2: # interesting
+        print 'Gre\'ater'
+    return (param2 - param1 + 1 + 0b10l) or None
+
+class SomeClass:
+    pass
+
+>>> message = '''interpreter
+... prompt'''`;
+
 sections.push(
-	<Pod.section key="typography">
+	<Pod.section styler={{style:{padding: '25px 15px',borderBottom: '1px solid #ddd'}}} key="typography">
 		<h1>Typography</h1>
 		<h4>Paragraph</h4>
 		<Pod.paragraph>
@@ -327,7 +426,13 @@ sections.push(
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph.
+					Text <Code>Inline code</Code> text
 		</Pod.paragraph>
+
+		<Pod.codeBlock language="javascript">{codeExample__javascript}</Pod.codeBlock>
+		<Pod.codeBlock>{codeExample__css}</Pod.codeBlock>
+		<Pod.codeBlock>{codeExample__cpp}</Pod.codeBlock>
+		<Pod.codeBlock>{codeExample__python}</Pod.codeBlock>
 
 		<h4>Horizontal Rule </h4>
 		<Pod.hr height="1" />
