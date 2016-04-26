@@ -14,7 +14,7 @@ var config = {
 		filename: 'examples_bundle.js',
 		publicPath: '/static/'
 	},
-	
+
 
 	// Resolve source directories so we can avoid writing
 	// ../../wherever/module
@@ -47,7 +47,7 @@ var config = {
 					path.resolve(__dirname, "src/peapod"),
 					path.resolve(__dirname, "examples")
 				],
-				loaders: ['react-hot','babel-loader']
+				loaders: ['react-hot', 'babel'],
 			},
 
 			//JSX files go through hotloader and Babel
@@ -57,7 +57,7 @@ var config = {
 					path.resolve(__dirname, "src/peapod"),
 					path.resolve(__dirname, "examples")
 				],
-				loaders: ['react-hot','babel-loader']
+				loaders: ['react-hot', 'babel'],
 			}
 		]
 	}

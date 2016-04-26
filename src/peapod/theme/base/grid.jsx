@@ -15,15 +15,15 @@ sheet.setValues({
 				large: '1024',
 				xlarge: '1500'
 			},
-			xsmall: '@media (min-width: 1px)',
-			small: '@media (min-width: 610px)',
-			medium: '@media (min-width: 800px)',
-			large: '@media (min-width: 1024px)',
-			xlarge: '@media (min-width: 1500px)',
-			smallLt: '@media (max-width: 609px)',
-			mediumLt: '@media (max-width: 799px)',
-			largeLt: '@media (max-width: 1023px)',
-			xlargeLt: '@media (max-width: 1499px)'
+			xsmall: '@media (minWidth: 1px)',
+			small: '@media (minWidth: 610px)',
+			medium: '@media (minWidth: 800px)',
+			large: '@media (minWidth: 1024px)',
+			xlarge: '@media (minWidth: 1500px)',
+			smallLt: '@media (maxWidth: 609px)',
+			mediumLt: '@media (maxWidth: 799px)',
+			largeLt: '@media (maxWidth: 1023px)',
+			xlargeLt: '@media (maxWidth: 1499px)'
 		},
 	}
 });

@@ -314,7 +314,7 @@ module.exports = {
 		//Borders
 		border: {
 			color: 'transparent',
-			width: '0',
+			width: '0px',
 			style: 'solid',
 			radius: {
 				small: '2px',
