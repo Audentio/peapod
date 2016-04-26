@@ -6,7 +6,6 @@ import _ from 'lodash'
 //Peapod
 import 'peapod/vars'
 import 'peapod/styler'
-import 'peapod/components'
 
 import Sections from './sections.jsx'
 

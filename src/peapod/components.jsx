@@ -8,7 +8,7 @@ import Pod_Wrapper from './wrapper.jsx';
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = ['Alert', 'Button', 'Checkbox', 'CircularProgress', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Notification', 'Paginator', 'Paragraph', 'Photo', 'Portal', 'Progress', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs'];
+var components = ['Alert','Button', 'Code', 'CodeBlock', 'Checkbox', 'CircularProgress', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Notification', 'Paginator', 'Paragraph', 'Photo', 'Portal', 'Progress', 'Radio', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs', 'Timestamp'];
 
 window.Pod = {options:{}};
 

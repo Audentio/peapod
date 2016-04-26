@@ -43,14 +43,20 @@ var Pod_helper = {
 
     	//Touch
     	if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
-    		var disableScroll = function(e){
-    			e.preventDefault()
-    		};
-    		//TBD
+    		if(allowScroll){
+                document.removeEventListener('touchmove', this.noTouchScrolling)
+            } else {
+                document.addEventListener('touchmove', this.noTouchScrolling)
+            }
     	}
 
-        document.body.style.overflowY = (allowScroll) ? 'scroll' : 'hidden';
+        document.body.style.overflow = (allowScroll) ? '' : 'scroll'; //overflowY doesn't disable scrolling on safari
+        document.documentElement.style.overflow = (allowScroll) ? '' : 'hidden'; //overflowY doesn't disable scrolling on safari
 
+    },
+
+    noTouchScrolling: function(e){
+        e.preventDefault()
     },
 
     fullscreen: {
@@ -115,6 +121,54 @@ var Pod_helper = {
         downLink.href = url;
         downLink.download = filename || url.substring(url.lastIndexOf('/')+1, url.length);
         downLink.click();
+    },
+
+    addStylesheet: function(id, path, callback){
+        if(!document.getElementById('Peapod_'+id+'_stylesheet')){
+            var stylesheet = document.createElement('link');
+            stylesheet.id = 'Peapod_'+id+'_stylesheet'
+            stylesheet.rel = 'stylesheet'
+            stylesheet.type = 'text/css'
+            stylesheet.href = path
+            stylesheet.onload = callback
+            document.head.appendChild(stylesheet)
+            return true
+        }
+        return false
+    },
+
+    addScript: function(params){
+        if(document.getElementById('Peapod_'+params.id+'_script'))
+            return false;
+
+        var addToPage = function(cb){
+            var script = document.createElement('script');
+            script.id = 'Peapod_'+params.id+'_script'
+            script.type = 'text/javascript'
+            script.src = params.url
+            if(cb) script.onload = cb
+            document.head.appendChild(script)
+            return true
+        }
+
+        if(params.ajax) {
+            var request = new XMLHttpRequest();
+            request.open("GET", params.url, true);
+            request.onreadystatechange = function () {
+                if(request.readyState !== 4) return;
+                if(request.status === 200) {
+                    addToPage(function(){
+                        params.callback(request)
+                    })
+                } else {
+                    params.callback(request);
+                }
+            };
+            request.send();
+        }
+        else {
+            addToPage(params.callback)
+        }
     }
 }
 

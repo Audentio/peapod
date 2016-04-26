@@ -6,13 +6,13 @@
 
 
 //Dependencies
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-var Pod_Styler = require('../styler.jsx');
-var Pod_icon = require('./icon.jsx');
-var Wrapper = require('../wrapper.jsx')
-
+import Pod_Styler from '../styler.jsx'
+import Icon from './icon.jsx'
+import Wrapper from '../wrapper.jsx'
+import sheet from '../theme/base/input.jsx'
 
 /**
 * Multipurpose Input component
@@ -28,23 +28,93 @@ var Input = React.createClass({
 
 	//Validate props
 	propTypes: {
-		type: React.PropTypes.oneOf(['text','password']),
+		type: React.PropTypes.oneOf(['text','password', 'email', 'url', 'number']),
 		value: React.PropTypes.string,
-		placeholder: React.PropTypes.string
+		placeholder: React.PropTypes.string,
+		required: React.PropTypes.bool,
+		validate: React.PropTypes.oneOfType([
+			React.PropTypes.func,
+			React.PropTypes.bool
+		]),
+		validationResponse: React.PropTypes.object
+	},
+
+	getDefaultProps: function(){
+		return {
+			type: 'text',
+
+			//validation is disabled by default
+			validate: false,
+			validationResponse: {
+				invalid: 'Invalid input',
+				valid: 'Valid',
+				empty: 'This field is required'
+			}
+		}
 	},
 
 	getInitialState: function() {
 		return {
 			value: this.props.value,
 			focus: false,
-			placeholder: (this.props.value && this.props.value.length > 1) ? undefined : this.props.placeholder //undefined if value prop exists
-		};
+
+			///8
+			placeholder: (this.props.value && this.props.value.length > 1) ? '' : this.props.placeholder,
+			evaluation: null //validation state
+		}
+	},
+
+	evaluate: function(value){
+
+		//If value is empty
+		// -- return 'empty' if required
+		// -- else return null (makes sure there's no notice or style change)
+		if(value === undefined || value === '')
+			return (this.props.required) ? 'empty' : null
+
+		switch (this.props.type) {
+
+			//Field type: E-mail
+			//uses a rather simple regex for validation
+			case 'email':
+				return ( value.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/) ) ? 'valid' : 'invalid'
+
+			//Field type: URL
+			//verify a URL
+			case 'url':
+				var expr = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i
+				return ( value.match(expr) ) ? 'valid' : 'invalid'
+
+			//Regular text type field
+			default:
+				return 'valid'
+
+		}
+	},
+
+	validate: function(value = this.state.value) {
+
+		//no validation required. halt
+		if(!this.props.validate)
+			return false
+
+		//Use custom validation function if passed
+		//else use predefined evaluation function
+		var evaluation = (typeof this.props.validate == 'function') ? this.props.validate(value) : this.evaluate(value)
+
+		this.setState({evaluation:evaluation})
+
 	},
 
 	onChangeHandler: function(e){
 		var value = e.target.value,
 			placeholder = ( value.length > 0 ) ? '' : this.props.placeholder,
 			callback = this.props.callback || function() {};
+
+		//evaluate if evaluated before
+		if(this.state.evaluation !== null) {
+			this.validate(value)
+		}
 
 		callback(value)
 
@@ -57,21 +127,56 @@ var Input = React.createClass({
 
 	onBlur: function(e){
 		this.setState({ focus: false })
+
+		//autofix missing protocol
+		//http is assumed
+		if(	this.props.type == 'url' && //URL type input
+			this.props.validate != false && //validation enabled
+			this.state.value && this.state.value.length > 0 &&  //Value is non-empty & has a dot
+			this.state.value.match(/(?:[a-z][a-z0-9_]*)(\.)(?:[a-z][a-z0-9_]*)/) && //There's a dot in between
+			this.state.value.indexOf('://') == -1 //protocol not defined
+		){
+			var value = 'http://'+this.state.value.trim()
+			this.setState({ value: value })
+			this.validate(value)
+		} else {
+			this.validate()
+		}
 	},
 
 	render: function() {
 		var style = Pod_Styler.getStyle(this);
 
+		//Message to show in response box
+		var validationResponse = this.props.validationResponse[this.state.evaluation]
+
 		return (
-			<div onFocus={this.onFocus} onBlur={this.onBlur} style={style.main} className={this.props.className}>
+			<div style={style.main}>
 
-				<span style={style.placeholder}>
-					{this.props.icon && <Pod_icon styler={{style: style.icon}}>{this.props.icon}</Pod_icon>}
-					{this.state.placeholder}
-				</span>
+				{
+					this.props.icon &&
+					<Icon style={style.icon}>{this.props.icon}</Icon>
+				}
 
-				<input name={this.props.name} type={this.props.type} onFocus={this.onFocusHandler} style={style.input}
-					   value={this.state.value} onChange={this.onChangeHandler} />
+				{
+					this.state.placeholder &&
+					<span style={style.placeholder}>{this.props.placeholder}</span>
+				}
+
+				<input
+					name={this.props.name}
+					type={this.props.type}
+					style={style.input}
+					value={this.state.value}
+					required={this.props.required}
+
+					onChange={this.onChangeHandler}
+					onFocus={this.onFocus}
+					onBlur={this.onBlur} />
+				{
+					(this.state.evaluation !== null) &&
+					<div style={style.evaluation}>{validationResponse}</div>
+				}
 			</div>
 		);
 	}
