@@ -45,7 +45,7 @@ window.Pod_Styler = window.Pod_Styler || {
 				stylesheet = requireFunc('./' + componentName.charAt(0).toLowerCase() + componentName.slice(1) + '.jsx');
 			} catch(err) {
 				if (err.code !== 'MODULE_NOT_FOUND') {
-					throw err; // Re-throw not "Module not found" errors
+					throw err; // Re-throw non-"Module not found" errors
 				} else {
 					console.warn(err);
 				}
@@ -234,7 +234,12 @@ window.Pod_Styler = window.Pod_Styler || {
 						}
 					}
 				}
-				style[partKey] = partStyle;
+
+				if (typeof(style[partKey]) == 'undefined') {
+					style[partKey] = partStyle;
+				} else {
+					style[partKey] = Object.assign(style[partKey], partStyle);
+				}
 			}
 		}
 
