@@ -68,8 +68,8 @@ sheet.setValues({
 			},
 			border: {
 				color: '$palette.grey200',
-				radius: '0',
-				width: '0',
+				radius: '0px',
+				width: '0px',
 				style: 'solid'
 			},
 			font: {
