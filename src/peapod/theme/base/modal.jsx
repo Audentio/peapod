@@ -11,10 +11,10 @@ main.addSelector({
     common: {
         borderWidth: '1px',
         backgroundColor: '$palette.white',
-        padding: '10px',
+        padding: '$font.size.xxxlarge',
         boxShadow: '0 1px 2px rgba(0,0,0,.2)',
-        // margin: '{$gutter.internal} auto' //in case someone puts a width it will center
         display: 'inline-block',
+        textAlign: 'left',
         maxWidth: '400px'
     }
 })

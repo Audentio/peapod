@@ -23,9 +23,9 @@ class Modal extends React.Component {
 
     constructor() {
         super();
-        this.state = {
-            hidden: false
-        };
+        // this.state = {
+        //     hidden: false
+        // };
     }
 
     render() {
@@ -35,17 +35,14 @@ class Modal extends React.Component {
 
         var modalBox = (
             <div style={style.main}>
-                <h2>{this.props.title}</h2>
-                <p>{this.props.text}</p>
-                <br/>
-                <Pod.button label="Hide" styler={{kind: 'success'}} onClick={() => {this.setState({hidden: true})}
-                } />
-                <Pod.button label="Undo" styler={{kind: 'danger'}} />
+                {this.props.children}
             </div>
         );
 
         return (this.props.overlay) ?  (
-            <Pod.overlay children={modalBox} />
+            <Pod.overlay>
+                {modalBox}
+            </Pod.overlay>
         ) : modalBox
 
     }
