@@ -6,6 +6,7 @@ var sheet = new Sheet,
 	main = sheet.addMain();
 
 
+
 sheet.addCondition('orderSet').addStyler({order: ['!=', '']});
 main.addSelector({
 	condition: ['orderSet'],
@@ -42,8 +43,9 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 		sheet.addCondition([abbrevs[sizeIndex]] + '_' + i).addStyler({[abbrevs[sizeIndex]]: i});
 		main.addSelector({
 			condition: [[abbrevs[sizeIndex]] + '_' + i],
+
 			common: {
-				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
+				["'" + Pod_Vars.get('grid.' + sizes[sizeIndex]) + "'"]: { width: (100 * (i / 12)) + '%' }
 			}
 		});
 

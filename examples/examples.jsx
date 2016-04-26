@@ -10,4 +10,5 @@ import 'peapod/components'
 
 import Sections from './sections.jsx'
 
+
 ReactDOM.render(<Sections />, document.getElementById('mainContainer'));

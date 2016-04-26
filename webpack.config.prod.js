@@ -45,8 +45,22 @@ var config = {
 			{ test: /\.json$/, loader: 'json'},
 		],
 		loaders: [
-			{ test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
-			{ test: /\.jsx$/, exclude: /node_modules/, loader: 'babel'}
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: "babel-loader",
+				query: {
+					presets: ['react', 'es2015', 'es2016', 'es2017']
+				}
+			},
+			{
+				test: /\.jsx$/,
+				exclude: /node_modules/,
+				loader: "babel-loader",
+				query: {
+					presets: ['react', 'es2015', 'es2016', 'es2017']
+				}
+			},
 		]
 	},
 };

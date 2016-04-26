@@ -14,9 +14,7 @@ var reduce = lodash.reduce;
 var isPlainObject = lodash.isPlainObject;
 var isUndefined = lodash.isUndefined;
 var isFunction = lodash.isFunction;
-var findIndex = require('lodash/array/findIndex');
 var sorter = lodash.sortByOrder;
-var sortByOrder = require('lodash/collection/sortByOrder');
 
 var Button = require('./button.jsx')
 var Checkbox = require('./checkbox.jsx')
@@ -160,7 +158,7 @@ var Table = React.createClass({
 
 		var ascending = column.sort === 'asc' ? 'desc' : 'asc';
 
-		return sortByOrder(data, [column.property], [ascending])
+		return sorter(data, [column.property], [ascending])
 	},
 
 	filterData: function(data, query) {

@@ -69,12 +69,12 @@ wrapper.addSelector({
 dismissIcon.addSelector({
     common: {
         position: 'absolute',
-        top: '0',
-        right: '0',
+        top: '0px',
+        right: '0px',
         padding: '1.5rem',
         fontWeight: 'bold',
         fontSize: '1.5rem',
-        color: 'rgba(0,0,0,.4)',
+        color: 'rgba(0,0,0,0.4)',
         cursor: 'pointer',
 
         ':hover': {
