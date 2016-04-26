@@ -292,7 +292,8 @@ module.exports = {
 			family: {
 				primary: 'Lato-Regular',
 				secondary: 'Lato-Light',
-				tertiary: 'Lato-Regular'
+				tertiary: 'Lato-Regular',
+				code: 'monaco, monospace'
 			},
 			size: {
 				xsmall: '1.1rem',
