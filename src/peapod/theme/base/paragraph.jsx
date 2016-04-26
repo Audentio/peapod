@@ -9,7 +9,9 @@ var sheet = new Sheet,
 sheet.setValues({});
 
 main.addSelector({
-	marginBottom: '$gutter.internal'
+    common:{
+	   marginBottom: '$gutter.internal'
+    }
 })
 
 module.exports = sheet;
