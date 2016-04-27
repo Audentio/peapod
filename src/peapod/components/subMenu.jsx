@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 var Pod_Styler = require('../styler.jsx');
 var Wrapper = require('../wrapper.jsx')
 
-class Menu extends React.Component {
+class SubMenu extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -16,4 +16,4 @@ class Menu extends React.Component {
     }
 };
 
-module.exports = Wrapper(Menu);
+module.exports = Wrapper(SubMenu);
