@@ -31,10 +31,12 @@ window.Pod_Styler = window.Pod_Styler || {
 	},
 
 	// registers a library
-	addLibrary: function(parentName, libraryName, componentNames, requireFunc) {
+	addLibrary: function(parentName, libraryName, componentNames, requireFunc, globalVars) {
 		console.log('Adding Library ' + libraryName);
 		Pod_Styler.varCache = {};
 		Pod_Styler.removeLibrary(libraryName);
+
+		Pod_Vars.register(globalVars);
 
 		let components = {};
 		for (let i = 0, len = componentNames.length; i < len; i++) {
@@ -59,7 +61,8 @@ window.Pod_Styler = window.Pod_Styler || {
 			componentNames: componentNames,
 			components: components,
 			name: libraryName,
-			type: 'normal'
+			type: 'normal',
+			globalVars: globalVars,
 		}
 
 		Pod_Styler.libraries.push(library);
