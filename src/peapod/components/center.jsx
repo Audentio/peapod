@@ -16,27 +16,28 @@ var Wrapper = require('../wrapper.jsx')
 /**
 * Template component
 *
-* @element Pod_template
+* @element Pod_modal
 *
 */
-class Heading extends React.Component {
+class Center extends React.Component {
+
+    constructor() {
+        super();
+    }
 
     render() {
         var style = Pod_Styler.getStyle(this);
 
-        var tagname = this.props.kind;
+        return (
+            <div style={style.main}>
+                <div style={style.inner}>
+                    {this.props.children}
+                </div>
+            </div>
+        );
 
-        return React.createElement(
-            tagname,
-            {style: style[tagname]},
-            this.props.children
-        )
     }
 
 };
 
-Heading.defaultProps = {
-    kind: 'h1'
-};
-
-module.exports = Wrapper(Heading);
+module.exports = Wrapper(Center);

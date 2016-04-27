@@ -40,11 +40,12 @@ sheet.setValues({
 				width: '$border.width',
 				style: '$border.style'
 			},
-			height: '3rem',
+			height: '3.2rem',
 			lineHeight: '$button.height',
 			font: {
-				family: 'inherit',
-				size: '$font.size.normal'
+				family: 'Roboto',
+				size: '$font.size.normal',
+				weight: 500
 			},
 			transition: {
 				duration: '150ms',
@@ -65,10 +66,12 @@ main.addSelector({
 		borderColor: '$button.border.color',
 
 		textDecoration: 'none',
+		textTransform: 'uppercase',
 		fontFamily: '$button.font.family',
 		fontSize: '$button.font.size',
+		fontWeight: '$button.font.weight',
 		lineHeight: '$button.lineHeight',
-		padding: '0 6px',
+		padding: '0 16px',
 		height: '$button.height',
 		textAlign: 'center',
 		outline: 'none',

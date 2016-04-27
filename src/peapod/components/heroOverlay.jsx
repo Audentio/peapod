@@ -16,27 +16,30 @@ var Wrapper = require('../wrapper.jsx')
 /**
 * Template component
 *
-* @element Pod_template
+* @element Pod_modal
 *
 */
-class Heading extends React.Component {
+class HeroOverlay extends React.Component {
+
+    constructor() {
+        super();
+    }
 
     render() {
         var style = Pod_Styler.getStyle(this);
 
-        var tagname = this.props.kind;
+        return (
+            <div style={style.main}>
+                {this.props.children}
+            </div>
+        );
 
-        return React.createElement(
-            tagname,
-            {style: style[tagname]},
-            this.props.children
-        )
     }
 
 };
 
-Heading.defaultProps = {
-    kind: 'h1'
+HeroOverlay.defaultProps = {
+    position: 'center'
 };
 
-module.exports = Wrapper(Heading);
+module.exports = Wrapper(HeroOverlay);
