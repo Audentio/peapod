@@ -25,11 +25,9 @@ class Overlay extends React.Component {
         var style = Pod_Styler.getStyle(this);
         return (
             <div style={style.main}>
-                <div style={style.outer}>
-                    <div style={style.inner}>
-                        {this.props.children}
-                    </div>
-                </div>
+                <Pod.center>
+                    {this.props.children}
+                </Pod.center>
             </div>
         );
 
