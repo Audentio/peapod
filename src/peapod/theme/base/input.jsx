@@ -109,7 +109,7 @@ main.addSelector({
 	common: {
 		height: '$input.height',
 		display: 'inline-block',
-		marginBottom: '$gutter.internal',
+		// marginBottom: '$gutter.internal',
 		position: 'relative',
 		color: '$input.color.text',
 		backgroundColor: '$input.color.background',
@@ -151,7 +151,6 @@ main.addSelector({
 input.addSelector({
 	common: {
 		height: '100%',
-		margin: '0',
 		width: '100%',
 		paddingTop: '$input.padding.top',
 		paddingRight: '$input.padding.right',
