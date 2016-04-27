@@ -2,7 +2,8 @@ import {Sheet} from '../../stylesheet.jsx';
 
 var sheet = new Sheet,
     main = sheet.addMain(),
-    anchor = sheet.addPart('anchor');
+    anchor = sheet.addPart('anchor'),
+    subtext = sheet.addPart('subtext');
 
 //Variables
 sheet.setValues({
@@ -23,10 +24,20 @@ main.addSelector({
     }
 });
 
+subtext.addSelector({
+    common: {
+        float: 'right',
+        paddingLeft: '24px'
+    }
+});
+
 anchor.addSelector({
     common: {
         textDecoration: 'none',
-        color: 'inherit'
+        color: 'inherit',
+        display: 'inline-block',
+        width: '100%',
+        height: '100%'
     }
 });
 
