@@ -12,7 +12,6 @@ import ReactDOM from 'react-dom'
 import Pod_Styler from '../styler.jsx'
 import Icon from './icon.jsx'
 import Wrapper from '../wrapper.jsx'
-import sheet from '../theme/base/input.jsx'
 
 /**
 * Multipurpose Input component

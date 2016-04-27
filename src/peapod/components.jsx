@@ -2,15 +2,44 @@
 //import ReactDOM from 'react-dom'
 import _ from 'lodash'
 
-import Pod_Wrapper from './wrapper.jsx';
-
 //Peapod
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = ['Alert','Button', 'Code', 'CodeBlock', 'Checkbox', 'CircularProgress', 'Div', 'Grid', 'GridCell', 'Hr', 'Icon', 'Input', 'Label', 'Notification', 'Paginator', 'Paragraph', 'Photo', 'Portal', 'Progress', 'Radio', 'Section', 'Table', 'TableCell', 'TableRow', 'Tabs', 'Timestamp'];
+var components = [
+	'Alert',
+	'Button',
+	'Code',
+	'CodeBlock',
+	'Checkbox',
+	'CircularProgress',
+	'Div',
+	'Grid',
+	'GridCell',
+	'Hr',
+	'Icon',
+	'Input',
+	'Label',
+	'Notification',
+	'Paginator',
+	'Paragraph',
+	'Photo',
+	'Portal',
+	'Progress',
+	'Radio',
+	'Section',
+	'Table',
+	'TableCell',
+	'TableInner',
+	'TableRow',
+	'Tabs',
+	'Timestamp'
+];
 
-window.Pod = {options:{}};
+window.Pod = {
+	options:{},
+	wrapper: require('./wrapper.jsx'),
+};
 
 _.merge(Pod, {
     timestamp: require('./components/timestamp.jsx'),

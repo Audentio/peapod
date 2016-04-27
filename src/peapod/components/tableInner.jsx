@@ -46,7 +46,7 @@ var TableInner = React.createClass({
 		var rowKey = this.props.rowKey;
 		var rowProps = this.props.row || function() {};
 		var hoveredRow = this.props.hoveredRow;
-
+		
 		return (
 			<div style={{overflowX: 'auto'}}>
 				<div style={style.main}>

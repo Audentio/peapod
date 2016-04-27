@@ -47,15 +47,15 @@ label.addSelector({
 		paddingRight: '$gutter.internal',
 		borderColor: '$paginator.border.color',
 		borderStyle: '$paginator.border.style',
-		borderTopWidth: '0',
-		borderBottomWidth: '0',
+		borderTopWidth: '0px',
+		borderBottomWidth: '0px',
 		borderLeftWidth: '$paginator.border.width',
 		borderRightWidth: '$paginator.border.width'
 	}
 }).addSelector({
 	condition: ['onePage'],
 	common: {
-		borderRightWidth: '0'
+		borderRightWidth: '0px'
 
 	}
 });
