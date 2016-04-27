@@ -6,6 +6,7 @@ var sheet = new Sheet,
 	main = sheet.addMain(),
 	input = sheet.addPart('input'),
 	placeholder = sheet.addPart('placeholder'),
+	label = sheet.addPart('label'),
 	icon = sheet.addPart('icon'),
 	evaluation = sheet.addPart('evaluation');
 
@@ -54,22 +55,22 @@ sheet.setValues({
 			color: {
 				text: '$color.text.base',
 				placeholder: 'rgba(0,0,0,0.3)',
-				background: '$palette.grey200',
-				backgroundFocus: '$palette.grey100',
+				background: 'transparent',
+				backgroundFocus: 'transparent',
 				icon: '$input.color.text'
 			},
 			textIndent: 0,
 			height: '3.2rem',
 			padding: {
-				top: 7,
-				right: 10,
-				bottom: 7,
-				left: 10
+				top: 8,
+				right: 0,
+				bottom: 8,
+				left: 0
 			},
 			border: {
 				color: '$palette.grey200',
 				radius: '0px',
-				width: '0px',
+				width: '0 0 1px 0',
 				style: 'solid'
 			},
 			font: {
@@ -84,7 +85,7 @@ sheet.setValues({
 				background: 'transparent'
 			},
 			border: {
-				width: '0 0 2px 0'
+				width: '0 0 1px 0'
 			}
 		}
 	},
@@ -115,31 +116,25 @@ main.addSelector({
 		borderWidth: '$input.border.width',
 		borderStyle: '$input.border.style',
 		borderColor: '$input.border.color',
-		borderRadius: '$input.border.radius'
-	},
-	material: {
+		borderRadius: '$input.border.radius',
+		margin: '0 0 8px 0',
 		transition: 'border-color 100ms'
 	}
 }).addSelector({
 	condition: 'focused',
-	material: {
-		borderColor: '$color.primary.base'
+	common: {
+		borderColor: '$color.primary.base',
+		borderWidth: '0 0 2px 0',
 	}
 }).addSelector({
 	condition: 'evaluation-valid',
 	common: {
-		backgroundColor: '$palette.green100'
-	},
-	material: {
 		backgroundColor: 'transparent',
 		borderColor: '$color.success.base'
 	}
 }).addSelector({
 	condition: ['evaluation-invalid'],
 	common: {
-		backgroundColor: '$palette.red100'
-	},
-	material: {
 		backgroundColor: 'transparent',
 		borderColor: '$color.danger.base'
 	}
@@ -148,9 +143,6 @@ main.addSelector({
 .addSelector({
 	condition: ['evaluation-empty'],
 	common: {
-		backgroundColor: '$palette.red100'
-	},
-	material: {
 		backgroundColor: 'transparent',
 		borderColor: '$color.danger.base'
 	}
@@ -159,7 +151,7 @@ main.addSelector({
 input.addSelector({
 	common: {
 		height: '100%',
-		margin: 0,
+		margin: '0',
 		width: '100%',
 		paddingTop: '$input.padding.top',
 		paddingRight: '$input.padding.right',
@@ -168,21 +160,19 @@ input.addSelector({
 		verticalAlign: 'middle',
 		textIndent: '$input.textIndent',
 		background: 'transparent',
-		fontSize: 'inherit',
+		fontSize: '1.6rem',
 		color: 'inherit',
 		appearance: 'none',
 		border: 'none',
 		outline: 'none',
 		lineHeight: 'normal',
 		position: 'relative',
-		zIndex: 2
-	},
-	material: {
+		zIndex: 2,
 		transition: 'padding 100ms'
 	}
 }).addSelector({
 	condition: 'focused',
-	material: {
+	common: {
 		paddingLeft: 0
 	}
 })
@@ -201,32 +191,31 @@ placeholder.addSelector({
 		color: '$input.color.placeholder',
 		overflow: 'hidden',
 		whiteSpace: 'nowrap',
-		textOverflow: 'ellipsis'
-	},
-	material: {
-		transition: 'padding 100ms'
+		textOverflow: 'ellipsis',
+		fontSize: '1.6rem',
+		transition: 'padding 100ms',
 	}
 }).addSelector({
 	condition: 'focused',
-	material: {
+	common: {
 		paddingLeft: 0
 	}
 })
 
 evaluation.addSelector({
 	common: {
-		display: 'inline-block',
-		padding: '1px 6px 2px',
+		display: 'block',
+		padding: '6px 0 0',
 		borderRadius: '$border.radius.small',
 		fontSize: '$font.size.xsmall',
-		backgroundColor: '$palette.grey100',
-		position: 'absolute',
-		marginLeft: '$gutter.internal',
-		marginTop: 7,
-		left: '100%',
-		top: 0,
-		color: 'white',
-		fontWeight: 'bold',
+		// backgroundColor: '$palette.grey100',
+		// position: 'absolute',
+		// marginLeft: '$gutter.internal',
+		// marginTop: 7,
+		// left: '100%',
+		// top: 0,
+		color: '$palette.grey100',
+		// fontWeight: 'bold',
 		whiteSpace: 'nowrap'
 	}
 }).addSelector({
@@ -234,21 +223,21 @@ evaluation.addSelector({
 	common: {
 		animation: 'x 500ms 0s 1',
 		animationName: bounceKeyframes1,
-		backgroundColor: '$color.danger.base'
+		color: '$color.danger.base'
 	}
 }).addSelector({
 	condition: 'evaluation-empty',
 	common: {
 		animation: 'x 500ms 0s 1',
 		animationName: bounceKeyframes2,
-		backgroundColor: '$color.danger.base'
+		color: '$color.danger.base'
 	}
 }).addSelector({
 	condition: 'evaluation-valid',
 	common: {
 		animation: 'x 500ms 0s 1',
 		animationName: bounceKeyframes3,
-		backgroundColor: '$color.success.base'
+		color: '$color.success.base'
 	}
 })
 
