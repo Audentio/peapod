@@ -295,7 +295,7 @@ var init = function(components) {
 			//Typography
 			font: {
 				family: {
-					primary: 'Lato-Regular',
+					primary: 'Roboto',
 					secondary: 'Lato-Light',
 					tertiary: 'Lato-Regular',
 					code: 'monaco, monospace'
@@ -312,6 +312,7 @@ var init = function(components) {
 				weight: {
 					light: '300',
 					normal: '400',
+					medium: '500',
 					bold: '700'
 				}
 			},
@@ -340,7 +341,7 @@ var init = function(components) {
 					active: '#0089af',
 				},
 				general: {
-					base: '$palette.white',
+					base: '$palette.blue400',
 					hover: '$palette.grey100',
 					active: '$palette.grey200',
 				},
@@ -390,9 +391,9 @@ var init = function(components) {
 
 			//Spacing
 			gutter: {
-				large: '3rem',
-				small: '2rem',
-				internal: '1rem'
+				large: '32px',
+				small: '24px',
+				internal: '16px'
 			},
 
 			//Transitions
@@ -437,6 +438,10 @@ var init = function(components) {
 				d3: '0 12px 15px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19)',
 				d4: '0 16px 28px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21)',
 				d5: '0 27px 24px 0 rgba(0,0,0,0.2),0 40px 77px 0 rgba(0,0,0,0.22)'
+			},
+
+			opacity: {
+				notAllowed: '.7'
 			}
 
 		}

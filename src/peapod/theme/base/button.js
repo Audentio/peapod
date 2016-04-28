@@ -28,8 +28,8 @@ sheet.setValues({
 					dark: '$color.text.dark'
 				},
 				base: {
-					background: '#778A9D',
-					color: 'white',
+					background: '$palette.blue400',
+					color: '$palette.white',
 					hover: '$color.primary.hover',
 					active: '$color.primary.active'
 				}
@@ -40,12 +40,12 @@ sheet.setValues({
 				width: '$border.width',
 				style: '$border.style'
 			},
-			height: '3.2rem',
+			height: '32px',
 			lineHeight: '$button.height',
 			font: {
-				family: 'Roboto',
+				family: '$font.family.primary',
 				size: '$font.size.normal',
-				weight: 500
+				weight: '$font.weight.medium'
 			},
 			transition: {
 				duration: '150ms',
@@ -73,12 +73,14 @@ main.addSelector({
 		lineHeight: '$button.lineHeight',
 		paddingTop: '0px',
 		paddingBottom: '0px',
-		paddingLeft: '16px',
-		paddingRight: '16px',
+		paddingLeft: '$gutter.internal',
+		paddingRight: '$gutter.internal',
 		height: '$button.height',
 		textAlign: 'center',
 		outline: 'none',
+
 		color: '$button.color.text.dark',
+		backgroundColor: '$button.color.base.background'
 	}
 }).addSelector({
 	condition: ['notDisabled'],
@@ -94,12 +96,12 @@ main.addSelector({
 	condition: 'disabled',
 	common: {
 		cursor: 'not-allowed',
-		opacity: '.7'
+		opacity: '$opacity.notAllowed'
 	}
 }).addSelector({
 	condition: ['raised'],
 	common: {
-		boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2)'
+		boxShadow: '$shadows.d1'
 	}
 }).addSelector({
 	condition: ['block'],
@@ -109,7 +111,7 @@ main.addSelector({
 }).addSelector({
 	condition: ['round'],
 	common: {
-		borderRadius: '10000px'
+		borderRadius: '1000000px'
 	}
 })
 
@@ -117,8 +119,9 @@ main.addSelector({
 	condition: ['kindGeneral'],
 	common: {
 		backgroundColor: '$color.general.base',
+		color: '$palette.white',
 		borderColor: '$palette.grey200',
-		borderWidth: '1px'
+		borderWidth: '$border.width'
 	}
 }).addSelector({
 	condition: ['kindGeneral', 'notDisabled'],

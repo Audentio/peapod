@@ -15,9 +15,10 @@ sheet.setValues({
 
 main.addSelector({
     common: {
-        background: '#fff',
+        background: '$palette.white',
         boxShadow: '$shadows.d1',
-        padding: '16px 0',
+        paddingTop: '$gutter.internal',
+        paddingBottom: '$gutter.internal',
         borderRadius: '$border.radius.small',
         zIndex: 3,
         position: 'absolute'
@@ -41,7 +42,8 @@ portal.addSelector({
     common: {
         background: '#fff',
         boxShadow: '$shadows.d1',
-        padding: '16px 0',
+        paddingTop: '$gutter.internal',
+        paddingBottom: '$gutter.internal',
         borderRadius: '$border.radius.small',
         zIndex: 3,
         position: 'relative'

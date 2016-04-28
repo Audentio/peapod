@@ -12,22 +12,24 @@ sheet.setValues({
 
 main.addSelector({
     common: {
-        height: '32px',
-        lineHeight: '32px',
-        padding: '0 24px',
+        height: '$gutter.large',
+        lineHeight: '$gutter.large',
+        paddingLeft: '$gutter.small',
+        paddingRight: '$gutter.small',
         background: '$palette.white',
+        width: '100%',
+        position: 'relative',
 
         ':hover': {
-            background: '$palette.grey100',
-            color: 'blue'
+            background: '$palette.grey100'
         }
     }
 });
 
 subtext.addSelector({
     common: {
-        float: 'right',
-        paddingLeft: '24px'
+        position: 'absolute',
+        top: 0, right: '$gutter.small',
     }
 });
 
