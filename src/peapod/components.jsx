@@ -6,35 +6,12 @@ import _ from 'lodash'
 //import Pod_core from './core.jsx';
 import Pod_core from './components/core.jsx';
 
-var components = [
-	'Alert',
-	'Button',
-	'Code',
-	'CodeBlock',
-	'Checkbox',
-	'CircularProgress',
-	'Div',
-	'Grid',
-	'GridCell',
-	'Hr',
-	'Icon',
-	'Input',
-	'Label',
-	'Notification',
-	'Paginator',
-	'Paragraph',
-	'Photo',
-	'Portal',
-	'Progress',
-	'Radio',
-	'Section',
-	'Table',
-	'TableCell',
-	'TableInner',
-	'TableRow',
-	'Tabs',
-	'Timestamp'
-];
+var components = [],
+	ignoreComponents = [
+		'__template',
+		'Animation',
+		'Core',
+	];
 
 window.Pod = {
 	options:{},
@@ -47,11 +24,17 @@ _.merge(Pod, {
 });
 
 var init = function() {
-	var req = require.context('./components', false, /^\.\/.*\.jsx$/);
-	for (var i = 0, len = components.length; i < len; i++) {
-		var component = components[i],
-			componentName = component.charAt(0).toLowerCase() + component.slice(1);
-		window.Pod[componentName] = req('./' + componentName + '.jsx');
+	var req = require.context('./components', false, /^\.\/.*\.jsx$/),
+		fileNames = req.keys();
+
+	for (var i = 0, len = fileNames.length; i < len; i++) {
+		var fileName = fileNames[i].replace('./', '').replace('.jsx', ''),
+			componentName = fileName.charAt(0).toUpperCase() + fileName.slice(1);
+
+		if (ignoreComponents.indexOf(componentName) == -1) {
+			components.push(componentName);
+			window.Pod[fileName] = req('./' + fileName + '.jsx');
+		}
 	}
 
 	window.Pod_Vars = window.Pod_Vars || require('./vars.js');
