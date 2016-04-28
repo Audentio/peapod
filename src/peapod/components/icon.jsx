@@ -6,9 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Pod_animation } from './animation.jsx';
-import Pod_Helper from '../helper.jsx'
-var Pod_Styler = require('../styler.jsx');
-var Pod_Vars = require('../vars.jsx');
+import Pod_Helper from '../helper.js'
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 /**

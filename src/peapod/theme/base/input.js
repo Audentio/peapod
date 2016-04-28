@@ -1,4 +1,4 @@
-import {Sheet} from '../../stylesheet.jsx';
+import {Sheet} from '../../stylesheet.js';
 import Radium from 'radium'
 import color from 'color'
 

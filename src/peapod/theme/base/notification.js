@@ -1,5 +1,4 @@
-import {Sheet} from '../../stylesheet.jsx';
-import Radium from 'radium';
+import {Sheet} from '../../stylesheet.js';
 
 var sheet = new Sheet,
 	main = sheet.addMain(),

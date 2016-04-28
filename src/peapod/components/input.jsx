@@ -9,7 +9,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Pod_Styler from '../styler.jsx'
+import Pod_Styler from '../styler.js'
 import Icon from './icon.jsx'
 import Wrapper from '../wrapper.jsx'
 

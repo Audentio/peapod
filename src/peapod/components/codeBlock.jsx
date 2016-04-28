@@ -5,8 +5,8 @@
 */
 
 import React from 'react'
-import Pod_Styler from '../styler.jsx'
-import Pod_Helper from '../helper.jsx'
+import Pod_Styler from '../styler.js'
+import Pod_Helper from '../helper.js'
 import Wrapper from '../wrapper.jsx'
 
 

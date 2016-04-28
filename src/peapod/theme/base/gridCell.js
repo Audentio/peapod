@@ -1,6 +1,6 @@
-var Pod_Vars = require('../../vars.jsx');
+var Pod_Vars = require('../../vars.js');
 
-import {Sheet} from '../../stylesheet.jsx';
+import {Sheet} from '../../stylesheet.js';
 
 var sheet = new Sheet,
 	main = sheet.addMain();

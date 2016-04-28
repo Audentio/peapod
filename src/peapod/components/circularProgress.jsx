@@ -7,7 +7,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Pod_animation } from './animation.jsx'
 import _ from 'lodash'
-import Pod_Styler from '../styler.jsx'
+import Pod_Styler from '../styler.js'
 import Wrapper from '../wrapper.jsx'
 
 var CircularProgress = React.createClass({

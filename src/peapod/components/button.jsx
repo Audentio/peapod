@@ -8,7 +8,7 @@
 var React = require('react');
 
 var Color = require('color');
-var Pod_Styler = require('../styler.jsx');
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 
