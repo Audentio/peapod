@@ -30,4 +30,8 @@ class MenuItem extends React.Component {
     }
 };
 
+MenuItem.defaultProps = {
+    subtext: ' '
+};
+
 module.exports = Wrapper(MenuItem);

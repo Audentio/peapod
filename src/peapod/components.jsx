@@ -33,7 +33,17 @@ var components = [
 	'TableInner',
 	'TableRow',
 	'Tabs',
-	'Timestamp'
+	'Timestamp',
+	'Overlay',
+	'Modal',
+	'Heading',
+	'Hero',
+	'HeroOverlay',
+	'Center',
+	'FixedElement',
+	'Menu',
+	'MenuItem',
+	'SubMenu'
 ];
 
 window.Pod = {

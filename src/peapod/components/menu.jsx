@@ -42,8 +42,18 @@ class Menu extends React.Component {
         } else {
             return (
                 <div style={style.trigger}
-                    onMouseEnter={this.mouseEnter.bind(this)}
-                    onMouseLeave={this.mouseLeave.bind(this)}
+                    onMouseOver={() => {
+                        if (!this.props.click)
+                        this.mouseEnter()
+                    }}
+                    onMouseLeave={() => {
+                        if (!this.props.click)
+                        this.mouseLeave()
+                    }}
+                    onMouseDown={() => {
+                        if (this.props.click)
+                        this.mouseEnter()
+                    }}
                 >
                     {this.props.trigger}
                     {children}
@@ -51,6 +61,10 @@ class Menu extends React.Component {
             )
         }
     }
+};
+
+Menu.defaultProps = {
+    click: false
 };
 
 module.exports = Wrapper(Menu);
