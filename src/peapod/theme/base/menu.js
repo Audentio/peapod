@@ -6,6 +6,7 @@ var sheet = new Sheet,
     trigger = sheet.addPart('trigger');
 
 sheet.addCondition('level').addStyler({level: 1});
+sheet.addCondition('left').addStyler({left: true});
 
 //Variables
 sheet.setValues({
@@ -27,6 +28,12 @@ main.addSelector({
         whiteSpace: 'nowrap',
         transform: 'translate(0, -48px)',
         left: '100%'
+    }
+}).addSelector({
+    condition: ['left'],
+    common: {
+        left: 'auto',
+        right: '100%'
     }
 });
 
