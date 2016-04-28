@@ -326,6 +326,19 @@ var init = function(components) {
 					normal: '400',
 					medium: '500',
 					bold: '700'
+				},
+				margins: {
+					display4: '112px',
+					display3: '48px',
+					display2: '40px',
+					display1: '32px',
+					headline: '28px',
+					title: '28px',
+					subheading: '24px',
+					body2: '24px',
+					body1: '20px',
+					caption: '12px',
+					button: '14px',
 				}
 			},
 

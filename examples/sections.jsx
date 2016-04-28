@@ -568,12 +568,25 @@ sections.push(
 		<Pod.hr height="1" />
 
 		<Pod.heading kind="h4">Headings</Pod.heading>
+
 		<Pod.heading kind="h1">Headings 1</Pod.heading>
+		<Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+
 		<Pod.heading kind="h2">Headings 2</Pod.heading>
+		<Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+
 		<Pod.heading kind="h3">Headings 3</Pod.heading>
+		<Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+
 		<Pod.heading kind="h4">Headings 4</Pod.heading>
+		<Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+
 		<Pod.heading kind="h5">Headings 5</Pod.heading>
+		<Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+
 		<Pod.heading kind="h6">Headings 6</Pod.heading>
+		<Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+
 	</Pod.section>
 )
 
