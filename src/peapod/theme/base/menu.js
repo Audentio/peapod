@@ -5,27 +5,35 @@ var sheet = new Sheet,
     portal = sheet.addPart('portal'),
     trigger = sheet.addPart('trigger');
 
+sheet.addCondition('level').addStyler({level: 1});
+
 //Variables
 sheet.setValues({
-    common: {
-    }
+    common: {}
 });
 
 main.addSelector({
     common: {
         background: '#fff',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)',
+        boxShadow: '$shadows.d1',
         padding: '16px 0',
         borderRadius: '$border.radius.small',
         zIndex: 3,
         position: 'absolute'
+    }
+}).addSelector({
+    condition: ['level'],
+    common: {
+        whiteSpace: 'nowrap',
+        transform: 'translate(0, -48px)',
+        left: '100%'
     }
 });
 
 portal.addSelector({
     common: {
         background: '#fff',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)',
+        boxShadow: '$shadows.d1',
         padding: '16px 0',
         borderRadius: '$border.radius.small',
         zIndex: 3,
@@ -36,6 +44,11 @@ portal.addSelector({
 trigger.addSelector({
     common: {
         display: 'inline-block'
+    }
+}).addSelector({
+    condition: ['level'],
+    common: {
+        display: 'block'
     }
 })
 
