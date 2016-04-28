@@ -10,7 +10,8 @@ sheet.setValues({});
 
 main.addSelector({
     common:{
-	   marginBottom: '$gutter.internal'
+	   marginBottom: '$font.margins.body1',
+       fontSize: '$font.size.body1'
     }
 })
 

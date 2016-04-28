@@ -295,16 +295,28 @@ var init = function(components) {
 			//Typography
 			font: {
 				family: {
-					primary: 'Lato-Regular',
+					primary: 'Roboto',
 					secondary: 'Lato-Light',
 					tertiary: 'Lato-Regular',
 					code: 'monaco, monospace'
 				},
 				size: {
+					display4: '112px',
+					display3: '56px',
+					display2: '45px',
+					display1: '34px',
+					headline: '24px',
+					title: '20px',
+					subheading: '16px',
+					body2: '14px',
+					body1: '14px',
+					caption: '12px',
+					button: '14px',
+
 					xsmall: '1.1rem',
-					small: '1.2rem',
-					normal: '1.3rem',
-					large: '1.6rem',
+					small: '13px',
+					normal: '14px',
+					large: '16px',
 					xlarge: '1.8rem',
 					xxlarge: '2.4rem',
 					xxxlarge: '3.0rem'
@@ -312,7 +324,21 @@ var init = function(components) {
 				weight: {
 					light: '300',
 					normal: '400',
+					medium: '500',
 					bold: '700'
+				},
+				margins: {
+					display4: '112px',
+					display3: '48px',
+					display2: '40px',
+					display1: '32px',
+					headline: '28px',
+					title: '28px',
+					subheading: '24px',
+					body2: '24px',
+					body1: '20px',
+					caption: '12px',
+					button: '14px',
 				}
 			},
 
@@ -330,7 +356,7 @@ var init = function(components) {
 			//Colors
 			color: {
 				primary: {
-					base: '#59C1AD',
+					base: '$palette.blue400',
 					hover: '#7ACDBD',
 					active: '#479A8A',
 				},
@@ -340,7 +366,7 @@ var init = function(components) {
 					active: '#0089af',
 				},
 				general: {
-					base: '$palette.white',
+					base: '$palette.blue400',
 					hover: '$palette.grey100',
 					active: '$palette.grey200',
 				},
@@ -390,9 +416,10 @@ var init = function(components) {
 
 			//Spacing
 			gutter: {
-				large: '3rem',
-				small: '2rem',
-				internal: '1rem'
+				large: '32px',
+				small: '24px',
+				internal: '16px',
+				extrasmall: '8px'
 			},
 
 			//Transitions
@@ -430,6 +457,18 @@ var init = function(components) {
 					}
 				}
 			},
+
+			shadows: {
+				d1: '0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)',
+				d2: '0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)',
+				d3: '0 12px 15px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19)',
+				d4: '0 16px 28px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21)',
+				d5: '0 27px 24px 0 rgba(0,0,0,0.2),0 40px 77px 0 rgba(0,0,0,0.22)'
+			},
+
+			opacity: {
+				notAllowed: '.7'
+			}
 
 		}
 	}
