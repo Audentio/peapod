@@ -44,7 +44,7 @@ sheet.setValues({
 			lineHeight: '$button.height',
 			font: {
 				family: '$font.family.primary',
-				size: '$font.size.normal',
+				size: '$font.size.button',
 				weight: '$font.weight.medium'
 			},
 			transition: {

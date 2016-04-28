@@ -301,10 +301,22 @@ var init = function(components) {
 					code: 'monaco, monospace'
 				},
 				size: {
+					display4: '112px',
+					display3: '56px',
+					display2: '45px',
+					display1: '34px',
+					headline: '24px',
+					title: '20px',
+					subheading: '16px',
+					body2: '14px',
+					body1: '14px',
+					caption: '12px',
+					button: '14px',
+
 					xsmall: '1.1rem',
-					small: '1.2rem',
-					normal: '1.3rem',
-					large: '1.6rem',
+					small: '13px',
+					normal: '14px',
+					large: '16px',
 					xlarge: '1.8rem',
 					xxlarge: '2.4rem',
 					xxxlarge: '3.0rem'
@@ -331,7 +343,7 @@ var init = function(components) {
 			//Colors
 			color: {
 				primary: {
-					base: '#59C1AD',
+					base: '$palette.blue400',
 					hover: '#7ACDBD',
 					active: '#479A8A',
 				},
@@ -393,7 +405,8 @@ var init = function(components) {
 			gutter: {
 				large: '32px',
 				small: '24px',
-				internal: '16px'
+				internal: '16px',
+				extrasmall: '8px'
 			},
 
 			//Transitions

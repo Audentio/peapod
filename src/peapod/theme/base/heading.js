@@ -21,42 +21,42 @@ sheet.setValues({
 
 h1.addSelector({
     common:{
-       fontSize: '$font.size.xxxlarge',
+       fontSize: '$font.size.display3',
        marginBottom:'$font.size.xxxlarge',
     }
 });
 
 h2.addSelector({
     common:{
-       fontSize: '$font.size.xxlarge',
+       fontSize: '$font.size.display2',
        marginBottom:'$font.size.xxlarge',
     }
 });
 
 h3.addSelector({
     common:{
-       fontSize: '$font.size.xlarge',
+       fontSize: '$font.size.display1',
        marginBottom:'$font.size.xlarge',
     }
 });
 
 h4.addSelector({
     common:{
-       fontSize: '$font.size.large',
+       fontSize: '$font.size.headline',
        marginBottom:'$font.size.large',
     }
 });
 
 h5.addSelector({
     common:{
-       fontSize: '$font.size.normal',
+       fontSize: '$font.size.title',
        marginBottom:'$font.size.normal',
     }
 });
 
 h6.addSelector({
     common:{
-       fontSize: '$font.size.small',
+       fontSize: '$font.size.subheading',
        marginBottom:'$font.size.small',
     }
 });

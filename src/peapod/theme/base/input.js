@@ -60,22 +60,22 @@ sheet.setValues({
 				icon: '$input.color.text'
 			},
 			textIndent: 0,
-			height: '3.2rem',
+			height: '$gutter.large',
 			padding: {
-				top: 8,
-				right: 0,
-				bottom: 8,
-				left: 0
+				top: '0',
+				right: '0px',
+				bottom: '0',
+				left: '0px'
 			},
 			border: {
-				color: '$palette.grey200',
+				color: '$palette.blue400',
 				radius: '0px',
 				width: '0 0 1px 0',
 				style: 'solid'
 			},
 			font: {
 				family: 'inherit',
-				size: '$font.size.normal'
+				size: '$font.size.large'
 			}
 		},
 	},
@@ -117,8 +117,8 @@ main.addSelector({
 		borderStyle: '$input.border.style',
 		borderColor: '$input.border.color',
 		borderRadius: '$input.border.radius',
-		margin: '0 0 8px 0',
-		transition: 'border-color 100ms'
+		marginBottom: '$gutter.extrasmall',
+		transition: 'border-color 100ms',
 	}
 }).addSelector({
 	condition: 'focused',
@@ -159,7 +159,7 @@ input.addSelector({
 		verticalAlign: 'middle',
 		textIndent: '$input.textIndent',
 		background: 'transparent',
-		fontSize: '1.6rem',
+		fontSize: '$font.size.large',
 		color: 'inherit',
 		appearance: 'none',
 		border: 'none',
@@ -191,7 +191,7 @@ placeholder.addSelector({
 		overflow: 'hidden',
 		whiteSpace: 'nowrap',
 		textOverflow: 'ellipsis',
-		fontSize: '1.6rem',
+		fontSize: '$font.size.large',
 		transition: 'padding 100ms',
 	}
 }).addSelector({
