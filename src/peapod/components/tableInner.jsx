@@ -5,7 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.jsx');
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 
@@ -46,7 +46,7 @@ var TableInner = React.createClass({
 		var rowKey = this.props.rowKey;
 		var rowProps = this.props.row || function() {};
 		var hoveredRow = this.props.hoveredRow;
-		
+
 		return (
 			<div style={{overflowX: 'auto'}}>
 				<div style={style.main}>
