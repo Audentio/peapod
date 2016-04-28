@@ -42,23 +42,13 @@ var config = {
 
 			//JSX files go through hotloader and Babel
 			{
-				test: /\.jsx$/,
+				test: /\.jsx?$/,
 				include: [
 					path.resolve(__dirname, "src/peapod"),
 					path.resolve(__dirname, "examples")
 				],
 				loaders: ['react-hot', 'babel'],
 			},
-
-			//JSX files go through hotloader and Babel
-			{
-				test: /\.js$/,
-				include: [
-					path.resolve(__dirname, "src/peapod"),
-					path.resolve(__dirname, "examples")
-				],
-				loaders: ['react-hot', 'babel'],
-			}
 		]
 	}
 

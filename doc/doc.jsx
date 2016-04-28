@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import ReactDOMServer from 'react-dom/server'
 
 import _ from 'lodash'
 
@@ -323,9 +324,20 @@ var ComponentDoc = React.createClass({
 
 		var renderedComponent = renderComponent(sheetName, sandboxCondition, component)
 
+		var jsxStyler = "",
+			jsxComponentName = 'Pod.' + sheetName.charAt(0).toLowerCase() + sheetName.slice(1);
+
+
+		if (typeof(sandboxCondition.styler) !== 'undefined') {
+			jsxStyler = ' styler={' + JSON.stringify(sandboxCondition.styler) + '}'
+		}
+
+		var componentJSX = '<' + jsxComponentName + jsxStyler + '>' + '</' + jsxComponentName + '>';
+
 		var sandboxResults = <div>
 			{sandboxDoc}
 			{renderedComponent}
+			<Pod.codeBlock>{componentJSX}</Pod.codeBlock>
 		</div>
 
 		var tabs = [

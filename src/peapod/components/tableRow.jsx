@@ -31,15 +31,13 @@ var TableRow = React.createClass({
 			hoveredRow = this.props.hoveredRow,
 			columns = this.props.columns,
 			data = this.props.data,
-			style = Pod_Styler.getStyle({props: {
-				styler: {
-					styleLike: 'TableInner',
-					dark: i % 2 == 1,
-					firstRow: i == 0,
-					checked: row.checked == true,
-					hovered: hoveredRow == i
-				}
-			}});
+			style = Pod_Styler.getStyle({}, {
+				styleLike: 'TableInner',
+				dark: i % 2 == 1,
+				firstRow: i == 0,
+				checked: row.checked == true,
+				hovered: hoveredRow == i
+			});
 
 		return (
 			<div {...rowProps(row, i)}

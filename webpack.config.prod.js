@@ -6,7 +6,8 @@ var config = {
 	entry: {
 		styler: [path.resolve(__dirname, 'src/peapod/styler.jsx')],
 		components: path.resolve(__dirname, 'src/peapod/components.jsx'),
-		vars:  [path.resolve(__dirname, 'src/peapod/vars.jsx')]
+		vars:  [path.resolve(__dirname, 'src/peapod/vars.jsx')],
+		sheet:  [path.resolve(__dirname, 'src/peapod/stylesheet.jsx')],
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -46,12 +47,7 @@ var config = {
 		],
 		loaders: [
 			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				loader: "babel",
-			},
-			{
-				test: /\.jsx$/,
+				test: /\.jsx?$/,
 				exclude: /node_modules/,
 				loader: "babel",
 			},

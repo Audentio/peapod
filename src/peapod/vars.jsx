@@ -5,15 +5,16 @@
 
 var lodash = require('lodash')
 
-var base = require('./theme/baseVars.jsx');
-
 var maxDepth = 20;
 
 window.Pod_Vars = window.Pod_Vars || {
-	sources: [base],
+	sources: [],
 	cache: {},
 
-	register: function(vars, level = 0) {
+	register: function(vars, level = (this.sources.length - 1)) {
+		if (level < 0) {
+			level = 0;
+		}
 		this.sources[level] = lodash.merge(this.sources[level], vars);
 	},
 

@@ -25,7 +25,7 @@ module.exports = {
 			react: path.resolve('./node_modules/react'),
 		},
 	},
-	
+
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin()
@@ -39,7 +39,7 @@ module.exports = {
 		}],
 
 		loaders: [{
-			test: /\.jsx$/,
+			test: /\.jsx?$/,
 			loaders: ['react-hot', 'babel'],
 			include: [
 				path.join(__dirname, 'src'),
