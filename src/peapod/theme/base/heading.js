@@ -19,45 +19,48 @@ sheet.setValues({
     }
 });
 
+var getMargin = (margin, font) => {
+    return (parseFloat(Pod_Vars.get(margin)) - parseFloat(Pod_Vars.get(font))) + 'px';
+}
 h1.addSelector({
     common:{
-       fontSize: '$font.size.xxxlarge',
-       marginBottom:'$font.size.xxxlarge',
+       fontSize: '$font.size.display3',
+       marginBottom: getMargin('font.margins.display3', 'font.size.body1'),
     }
 });
 
 h2.addSelector({
     common:{
-       fontSize: '$font.size.xxlarge',
-       marginBottom:'$font.size.xxlarge',
+       fontSize: '$font.size.display2',
+       marginBottom: getMargin('font.margins.display2', 'font.size.body1'),
     }
 });
 
 h3.addSelector({
     common:{
-       fontSize: '$font.size.xlarge',
-       marginBottom:'$font.size.xlarge',
+       fontSize: '$font.size.display1',
+       marginBottom: getMargin('font.margins.display1', 'font.size.body1'),
     }
 });
 
 h4.addSelector({
     common:{
-       fontSize: '$font.size.large',
-       marginBottom:'$font.size.large',
+       fontSize: '$font.size.headline',
+       marginBottom: getMargin('font.margins.headline', 'font.size.body1'),
     }
 });
 
 h5.addSelector({
     common:{
-       fontSize: '$font.size.normal',
-       marginBottom:'$font.size.normal',
+       fontSize: '$font.size.title',
+       marginBottom: getMargin('font.margins.title', 'font.size.body1'),
     }
 });
 
 h6.addSelector({
     common:{
-       fontSize: '$font.size.small',
-       marginBottom:'$font.size.small',
+       fontSize: '$font.size.subheading',
+       marginBottom: getMargin('font.margins.subheading', 'font.size.body1'),
     }
 });
 

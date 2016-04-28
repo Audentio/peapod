@@ -11,7 +11,7 @@ sheet.setValues({
 main.addSelector({
     common: {
         background: '#fff',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)',
+        boxShadow: '$shadows.d1',
         padding: '16px 0',
         borderRadius: '$border.radius.small',
         zIndex: 3,
