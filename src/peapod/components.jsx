@@ -54,10 +54,10 @@ var init = function() {
 		window.Pod[componentName] = req('./' + componentName + '.jsx');
 	}
 
-	window.Pod_Vars = window.Pod_Vars || require('./vars.jsx');
-	window.Pod_Styler = window.Pod_Styler || require('./styler.jsx');
+	window.Pod_Vars = window.Pod_Vars || require('./vars.js');
+	window.Pod_Styler = window.Pod_Styler || require('./styler.js');
 
-	var base = require('./theme/base.jsx');
+	var base = require('./theme/base.js');
 	base(components);
 }
 
