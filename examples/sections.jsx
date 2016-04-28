@@ -5,11 +5,141 @@ import Strong from 'peapod/components/strong'
 import Code from 'peapod/components/code'
 
 var sections = []
+sections.push(
+  	<Pod.hero key={'hero'} styler={{style: {backgroundImage: 'url(mrRobot.jpg)'}}}>
+  		<Pod.heroOverlay styler={{position:'left'}}>
+  			<Pod.center>
+  				<Pod.heading>Hero Element</Pod.heading>
+  				<Pod.heading kind="h3">With Hero Overlay</Pod.heading>
+  			</Pod.center>
+  		</Pod.heroOverlay>
+  	</Pod.hero>
+)
+
+sections.push(
+  	<Pod.fixedElement key={'fixed navigation'} styler={{style: {top: 0, left: 0, width: '100%', background: '#fff', borderBottom: '1px solid #ddd'}}}>
+	  	<div className="section">
+	  		Fixed Element With &nbsp;
+			<Pod.menu trigger={
+				<Pod.button label="Button & Dropdown" />
+			}>
+				<Pod.menuItem href="#" subtext="1">
+					Something about something
+				</Pod.menuItem>
+				<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
+				<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+				<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
+					<Pod.menu styler={{level:1}}trigger={
+						<Pod.menuItem subtext={
+							<Pod.icon styler={{style:{ fontSize: '0.9em' }}}>keyboard_arrow_right</Pod.icon>
+						}>And another</Pod.menuItem>
+					}>
+						<Pod.menuItem href="#">Another thing</Pod.menuItem>
+						<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+						<Pod.menuItem href="#">And another</Pod.menuItem>
+						<Pod.menu styler={{level:1, left: true}} trigger={
+							<Pod.menuItem subtext={
+								<Pod.icon styler={{style:{ fontSize: '0.9em' }}}>keyboard_arrow_right</Pod.icon>
+							}>And another</Pod.menuItem>
+						}>
+							<Pod.menuItem href="#">Another thing</Pod.menuItem>
+							<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+							<Pod.menuItem href="#">And another</Pod.menuItem>
+						</Pod.menu>
+					</Pod.menu>
+			</Pod.menu>
+		</div>
+  	</Pod.fixedElement>
+)
+
+sections.push(
+<div className="section" key={'menu'}>
+
+	<Pod.heading>Menus</Pod.heading>
+
+	<Pod.menu trigger={
+		<Pod.button label="On Hover" />
+	}>
+		<Pod.menuItem href="#" subtext="1">
+			Something about something
+		</Pod.menuItem>
+		<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
+		<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+		<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
+			<Pod.menu styler={{level:1}} trigger={
+				<Pod.menuItem subtext="5">And another</Pod.menuItem>
+			}>
+				<Pod.menuItem href="#">Another thing</Pod.menuItem>
+				<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+				<Pod.menuItem href="#">And another</Pod.menuItem>
+				<Pod.menu styler={{level:1}} trigger={
+					<Pod.menuItem subtext="5">And another</Pod.menuItem>
+				}>
+					<Pod.menuItem href="#">Another thing</Pod.menuItem>
+					<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+					<Pod.menuItem href="#">And another</Pod.menuItem>
+				</Pod.menu>
+			</Pod.menu>
+	</Pod.menu>
+
+	<Pod.menu portal={true} trigger={
+		<Pod.button label="On Click" />
+	}>
+		<Pod.menuItem href="#" subtext="1">
+			Something about something
+		</Pod.menuItem>
+		<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
+		<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+		<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
+			<Pod.menu styler={{level:1}} click={true} trigger={
+				<Pod.menuItem subtext="5">And another</Pod.menuItem>
+			}>
+				<Pod.menuItem href="#">Another thing</Pod.menuItem>
+				<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+				<Pod.menuItem href="#">And another</Pod.menuItem>
+				<Pod.menu click={true} styler={{level:1}} trigger={
+					<Pod.menuItem subtext="5">And another</Pod.menuItem>
+				}>
+					<Pod.menuItem href="#">Another thing</Pod.menuItem>
+					<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+					<Pod.menuItem href="#">And another</Pod.menuItem>
+				</Pod.menu>
+			</Pod.menu>
+	</Pod.menu>
+
+</div>
+)
+
+sections.push(
+<div className="section" key={'modals'}>
+
+	<Pod.heading>Modals, Overlays and Centers</Pod.heading>
+
+		<Pod.portal trigger={
+			<Pod.button label="Modal, Overlay and Center" />
+		} closeOnEsc={true} noArrow={true}>
+			<Pod.modal>
+				<Pod.heading kind="h2">Heading2 test</Pod.heading>
+				<Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
+				<Pod.button label="You are a cabbage" styler={{kind:'primary'}} />
+			</Pod.modal>
+		</Pod.portal>
+
+		<Pod.portal trigger={
+			<Pod.button label="Button, Overlay and Center" />
+		} closeOnEsc={true} noArrow={true}>
+			<Pod.overlay>
+				<Pod.button label="You are a cabbage" styler={{kind:'primary'}} />
+			</Pod.overlay>
+		</Pod.portal>
+	</div>
+)
+
 
 //Section: Forms
 sections.push(
 	<div className="section" key={'forms'}>
-		<h1>Forms</h1>
+		<Pod.heading>Forms</Pod.heading>
 
 		<Paragraph>Placeholder can by styled with <Code>placeholderStyle</Code> styler prop</Paragraph>
 		<Pod.input placeholder="Styled placeholders" styler={{placeholderStyle: {color: 'red', opacity: '.4', textDecoration: 'underline'}}}/> <br />
@@ -56,7 +186,7 @@ sections.push(
 //Section: Buttons
 sections.push(
 	<div className="section" key={'buttons'}>
-		<h1>Buttons</h1>
+		<Pod.heading>Buttons</Pod.heading>
 
 		<Pod.button label="Default" />
 		<Pod.button label="Primary" styler={{kind:'primary'}} />
@@ -215,7 +345,7 @@ var Progressing = React.createClass({
 
 sections.push(
 	<div className="section" key="Progress">
-		<h1>Progress</h1>
+		<Pod.heading>Progress</Pod.heading>
 
 		<ProgressExamples />
 
@@ -246,7 +376,7 @@ sections.push(
 var imageStyle = {width:'200px',height:'200px'};
 sections.push(
 	<div className="section" key="Photo">
-		<h1>Photo</h1>
+		<Pod.heading>Photo</Pod.heading>
 		<Pod.photo src="image.png" styler={{style:imageStyle}} lightboxAnimation={false} caption="lightbox without animation" />
 		&nbsp;
 		<Pod.photo src="image.png" styler={{style:imageStyle}} lightbox={false} caption="lightbox disabled" hidpiData={[ ['1.5','-mySuffix'] ]} />
@@ -260,7 +390,7 @@ sections.push(
 //Section: Icons
 sections.push(
 	<div className="section" key={'icons'}>
-		<h1>Icons</h1>
+		<Pod.heading>Icons</Pod.heading>
 
 		<h2>Size & color</h2>
 		<p>Currently simply a layer of abstration over google material icons</p>
@@ -288,7 +418,7 @@ var restoreAlerts = function(){
 }
 sections.push(
 	<div className="section" key={'Alerts'}>
-		<h1>Alerts</h1>
+		<Pod.heading>Alerts</Pod.heading>
 		<p><Pod.button onClick={restoreAlerts} label="Restore all alerts" /></p>
 		<Pod.alert dismissable={true} id="generalAlert">Jim quickly realized that the beautiful gowns are expensive.</Pod.alert>
 		<Pod.alert styler={{kind: 'info'}} dismissable={true} id="infoAlert">Jim quickly realized that the beautiful gowns are expensive.</Pod.alert>
@@ -312,7 +442,7 @@ var restoreNotifs = function(){
 }
 sections.push(
 	<div className="section" key={"notifications"}>
-		<h1>Notifications</h1>
+		<Pod.heading>Notifications</Pod.heading>
 
 		<p><Pod.button onClick={restoreNotifs} label="Restore all notifications" /></p>
 
@@ -335,7 +465,7 @@ sections.push(
 //Section: Microcomponents
 sections.push(
 	<div className="section" key={'microcomponents'}>
-		<h1>Microcomponents</h1>
+		<Pod.heading>Microcomponents</Pod.heading>
 
 		<h2>Timestamps</h2>
 		Page loaded <Pod.timestamp time={new Date().toISOString()} /> (updates automatically)<br />
@@ -345,7 +475,7 @@ sections.push(
 
 sections.push(
 	<div className="section" key="labels">
-		<h1>Label</h1>
+		<Pod.heading>Label</Pod.heading>
 		<Pod.label icon="settings" styler={{
 				kind: 'success',
 				disabled: true,
@@ -417,8 +547,8 @@ class SomeClass:
 
 sections.push(
 	<Pod.section styler={{style:{padding: '25px 15px',borderBottom: '1px solid #ddd'}}} key="typography">
-		<h1>Typography</h1>
-		<h4>Paragraph</h4>
+		<Pod.heading>Typography</Pod.heading>
+		<Pod.heading kind="h4">Paragraph</Pod.heading>
 		<Pod.paragraph>
 			This is a paragraph. This is a paragraph. This is a paragraph.
 			This is a paragraph. This is a paragraph. This is a paragraph.
@@ -434,8 +564,16 @@ sections.push(
 		<Pod.codeBlock>{codeExample__cpp}</Pod.codeBlock>
 		<Pod.codeBlock>{codeExample__python}</Pod.codeBlock>
 
-		<h4>Horizontal Rule </h4>
+		<Pod.heading kind="h4">Horizontal Rule</Pod.heading>
 		<Pod.hr height="1" />
+
+		<Pod.heading kind="h4">Headings</Pod.heading>
+		<Pod.heading kind="h1">Headings 1</Pod.heading>
+		<Pod.heading kind="h2">Headings 2</Pod.heading>
+		<Pod.heading kind="h3">Headings 3</Pod.heading>
+		<Pod.heading kind="h4">Headings 4</Pod.heading>
+		<Pod.heading kind="h5">Headings 5</Pod.heading>
+		<Pod.heading kind="h6">Headings 6</Pod.heading>
 	</Pod.section>
 )
 
