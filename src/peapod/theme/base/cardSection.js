@@ -9,8 +9,10 @@ sheet.addCondition('titleSmall').addStyler({kind: 'title-small'});
 sheet.addCondition('titleWithSupports').addStyler({kind: 'title-supports'});
 sheet.addCondition('actionBar').addStyler({kind: 'action-bar'});
 sheet.addCondition('supportingText').addStyler({kind: 'supporting-text'});
+sheet.addCondition('media').addStyler({kind: 'media'});
 
-sheet.addCondition('right').addStyler({align: 'right'});
+sheet.addCondition('alignRight').addStyler({align: 'right'});
+sheet.addCondition('floatRight').addStyler({float: 'right'});
 sheet.addCondition('left').addStyler({align: 'left'});
 
 //Variables
@@ -22,7 +24,8 @@ main.addSelector({
         paddingRight: '16px',
         paddingBottom: '16px',
         paddingLeft: '16px',
-        textAlgin: 'left'
+        clear: 'both',
+        overflow: 'hidden'
     }
 }).addSelector({
     condition: ['titleLarge'],
@@ -49,9 +52,24 @@ main.addSelector({
         paddingTop: '0px'
     }
 }).addSelector({
-    condition: ['right'],
+    condition: ['media'],
     common: {
-        textAlgin: 'right'
+        marginTop: '-8px',
+
+        paddingTop: '0px',
+        paddingRight: '0px',
+        paddingBottom: '0px',
+        paddingLeft: '0px'
+    }
+}).addSelector({
+    condition: ['alignRight'],
+    common: {
+        textAlign: 'right'
+    }
+}).addSelector({
+    condition: ['floatRight'],
+    common: {
+        float: 'right'
     }
 });
 

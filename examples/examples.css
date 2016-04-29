@@ -15,6 +15,9 @@ body {
   padding: 25px 40px;
   border-bottom: 1px solid #ddd;
 }
+.section.grey {
+  background: #efefef;
+}
 
 #mainContainer {
 	/*max-width: 1100px;*/

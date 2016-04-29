@@ -13,7 +13,8 @@ main.addSelector({
         backgroundColor: '$palette.white',
         borderRadius: '$border.radius.small',
         boxShadow: '$shadows.d1',
-        margin: '8px'
+        margin: '8px',
+        overflow: 'hidden'
     }
 })
 
