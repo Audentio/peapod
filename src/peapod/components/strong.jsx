@@ -9,7 +9,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Pod_Styler from '../styler.jsx'
+import Pod_Styler from '../styler.js'
 import Wrapper from '../wrapper.jsx'
 
 
@@ -22,8 +22,10 @@ import Wrapper from '../wrapper.jsx'
 var Strong = React.createClass({
 
 	render: function() {
+		let style = Pod_Styler.getStyle(this);
+
 		return (
-			<strong style={[Pod_Styler.getStyle(this), {fontWeight: 'bold'}]}>
+			<strong style={[style.main, {fontWeight: 'bold'}]}>
                 {this.props.children}
             </strong>
 		)

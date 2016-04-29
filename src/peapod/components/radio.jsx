@@ -6,8 +6,7 @@
 
 import React from 'react'
 import Wrapper from '../wrapper.jsx'
-import Pod_Styler from '../styler.jsx'
-import Pod_Vars from '../vars.jsx'
+import Pod_Styler from '../styler.js'
 import Icon from './icon.jsx'
 
 /**

@@ -1,0 +1,1 @@
+$('.container p strong')

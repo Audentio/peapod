@@ -5,7 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.jsx');
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 
@@ -24,23 +24,20 @@ var TableRow = React.createClass({
 	},
 
 	render: function() {
-		var style = Pod_Styler.getStyle({props: {
-			styler: {
-				styleLike: 'TableInner',
-				dark: i % 2 == 1,
-				firstRow: i == 0,
-				checked: row.checked == true,
-				hovered: hoveredRow == i
-			}
-		}});
-
 		var row = this.props.row,
 			rowKey = this.props.rowKey,
 			i = this.props.i,
 			rowProps = this.props.rowProps,
 			hoveredRow = this.props.hoveredRow,
 			columns = this.props.columns,
-			data = this.props.data;
+			data = this.props.data,
+			style = Pod_Styler.getStyle({}, {
+				styleLike: 'TableInner',
+				dark: i % 2 == 1,
+				firstRow: i == 0,
+				checked: row.checked == true,
+				hovered: hoveredRow == i
+			});
 
 		return (
 			<div {...rowProps(row, i)}

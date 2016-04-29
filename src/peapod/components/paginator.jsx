@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var Pod_Styler = require('../styler.jsx');
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 

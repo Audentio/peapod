@@ -5,7 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.jsx');
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 
@@ -14,9 +14,7 @@ var reduce = lodash.reduce;
 var isPlainObject = lodash.isPlainObject;
 var isUndefined = lodash.isUndefined;
 var isFunction = lodash.isFunction;
-var findIndex = require('lodash/array/findIndex');
-var sorter = lodash.sortByOrder;
-var sortByOrder = require('lodash/collection/sortByOrder');
+var sorter = lodash.sortBy;
 
 var Button = require('./button.jsx')
 var Checkbox = require('./checkbox.jsx')
@@ -160,7 +158,10 @@ var Table = React.createClass({
 
 		var ascending = column.sort === 'asc' ? 'desc' : 'asc';
 
-		return sortByOrder(data, [column.property], [ascending])
+		if (ascending == 'desc') {
+			return lodash.reverse(sorter(data, [column.property]));
+		}
+		return sorter(data, [column.property]);
 	},
 
 	filterData: function(data, query) {

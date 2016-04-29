@@ -5,7 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.jsx');
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 
@@ -19,33 +19,30 @@ var TableCell = React.createClass({
 	},
 
 	render: function() {
-		var style = Pod_Styler.getStyle({props: {
-			styler: {
-				styleLike: 'TableCell',
-				firstCell: index == 0,
-				centered: column.centered == true,
-				hovered: column.hovered == true,
-				sortable: column.sortable == true,
-				sortAsc: column.sort == 'asc',
-				sortDesc: column.sort == 'desc',
-				sortAsc: column.sort == 'asc',
-				sortDesc: column.sort == 'desc',
-				header: this.props.header == true
-			}
-		}})
-
 		var column = this.props.column || {
 				centered: false,
 				hovered: false,
 				sort: '',
 				header: false
 			},
-			index = this.props.index;
+			index = this.props.index,
+			style = Pod_Styler.getStyle({props: {
+				styler: {
+					styleLike: 'TableCell',
+					firstCell: index == 0,
+					centered: column.centered == true,
+					hovered: column.hovered == true,
+					sortable: column.sortable == true,
+					sortAsc: column.sort == 'asc',
+					sortDesc: column.sort == 'desc',
+					sortAsc: column.sort == 'asc',
+					sortDesc: column.sort == 'desc',
+					header: this.props.header == true
+				}
+			}});
 
 		return (
-			<div {...this.props}
-				style={style.main}
-			>
+			<div {...this.props} style={style.main}>
 				{this.props.children}
 			</div>
 		)

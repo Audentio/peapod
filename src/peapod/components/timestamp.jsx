@@ -6,8 +6,7 @@
 import React from 'react';
 import moment from 'moment';
 
-var Pod_Styler = require('../styler.jsx');
-var Pod_Vars = require('../vars.jsx');
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 
