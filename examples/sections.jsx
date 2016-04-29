@@ -9,8 +9,19 @@ sections.push(
   	<Pod.hero key={'hero'} styler={{cover: true, style: {backgroundImage: 'url(mrRobot.jpg)'}}}>
   		<Pod.heroOverlay styler={{position:'left'}}>
   			<Pod.center>
-  				<Pod.heading>Hero Element</Pod.heading>
-  				<Pod.heading kind="h3">With Hero Overlay</Pod.heading>
+				<Pod.card styler={{disguised: true, style:{width: '500px'}}}>
+
+				<Pod.cardSection styler={{kind:'title-supports'}}>
+					<Pod.heading kind="h2" styler={{secondary: true}}>I'm a card in disguese!</Pod.heading>
+					<Pod.heading kind="h5" styler={{secondary: true}}>Damion: Add option to look this way to cards</Pod.heading>
+				</Pod.cardSection>
+				<Pod.cardSection styler={{kind:'supporting-text'}}>
+					<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
+				</Pod.cardSection>
+				<Pod.cardSection styler={{kind:'action-bar'}}>
+					<Pod.button label="Find Out More" />
+				</Pod.cardSection>
+			</Pod.card>
   			</Pod.center>
   		</Pod.heroOverlay>
   	</Pod.hero>
@@ -37,8 +48,10 @@ sections.push(
   	<Pod.toolbar key={'toolbar'}>
   		<Pod.icon styler={{style: {height: '32px', display: 'inline-block', lineHeight: '32px', width: '32px', float: 'left'}}}>menu</Pod.icon>
 
+  		Fixed, Toolbar with icon and a &nbsp;
+
 		<Pod.menu trigger={
-			<Pod.button label="Button & Dropdown" />
+			<Pod.button label="Button with Dropdown" />
 		}>
 			<Pod.menuItem href="#" subtext="1">
 				Something about something
@@ -157,7 +170,7 @@ sections.push(
 sections.push(
 	<div className="section grey" key={'card'}>
 		<Pod.heading>Cards</Pod.heading>
-		<Pod.card styler={{style:{width: '400px'}}}>
+		<Pod.card styler={{style:{width: '350px'}}}>
 			<Pod.cardSection styler={{kind:'media-section'}} mediaTitle={
 				<div>
 					<Pod.cardSection styler={{kind:'title-small'}}>
@@ -171,15 +184,35 @@ sections.push(
 					</Pod.cardSection>
 				</div>
 			}>
-				<Pod.photo src="mrRobot.jpg" hidpiData={false} styler={{style:{display:'block'}}}/>
+				<Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
 			</Pod.cardSection>
 
 		</Pod.card>
 
+		<Pod.card styler={{style:{width: '350px'}}}>
+			<Pod.cardSection>
+				<Pod.cardSection styler={{kind:'media-area'}}>
+					<Pod.photo src="image.png"/>
+				</Pod.cardSection>
+				<Pod.cardSection styler={{kind:'media-area-icons'}}>
+				<Pod.button styler={{type: 'icon'}} label={
+					(<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
+				} />
 
-		<Pod.card styler={{style:{width: '400px'}}}>
+				<Pod.button styler={{type: 'icon'}} label={
+					(<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.icon>)
+				} />
+
+				<Pod.button styler={{type: 'icon'}} label={
+					(<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+				} />
+				</Pod.cardSection>
+			</Pod.cardSection>
+		</Pod.card>
+
+		<Pod.card styler={{style:{width: '350px'}}}>
 			<Pod.cardSection styler={{kind:'media-section'}}>
-				<Pod.photo src="mrRobot.jpg" hidpiData={false} styler={{style:{display:'block'}}}/>
+				<Pod.photo src="image.png"/>
 			</Pod.cardSection>
 
 			<Pod.cardSection styler={{kind:'action-bar'}}>
@@ -199,7 +232,7 @@ sections.push(
 		</Pod.card>
 
 
-		<Pod.card styler={{style:{width: '400px'}}}>
+		<Pod.card styler={{style:{width: '350px'}}}>
 
 			<Pod.cardSection styler={{kind:'title-supports'}}>
 				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
@@ -214,10 +247,10 @@ sections.push(
 			</Pod.cardSection>
 		</Pod.card>
 
-		<Pod.card styler={{style:{width: '400px'}}}>
+		<Pod.card styler={{style:{width: '350px'}}}>
 			<Pod.cardSection styler={{kind:'title-supports'}}>
 				<Pod.cardSection styler={{kind:'media', float: 'right'}}>
-					<Pod.photo src="mrRobot.jpg" hidpiData={false} styler={{style:{display:'block', width: '100px'}}}/>
+					<Pod.photo src="image.png" styler={{style:{width: '100px'}}}/>
 				</Pod.cardSection>
 
 				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>

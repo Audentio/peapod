@@ -11,6 +11,8 @@ sheet.addCondition('titleWithSupports').addStyler({kind: 'title-supports'});
 sheet.addCondition('actionBar').addStyler({kind: 'action-bar'});
 sheet.addCondition('supportingText').addStyler({kind: 'supporting-text'});
 sheet.addCondition('mediaSection').addStyler({kind: 'media-section'});
+sheet.addCondition('mediaAreaIcons').addStyler({kind: 'media-area-icons'});
+sheet.addCondition('mediaArea').addStyler({kind: 'media-area'});
 sheet.addCondition('media').addStyler({kind: 'media'});
 
 sheet.addCondition('alignRight').addStyler({align: 'right'});
@@ -57,7 +59,7 @@ main.addSelector({
         paddingTop: '0px'
     }
 }).addSelector({
-    condition: ['media', 'mediaSection'],
+    condition: ['media'],
     common: {
         marginTop: '-8px',
 
@@ -75,6 +77,31 @@ main.addSelector({
         paddingRight: '0px',
         paddingBottom: '0px',
         paddingLeft: '0px'
+    }
+}).addSelector({
+    condition: ['mediaAreaIcons'],
+    common: {
+        marginTop: '0px',
+        float: 'right',
+        width: '48px',
+
+        paddingTop: '0px',
+        paddingRight: '0px',
+        paddingBottom: '0px',
+        paddingLeft: '0px',
+        clear: 'none',
+        padding: '8px'
+    }
+}).addSelector({
+    condition: ['mediaArea'],
+    common: {
+        float: 'left',
+        maxWidth: 'calc(100% - 56px)',
+        paddingTop: '0px',
+        paddingRight: '0px',
+        paddingBottom: '0px',
+        paddingLeft: '0px',
+        clear: 'none'
     }
 }).addSelector({
     condition: ['alignRight'],

@@ -7,7 +7,8 @@ var sheet = new Sheet,
 //Variables
 main.addSelector({
     common: {
-        position: 'static'
+        position: 'static',
+        zIndex: '998'
     }
 });
 
