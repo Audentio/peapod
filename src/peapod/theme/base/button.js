@@ -28,7 +28,7 @@ sheet.setValues({
 					dark: '$color.text.dark'
 				},
 				base: {
-					background: '$palette.blue400',
+					background: '$palette.white',
 					color: '$palette.white',
 					hover: '$color.primary.hover',
 					active: '$color.primary.active'
@@ -79,7 +79,7 @@ main.addSelector({
 		textAlign: 'center',
 		outline: 'none',
 
-		color: '$button.color.text.dark',
+		color: '$button.color.text.light',
 		backgroundColor: '$button.color.base.background'
 	}
 }).addSelector({

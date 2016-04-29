@@ -17,19 +17,29 @@ sections.push(
 )
 
 sections.push(
-  	<Pod.fixedElement key={'fixed navigation'} styler={{style: {top: 0, left: 0, width: '100%', background: '#fff', borderBottom: '1px solid #ddd'}}}>
-	  	<div className="section">
-	  		Fixed Element With &nbsp;
-			<Pod.menu trigger={
-				<Pod.button label="Button & Dropdown" />
-			}>
-				<Pod.menuItem href="#" subtext="1">
-					Something about something
-				</Pod.menuItem>
-				<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
-				<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
-				<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
-					<Pod.menu styler={{level:1}}trigger={
+  	<Pod.fixedElement key={'fixed navigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
+
+  	<Pod.toolbar key={'toolbar'}>
+  		<Pod.icon styler={{style: {height: '32px', display: 'inline-block', lineHeight: '32px', width: '32px', float: 'left'}}}>menu</Pod.icon>
+
+		<Pod.menu trigger={
+			<Pod.button label="Button & Dropdown" />
+		}>
+			<Pod.menuItem href="#" subtext="1">
+				Something about something
+			</Pod.menuItem>
+			<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
+			<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+			<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
+				<Pod.menu styler={{level:1}}trigger={
+					<Pod.menuItem subtext={
+						<Pod.icon styler={{style:{ fontSize: '0.9em' }}}>keyboard_arrow_right</Pod.icon>
+					}>And another</Pod.menuItem>
+				}>
+					<Pod.menuItem href="#">Another thing</Pod.menuItem>
+					<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+					<Pod.menuItem href="#">And another</Pod.menuItem>
+					<Pod.menu styler={{level:1, left: true}} trigger={
 						<Pod.menuItem subtext={
 							<Pod.icon styler={{style:{ fontSize: '0.9em' }}}>keyboard_arrow_right</Pod.icon>
 						}>And another</Pod.menuItem>
@@ -37,18 +47,11 @@ sections.push(
 						<Pod.menuItem href="#">Another thing</Pod.menuItem>
 						<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
 						<Pod.menuItem href="#">And another</Pod.menuItem>
-						<Pod.menu styler={{level:1, left: true}} trigger={
-							<Pod.menuItem subtext={
-								<Pod.icon styler={{style:{ fontSize: '0.9em' }}}>keyboard_arrow_right</Pod.icon>
-							}>And another</Pod.menuItem>
-						}>
-							<Pod.menuItem href="#">Another thing</Pod.menuItem>
-							<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-							<Pod.menuItem href="#">And another</Pod.menuItem>
-						</Pod.menu>
 					</Pod.menu>
-			</Pod.menu>
-		</div>
+				</Pod.menu>
+		</Pod.menu>
+  	</Pod.toolbar>
+
   	</Pod.fixedElement>
 )
 
@@ -135,6 +138,42 @@ sections.push(
 	</div>
 )
 
+
+sections.push(
+	<div className="section" key={'card'}>
+		<Pod.heading>Cards</Pod.heading>
+		<Pod.card styler={{style:{width: '400px'}}}>
+			<Pod.photo src="mrRobot.jpg" hidpiData={false} styler={{style:{display:'block'}}}/>
+			<Pod.cardSection styler={{kind:'title-supports'}}>
+				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
+				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
+			</Pod.cardSection>
+			<Pod.cardSection styler={{kind:'action-bar', align: 'right'}}>
+				<Pod.button label="Agree" />
+				<Pod.button label="Disagree" />
+			</Pod.cardSection>
+			<Pod.cardSection>
+				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
+			</Pod.cardSection>
+		</Pod.card>
+
+
+		<Pod.card styler={{style:{width: '400px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-supports'}}>
+				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
+				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
+			</Pod.cardSection>
+			<Pod.cardSection styler={{kind:'supporting-text'}}>
+				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
+			</Pod.cardSection>
+			<Pod.cardSection styler={{kind:'action-bar', align: 'right'}}>
+				<Pod.button label="Agree" />
+				<Pod.button label="Disagree" />
+			</Pod.cardSection>
+		</Pod.card>
+	</div>
+)
 
 //Section: Forms
 sections.push(
