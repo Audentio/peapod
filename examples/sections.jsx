@@ -41,6 +41,15 @@ sections.push(
 	</Pod.grid>
 </div>
 )
+sections.push(
+<div className="section" key={'chips'}>
+	<Pod.heading>Chips</Pod.heading>
+	<Pod.chip>This is a chip</Pod.chip>
+	<Pod.chip del={true}>Chip with Delete</Pod.chip>
+	<Pod.chip photo='profile@2x.jpg'>Chip with Photo</Pod.chip>
+	<Pod.chip del={true} photo='profile@2x.jpg'>Chip with Delete & Photo</Pod.chip>
+</div>
+)
 
 sections.push(
   	<Pod.fixedElement key={'fixed navigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
