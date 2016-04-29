@@ -8,26 +8,39 @@ var sheet = new Sheet,
 sheet.addCondition('level').addStyler({level: 1});
 sheet.addCondition('left').addStyler({left: true});
 
+var add = (valueone, valuetwo) => {
+    return (parseFloat(Pod_Vars.get(valueone)) + parseFloat(Pod_Vars.get(valuetwo)));
+}
+
 //Variables
 sheet.setValues({
-    common: {}
+    common: {
+        menu: {
+            background: '$palette.white',
+            boxShadow: '$shadows.d1',
+            paddingTop: '$gutter.internal',
+            paddingBottom: '$gutter.internal',
+            borderRadius: '$border.radius.small',
+            zIndex: 3
+        }
+    }
 });
 
 main.addSelector({
     common: {
-        background: '$palette.white',
-        boxShadow: '$shadows.d1',
-        paddingTop: '$gutter.internal',
-        paddingBottom: '$gutter.internal',
-        borderRadius: '$border.radius.small',
-        zIndex: 3,
+        background: '$menu.background',
+        boxShadow: '$menu.boxShadow',
+        paddingTop: '$menu.paddingTop',
+        paddingBottom: '$menu.paddingBottom',
+        borderRadius: '$menu.borderRadius',
+        zIndex: '$menu.zIndex',
         position: 'absolute'
     }
 }).addSelector({
     condition: ['level'],
     common: {
         whiteSpace: 'nowrap',
-        transform: 'translate(0, -48px)',
+        transform: 'translate(0, -' + add('gutter.large', 'menu.paddingTop') + 'px)',
         left: '100%'
     }
 }).addSelector({
@@ -40,12 +53,12 @@ main.addSelector({
 
 portal.addSelector({
     common: {
-        background: '#fff',
-        boxShadow: '$shadows.d1',
-        paddingTop: '$gutter.internal',
-        paddingBottom: '$gutter.internal',
-        borderRadius: '$border.radius.small',
-        zIndex: 3,
+        background: '$menu.background',
+        boxShadow: '$menu.boxShadow',
+        paddingTop: '$menu.paddingTop',
+        paddingBottom: '$menu.paddingBottom',
+        borderRadius: '$menu.borderRadius',
+        zIndex: '$menu.zIndex',
         position: 'relative'
     }
 });

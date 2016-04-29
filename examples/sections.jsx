@@ -6,7 +6,7 @@ import Code from 'peapod/components/code'
 
 var sections = []
 sections.push(
-  	<Pod.hero key={'hero'} styler={{style: {backgroundImage: 'url(mrRobot.jpg)'}}}>
+  	<Pod.hero key={'hero'} styler={{cover: true, style: {backgroundImage: 'url(mrRobot.jpg)'}}}>
   		<Pod.heroOverlay styler={{position:'left'}}>
   			<Pod.center>
   				<Pod.heading>Hero Element</Pod.heading>
@@ -546,7 +546,7 @@ class SomeClass:
 ... prompt'''`;
 
 sections.push(
-	<Pod.section styler={{style:{padding: '25px 15px',borderBottom: '1px solid #ddd'}}} key="typography">
+	<div className="section" key={'Typography'}>
 		<Pod.heading>Typography</Pod.heading>
 		<Pod.heading kind="h4">Paragraph</Pod.heading>
 		<Pod.paragraph>
@@ -558,6 +558,8 @@ sections.push(
 			This is a paragraph. This is a paragraph.
 					Text <Code>Inline code</Code> text
 		</Pod.paragraph>
+
+		<Pod.heading kind="h4">Code</Pod.heading>
 
 		<Pod.codeBlock language="javascript">{codeExample__javascript}</Pod.codeBlock>
 		<Pod.codeBlock>{codeExample__css}</Pod.codeBlock>
@@ -587,7 +589,7 @@ sections.push(
 		<Pod.heading kind="h6">Headings 6</Pod.heading>
 		<Pod.paragraph>Testing line heights for headings</Pod.paragraph>
 
-	</Pod.section>
+	</div>
 )
 
 var tabs = [
