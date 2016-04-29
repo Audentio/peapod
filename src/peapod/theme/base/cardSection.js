@@ -1,7 +1,8 @@
 import {Sheet} from '../../stylesheet.js';
 
 var sheet = new Sheet,
-    main = sheet.addMain();
+    main = sheet.addMain(),
+    mediaTitle = sheet.addPart('mediaTitle');
 
 //Conditions
 sheet.addCondition('titleLarge').addStyler({kind: 'title-large'});
@@ -9,11 +10,14 @@ sheet.addCondition('titleSmall').addStyler({kind: 'title-small'});
 sheet.addCondition('titleWithSupports').addStyler({kind: 'title-supports'});
 sheet.addCondition('actionBar').addStyler({kind: 'action-bar'});
 sheet.addCondition('supportingText').addStyler({kind: 'supporting-text'});
+sheet.addCondition('mediaSection').addStyler({kind: 'media-section'});
 sheet.addCondition('media').addStyler({kind: 'media'});
 
 sheet.addCondition('alignRight').addStyler({align: 'right'});
 sheet.addCondition('floatRight').addStyler({float: 'right'});
 sheet.addCondition('left').addStyler({align: 'left'});
+
+sheet.addCondition('light').addStyler({mediaSection: 'light'});
 
 //Variables
 sheet.setValues({});
@@ -25,7 +29,8 @@ main.addSelector({
         paddingBottom: '16px',
         paddingLeft: '16px',
         clear: 'both',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative'
     }
 }).addSelector({
     condition: ['titleLarge'],
@@ -52,9 +57,19 @@ main.addSelector({
         paddingTop: '0px'
     }
 }).addSelector({
-    condition: ['media'],
+    condition: ['media', 'mediaSection'],
     common: {
         marginTop: '-8px',
+
+        paddingTop: '0px',
+        paddingRight: '0px',
+        paddingBottom: '0px',
+        paddingLeft: '0px'
+    }
+}).addSelector({
+    condition: ['mediaSection'],
+    common: {
+        marginTop: '0px',
 
         paddingTop: '0px',
         paddingRight: '0px',
@@ -70,6 +85,24 @@ main.addSelector({
     condition: ['floatRight'],
     common: {
         float: 'right'
+    }
+});
+
+mediaTitle.addSelector({
+    common: {
+        position: 'absolute',
+        bottom: '0px',
+        left: '0px',
+        background: 'rgba(0,0,0,.4)',
+        color: 'white',
+        width: '100%'
+        // padding: '16px'
+    }
+}).addSelector({
+    condition: ['light'],
+    common: {
+        background: 'rgba(255,255,255,.4)',
+        color: 'black',
     }
 });
 

@@ -158,18 +158,44 @@ sections.push(
 	<div className="section grey" key={'card'}>
 		<Pod.heading>Cards</Pod.heading>
 		<Pod.card styler={{style:{width: '400px'}}}>
-			<Pod.photo src="mrRobot.jpg" hidpiData={false} styler={{style:{display:'block'}}}/>
-			<Pod.cardSection styler={{kind:'title-supports'}}>
-				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
-				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
+			<Pod.cardSection styler={{kind:'media-section'}} mediaTitle={
+				<div>
+					<Pod.cardSection styler={{kind:'title-small'}}>
+						<Pod.heading kind="h4" styler={{secondary: true}}>Hello there</Pod.heading>
+						<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
+					</Pod.cardSection>
+
+					<Pod.cardSection styler={{kind:'action-bar'}}>
+						<Pod.button label="Agree" />
+						<Pod.button label="Disagree" />
+					</Pod.cardSection>
+				</div>
+			}>
+				<Pod.photo src="mrRobot.jpg" hidpiData={false} styler={{style:{display:'block'}}}/>
 			</Pod.cardSection>
+
+		</Pod.card>
+
+
+		<Pod.card styler={{style:{width: '400px'}}}>
+			<Pod.cardSection styler={{kind:'media-section'}}>
+				<Pod.photo src="mrRobot.jpg" hidpiData={false} styler={{style:{display:'block'}}}/>
+			</Pod.cardSection>
+
 			<Pod.cardSection styler={{kind:'action-bar'}}>
-				<Pod.button label="Agree" />
-				<Pod.button label="Disagree" />
+				<Pod.button styler={{type: 'icon'}} label={
+					(<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
+				} />
+
+				<Pod.button styler={{type: 'icon'}} label={
+					(<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.icon>)
+				} />
+
+				<Pod.button styler={{type: 'icon'}} label={
+					(<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+				} />
 			</Pod.cardSection>
-			<Pod.cardSection>
-				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
-			</Pod.cardSection>
+
 		</Pod.card>
 
 

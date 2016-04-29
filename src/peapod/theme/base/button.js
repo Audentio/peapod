@@ -10,6 +10,8 @@ sheet.addCondition('round').addStyler({round: true});
 sheet.addCondition('disabled').addStyler({disabled: true});
 sheet.addCondition('notDisabled').addStyler({disabled: undefined});
 
+sheet.addCondition('icon').addStyler({type: 'icon'});
+
 sheet.addCondition('kindGeneral').addStyler({kind: 'general'});
 sheet.addCondition('kindBase').addStyler({kind: 'base'});
 sheet.addCondition('kindPrimary').addStyler({kind: 'primary'});
@@ -82,7 +84,15 @@ main.addSelector({
 		color: '$button.color.text.light',
 		backgroundColor: '$button.color.base.background'
 	}
-}).addSelector({
+})
+.addSelector({
+	condition: ['icon'],
+	common: {
+		padding: '0px 4px',
+		color: '$button.color.base'
+	}
+})
+.addSelector({
 	condition: ['notDisabled'],
 	common: {
 		cursor: 'pointer',
