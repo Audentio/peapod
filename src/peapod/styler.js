@@ -365,7 +365,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
 		if (computedVar.indexOf('$') > -1) {
 			var computedKey = computedVar;
-			if (this.enableVarCache && typeof(this.varCache[computedVar + '_' + scene]) == 'undefined') {
+			if (!this.enableVarCache || typeof(this.varCache[computedVar + '_' + scene]) == 'undefined') {
 				if (computedVar.indexOf('{') > -1 && computedVar.indexOf('}') > -1) { // RegEx based Pod_Vars.get
 					var regEx = /\{\$\S*\}/g,
 						matches = computedVar.match(regEx);
@@ -377,7 +377,7 @@ window.Pod_Styler = window.Pod_Styler || {
 				} else { // simple Pod_Vars.get on whole value
 					computedVar = Pod_Vars.get(computedVar.replace('$', ''), scene);
 				}
-				if (enableVarCache) {
+				if (this.enableVarCache) {
 					this.varCache[computedKey + '_' + scene] = computedVar;
 				}
 			} else {
