@@ -14,6 +14,7 @@ window.Pod_Styler = window.Pod_Styler || {
 	libraries: [],
 	currentLibrary: 'base',
 	enableCache: false,
+	enableVarCache: false,
 	cache: {},
 	varCache: {},
 	maxCacheLength: 20,
@@ -364,7 +365,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
 		if (computedVar.indexOf('$') > -1) {
 			var computedKey = computedVar;
-			if (typeof(this.varCache[computedVar + '_' + scene]) == 'undefined') {
+			if (this.enableVarCache && typeof(this.varCache[computedVar + '_' + scene]) == 'undefined') {
 				if (computedVar.indexOf('{') > -1 && computedVar.indexOf('}') > -1) { // RegEx based Pod_Vars.get
 					var regEx = /\{\$\S*\}/g,
 						matches = computedVar.match(regEx);
@@ -376,7 +377,9 @@ window.Pod_Styler = window.Pod_Styler || {
 				} else { // simple Pod_Vars.get on whole value
 					computedVar = Pod_Vars.get(computedVar.replace('$', ''), scene);
 				}
-				this.varCache[computedKey + '_' + scene] = computedVar;
+				if (enableVarCache) {
+					this.varCache[computedKey + '_' + scene] = computedVar;
+				}
 			} else {
 				computedVar = this.varCache[computedKey + '_' + scene]; // get variable from cache rather than parse string
 			}
