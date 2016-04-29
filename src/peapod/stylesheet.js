@@ -1,5 +1,5 @@
 import {merge as lodashMerge} from "lodash";
-import Pod_Vars from './vars.jsx';
+import Pod_Vars from './vars.js';
 var React = require('react');
 
 

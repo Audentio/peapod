@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM, {findDOMNode} from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
 
-var Pod_Styler = require('../styler.jsx');
+var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 
