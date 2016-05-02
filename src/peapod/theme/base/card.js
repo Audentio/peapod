@@ -11,14 +11,23 @@ sheet.addCondition('disguised').addStyler({disguised: true});
 sheet.addCondition('padded').addStyler({padded: true});
 
 //Variables
-sheet.setValues({});
+sheet.setValues({
+    common: {
+        card: {
+            padding: {
+                large: '$gutter.internal',
+                small: '$gutter.extrasmall'
+            }
+        }
+    }
+});
 
 main.addSelector({
     common: {
         backgroundColor: '$palette.white',
         borderRadius: '$border.radius.small',
         boxShadow: '$shadows.d1',
-        margin: '8px',
+        margin: '$card.padding.small',
         overflow: 'hidden',
         display: 'inline-block',
         textAlign: 'left',
@@ -40,23 +49,23 @@ main.addSelector({
 
 title.addSelector({
     common: {
-        paddingTop: '16px',
-        paddingLeft: '16px',
-        paddingRight: '16px'
+        paddingTop: '$card.padding.large',
+        paddingLeft: '$card.padding.large',
+        paddingRight: '$card.padding.large'
     }
 });
 
 content.addSelector({
     condition: ['padded'],
     common: {
-        paddingLeft: '16px',
-        paddingRight: '16px'
+        paddingLeft: '$card.padding.large',
+        paddingRight: '$card.padding.large'
     }
 });
 
 actionBar.addSelector({
     common: {
-        padding: 8
+        padding: '$card.padding.small'
     }
 });
 
