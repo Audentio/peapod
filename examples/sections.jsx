@@ -289,25 +289,63 @@ sections.push(
 			{/*<Pod.devider styler={{inline: true, indent: 100, outdent: 100}}></Pod.devider>*/}
 			<Pod.cardSection>
 				<Pod.list>
-					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+					<Pod.listItem
+						image={'image.png'}
+						icon={'star_border'}
+						secondary={"Something something"}
+
+						styler={{image: 'right', icon: 'left', divider: 'right'}}
+						onClick={(event)=>{console.log("List Item Clicked")}}
+						onIconClick={()=>{console.log("List Item Button Clicked")}}
+					>
 						Item #1
 					</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+					<Pod.listItem image={'image.png'} icon={'star_border'} secondary={"Something something"} styler={{divider: 'left'}}>
 						Item #2
 					</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+					<Pod.listItem image={'image.png'} icon={'star_border'} secondary={"Something something"} styler={{image: 'right', icon: 'left', divider: 'right'}}>
 						Item #3
 					</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+					<Pod.listItem image={'image.png'} icon={'star_border'} secondary={"Something something"} styler={{divider: 'left'}}>
 						Item #4
 					</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+					<Pod.listItem image={'image.png'} icon={'star_border'} secondary={"Something something"} styler={{image: 'right', icon: 'left', divider: 'right'}}>
 						Item #5
 					</Pod.listItem>
 				</Pod.list>
 			</Pod.cardSection>
 
 		</Pod.card>
+
+		<Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-supports'}}>
+				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
+				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
+			</Pod.cardSection>
+			{/*<Pod.devider styler={{inline: true, indent: 100, outdent: 100}}></Pod.devider>*/}
+			<Pod.cardSection>
+				<Pod.list>
+					<Pod.listItem secondary={"Something something"}>
+						Item #1
+					</Pod.listItem>
+					<Pod.listItem secondary={"Something something"}>
+						Item #2
+					</Pod.listItem>
+					<Pod.listItem secondary={"Something something"}>
+						Item #3
+					</Pod.listItem>
+					<Pod.listItem secondary={"Something something"}>
+						Item #4
+					</Pod.listItem>
+					<Pod.listItem secondary={"Something something"}>
+						Item #5
+					</Pod.listItem>
+				</Pod.list>
+			</Pod.cardSection>
+
+		</Pod.card>
+
 		<Pod.card styler={{style:{width: '350px'}}}>
 
 			<Pod.cardSection styler={{kind:'title-small'}}>
@@ -316,11 +354,11 @@ sections.push(
 
 			<Pod.cardSection>
 				<Pod.list>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #1</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #2</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #3</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #4</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #5</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #1</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #2</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #3</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #4</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #5</Pod.listItem>
 				</Pod.list>
 			</Pod.cardSection>
 
@@ -333,11 +371,11 @@ sections.push(
 
 			<Pod.cardSection>
 				<Pod.list>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #1</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #2</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #3</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #4</Pod.listItem>
-					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #5</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #1</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #2</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #3</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #4</Pod.listItem>
+					<Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #5</Pod.listItem>
 				</Pod.list>
 			</Pod.cardSection>
 
@@ -350,11 +388,11 @@ sections.push(
 
 			<Pod.cardSection>
 				<Pod.list>
-					<Pod.listItem leftIcon={'star_border'}>Item #1</Pod.listItem>
-					<Pod.listItem leftIcon={'star_border'}>Item #2</Pod.listItem>
-					<Pod.listItem leftIcon={'star_border'}>Item #3</Pod.listItem>
-					<Pod.listItem leftIcon={'star_border'}>Item #4</Pod.listItem>
-					<Pod.listItem leftIcon={'star_border'}>Item #5</Pod.listItem>
+					<Pod.listItem icon={'star_border'}>Item #1</Pod.listItem>
+					<Pod.listItem icon={'star_border'}>Item #2</Pod.listItem>
+					<Pod.listItem icon={'star_border'}>Item #3</Pod.listItem>
+					<Pod.listItem icon={'star_border'}>Item #4</Pod.listItem>
+					<Pod.listItem icon={'star_border'}>Item #5</Pod.listItem>
 				</Pod.list>
 			</Pod.cardSection>
 			<Pod.cardSection styler={{kind:'action-bar'}}>

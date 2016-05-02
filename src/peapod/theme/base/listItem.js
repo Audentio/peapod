@@ -2,18 +2,24 @@ import {Sheet} from '../../stylesheet.js';
 
 var sheet = new Sheet,
     main = sheet.addMain(),
-    rightImageContainer = sheet.addPart('rightImageContainer'),
-    rightImage = sheet.addPart('rightImage'),
-    leftIcon = sheet.addPart('leftIcon'),
+    imageContainer = sheet.addPart('imageContainer'),
+    image = sheet.addPart('image'),
+    icon = sheet.addPart('icon'),
     secondary = sheet.addPart('secondary');
 
 //Conditions
 sheet.addCondition('secondary').addFunction((instance) => {
     if (instance.props.secondary != undefined || instance.styler.imgSize == 'large') return true;
 });
+
 sheet.addCondition('imageSmall').addStyler({imgSize: 'small'});
 sheet.addCondition('imageMedium').addStyler({imgSize: 'medium'});
 sheet.addCondition('imageLarge').addStyler({imgSize: 'large'});
+
+sheet.addCondition('imageLeft').addStyler({image: 'left'});
+sheet.addCondition('imageRight').addStyler({image: 'right'});
+sheet.addCondition('iconLeft').addStyler({icon: 'left'});
+sheet.addCondition('iconRight').addStyler({icon: 'right'});
 
 //Functions
 var half = (value1) => {
@@ -68,14 +74,26 @@ main.addSelector({
     }
 })
 
-rightImageContainer.addSelector({
+imageContainer.addSelector({
     common: {
         width: minus('listItem.height.large', 'listItem.padding.left'),
         float: 'left'
     }
-})
+}).addSelector({
+    condition: ['imageRight'],
+    common: {
+        width: minus('listItem.height.large', 'listItem.padding.left'),
+        textAlign: 'right',
+        float: 'right'
+    }
+}).addSelector({
+    condition: ['secondary'],
+    common: {
+        height: '52px'
+    }
+});
 
-rightImage.addSelector({
+image.addSelector({
     common: {
         height: '$listItem.image.large',
         width: '$listItem.image.large',
@@ -90,11 +108,27 @@ rightImage.addSelector({
     }
 });
 
-leftIcon.addSelector({
+icon.addSelector({
     common: {
-        float: 'right'
+        float: 'right',
+        width: minus('listItem.height.large', 'listItem.padding.left'),
+        textAlign: 'right',
+        marginTop: '16px',
+        marginLeft: '16px',
+        marginRight: '16px'
     }
-})
+}).addSelector({
+    condition: ['iconLeft'],
+    common: {
+        float: 'left',
+        textAlign: 'left'
+    }
+}).addSelector({
+    condition: ['secondary'],
+    common: {
+        height: '36px'
+    }
+});
 
 secondary.addSelector({
     common: {

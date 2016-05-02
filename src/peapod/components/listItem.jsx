@@ -20,16 +20,24 @@ class ListItem extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
-        var rightImg = '', leftIcon = '', secondary = '';
+        var image = '', icon = '', secondary = '';
         var deviderProps = {inline: true}
 
-        if (this.props.rightImage) {
-            rightImg = (<div style={style.rightImageContainer}><img src={this.props.rightImage} style={style.rightImage}/></div>);
-            deviderProps['indent'] = 72
+        var stylerObject = new Object(this.props.styler); // needs to be converted to a new object else throws an error
+        if ('divider' in stylerObject) {
+            if (stylerObject.divider == 'left') {
+                deviderProps['indent'] = 72
+            } else if (stylerObject.divider == 'right') {
+                deviderProps['outdent'] = 72
+            }
         }
 
-        if (this.props.leftIcon) {
-            leftIcon = (<Pod.icon styler={{style: style.leftIcon}}>{this.props.leftIcon}</Pod.icon>);
+        if (this.props.image) {
+            image = (<div style={style.imageContainer}><img src={this.props.image} style={style.image}/></div>);
+        }
+
+        if (this.props.icon) {
+            icon = (<Pod.icon styler={{style: style.icon}} onClick={this.props.onIconClick}>{this.props.icon}</Pod.icon>);
         }
 
         if (this.props.secondary) {
@@ -38,9 +46,9 @@ class ListItem extends React.Component {
 
         return (
             <div>
-                <div style={style.main}>
-                    {leftIcon}
-                    {rightImg}
+                {icon}
+                <div style={style.main}  onClick={this.props.onClick}>
+                    {image}
                     {this.props.children}
                     {secondary}
                 </div>
