@@ -263,6 +263,22 @@ sections.push(
 
 		</Pod.card>
 
+		<Pod.card styler={{style:{width: '350px'}}}>
+			<Pod.cardSection styler={{kind:'title-supports'}}>
+				<Pod.cardSection styler={{kind:'media', float: 'right'}}>
+					<Pod.photo src="image.png" styler={{style:{width: '100px'}}}/>
+				</Pod.cardSection>
+
+				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
+				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
+			</Pod.cardSection>
+
+			<Pod.cardSection styler={{kind:'action-bar'}}>
+				<Pod.button label="Agree" />
+				<Pod.button label="Disagree" />
+			</Pod.cardSection>
+		</Pod.card>
+
 
 		<Pod.card styler={{style:{width: '350px'}}}>
 
@@ -341,25 +357,6 @@ sections.push(
 					<Pod.listItem leftIcon={'star_border'}>Item #5</Pod.listItem>
 				</Pod.list>
 			</Pod.cardSection>
-			<Pod.cardSection styler={{kind:'action-bar'}}>
-				<Pod.button label="Agree" />
-				<Pod.button label="Disagree" />
-			</Pod.cardSection>
-		</Pod.card>
-
-		</Pod.card>
-		<Pod.card styler={{style:{width: '350px'}}}>
-
-		<Pod.card styler={{style:{width: '350px'}}}>
-			<Pod.cardSection styler={{kind:'title-supports'}}>
-				<Pod.cardSection styler={{kind:'media', float: 'right'}}>
-					<Pod.photo src="image.png" styler={{style:{width: '100px'}}}/>
-				</Pod.cardSection>
-
-				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
-				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
-			</Pod.cardSection>
-
 			<Pod.cardSection styler={{kind:'action-bar'}}>
 				<Pod.button label="Agree" />
 				<Pod.button label="Disagree" />
