@@ -20,7 +20,7 @@ class Chip extends React.Component {
 
     componentWillMount() {
         this.defaultProps = {
-            del: false,
+            deleteTrigger: false,
             photo: false
         }
         this.state = {
@@ -37,8 +37,8 @@ class Chip extends React.Component {
     render() {
         var style = Pod_Styler.getStyle(this);
 
-        var del = (this.props.del) ? (
-            <Pod.icon styler={{style: style.del}} onClick={() => {this.removeChip()}}>close</Pod.icon>
+        var deleteTrigger = (this.props.deleteTrigger) ? (
+            <Pod.icon styler={{style: style.deleteTrigger}} onClick={() => {this.removeChip()}}>close</Pod.icon>
         ) : '';
         var photo = (this.props.photo) ? (
             <img src={this.props.photo} style={style.photo}/>
@@ -48,7 +48,7 @@ class Chip extends React.Component {
             return (
                 <div style={style.main}>
                     {photo}
-                    {del}
+                    {deleteTrigger}
                     {this.props.children}
                 </div>
             );
