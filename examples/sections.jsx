@@ -373,7 +373,6 @@ sections.push(
 				<Pod.heading kind="h6" styler={{secondary: true}}>Alternating List</Pod.heading>
 			</Pod.cardSection>
 
-			<Pod.cardSection>
 
                 <Pod.list>
                     <Pod.listItem
@@ -401,15 +400,12 @@ sections.push(
                     </Pod.listItem>
                 </Pod.list>
 
-        	</Pod.cardSection>
         </Pod.card>
         <Pod.card styler={{style:{width: '350px'}}}>
 
 			<Pod.cardSection styler={{kind:'title-small'}}>
 				<Pod.heading kind="h6" styler={{secondary: true}}>Standard list with secondary text</Pod.heading>
 			</Pod.cardSection>
-
-			<Pod.cardSection>
 
                 <Pod.list>
                     <Pod.listItem secondary={"Something something"}>
@@ -429,15 +425,12 @@ sections.push(
                     </Pod.listItem>
                 </Pod.list>
 
-            </Pod.cardSection>
         </Pod.card>
         <Pod.card styler={{style:{width: '350px'}}}>
 
 			<Pod.cardSection styler={{kind:'title-small'}}>
 				<Pod.heading kind="h6" styler={{secondary: true}}>List with images</Pod.heading>
 			</Pod.cardSection>
-
-			<Pod.cardSection>
 
                 <Pod.list>
                     <Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #1</Pod.listItem>
@@ -447,15 +440,12 @@ sections.push(
                     <Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #5</Pod.listItem>
                 </Pod.list>
 
-            </Pod.cardSection>
         </Pod.card>
         <Pod.card styler={{style:{width: '350px'}}}>
 
 			<Pod.cardSection styler={{kind:'title-small'}}>
 				<Pod.heading kind="h6" styler={{secondary: true}}>List with large images</Pod.heading>
 			</Pod.cardSection>
-
-			<Pod.cardSection>
 
                 <Pod.list>
                     <Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #1</Pod.listItem>
@@ -465,15 +455,12 @@ sections.push(
                     <Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #5</Pod.listItem>
                 </Pod.list>
 
-            </Pod.cardSection>
         </Pod.card>
         <Pod.card styler={{style:{width: '350px'}}}>
 
 			<Pod.cardSection styler={{kind:'title-small'}}>
 				<Pod.heading kind="h6" styler={{secondary: true}}>List with icons</Pod.heading>
 			</Pod.cardSection>
-
-			<Pod.cardSection>
 
                 <Pod.list>
                     <Pod.listItem icon={'star_border'}>Item #1</Pod.listItem>
@@ -482,7 +469,6 @@ sections.push(
                     <Pod.listItem icon={'star_border'}>Item #4</Pod.listItem>
                     <Pod.listItem icon={'star_border'}>Item #5</Pod.listItem>
                 </Pod.list>
-            </Pod.cardSection>
        </Pod.card>
 
 	</div>
