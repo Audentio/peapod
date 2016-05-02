@@ -29,9 +29,23 @@ class Menu extends React.Component {
             var childjson = this.props.json
             for (var i = childjson.length - 1; i >= 0; i--) {
                 // key needs updating to always be unique
-                childrencomonents.push(
-                   <Pod.menuItem key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Pod.menuItem>
-                )
+
+                if (childjson[i].children != undefined) {
+                    childrencomonents.push(
+                        <Pod.menu
+                            styler={{level:1}}
+                            key={i}
+                            json={childjson[i].children}
+                            trigger={
+                                <Pod.menuItem key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Pod.menuItem>
+                            }
+                        />
+                    )
+                } else {
+                    childrencomonents.push(
+                       <Pod.menuItem key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Pod.menuItem>
+                    )
+                }
             }
         }
 

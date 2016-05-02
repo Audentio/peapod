@@ -68,7 +68,7 @@ sections.push(
 			<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
 			<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
 			<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
-				<Pod.menu styler={{level:1}}trigger={
+				<Pod.menu styler={{level:1}} trigger={
 					<Pod.menuItem subtext={
 						<Pod.icon styler={{style:{ fontSize: '0.9em' }}}>keyboard_arrow_right</Pod.icon>
 					}>And another</Pod.menuItem>
@@ -150,7 +150,17 @@ sections.push(
 
     <Pod.menu trigger={
         <Pod.button label="On Hover from JSON" />
-    } json={[{text: 'Hello World', href: '#'}, {text: 'Hello World 123', href: '#', subtext: '2'}]} />
+    } json={[
+        {text: 'Hello World', href: '#'},
+        {text: 'Hello World 36', href: '#',
+            children: [
+                {text: 'Hello World 387', href: '#'},
+                {text: 'Hello World 123', href: '#', subtext: '2'}
+            ]
+        },
+        {text: 'Hello World 387', href: '#'},
+        {text: 'Hello World 123', href: '#', subtext: '2'}
+    ]} />
 
 </div>
 )
