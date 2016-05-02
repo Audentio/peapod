@@ -17,7 +17,8 @@ main.addSelector({
         margin: '8px',
         overflow: 'hidden',
         display: 'inline-block',
-        textAlign: 'left'
+        textAlign: 'left',
+        verticalAlign: 'top'
     }
 }).addSelector({
     condition: ['disguised'],

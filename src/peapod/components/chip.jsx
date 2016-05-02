@@ -18,32 +18,46 @@ var Wrapper = require('../wrapper.jsx')
 */
 class Chip extends React.Component {
 
+    componentWillMount() {
+        this.defaultProps = {
+            del: false,
+            photo: false
+        }
+        this.state = {
+            showElement: true
+        }
+    }
+
+    removeChip() {
+        this.setState({
+            showElement: false
+        });
+    }
+
     render() {
         var style = Pod_Styler.getStyle(this);
 
         var del = (this.props.del) ? (
-            <Pod.icon styler={{style: style.del}}>close</Pod.icon>
+            <Pod.icon styler={{style: style.del}} onClick={() => {this.removeChip()}}>close</Pod.icon>
         ) : '';
         var photo = (this.props.photo) ? (
             <img src={this.props.photo} style={style.photo}/>
         ) : '';
 
-        return (
-            <div style={style.main}>
-                {photo}
-                {del}
-                {this.props.children}
-            </div>
-        );
+        if (this.state.showElement) {
+            return (
+                <div style={style.main}>
+                    {photo}
+                    {del}
+                    {this.props.children}
+                </div>
+            );
+        } else {
+            return null;
+        };
 
     }
 
-};
-
-
-Chip.defaultProps = {
-    del: false,
-    photo: false
 };
 
 module.exports = Wrapper(Chip);

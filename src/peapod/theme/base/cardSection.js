@@ -85,12 +85,11 @@ main.addSelector({
         float: 'right',
         width: '48px',
 
-        paddingTop: '0px',
-        paddingRight: '0px',
-        paddingBottom: '0px',
-        paddingLeft: '0px',
         clear: 'none',
-        padding: '8px'
+        paddingTop: '8px',
+        paddingRight: '8px',
+        paddingBottom: '8px',
+        paddingLeft: '8px',
     }
 }).addSelector({
     condition: ['mediaArea'],

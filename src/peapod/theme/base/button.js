@@ -88,7 +88,10 @@ main.addSelector({
 .addSelector({
 	condition: ['icon'],
 	common: {
-		padding: '0px 4px',
+		paddingTop: '0px',
+		paddingBottom: '0px',
+		paddingLeft: '4px',
+		paddingRight: '4px',
 		color: '$button.color.base'
 	}
 })

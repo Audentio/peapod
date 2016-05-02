@@ -25,7 +25,7 @@ var Button = React.createClass({
 
 	//Validate props
 	propTypes: {
-		label: React.PropTypes.string,
+		label: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.object ]),
 		href: React.PropTypes.string,
 		disabled: React.PropTypes.bool
 	},

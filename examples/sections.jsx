@@ -9,7 +9,7 @@ sections.push(
   	<Pod.hero key={'hero'} styler={{cover: true, style: {backgroundImage: 'url(mrRobot.jpg)'}}}>
   		<Pod.heroOverlay styler={{position:'left'}}>
   			<Pod.center>
-				<Pod.card styler={{disguised: true, style:{width: '500px'}}}>
+				<Pod.card styler={{disguised: true, style:{maxWidth: '500px'}}}>
 
 				<Pod.cardSection styler={{kind:'title-supports'}}>
 					<Pod.heading kind="h2" styler={{secondary: true}}>I'm a card in disguese!</Pod.heading>
@@ -105,6 +105,7 @@ sections.push(
 		</Pod.menuItem>
 		<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
 		<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+		<Pod.devider></Pod.devider>
 		<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
 			<Pod.menu styler={{level:1}} trigger={
 				<Pod.menuItem subtext="5">And another</Pod.menuItem>
@@ -170,6 +171,28 @@ sections.push(
 		} closeOnEsc={true} noArrow={true}>
 			<Pod.overlay>
 				<Pod.button label="You are a cabbage" styler={{kind:'primary'}} />
+			</Pod.overlay>
+		</Pod.portal>
+
+
+
+		<Pod.portal trigger={
+			<Pod.button label="Card, Overlay and Center" />
+		} closeOnEsc={true} noArrow={true}>
+			<Pod.overlay>
+				<Pod.card styler={{style:{width: '350px'}}}>
+
+					<Pod.cardSection styler={{kind:'title-supports'}}>
+						<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
+					</Pod.cardSection>
+					<Pod.cardSection styler={{kind:'supporting-text'}}>
+						<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</Pod.paragraph>
+					</Pod.cardSection>
+					<Pod.cardSection styler={{kind:'action-bar', align: 'right'}}>
+						<Pod.button label="Agree" />
+						<Pod.button label="Disagree" />
+					</Pod.cardSection>
+				</Pod.card>
 			</Pod.overlay>
 		</Pod.portal>
 	</div>
@@ -247,7 +270,8 @@ sections.push(
 				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
 				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
 			</Pod.cardSection>
-			<Pod.cardSection styler={{kind:'supporting-text'}}>
+			<Pod.devider styler={{inline: true, indent: 100, outdent: 100}}></Pod.devider>
+			<Pod.cardSection>
 				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
 			</Pod.cardSection>
 			<Pod.cardSection styler={{kind:'action-bar'}}>
