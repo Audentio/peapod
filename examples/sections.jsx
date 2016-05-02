@@ -270,15 +270,85 @@ sections.push(
 				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
 				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
 			</Pod.cardSection>
-			<Pod.devider styler={{inline: true, indent: 100, outdent: 100}}></Pod.devider>
+			{/*<Pod.devider styler={{inline: true, indent: 100, outdent: 100}}></Pod.devider>*/}
 			<Pod.cardSection>
-				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
+				<Pod.list>
+					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+						Item #1
+					</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+						Item #2
+					</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+						Item #3
+					</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+						Item #4
+					</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} leftIcon={'star_border'} secondary={"Something something"}>
+						Item #5
+					</Pod.listItem>
+				</Pod.list>
+			</Pod.cardSection>
+
+		</Pod.card>
+		<Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-small'}}>
+				<Pod.heading kind="h6" styler={{secondary: true}}>Another List</Pod.heading>
+			</Pod.cardSection>
+
+			<Pod.cardSection>
+				<Pod.list>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #1</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #2</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #3</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #4</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'small'}}>Item #5</Pod.listItem>
+				</Pod.list>
+			</Pod.cardSection>
+
+		</Pod.card>
+		<Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-small'}}>
+				<Pod.heading kind="h6" styler={{secondary: true}}>Another List</Pod.heading>
+			</Pod.cardSection>
+
+			<Pod.cardSection>
+				<Pod.list>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #1</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #2</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #3</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #4</Pod.listItem>
+					<Pod.listItem rightImage={'image.png'} styler={{imgSize: 'large'}}>Item #5</Pod.listItem>
+				</Pod.list>
+			</Pod.cardSection>
+
+		</Pod.card>
+		<Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-small'}}>
+				<Pod.heading kind="h6" styler={{secondary: true}}>Another List</Pod.heading>
+			</Pod.cardSection>
+
+			<Pod.cardSection>
+				<Pod.list>
+					<Pod.listItem leftIcon={'star_border'}>Item #1</Pod.listItem>
+					<Pod.listItem leftIcon={'star_border'}>Item #2</Pod.listItem>
+					<Pod.listItem leftIcon={'star_border'}>Item #3</Pod.listItem>
+					<Pod.listItem leftIcon={'star_border'}>Item #4</Pod.listItem>
+					<Pod.listItem leftIcon={'star_border'}>Item #5</Pod.listItem>
+				</Pod.list>
 			</Pod.cardSection>
 			<Pod.cardSection styler={{kind:'action-bar'}}>
 				<Pod.button label="Agree" />
 				<Pod.button label="Disagree" />
 			</Pod.cardSection>
 		</Pod.card>
+
+		</Pod.card>
+		<Pod.card styler={{style:{width: '350px'}}}>
 
 		<Pod.card styler={{style:{width: '350px'}}}>
 			<Pod.cardSection styler={{kind:'title-supports'}}>
