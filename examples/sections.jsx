@@ -26,6 +26,28 @@ sections.push(
   		</Pod.heroOverlay>
   	</Pod.hero>
 )
+sections.push(
+    <div className="section" key={'media'}>
+
+        <Pod.heading>Media Element</Pod.heading>
+
+        <Pod.block>
+            <Pod.blockLeft>
+                <Pod.photo src="image.png" styler={{ style: { display: 'block', width:'100px' } }}/>
+            </Pod.blockLeft>
+            <Pod.block>
+                <Pod.heading kind="h4">Not a media element(Level 1 elements)</Pod.heading>
+                <Pod.paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint quaerat ex, rerum nulla officia expedita deleniti excepturi debitis vitae ea deserunt. Nihil quo voluptate ad atque veritatis, officia itaque sunt! </Pod.paragraph>
+            </Pod.block>
+        </Pod.block>
+
+        <Pod.media image="image.png" title="A media element(Level 2 element)">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat, culpa unde earum at recusandae ipsa fuga facilis doloremque minus expedita.
+        </Pod.media>
+
+    </div>
+)
+
 
 sections.push(
 <div className="section" key={'grid5'}>
@@ -56,6 +78,19 @@ sections.push(
 
     <Pod.imageContainer styler={{scrollable: true, style: {float: 'left'}}}>
         <Pod.heading kind="h5">Scrollable</Pod.heading>
+        <Pod.block>
+            <Pod.blockLeft>
+                <Pod.photo src="image.png" styler={{ style: { display: 'block', width:'100px' } }}/>
+            </Pod.blockLeft>
+            <Pod.block>
+                <Pod.heading kind="h4">Not a media element(Level 1 elements)</Pod.heading>
+                <Pod.paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint quaerat ex, rerum nulla officia expedita deleniti excepturi debitis vitae ea deserunt. Nihil quo voluptate ad atque veritatis, officia itaque sunt! </Pod.paragraph>
+            </Pod.block>
+        </Pod.block>
+
+        <Pod.media image="image.png" title="A media element(Level 2 element)">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat, culpa unde earum at recusandae ipsa fuga facilis doloremque minus expedita.
+        </Pod.media>
         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
@@ -77,7 +112,7 @@ sections.push(
 )
 
 sections.push(
-  	<Pod.fixedElement key={'fixed navigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
+  	<Pod.fixedElement key={'fixednavigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
 
   	<Pod.toolbar key={'toolbar'}>
   		<Pod.icon styler={{style: {height: '32px', display: 'inline-block', lineHeight: '32px', width: '32px', float: 'left'}}}>menu</Pod.icon>
@@ -118,35 +153,35 @@ sections.push(
 )
 
 sections.push(
-<div className="section" key={'menu'}>
+    <div className="section" key={'menu'}>
 
-	<Pod.heading>Menus</Pod.heading>
+    <Pod.heading>Menus</Pod.heading>
 
-	<Pod.menu trigger={
-		<Pod.button label="On Hover" />
-	}>
-		<Pod.menuItem href="#" subtext="1">
-			Something about something
-		</Pod.menuItem>
-		<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
-		<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
-		<Pod.devider></Pod.devider>
-		<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
-			<Pod.menu styler={{level:1}} trigger={
-				<Pod.menuItem subtext="5">And another</Pod.menuItem>
-			}>
-				<Pod.menuItem href="#">Another thing</Pod.menuItem>
-				<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-				<Pod.menuItem href="#">And another</Pod.menuItem>
-				<Pod.menu styler={{level:1}} trigger={
-					<Pod.menuItem subtext="5">And another</Pod.menuItem>
-				}>
-					<Pod.menuItem href="#">Another thing</Pod.menuItem>
-					<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-					<Pod.menuItem href="#">And another</Pod.menuItem>
-				</Pod.menu>
-			</Pod.menu>
-	</Pod.menu>
+    <Pod.menu trigger={
+    	<Pod.button label="On Hover" />
+    }>
+    	<Pod.menuItem href="#" subtext="1">
+    		Something about something
+    	</Pod.menuItem>
+    	<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
+    	<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+    	<Pod.devider></Pod.devider>
+    	<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
+    		<Pod.menu styler={{level:1}} trigger={
+    			<Pod.menuItem subtext="5">And another</Pod.menuItem>
+    		}>
+    			<Pod.menuItem href="#">Another thing</Pod.menuItem>
+    			<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+    			<Pod.menuItem href="#">And another</Pod.menuItem>
+    			<Pod.menu styler={{level:1}} trigger={
+    				<Pod.menuItem subtext="5">And another</Pod.menuItem>
+    			}>
+    				<Pod.menuItem href="#">Another thing</Pod.menuItem>
+    				<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+    				<Pod.menuItem href="#">And another</Pod.menuItem>
+    			</Pod.menu>
+    		</Pod.menu>
+    </Pod.menu>
 
     <Pod.menu portal={true} trigger={
         <Pod.button label="On Click" />
@@ -187,11 +222,11 @@ sections.push(
         {text: 'Hello World 123', href: '#', subtext: '2'}
     ]} />
 
-</div>
+    </div>
 )
 
 sections.push(
-<div className="section" key={'modals'}>
+    <div className="section" key={'modals'}>
 
 	<Pod.heading>Modals, Overlays and Centers</Pod.heading>
 
@@ -338,7 +373,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section styler={{style:{background: '#afafaf', overflow: 'hidden'}}}>
+    <Pod.section key={'section'} styler={{style:{background: '#afafaf', overflow: 'hidden'}}}>
         <Pod.heading>Pod Section</Pod.heading>
         <Pod.paragraph>No Padding, Max width: 900px - set in base.js</Pod.paragraph>
     </Pod.section>

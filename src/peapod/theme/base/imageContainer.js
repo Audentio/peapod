@@ -14,7 +14,7 @@ sheet.setValues({});
 main.addSelector({
     common: {
         // background
-        background: 'url(iphone.svg)', // passed value
+        backgroundImage: 'url(iphone.svg)', // passed value
         width: '320px', // passed value
         height: '600px', // passed value
         position: 'relative',
