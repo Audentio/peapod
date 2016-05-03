@@ -4,11 +4,14 @@ var sheet = new Sheet,
     main = sheet.addMain();
 
 //Conditions
+
 //Variables
+
 main.addSelector({
     common: {
-        position: 'static',
-        zIndex: '998'
+        padding: '16px',
+        borderBottom: '1px solid #ddd',
+        background: '#fff'
     }
 });
 

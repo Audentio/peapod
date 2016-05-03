@@ -9,6 +9,7 @@ var sheet = new Sheet,
     h6 = sheet.addPart('h6');
 
 //Conditions
+sheet.addCondition('secondary').addStyler({secondary: true});
 
 //Variables
 sheet.setValues({
@@ -27,12 +28,22 @@ h1.addSelector({
        fontSize: '$font.size.display3',
        marginBottom: getMargin('font.margins.display3', 'font.size.body1'),
     }
+}).addSelector({
+    condition: ['secondary'],
+    common:{
+       marginBottom: '0px',
+    }
 });
 
 h2.addSelector({
     common:{
        fontSize: '$font.size.display2',
        marginBottom: getMargin('font.margins.display2', 'font.size.body1'),
+    }
+}).addSelector({
+    condition: ['secondary'],
+    common:{
+       marginBottom: '0px',
     }
 });
 
@@ -41,12 +52,22 @@ h3.addSelector({
        fontSize: '$font.size.display1',
        marginBottom: getMargin('font.margins.display1', 'font.size.body1'),
     }
+}).addSelector({
+    condition: ['secondary'],
+    common:{
+       marginBottom: '0px',
+    }
 });
 
 h4.addSelector({
     common:{
        fontSize: '$font.size.headline',
        marginBottom: getMargin('font.margins.headline', 'font.size.body1'),
+    }
+}).addSelector({
+    condition: ['secondary'],
+    common:{
+       marginBottom: '0px',
     }
 });
 
@@ -55,12 +76,22 @@ h5.addSelector({
        fontSize: '$font.size.title',
        marginBottom: getMargin('font.margins.title', 'font.size.body1'),
     }
+}).addSelector({
+    condition: ['secondary'],
+    common:{
+       marginBottom: '0px',
+    }
 });
 
 h6.addSelector({
     common:{
        fontSize: '$font.size.subheading',
        marginBottom: getMargin('font.margins.subheading', 'font.size.body1'),
+    }
+}).addSelector({
+    condition: ['secondary'],
+    common:{
+       marginBottom: '0px',
     }
 });
 

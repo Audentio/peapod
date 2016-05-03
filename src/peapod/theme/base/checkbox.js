@@ -18,7 +18,7 @@ sheet.addCondition('hovered').addStyler({hovered: true});
 sheet.setValues({
 	common: {
 		checkbox: {
-			width: '1.5rem',
+			width: '18px',
 			height: '$checkbox.width',
 			color: {
 				text: '$color.text.dark',
@@ -27,15 +27,15 @@ sheet.setValues({
 				icon: '$color.text.white'
 			},
 			border: {
-				color: '$palette.grey200',
+				color: '$palette.black',
 				colorChecked: '$checkbox.color.backgroundChecked',
-				radius: '$border.radius.large',
-				width: '1px',
+				radius: '$border.radius.small',
+				width: '2px',
 				style: 'solid'
 			},
 			font: {
 				family: 'inherit',
-				size: '$font.size.normal'
+				size: '$font.size.large'
 			}
 		}
 	},
@@ -114,7 +114,7 @@ icon.addSelector({
 	common: {
 		color: '$checkbox.color.icon',
 		position: 'absolute',
-		top: '50%',
+		top: '53%',
 		transform: 'translateY(-50%)',
 		left: '1px',
 		display: 'none',

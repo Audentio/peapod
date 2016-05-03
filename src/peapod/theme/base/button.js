@@ -10,6 +10,8 @@ sheet.addCondition('round').addStyler({round: true});
 sheet.addCondition('disabled').addStyler({disabled: true});
 sheet.addCondition('notDisabled').addStyler({disabled: undefined});
 
+sheet.addCondition('icon').addStyler({type: 'icon'});
+
 sheet.addCondition('kindGeneral').addStyler({kind: 'general'});
 sheet.addCondition('kindBase').addStyler({kind: 'base'});
 sheet.addCondition('kindPrimary').addStyler({kind: 'primary'});
@@ -28,7 +30,7 @@ sheet.setValues({
 					dark: '$color.text.dark'
 				},
 				base: {
-					background: '$palette.blue400',
+					background: '$palette.white',
 					color: '$palette.white',
 					hover: '$color.primary.hover',
 					active: '$color.primary.active'
@@ -73,16 +75,27 @@ main.addSelector({
 		lineHeight: '$button.lineHeight',
 		paddingTop: '0px',
 		paddingBottom: '0px',
-		paddingLeft: '$gutter.internal',
-		paddingRight: '$gutter.internal',
+		paddingLeft: '$gutter.extrasmall',
+		paddingRight: '$gutter.extrasmall',
 		height: '$button.height',
 		textAlign: 'center',
 		outline: 'none',
 
-		color: '$button.color.text.dark',
+		color: '$button.color.text.light',
 		backgroundColor: '$button.color.base.background'
 	}
-}).addSelector({
+})
+.addSelector({
+	condition: ['icon'],
+	common: {
+		paddingTop: '0px',
+		paddingBottom: '0px',
+		paddingLeft: '4px',
+		paddingRight: '4px',
+		color: '$button.color.base'
+	}
+})
+.addSelector({
 	condition: ['notDisabled'],
 	common: {
 		cursor: 'pointer',
