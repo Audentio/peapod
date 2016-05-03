@@ -9,6 +9,8 @@ var sheet = new Sheet,
 //Conditions
 sheet.addCondition('disguised').addStyler({disguised: true});
 sheet.addCondition('padded').addStyler({padded: true});
+sheet.addCondition('actionBarLeft').addProps({actionBarLocation: 'left'});
+sheet.addCondition('actionBarRight').addProps({actionBarLocation: 'right'});
 
 //Variables
 sheet.setValues({
@@ -57,16 +59,34 @@ title.addSelector({
 });
 
 content.addSelector({
+    common: {
+        overflow: 'hidden'
+    }
+}).addSelector({
     condition: ['padded'],
     common: {
         paddingLeft: '$card.padding.large',
-        paddingRight: '$card.padding.large'
+        paddingRight: '$card.padding.large',
     }
 });
 
 actionBar.addSelector({
     common: {
         padding: '$card.padding.small'
+    }
+}).addSelector({
+    condition: ['actionBarLeft'],
+    common: {
+        float: 'left',
+        maxWidth: '56px',
+        textAlign: 'center'
+    }
+}).addSelector({
+    condition: ['actionBarRight'],
+    common: {
+        float: 'right',
+        maxWidth: '56px',
+        textAlign: 'center'
     }
 });
 

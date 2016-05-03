@@ -368,6 +368,48 @@ sections.push(
         <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
     </Pod.card>
 
+    <Pod.card styler={{style:{width: '350px'}}} actionBarLocation='top' actionBar={(
+        <div>
+            <Pod.button styler={{type: 'icon'}} label={
+                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
+                } />
+
+            <Pod.button styler={{type: 'icon'}} label={
+                (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+            } />
+        </div>
+    )}>
+            <Pod.photo src="image.png"/>
+    </Pod.card>
+
+    <Pod.card styler={{style:{width: '350px'}}} actionBarLocation='left' actionBar={(
+        <div>
+            <Pod.button styler={{type: 'icon'}} label={
+                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
+                } />
+
+            <Pod.button styler={{type: 'icon'}} label={
+                (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+            } />
+        </div>
+    )}>
+            <Pod.photo src="image.png"/>
+    </Pod.card>
+
+    <Pod.card styler={{style:{width: '350px'}}} actionBarLocation='right' actionBar={(
+        <div>
+            <Pod.button styler={{type: 'icon'}} label={
+                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
+                } />
+
+            <Pod.button styler={{type: 'icon'}} label={
+                (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+            } />
+        </div>
+    )}>
+            <Pod.photo src="image.png"/>
+    </Pod.card>
+
     </div>
 )
 

@@ -39,8 +39,15 @@ class Card extends React.Component {
             </div>
         ) : '';
 
+        var actionBarTop = '';
+        if (this.props.actionBarLocation != 'bottom') {
+            actionBarTop = actionBar;
+            actionBar = '';
+        }
+
         return (
             <div style={style.main}>
+                {actionBarTop}
                 {title}
 
                 <div style={style.content}>{this.props.children}</div>
