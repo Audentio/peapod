@@ -92,7 +92,7 @@ main.addSelector({
 		paddingBottom: '0px',
 		paddingLeft: '4px',
 		paddingRight: '4px',
-		color: '$button.color.base'
+		color: '$button.color.base.color'
 	}
 })
 .addSelector({
