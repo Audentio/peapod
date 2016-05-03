@@ -22,7 +22,7 @@ class BlockLeft extends React.Component {
         var style = Pod_Styler.getStyle(this);
 
         return (
-            <Pod.block align="left">
+            <Pod.block {...this.props} align="left">
                 {this.props.children}
             </Pod.block>
         );

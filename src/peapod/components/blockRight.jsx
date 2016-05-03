@@ -22,7 +22,7 @@ class BlockRight extends React.Component {
         var style = Pod_Styler.getStyle(this);
 
         return (
-            <Pod.block align="right">
+            <Pod.block {...this.props} align="right">
                 {this.props.children}
             </Pod.block>
         );
