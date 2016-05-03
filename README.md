@@ -30,7 +30,7 @@ npm install
 ```
 npm run examples-dev
 ```
-Then visit [http://localhost:3000](http://localhost:3000).
+Then visit [http://localhost:3002](http://localhost:3002).
 
 **Build & watch documentation**
 ```
