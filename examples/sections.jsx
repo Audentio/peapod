@@ -28,30 +28,6 @@ sections.push(
 )
 
 sections.push(
-	<div className="section" key={'grid5'}>
-		<Pod.heading>Grid Example (Not Working)</Pod.heading>
-		<Pod.grid>
-			<Pod.gridCell styler={{sm:6}}>
-				Bars
-			</Pod.gridCell>
-
-			<Pod.gridCell styler={{sm:6}}>
-				Circles
-			</Pod.gridCell>
-
-			<Pod.div styler={{style: {flex: '0 0 50%'}}}>
-				test
-			</Pod.div>
-
-			<Pod.div styler={{style: {color: 'blue', ':hover': {color: 'red'}}}}>1</Pod.div>
-			<div key="3" style={{
-					color: 'blue',
-					':hover': {color: 'red'},
-					'@media (min-width: 800px)': {color: '#F0F'}}}>3</div>
-		</Pod.grid>
-	</div>
-)
-sections.push(
 	<div className="section" key={'chips'}>
 		<Pod.heading>Chips</Pod.heading>
 		<Pod.chip>This is a chip</Pod.chip>
