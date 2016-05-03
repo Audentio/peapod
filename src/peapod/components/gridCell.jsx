@@ -13,6 +13,9 @@ var Wrapper = require('../wrapper.jsx')
 var GridCell = React.createClass({
 	render: function() {
 		var style = Pod_Styler.getStyle(this);
+
+		console.log(style.main);
+
 		return (
 			<div style={style.main}>
 				{this.props.children}
