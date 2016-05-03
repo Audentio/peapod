@@ -9,7 +9,7 @@ sections.push(
   	<Pod.hero key={'hero'} styler={{cover: true, style: {backgroundImage: 'url(mrRobot.jpg)'}}}>
   		<Pod.heroOverlay styler={{position:'left'}}>
   			<Pod.center>
-				<Pod.card styler={{disguised: true, style:{width: '500px'}}}>
+				<Pod.card styler={{disguised: true, style:{maxWidth: '500px'}}}>
 
 				<Pod.cardSection styler={{kind:'title-supports'}}>
 					<Pod.heading kind="h2" styler={{secondary: true}}>I'm a card in disguese!</Pod.heading>
@@ -68,7 +68,7 @@ sections.push(
 			<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
 			<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
 			<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
-				<Pod.menu styler={{level:1}}trigger={
+				<Pod.menu styler={{level:1}} trigger={
 					<Pod.menuItem subtext={
 						<Pod.icon styler={{style:{ fontSize: '0.9em' }}}>keyboard_arrow_right</Pod.icon>
 					}>And another</Pod.menuItem>
@@ -105,6 +105,7 @@ sections.push(
 		</Pod.menuItem>
 		<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
 		<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+		<Pod.devider></Pod.devider>
 		<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
 			<Pod.menu styler={{level:1}} trigger={
 				<Pod.menuItem subtext="5">And another</Pod.menuItem>
@@ -122,30 +123,44 @@ sections.push(
 			</Pod.menu>
 	</Pod.menu>
 
-	<Pod.menu portal={true} trigger={
-		<Pod.button label="On Click" />
-	}>
-		<Pod.menuItem href="#" subtext="1">
-			Something about something
-		</Pod.menuItem>
-		<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
-		<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
-		<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
-			<Pod.menu styler={{level:1}} click={true} trigger={
-				<Pod.menuItem subtext="5">And another</Pod.menuItem>
-			}>
-				<Pod.menuItem href="#">Another thing</Pod.menuItem>
-				<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-				<Pod.menuItem href="#">And another</Pod.menuItem>
-				<Pod.menu click={true} styler={{level:1}} trigger={
-					<Pod.menuItem subtext="5">And another</Pod.menuItem>
-				}>
-					<Pod.menuItem href="#">Another thing</Pod.menuItem>
-					<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-					<Pod.menuItem href="#">And another</Pod.menuItem>
-				</Pod.menu>
-			</Pod.menu>
-	</Pod.menu>
+    <Pod.menu portal={true} trigger={
+        <Pod.button label="On Click" />
+    }>
+        <Pod.menuItem href="#" subtext="1">
+            Something about something
+        </Pod.menuItem>
+        <Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
+        <Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+        <Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
+            <Pod.menu styler={{level:1}} click={true} trigger={
+                <Pod.menuItem subtext="5">And another</Pod.menuItem>
+            }>
+                <Pod.menuItem href="#">Another thing</Pod.menuItem>
+                <Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+                <Pod.menuItem href="#">And another</Pod.menuItem>
+                <Pod.menu click={true} styler={{level:1}} trigger={
+                    <Pod.menuItem subtext="5">And another</Pod.menuItem>
+                }>
+                    <Pod.menuItem href="#">Another thing</Pod.menuItem>
+                    <Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+                    <Pod.menuItem href="#">And another</Pod.menuItem>
+                </Pod.menu>
+            </Pod.menu>
+    </Pod.menu>
+
+    <Pod.menu trigger={
+        <Pod.button label="On Hover from JSON" />
+    } json={[
+        {text: 'Hello World', href: '#'},
+        {text: 'Hello World 36', href: '#',
+            children: [
+                {text: 'Hello World 387', href: '#'},
+                {text: 'Hello World 123', href: '#', subtext: '2'}
+            ]
+        },
+        {text: 'Hello World 387', href: '#'},
+        {text: 'Hello World 123', href: '#', subtext: '2'}
+    ]} />
 
 </div>
 )
@@ -170,6 +185,28 @@ sections.push(
 		} closeOnEsc={true} noArrow={true}>
 			<Pod.overlay>
 				<Pod.button label="You are a cabbage" styler={{kind:'primary'}} />
+			</Pod.overlay>
+		</Pod.portal>
+
+
+
+		<Pod.portal trigger={
+			<Pod.button label="Card, Overlay and Center" />
+		} closeOnEsc={true} noArrow={true}>
+			<Pod.overlay>
+				<Pod.card styler={{style:{width: '350px'}}}>
+
+					<Pod.cardSection styler={{kind:'title-supports'}}>
+						<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
+					</Pod.cardSection>
+					<Pod.cardSection styler={{kind:'supporting-text'}}>
+						<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</Pod.paragraph>
+					</Pod.cardSection>
+					<Pod.cardSection styler={{kind:'action-bar', align: 'right'}}>
+						<Pod.button label="Agree" />
+						<Pod.button label="Disagree" />
+					</Pod.cardSection>
+				</Pod.card>
 			</Pod.overlay>
 		</Pod.portal>
 	</div>
@@ -240,22 +277,6 @@ sections.push(
 
 		</Pod.card>
 
-
-		<Pod.card styler={{style:{width: '350px'}}}>
-
-			<Pod.cardSection styler={{kind:'title-supports'}}>
-				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
-				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
-			</Pod.cardSection>
-			<Pod.cardSection styler={{kind:'supporting-text'}}>
-				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
-			</Pod.cardSection>
-			<Pod.cardSection styler={{kind:'action-bar'}}>
-				<Pod.button label="Agree" />
-				<Pod.button label="Disagree" />
-			</Pod.cardSection>
-		</Pod.card>
-
 		<Pod.card styler={{style:{width: '350px'}}}>
 			<Pod.cardSection styler={{kind:'title-supports'}}>
 				<Pod.cardSection styler={{kind:'media', float: 'right'}}>
@@ -271,6 +292,185 @@ sections.push(
 				<Pod.button label="Disagree" />
 			</Pod.cardSection>
 		</Pod.card>
+
+		<Pod.card styler={{style:{width: '350px'}}}>
+			<Pod.cardSection styler={{kind:'title-supports'}}>
+
+				<Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
+				<Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
+			</Pod.cardSection>
+
+			<Pod.cardSection>
+				<Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
+			</Pod.cardSection>
+
+			<Pod.cardSection styler={{kind:'action-bar'}}>
+				<Pod.button label="Agree" />
+				<Pod.button label="Disagree" />
+			</Pod.cardSection>
+		</Pod.card>
+	</div>
+)
+
+sections.push(
+    <div className="section grey" key={"simplecards"}>
+
+        <Pod.heading>Simple Cards</Pod.heading>
+
+        <Pod.card styler={{padded:true, style:{width: '350px'}}} title="Simple Card" actionBar={(
+            <div>
+                <Pod.button styler={{type: 'icon'}} label={
+                        (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.icon>)
+                    } />
+
+                <Pod.button styler={{type: 'icon'}} label={
+                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+                } />
+            </div>
+        )}>
+            <Pod.photo src="image.png"/>
+        </Pod.card>
+
+    <Pod.card styler={{style:{width: '350px'}}} actionBar={(
+            <div>
+                <Pod.button styler={{type: 'icon'}} label={
+                        (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
+                    } />
+
+                <Pod.button styler={{type: 'icon'}} label={
+                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+                } />
+            </div>
+        )}>
+            <Pod.photo src="image.png"/>
+        </Pod.card>
+
+    <Pod.card styler={{padded:true, style:{width: '350px'}}} title="Simple Card" actionBar={(
+            <div>
+                <Pod.button label="Button" />
+
+                <Pod.button label="Another Button" />
+            </div>
+        )}>
+        <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
+    </Pod.card>
+
+    <Pod.card styler={{padded:true, style:{width: '350px'}}} title="Simple Card">
+        <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
+    </Pod.card>
+
+    </div>
+)
+
+sections.push(
+	<div className="section grey" key={"lists"}>
+
+		<Pod.heading>Lists</Pod.heading>
+
+        <Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-small'}}>
+				<Pod.heading kind="h6" styler={{secondary: true}}>Alternating List</Pod.heading>
+			</Pod.cardSection>
+
+
+                <Pod.list>
+                    <Pod.listItem
+                        image={'image.png'}
+                        icon={'star_border'}
+                        secondary={"Something something"}
+
+                        styler={{image: 'right', icon: 'left', divider: 'right'}}
+                        onClick={(event)=>{console.log("List Item Clicked")}}
+                        onIconClick={()=>{console.log("List Item Button Clicked")}}
+                    >
+                        Item #1
+                    </Pod.listItem>
+                    <Pod.listItem image={'image.png'} icon={'star_border'} secondary={"Something something"} styler={{divider: 'left'}}>
+                        Item #2
+                    </Pod.listItem>
+                    <Pod.listItem image={'image.png'} icon={'star_border'} secondary={"Something something"} styler={{image: 'right', icon: 'left', divider: 'right'}}>
+                        Item #3
+                    </Pod.listItem>
+                    <Pod.listItem image={'image.png'} icon={'star_border'} secondary={"Something something"} styler={{divider: 'left'}}>
+                        Item #4
+                    </Pod.listItem>
+                    <Pod.listItem image={'image.png'} icon={'star_border'} secondary={"Something something"} styler={{image: 'right', icon: 'left', divider: 'right'}}>
+                        Item #5
+                    </Pod.listItem>
+                </Pod.list>
+
+        </Pod.card>
+        <Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-small'}}>
+				<Pod.heading kind="h6" styler={{secondary: true}}>Standard list with secondary text</Pod.heading>
+			</Pod.cardSection>
+
+                <Pod.list>
+                    <Pod.listItem secondary={"Something something"}>
+                        Item #1
+                    </Pod.listItem>
+                    <Pod.listItem secondary={"Something something"}>
+                        Item #2
+                    </Pod.listItem>
+                    <Pod.listItem secondary={"Something something"}>
+                        Item #3
+                    </Pod.listItem>
+                    <Pod.listItem secondary={"Something something"}>
+                        Item #4
+                    </Pod.listItem>
+                    <Pod.listItem secondary={"Something something"}>
+                        Item #5
+                    </Pod.listItem>
+                </Pod.list>
+
+        </Pod.card>
+        <Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-small'}}>
+				<Pod.heading kind="h6" styler={{secondary: true}}>List with images</Pod.heading>
+			</Pod.cardSection>
+
+                <Pod.list>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #1</Pod.listItem>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #2</Pod.listItem>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #3</Pod.listItem>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #4</Pod.listItem>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'small'}}>Item #5</Pod.listItem>
+                </Pod.list>
+
+        </Pod.card>
+        <Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-small'}}>
+				<Pod.heading kind="h6" styler={{secondary: true}}>List with large images</Pod.heading>
+			</Pod.cardSection>
+
+                <Pod.list>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #1</Pod.listItem>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #2</Pod.listItem>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #3</Pod.listItem>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #4</Pod.listItem>
+                    <Pod.listItem image={'image.png'} styler={{imgSize: 'large'}}>Item #5</Pod.listItem>
+                </Pod.list>
+
+        </Pod.card>
+        <Pod.card styler={{style:{width: '350px'}}}>
+
+			<Pod.cardSection styler={{kind:'title-small'}}>
+				<Pod.heading kind="h6" styler={{secondary: true}}>List with icons</Pod.heading>
+			</Pod.cardSection>
+
+                <Pod.list>
+                    <Pod.listItem icon={'star_border'}>Item #1</Pod.listItem>
+                    <Pod.listItem icon={'star_border'}>Item #2</Pod.listItem>
+                    <Pod.listItem icon={'star_border'}>Item #3</Pod.listItem>
+                    <Pod.listItem icon={'star_border'}>Item #4</Pod.listItem>
+                    <Pod.listItem icon={'star_border'}>Item #5</Pod.listItem>
+                </Pod.list>
+       </Pod.card>
+
 	</div>
 )
 
