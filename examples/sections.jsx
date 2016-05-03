@@ -41,13 +41,38 @@ sections.push(
 	</Pod.grid>
 </div>
 )
+
+sections.push(
+<div className="section" key={'imageContainer'}>
+    <Pod.heading>Image Containers</Pod.heading>
+
+    <Pod.imageContainer styler={{style: {float: 'left', marginRight: 40}}}>
+        <Pod.heading kind="h5">Not Scrollable</Pod.heading>
+        <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+        <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+        <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+        <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+    </Pod.imageContainer>
+
+    <Pod.imageContainer styler={{scrollable: true, style: {float: 'left'}}}>
+        <Pod.heading kind="h5">Scrollable</Pod.heading>
+        <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+        <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+        <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+        <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+    </Pod.imageContainer>
+
+    <br className="clear" />
+</div>
+)
+
 sections.push(
 <div className="section" key={'chips'}>
-	<Pod.heading>Chips</Pod.heading>
-	<Pod.chip>This is a chip</Pod.chip>
-	<Pod.chip del={true}>Chip with Delete</Pod.chip>
-	<Pod.chip photo='profile@2x.jpg'>Chip with Photo</Pod.chip>
-	<Pod.chip del={true} photo='profile@2x.jpg'>Chip with Delete & Photo</Pod.chip>
+    <Pod.heading>Chips</Pod.heading>
+    <Pod.chip>This is a chip</Pod.chip>
+    <Pod.chip deleteTrigger={true}>Chip with Delete</Pod.chip>
+    <Pod.chip photo='profile@2x.jpg'>Chip with Photo</Pod.chip>
+    <Pod.chip deleteTrigger={true} photo='profile@2x.jpg'>Chip with Delete & Photo</Pod.chip>
 </div>
 )
 
@@ -310,6 +335,13 @@ sections.push(
 			</Pod.cardSection>
 		</Pod.card>
 	</div>
+)
+
+sections.push(
+    <Pod.section styler={{style:{background: '#afafaf', overflow: 'hidden'}}}>
+        <Pod.heading>Pod Section</Pod.heading>
+        <Pod.paragraph>No Padding, Max width: 900px - set in base.js</Pod.paragraph>
+    </Pod.section>
 )
 
 sections.push(
