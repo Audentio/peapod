@@ -51,7 +51,8 @@ title.addSelector({
     common: {
         paddingTop: '$card.padding.large',
         paddingLeft: '$card.padding.large',
-        paddingRight: '$card.padding.large'
+        paddingRight: '$card.padding.large',
+        paddingBottom: '$card.padding.small'
     }
 });
 
