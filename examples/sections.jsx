@@ -43,9 +43,8 @@ sections.push(
 				test
 			</Pod.div>
 
-			<Pod.div key="1" styler={{style: {':hover': {color: 'red'}}}}>Testing</Pod.div>
-			<Pod.div key="2" style={{':hover': {color: 'red'}}}>Testing</Pod.div>
-			<div key="3" style={{':hover': {color: 'red'}}}>Testing</div>
+			<Pod.div styler={{style: {color: 'blue', ':hover': {color: 'red'}}}}>1</Pod.div>
+			<div key="3" style={{color: 'blue', ':hover': {color: 'red'}}}>3</div>
 		</Pod.grid>
 	</div>
 )

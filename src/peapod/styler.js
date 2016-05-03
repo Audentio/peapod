@@ -204,8 +204,25 @@ window.Pod_Styler = window.Pod_Styler || {
 							computedVar = part[ruleKey];
 
 						if (typeof(computedVar) == 'object') { // merge style objects
-							for (var varIndex = 0, varLen = Object.keys(computedVar).length; varIndex < varLen; varIndex++) {
-								computedVar[Object.keys(computedVar)[varIndex]] = Pod_Styler.parseVariableValue(computedVar[Object.keys(computedVar)[varIndex]], obj, scene);
+							var computedKeys = Object.keys(computedVar);
+
+							for (var varIndex = 0, varLen = computedKeys.length; varIndex < varLen; varIndex++) {
+								var computedKey = computedKeys[varIndex],
+									resultVar = Pod_Styler.parseVariableValue(computedVar[computedKey], obj, scene);
+
+								if (typeof(resultVar) == 'string') {
+									if (resultVar.indexOf('!unset') == -1) {
+										computedVar[computedKey] = resultVar;
+									} else {
+										if (computedKey == 'all') {
+											computedVar = {};
+										} else {
+											delete computedVar[computedKey]
+										}
+									}
+								} else {
+									computedVar[computedKey] = resultVar;
+								}
 							}
 
 							if (typeof(partStyle[ruleKey]) !== 'undefined') { // merge if key already exists
@@ -223,18 +240,20 @@ window.Pod_Styler = window.Pod_Styler || {
 									}
 								}
 							}
-						}
 
-						if (typeof(resultVar) == 'string') {
-							if (resultVar.indexOf('!unset') == -1) {
-								partStyle[computedRuleKey] = resultVar;
-							} else {
-								if (computedRuleKey == 'all') {
-									partStyle = {};
+							if (typeof(resultVar) == 'string') {
+								if (resultVar.indexOf('!unset') == -1) {
+									partStyle[computedRuleKey] = resultVar;
+								} else {
+									if (computedRuleKey == 'all') {
+										partStyle = {};
+									} else {
+										delete computedVar[computedKey]
+									}
 								}
+							} else {
+								partStyle[computedRuleKey] = resultVar;
 							}
-						} else {
-							partStyle[computedRuleKey] = resultVar;
 						}
 					}
 				}
