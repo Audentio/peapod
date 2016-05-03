@@ -57,7 +57,7 @@ var smackKeyframes = Radium.keyframes({
 main.addSelector({
 	common: {
 		display: 'inline-block',
-		position: 'relative'
+		// position: 'relative' // was causing an issue with positioned elements
 	}
 })
 

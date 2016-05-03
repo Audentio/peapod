@@ -23,9 +23,13 @@ class Card extends React.Component {
 
         var objectCheck = new Object(this.props);
 
+        var titleElement = (typeof objectCheck.title === "string") ?
+            (<Pod.heading kind="h4" styler={{secondary:true}}>{this.props.title}</Pod.heading>) :
+            objectCheck.title;
+
         var title = (objectCheck.title) ? (
             <div style={style.title}>
-                <Pod.heading kind="h4">{this.props.title}</Pod.heading>
+                {titleElement}
             </div>
         ) : '';
 
@@ -35,8 +39,15 @@ class Card extends React.Component {
             </div>
         ) : '';
 
+        var actionBarTop = '';
+        if (this.props.actionBarLocation != 'bottom') {
+            actionBarTop = actionBar;
+            actionBar = '';
+        }
+
         return (
             <div style={style.main}>
+                {actionBarTop}
                 {title}
 
                 <div style={style.content}>{this.props.children}</div>
