@@ -4,8 +4,8 @@ var sheet = new Sheet,
     main = sheet.addMain();
 
 //Conditions
-sheet.addCondition('alignRight').addProps({alignitem: 'right'});
-sheet.addCondition('alignLeft').addProps({alignitem: 'left'});
+sheet.addCondition('alignRight').addProps({align: 'right'});
+sheet.addCondition('alignLeft').addProps({align: 'left'});
 
 //Variables
 sheet.setValues({});

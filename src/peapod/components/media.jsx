@@ -22,8 +22,8 @@ class Media extends React.Component {
         var style = Pod_Styler.getStyle(this);
 
         var image = (this.props.image) ? (
-            <Pod.block alignitem={this.props.alignImage}>
-                <Pod.photo src={this.props.image} styler={{ style: { display: 'block', width:'100px' } }}/>
+            <Pod.block align={this.props.alignImage}>
+                <Pod.photo src={this.props.image}/>
             </Pod.block>
         ) : '' ;
 

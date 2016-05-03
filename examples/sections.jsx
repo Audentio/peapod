@@ -33,7 +33,7 @@ sections.push(
 
         <Pod.block>
             <Pod.blockLeft>
-                <Pod.photo src="image.png" styler={{ style: { display: 'block', width:'100px' } }}/>
+                <Pod.photo src="smallimg.png" />
             </Pod.blockLeft>
             <Pod.block>
                 <Pod.heading kind="h4">Not a media element(Level 1 elements)</Pod.heading>
@@ -41,7 +41,7 @@ sections.push(
             </Pod.block>
         </Pod.block>
 
-        <Pod.media image="image.png" title="A media element(Level 2 element)">
+        <Pod.media image="smallimg.png" title="A media element(Level 2 element)">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat, culpa unde earum at recusandae ipsa fuga facilis doloremque minus expedita.
         </Pod.media>
 
@@ -68,7 +68,7 @@ sections.push(
 <div className="section" key={'imageContainer'}>
     <Pod.heading>Image Containers</Pod.heading>
 
-    <Pod.imageContainer styler={{style: {float: 'left', marginRight: 40}}}>
+    <Pod.imageContainer preset='iphone' styler={{style: {float: 'left', marginRight: 40}}}>
         <Pod.heading kind="h5">Not Scrollable</Pod.heading>
         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
@@ -76,11 +76,11 @@ sections.push(
         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
     </Pod.imageContainer>
 
-    <Pod.imageContainer styler={{scrollable: true, style: {float: 'left'}}}>
+    <Pod.imageContainer preset='iphone' styler={{scrollable: true, style: {float: 'left'}}}>
         <Pod.heading kind="h5">Scrollable</Pod.heading>
         <Pod.block>
             <Pod.blockLeft>
-                <Pod.photo src="image.png" styler={{ style: { display: 'block', width:'100px' } }}/>
+                <Pod.photo src="smallimg.png" styler={{ style: { display: 'block', width:'100px' } }}/>
             </Pod.blockLeft>
             <Pod.block>
                 <Pod.heading kind="h4">Not a media element(Level 1 elements)</Pod.heading>
@@ -88,7 +88,7 @@ sections.push(
             </Pod.block>
         </Pod.block>
 
-        <Pod.media image="image.png" title="A media element(Level 2 element)">
+        <Pod.media image="smallimg.png" title="A media element(Level 2 element)">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat, culpa unde earum at recusandae ipsa fuga facilis doloremque minus expedita.
         </Pod.media>
         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
