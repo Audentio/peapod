@@ -31,13 +31,19 @@ sections.push(
 <div className="section" key={'grid5'}>
 	<Pod.heading>Grid Example (Not Working)</Pod.heading>
 	<Pod.grid>
-		<Pod.gridCell styler={{md:6}}>
+		<Pod.gridCell styler={{xs:6}}>
 			Bars
 		</Pod.gridCell>
 
-		<Pod.gridCell styler={{md:6}}>
+		<Pod.grid styler={{xs:6}}>
 			Circles
-		</Pod.gridCell>
+		</Pod.grid>
+
+    <Pod.div styler={{style: {flex: '0 0 50%'}}}>
+      test
+    </Pod.div>
+
+    <div>Testing</div>
 	</Pod.grid>
 </div>
 )
