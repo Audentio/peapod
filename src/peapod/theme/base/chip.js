@@ -2,10 +2,15 @@ import {Sheet} from '../../stylesheet.js';
 
 var sheet = new Sheet,
     main = sheet.addMain(),
-    del = sheet.addPart('del'),
+    deleteTrigger = sheet.addPart('deleteTrigger'),
     photo = sheet.addPart('photo');
 
 //Conditions
+
+//Functions
+var half = (value) => {
+    return (parseFloat(Pod_Vars.get(value)) / 2 );
+}
 
 //Variables
 sheet.setValues({
@@ -43,21 +48,21 @@ main.addSelector({
     }
 })
 
-del.addSelector({
+deleteTrigger.addSelector({
     common: {
         display: 'inline-block',
-        height: '16px', // $chip.height / 2
-        lineHeight: '16px', // $chip.height / 2
-        width: '16px', // $chip.height / 2
+        height: half('chip.height'),
+        lineHeight: half('chip.height'),
+        width: half('chip.height'),
         fontSize:'12px', // variable?
         background: '$palette.grey500',
         color: '$chip.background',
         textAlign:'center',
         float: 'right',
         marginLeft: '$chip.innerMargins',
-        marginRight: '-4px', // $chip.innerMargins / 2
+        marginRight: (0 - half('chip.innerMargins')),
         marginTop: '$chip.innerMargins',
-        borderRadius: '50%',
+        borderRadius: half('chip.height'),
 
         ':hover': {
             background: '$chip.hover.color',
@@ -70,7 +75,7 @@ photo.addSelector({
     common: {
         height: '$chip.height',
         width: '$chip.height',
-        borderRadius: '50%',
+        borderRadius: half('chip.height'),
         float: 'left',
         marginLeft: (0 - parseFloat(Pod_Vars.get('chip.paddingLeftRight'))), // needs to be minus
         marginRight: '$chip.innerMargins'

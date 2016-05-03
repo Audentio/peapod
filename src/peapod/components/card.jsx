@@ -21,14 +21,38 @@ class Card extends React.Component {
     render() {
         var style = Pod_Styler.getStyle(this);
 
+        var objectCheck = new Object(this.props);
+
+        var title = (objectCheck.title) ? (
+            <div style={style.title}>
+                <Pod.heading kind="h4">{this.props.title}</Pod.heading>
+            </div>
+        ) : '';
+
+        var actionBar = (objectCheck.actionBar) ? (
+            <div style={style.actionBar}>
+                {this.props.actionBar}
+            </div>
+        ) : '';
+
         return (
             <div style={style.main}>
-                {this.props.children}
+                {title}
+
+                <div style={style.content}>{this.props.children}</div>
+
+                {actionBar}
             </div>
         );
 
     }
 
+};
+
+Card.defaultProps = {
+    title: false,
+    actionBar: false,
+    actionBarLocation: 'bottom'
 };
 
 module.exports = Wrapper(Card);

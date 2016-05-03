@@ -21,11 +21,62 @@ class Menu extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
+
+        var childrencomonents = this.props.children;
+        // Allow passing of JSON
+        if (this.props.json) {
+            var childrencomonents = []
+            var childjson = this.props.json
+            for (var i = childjson.length - 1; i >= 0; i--) {
+                // key needs updating to always be unique
+
+                if (childjson[i].children != undefined) {
+                    childrencomonents.push(
+                        <Pod.menu
+                            styler={{level:1}}
+                            key={i}
+                            json={childjson[i].children}
+                            trigger={
+                                <Pod.menuItem key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Pod.menuItem>
+                            }
+                        />
+                    )
+                } else {
+                    childrencomonents.push(
+                       <Pod.menuItem key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Pod.menuItem>
+                    )
+                }
+            }
+        }
+
+        // Allow showing of children for non portal menus
         var children =  (this.state.show) ? (
             <div style={style.main}>
-                {this.props.children}
+                {childrencomonents}
             </div>
         ) : "";
+
+        var hassubtext = false;
+
+        // console.log(this.props.children)
+        // for (var i = this.props.children.length - 1; i >= 0; i--) {
+        //     var newObj = new Object(this.props.children[i]);
+        //     if ('subtext' in newObj.props) {
+        //         hassubtext = true;
+        //         console.log(hassubtext)
+        //         continue;
+        //     }
+        // }
+
+        // if (hassubtext) {
+        //    for (var i = this.props.children.length - 1; i >= 0; i--) {
+        //         var newObj = new Object(this.props.children[i]);
+        //         if ('subtext' in newObj.props) {
+        //         } else {
+        //             this.props.children[i].props.subtext = ''
+        //         }
+        //     }
+        // }
 
         if (this.props.portal) {
             return(
@@ -35,7 +86,7 @@ class Menu extends React.Component {
                     noArrow={true}
                 >
                     <div style={style.portal}>
-                        {this.props.children}
+                        {childrencomonents}
                     </div>
                 </Pod.portal>
             )
@@ -64,7 +115,8 @@ class Menu extends React.Component {
 };
 
 Menu.defaultProps = {
-    click: false
+    click: false,
+    json: false
 };
 
 module.exports = Wrapper(Menu);

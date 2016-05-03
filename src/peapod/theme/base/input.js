@@ -62,15 +62,15 @@ sheet.setValues({
 			textIndent: 0,
 			height: '$gutter.large',
 			padding: {
-				top: '0',
+				top: '0px',
 				right: '0px',
-				bottom: '0',
+				bottom: '0px',
 				left: '0px'
 			},
 			border: {
 				color: '$palette.blue400',
 				radius: '0px',
-				width: '0 0 1px 0',
+				width: '0px 0px 1px 0px',
 				style: 'solid'
 			},
 			font: {
@@ -85,7 +85,7 @@ sheet.setValues({
 				background: 'transparent'
 			},
 			border: {
-				width: '0 0 1px 0'
+				width: '0px 0px 1px 0px'
 			}
 		}
 	},
@@ -124,7 +124,7 @@ main.addSelector({
 	condition: 'focused',
 	common: {
 		borderColor: '$color.primary.base',
-		borderWidth: '0 0 2px 0',
+		borderWidth: '0px 0px 2px 0px',
 	}
 }).addSelector({
 	condition: 'evaluation-valid',
@@ -172,7 +172,7 @@ input.addSelector({
 }).addSelector({
 	condition: 'focused',
 	common: {
-		paddingLeft: 0
+		paddingLeft: '0px'
 	}
 })
 
@@ -197,7 +197,7 @@ placeholder.addSelector({
 }).addSelector({
 	condition: 'focused',
 	common: {
-		paddingLeft: 0
+		paddingLeft: '0px'
 	}
 })
 
