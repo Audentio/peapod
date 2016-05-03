@@ -6,6 +6,20 @@ var sheet = new Sheet,
 //Conditions
 
 //Variables
-sheet.setValues({});
+sheet.setValues({
+    common: {
+        section: {
+            width: '$site.maxWidth'
+        }
+    }
+});
+
+
+main.addSelector({
+    common: {
+        maxWidth: '$section.width',
+        margin: '0 auto'
+    }
+})
 
 module.exports = sheet;

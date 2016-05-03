@@ -52,7 +52,7 @@ deleteTrigger.addSelector({
     common: {
         display: 'inline-block',
         height: half('chip.height'),
-        lineHeight: half('chip.height'),
+        lineHeight: half('chip.height') + 'px',
         width: half('chip.height'),
         fontSize:'12px', // variable?
         background: '$palette.grey500',

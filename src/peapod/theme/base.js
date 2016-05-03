@@ -468,6 +468,10 @@ var init = function(components) {
 
 			opacity: {
 				notAllowed: '.7'
+			},
+
+			site: {
+				maxWidth: 900
 			}
 
 		}
