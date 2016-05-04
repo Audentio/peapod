@@ -28,20 +28,6 @@ sections.push(
 )
 
 sections.push(
-<div className="section" key={'grid5'}>
-	<Pod.heading>Grid Example (Not Working)</Pod.heading>
-	<Pod.grid>
-		<Pod.gridCell styler={{md:6}}>
-			Bars
-		</Pod.gridCell>
-
-		<Pod.gridCell styler={{md:6}}>
-			Circles
-		</Pod.gridCell>
-	</Pod.grid>
-</div>
-)
-sections.push(
 <div className="section" key={'chips'}>
 	<Pod.heading>Chips</Pod.heading>
 	<Pod.chip>This is a chip</Pod.chip>

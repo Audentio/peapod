@@ -33,7 +33,10 @@ var Progress = React.createClass({
 
 	getScale() {
 		var progress = (this.props.value < 0) ? 0 : this.props.value;
-		return progress/this.props.max
+		var scale = progress/this.props.max;
+		return {
+            transform: `scaleX(${scale})`
+        };
 	},
 
 	render() {
@@ -41,7 +44,7 @@ var Progress = React.createClass({
 
 		return (
 			<div style={style.main}>
-			    <div style={style.progress}></div>
+			    <div style={[style.progress, this.getScale()]}></div>
 			</div>
 		)
 	}

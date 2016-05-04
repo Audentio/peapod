@@ -13,7 +13,7 @@ var Section = React.createClass({
 		var style = Pod_Styler.getStyle(this);
 
 		return (
-			<section varSet={this.props.varSet} style={style.main} >
+			<section varSet={this.props.varSet} style={style.main}>
 				{this.props.children}
 			</section>
 		);

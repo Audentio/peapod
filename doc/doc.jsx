@@ -68,6 +68,9 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 		if (typeof(rawStyle) == 'string' && rawStyle.length > 1) {
 			parsedVariable = Pod_Styler.parseVariableValue(rawStyle, {styler: {}, state: {}, props: {}, context: {}}, key);
 			if (parsedVariable !== rawStyle) {
+				if (typeof(parsedVariable) == 'object') {
+					throw "Variable of type object.";
+				}
 				parsedStyle = <span> <span>({parsedVariable})</span></span>
 			}
 		}
@@ -105,7 +108,7 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 
 var renderComponent = function(sheetName, condition, stylesheet) {
 	var Component = Pod[sheetName.charAt(0).toLowerCase() + sheetName.slice(1)],
-		showComponents = "Alert,Button,Checkbox,CircularProgress,Div,Hr,Input,Label,Paragraph,Progress",
+		showComponents = "Alert,Button,Checkbox,CircularProgress,Hr,Input,Label,Paragraph,Progress",
 		docDefault = stylesheet.getDocDefault(),
 		defaults = {},
 		defaultChildren = "Test " + sheetName;
@@ -141,10 +144,10 @@ var SelectorDoc = React.createClass({
 
 		return (
 			<li style={{margin: '10px 0'}} key={i}>
-				<pre style={{backgroundColor: '#F6F6F6', padding: '10px', fontFamily: '"Lucida Console", Monaco, monospace'}}>
+				<Pod.codeBlock>
 					{when}
 					{scenes}
-				</pre>
+				</Pod.codeBlock>
 			</li>
 		)
 	},

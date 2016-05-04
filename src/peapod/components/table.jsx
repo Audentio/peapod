@@ -338,6 +338,7 @@ var Table = React.createClass({
 			}}});
 		var isFetching = (this.props.isFetching) ? <div style={statusStyle}>Loading Data...</div>: null;
 		var noData = (paginated.data.length == 0 && !this.props.isFetching) ? <div style={statusStyle}>No Data</div>: null;
+		var presets = (typeof(this.state.presets) !== 'undefined') ? <TablePresets queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/> : null;
 
 		return (
 			<div style={style.main}>
@@ -356,7 +357,7 @@ var Table = React.createClass({
 									}}
 									onChange={this.checkAll}></Checkbox>
 							</Div>
-							<TablePresets queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/>
+							{presets}
 						</div>
 						<Grid>
 							<TableQuery queries={queries} removeQuery={this.removeQuery}/>
