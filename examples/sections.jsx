@@ -28,7 +28,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'media'}>
         <Pod.contentWrap>
             <Pod.heading>Media Elements</Pod.heading>
             <Pod.grid>
@@ -54,8 +54,30 @@ sections.push(
         </Pod.contentWrap>
     </Pod.section>
 )
+
 sections.push(
-    <Pod.section>
+    <Pod.section key={'Embed'}>
+        <Pod.contentWrap>
+            <Pod.heading>Embed</Pod.heading>
+            <Pod.embed width="100%" height="480px" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
+        </Pod.contentWrap>
+    </Pod.section>
+)
+
+sections.push(
+    <Pod.section key={'breadcrumbs'}n>
+        <Pod.contentWrap>
+
+            <Pod.heading>Breadcrumbs</Pod.heading>
+
+            <Pod.breadcrumbs children={['Home', 'Forums', 'Subforums', 'Best way to handle these?']}></Pod.breadcrumbs>
+
+        </Pod.contentWrap>
+    </Pod.section>
+)
+
+sections.push(
+    <Pod.section key={'grid'}>
         <Pod.contentWrap>
             <Pod.heading>Grid Example(Responsive)</Pod.heading>
             <Pod.grid>
@@ -79,7 +101,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'section'}>
         <Pod.contentWrap>
             <Pod.heading>Section + Wrapper + Scrollable</Pod.heading>
             <Pod.scrollable height='100px'>
@@ -93,7 +115,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'blockquote'}>
         <Pod.contentWrap>
             <Pod.heading>Blockquote</Pod.heading>
             <Pod.blockquote>
@@ -104,7 +126,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'imageContainer'}>
         <Pod.contentWrap>
             <Pod.heading>Image Containers</Pod.heading>
 
@@ -144,7 +166,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'chips'}>
         <Pod.contentWrap>
         	<Pod.heading>Chips</Pod.heading>
         	<Pod.chip>This is a chip</Pod.chip>
@@ -156,8 +178,8 @@ sections.push(
 )
 
 sections.push(
-  	<Pod.fixedElement key={'fixed navigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
-      	<Pod.toolbar key={'toolbar'}>
+  	<Pod.fixedElement key={'fixednavigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
+      	<Pod.toolbar>
             <Pod.contentWrap>
           		<Pod.icon styler={{style: {height: '32px', display: 'inline-block', lineHeight: '32px', width: '32px', float: 'left'}}}>menu</Pod.icon>
 
@@ -197,7 +219,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'menus'}>
         <Pod.contentWrap>
 
         	<Pod.heading>Menus</Pod.heading>
@@ -273,7 +295,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'modals'}>
         <Pod.contentWrap>
 
         	<Pod.heading>Modals, Overlays and Centers</Pod.heading>
@@ -322,7 +344,7 @@ sections.push(
 
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'cards'}>
         <Pod.contentWrap>
 
     		<Pod.heading>Cards</Pod.heading>
@@ -423,7 +445,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'simplecards'}>
         <Pod.contentWrap>
 
             <Pod.heading>Simple Cards</Pod.heading>
@@ -475,7 +497,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'lists'}>
         <Pod.contentWrap>
 
     		<Pod.heading>Lists</Pod.heading>
@@ -590,7 +612,7 @@ sections.push(
 
 //Section: Forms
 sections.push(
-    <Pod.section>
+    <Pod.section key={'forms'}>
         <Pod.contentWrap>
 
     		<Pod.heading>Forms</Pod.heading>
@@ -640,7 +662,7 @@ sections.push(
 
 //Section: Buttons
 sections.push(
-    <Pod.section>
+    <Pod.section key={'buttons'}>
         <Pod.contentWrap>
 
     		<Pod.heading>Buttons</Pod.heading>
@@ -803,7 +825,7 @@ var Progressing = React.createClass({
 });
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'progress'}>
         <Pod.contentWrap>
     		<Pod.heading>Progress</Pod.heading>
 
@@ -837,7 +859,7 @@ sections.push(
 
 var imageStyle = {width:'200px',height:'200px'};
 sections.push(
-    <Pod.section>
+    <Pod.section key={'photo'}>
         <Pod.contentWrap>
 
         	<Pod.heading>Photo</Pod.heading>
@@ -855,7 +877,7 @@ sections.push(
 
 //Section: Icons
 sections.push(
-    <Pod.section>
+    <Pod.section key={'icons'}>
         <Pod.contentWrap>
     		<Pod.heading>Icons</Pod.heading>
 
@@ -885,7 +907,7 @@ var restoreAlerts = function(){
 	}
 }
 sections.push(
-    <Pod.section>
+    <Pod.section key={'alerts'}>
         <Pod.contentWrap>
 
     		<Pod.heading>Alerts</Pod.heading>
@@ -914,7 +936,7 @@ var restoreNotifs = function(){
 	}
 }
 sections.push(
-    <Pod.section>
+    <Pod.section key={'notifications'}>
         <Pod.contentWrap>
     		<Pod.heading>Notifications</Pod.heading>
 
@@ -940,7 +962,7 @@ sections.push(
 
 //Section: Microcomponents
 sections.push(
-    <Pod.section>
+    <Pod.section key={'micro'}>
         <Pod.contentWrap>
 
     		<Pod.heading>Microcomponents</Pod.heading>
@@ -954,7 +976,7 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'label'}>
         <Pod.contentWrap>
     		<Pod.heading>Label</Pod.heading>
     		<Pod.label icon="settings" styler={{
@@ -1028,7 +1050,7 @@ class SomeClass:
 ... prompt'''`;
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'typography'}>
         <Pod.contentWrap>
 
     		<Pod.heading>Typography</Pod.heading>
@@ -1090,7 +1112,7 @@ var tabs = [
 ]
 
 sections.push(
-    <Pod.section>
+    <Pod.section key={'tabs'}>
         <Pod.contentWrap>
             <Pod.heading>Tabs</Pod.heading>
 
