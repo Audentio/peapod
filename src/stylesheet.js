@@ -327,6 +327,15 @@ class Style {
 		return val;
 	}
 
+	transformTLBR(styles, key, splitStyle) { // transform Top Left Bottom Right
+		styles[key + 'Top'] = splitStyle[0];
+		styles[key + 'Right'] = splitStyle[1];
+		styles[key + 'Bottom'] = splitStyle[2];
+		styles[key + 'Left'] = splitStyle[3];
+		delete styles[key];
+		return styles;
+	}
+
 	transform(styles, depth = 0) {
 		if (typeof(styles) == 'object') {
 			let keys = Object.keys(styles);
@@ -354,11 +363,7 @@ class Style {
 							splitStyle.push(splitStyle[1]);
 						}
 
-						styles[key + 'Top'] = splitStyle[0];
-						styles[key + 'Right'] = splitStyle[1];
-						styles[key + 'Bottom'] = splitStyle[2];
-						styles[key + 'Left'] = splitStyle[3];
-						delete styles[key];
+						styles = this.transformTLBR(styles, key, splitStyle)
 					} else {
 						styles[key] = this.addUnit(style);
 					}
