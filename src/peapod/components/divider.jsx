@@ -13,10 +13,10 @@ var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 /**
-* Devider component
+* Divider component
 * @element Code
 */
-class Devider extends React.Component {
+class Divider extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -31,4 +31,4 @@ class Devider extends React.Component {
 
 };
 
-module.exports = Wrapper(Devider);
+module.exports = Wrapper(Divider);

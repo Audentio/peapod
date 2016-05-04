@@ -269,7 +269,7 @@ sections.push(
         		</Pod.menuItem>
         		<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
         		<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
-        		<Pod.devider></Pod.devider>
+        		<Pod.divider></Pod.divider>
         		<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
         			<Pod.menu styler={{level:1}} trigger={
         				<Pod.menuItem subtext="5">And another</Pod.menuItem>
