@@ -9,8 +9,8 @@ var sheet = new Sheet,
 //Conditions
 sheet.addCondition('disguised').addStyler({disguised: true});
 sheet.addCondition('padded').addStyler({padded: true});
-sheet.addCondition('actionBarLeft').addProps({actionBarLocation: 'left'});
-sheet.addCondition('actionBarRight').addProps({actionBarLocation: 'right'});
+sheet.addCondition('actionBarLeft').addProp({actionBarLocation: 'left'});
+sheet.addCondition('actionBarRight').addProp({actionBarLocation: 'right'});
 
 //Variables
 sheet.setValues({

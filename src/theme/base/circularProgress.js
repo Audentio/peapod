@@ -23,7 +23,7 @@ sheet.addCondition('kindInfo').addStyler({kind: 'info'})
 sheet.addCondition('kindWarning').addStyler({kind: 'warning'});
 sheet.addCondition('kindDanger').addStyler({kind: 'danger'});
 sheet.addCondition('kindSecondary').addStyler({kind: 'secondary'});
-sheet.addCondition('indeterminate').addProps({value: ['<','0']});
+sheet.addCondition('indeterminate').addProp({value: ['<','0']});
 
 sheet.addCondition('sizeSet').addStyler({size: ['>', '0']})
 sheet.addCondition('strokeSet').addStyler({stroke: ['>', '0']})

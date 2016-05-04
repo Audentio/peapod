@@ -6,7 +6,7 @@ var sheet = new Sheet,
 
 //Conditions
 sheet.addCondition('scrollable').addStyler({scrollable: true});
-sheet.addCondition('iphone').addProps({preset: 'iphone'});
+sheet.addCondition('iphone').addProp({preset: 'iphone'});
 
 
 //Variables

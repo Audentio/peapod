@@ -131,7 +131,7 @@ class Condition {
 		return this;
 	}
 
-	addProps(obj) {
+	addProp(obj) {
 		this.props = obj;
 		return this;
 	}

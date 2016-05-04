@@ -13,8 +13,8 @@ var sheet = new Sheet,
 
 //Conditions
 sheet.addCondition('lightboxVisible').addState({lightboxVisible: true});
-sheet.addCondition('hasLightbox').addProps({lightbox: true});
-sheet.addCondition('lightboxAnimation').addProps({lightboxAnimation: true})
+sheet.addCondition('hasLightbox').addProp({lightbox: true});
+sheet.addCondition('lightboxAnimation').addProp({lightboxAnimation: true})
 sheet.addCondition('block').addStyler({block: true});
 sheet.addCondition('hovered').addStyler({hovered: true});
 
