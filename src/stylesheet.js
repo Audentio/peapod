@@ -319,17 +319,48 @@ class Style {
 		this.style = this.transform(style);
 	}
 
+	addUnit(val) {
+		if (val == 0) {
+			val = "0px";
+		}
+
+		return val;
+	}
+
 	transform(styles, depth = 0) {
 		if (typeof(styles) == 'object') {
 			let keys = Object.keys(styles);
-			for (var i = 0, len = keys.length; i < len; i++) {
-				let key = keys[i],
+			for (var keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
+				let key = keys[keyIndex],
 					style = styles[key],
 					styleType = typeof(style);
 
 				if (styleType == 'string') {
-					if (styles[key] == 0) {
-						styles[key] = "0px";
+
+					if (key == 'padding' || key == 'margin') {
+						var splitStyle = styles[key].trim().split(/ +/),
+							splitStyleLen = splitStyle.length;
+
+						for (var splitIndex = 0; splitIndex < splitStyleLen; splitIndex++) {
+							splitStyle[splitIndex] = this.addUnit(splitStyle[splitIndex]);
+						}
+
+						if (splitStyleLen == 1) {
+							splitStyle.push(splitStyle[0]);
+							splitStyle.push(splitStyle[0]);
+							splitStyle.push(splitStyle[0]);
+						} else if (splitStyleLen == 2) {
+							splitStyle.push(splitStyle[0]);
+							splitStyle.push(splitStyle[1]);
+						}
+
+						styles[key + 'Top'] = splitStyle[0];
+						styles[key + 'Right'] = splitStyle[1];
+						styles[key + 'Bottom'] = splitStyle[2];
+						styles[key + 'Left'] = splitStyle[3];
+						delete styles[key];
+					} else {
+						styles[key] = this.addUnit(style);
 					}
 				} else if (styleType == 'object') {
 					styles[key] = this.transform(style, depth + 1);
@@ -424,5 +455,6 @@ class Sheet {
 }
 
 module.exports = {
-	Sheet: Sheet
+	Sheet: Sheet,
+	Style: Style
 }
