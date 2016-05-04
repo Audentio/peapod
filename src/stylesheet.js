@@ -328,8 +328,8 @@ class Style {
 					styleType = typeof(style);
 
 				if (styleType == 'string') {
-					if (style == 0) {
-						//style = "0px";
+					if (styles[key] == 0) {
+						styles[key] = "0px";
 					}
 				} else if (styleType == 'object') {
 					styles[key] = this.transform(style, depth + 1);
