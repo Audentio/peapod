@@ -66,7 +66,7 @@ sections.push(
         <Pod.contentWrap>
             <Pod.heading>Embed</Pod.heading>
 
-            <Pod.lazy height="480px">
+            <Pod.lazy height="480px" distance="50">
                 <Pod.embed width="100%" height="480px" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
             </Pod.lazy>
 
@@ -152,7 +152,9 @@ sections.push(
             </Pod.imageContainer>
 
             <Pod.imageContainer preset='iphone' styler={{style: {display: 'inline-block'}}}>
-                <Pod.embed width="100%" height="100%" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
+                <Pod.lazy distance="50" height="100%">
+                    <Pod.embed width="100%" height="100%" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
+                </Pod.lazy>
             </Pod.imageContainer>
 
             <Pod.imageContainer preset='iphone' styler={{scrollable: true, style: {display: 'inline-block'}}}>
@@ -177,11 +179,15 @@ sections.push(
             </Pod.imageContainer>
 
             <Pod.imageContainer preset='iphone' styler={{scrollable: true, horizontal:true, style: {display: 'inline-block'}}}>
-                <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
+                <Pod.lazy distance="50" height="100%">
+                    <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
+                </Pod.lazy>
             </Pod.imageContainer>
 
             <Pod.imageContainer preset='iphone' styler={{style: {display: 'inline-block'}}}>
-                <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
+                <Pod.lazy distance="50" height="100%">
+                    <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
+                </Pod.lazy>
             </Pod.imageContainer>
 
             <Pod.imageContainer preset='iphone' styler={{scrollable: true, style: {display: 'inline-block'}}}>

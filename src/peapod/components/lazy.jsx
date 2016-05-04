@@ -18,7 +18,8 @@ var Wrapper = require('../wrapper.jsx')
 class Lazy extends React.Component {
 
     defaultProps = {
-        visible: false
+        visible: false,
+        distance: 100
     }
 
     componentDidMount() {
@@ -36,15 +37,14 @@ class Lazy extends React.Component {
     }
 
     lazyCheck() {
-        var element = this.refs.fixedElem
-        console.log(element)
-        var bounds = element.getBoundingClientRect(),
-        scrollTop = window.pageYOffset,
-        top = bounds.top + scrollTop,
-        height = bounds.bottom - bounds.top;
-        var dist = 100;
+        var element = this.refs.LazyElement
+        var bounds    = element.getBoundingClientRect();
+        var scrollTop = window.pageYOffset;
+        var top       = bounds.top + scrollTop;
+        var height    = bounds.bottom - bounds.top;
+        var distance  = this.props.distance;
 
-        if(top === 0 || (top <= (scrollTop + window.innerHeight + dist) && (top + height + dist) > scrollTop)){
+        if (top === 0 || (top <= (scrollTop + window.innerHeight + distance) && (top + height + distance) > scrollTop) ){
             this.setState({visible: true});
             this.removeListener(); //stop listening, the show is over
         }
@@ -61,7 +61,7 @@ class Lazy extends React.Component {
         var children = (this.state.visible) ? this.props.children : '';
 
         return (
-            <div style={style.main} ref='fixedElem'>
+            <div style={style.main} ref='LazyElement'>
                 {children}
             </div>
         );
