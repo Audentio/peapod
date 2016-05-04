@@ -23,6 +23,7 @@ class ImageContainer extends React.Component {
 
         return (
             <div style={style.main}>
+                <div style={style.background}></div>
                 <div style={style.innerscreen}>
                     {this.props.children}
                 </div>
