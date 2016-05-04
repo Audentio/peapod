@@ -38,7 +38,7 @@ var CircularProgress = React.createClass({
 
                 <div style={style.track}></div>
 
-            	<div style={style.mask}><div style={[style.circle, this.getTransform()]}></div></div>
+            	<div style={[style.mask, this.getTransform()]}><div style={[style.circle, this.getTransform()]}></div></div>
 				<div style={style.mask}><div style={[style.circle, this.getTransform()]}></div></div>
 
                 <div style={style.content}>
