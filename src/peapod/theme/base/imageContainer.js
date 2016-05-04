@@ -55,7 +55,7 @@ background.addSelector({
         backgroundImage: 'url(iphone.svg)',
         width: '320px',
         height: '600px',
-        transform: 'rotate(90deg)',
+        transform: 'rotate(-90deg)',
         transformOrigin: 'center'
     }
 })

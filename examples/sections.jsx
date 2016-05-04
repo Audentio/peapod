@@ -65,7 +65,12 @@ sections.push(
     <Pod.section key={'Embed'}>
         <Pod.contentWrap>
             <Pod.heading>Embed</Pod.heading>
-            <Pod.embed width="100%" height="480px" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
+
+            <Pod.lazy height="480px">
+                <Pod.embed width="100%" height="480px" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
+            </Pod.lazy>
+
+
         </Pod.contentWrap>
     </Pod.section>
 )
