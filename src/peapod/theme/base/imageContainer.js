@@ -46,7 +46,8 @@ background.addSelector({
         width: '320px',
         height: '600px',
         position: 'absolute',
-        top: 0, left: 0
+        bottom: 'calc(50% - 300px)',
+        left: 'calc(50% - 160px)'
     }
 }).addSelector({
     condition: ['iphone', 'horizontal'],
@@ -55,8 +56,7 @@ background.addSelector({
         width: '320px',
         height: '600px',
         transform: 'rotate(90deg)',
-        transformOrigin: '94%',
-        top: 0, left: 0
+        transformOrigin: 'center'
     }
 })
 

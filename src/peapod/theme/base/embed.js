@@ -17,7 +17,7 @@ sheet.setValues({
 
 main.addSelector({
     common: {
-        display: 'inline-block',
+        display: 'block',
         width: '100%',
         height: '400px'
     }
