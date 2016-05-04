@@ -62,7 +62,8 @@ class FixedElement extends React.Component {
         style.main['position'] = this.state.position
 
         var fixedStyle = {
-            height: this.state.origionalHeight
+            height: this.state.origionalHeight,
+            // transform: 'translate3d(0, 0, 0)'
         }
 
         if (this.props.onScroll) {
