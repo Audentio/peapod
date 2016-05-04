@@ -28,6 +28,7 @@ sections.push(
   		</Pod.heroOverlay>
   	</Pod.hero>
 )
+<<<<<<< HEAD
 sections.push(
     <div className="section" key={'media'}>
 
@@ -120,19 +121,21 @@ sections.push(
     <br className="clear" />
 </div>
 )
+=======
+>>>>>>> Audentio/dev
 
 sections.push(
 <div className="section" key={'chips'}>
-    <Pod.heading>Chips</Pod.heading>
-    <Pod.chip>This is a chip</Pod.chip>
-    <Pod.chip deleteTrigger={true}>Chip with Delete</Pod.chip>
-    <Pod.chip photo='profile@2x.jpg'>Chip with Photo</Pod.chip>
-    <Pod.chip deleteTrigger={true} photo='profile@2x.jpg'>Chip with Delete & Photo</Pod.chip>
+	<Pod.heading>Chips</Pod.heading>
+	<Pod.chip>This is a chip</Pod.chip>
+	<Pod.chip del={true}>Chip with Delete</Pod.chip>
+	<Pod.chip photo='profile@2x.jpg'>Chip with Photo</Pod.chip>
+	<Pod.chip del={true} photo='profile@2x.jpg'>Chip with Delete & Photo</Pod.chip>
 </div>
 )
 
 sections.push(
-  	<Pod.fixedElement key={'fixednavigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
+  	<Pod.fixedElement key={'fixed navigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
 
   	<Pod.toolbar key={'toolbar'}>
   		<Pod.icon styler={{style: {height: '32px', display: 'inline-block', lineHeight: '32px', width: '32px', float: 'left'}}}>menu</Pod.icon>
@@ -173,35 +176,35 @@ sections.push(
 )
 
 sections.push(
-    <div className="section" key={'menu'}>
+<div className="section" key={'menu'}>
 
-    <Pod.heading>Menus</Pod.heading>
+	<Pod.heading>Menus</Pod.heading>
 
-    <Pod.menu trigger={
-    	<Pod.button label="On Hover" />
-    }>
-    	<Pod.menuItem href="#" subtext="1">
-    		Something about something
-    	</Pod.menuItem>
-    	<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
-    	<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
-    	<Pod.devider></Pod.devider>
-    	<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
-    		<Pod.menu styler={{level:1}} trigger={
-    			<Pod.menuItem subtext="5">And another</Pod.menuItem>
-    		}>
-    			<Pod.menuItem href="#">Another thing</Pod.menuItem>
-    			<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-    			<Pod.menuItem href="#">And another</Pod.menuItem>
-    			<Pod.menu styler={{level:1}} trigger={
-    				<Pod.menuItem subtext="5">And another</Pod.menuItem>
-    			}>
-    				<Pod.menuItem href="#">Another thing</Pod.menuItem>
-    				<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-    				<Pod.menuItem href="#">And another</Pod.menuItem>
-    			</Pod.menu>
-    		</Pod.menu>
-    </Pod.menu>
+	<Pod.menu trigger={
+		<Pod.button label="On Hover" />
+	}>
+		<Pod.menuItem href="#" subtext="1">
+			Something about something
+		</Pod.menuItem>
+		<Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
+		<Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
+		<Pod.devider></Pod.devider>
+		<Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
+			<Pod.menu styler={{level:1}} trigger={
+				<Pod.menuItem subtext="5">And another</Pod.menuItem>
+			}>
+				<Pod.menuItem href="#">Another thing</Pod.menuItem>
+				<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+				<Pod.menuItem href="#">And another</Pod.menuItem>
+				<Pod.menu styler={{level:1}} trigger={
+					<Pod.menuItem subtext="5">And another</Pod.menuItem>
+				}>
+					<Pod.menuItem href="#">Another thing</Pod.menuItem>
+					<Pod.menuItem href="#">Yet another thing</Pod.menuItem>
+					<Pod.menuItem href="#">And another</Pod.menuItem>
+				</Pod.menu>
+			</Pod.menu>
+	</Pod.menu>
 
     <Pod.menu portal={true} trigger={
         <Pod.button label="On Click" />
@@ -242,11 +245,11 @@ sections.push(
         {text: 'Hello World 123', href: '#', subtext: '2'}
     ]} />
 
-    </div>
+</div>
 )
 
 sections.push(
-    <div className="section" key={'modals'}>
+<div className="section" key={'modals'}>
 
 	<Pod.heading>Modals, Overlays and Centers</Pod.heading>
 
@@ -393,13 +396,6 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section key={'section'} styler={{style:{background: '#afafaf', overflow: 'hidden'}}}>
-        <Pod.heading>Pod Section</Pod.heading>
-        <Pod.paragraph>No Padding, Max width: 900px - set in base.js</Pod.paragraph>
-    </Pod.section>
-)
-
-sections.push(
     <div className="section grey" key={"simplecards"}>
 
         <Pod.heading>Simple Cards</Pod.heading>
@@ -444,57 +440,6 @@ sections.push(
 
     <Pod.card styler={{padded:true, style:{width: '350px'}}} title="Simple Card">
         <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
-    </Pod.card>
-
-    <Pod.card styler={{padded:true, style:{width: '350px'}}} title={(
-        <div>
-            <Pod.heading kind="h4" styler={{secondary: true}}>Custom Title</Pod.heading>
-            <Pod.heading kind="h6" styler={{secondary: true}}>Custom Title h6</Pod.heading>
-        </div>
-    )} >
-        <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
-    </Pod.card>
-
-    <Pod.card styler={{style:{width: '350px'}}} actionBarLocation='top' actionBar={(
-        <div>
-            <Pod.button styler={{type: 'icon'}} label={
-                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
-                } />
-
-            <Pod.button styler={{type: 'icon'}} label={
-                (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
-            } />
-        </div>
-    )}>
-            <Pod.photo src="image.png"/>
-    </Pod.card>
-
-    <Pod.card styler={{style:{width: '350px'}}} actionBarLocation='left' actionBar={(
-        <div>
-            <Pod.button styler={{type: 'icon'}} label={
-                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
-                } />
-
-            <Pod.button styler={{type: 'icon'}} label={
-                (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
-            } />
-        </div>
-    )}>
-            <Pod.photo src="image.png"/>
-    </Pod.card>
-
-    <Pod.card styler={{style:{width: '350px'}}} actionBarLocation='right' actionBar={(
-        <div>
-            <Pod.button styler={{type: 'icon'}} label={
-                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
-                } />
-
-            <Pod.button styler={{type: 'icon'}} label={
-                (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
-            } />
-        </div>
-    )}>
-            <Pod.photo src="image.png"/>
     </Pod.card>
 
     </div>

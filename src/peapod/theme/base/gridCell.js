@@ -7,7 +7,7 @@ var sheet = new Sheet,
 
 
 
-sheet.addCondition('orderSet').addStyler({order: ['!=', '']});
+sheet.addCondition('orderSet').addStyler({order: ['!=', undefined]});
 main.addSelector({
 	condition: ['orderSet'],
 	common: {
@@ -15,7 +15,7 @@ main.addSelector({
 	}
 });
 
-sheet.addCondition('flexSet').addStyler({flex: ['!=', '']});
+sheet.addCondition('flexSet').addStyler({flex: ['!=', undefined]});
 main.addSelector({
 	condition: ['flexSet'],
 	common: {
@@ -45,7 +45,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 			condition: [[abbrevs[sizeIndex]] + '_' + i],
 
 			common: {
-				["'" + Pod_Vars.get('grid.' + sizes[sizeIndex]) + "'"]: { width: (100 * (i / 12)) + '%' }
+				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
 			}
 		});
 
