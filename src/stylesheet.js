@@ -316,7 +316,29 @@ class Selector {
 // actual Styling
 class Style {
 	constructor(style) {
-		this.style = style;
+		this.style = this.transform(style);
+	}
+
+	transform(styles, depth = 0) {
+		if (typeof(styles) == 'object') {
+			let keys = Object.keys(styles);
+			for (var i = 0, len = keys.length; i < len; i++) {
+				let key = keys[i],
+					style = styles[key],
+					styleType = typeof(style);
+
+				if (styleType == 'string') {
+					if (style == 0) {
+						//style = "0px";
+					}
+				} else if (styleType == 'object') {
+					styles[key] = this.transform(style, depth + 1);
+				}
+			}
+
+		}
+
+		return styles;
 	}
 
 	getStyle() {
