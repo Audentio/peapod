@@ -28,12 +28,13 @@ class Anchor extends React.Component {
     render() {
         var style = Pod_Styler.getStyle(this);
 
-        if (this.props.internal) {
-            return(<Link style={style.main} to={this.props.to}>{this.props.children}</Link>)
-        }
-        else {
+        // var regex = /^(https?:\/\/|ftp:\/\/)/g;
+        // if (regex.test(this.props.to) && !this.props.internal) {
             return (<a style={style.main} href={this.props.to}>{this.props.children}</a>);
-        }
+        // }
+        // else {
+        //     return(<Link style={style.main} to={this.props.to}>{this.props.children}</Link>)
+        // }
 
     }
 
