@@ -1,8 +1,8 @@
 import React from 'react'
-import 'peapod/components'
-import Paragraph from 'peapod/components/paragraph'
-import Strong from 'peapod/components/strong'
-import Code from 'peapod/components/code'
+import 'components'
+import Paragraph from 'components/paragraph'
+import Strong from 'components/strong'
+import Code from 'components/code'
 
 var sections = []
 sections.push(
