@@ -18,7 +18,7 @@ sheet.addCondition('hovered').addStyler({hovered: true});
 sheet.setValues({
 	common: {
 		checkbox: {
-			width: '18px',
+			width: '1.8rem',
 			height: '$checkbox.width',
 			color: {
 				text: '$color.text.dark',

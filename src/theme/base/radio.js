@@ -17,9 +17,9 @@ sheet.addCondition('hovered').addStyler({hovered: true});
 //Variables
 sheet.setValues({
 	common: {
-		checkbox: {
+		radio: {
 			width: '1.5rem',
-			height: '$checkbox.width',
+			height: '$radio.width',
 			color: {
 				text: '$color.text.dark',
 				background: '$palette.grey50',
@@ -28,7 +28,7 @@ sheet.setValues({
 			},
 			border: {
 				color: '$palette.grey200',
-				colorChecked: '$checkbox.color.backgroundChecked',
+				colorChecked: '$radio.color.backgroundChecked',
 				radius: '$border.radius.large',
 				width: '1px',
 				style: 'solid'
@@ -40,13 +40,13 @@ sheet.setValues({
 		}
 	},
 	dark: {
-		checkbox: {
+		radio: {
 			color: {
 				text: '$color.text.white',
 				background: 'transparent'
 			},
 			border: {
-				color: '$checkbox.color.text'
+				color: '$radio.color.text'
 			}
 		},
 	}
