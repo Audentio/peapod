@@ -77,7 +77,6 @@ sections.push(
             <Pod.heading>Breadcrumbs</Pod.heading>
 
             <Pod.breadcrumbs children={['Home', 'Forums', 'Subforums', 'Best way to handle these?']}></Pod.breadcrumbs>
-
         </Pod.contentWrap>
     </Pod.section>
 )
@@ -134,9 +133,12 @@ sections.push(
 sections.push(
     <Pod.section key={'imageContainer'}>
         <Pod.contentWrap>
-            <Pod.heading>Image Containers</Pod.heading>
+            <Pod.heading>Image Containers / Scrollable(horizontal)</Pod.heading>
+        </Pod.contentWrap>
 
-            <Pod.imageContainer preset='iphone' styler={{style: {float: 'left', marginRight: 40}}}>
+        <Pod.scrollable horizontal={true} styler={{center: true}}>
+
+            <Pod.imageContainer preset='iphone' styler={{style: {display: 'inline-block'}}}>
                 <Pod.heading kind="h5">Not Scrollable</Pod.heading>
                 <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                 <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
@@ -144,7 +146,11 @@ sections.push(
                 <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
             </Pod.imageContainer>
 
-            <Pod.imageContainer preset='iphone' styler={{scrollable: true, style: {float: 'left'}}}>
+            <Pod.imageContainer preset='iphone' styler={{style: {display: 'inline-block'}}}>
+                <Pod.embed width="100%" height="100%" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
+            </Pod.imageContainer>
+
+            <Pod.imageContainer preset='iphone' styler={{scrollable: true, style: {display: 'inline-block'}}}>
                 <Pod.heading kind="h5">Scrollable</Pod.heading>
                 <Pod.block>
                     <Pod.blockLeft>
@@ -165,9 +171,19 @@ sections.push(
                 <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
             </Pod.imageContainer>
 
-            <br className="clear" />
+            <Pod.imageContainer preset='iphone' styler={{style: {display: 'inline-block'}}}>
+                <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
+            </Pod.imageContainer>
 
-        </Pod.contentWrap>
+            <Pod.imageContainer preset='iphone' styler={{scrollable: true, style: {display: 'inline-block'}}}>
+                <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+                <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+                <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+                <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
+            </Pod.imageContainer>
+        </Pod.scrollable>
+
+        <br className="clear" />
     </Pod.section>
 )
 
@@ -343,7 +359,6 @@ sections.push(
     				</Pod.card>
     			</Pod.overlay>
     		</Pod.portal>
-
         </Pod.contentWrap>
     </Pod.section>
 )
@@ -445,7 +460,6 @@ sections.push(
     				<Pod.button label="Disagree" />
     			</Pod.cardSection>
     		</Pod.card>
-
         </Pod.contentWrap>
     </Pod.section>
 )
