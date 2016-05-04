@@ -29,7 +29,7 @@ class Anchor extends React.Component {
         var style = Pod_Styler.getStyle(this);
 
         if (this.props.internal) {
-            return(<Link to={this.props.to} style={style.main}>{this.props.children}</Link>)
+            return(<Link style={style.main} to={this.props.to}>{this.props.children}</Link>)
         }
         else {
             return (<a style={style.main} href={this.props.to}>{this.props.children}</a>);

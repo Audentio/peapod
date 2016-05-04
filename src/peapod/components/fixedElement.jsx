@@ -39,6 +39,10 @@ class FixedElement extends React.Component {
         })
 
         document.addEventListener("scroll", () => {
+            var element = this.fixedElem
+            var elemRect = element.getBoundingClientRect()
+
+            this.origionalPosition = elemRect.top  + window.scrollY
             var doc = document.documentElement;
             var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 

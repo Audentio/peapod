@@ -22,6 +22,7 @@ sheet.setValues({
 main.addSelector({
 	common: {
 		color: '$anchor.color.base',
+		textDecoration: 'none',
 
 		':hover': {
 			color: '$anchor.color.hover'
