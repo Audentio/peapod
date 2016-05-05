@@ -7,7 +7,7 @@
 
 //Dependencies
 import React from 'react';
-import ReactaDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
@@ -18,11 +18,12 @@ var Wrapper = require('../wrapper.jsx')
 */
 class Chip extends React.Component {
 
+    defaultProps = {
+        deleteTrigger: false,
+        photo: false
+    }
+
     componentWillMount() {
-        this.defaultProps = {
-            deleteTrigger: false,
-            photo: false
-        }
         this.state = {
             showElement: true
         }

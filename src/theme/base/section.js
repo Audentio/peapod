@@ -9,7 +9,10 @@ var sheet = new Sheet,
 sheet.setValues({
     common: {
         section: {
-            width: '$site.maxWidth'
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: '$palette.grey200',
+            padding: '$gutter.large'
         }
     }
 });
@@ -17,8 +20,11 @@ sheet.setValues({
 
 main.addSelector({
     common: {
-        maxWidth: '$section.width',
-        margin: '0 auto'
+        borderBottomWidth: '$section.borderWidth',
+        borderBottomStyle: '$section.borderStyle',
+        borderBottomColor: '$section.borderColor',
+        paddingTop: '$section.padding',
+        paddingBottom: '$section.padding'
     }
 })
 
