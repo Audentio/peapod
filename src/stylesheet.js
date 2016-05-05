@@ -344,8 +344,8 @@ class Style {
 					styleType = typeof(style);
 
 				if (styleType == 'string') {
-					//TODO background, font, border, border-top, border-right, border0bottom, border-left, transition, transform, list-style, border-radius, flex
-					if (['padding', 'margin', 'border-width', 'border-color', 'border-style'].indexOf(key) > -1) {
+					//TODO background, font, border, borderTop, borderRight, borderBottom, borderLeft, transition, transform, listStyle, borderRadius, flex
+					if (['padding', 'margin', 'borderWidth', 'borderColor', 'borderWtyle'].indexOf(key) > -1) {
 						var splitStyle = styles[key].trim().split(/ +/),
 							splitStyleLen = splitStyle.length;
 
