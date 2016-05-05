@@ -1,8 +1,8 @@
 import React from 'react'
-import 'peapod/components'
-import Paragraph from 'peapod/components/paragraph'
-import Strong from 'peapod/components/strong'
-import Code from 'peapod/components/code'
+import 'components'
+import Paragraph from 'components/paragraph'
+import Strong from 'components/strong'
+import Code from 'components/code'
 
 var sections = []
 sections.push(
@@ -76,12 +76,12 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section key={'breadcrumbs'}n>
+    <Pod.section key={'breadcrumb'}n>
         <Pod.contentWrap>
 
-            <Pod.heading>Breadcrumbs</Pod.heading>
+            <Pod.heading>Breadcrumb</Pod.heading>
 
-            <Pod.breadcrumbs children={['Home', 'Forums', 'Subforums', 'Best way to handle these?']}></Pod.breadcrumbs>
+            <Pod.breadcrumb children={['Home', 'Forums', 'Subforums', 'Best way to handle these?']}></Pod.breadcrumb>
         </Pod.contentWrap>
     </Pod.section>
 )
@@ -128,9 +128,9 @@ sections.push(
     <Pod.section key={'blockquote'}>
         <Pod.contentWrap>
             <Pod.heading>Blockquote</Pod.heading>
-            <Pod.blockquote>
+            <Pod.blockQuote>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit iure dolorem rem quidem consequatur. Incidunt molestiae fugiat, vero! Aperiam eum voluptatum perferendis quam, sapiente modi vitae debitis provident non consequatur.
-            </Pod.blockquote>
+            </Pod.blockQuote>
         </Pod.contentWrap>
     </Pod.section>
 )
