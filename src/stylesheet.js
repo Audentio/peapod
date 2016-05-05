@@ -390,7 +390,7 @@ class Sheet {
 		this.doc = "";
 		this.docDefault = null;
 		if (name == undefined) {
-			console.warn('Sheet created without a name specified.')
+			console.error('Sheet created without a name specified.')
 		}
 		this.name = name;
 	}

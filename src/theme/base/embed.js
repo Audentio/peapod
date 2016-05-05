@@ -4,8 +4,8 @@ var sheet = new Sheet('embed'),
     main = sheet.addMain();
 
 //Conditions
-sheet.addCondition('height').addProps({height: ['!=', undefined]});
-sheet.addCondition('width').addProps({width: ['!=', undefined]});
+sheet.addCondition('height').addProp({height: ['!=', undefined]});
+sheet.addCondition('width').addProp({width: ['!=', undefined]});
 
 //Variables
 sheet.setValues({});

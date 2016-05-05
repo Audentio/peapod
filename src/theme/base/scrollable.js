@@ -4,8 +4,8 @@ var sheet = new Sheet('scrollable'),
 	main = sheet.addMain();
 
 //Conditions
-sheet.addCondition('horizontal').addProps({horizontal: true});
-sheet.addCondition('height').addProps({height: ['!=', undefined]});
+sheet.addCondition('horizontal').addProp({horizontal: true});
+sheet.addCondition('height').addProp({height: ['!=', undefined]});
 sheet.addCondition('center').addStyler({center: true});
 
 //Variables

@@ -22,51 +22,16 @@ sheet.addCondition('kindSuccess').addStyler({kind: 'success'});
 
 //Variables
 sheet.setValues({
-<<<<<<< HEAD
 	color: {
 		text: {
 			light: '$color.text.white',
 			dark: '$color.text.dark'
 		},
 		base: {
-			background: '$palette.white',
-			color: '$palette.white',
+			background: 'transparent',
+			color: '$color.primary.base',
 			hover: '$color.primary.hover',
 			active: '$color.primary.active'
-=======
-	common: {
-		button: {
-			color: {
-				text: {
-					light: '$color.text.white',
-					dark: '$color.text.dark'
-				},
-				base: {
-					background: 'transparent',
-					color: '$color.primary.base',
-					hover: '$color.primary.hover',
-					active: '$color.primary.active'
-				}
-			},
-			border: {
-				color: '$border.color',
-				radius: '$border.radius.small',
-				width: '$border.width',
-				style: '$border.style'
-			},
-			height: '32px',
-			lineHeight: '$button.height',
-			font: {
-				family: '$font.family.primary',
-				size: '$font.size.button',
-				weight: '$font.weight.medium'
-			},
-			transition: {
-				duration: '150ms',
-				scale: '0.92',
-
-			}
->>>>>>> dev
 		}
 	},
 	border: {

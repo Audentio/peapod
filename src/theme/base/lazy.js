@@ -4,7 +4,7 @@ var sheet = new Sheet('lazy'),
     main = sheet.addMain();
 
 //Conditions
-sheet.addCondition('height').addProps({height: ['!=', undefined]});
+sheet.addCondition('height').addProp({height: ['!=', undefined]});
 
 //Variables
 sheet.setValues({});

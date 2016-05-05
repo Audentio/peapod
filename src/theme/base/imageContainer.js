@@ -7,7 +7,7 @@ var sheet = new Sheet('imageContainer'),
 
 //Conditions
 sheet.addCondition('scrollable').addStyler({scrollable: true});
-sheet.addCondition('iphone').addProps({preset: 'iphone'});
+sheet.addCondition('iphone').addProp({preset: 'iphone'});
 sheet.addCondition('horizontal').addStyler({horizontal: true});
 
 
