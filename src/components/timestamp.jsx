@@ -6,17 +6,43 @@
 import React from 'react';
 import moment from 'moment';
 
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+import Pod_Styler from '../styler.js'
+import Wrapper from '../wrapper.jsx'
+import {merge as _merge} from 'lodash'
 
 
 /**
 * Create live timestamp from valid date.
 *
 * @element Pod_liveTimestamp
-* @property {(string|Object)} time - IETF-compliant RFC 2822 timestamp string or Date Object
+* @property {(string|integer|Object)} time - Date() / UNIX time / ISO 8601
 */
 var Pod_liveTimestamp = React.createClass({
+
+	getDefaultProps: function(){
+		return {
+			time: Math.floor( Date.now() / 1000 ),
+			timezone: "UTC",
+			output: "absolute",
+			outputTimezone: null, //inherit input timezone
+			showTime: true,
+			showDate: true,
+			format: null //timezone overrides output, showTime and showDate 'MMMM Do YYYY, h:mm a'
+		}
+	},
+
+	//create moment object from time prop
+	createMomentObject: function(){
+
+		//try as unix timestamp
+		var momentObject = moment.unix(Number(this.props.time))
+
+		if(!momentObject.isValid()) {
+			var momentObject = moment(this.props.time)
+		}
+
+		this.timestamp = momentObject;
+	},
 
 	/* returns the amount of seconds elapsed since {this.props.time} */
 	timeElapsed: function(){
@@ -24,22 +50,27 @@ var Pod_liveTimestamp = React.createClass({
 	},
 
 	getInitialState: function() {
-		//create moment object from time property
-		this.timestamp = moment(this.props.time)
 
-		return {
-			timeElapsed: this.timeElapsed()
-		}
+		this.createMomentObject();
+
+		return (this.props.output == "relative") ? { timeElapsed: this.timeElapsed() } : null
+	},
+
+	componentWillUpdate: function(){
+		this.createMomentObject();
 	},
 
 	componentDidMount: function(){
-		let self = this;
-		//start repeater
-		this._timer = setInterval(function(){
-			self.setState({
-				timeElapsed: self.timeElapsed()
-			})
-		}, 1000*60) //60 seconds
+
+		if (this.props.output == "relative") {
+			let self = this;
+			//start repeater
+			this._timer = setInterval(function(){
+				self.setState({
+					timeElapsed: self.timeElapsed()
+				})
+			}, 1000*60) //60 seconds
+		}
 	},
 
 	componentWillUnmount: function(){
@@ -48,11 +79,43 @@ var Pod_liveTimestamp = React.createClass({
 	},
 
 	render: function() {
-		var style = Pod_Styler.getStyle(this);
+		var style = Pod_Styler.getStyle(this),
+			display,
+			format = this.props.format;
+
+		if(format) {
+			display = this.timestamp.format(format)
+		}
+		else {
+			//create format setting from booleans
+			var showDate = this.props.showDate,
+				showTime = this.props.showTime;
+
+			if(showDate && showTime)
+				format = 'MMMM Do YYYY, h:mm a'
+
+			else if(showDate)
+				format = 'MMMM Do YYYY'
+
+			else if(showTime)
+				format = 'h:mm a'
+
+			//output style
+			switch(this.props.output){
+				case 'relative':
+					display = this.state.timeElapsed;
+					break;
+				case 'calendar':
+					display = this.timestamp.calendar();
+					break;
+				default:
+					display = this.timestamp.format(format);
+			}
+		}
 
 		return (
-			<span style={style.main} title={ moment(this.props.time).format('MMMM Do YYYY, h:mm:ss a') }>
-				{this.state.timeElapsed}
+			<span style={style.main} title={ this.timestamp.format('MMMM Do YYYY, h:mm a') }>
+				{display}
 			</span>
 		)
 	}
