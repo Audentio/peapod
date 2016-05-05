@@ -345,7 +345,7 @@ class Style {
 
 				if (styleType == 'string') {
 
-					if (key == 'padding' || key == 'margin') {
+					if (['padding', 'margin', 'border-width', 'border-color', 'border-style'].indexOf(key) > -1) {
 						var splitStyle = styles[key].trim().split(/ +/),
 							splitStyleLen = splitStyle.length;
 
