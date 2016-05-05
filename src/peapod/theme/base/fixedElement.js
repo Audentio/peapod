@@ -8,7 +8,9 @@ var sheet = new Sheet,
 main.addSelector({
     common: {
         position: 'static',
-        zIndex: '998'
+        zIndex: '998',
+        // transform: 'translate3d(0, 0, 0)'
+        willChange: 'position'
     }
 });
 

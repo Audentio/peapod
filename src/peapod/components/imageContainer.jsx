@@ -7,7 +7,7 @@
 
 //Dependencies
 import React from 'react';
-import ReactaDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
@@ -23,6 +23,7 @@ class ImageContainer extends React.Component {
 
         return (
             <div style={style.main}>
+                <div style={style.background}></div>
                 <div style={style.innerscreen}>
                     {this.props.children}
                 </div>

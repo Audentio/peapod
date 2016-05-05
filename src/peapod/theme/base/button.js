@@ -30,8 +30,8 @@ sheet.setValues({
 					dark: '$color.text.dark'
 				},
 				base: {
-					background: '$palette.white',
-					color: '$palette.white',
+					background: 'transparent',
+					color: '$color.primary.base',
 					hover: '$color.primary.hover',
 					active: '$color.primary.active'
 				}
@@ -81,7 +81,7 @@ main.addSelector({
 		textAlign: 'center',
 		outline: 'none',
 
-		color: '$button.color.text.light',
+		color: '$button.color.base.color',
 		backgroundColor: '$button.color.base.background'
 	}
 })
@@ -193,7 +193,8 @@ main.addSelector({
 .addSelector({
 	condition: ['kindWarning'],
 	common: {
-		backgroundColor: '$color.warning.base'
+		backgroundColor: '$color.warning.base',
+		color: '$button.color.text.dark'
 	}
 }).addSelector({
 	condition: ['kindWarning', 'notDisabled'],
@@ -251,6 +252,7 @@ main.addSelector({
 	condition: ['kindSuccess'],
 	common: {
 		backgroundColor: '$color.success.base',
+		color: '$button.color.text.light'
 	}
 }).addSelector({
 	condition: ['kindSuccess', 'notDisabled'],

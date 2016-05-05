@@ -8,27 +8,28 @@
 //Dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import { Link } from 'react-router'
 
 var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 /**
-* BlockRight component
+* ContentWrap component
 * @element Code
 */
-class BlockRight extends React.Component {
+class ContentWrap extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
 
-        return (
-            <Pod.block {...this.props} align="right">
+        return(
+            <div style={style.main}>
                 {this.props.children}
-            </Pod.block>
-        );
+            </div>
+        )
 
     }
 
 };
 
-module.exports = Wrapper(BlockRight);
+module.exports = Wrapper(ContentWrap);

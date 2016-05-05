@@ -13,22 +13,22 @@ var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 /**
-* BlockRight component
+* Blockquote component
 * @element Code
 */
-class BlockRight extends React.Component {
+class Blockquote extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
 
         return (
-            <Pod.block {...this.props} align="right">
+            <blockquote style={style.main}>
                 {this.props.children}
-            </Pod.block>
+            </blockquote>
         );
 
     }
 
 };
 
-module.exports = Wrapper(BlockRight);
+module.exports = Wrapper(Blockquote);
