@@ -25,20 +25,20 @@ class Part {
 
 	getDebug(instance, scene, conditions) {
 		let debugApplied = [],
-			debugAll = [];
+		debugAll = [];
 
 		for (let i = 0, len = this.selectors.length; i < len; i++) {
 			let selector = this.selectors[i],
-				debugStyling = selector.getStyling(scene),
-				selectorConditions = selector.checkConditions(instance, conditions),
-				selectorCondition = selector.getCondition(),
-				selectorValid = [];
+			debugStyling = selector.getStyling(scene),
+			selectorConditions = selector.checkConditions(instance, conditions),
+			selectorCondition = selector.getCondition(),
+			selectorValid = [];
 
 			if (selectorCondition !== null) {
 				for (let conditionIndex = 0, conditionLen = selectorCondition.length; conditionIndex < conditionLen; conditionIndex++) {
 					let conditionName = conditionIndex[conditionIndex],
-						condition = conditions[conditionName],
-						conditionValid = selector.checkCondition(condition);
+					condition = conditions[conditionName],
+					conditionValid = selector.checkCondition(condition);
 					selectorValid.push({
 						name: conditionName,
 						condition: condition,
@@ -178,8 +178,8 @@ class Condition {
 		var keys = Object.keys(conditionVal);
 		for (var i = 0, len = keys.length; i < len; i++) {
 			var key = keys[i],
-				objVal = instanceVal[key],
-				selVal = conditionVal[key];
+			objVal = instanceVal[key],
+			selVal = conditionVal[key];
 
 			if (typeof(selVal) == 'object' && selVal !== null) {
 				if (selVal.length == 2) {
@@ -215,10 +215,10 @@ class Condition {
 	// check if the condition is satisfied
 	isTrue(instance) {
 		let validStyler = this.checkType('styler', instance),
-			validState = this.checkType('state', instance),
-			validProps = this.checkType('props', instance),
-			validContext = this.checkType('context', instance),
-			validFunction = true;
+		validState = this.checkType('state', instance),
+		validProps = this.checkType('props', instance),
+		validContext = this.checkType('context', instance),
+		validFunction = true;
 
 		if (this.func !== null) {
 			validFunction = this.func(instance);
@@ -232,8 +232,8 @@ class Condition {
 class Selector {
 	constructor(selector) {
 		var condition = selector.condition,
-			conditionType = typeof(condition),
-			keys = Object.keys(selector);
+		conditionType = typeof(condition),
+		keys = Object.keys(selector);
 		if (conditionType == 'undefined') {
 			this.condition = null;
 		} else if (conditionType == 'string') {
@@ -271,7 +271,7 @@ class Selector {
 	// check if a single condition is true
 	checkCondition(instance, conditionName, conditions) {
 		let condition = null,
-			desired = true;
+		desired = true;
 		if (conditionName.indexOf('!') > -1) {
 			desired = false;
 			conditon = conditions[conditionName.replace('!', '')]
@@ -326,43 +326,118 @@ class Style {
 		return val;
 	}
 
-	transformTLBR(styles, key, splitStyle) { // transform Top Left Bottom Right
-		styles[key + 'Top'] = splitStyle[0];
-		styles[key + 'Right'] = splitStyle[1];
-		styles[key + 'Bottom'] = splitStyle[2];
-		styles[key + 'Left'] = splitStyle[3];
+	transformKeys(styles, key, splitStyle, keyAppend) {
+		for (var i = 0, len = keyAppend.length; i < len; i++) {
+			var appendKey = keyAppend[i];
+			if (typeof(appendKey) == 'object') {
+				appendKey = appendKey[0];
+			} else {
+				appendKey = key + appendKey;
+			}
+			styles[appendKey] = splitStyle[i];
+		}
 		delete styles[key];
 		return styles;
 	}
 
+	spreadToFour(splitStyle) {
+		let splitStyleLen = splitStyle.length;
+
+		if (splitStyleLen == 1) {
+			splitStyle.push(splitStyle[0]);
+			splitStyle.push(splitStyle[0]);
+			splitStyle.push(splitStyle[0]);
+		} else if (splitStyleLen == 2) {
+			splitStyle.push(splitStyle[0]);
+			splitStyle.push(splitStyle[1]);
+		} else if (splitStyleLen == 3) {
+			splitStyle.push(splitStyle[1]);
+		}
+		return splitStyle;
+	}
+
+	splitStyle(style) {
+		var splitStyle = style.trim().split(/ +/),
+		splitStyleLen = splitStyle.length;
+
+		for (var splitIndex = 0; splitIndex < splitStyleLen; splitIndex++) {
+			splitStyle[splitIndex] = this.addUnit(splitStyle[splitIndex]);
+		}
+
+		return splitStyle;
+	}
+
 	transform(styles, depth = 0) {
-		if (typeof(styles) == 'object') {
+		if (typeof(styles) == 'object' && styles !== undefined && styles !== null) {
 			let keys = Object.keys(styles);
 			for (var keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
 				let key = keys[keyIndex],
-					style = styles[key],
-					styleType = typeof(style);
+				style = styles[key],
+				styleType = typeof(style);
 
 				if (styleType == 'string') {
-					//TODO background, font, border, borderTop, borderRight, borderBottom, borderLeft, transition, transform, listStyle, borderRadius, flex
-					if (['padding', 'margin', 'borderWidth', 'borderColor', 'borderWtyle'].indexOf(key) > -1) {
-						var splitStyle = styles[key].trim().split(/ +/),
+					if (['padding', 'margin'].indexOf(key) > -1) {
+						var splitStyle = this.splitStyle(styles[key]);
+						splitStyle = this.spreadToFour(splitStyle);
+
+						styles = this.transformKeys(styles, key, splitStyle, ['Top', 'Right', 'Bottom', 'Left']);
+					} else if (['borderWidth', 'borderColor', 'borderStyle'].indexOf(key) > -1) {
+						var splitStyle = this.splitStyle(styles[key]);
+						splitStyle = this.spreadToFour(splitStyle);
+						if (key == 'borderWidth') {
+							styles = this.transformKeys(styles, key, splitStyle, [['borderTopWidth'], ['borderRightWidth'], ['borderBottomWidth'], ['borderLeftWidth']]);
+						} else if (key == 'borderColor') {
+							styles = this.transformKeys(styles, key, splitStyle, [['borderTopColor'], ['borderRightColor'], ['borderBottomColor'], ['borderLeftColor']]);
+						} else if (key == 'borderStyle') {
+							styles = this.transformKeys(styles, key, splitStyle, [['borderTopStyle'], ['borderRightStyle'], ['borderBottomStyle'], ['borderLeftStyle']]);
+						}
+					} else if (['border', 'borderTop', 'borderRight', 'borderBottom', 'borderLeft'].indexOf(key) > -1) {
+						var splitStyle = this.splitStyle(styles[key]),
 							splitStyleLen = splitStyle.length;
 
-						for (var splitIndex = 0; splitIndex < splitStyleLen; splitIndex++) {
-							splitStyle[splitIndex] = this.addUnit(splitStyle[splitIndex]);
+						if (splitStyleLen == 1) {
+							splitStyle.unshift(Pod_Vars.get('border.width'));
+							splitStyle.push(Pod_Vars.get('border.color'));
+						} else if (splitStyleLen == 2) {
+							splitStyle.push(Pod_Vars.get('border.color'));
 						}
+
+						styles = this.transformKeys(styles, key, splitStyle, ['Width', 'Style', 'Color']);
+					} else if (key == 'borderRadius') {
+						var splitStyle = this.splitStyle(styles[key]);
+						splitStyle = this.spreadToFour(splitStyle);
+
+						styles = this.transformKeys(styles, key, splitStyle, [['borderTopLeftRadius'], ['borderTopRightRadius'], ['borderBottomRightRadius'], ['borderBottomLeftRadius']]);
+					} else if (key == 'font') {
+						var splitStyle = this.splitStyle(styles[key]),
+							splitStyleLen = splitStyle.length;
+
+						styles = this.transformKeys(styles, key, splitStyle, ['Style', 'Weight', 'Size', ['lineHeight'], 'Family']);
+					} else if (key == 'background') {
+						var splitStyle = this.splitStyle(styles[key]),
+							splitStyleLen = splitStyle.length;
 
 						if (splitStyleLen == 1) {
-							splitStyle.push(splitStyle[0]);
-							splitStyle.push(splitStyle[0]);
-							splitStyle.push(splitStyle[0]);
-						} else if (splitStyleLen == 2) {
-							splitStyle.push(splitStyle[0]);
-							splitStyle.push(splitStyle[1]);
+							styles['backgroundColor'] = splitStyle[0];
+							delete styles['background'];
+						} else {
+							styles = this.transformKeys(styles, key, splitStyle, ['Color', 'Image', 'Repeat', 'Attachment', 'Position']);
 						}
+					} else if (key == 'flex') {
+						var splitStyle = this.splitStyle(styles[key]),
+							splitStyleLen = splitStyle.length;
 
-						styles = this.transformTLBR(styles, key, splitStyle)
+						styles = this.transformKeys(styles, key, splitStyle, ['Grow', 'Shrink', 'Basis']);
+					} else if (key == 'transition') {
+						var splitStyle = this.splitStyle(styles[key]),
+							splitStyleLen = splitStyle.length;
+
+						styles = this.transformKeys(styles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
+					} else if (key == 'listStyle') {
+						var splitStyle = this.splitStyle(styles[key]),
+							splitStyleLen = splitStyle.length;
+
+						styles = this.transformKeys(styles, key, splitStyle, ['Type', 'Position', 'Image']);
 					} else {
 						styles[key] = this.addUnit(style);
 					}
@@ -370,7 +445,6 @@ class Style {
 					styles[key] = this.transform(style, depth + 1);
 				}
 			}
-
 		}
 
 		return styles;
@@ -458,7 +532,7 @@ class Sheet {
 
 	getAllStyling(instance, scene = 'normal', conditions) {
 		let result = {},
-			partKeys = Object.keys(this.parts);
+		partKeys = Object.keys(this.parts);
 
 		for (var i = 0, len = partKeys.length; i < len; i++) {
 			var partName = partKeys[i];
