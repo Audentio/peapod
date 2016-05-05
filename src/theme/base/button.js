@@ -59,9 +59,9 @@ main.addSelector({
 	common: {
 		display: 'inline-block',
 		borderRadius: '$button.border.radius',
-		borderWidth: '$button.border.width',
-		borderStyle: '$button.border.style',
-		borderColor: '$button.border.color',
+		border: 'none',
+		// borderStyle: '$button.border.style',
+		// borderColor: '$button.border.color',
 
 		textDecoration: 'none',
 		textTransform: 'uppercase',

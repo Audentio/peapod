@@ -16,12 +16,12 @@ sheet.addCondition('hovered').addStyler({hovered: true});
 
 //Variables
 sheet.setValues({
-	width: '1.8rem',
+	width: '24px',
 	height: '$checkbox.width',
 	color: {
 		text: '$color.text.dark',
 		background: '$palette.grey50',
-		backgroundChecked: '$color.primary.base',
+		backgroundChecked: '$palette.grey400',
 		icon: '$color.text.white'
 	},
 	border: {
