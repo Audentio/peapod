@@ -28,6 +28,7 @@ import LabelSection from './sectionComponents/label.jsx'
 import TabsSection from './sectionComponents/tabs.jsx'
 import AlertsSection from './sectionComponents/alerts.jsx'
 import ScrollableSection from './sectionComponents/scrollable.jsx'
+import ProgressSection from './sectionComponents/progress.jsx'
 
 // import dev sections
 import DamionDev from './developmentComponents/damionDev.jsx'
@@ -63,6 +64,7 @@ class Sections extends React.Component{
                 <LabelSection />
                 <TabsSection />
                 <AlertsSection />
+                <ProgressSection />
 
                 <DamionDev />
                 <KylerDev />
