@@ -32,6 +32,7 @@ module.exports = {
 	],
 
 	module: {
+		noParse: [/autoit\.js$/], //highlightjs fix
 
 		preLoaders: [{
 			test: /\.json$/,
