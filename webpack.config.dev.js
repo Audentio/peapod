@@ -32,7 +32,7 @@ module.exports = {
 	],
 
 	module: {
-		noParse: [/autoit\.js$/], //highlightjs fix
+		noParse: [/highlight\.js\/lib\/languages/], //highlightjs fix
 
 		preLoaders: [{
 			test: /\.json$/,
