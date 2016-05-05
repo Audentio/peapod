@@ -3,7 +3,9 @@ import {Sheet} from '../../stylesheet.js';
 var sheet = new Sheet('device'),
     main = sheet.addMain(),
     background = sheet.addPart('background'),
-    innerscreen = sheet.addPart('innerscreen');
+    innerscreen = sheet.addPart('innerscreen'),
+    overlay = sheet.addPart('overlay'),
+    scrollable = sheet.addPart('scrollable');
 
 //Conditions
 sheet.addCondition('scrollable').addStyler({scrollable: true});
@@ -106,14 +108,29 @@ innerscreen.addSelector({
         bottom: getStandardVersion.offset.left,
         left: getStandardVersion.offset.top,
     }
-}).addSelector({
+});
+scrollable.addSelector({
     condition: ['scrollable'],
     common: {
         overflowX: 'hidden',
-        overflowY: 'auto'
-        // scrollable?
+        overflowY: 'auto',
+        width: '100%',
+        height: '100%'
     }
-})
+});
+overlay.addSelector({
+    common: {
+        position: 'absolute',
+        pointerEvents: 'none',
+        top: 0, right: 0, bottom: 0, left: 0,
+        backgroundPosition: '-194.5% -50%',
+        backgroundSize: '380%',
+
+        backgroundImage: 'radial-gradient(ellipse at center, rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%)'
+        // radial-gradient(ellipse at center, rgba(255,255,255,0.43) 0%, rgb(255, 255, 255) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 100%)
+
+    }
+});
 
 for(var index in devices.devices) {
     if (index != 'standard') {continue;}
