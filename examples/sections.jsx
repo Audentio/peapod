@@ -76,12 +76,12 @@ sections.push(
 )
 
 sections.push(
-    <Pod.section key={'breadcrumbs'}n>
+    <Pod.section key={'breadcrumb'}n>
         <Pod.contentWrap>
 
-            <Pod.heading>Breadcrumbs</Pod.heading>
+            <Pod.heading>Breadcrumb</Pod.heading>
 
-            <Pod.breadcrumbs children={['Home', 'Forums', 'Subforums', 'Best way to handle these?']}></Pod.breadcrumbs>
+            <Pod.breadcrumb children={['Home', 'Forums', 'Subforums', 'Best way to handle these?']}></Pod.breadcrumb>
         </Pod.contentWrap>
     </Pod.section>
 )

@@ -27,8 +27,8 @@ var Portal = require('./portal.jsx');
 var TableCell = require('./tableCell.jsx');
 var TableQuery = require('./tableQuery.jsx');
 var TableInner = require('./tableInner.jsx');
-var TablePresets = require('./tablePresets.jsx');
-var TableControls = require('./tableControls.jsx');
+var TablePreset = require('./tablePreset.jsx');
+var TableControl = require('./tableControl.jsx');
 var TableHeader = require('./tableHeader.jsx');
 
 
@@ -338,11 +338,11 @@ var Table = React.createClass({
 			}}});
 		var isFetching = (this.props.isFetching) ? <div style={statusStyle}>Loading Data...</div>: null;
 		var noData = (paginated.data.length == 0 && !this.props.isFetching) ? <div style={statusStyle}>No Data</div>: null;
-		var presets = (typeof(this.state.presets) !== 'undefined') ? <TablePresets queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/> : null;
+		var presets = (typeof(this.state.presets) !== 'undefined') ? <TablePreset queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/> : null;
 
 		return (
 			<div style={style.main}>
-				<TableControls>
+				<TableControl>
 					<Grid styler={{justifyContent: 'space-between', style: {height: '$table.headerHeight', lineHeight: '$table.headerHeight'}}}>
 						<div>
 							<Div styler={{
@@ -385,7 +385,7 @@ var Table = React.createClass({
 							</Div>
 						</Grid>
 					</Grid>
-				</TableControls>
+				</TableControl>
 				<TableInner style={style.main}
 					data={paginated.data}
 					columns={columns}

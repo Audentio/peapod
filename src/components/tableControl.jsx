@@ -9,7 +9,7 @@ var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 
-var TableControls = React.createClass({
+var TableControl = React.createClass({
 	render: function() {
 		var style = Pod_Styler.getStyle(this);
 
@@ -21,4 +21,4 @@ var TableControls = React.createClass({
 	}
 })
 
-module.exports = Wrapper(TableControls);
+module.exports = Wrapper(TableControl);

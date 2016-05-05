@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet('breadcrumbs'),
+var sheet = new Sheet('breadcrumb'),
     main = sheet.addMain(),
     listitem = sheet.addPart('listitem');
 

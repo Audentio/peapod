@@ -16,7 +16,7 @@ var Wrapper = require('../wrapper.jsx')
 * Breadcrumbs component
 * @element Code
 */
-class Breadcrumbs extends React.Component {
+class Breadcrumb extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -48,4 +48,4 @@ class Breadcrumbs extends React.Component {
 
 };
 
-module.exports = Wrapper(Breadcrumbs);
+module.exports = Wrapper(Breadcrumb);
