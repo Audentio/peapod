@@ -11,15 +11,12 @@ import Wrapper from '../wrapper.jsx'
 
 
 //@Tushar including Highlightjs seems to be causing "Module parse failed: Maximum call stack size exceeded" -- KC
-//import Highlightjs from 'highlight.js/lib/highlight.js'
+import Highlightjs from 'highlight.js/lib/highlight.js'
 
 //import languages
-
-/*
 ['cpp','cs','css','json','java','javascript','nginx','objectivec','perl','php','python','ruby','xml'].forEach(function(lang){
     Highlightjs.registerLanguage(lang, require('highlight.js/lib/languages/'+lang));
 })
-*/
 
 /**
 * Code block component
@@ -40,15 +37,13 @@ var CodeBlock = React.createClass({
         highlight: true
     },
 
-	/*
     highlightCode(){
         var container = this.refs.codeContainer,
             _this = this;
 
         //Minified language files seem malformed
         //some basic languages loaded Manually (see line 15 this file)
-		*/
-        /*
+
         if(this.props.language) {
 
             Pod_Helper.addScript({
@@ -57,15 +52,12 @@ var CodeBlock = React.createClass({
                 ajax: true,
                 callback: function(response){
                     if(response.status !== 200) return;
-                    console.log(hljs.listLanguages())
                     var highlighted = hljs.highlight('js', _this.props.children, true);
-                    console.log(highlighted)
                     container.innerHTML = highlighted.value
                     container.setAttribute('data-lang', highlighted.language)
                 }
             })
-        }*/
-		/*
+        }
         var highlighted = (this.props.language) ?
             Highlightjs.highlight(this.props.language, this.props.children, true) :
             Highlightjs.highlightAuto(this.props.children);
@@ -73,19 +65,18 @@ var CodeBlock = React.createClass({
         container.innerHTML = highlighted.value
         container.setAttribute('data-lang', highlighted.language)
     },
-	*/
 
     componentWillMount() {
-        //if(!window.hljs) window.hljs = Highlightjs;
-        //Pod_Helper.addStylesheet('HLJS', '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/github-gist.min.css')
+        if(!window.hljs) window.hljs = Highlightjs;
+        Pod_Helper.addStylesheet('HLJS', '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/github-gist.min.css')
     },
 
     componentWillUpdate() {
-        //this.highlightCode()
+        this.highlightCode()
     },
 
     componentDidMount(){
-        //this.highlightCode()
+        this.highlightCode()
     },
 
 	render() {
