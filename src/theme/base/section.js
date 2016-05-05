@@ -1,17 +1,13 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('section'),
 	main = sheet.addMain();
 
 //Conditions
 
 //Variables
 sheet.setValues({
-    common: {
-        section: {
-            width: '$site.maxWidth'
-        }
-    }
+    width: '$site.maxWidth'
 });
 
 

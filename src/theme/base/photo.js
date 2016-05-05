@@ -1,7 +1,7 @@
 import {Sheet} from '../../stylesheet.js';
 import Radium from 'radium';
 
-var sheet = new Sheet,
+var sheet = new Sheet('photo'),
 	main = sheet.addMain(),
 	caption = sheet.addPart('caption'),
 	image = sheet.addPart('image'),
@@ -20,14 +20,10 @@ sheet.addCondition('hovered').addStyler({hovered: true});
 
 //Variables
 sheet.setValues({
-	common: {
-		image: {
-			color: {
-				//captionBackground: 'rgba(255, 255, 255, 0.5)',
-				captionBackground: '$palette.grey200',
-				lightboxBackground: 'rgba(0,0,0,0.85)'
-			}
-		},
+	color: {
+		//captionBackground: 'rgba(255, 255, 255, 0.5)',
+		captionBackground: '$palette.grey200',
+		lightboxBackground: 'rgba(0,0,0,0.85)'
 	}
 });
 
@@ -81,7 +77,7 @@ caption.addSelector({
 		fontSize: '$font.size.small',
 		bottom: 0,
 		left: 0,
-		backgroundColor: '$image.color.captionBackground',
+		backgroundColor: '$photo.color.captionBackground',
 		width: '100%'
 	}
 }).addSelector({
@@ -96,7 +92,7 @@ lightbox.addSelector({
 		display: 'table',
 		position: 'fixed',
 		zIndex: 999,
-		backgroundColor: '$image.color.lightboxBackground',
+		backgroundColor: '$photo.color.lightboxBackground',
 		width: '100%',
 		height: '100%',
 		top: 0,

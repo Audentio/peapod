@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('tabs'),
 	main = sheet.addMain(),
 	trigger = sheet.addPart('trigger'),
 	panel = sheet.addPart('panel'),

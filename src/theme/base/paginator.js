@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('paginator'),
 	main = sheet.addMain(),
 	trigger = sheet.addPart('trigger'),
 	label = sheet.addPart('label');
@@ -9,19 +9,15 @@ sheet.addCondition('onePage').addStyler({onePage: true});
 
 //Variables
 sheet.setValues({
-	common: {
-		paginator: {
-			border: {
-				color: '#778A9D',
-				width: '1px',
-				style: 'solid'
-			},
-			font: {
-				family: 'inherit',
-				size: '$font.size.normal',
-				triggerSize: '$font.size.xlarge'
-			}
-		},
+	border: {
+		color: '#778A9D',
+		width: '1px',
+		style: 'solid'
+	},
+	font: {
+		family: 'inherit',
+		size: '$font.size.normal',
+		triggerSize: '$font.size.xlarge'
 	}
 });
 

@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('heading'),
     h1 = sheet.addPart('h1'),
     h2 = sheet.addPart('h2'),
     h3 = sheet.addPart('h3'),
@@ -13,11 +13,7 @@ sheet.addCondition('secondary').addStyler({secondary: true});
 
 //Variables
 sheet.setValues({
-    common: {
-        heading: {
-            textTransform: 'uppercase'
-        }
-    }
+    textTransform: 'uppercase'
 });
 
 var getMargin = (margin, font) => {

@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('card'),
     main = sheet.addMain(),
     actionBar = sheet.addPart('actionBar'),
     title = sheet.addPart('title'),
@@ -14,13 +14,9 @@ sheet.addCondition('actionBarRight').addProp({actionBarLocation: 'right'});
 
 //Variables
 sheet.setValues({
-    common: {
-        card: {
-            padding: {
-                large: '$gutter.internal',
-                small: '$gutter.extrasmall'
-            }
-        }
+    padding: {
+        large: '$gutter.internal',
+        small: '$gutter.extrasmall'
     }
 });
 

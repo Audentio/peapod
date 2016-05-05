@@ -1,14 +1,12 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('menuItem'),
     main = sheet.addMain(),
     anchor = sheet.addPart('anchor'),
     subtext = sheet.addPart('subtext');
 
 //Variables
-sheet.setValues({
-    common: {}
-});
+sheet.setValues({});
 
 main.addSelector({
     common: {

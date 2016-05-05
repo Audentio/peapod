@@ -1,12 +1,10 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('subMenu'),
     main = sheet.addMain();
 
 //Variables
-sheet.setValues({
-    common: {}
-});
+sheet.setValues({});
 
 main.addSelector({
     common: {

@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('checkbox'),
 	main = sheet.addMain(),
 	innerBox = sheet.addPart('innerBox'),
 	wrapper = sheet.addPart('wrapper'),
@@ -16,41 +16,34 @@ sheet.addCondition('hovered').addStyler({hovered: true});
 
 //Variables
 sheet.setValues({
-	common: {
-		checkbox: {
-			width: '1.8rem',
-			height: '$checkbox.width',
-			color: {
-				text: '$color.text.dark',
-				background: '$palette.grey50',
-				backgroundChecked: '$color.primary.base',
-				icon: '$color.text.white'
-			},
-			border: {
-				color: '$palette.black',
-				colorChecked: '$checkbox.color.backgroundChecked',
-				radius: '$border.radius.small',
-				width: '2px',
-				style: 'solid'
-			},
-			font: {
-				family: 'inherit',
-				size: '$font.size.large'
-			}
-		}
+	width: '1.8rem',
+	height: '$checkbox.width',
+	color: {
+		text: '$color.text.dark',
+		background: '$palette.grey50',
+		backgroundChecked: '$color.primary.base',
+		icon: '$color.text.white'
 	},
-	dark: {
-		checkbox: {
-			color: {
-				text: '$color.text.white',
-				background: 'transparent'
-			},
-			border: {
-				color: '$checkbox.color.text'
-			}
-		},
+	border: {
+		color: '$palette.black',
+		colorChecked: '$checkbox.color.backgroundChecked',
+		radius: '$border.radius.small',
+		width: '2px',
+		style: 'solid'
+	},
+	font: {
+		family: 'inherit',
+		size: '$font.size.large'
 	}
-});
+}).setValues({
+	color: {
+		text: '$color.text.white',
+		background: 'transparent'
+	},
+	border: {
+		color: '$checkbox.color.text'
+	}
+}, 'dark');
 
 //Root
 innerBox.addSelector({

@@ -2,7 +2,6 @@ import {merge as lodashMerge} from "lodash";
 import Pod_Vars from './vars.js';
 var React = require('react');
 
-
 var pod_debug = false; // if true, will add a debug object to the inline style produced
 
 // Parts of a component
@@ -384,17 +383,33 @@ class Style {
 
 // A sheet of parts with their selectors, conditions, and values for variables
 class Sheet {
-	constructor() {
+	constructor(name) {
 		this.values = {};
 		this.parts = {},
 		this.conditions = {};
 		this.doc = "";
 		this.docDefault = null;
+		if (name == undefined) {
+			console.warn('Sheet created without a name specified.')
+		}
+		this.name = name;
 	}
 
-	setValues(values = {}) {
-		this.values = values;
-		Pod_Vars.register(values);
+	setValues(values = {}, scene = 'common', custom = false) {
+		if (custom) {
+			var variables = values;
+		} else {
+			var variables = {
+				[scene]: {
+					[this.name]: values
+				}
+			};
+		}
+
+		this.values = variables;
+		Pod_Vars.register(variables);
+
+		return this;
 	}
 
 	addMain() {
@@ -408,6 +423,9 @@ class Sheet {
 		return part;
 	}
 
+	getName() {
+		return this.name;
+	}
 	getValues() {
 		return this.values;
 	}

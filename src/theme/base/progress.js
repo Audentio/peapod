@@ -2,7 +2,7 @@ import {Sheet} from '../../stylesheet.js'
 import Radium from 'radium'
 import _ from 'lodash'
 
-var sheet = new Sheet,
+var sheet = new Sheet('progress'),
 	main = sheet.addMain(),
     progress = sheet.addPart('progress');
 
@@ -18,11 +18,7 @@ sheet.addCondition('strokeSet').addStyler({stroke: ['>', '0']});
 
 //Variables
 sheet.setValues({
-	common: {
-		progress: {
-			height: 4
-		}
-	}
+	height: 4
 });
 
 var indeterminateKeyframes = Radium.keyframes({

@@ -1,12 +1,11 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('heroOverlay'),
     main = sheet.addMain();
 
 //Conditions
 sheet.addCondition('positionRight').addStyler({position: 'right'});
 sheet.addCondition('positionLeft').addStyler({position: 'left'});
-//Variables
 
 main.addSelector({
     common: {

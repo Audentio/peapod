@@ -2,7 +2,7 @@ import {Sheet} from '../../stylesheet.js'
 import Radium from 'radium'
 import _ from 'lodash'
 
-var sheet = new Sheet,
+var sheet = new Sheet('circularProgress'),
 	main = sheet.addMain(),
 	wrapper = sheet.addPart('wrapper'),
 	circle = sheet.addPart('circle'),
@@ -30,12 +30,8 @@ sheet.addCondition('strokeSet').addStyler({stroke: ['>', '0']})
 
 //Variables
 sheet.setValues({
-	common: {
-		circularProgress: {
-			stroke: 4,
-			size: 50
-		}
-	}
+	stroke: 4,
+	size: 50
 });
 
 main.addSelector({

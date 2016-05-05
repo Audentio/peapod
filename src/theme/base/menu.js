@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('menu'),
     main = sheet.addMain(),
     portal = sheet.addPart('portal'),
     trigger = sheet.addPart('trigger');
@@ -14,16 +14,12 @@ var add = (valueone, valuetwo) => {
 
 //Variables
 sheet.setValues({
-    common: {
-        menu: {
-            background: '$palette.white',
-            boxShadow: '$shadows.d1',
-            paddingTop: '$gutter.internal',
-            paddingBottom: '$gutter.internal',
-            borderRadius: '$border.radius.small',
-            zIndex: 3
-        }
-    }
+    background: '$palette.white',
+    boxShadow: '$shadows.d1',
+    paddingTop: '$gutter.internal',
+    paddingBottom: '$gutter.internal',
+    borderRadius: '$border.radius.small',
+    zIndex: 3
 });
 
 main.addSelector({

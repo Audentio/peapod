@@ -1,19 +1,15 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('portal'),
 	main = sheet.addMain();
 
 //Variables
 sheet.setValues({
-	common: {
-		portal: {
-			font: {
-				family: '$font.family.primary'
-			},
-			dropdown: {
-				width: '20rem'
-			}
-		},
+	font: {
+		family: '$font.family.primary'
+	},
+	dropdown: {
+		width: '20rem'
 	}
 });
 

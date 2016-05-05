@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('listItem'),
     main = sheet.addMain(),
     imageContainer = sheet.addPart('imageContainer'),
     image = sheet.addPart('image'),
@@ -31,27 +31,23 @@ var minus = (value1, value2) => {
 
 //Variables
 sheet.setValues({
-    common: {
-        listItem: {
-            height: {
-                small: 48,
-                large: 72
-            },
-            padding: {
-                left: 16,
-                right: 16,
-                top: 16,
-                bottom: 16,
-            },
-            font: {
-                subheading: '',
-                body: ''
-            },
-            image: {
-                small: 24,
-                large: 42
-            }
-        }
+    height: {
+        small: 48,
+        large: 72
+    },
+    padding: {
+        left: 16,
+        right: 16,
+        top: 16,
+        bottom: 16,
+    },
+    font: {
+        subheading: '',
+        body: ''
+    },
+    image: {
+        small: 24,
+        large: 42
     }
 });
 

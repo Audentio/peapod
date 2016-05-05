@@ -2,30 +2,26 @@ var Pod_Vars = require('../../vars.js');
 
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('grid'),
 	main = sheet.addMain();
 
 //Variables
 sheet.setValues({
-	common: {
-		grid: {
-			breakpoints: {
-				small: '610',
-				medium: '800',
-				large: '1024',
-				xlarge: '1500'
-			},
-			xsmall: '@media (min-width: 1px)',
-			small: '@media (min-width: 610px)',
-			medium: '@media (min-width: 800px)',
-			large: '@media (min-width: 1024px)',
-			xlarge: '@media (min-width: 1500px)',
-			smallLt: '@media (max-width: 609px)',
-			mediumLt: '@media (max-width: 799px)',
-			largeLt: '@media (max-width: 1023px)',
-			xlargeLt: '@media (max-width: 1499px)'
-		},
-	}
+	breakpoints: {
+		small: '610',
+		medium: '800',
+		large: '1024',
+		xlarge: '1500'
+	},
+	xsmall: '@media (min-width: 1px)',
+	small: '@media (min-width: 610px)',
+	medium: '@media (min-width: 800px)',
+	large: '@media (min-width: 1024px)',
+	xlarge: '@media (min-width: 1500px)',
+	smallLt: '@media (max-width: 609px)',
+	mediumLt: '@media (max-width: 799px)',
+	largeLt: '@media (max-width: 1023px)',
+	xlargeLt: '@media (max-width: 1499px)'
 });
 
 main.addSelector({

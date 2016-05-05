@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('timestamp'),
 	main = sheet.addMain();
 
 //Conditions

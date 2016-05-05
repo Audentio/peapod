@@ -1,7 +1,7 @@
 import {Sheet} from '../../stylesheet.js';
 import Radium from 'radium';
 
-var sheet = new Sheet,
+var sheet = new Sheet('alert'),
 	main = sheet.addMain(),
     wrapper = sheet.addPart('wrapper'),
     message = sheet.addPart('message'),
@@ -18,18 +18,14 @@ sheet.addCondition('kindDanger').addStyler({kind: 'danger'});
 
 //Variables
 sheet.setValues({
-	common: {
-		alert: {
-			background: {
-				general: '$palette.grey300',
-                success: '$palette.lightGreen100',
-                warning: '$palette.yellow100',
-                info: '$palette.blue100',
-                danger: '$palette.red100'
-			}
-		},
+	background: {
+		general: '$palette.grey300',
+		success: '$palette.lightGreen100',
+		warning: '$palette.yellow100',
+		info: '$palette.blue100',
+		danger: '$palette.red100'
 	}
-});
+})
 
 wrapper.addSelector({
     common: {

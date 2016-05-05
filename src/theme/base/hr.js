@@ -1,11 +1,8 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('hr'),
 	main = sheet.addMain();
 
-//Conditions
-
-//Variables
 
 main.addSelector({
 	common: {

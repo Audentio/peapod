@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('notification'),
 	main = sheet.addMain(),
     wrapper = sheet.addPart('wrapper'),
     title = sheet.addPart('title'),
@@ -15,16 +15,12 @@ sheet.addCondition('kindDanger').addStyler({kind: 'danger'});
 
 //Variables
 sheet.setValues({
-	common: {
-		notification: {
-			background: {
-				general: '$color.base.base',
-                success: '$color.success.base',
-                warning: '$color.warning.active',
-                info: '$color.info.base',
-                danger: '$color.danger.base'
-			}
-		},
+	background: {
+		general: '$color.base.base',
+        success: '$color.success.base',
+        warning: '$color.warning.active',
+        info: '$color.info.base',
+        danger: '$color.danger.base'
 	}
 });
 

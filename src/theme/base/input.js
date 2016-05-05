@@ -2,7 +2,7 @@ import {Sheet} from '../../stylesheet.js';
 import Radium from 'radium'
 import color from 'color'
 
-var sheet = new Sheet,
+var sheet = new Sheet('input'),
 	main = sheet.addMain(),
 	input = sheet.addPart('input'),
 	placeholder = sheet.addPart('placeholder'),
@@ -50,60 +50,50 @@ sheet.addCondition('evaluation-empty').addState({evaluation: 'empty'}); //only w
 
 //Variables
 sheet.setValues({
-	common: {
-		input: {
-			color: {
-				text: '$color.text.base',
-				placeholder: 'rgba(0,0,0,0.3)',
-				background: 'transparent',
-				backgroundFocus: 'transparent',
-				icon: '$input.color.text'
-			},
-			textIndent: 0,
-			height: '$gutter.large',
-			padding: {
-				top: '0px',
-				right: '0px',
-				bottom: '0px',
-				left: '0px'
-			},
-			border: {
-				color: '$palette.blue400',
-				radius: '0px',
-				width: '0px 0px 1px 0px',
-				style: 'solid'
-			},
-			font: {
-				family: 'inherit',
-				size: '$font.size.large'
-			}
-		},
+	color: {
+		text: '$color.text.base',
+		placeholder: 'rgba(0,0,0,0.3)',
+		background: 'transparent',
+		backgroundFocus: 'transparent',
+		icon: '$input.color.text'
 	},
-	material: {
-		input: {
-			color: {
-				background: 'transparent'
-			},
-			border: {
-				width: '0px 0px 1px 0px'
-			}
-		}
+	textIndent: 0,
+	height: '$gutter.large',
+	padding: {
+		top: '0px',
+		right: '0px',
+		bottom: '0px',
+		left: '0px'
 	},
-	dark: {
-		input: {
-			color: {
-				text: '$color.text.white',
-				placeholder: '$input.color.text',
-				background: 'transparent',
-				backgroundFocus: 'rgba(255, 255, 255, 0.1)',
-				icon: '$input.color.text'
-			},
-			border: {
-				color: '$palette.grey200',
-			}
-		}
+	border: {
+		color: '$palette.blue400',
+		radius: '0px',
+		width: '0px 0px 1px 0px',
+		style: 'solid'
+	},
+	font: {
+		family: 'inherit',
+		size: '$font.size.large'
 	}
-});
+}).setValues({
+	color: {
+		background: 'transparent'
+	},
+	border: {
+		width: '0px 0px 1px 0px'
+	}
+}, 'material').setValues({
+	color: {
+		text: '$color.text.white',
+		placeholder: '$input.color.text',
+		background: 'transparent',
+		backgroundFocus: 'rgba(255, 255, 255, 0.1)',
+		icon: '$input.color.text'
+	},
+	border: {
+		color: '$palette.grey200',
+	}
+}, 'dark');
 
 main.addSelector({
 	common: {

@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('center'),
     main = sheet.addMain(),
     outer = sheet.addPart('outer'),
     inner = sheet.addPart('inner');

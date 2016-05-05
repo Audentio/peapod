@@ -1,22 +1,18 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('icon'),
 	main = sheet.addMain();
 
 //Variables
 sheet.setValues({
-	common: {
-		icon: {
-			font: {
-				size: 'inherit'
-			},
-			color: 'inherit'
-		},
-	}
+	font: {
+		size: 'inherit'
+	},
+	color: 'inherit'
 });
 
-sheet.addCondition('sizeSet').addStyler({size: ['!=', '']});
-sheet.addCondition('colorSet').addStyler({color: ['!=', '']});
+sheet.addCondition('sizeSet').addStyler({size: ['!=', undefined]});
+sheet.addCondition('colorSet').addStyler({color: ['!=', undefined]});
 
 main.addSelector({
 	common: {

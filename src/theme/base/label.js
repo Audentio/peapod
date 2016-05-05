@@ -1,17 +1,13 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('label'),
 	main = sheet.addMain(),
 	icon = sheet.addPart('icon');
 
 //Variables
 sheet.setValues({
-	common: {
-		label: {
-			color: {
-				text: '$color.text.white'
-			}
-		}
+	color: {
+		text: '$color.text.white'
 	}
 });
 

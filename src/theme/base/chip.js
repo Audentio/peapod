@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('chip'),
     main = sheet.addMain(),
     deleteTrigger = sheet.addPart('deleteTrigger'),
     photo = sheet.addPart('photo');
@@ -14,19 +14,15 @@ var half = (value) => {
 
 //Variables
 sheet.setValues({
-    common: {
-        chip: {
-            height: '32px',
-            background: '$palette.grey100',
-            color: '#777', // needs to be 67% black
-            hover: {
-                background: '$palette.grey600',
-                color: '$palette.white'
-            },
-            paddingLeftRight: '12px',
-            innerMargins: '8px'
-        }
-    }
+    height: '32px',
+    background: '$palette.grey100',
+    color: '#777', // needs to be 67% black
+    hover: {
+        background: '$palette.grey600',
+        color: '$palette.white'
+    },
+    paddingLeftRight: '12px',
+    innerMargins: '8px'
 });
 
 main.addSelector({

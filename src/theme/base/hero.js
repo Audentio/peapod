@@ -1,12 +1,11 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet,
+var sheet = new Sheet('hero'),
     main = sheet.addMain();
 
 //Conditions
 sheet.addCondition('cover').addStyler({cover: true});
 sheet.addCondition('contain').addStyler({contain: true});
-//Variables
 
 main.addSelector({
     common: {
