@@ -471,7 +471,7 @@ var init = function(components) {
 			},
 
 			site: {
-				maxWidth: 900
+				maxWidth: 1200
 			}
 
 		}

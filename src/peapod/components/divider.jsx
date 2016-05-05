@@ -13,22 +13,22 @@ var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 /**
-* BlockRight component
+* Divider component
 * @element Code
 */
-class BlockRight extends React.Component {
+class Divider extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
 
         return (
-            <Pod.block {...this.props} align="right">
+            <div style={style.main}>
                 {this.props.children}
-            </Pod.block>
+            </div>
         );
 
     }
 
 };
 
-module.exports = Wrapper(BlockRight);
+module.exports = Wrapper(Divider);

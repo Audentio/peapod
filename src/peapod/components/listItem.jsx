@@ -7,7 +7,7 @@
 
 //Dependencies
 import React from 'react';
-import ReactaDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 
 var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
@@ -21,14 +21,14 @@ class ListItem extends React.Component {
     render() {
         var style = Pod_Styler.getStyle(this);
         var image = '', icon = '', secondary = '';
-        var deviderProps = {inline: true}
+        var dividerProps = {inline: true}
 
         var stylerObject = new Object(this.props.styler); // needs to be converted to a new object else throws an error
         if ('divider' in stylerObject) {
             if (stylerObject.divider == 'left') {
-                deviderProps['indent'] = 72
+                dividerProps['indent'] = 72
             } else if (stylerObject.divider == 'right') {
-                deviderProps['outdent'] = 72
+                dividerProps['outdent'] = 72
             }
         }
 
@@ -52,7 +52,7 @@ class ListItem extends React.Component {
                     {this.props.children}
                     {secondary}
                 </div>
-                <Pod.devider styler={deviderProps}></Pod.devider>
+                <Pod.divider styler={dividerProps}></Pod.divider>
             </div>
         );
 
