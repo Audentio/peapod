@@ -16,7 +16,7 @@ var Wrapper = require('../wrapper.jsx')
 * ImageContainer component
 * @element Code
 */
-class ImageContainer extends React.Component {
+class Device extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -34,4 +34,4 @@ class ImageContainer extends React.Component {
 
 };
 
-module.exports = Wrapper(ImageContainer);
+module.exports = Wrapper(Device);

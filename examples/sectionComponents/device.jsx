@@ -9,28 +9,28 @@ export default class DeviceSection extends React.Component {
 
     render () {
         return (
-            <Pod.section key={'imageContainer'}>
+            <Pod.section key={'device'}>
                 <Pod.contentWrap>
                     <Pod.heading>Image Containers / Scrollable(horizontal)</Pod.heading>
                     <Pod.paragraph>Todo: Update iphone to show actual screen??, Add MacBook, iPad and iMac</Pod.paragraph>
                 </Pod.contentWrap>
 
                 <Pod.scrollable horizontal={true} styler={{center: true}}>
-                    <Pod.imageContainer preset='iphone' styler={{style: {display: 'inline-block'}}}>
+                    <Pod.device device='iphone' variant="black" version="6" styler={{style: {display: 'inline-block'}}}>
                         <Pod.heading kind="h5">Not Scrollable</Pod.heading>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
-                    </Pod.imageContainer>
+                    </Pod.device>
 
-                    <Pod.imageContainer preset='iphone' styler={{style: {display: 'inline-block'}}}>
+                    <Pod.device device='iphone' variant="black" version="6" styler={{style: {display: 'inline-block'}}}>
                         <Pod.lazy distance="50" height="100%">
                             <Pod.embed width="100%" height="100%" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
                         </Pod.lazy>
-                    </Pod.imageContainer>
+                    </Pod.device>
 
-                    <Pod.imageContainer preset='iphone' styler={{scrollable: true, style: {display: 'inline-block'}}}>
+                    <Pod.device device='iphone' variant="black" version="6" styler={{scrollable: true, style: {display: 'inline-block'}}}>
                         <Pod.heading kind="h5">Scrollable</Pod.heading>
                         <Pod.block>
                             <Pod.blockLeft>
@@ -49,26 +49,26 @@ export default class DeviceSection extends React.Component {
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
-                    </Pod.imageContainer>
+                    </Pod.device>
 
-                    <Pod.imageContainer preset='iphone' styler={{scrollable: true, horizontal:true, style: {display: 'inline-block'}}}>
+                    <Pod.device device='phone' variant="black" version="6" orientation='horizontal'styler={{scrollable: true, style: {display: 'inline-block'}}}>
                         <Pod.lazy distance="50" height="100%">
                             <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
                         </Pod.lazy>
-                    </Pod.imageContainer>
+                    </Pod.device>
 
-                    <Pod.imageContainer preset='iphone' styler={{style: {display: 'inline-block'}}}>
+                    <Pod.device device='iphone' variant="black" version="6" styler={{style: {display: 'inline-block'}}}>
                         <Pod.lazy distance="50" height="100%">
                             <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
                         </Pod.lazy>
-                    </Pod.imageContainer>
+                    </Pod.device>
 
-                    <Pod.imageContainer preset='iphone' styler={{scrollable: true, style: {display: 'inline-block'}}}>
+                    <Pod.device device='iphone' variant="black" version="6" styler={{scrollable: true, style: {display: 'inline-block'}}}>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
-                    </Pod.imageContainer>
+                    </Pod.device>
                 </Pod.scrollable>
 
                 <br className="clear" />
