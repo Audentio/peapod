@@ -11,21 +11,22 @@ var sheet = new Sheet('checkbox'),
 
 //Conditions
 sheet.addCondition('checked').addState({checked: true});
+sheet.addCondition('disabled').addState({disabled: true});
 sheet.addCondition('block').addStyler({block: true});
 sheet.addCondition('hovered').addStyler({hovered: true});
 
 //Variables
 sheet.setValues({
-	width: '24px',
+	width: '18px',
 	height: '$checkbox.width',
 	color: {
 		text: '$color.text.dark',
 		background: '$palette.grey50',
-		backgroundChecked: '$palette.grey400',
+		backgroundChecked: '$palette.grey500',
 		icon: '$color.text.white'
 	},
 	border: {
-		color: '$palette.black',
+		color: '$palette.grey600',
 		colorChecked: '$checkbox.color.backgroundChecked',
 		radius: '$border.radius.small',
 		width: '2px',
@@ -41,7 +42,8 @@ sheet.setValues({
 		background: 'transparent'
 	},
 	border: {
-		color: '$checkbox.color.text'
+		color: '$palette.white',
+		colorChecked: '$palette.grey200',
 	}
 }, 'dark');
 
@@ -62,6 +64,19 @@ innerBox.addSelector({
 }).addSelector({
 	condition: ['checked'],
 	common: {
+		backgroundColor: '$checkbox.color.backgroundChecked',
+		borderColor: '$checkbox.border.colorChecked',
+	}
+}).addSelector({
+	condition: ['disabled'],
+	common: {
+		opacity: '0.6',
+		borderColor: '$checkbox.border.colorChecked',
+	}
+}).addSelector({
+	condition: ['disabled', 'checked'],
+	common: {
+		opacity: '0.6',
 		backgroundColor: '$checkbox.color.backgroundChecked',
 		borderColor: '$checkbox.border.colorChecked',
 	}
