@@ -52,9 +52,7 @@ var CodeBlock = React.createClass({
                 ajax: true,
                 callback: function(response){
                     if(response.status !== 200) return;
-                    console.log(hljs.listLanguages())
                     var highlighted = hljs.highlight('js', _this.props.children, true);
-                    console.log(highlighted)
                     container.innerHTML = highlighted.value
                     container.setAttribute('data-lang', highlighted.language)
                 }

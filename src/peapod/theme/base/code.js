@@ -12,7 +12,7 @@ main.addSelector({
 	common: {
         backgroundColor: '$palette.blue50',
         color: '$palette.blue700',
-        padding: '2px',
+        padding: '1px 2px',
         fontSize: '85%',
 		fontFamily: '$font.family.code'
 	}
