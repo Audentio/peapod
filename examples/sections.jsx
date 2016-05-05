@@ -7,7 +7,7 @@ import Code from 'components/code'
 
 var comps = ['hero']
 
-var singleTest = true;
+var singleTest = false;
 
 
 // import sections
@@ -70,16 +70,19 @@ var elements = (!singleTest) ? (
         <AlertsSection />
         <ProgressSection />
     </div>
-) : '';
+) : (
+    <div>
+        <DamionDev />
+        <KylerDev />
+        <TusharDev />
+    </div>
+);
 
 class Sections extends React.Component {
     render () {
         return (
             <div>
                 {elements}
-                <DamionDev />
-                <KylerDev />
-                <TusharDev />
 
                 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
