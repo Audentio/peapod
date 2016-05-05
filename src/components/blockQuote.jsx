@@ -4,7 +4,6 @@
 * LICENSE: <%= package.licence %>
 */
 
-
 //Dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -13,7 +12,7 @@ var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 /**
-* Blockquote component
+* BlockQuote component
 * @element Code
 */
 class BlockQuote extends React.Component {

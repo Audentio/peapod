@@ -5,7 +5,6 @@ var sheet = new Sheet('blockQuote'),
 
 //Conditions
 
-
 //Variables
 sheet.setValues({});
 
