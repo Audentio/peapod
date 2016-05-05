@@ -4,7 +4,6 @@
   "description": "UI Kit from Audentio Design.",
   "main": "index.js",
   "scripts": {
-    "examples": "webpack",
     "examples-dev": "node devServer.js",
     "doc": "node docServer.js",
     "lint": "eslint src",
@@ -13,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:audentiodesign/peapod.git"
+    "url": "git@github.com:Audentio/peapod.git"
   },
   "author": "Audentio Design, LLC",
   "license": "ISC",
@@ -21,30 +20,15 @@
     "babel-core": "^6.1.0",
     "babel-eslint": "^6.0.0",
     "babel-loader": "^6.1.0",
-    "babel-plugin-react-display-name": "^2.0.0",
-    "babel-plugin-react-transform": "^2.0.0",
-    "babel-plugin-transform-runtime": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-es2016": "^6.0.11",
     "babel-preset-es2017": "^1.3.1",
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.0.1",
     "babel-preset-stage-0": "^6.3.13",
-    "del": "^2.2.0",
     "eslint": "^2.8.0",
     "eslint-plugin-react": "^5.0.0",
-    "expose-loader": "^0.7.0",
-    "express": "^4.13.3",
-    "highlight.js": "^9.3.0",
-    "jshint-stylish": "^2.1.0",
-    "json-loader": "^0.5.3",
-    "open": "0.0.5",
-    "react-display-name": "0.1.1",
     "react-hot-loader": "^1.3.0",
-    "react-transform-catch-errors": "^1.0.0",
-    "react-transform-hmr": "^1.0.0",
-    "redbox-react": "^1.0.1",
-    "require-dir": "^0.3.0",
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.14.0",
@@ -54,10 +38,12 @@
     "color": "^0.11.0",
     "lodash": "^4.11.0",
     "moment": "^2.10.6",
+    "moment-timezone": "^0.5.4",
     "radium": "^0.15.3",
     "react": "^15.0.1",
     "react-dom": "^15.0.0",
     "react-passthrough": "^0.1.0",
-    "remarkable": "^1.6.2"
+    "remarkable": "^1.6.2",
+	"highlight.js": "^9.3.0"
   }
 }

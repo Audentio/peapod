@@ -54,6 +54,10 @@ button {
 	margin-right: 8px;
 	/*margin-bottom: 5px;*/
 }
+
+.clear {
+	clear: both;
+}
 /*
 h1 {
 	font-size: 16px;
