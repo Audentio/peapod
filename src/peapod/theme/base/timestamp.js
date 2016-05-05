@@ -8,4 +8,11 @@ var sheet = new Sheet,
 //Variables
 sheet.setValues({});
 
+main.addSelector({
+	common: {
+		cursor: 'default',
+		color: 'red'
+	}
+})
+
 module.exports = sheet;
