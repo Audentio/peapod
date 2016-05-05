@@ -19,7 +19,8 @@ class Lazy extends React.Component {
 
     defaultProps = {
         visible: false,
-        distance: 100
+        distance: 100,
+        placeholder: false
     }
 
     componentDidMount() {
@@ -58,7 +59,8 @@ class Lazy extends React.Component {
     render() {
         var style = Pod_Styler.getStyle(this);
 
-        var children = (this.state.visible) ? this.props.children : '';
+        var placeholder = (this.props.placeholder) ? this.props.placeholder : '';
+        var children = (this.state.visible) ? this.props.children : placeholder;
 
         return (
             <div style={style.main} ref='LazyElement'>
