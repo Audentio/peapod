@@ -4,6 +4,12 @@ import Paragraph from 'components/paragraph'
 import Strong from 'components/strong'
 import Code from 'components/code'
 
+
+var comps = ['hero']
+
+var singleTest = true;
+
+
 // import sections
 import HeroSection from './sectionComponents/hero.jsx'
 import MediaSection from './sectionComponents/media.jsx'
@@ -37,35 +43,40 @@ import TusharDev from './developmentComponents/tusharDev.jsx'
 
 // FixedSection
 
-class Sections extends React.Component{
+var elements = (!singleTest) ? (
+    <div>
+        <HeroSection />
+        <MediaSection />
+        <TypographySection />
+        <FromsSection />
+        <ScrollableSection />
+        <EmbedSection />
+        <DeviceSection />
+        <BreadcrumbSection />
+        <BlockquoteSection />
+        <ChipsSection />
+        <FixedSection />
+        <PhotosSection />
+        <MenusSection />
+        <GridSection />
+        <ModalsSection />
+        <CardsSection />
+        <ListsSection />
+        <ButtonsSection />
+        <IconsSection />
+        <MicroSection />
+        <LabelSection />
+        <TabsSection />
+        <AlertsSection />
+        <ProgressSection />
+    </div>
+) : '';
+
+class Sections extends React.Component {
     render () {
         return (
             <div>
-                <HeroSection />
-                <MediaSection />
-                <TypographySection />
-                <FromsSection />
-                <ScrollableSection />
-                <EmbedSection />
-                <DeviceSection />
-                <BreadcrumbSection />
-                <BlockquoteSection />
-                <ChipsSection />
-                <FixedSection />
-                <PhotosSection />
-                <MenusSection />
-                <GridSection />
-                <ModalsSection />
-                <CardsSection />
-                <ListsSection />
-                <ButtonsSection />
-                <IconsSection />
-                <MicroSection />
-                <LabelSection />
-                <TabsSection />
-                <AlertsSection />
-                <ProgressSection />
-
+                {elements}
                 <DamionDev />
                 <KylerDev />
                 <TusharDev />
