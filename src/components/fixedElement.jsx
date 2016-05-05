@@ -39,6 +39,10 @@ class FixedElement extends React.Component {
         })
 
         document.addEventListener("scroll", () => {
+            var element = this.fixedElem
+            var elemRect = element.getBoundingClientRect()
+
+            this.origionalPosition = elemRect.top  + window.scrollY
             var doc = document.documentElement;
             var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 
@@ -58,7 +62,8 @@ class FixedElement extends React.Component {
         style.main['position'] = this.state.position
 
         var fixedStyle = {
-            height: this.state.origionalHeight
+            height: this.state.origionalHeight,
+            // transform: 'translate3d(0, 0, 0)'
         }
 
         if (this.props.onScroll) {

@@ -279,15 +279,15 @@ var Photo = React.createClass({
 						</div>
 
 						<div style={style.lightboxActions}>
-							<Icon style={style.lightboxAction} onClick={this.hideLightbox}>close</Icon>
+							<Icon styler={{style: style.lightboxAction}} onClick={this.hideLightbox}>close</Icon>
 							{	Pod_helper.fullscreen.isAvailable() &&
-								<Icon style={style.lightboxAction} onClick={this.toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
+								<Icon styler={{style: style.lightboxAction}} onClick={this.toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
 							}
 
 							{	this.props.allowDownload &&
-								<Icon onClick={this.downloadFile} style={style.lightboxAction}>file_download</Icon> }
+								<Icon onClick={this.downloadFile} styler={{style: style.lightboxAction}}>file_download</Icon> }
 
-							<Icon onClick={this.openInNew} style={style.lightboxAction}>open_in_new</Icon>
+							<Icon onClick={this.openInNew} styler={{style: style.lightboxAction}}>open_in_new</Icon>
 
 						</div>
 					</div>

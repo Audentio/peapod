@@ -7,14 +7,20 @@ var sheet = new Sheet('section'),
 
 //Variables
 sheet.setValues({
-    width: '$site.maxWidth'
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: '$palette.grey200',
+    padding: '$gutter.large'
 });
 
 
 main.addSelector({
     common: {
-        maxWidth: '$section.width',
-        margin: '0 auto'
+        borderBottomWidth: '$section.borderWidth',
+        borderBottomStyle: '$section.borderStyle',
+        borderBottomColor: '$section.borderColor',
+        paddingTop: '$section.padding',
+        paddingBottom: '$section.padding'
     }
 })
 

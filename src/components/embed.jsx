@@ -13,22 +13,26 @@ var Pod_Styler = require('../styler.js');
 var Wrapper = require('../wrapper.jsx')
 
 /**
-* BlockRight component
+* Embed component
 * @element Code
 */
-class BlockRight extends React.Component {
+class Embed extends React.Component {
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        this.style = Pod_Styler.getStyle(this);
 
         return (
-            <Pod.block {...this.props} align="right">
-                {this.props.children}
-            </Pod.block>
+            <iframe
+                style={this.style.main}
+                src={this.props.src}
+                frameborder="0"
+                allowfullscreen
+            >
+            </iframe>
         );
 
     }
 
 };
 
-module.exports = Wrapper(BlockRight);
+module.exports = Wrapper(Embed);

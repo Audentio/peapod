@@ -93,7 +93,7 @@ track.addSelector({
 var mask_circle = {
 	width: '1em',
 	height: '1em',
-	transition: 'transform .3s linear',
+	transition: 'transform .2s linear',
 	backfaceVisibility: 'hidden',
 	position: 'absolute'
 }
