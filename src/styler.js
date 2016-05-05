@@ -340,10 +340,6 @@ window.Pod_Styler = window.Pod_Styler || {
 	getStyle: function(instance, localStyler = {}) {
 		var obj = Pod_Styler.makeInstanceObj(instance, localStyler);
 
-		if (typeof(localStyler) == 'string') {
-			console.error("Using old `Pod_Styler.getStyle` syntax in " + obj.componentName);
-		}
-
 		if (Pod_Styler.enableCache) {
 			var cacheVal = this.getStyleFromCache(obj, obj.componentName || "_");
 			if (cacheVal !== false) {
