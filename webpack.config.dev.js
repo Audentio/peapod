@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
 	devtool: 'eval',
 	entry: [
-		'webpack-dev-server/client?http://localhost:3000',
+		'webpack-dev-server/client?http://localhost:3002',
 		'webpack/hot/only-dev-server',
 		'./examples/examples.jsx'
 	],
@@ -32,6 +32,7 @@ module.exports = {
 	],
 
 	module: {
+		noParse: [/highlight\.js\/lib\/languages/], //highlightjs fix
 
 		preLoaders: [{
 			test: /\.json$/,
