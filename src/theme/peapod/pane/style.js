@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet('timestamp'),
+var sheet = new Sheet('pane'),
 	main = sheet.addMain();
 
 //Conditions
@@ -10,8 +10,8 @@ sheet.setValues({});
 
 main.addSelector({
 	common: {
-		cursor: 'default',
-		color: 'red'
+		display: 'block',
+		width: '100%'
 	}
 })
 

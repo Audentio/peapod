@@ -32,6 +32,7 @@ module.exports = {
 	],
 
 	module: {
+		noParse: [/highlight\.js\/lib\/languages/], //highlightjs fix
 
 		preLoaders: [{
 			test: /\.json$/,

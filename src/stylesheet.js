@@ -1,4 +1,4 @@
-import {merge as lodashMerge} from "lodash";
+import {merge as _Merge, clone as _Clone} from "lodash";
 import Pod_Vars from './vars.js';
 var React = require('react');
 
@@ -85,7 +85,7 @@ class Part {
 				if (styling == null) {
 					styling = selectorStyling;
 				} else if (selectorStyling !== null) {
-					styling = lodashMerge({}, styling, selectorStyling);
+					styling = _Merge({}, styling, selectorStyling);
 				}
 			}
 		}
@@ -287,16 +287,16 @@ class Selector {
 	}
 
 	// Gets the styling for a specified scene merged with the common scene
-	getStyling(scene) {
+	getStyling(instance, scene, conditions) {
 		if (typeof(this.scenes.common) !== 'undefined') {
 			if (typeof(this.scenes[scene]) !== 'undefined') {
-				return lodashMerge({}, this.scenes.common.getStyle(), this.scenes[scene].getStyle());
+				return _Merge({}, this.scenes.common.getStyle(instance), this.scenes[scene].getStyle(instance));
 			} else {
-				return this.scenes.common.getStyle();
+				return this.scenes.common.getStyle(instance);
 			}
 		} else {
 			if (typeof(this.scenes[scene]) !== 'undefined') {
-				return this.scenes[scene].getStyle();
+				return this.scenes[scene].getStyle(instance);
 			} else {
 				return null;
 			}
@@ -304,11 +304,7 @@ class Selector {
 	}
 
 	getSelector(instance, scene, conditions) {
-		let applies = this.checkConditions(instance, conditions);
-		if (applies) {
-			return this.getStyling(scene);
-		}
-		return null;
+		return this.getStyling(instance, scene, conditions);
 	}
 }
 
@@ -432,7 +428,12 @@ class Style {
 						var splitStyle = this.splitStyle(styles[key]),
 							splitStyleLen = splitStyle.length;
 
-						styles = this.transformKeys(styles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
+						if (splitStyleLen == 1) {
+							styles['transitionDuration'] = splitStyle[0];
+							delete styles['transition'];
+						} else {
+							styles = this.transformKeys(styles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
+						}
 					} else if (key == 'listStyle') {
 						var splitStyle = this.splitStyle(styles[key]),
 							splitStyleLen = splitStyle.length;
@@ -450,8 +451,44 @@ class Style {
 		return styles;
 	}
 
-	getStyle() {
-		return this.style;
+	getStyle(instance) {
+		var style = _Clone(this.style);
+
+		if (typeof(style) == 'object') {
+			let keys = Object.keys(style);
+			for (let keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
+				let key = keys[keyIndex];
+				if (key.indexOf('@media') == 0) {
+
+					let keySize = key.split(' ').join('').replace('@media(', '').replace('px)', '').split(':');
+					if (keySize.length == 2) {
+						let paneWidth = instance.context._podPaneWidth,
+							queryType = keySize[0],
+							queryValue = keySize[1];
+						if (typeof(paneWidth) == "number") {
+							if (queryType == 'minWidth') {
+								if (paneWidth >= queryValue) {
+									style = _Merge({}, style, style[key]);
+								}
+								delete style[key]
+							} else if (queryType == 'maxWidth') {
+								if (paneWidth < queryValue) {
+									style = _Merge({}, style, style[key]);
+								}
+								delete style[key]
+							} else {
+								throw "Unsupported value for media query";
+							}
+						}
+
+					} else {
+						throw "Invalid media query";
+					}
+				}
+			}
+		}
+
+		return style;
 	}
 }
 
