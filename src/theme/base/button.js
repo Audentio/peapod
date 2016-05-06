@@ -28,8 +28,8 @@ sheet.setValues({
 			dark: '$color.text.dark'
 		},
 		base: {
-			background: 'transparent',
-			color: '$color.primary.base',
+			background: '$color.primary.base',
+			color: '$color.text.white',
 			hover: '$color.primary.hover',
 			active: '$color.primary.active'
 		}
@@ -59,9 +59,9 @@ main.addSelector({
 	common: {
 		display: 'inline-block',
 		borderRadius: '$button.border.radius',
-		borderWidth: '$button.border.width',
-		borderStyle: '$button.border.style',
-		borderColor: '$button.border.color',
+		border: 'none',
+		// borderStyle: '$button.border.style',
+		// borderColor: '$button.border.color',
 
 		textDecoration: 'none',
 		textTransform: 'uppercase',
@@ -88,7 +88,9 @@ main.addSelector({
 		paddingBottom: '0px',
 		paddingLeft: '4px',
 		paddingRight: '4px',
-		color: '$button.color.base.color'
+		color: '$button.color.base.background',
+		background: 'transparent',
+		fontSize: '$font.size.headline'
 	}
 })
 .addSelector({
@@ -127,8 +129,8 @@ main.addSelector({
 .addSelector({
 	condition: ['kindGeneral'],
 	common: {
-		backgroundColor: '$color.general.base',
-		color: '$palette.white',
+		backgroundColor: 'transparent',
+		color: '$color.general.base',
 		borderColor: '$palette.grey200',
 		borderWidth: '$border.width'
 	}

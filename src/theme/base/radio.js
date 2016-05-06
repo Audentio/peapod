@@ -45,6 +45,40 @@ sheet.setValues({
 	}
 }, 'dark');
 
+main.addSelector({})
+
+radio_outer.addSelector({
+    common:{
+        width: '$radio.width',
+        height: '$radio.height',
+        background:'transparent',
+        border: '2px solid #ddd',
+        display: 'inline-block',
+        marginRight: '$gutter.extrasmall',
+        borderRadius: '50%',
+        position: 'relative'
+    }
+});
+radio_inner.addSelector({
+    condition: ['checked'],
+    common: {
+        width: '$radio.width',
+        height: '$radio.height',
+        display: 'inline-block',
+        borderRadius: '50%',
+        border: '2px solid #ddd',
+        background: '#ddd',
+        boxShadow: 'inset 0 0 0 2px #fff',
+        position: 'absolute',
+        top: '-2px', left: '-2px'
+    }
+});
+radio_element.addSelector({
+    common: {
+        display: 'none'
+    }
+});
+
 label.addSelector({
     condition: ['checked'],
     common: {
