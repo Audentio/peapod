@@ -7,9 +7,6 @@ import Code from 'components/code'
 
 var comps = ['hero']
 
-var singleTest = true;
-
-
 // import sections
 import HeroSection from './sectionComponents/hero.jsx'
 import MediaSection from './sectionComponents/media.jsx'
@@ -36,53 +33,34 @@ import AlertsSection from './sectionComponents/alerts.jsx'
 import ScrollableSection from './sectionComponents/scrollable.jsx'
 import ProgressSection from './sectionComponents/progress.jsx'
 
-// import dev sections
-import DamionDev from './developmentComponents/damionDev.jsx'
-import KylerDev from './developmentComponents/kylerDev.jsx'
-import TusharDev from './developmentComponents/tusharDev.jsx'
-
-// FixedSection
-
-var elements = (!singleTest) ? (
-    <div>
-        <HeroSection />
-        <MediaSection />
-        <TypographySection />
-        <FromsSection />
-        <ScrollableSection />
-        <EmbedSection />
-        <DeviceSection />
-        <BreadcrumbSection />
-        <BlockquoteSection />
-        <ChipsSection />
-        <FixedSection />
-        <PhotosSection />
-        <MenusSection />
-        <GridSection />
-        <ModalsSection />
-        <CardsSection />
-        <ListsSection />
-        <ButtonsSection />
-        <IconsSection />
-        <MicroSection />
-        <LabelSection />
-        <TabsSection />
-        <AlertsSection />
-        <ProgressSection />
-    </div>
-) : (
-    <div>
-        <DamionDev />
-        <KylerDev />
-        <TusharDev />
-    </div>
-);
-
 class Sections extends React.Component {
     render () {
         return (
             <div>
-                {elements}
+                <HeroSection />
+                <MediaSection />
+                <TypographySection />
+                <FromsSection />
+                <ScrollableSection />
+                <EmbedSection />
+                <DeviceSection />
+                <BreadcrumbSection />
+                <BlockquoteSection />
+                <ChipsSection />
+                <FixedSection />
+                <PhotosSection />
+                <MenusSection />
+                <GridSection />
+                <ModalsSection />
+                <CardsSection />
+                <ListsSection />
+                <ButtonsSection />
+                <IconsSection />
+                <MicroSection />
+                <LabelSection />
+                <TabsSection />
+                <AlertsSection />
+                <ProgressSection />
 
                 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
