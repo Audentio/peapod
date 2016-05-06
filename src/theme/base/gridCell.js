@@ -5,6 +5,12 @@ import {Sheet} from '../../stylesheet.js';
 var sheet = new Sheet('gridCell'),
 	main = sheet.addMain();
 
+main.addSelector({
+	common: {
+		width: '100%'
+	}
+})
+
 sheet.addCondition('orderSet').addStyler({order: ['!=', undefined]});
 main.addSelector({
 	condition: ['orderSet'],

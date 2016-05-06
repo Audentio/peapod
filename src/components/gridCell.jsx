@@ -11,6 +11,10 @@ var Wrapper = require('../wrapper.jsx')
 
 
 var GridCell = React.createClass({
+	contextTypes: {
+		_podPaneWidth: React.PropTypes.number
+	},
+
 	render: function() {
 		var style = Pod_Styler.getStyle(this);
 		return (
