@@ -1,4 +1,4 @@
-import {merge as lodashMerge} from "lodash";
+import {merge as _Merge, clone as _Clone} from "lodash";
 import Pod_Vars from './vars.js';
 var React = require('react');
 
@@ -85,7 +85,7 @@ class Part {
 				if (styling == null) {
 					styling = selectorStyling;
 				} else if (selectorStyling !== null) {
-					styling = lodashMerge({}, styling, selectorStyling);
+					styling = _Merge({}, styling, selectorStyling);
 				}
 			}
 		}
@@ -290,7 +290,7 @@ class Selector {
 	getStyling(instance, scene, conditions) {
 		if (typeof(this.scenes.common) !== 'undefined') {
 			if (typeof(this.scenes[scene]) !== 'undefined') {
-				return lodashMerge({}, this.scenes.common.getStyle(instance), this.scenes[scene].getStyle(instance));
+				return _Merge({}, this.scenes.common.getStyle(instance), this.scenes[scene].getStyle(instance));
 			} else {
 				return this.scenes.common.getStyle(instance);
 			}
@@ -452,13 +452,14 @@ class Style {
 	}
 
 	getStyle(instance) {
-		var style = this.style;
+		var style = _Clone(this.style);
 
 		if (typeof(style) == 'object') {
 			let keys = Object.keys(style);
 			for (let keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
 				let key = keys[keyIndex];
 				if (key.indexOf('@media') == 0) {
+
 					let keySize = key.split(' ').join('').replace('@media(', '').replace('px)', '').split(':');
 					if (keySize.length == 2) {
 						let paneWidth = instance.context._podPaneWidth,
@@ -467,12 +468,12 @@ class Style {
 						if (typeof(paneWidth) == "number") {
 							if (queryType == 'minWidth') {
 								if (paneWidth >= queryValue) {
-									style = lodashMerge({}, style, style[key]);
+									style = _Merge({}, style, style[key]);
 								}
 								delete style[key]
 							} else if (queryType == 'maxWidth') {
 								if (paneWidth < queryValue) {
-									style = lodashMerge({}, style, style[key]);
+									style = _Merge({}, style, style[key]);
 								}
 								delete style[key]
 							} else {

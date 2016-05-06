@@ -40,7 +40,11 @@ var Pane = React.createClass({
 
 	widthCheck() {
 		var element = this.refs.pane
-		var width = element.offsetWidth;
+		if (typeof(element) !== 'undefined') {
+			var width = element.offsetWidth;
+		} else {
+			var width = -1;
+		}
 
 		if (width != this.state._podPaneWidth){
 			this.setState({_podPaneWidth: width});
