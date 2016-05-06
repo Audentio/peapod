@@ -15,41 +15,35 @@ var Wrapper = require('../wrapper.jsx')
 
 
 var Pane = React.createClass({
-	contextTypes: {
-		width: React.PropTypes.number
+	childContextTypes: {
+		_podPaneWidth: React.PropTypes.number
 	},
 
 	getInitialState() {
 		return {
-			width: -1
+			_podPaneWidth: -1
 		}
 	},
 
 	getChildContext() {
 		return {
-			width: this.state.width
+			_podPaneWidth: this.state._podPaneWidth
 		}
 	},
 
 	componentDidMount() {
-
 		//initial check
 		this.widthCheck();
-
-		// bind this to width check always
-		this.widthCheck = this.widthCheck.bind(this)
-
 		//start listening for viewport events
 		window.addEventListener('resize', this.widthCheck)
-
 	},
 
 	widthCheck() {
 		var element = this.refs.pane
 		var width = element.offsetWidth;
 
-		if (width != this.state.width){
-			this.setState({width: width});
+		if (width != this.state._podPaneWidth){
+			this.setState({_podPaneWidth: width});
 		}
 	},
 
@@ -65,4 +59,5 @@ var Pane = React.createClass({
 	}
 });
 
-module.exports = Wrapper(Pane);
+//module.exports = Wrapper(Pane);
+module.exports = Pane;

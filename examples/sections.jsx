@@ -88,25 +88,27 @@ sections.push(
 
 sections.push(
     <Pod.section key={'grid'}>
-        <Pod.contentWrap>
-            <Pod.heading>Grid Example(Responsive)</Pod.heading>
-            <Pod.grid>
-                <Pod.gridCell styler={{sm:12, md:6, lg: 3}}>
-                    <Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-                </Pod.gridCell>
+		<Pod.pane styler={{style: {maxWidth: '1000px'}}}>
+	        <Pod.contentWrap>
+	            <Pod.heading>Grid Example(Responsive)</Pod.heading>
+	            <Pod.grid>
+	                <Pod.gridCell styler={{sm:12, md:6, lg: 3}}>
+	                    <Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+	                </Pod.gridCell>
 
-                <Pod.gridCell styler={{sm:12, md:6, lg: 3}}>
-                    <Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-                </Pod.gridCell>
-                <Pod.gridCell styler={{sm:12, md:6, lg: 3}}>
-                    <Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-                </Pod.gridCell>
+	                <Pod.gridCell styler={{sm:12, md:6, lg: 3}}>
+	                    <Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+	                </Pod.gridCell>
+	                <Pod.gridCell styler={{sm:12, md:6, lg: 3}}>
+	                    <Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+	                </Pod.gridCell>
 
-                <Pod.gridCell styler={{sm:12, md:6, lg: 3}}>
-                    <Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-                </Pod.gridCell>
-            </Pod.grid>
-        </Pod.contentWrap>
+	                <Pod.gridCell styler={{sm:12, md:6, lg: 3}}>
+	                    <Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+	                </Pod.gridCell>
+	            </Pod.grid>
+	        </Pod.contentWrap>
+		</Pod.pane>
     </Pod.section>
 )
 
@@ -1181,14 +1183,16 @@ sections.push(
 var Sections = React.createClass({
     render(){
         return(
-            <div>
-                {sections}
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        		<Pod.photo src="mrRobot.jpg" lazy={true} caption="Lazy load!" hidpiData={false} />
-            </div>
+			 <Pod.pane>
+	            <div>
+	                {sections}
+	                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	        		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	        		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	        		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	        		<Pod.photo src="mrRobot.jpg" lazy={true} caption="Lazy load!" hidpiData={false} />
+	            </div>
+			</Pod.pane>
         )
     }
 })
