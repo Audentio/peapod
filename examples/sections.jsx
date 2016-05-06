@@ -7,7 +7,7 @@ import Code from 'components/code'
 
 var comps = ['hero']
 
-var singleTest = false;
+var singleTest = true;
 
 
 // import sections
