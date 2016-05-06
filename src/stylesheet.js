@@ -430,7 +430,7 @@ class Style {
 
 						if (splitStyleLen == 1) {
 							styles['transitionDuration'] = splitStyle[0];
-							delete styles['background'];
+							delete styles['transition'];
 						} else {
 							styles = this.transformKeys(styles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
 						}
