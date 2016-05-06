@@ -59,5 +59,4 @@ var Pane = React.createClass({
 	}
 });
 
-//module.exports = Wrapper(Pane);
-module.exports = Pane;
+module.exports = Wrapper(Pane);
