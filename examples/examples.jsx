@@ -6,8 +6,8 @@ import _ from 'lodash'
 
 import Sections from './sections.jsx'
 import DamionDev from './developmentComponents/damionDev.jsx'
-import KylerDev from './developmentComponents/damionDev.jsx'
-import TusharDev from './developmentComponents/damionDev.jsx'
+import KylerDev from './developmentComponents/kylerDev.jsx'
+import TusharDev from './developmentComponents/tusharDev.jsx'
 
 
 render((
