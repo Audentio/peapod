@@ -58,9 +58,7 @@ export default class DeviceSection extends React.Component {
                     </Pod.device>
 
                     <Pod.device device='iphone' variant="black" version="6" styler={{style: {display: 'inline-block'}}}>
-                        <Pod.lazy distance="50" height="100%">
                             <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
-                        </Pod.lazy>
                     </Pod.device>
 
                     <Pod.device device='iphone' variant="black" version="6" styler={{scrollable: true, style: {display: 'inline-block'}}}>
