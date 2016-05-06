@@ -17,7 +17,7 @@ import {merge as _merge} from 'lodash'
 * @element Pod_liveTimestamp
 * @property {(string|integer|Object)} time - Date() / UNIX time / ISO 8601
 */
-var Pod_liveTimestamp = React.createClass({
+var Timestamp = React.createClass({
 
 	getDefaultProps: function(){
 		return {
@@ -121,4 +121,4 @@ var Pod_liveTimestamp = React.createClass({
 	}
 });
 
-module.exports = Wrapper(Pod_liveTimestamp);
+module.exports = Wrapper(Timestamp);
