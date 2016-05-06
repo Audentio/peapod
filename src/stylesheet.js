@@ -428,7 +428,12 @@ class Style {
 						var splitStyle = this.splitStyle(styles[key]),
 							splitStyleLen = splitStyle.length;
 
-						styles = this.transformKeys(styles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
+						if (splitStyleLen == 1) {
+							styles['transitionDuration'] = splitStyle[0];
+							delete styles['background'];
+						} else {
+							styles = this.transformKeys(styles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
+						}
 					} else if (key == 'listStyle') {
 						var splitStyle = this.splitStyle(styles[key]),
 							splitStyleLen = splitStyle.length;
