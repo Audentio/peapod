@@ -60,7 +60,7 @@ var Timestamp = React.createClass({
 			outputTimezone: moment.tz.guess(), //user timezone
 			showTime: true,
 			showDate: true,
-			showTimezone: true
+			showTimezone: false
 		}
 	},
 
