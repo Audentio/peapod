@@ -104,7 +104,7 @@ var Timestamp = React.createClass({
 
 		//Use format prop if passed
 		if(this.props.format)
-			return timestamp.format(format)
+			return timestamp.format(this.props.format)
 
 
 		//create format from showTime & showDate props

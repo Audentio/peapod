@@ -26,10 +26,6 @@ export default class MicroSection extends React.Component {
                         RFC 2822 (deprecated) <Code>Thu, 21 Dec 2000 16:01:07 +0200</Code><br />
                     </Paragraph>
 
-                        <Code>output=relative</Code> <Pod.timestamp time={1462567683} timezone="UTC"/> <br />
-                        <Code>output=relative</Code> <Pod.timestamp time={1462567683} timezone="Asia/Kolkata" /> <br />
-                        <Code>output=relative</Code> <Pod.timestamp time={1462567683} timezone="America/Chicago" /> <br />
-
                     <Strong>Output</Strong>
                     <Paragraph>
                         <Code>output=relative</Code> <Pod.timestamp time={1455670800} output="relative" /> <br />
@@ -45,12 +41,12 @@ export default class MicroSection extends React.Component {
                     <Paragraph>
                         Same dateTime used for all examples (<Code>2016-05-04T12:00:00Z</Code>). UTC is default for input, client timezone is default for output<br /><br />
 
-                        <Code>just time passed</Code> <Pod.timestamp time={tzTestTime} /> <br />
+                        <Code>just time passed</Code> <Pod.timestamp showTimezone={true} time={tzTestTime} /> <br />
                         <Code>showTimezone=false</Code> <Pod.timestamp time={tzTestTime} showTimezone={false} /> <br />
-                        <Code>timezone=America/Chicago</Code> <Pod.timestamp time={tzTestTime} timezone="America/Chicago" /> <br />
-                        <Code>timezone=America/New_York</Code> <Pod.timestamp time={tzTestTime} timezone="America/New_York" /> <br />
-                        <Code>outputTimezone=America/Chicago</Code> <Pod.timestamp time={tzTestTime} outputTimezone="America/Chicago" /> <br />
-                        <Code>outputTimezone=America/New_York</Code> <Pod.timestamp time={tzTestTime} outputTimezone="America/New_York" /> <br />
+                        <Code>timezone=America/Chicago</Code> <Pod.timestamp showTimezone={true} time={tzTestTime} timezone="America/Chicago" /> <br />
+                        <Code>timezone=America/New_York</Code> <Pod.timestamp showTimezone={true} time={tzTestTime} timezone="America/New_York" /> <br />
+                        <Code>outputTimezone=America/Chicago</Code> <Pod.timestamp showTimezone={true} time={tzTestTime} outputTimezone="America/Chicago" /> <br />
+                        <Code>outputTimezone=America/New_York</Code> <Pod.timestamp showTimezone={true} time={tzTestTime} outputTimezone="America/New_York" /> <br />
                         <Code>timezone=Asia/Kolkata, outputTimezone=America/Chicago</Code> <Pod.timestamp time={tzTestTime} timezone="Asia/Kolkata" outputTimezone="America/Chicago" /> <br />
                     </Paragraph>
 
