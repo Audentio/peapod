@@ -110,6 +110,11 @@ innerscreen.addSelector({
     }
 });
 scrollable.addSelector({
+    common: {
+        width: '100%',
+        height: '100%'
+    }
+}).addSelector({
     condition: ['scrollable'],
     common: {
         overflowX: 'hidden',
