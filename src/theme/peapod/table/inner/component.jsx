@@ -14,10 +14,10 @@
 import {isFunction as _isFunction} from 'lodash'
 
 
-var TableRow = require('./tableRow.jsx'); // TODO FIX THIS
-var TableCell = require('./tableCell.jsx'); // TODO FIX THIS
+import {Table_Row, Table_Header} from 'components.js';
 
-var TableInner = React.createClass({
+
+var Table_Inner = React.createClass({
 	propTypes: {
 		columnNames: React.PropTypes.oneOfType([
             React.PropTypes.object,
@@ -49,11 +49,11 @@ var TableInner = React.createClass({
 		return (
 			<div style={{overflowX: 'auto'}}>
 				<div style={style.main}>
-					{isFunction(columnNames) ? columnNames(columns) : <TableHeader config={columnNames} columns={columns} />}
+					{isFunction(columnNames) ? columnNames(columns) : <Table_Header config={columnNames} columns={columns} />}
 					{
 						data.map(function(row, i) {
 							return (
-								<TableRow key={(row[rowKey] || i) + '-row'}
+								<Table_Row key={(row[rowKey] || i) + '-row'}
 									row={row}
 									rowKey={rowKey}
 									i={i}
@@ -72,4 +72,4 @@ var TableInner = React.createClass({
 	}
 })
 
-module.exports = Wrapper(TableInner);
+module.exports = Wrapper(Table_Inner);

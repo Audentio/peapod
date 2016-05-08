@@ -8,7 +8,7 @@
  import Wrapper from 'wrapper.jsx';
 
 
-var TableControl = React.createClass({
+var Table_Control = React.createClass({
 	render: function() {
 		var style = Pod_Styler.getStyle(this);
 
@@ -20,4 +20,4 @@ var TableControl = React.createClass({
 	}
 })
 
-module.exports = Wrapper(TableControl);
+module.exports = Wrapper(Table_Control);

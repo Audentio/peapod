@@ -1,6 +1,6 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('tablePreset'),
+var sheet = new Sheet('table_Preset'),
 	main = sheet.addMain();
 
 //Conditions

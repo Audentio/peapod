@@ -10,13 +10,11 @@
 
 //var lodash = require('lodash')
 //var reduce = lodash.reduce;
-import {reduce} as _reduce from 'lodash'
+import {reduce as _reduce} from 'lodash'
 
-var TableCell = require('./tableCell.jsx'); // TODO FIX THIS
+import {Icon, Table_Cell} from 'components.js';
 
-var Icon = require('./icon.jsx') // TODO FIX THIS
-
-var TableHeader = React.createClass({
+var Table_Header = React.createClass({
 	propTypes: {
 		config: React.PropTypes.object,
 		columns: React.PropTypes.array
@@ -25,7 +23,7 @@ var TableHeader = React.createClass({
 	render: function() {
 		var style = Pod_Styler.getStyle({props: {
 			styler: {
-				styleLike: 'TableInner',
+				styleLike: 'Table_Inner',
 				header: true
 			}
 		}});
@@ -51,9 +49,9 @@ var TableHeader = React.createClass({
 					}
 
 					return (
-						<TableCell key={i + '-header'} column={column} header={true} {...columnHeader}>
+						<Table_Cell key={i + '-header'} column={column} header={true} {...columnHeader}>
 							{column.header}{column.sort == 'desc' ? <Icon styler={arrowStyler}>arrow_drop_down</Icon> : ''}{column.sort == 'asc' ? <Icon styler={arrowStyler}>arrow_drop_up</Icon> : ''}
-						</TableCell>
+						</Table_Cell>
 					)
 				})
 			}
@@ -62,4 +60,4 @@ var TableHeader = React.createClass({
 	}
 })
 
-module.exports = Wrapper(TableHeader);
+module.exports = Wrapper(Table_Header);

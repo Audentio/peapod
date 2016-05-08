@@ -1,4 +1,4 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
 var sheet = new Sheet('scrollable'),
 	main = sheet.addMain();

@@ -14,7 +14,7 @@ import Wrapper from 'wrapper.jsx';
 * BlockRight component
 * @element Code
 */
-class BlockRight extends React.Component {
+class Block_Right extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -29,4 +29,4 @@ class BlockRight extends React.Component {
 
 };
 
-module.exports = Wrapper(BlockRight);
+module.exports = Wrapper(Block_Right);

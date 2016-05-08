@@ -1,6 +1,6 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('tableControl'),
+var sheet = new Sheet('table_Control'),
 	main = sheet.addMain();
 
 //Conditions

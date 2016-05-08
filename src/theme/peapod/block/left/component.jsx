@@ -11,10 +11,10 @@ import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
 
 /**
-* BlockLeft component
+* Block_Left component
 * @element Code
 */
-class BlockLeft extends React.Component {
+class Block_Left extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -29,4 +29,4 @@ class BlockLeft extends React.Component {
 
 };
 
-module.exports = Wrapper(BlockLeft);
+module.exports = Wrapper(Block_Left);

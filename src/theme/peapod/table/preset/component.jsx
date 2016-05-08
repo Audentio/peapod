@@ -8,8 +8,8 @@
  import Wrapper from 'wrapper.jsx';
 
 
-var Button = require('./button.jsx'); // TODO FIX THIS
-var Portal = require('./portal.jsx'); // TODO FIX THIS
+ import {Portal, Button} from 'components.js';
+
 
 var topButtonStyle = {
 	display: 'inline-block',
@@ -21,7 +21,7 @@ var topButtonStyle = {
 	margin: '$gutter.internal'
 }
 
-var TablePreset = React.createClass({
+var Table_Preset = React.createClass({
 	getInitialState: function() {
 		return {
 			presets: this.props.presets
@@ -131,4 +131,4 @@ var TablePreset = React.createClass({
 	}
 })
 
-module.exports = Wrapper(TablePreset);
+module.exports = Wrapper(Table_Preset);

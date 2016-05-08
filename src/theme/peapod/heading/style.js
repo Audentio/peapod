@@ -1,4 +1,4 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
 var sheet = new Sheet('heading'),
     h1 = sheet.addPart('h1'),

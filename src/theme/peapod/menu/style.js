@@ -1,4 +1,4 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
 var sheet = new Sheet('menu'),
     main = sheet.addMain(),

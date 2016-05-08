@@ -7,7 +7,7 @@
  import Pod_Styler from 'styler.js';
  import Wrapper from 'wrapper.jsx';
 
-var TableCell = React.createClass({
+var Table_Cell = React.createClass({
 
 	shouldComponentUpdate: function(nextProps, nextState) {
 		return true;
@@ -24,7 +24,7 @@ var TableCell = React.createClass({
 			index = this.props.index,
 			style = Pod_Styler.getStyle({props: {
 				styler: {
-					styleLike: 'TableCell',
+					styleLike: 'Table_Cell',
 					firstCell: index == 0,
 					centered: column.centered == true,
 					hovered: column.hovered == true,
@@ -45,4 +45,4 @@ var TableCell = React.createClass({
 	}
 })
 
-module.exports = Wrapper(TableCell);
+module.exports = Wrapper(Table_Cell);

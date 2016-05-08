@@ -7,7 +7,7 @@ import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
 
-import Icon from './icon.jsx' // TODO FIX THIS
+import {Icon} from 'components.js';
 import Pod_helper from 'helper.js'
 
 var options = Pod_helper.options('Pea_photo', {

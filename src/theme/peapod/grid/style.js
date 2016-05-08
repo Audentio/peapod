@@ -1,6 +1,6 @@
 var Pod_Vars = require('../../vars.js');
 
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
 var sheet = new Sheet('grid'),
 	main = sheet.addMain();

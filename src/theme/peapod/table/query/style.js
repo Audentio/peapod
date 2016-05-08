@@ -1,6 +1,6 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('tableQuery'),
+var sheet = new Sheet('table_Query'),
 	main = sheet.addMain();
 
 //Conditions

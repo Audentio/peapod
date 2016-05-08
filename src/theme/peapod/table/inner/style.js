@@ -1,6 +1,6 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('tableInner'),
+var sheet = new Sheet('table_Inner'),
 	main = sheet.addMain(),
 	row = sheet.addPart('row');
 

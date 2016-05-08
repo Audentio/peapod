@@ -1,4 +1,4 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 import Radium from 'radium';
 
 var sheet = new Sheet('alert'),

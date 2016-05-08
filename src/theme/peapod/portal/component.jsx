@@ -5,9 +5,8 @@ import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
 
+import {Icon, Grid} from 'components.js';
 
-var Grid = require('./grid.jsx'); // TODO FIX THIS
-var Icon = require('./icon.jsx'); // TODO FIX THIS
 
 function isNodeInRoot(node, root) {
 	while (node) {

@@ -4,13 +4,11 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-//import shallowCompare from 'react/lib/shallowCompare';
 import Radium from 'radium';
 
-var _ = require('lodash')
-var Wrapper = require('../wrapper.jsx')
-
+import {merge as _merge} from 'lodash'
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 /**
 * Animation wrapper: Add animation prop to components
@@ -84,7 +82,7 @@ var Pod_animation = ComposedComponent => class extends React.Component {
     render() {
 
         var {animation, ...props} = this.props; //this.props.animation wont be passed down
-        var _style = _.merge( {},
+        var _style = _merge( {},
                 {'animation': anim[this.animationName]},
                 this.animationSpeed && {'animationDuration': this.animationSpeed},
                 this.props.style

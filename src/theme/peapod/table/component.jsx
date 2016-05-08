@@ -15,20 +15,7 @@ var isUndefined = lodash.isUndefined;
 var isFunction = lodash.isFunction;
 var sorter = lodash.sortBy;
 
-var Button = require('./button.jsx') // TODO FIX THIS
-var Checkbox = require('./checkbox.jsx') // TODO FIX THIS
-var Icon = require('./icon.jsx') // TODO FIX THIS
-var Paginator = require('./paginator.jsx') // TODO FIX THIS
-var Grid = require('./grid.jsx'); // TODO FIX THIS
-var Div = require('./div.jsx'); // TODO FIX THIS
-var Portal = require('./portal.jsx'); // TODO FIX THIS
-
-var TableCell = require('./tableCell.jsx'); // TODO FIX THIS
-var TableQuery = require('./tableQuery.jsx'); // TODO FIX THIS
-var TableInner = require('./tableInner.jsx'); // TODO FIX THIS
-var TablePreset = require('./tablePreset.jsx'); // TODO FIX THIS
-var TableControl = require('./tableControl.jsx'); // TODO FIX THIS
-var TableHeader = require('./tableHeader.jsx'); // TODO FIX THIS
+import {Button, Checkbox, Icon, Paginator, Grid, Div, Portal, Table_Query, Table_Inner, Table_Preset, Table_Control, Table_Header} from 'components.js';
 
 
 var Table = React.createClass({
@@ -132,7 +119,7 @@ var Table = React.createClass({
 		var columns = this.state.columns;
 		// return if you don't want a header
 		return (
-			<TableHeader config={headerConfig} columns={columns} />
+			<Table_Header config={headerConfig} columns={columns} />
 		)
 	},
 
@@ -325,7 +312,7 @@ var Table = React.createClass({
 
 		var statusStyle = Pod_Styler.getStyle({props: {
 			styler: {
-				styleLike: 'TableCell',
+				styleLike: 'Table_Cell',
 				style: {
 					borderLeft: 'none',
 					borderRight: 'none',
@@ -337,11 +324,11 @@ var Table = React.createClass({
 			}}});
 		var isFetching = (this.props.isFetching) ? <div style={statusStyle}>Loading Data...</div>: null;
 		var noData = (paginated.data.length == 0 && !this.props.isFetching) ? <div style={statusStyle}>No Data</div>: null;
-		var presets = (typeof(this.state.presets) !== 'undefined') ? <TablePreset queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/> : null;
+		var presets = (typeof(this.state.presets) !== 'undefined') ? <Table_Preset queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets}/> : null;
 
 		return (
 			<div style={style.main}>
-				<TableControl>
+				<Table_Control>
 					<Grid styler={{justifyContent: 'space-between', style: {height: '$table.headerHeight', lineHeight: '$table.headerHeight'}}}>
 						<div>
 							<Div styler={{
@@ -359,7 +346,7 @@ var Table = React.createClass({
 							{presets}
 						</div>
 						<Grid>
-							<TableQuery queries={queries} removeQuery={this.removeQuery}/>
+							<Table_Query queries={queries} removeQuery={this.removeQuery}/>
 
 							<Div styler={{
 									style: {
@@ -384,8 +371,8 @@ var Table = React.createClass({
 							</Div>
 						</Grid>
 					</Grid>
-				</TableControl>
-				<TableInner style={style.main}
+				</Table_Control>
+				<Table_Inner style={style.main}
 					data={paginated.data}
 					columns={columns}
 					columnNames={this.makeHeader}
@@ -405,7 +392,7 @@ var Table = React.createClass({
 							{noData}
 							{isFetching}
 						</div>
-				</TableInner>
+				</Table_Inner>
 				<div style={style.footer}>
 					<Grid styler={{
 							justifyContent: 'space-between',

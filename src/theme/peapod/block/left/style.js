@@ -1,6 +1,6 @@
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('blockLeft'),
+var sheet = new Sheet('block_Left'),
 	main = sheet.addMain();
 
 //Conditions

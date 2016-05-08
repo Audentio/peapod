@@ -10,7 +10,7 @@ import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
 
-var Pod_icon = require('./icon.jsx'); // TODO FIX THIS
+import {Icon} from 'components.js';
 
 /**
 * Checkbox component
@@ -67,8 +67,8 @@ var Checkbox = React.createClass({
 	render: function(){
 		var style = Pod_Styler.getStyle(this),
 			icon = (this.props.icon) ?
-			<Pod_icon styler={{style: style.icon}}>{this.props.icon}</Pod_icon> :
-			<Pod_icon styler={{style: style.icon}}>check</Pod_icon>;
+			<Icon styler={{style: style.icon}}>{this.props.icon}</Icon> :
+			<Icon styler={{style: style.icon}}>check</Icon>;
 
 		return (
 			<div style={style.main}>

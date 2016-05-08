@@ -1,8 +1,8 @@
-var Pod_Vars = require('../../vars.js');
+var Pod_Vars = require('vars.js');
 
-import {Sheet} from '../../stylesheet.js';
+import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('gridCell'),
+var sheet = new Sheet('grid_Cell'),
 	main = sheet.addMain();
 
 sheet.addCondition('orderSet').addStyler({order: ['!=', undefined]});

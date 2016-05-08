@@ -9,7 +9,7 @@
 
 
 
-var GridCell = React.createClass({
+var Grid_Cell = React.createClass({
 	render: function() {
 		var style = Pod_Styler.getStyle(this);
 		return (
@@ -21,4 +21,4 @@ var GridCell = React.createClass({
 
 });
 
-module.exports = Wrapper(GridCell);
+module.exports = Wrapper(Grid_Cell);

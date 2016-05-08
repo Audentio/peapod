@@ -6,8 +6,8 @@
 import React from 'react';
 import moment from 'moment';
 
-import Pod_Styler from '../styler.js'
-import Wrapper from '../wrapper.jsx'
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 import {merge as _merge} from 'lodash'
 
 

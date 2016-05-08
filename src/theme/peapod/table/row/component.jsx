@@ -15,9 +15,9 @@
 
 import {reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined} from 'lodash'
 
-var TableCell = require('./tableCell.jsx'); // TODO FIX THIS
+import {Table_Cell} from 'components.js';
 
-var TableRow = React.createClass({
+var Table_Row = React.createClass({
 	shouldComponentUpdate: function(nextProps, nextState) {
 		//return true;
 		return !lodash.isEqual(nextProps, this.props)
@@ -32,7 +32,7 @@ var TableRow = React.createClass({
 			columns = this.props.columns,
 			data = this.props.data,
 			style = Pod_Styler.getStyle({}, {
-				styleLike: 'TableInner',
+				styleLike: 'Table_Inner',
 				dark: i % 2 == 1,
 				firstRow: i == 0,
 				checked: row.checked == true,
@@ -79,7 +79,7 @@ var TableRow = React.createClass({
 						}
 
 						return (
-							<TableCell key={j + '-cell'} column={column} index={j}>{content.value}</TableCell>
+							<Table_Cell key={j + '-cell'} column={column} index={j}>{content.value}</Table_Cell>
 						)
 					})
 				}
@@ -89,4 +89,4 @@ var TableRow = React.createClass({
 
 });
 
-module.exports = Wrapper(TableRow);
+module.exports = Wrapper(Table_Row);

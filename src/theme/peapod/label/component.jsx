@@ -2,8 +2,7 @@ import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
 
-
-import Pod_icon from './icon.jsx'; // TODO FIX THIS
+import {Icon} from 'components.js';
 
 var Label = React.createClass({
 

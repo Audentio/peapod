@@ -7,12 +7,8 @@
  import Pod_Styler from 'styler.js';
  import Wrapper from 'wrapper.jsx';
 
+import {Button, Icon, Grid, Div, Portal} from 'components.js';
 
-var Button = require('./button.jsx'); // TODO FIX THIS
-var Icon = require('./icon.jsx'); // TODO FIX THIS
-var Grid = require('./grid.jsx'); // TODO FIX THIS
-var Div = require('./div.jsx'); // TODO FIX THIS
-var Portal = require('./portal.jsx'); // TODO FIX THIS
 
 var topButtonStyle = {
 	height: '2.5rem',
@@ -23,7 +19,7 @@ var topButtonStyle = {
 	margin: '$gutter.internal'
 }
 
-var TableQuery = React.createClass({
+var Table_Query = React.createClass({
 	render: function() {
 		var style = Pod_Styler.getStyle(this);
 
@@ -82,4 +78,4 @@ var TableQuery = React.createClass({
 	}
 })
 
-module.exports = Wrapper(TableQuery);
+module.exports = Wrapper(Table_Query);
