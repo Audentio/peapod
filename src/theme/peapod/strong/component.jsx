@@ -6,11 +6,9 @@
 
 
 //Dependencies
-import React from 'react'
-import ReactDOM from 'react-dom'
-
-import Pod_Styler from '../styler.js'
-import Wrapper from '../wrapper.jsx'
+import React from 'react';
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 
 /**

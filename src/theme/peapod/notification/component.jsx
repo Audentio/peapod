@@ -3,12 +3,9 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import moment from 'moment'
-
-var Pod_Styler = require('../styler.js')
-var Wrapper = require('../wrapper.jsx')
+ import React from 'react';
+ import Pod_Styler from 'styler.js';
+ import Wrapper from 'wrapper.jsx';
 
 
 

@@ -4,32 +4,31 @@
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 
-var lodash = require('lodash')
+var lodash = require('lodash') // TODO FIX THIS
 var reduce = lodash.reduce;
 var isPlainObject = lodash.isPlainObject;
 var isUndefined = lodash.isUndefined;
 var isFunction = lodash.isFunction;
 var sorter = lodash.sortBy;
 
-var Button = require('./button.jsx')
-var Checkbox = require('./checkbox.jsx')
-var Icon = require('./icon.jsx')
-var Paginator = require('./paginator.jsx')
-var Grid = require('./grid.jsx');
-var Div = require('./div.jsx');
-var Portal = require('./portal.jsx');
+var Button = require('./button.jsx') // TODO FIX THIS
+var Checkbox = require('./checkbox.jsx') // TODO FIX THIS
+var Icon = require('./icon.jsx') // TODO FIX THIS
+var Paginator = require('./paginator.jsx') // TODO FIX THIS
+var Grid = require('./grid.jsx'); // TODO FIX THIS
+var Div = require('./div.jsx'); // TODO FIX THIS
+var Portal = require('./portal.jsx'); // TODO FIX THIS
 
-var TableCell = require('./tableCell.jsx');
-var TableQuery = require('./tableQuery.jsx');
-var TableInner = require('./tableInner.jsx');
-var TablePreset = require('./tablePreset.jsx');
-var TableControl = require('./tableControl.jsx');
-var TableHeader = require('./tableHeader.jsx');
+var TableCell = require('./tableCell.jsx'); // TODO FIX THIS
+var TableQuery = require('./tableQuery.jsx'); // TODO FIX THIS
+var TableInner = require('./tableInner.jsx'); // TODO FIX THIS
+var TablePreset = require('./tablePreset.jsx'); // TODO FIX THIS
+var TableControl = require('./tableControl.jsx'); // TODO FIX THIS
+var TableHeader = require('./tableHeader.jsx'); // TODO FIX THIS
 
 
 var Table = React.createClass({

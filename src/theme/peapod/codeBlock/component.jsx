@@ -4,10 +4,9 @@
 * LICENSE: <%= package.licence %>
 */
 
-import React from 'react'
-import Pod_Styler from '../styler.js'
-import Pod_Helper from '../helper.js'
-import Wrapper from '../wrapper.jsx'
+import React from 'react';
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 
 //@Tushar including Highlightjs seems to be causing "Module parse failed: Maximum call stack size exceeded" -- KC

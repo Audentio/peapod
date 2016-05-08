@@ -27,7 +27,7 @@ if (color.className.indexOf('main') == -1) ret = ret + '\n' + camelize(newLine) 
 console.log(ret);
 */
 
-var Pod_styler = require('../styler.js');
+import Pod_Styler from 'styler.js';
 
 var init = function(components) {
 	var req = require.context('./base', false, /^\.\/.*\.js$/),

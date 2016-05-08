@@ -7,11 +7,8 @@
 
 //Dependencies
 import React from 'react';
-import ReactDOM from 'react-dom';
-// import { Link } from 'react-router'
-
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 /**
 * ContentWrap component

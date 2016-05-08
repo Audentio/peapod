@@ -4,10 +4,9 @@
  * LICENSE: <%= package.licence %>
  */
 
-import React from 'react'
-import Wrapper from '../wrapper.jsx'
-import Pod_Styler from '../styler.js'
-import Icon from './icon.jsx'
+import React from 'react';
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 /**
 * Radio component (single radio item)

@@ -7,10 +7,10 @@
 
 //Dependencies
 import React from 'react';
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
-var Pod_Styler = require('../styler.js');
-var Pod_icon = require('./icon.jsx');
-var Wrapper = require('../wrapper.jsx')
+var Pod_icon = require('./icon.jsx'); // TODO FIX THIS
 
 /**
 * Checkbox component

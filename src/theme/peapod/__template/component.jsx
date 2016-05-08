@@ -9,10 +9,8 @@
 /*
 //Dependencies
 import React from 'react';
-import ReactDOM from 'react-dom';
-
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 
 var Pod_template = React.createClass({

@@ -3,20 +3,19 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+ import React from 'react';
+ import Pod_Styler from 'styler.js';
+ import Wrapper from 'wrapper.jsx';
 
 
-var lodash = require('lodash')
-var reduce = lodash.reduce;
-var isPlainObject = lodash.isPlainObject;
-var isUndefined = lodash.isUndefined;
-var isFunction = lodash.isFunction;
+//var lodash = require('lodash')
+//var isFunction = lodash.isFunction;
 
-var TableRow = require('./tableRow.jsx');
-var TableCell = require('./tableCell.jsx');
+import {isFunction as _isFunction} from 'lodash'
+
+
+var TableRow = require('./tableRow.jsx'); // TODO FIX THIS
+var TableCell = require('./tableCell.jsx'); // TODO FIX THIS
 
 var TableInner = React.createClass({
 	propTypes: {

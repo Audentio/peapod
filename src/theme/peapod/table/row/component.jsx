@@ -3,21 +3,21 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+ import React from 'react';
+ import Pod_Styler from 'styler.js';
+ import Wrapper from 'wrapper.jsx';
 
 
-var lodash = require('lodash')
-var reduce = lodash.reduce;
-var isPlainObject = lodash.isPlainObject;
-var isUndefined = lodash.isUndefined;
+//var lodash = require('lodash')
+//var reduce = lodash.reduce;
+//var isPlainObject = lodash.isPlainObject;
+//var isUndefined = lodash.isUndefined;
 
-var TableCell = require('./tableCell.jsx');
+import {reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined} from 'lodash'
+
+var TableCell = require('./tableCell.jsx'); // TODO FIX THIS
 
 var TableRow = React.createClass({
-
 	shouldComponentUpdate: function(nextProps, nextState) {
 		//return true;
 		return !lodash.isEqual(nextProps, this.props)
@@ -50,12 +50,12 @@ var TableRow = React.createClass({
 						cell = column.cell || function(a) {return a},
 						content;
 
-						content = reduce([value].concat(cell), (v, fn) => {
+						content = _reduce([value].concat(cell), (v, fn) => {
 							if(v && React.isValidElement(v.value)) {
 								return v;
 							}
 
-							if(!isPlainObject(value) && isPlainObject(v)) {
+							if(!_isPlainObject(value) && _isPlainObject(v)) {
 								return merge(v, {
 									value: fn(v.value, data, i, property)
 								});
@@ -63,7 +63,7 @@ var TableRow = React.createClass({
 
 							var val = fn(v, data, i, property);
 
-							if(val && !isUndefined(val.value)) {
+							if(val && !_isUndefined(val.value)) {
 								return val;
 							}
 

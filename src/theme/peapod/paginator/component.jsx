@@ -1,13 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
-
-
-var Icon = require('./icon.jsx');
-var Grid = require('./grid.jsx');
-var Div = require('./div.jsx');
+var Icon = require('./icon.jsx'); // TODO FIX THIS
+var Grid = require('./grid.jsx'); // TODO
+var Div = require('./div.jsx'); // TODO
 
 function paginate(data, o) {
     data = data || [];

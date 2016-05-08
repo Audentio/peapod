@@ -5,11 +5,9 @@
 */
 
 
-var React = require('react');
-
-var Color = require('color');
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+import React from 'react';
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 
 /**

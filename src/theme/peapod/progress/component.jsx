@@ -3,12 +3,9 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Pod_animation } from './animation.jsx'
-import _ from 'lodash'
-import Pod_Styler from '../styler.js'
-import Wrapper from '../wrapper.jsx'
+ import React from 'react';
+ import Pod_Styler from 'styler.js';
+ import Wrapper from 'wrapper.jsx';
 
 /**
 * Icon component

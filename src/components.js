@@ -3,8 +3,6 @@
 import _ from 'lodash'
 
 //Peapod
-//import Pod_core from './core.jsx';
-import Pod_core from './components/core.jsx';
 
 var components = [],
 	ignoreComponents = [
@@ -18,13 +16,8 @@ window.Pod = {
 	wrapper: require('./wrapper.jsx'),
 };
 
-_.merge(Pod, {
-    timestamp: require('./components/timestamp.jsx'),
-    animation: require('./components/animation.jsx'),
-});
-
 var init = function() {
-	var req = require.context('./components', false, /^\.\/.*\.jsx$/),
+	var req = require.context('./theme', false, /^\.\/.*\.jsx$/),
 		fileNames = req.keys();
 
 	for (var i = 0, len = fileNames.length; i < len; i++) {
@@ -54,4 +47,10 @@ if (module.hot) {
 
 init();
 
-module.exports = [Pod, Pod_Vars, Pod_Styler, components];
+//module.exports = [Pod, Pod_Vars, Pod_Styler, components];
+
+import Button from './theme/peapod/button/component.jsx'
+
+module.exports = {
+	Button: Button
+}

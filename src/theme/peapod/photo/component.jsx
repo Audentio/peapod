@@ -4,13 +4,11 @@
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
-
-import Icon from './icon.jsx'
-import Pod_helper from '../helper.js'
+import Icon from './icon.jsx' // TODO FIX THIS
+import Pod_helper from 'helper.js'
 
 var options = Pod_helper.options('Pea_photo', {
 

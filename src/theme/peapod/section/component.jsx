@@ -4,8 +4,8 @@
 */
 
 import React from 'react';
-import Pod_Styler from '../styler.js';
-var Wrapper = require('../wrapper.jsx')
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 
 var Section = React.createClass({

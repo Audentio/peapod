@@ -1,13 +1,13 @@
-import React from 'react';
 import ReactDOM, {findDOMNode} from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
 
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+import React from 'react';
+import Pod_Styler from 'styler.js';
+import Wrapper from 'wrapper.jsx';
 
 
-var Grid = require('./grid.jsx');
-var Icon = require('./icon.jsx');
+var Grid = require('./grid.jsx'); // TODO FIX THIS
+var Icon = require('./icon.jsx'); // TODO FIX THIS
 
 function isNodeInRoot(node, root) {
 	while (node) {

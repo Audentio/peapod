@@ -3,18 +3,18 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+ import React from 'react';
+ import Pod_Styler from 'styler.js';
+ import Wrapper from 'wrapper.jsx';
 
 
-var lodash = require('lodash')
-var reduce = lodash.reduce;
+//var lodash = require('lodash')
+//var reduce = lodash.reduce;
+import {reduce} as _reduce from 'lodash'
 
-var TableCell = require('./tableCell.jsx');
+var TableCell = require('./tableCell.jsx'); // TODO FIX THIS
 
-var Icon = require('./icon.jsx')
+var Icon = require('./icon.jsx') // TODO FIX THIS
 
 var TableHeader = React.createClass({
 	propTypes: {
@@ -37,7 +37,7 @@ var TableHeader = React.createClass({
 			<div style={style.row}>
 				{columns.map( function(column, i) {
 					//apply any onEvent specified to cell
-					var columnHeader = reduce(config, function(result, v, k){
+					var columnHeader = _reduce(config, function(result, v, k){
 						result[k] = k.indexOf('on') === 0 ? v.bind(null, column) : v;
 						return result;
 					}, {});

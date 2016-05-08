@@ -1,12 +1,6 @@
 import React from 'react'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
 
-
-var comps = ['hero']
-
+/*
 var singleTest = true;
 
 
@@ -77,9 +71,17 @@ var elements = (!singleTest) ? (
         <TusharDev />
     </div>
 );
+*/
+
+import KylerDev from './developmentComponents/kylerDev.jsx'
+
+var elements = (<div><KylerDev /></div>)
 
 class Sections extends React.Component {
     render () {
+		return (<div>{elements}</div>)
+
+		/*
         return (
             <div>
                 {elements}
@@ -91,6 +93,7 @@ class Sections extends React.Component {
         		<Pod.photo src="mrRobot.jpg" lazy={true} caption="Lazy load!" hidpiData={false} />
             </div>
         )
+		*/
     }
 }
 

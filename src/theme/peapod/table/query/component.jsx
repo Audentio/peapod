@@ -3,17 +3,16 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+ import React from 'react';
+ import Pod_Styler from 'styler.js';
+ import Wrapper from 'wrapper.jsx';
 
 
-var Button = require('./button.jsx')
-var Icon = require('./icon.jsx')
-var Grid = require('./grid.jsx');
-var Div = require('./div.jsx');
-var Portal = require('./portal.jsx');
+var Button = require('./button.jsx'); // TODO FIX THIS
+var Icon = require('./icon.jsx'); // TODO FIX THIS
+var Grid = require('./grid.jsx'); // TODO FIX THIS
+var Div = require('./div.jsx'); // TODO FIX THIS
+var Portal = require('./portal.jsx'); // TODO FIX THIS
 
 var topButtonStyle = {
 	height: '2.5rem',

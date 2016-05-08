@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+
+import {Button} from 'components.js'
 
 export default class GridSection extends React.Component {
 
@@ -30,6 +28,9 @@ export default class GridSection extends React.Component {
 			}
 		}
 
+		return (<div><Button></Button></div>)
+
+		/*
 		return(
 			<Pod.section key={'grid'}>
 				<Pod.pane>
@@ -110,6 +111,7 @@ export default class GridSection extends React.Component {
 				</Pod.pane>
 			</Pod.section>
 		)
+		*/
 	}
 
 }

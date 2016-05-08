@@ -3,14 +3,13 @@
  *  LICENSE: <%= package.licence %>
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-var Pod_Styler = require('../styler.js');
-var Wrapper = require('../wrapper.jsx')
+ import React from 'react';
+ import Pod_Styler from 'styler.js';
+ import Wrapper from 'wrapper.jsx';
 
 
-var Button = require('./button.jsx');
-var Portal = require('./portal.jsx')
+var Button = require('./button.jsx'); // TODO FIX THIS
+var Portal = require('./portal.jsx'); // TODO FIX THIS
 
 var topButtonStyle = {
 	display: 'inline-block',
