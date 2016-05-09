@@ -4,6 +4,8 @@ import _ from 'lodash'
 
 //Peapod
 
+module.exports = {};
+
 var components = [],
 	ignoreComponents = [
 		'__template',
@@ -16,11 +18,41 @@ window.Pod = {
 	wrapper: require('./wrapper.jsx'),
 };
 
-var init = function() {
+var init = function(themeName = 'peapod') {
 	var req = require.context('./theme', true, /^\.\/.*\.jsx$/),
 		fileNames = req.keys();
 
-	console.log(fileNames);
+	for (var fileIndex = 0, fileLen = fileNames.length; fileIndex < fileLen; fileIndex++) {
+		var fileName = fileNames[fileIndex],
+			splitName = fileName.replace('./', '').split('/'),
+			componentName = "",
+			styleName = "";
+
+		if (splitName[0] == themeName) {
+			for (var splitIndex = 1, splitLen = splitName.length; splitIndex < (splitLen - 1); splitIndex++) {
+				var splitVal = splitName[splitIndex],
+					splitValUpper = "";
+				if (splitVal.length == 1) {
+					splitValUpper = splitVal.charAt(0).toUpperCase()
+				} else {
+					splitValUpper = splitVal.charAt(0).toUpperCase() + splitVal.slice(1)
+				}
+				if (componentName == "") {
+					componentName = splitValUpper;
+					styleName = splitVal;
+				} else {
+					componentName += '_' + splitValUpper;
+					styleName += '_' + splitVal;
+				}
+			}
+
+			module.exports[componentName] = req(fileName);
+	 		console.log(splitName);
+			console.log(componentName);
+			console.log(styleName);
+			console.log('================')
+		}
+	}
 
 	window.Pod_Vars = window.Pod_Vars || require('./vars.js');
 	window.Pod_Styler = window.Pod_Styler || require('./styler.js');
@@ -51,36 +83,5 @@ if (module.hot) {
 
 init();
 
+console.log(module.exports);
 //module.exports = [Pod, Pod_Vars, Pod_Styler, components];
-
-import Button from './theme/peapod/button/component.jsx';
-import Icon from './theme/peapod/icon/component.jsx';
-import Grid from './theme/peapod/grid/component.jsx';
-import Div from './theme/peapod/div/component.jsx';
-import Checkbox from './theme/peapod/checkbox/component.jsx';
-import Paginator from './theme/peapod/paginator/component.jsx';
-import Portal from './theme/peapod/portal/component.jsx';
-import Table_Query from './theme/peapod/table/query/component.jsx';
-import Table_Inner from './theme/peapod/table/inner/component.jsx';
-import Table_Preset from './theme/peapod/table/preset/component.jsx';
-import Table_Control from './theme/peapod/table/control/component.jsx';
-import Table_Header from './theme/peapod/table/header/component.jsx';
-
-
-
-
-module.exports = {
-	Button: Button,
-	Icon: Icon,
-	Grid: Grid,
-	Div: Div,
-	Checkbox: Checkbox,
-	Paginator: Paginator,
-	Portal: Portal,
-	Table_Query: Table_Query,
-	Table_Inner: Table_Inner,
-	Table_Preset: Table_Preset,
-	Table_Control: Table_Control,
-	Table_Header: Table_Header,
-
-}

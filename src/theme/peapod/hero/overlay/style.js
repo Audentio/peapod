@@ -1,6 +1,6 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('heroOverlay'),
+var sheet = new Sheet('hero_overlay'),
     main = sheet.addMain();
 
 //Conditions

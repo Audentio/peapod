@@ -1,6 +1,6 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('subMenu'),
+var sheet = new Sheet('menu_sub'),
     main = sheet.addMain();
 
 //Variables

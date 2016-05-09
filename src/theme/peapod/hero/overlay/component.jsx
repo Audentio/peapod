@@ -17,7 +17,7 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_modal
 *
 */
-class HeroOverlay extends React.Component {
+class Hero_Overlay extends React.Component {
 
     constructor() {
         super();
@@ -36,8 +36,8 @@ class HeroOverlay extends React.Component {
 
 };
 
-HeroOverlay.defaultProps = {
+Hero_Overlay.defaultProps = {
     position: 'center'
 };
 
-module.exports = Wrapper(HeroOverlay);
+module.exports = Wrapper(Hero_Overlay);

@@ -1,6 +1,6 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('menuItem'),
+var sheet = new Sheet('menu_item'),
     main = sheet.addMain(),
     anchor = sheet.addPart('anchor'),
     subtext = sheet.addPart('subtext');

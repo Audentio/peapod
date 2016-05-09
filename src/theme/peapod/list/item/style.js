@@ -1,6 +1,6 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('listItem'),
+var sheet = new Sheet('list_item'),
     main = sheet.addMain(),
     imageContainer = sheet.addPart('imageContainer'),
     image = sheet.addPart('image'),

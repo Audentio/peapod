@@ -14,7 +14,7 @@ import Wrapper from 'wrapper.jsx';
 * Card component
 * @element Code
 */
-class CardSection extends React.Component {
+class Card_Section extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -36,8 +36,8 @@ class CardSection extends React.Component {
 
 };
 
-CardSection.defaultProps = {
+Card_Section.defaultProps = {
     mediaTitle: false
 };
 
-module.exports = Wrapper(CardSection);
+module.exports = Wrapper(Card_Section);

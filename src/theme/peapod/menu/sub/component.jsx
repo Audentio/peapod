@@ -2,7 +2,7 @@ import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
 
-class SubMenu extends React.Component {
+class Menu_Sub extends React.Component {
     constructor() {
         super();
 
@@ -37,4 +37,4 @@ class SubMenu extends React.Component {
     }
 };
 
-module.exports = Wrapper(SubMenu);
+module.exports = Wrapper(Menu_Sub);

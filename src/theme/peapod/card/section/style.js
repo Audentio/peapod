@@ -1,6 +1,6 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('cardSection'),
+var sheet = new Sheet('card_section'),
     main = sheet.addMain(),
     mediaTitle = sheet.addPart('mediaTitle');
 

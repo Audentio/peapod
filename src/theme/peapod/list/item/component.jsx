@@ -14,7 +14,7 @@ import Wrapper from 'wrapper.jsx';
 * ListItem component
 * @element Code
 */
-class ListItem extends React.Component {
+class List_Item extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -58,4 +58,4 @@ class ListItem extends React.Component {
 
 };
 
-module.exports = Wrapper(ListItem);
+module.exports = Wrapper(List_Item);
