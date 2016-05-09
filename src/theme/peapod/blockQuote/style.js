@@ -1,23 +1,25 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('blockQuote'),
-	main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+		main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
-sheet.setValues({});
+	//Variables
+	sheet.setValues({});
 
 
-main.addSelector({
-	common: {
-		background: '$palette.grey100',
-		padding: '$gutter.small',
-		borderLeftWidth: '5px',
-		borderLeftStyle: 'solid',
-		borderLeftColor: '$color.primary.base',
-		marginLeft: '$gutter.large'
-	}
-})
+	main.addSelector({
+		common: {
+			background: '$palette.grey100',
+			padding: '$gutter.small',
+			borderLeftWidth: '5px',
+			borderLeftStyle: 'solid',
+			borderLeftColor: '$color.primary.base',
+			marginLeft: '$gutter.large'
+		}
+	});
 
-module.exports = sheet;
+	return sheet;
+}

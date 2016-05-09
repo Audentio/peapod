@@ -1,11 +1,13 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('table_Query'),
-	main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+		main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
-sheet.setValues({});
+	//Variables
+	sheet.setValues({});
 
-module.exports = sheet;
+	return sheet;
+}

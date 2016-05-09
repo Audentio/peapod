@@ -1,23 +1,25 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('contentWrap'),
-    main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+	    main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
-sheet.setValues({
-    maxWidth: '$site.maxWidth',
-    width: '95%'
-});
+	//Variables
+	sheet.setValues({
+	    maxWidth: '$site.maxWidth',
+	    width: '95%'
+	});
 
 
-main.addSelector({
-    common: {
-        maxWidth: '$contentWrap.maxWidth',
-        width: '$contentWrap.width',
-        margin: '0 auto'
-    }
-});
+	main.addSelector({
+	    common: {
+	        maxWidth: '$contentWrap.maxWidth',
+	        width: '$contentWrap.width',
+	        margin: '0 auto'
+	    }
+	});
 
-module.exports = sheet;
+	return sheet;
+}

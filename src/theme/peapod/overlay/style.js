@@ -1,19 +1,21 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('overlay'),
-    main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+	    main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
+	//Variables
 
-main.addSelector({
-    common: {
-        backgroundColor: 'rgba(0,0,0,.4)',
-        position: 'fixed',
-        top: 0, right: 0,
-        bottom: 0, left:0
-    }
-})
+	main.addSelector({
+	    common: {
+	        backgroundColor: 'rgba(0,0,0,.4)',
+	        position: 'fixed',
+	        top: 0, right: 0,
+	        bottom: 0, left:0
+	    }
+	})
 
-module.exports = sheet;
+	return sheet;
+}

@@ -1,18 +1,20 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('timestamp'),
-	main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+		main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
-sheet.setValues({});
+	//Variables
+	sheet.setValues({});
 
-main.addSelector({
-	common: {
-		cursor: 'default',
-		color: 'red'
-	}
-})
+	main.addSelector({
+		common: {
+			cursor: 'default',
+			color: 'red'
+		}
+	})
 
-module.exports = sheet;
+	return sheet;
+}

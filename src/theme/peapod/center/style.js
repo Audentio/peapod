@@ -1,28 +1,30 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('center'),
-    main = sheet.addMain(),
-    outer = sheet.addPart('outer'),
-    inner = sheet.addPart('inner');
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+	    main = sheet.addMain(),
+	    outer = sheet.addPart('outer'),
+	    inner = sheet.addPart('inner');
 
-//Conditions
+	//Conditions
 
-//Variables
+	//Variables
 
-main.addSelector({
-    common: {
-        display: 'table',
-        width: '100%',
-        height: '100%'
-    }
-})
+	main.addSelector({
+	    common: {
+	        display: 'table',
+	        width: '100%',
+	        height: '100%'
+	    }
+	})
 
-inner.addSelector({
-    common: {
-        display: 'table-cell',
-        verticalAlign: 'middle',
-        textAlign: 'center'
-    }
-})
+	inner.addSelector({
+	    common: {
+	        display: 'table-cell',
+	        verticalAlign: 'middle',
+	        textAlign: 'center'
+	    }
+	})
 
-module.exports = sheet;
+	return sheet;
+}

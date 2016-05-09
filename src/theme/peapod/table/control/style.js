@@ -1,18 +1,20 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('table_Control'),
-	main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+		main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
-sheet.setValues({});
+	//Variables
+	sheet.setValues({});
 
-main.addSelector({
-	common: {
-		color: '$table.color.controls.color',
-		background: '$table.color.controls.background',
-	}
-})
+	main.addSelector({
+		common: {
+			color: '$table.color.controls.color',
+			background: '$table.color.controls.background',
+		}
+	})
 
-module.exports = sheet;
+	return sheet;
+}

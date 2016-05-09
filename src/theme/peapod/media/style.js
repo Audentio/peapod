@@ -1,17 +1,20 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('media'),
-    main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+	    main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
-sheet.setValues({});
+	//Variables
+	sheet.setValues({});
 
-main.addSelector({
-    common: {
-        float: 'right',
-        marginLeft: '$gutter.small'
-    }
-});
-module.exports = sheet;
+	main.addSelector({
+	    common: {
+	        float: 'right',
+	        marginLeft: '$gutter.small'
+	    }
+	});
+
+	return sheet;
+}

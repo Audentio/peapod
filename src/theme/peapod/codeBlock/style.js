@@ -1,23 +1,25 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('codeBlock'),
-	main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+		main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
-sheet.setValues({});
+	//Variables
+	sheet.setValues({});
 
-main.addSelector({
-	common: {
-		display: 'block',
-		marginBottom: '$gutter.internal',
-		backgroundColor: '$palette.grey100',
-		padding: '$gutter.internal',
-		fontFamily: '$font.family.code',
-		fontSize: '$font.size.small',
-		border: 0
-	}
-})
+	main.addSelector({
+		common: {
+			display: 'block',
+			marginBottom: '$gutter.internal',
+			backgroundColor: '$palette.grey100',
+			padding: '$gutter.internal',
+			fontFamily: '$font.family.code',
+			fontSize: '$font.size.small',
+			border: 0
+		}
+	});
 
-module.exports = sheet;
+	return sheet;
+}

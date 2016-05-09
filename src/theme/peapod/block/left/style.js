@@ -1,16 +1,18 @@
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('block_Left'),
-	main = sheet.addMain();
+module.exports = function(sheetName) {
+	var sheet = new Sheet(sheetName),
+		main = sheet.addMain();
 
-//Conditions
+	//Conditions
 
-//Variables
-sheet.setValues({});
+	//Variables
+	sheet.setValues({});
 
-main.addSelector({
-	common: {
-	}
-})
+	main.addSelector({
+		common: {
+		}
+	});
 
-module.exports = sheet;
+	return sheet;
+}
