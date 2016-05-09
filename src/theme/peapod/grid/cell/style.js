@@ -2,8 +2,27 @@ var Pod_Vars = require('vars.js');
 
 import {Sheet} from 'stylesheet.js';
 
-var sheet = new Sheet('grid_Cell'),
+var sheet = new Sheet('grid_cell'),
 	main = sheet.addMain();
+
+//Variables
+sheet.setValues({
+	breakpoints: {
+		small: '610',
+		medium: '800',
+		large: '1024',
+		xlarge: '1500'
+	},
+	xsmall: '@media (minWidth: 1px)',
+	small: '@media (minWidth: 610px)',
+	medium: '@media (minWidth: 800px)',
+	large: '@media (minWidth: 1024px)',
+	xlarge: '@media (minWidth: 1500px)',
+	smallLt: '@media (maxWidth: 609px)',
+	mediumLt: '@media (maxWidth: 799px)',
+	largeLt: '@media (maxWidth: 1023px)',
+	xlargeLt: '@media (maxWidth: 1499px)'
+});
 
 sheet.addCondition('orderSet').addStyler({order: ['!=', undefined]});
 main.addSelector({
@@ -43,7 +62,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 			condition: [[abbrevs[sizeIndex]] + '_' + i],
 
 			common: {
-				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
+				[Pod_Vars.get('grid_cell.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
 			}
 		});
 
@@ -51,7 +70,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 		main.addSelector({
 			condition: [[abbrevs[sizeIndex]] + 'Push_' + i],
 			common: {
-				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
+				[Pod_Vars.get('grid_cell.' + sizes[sizeIndex])]: {
 					position: 'relative',
 					left: (100 * (i / 12)) + '%'
 				}
@@ -62,7 +81,7 @@ for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through
 		main.addSelector({
 			condition: [[abbrevs[sizeIndex]] + 'Pull_' + i],
 			common: {
-				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
+				[Pod_Vars.get('grid_cell.' + sizes[sizeIndex])]: {
 					position: 'relative',
 					left: (-100 * (i / 12)) + '%'
 				}

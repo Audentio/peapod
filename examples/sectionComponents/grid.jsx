@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import {Button} from 'components.js'
+import {Section, Pane, ContentWrap, Grid, Grid_Cell, Photo, Heading} from 'components.js'
 
 export default class GridSection extends React.Component {
 
@@ -28,90 +28,86 @@ export default class GridSection extends React.Component {
 			}
 		}
 
-		return (<div><Button></Button></div>)
-
-		/*
 		return(
-			<Pod.section key={'grid'}>
-				<Pod.pane>
-					<Pod.contentWrap>
-						<Pod.heading>Grid Example(Responsive with Panes)</Pod.heading>
-					</Pod.contentWrap>
-					<Pod.grid styler={{style: {textAlign: 'center'}}}>
-						<Pod.gridCell styler={gridStyle}>
-							<Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-						</Pod.gridCell>
+			<Section key={'grid'}>
+				<Pane>
+					<ContentWrap>
+						<Heading>Grid Example(Responsive with Panes)</Heading>
+					</ContentWrap>
+					<Grid styler={{style: {textAlign: 'center'}}}>
+						<Grid_Cell styler={gridStyle}>
+							<Photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+						</Grid_Cell>
 
-						<Pod.gridCell styler={gridStyle}>
-							<Pod.pane>
-									<Pod.heading>Nested Pane</Pod.heading>
+						<Grid_Cell styler={gridStyle}>
+							<Pane>
+									<Heading>Nested Pane</Heading>
 
-									<Pod.grid styler={{style: {textAlign: 'center'}}}>
-										<Pod.gridCell styler={gridStyleSmall}>
-											<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-										</Pod.gridCell>
+									<Grid styler={{style: {textAlign: 'center'}}}>
+										<Grid_Cell styler={gridStyleSmall}>
+											<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+										</Grid_Cell>
 
-										<Pod.gridCell styler={gridStyleSmall}>
-											<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-										</Pod.gridCell>
-										<Pod.gridCell styler={gridStyleSmall}>
-											<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-										</Pod.gridCell>
+										<Grid_Cell styler={gridStyleSmall}>
+											<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+										</Grid_Cell>
+										<Grid_Cell styler={gridStyleSmall}>
+											<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+										</Grid_Cell>
 
-										<Pod.gridCell styler={gridStyleSmall}>
-											<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-										</Pod.gridCell>
+										<Grid_Cell styler={gridStyleSmall}>
+											<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+										</Grid_Cell>
 
-										<Pod.gridCell styler={gridStyleSmall}>
-											<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-										</Pod.gridCell>
+										<Grid_Cell styler={gridStyleSmall}>
+											<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+										</Grid_Cell>
 
-										<Pod.gridCell styler={gridStyleSmall}>
-											<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-										</Pod.gridCell>
-									</Pod.grid>
-							</Pod.pane>
-						</Pod.gridCell>
+										<Grid_Cell styler={gridStyleSmall}>
+											<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+										</Grid_Cell>
+									</Grid>
+							</Pane>
+						</Grid_Cell>
 
-						<Pod.gridCell styler={gridStyle}>
-							<Pod.photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-						</Pod.gridCell>
+						<Grid_Cell styler={gridStyle}>
+							<Photo src="image.png" styler={{style:imageStyle}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+						</Grid_Cell>
 
-						<Pod.gridCell styler={gridStyle}>
-							<Pod.pane>
-								<Pod.heading>Nested Pane</Pod.heading>
+						<Grid_Cell styler={gridStyle}>
+							<Pane>
+								<Heading>Nested Pane</Heading>
 
-								<Pod.grid styler={{style: {textAlign: 'center'}}}>
-									<Pod.gridCell styler={gridStyleSmall}>
-										<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-									</Pod.gridCell>
+								<Grid styler={{style: {textAlign: 'center'}}}>
+									<Grid_Cell styler={gridStyleSmall}>
+										<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+									</Grid_Cell>
 
-									<Pod.gridCell styler={gridStyleSmall}>
-										<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-									</Pod.gridCell>
-									<Pod.gridCell styler={gridStyleSmall}>
-										<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-									</Pod.gridCell>
+									<Grid_Cell styler={gridStyleSmall}>
+										<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+									</Grid_Cell>
+									<Grid_Cell styler={gridStyleSmall}>
+										<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+									</Grid_Cell>
 
-									<Pod.gridCell styler={gridStyleSmall}>
-										<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-									</Pod.gridCell>
+									<Grid_Cell styler={gridStyleSmall}>
+										<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+									</Grid_Cell>
 
-									<Pod.gridCell styler={gridStyleSmall}>
-										<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-									</Pod.gridCell>
+									<Grid_Cell styler={gridStyleSmall}>
+										<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+									</Grid_Cell>
 
-									<Pod.gridCell styler={gridStyleSmall}>
-										<Pod.photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
-									</Pod.gridCell>
-								</Pod.grid>
-							</Pod.pane>
-						</Pod.gridCell>
-					</Pod.grid>
-				</Pod.pane>
-			</Pod.section>
+									<Grid_Cell styler={gridStyleSmall}>
+										<Photo src="image.png" styler={{style:imageStyleSmall}} hidpiData={[ ['1.5','@2x'], ['2','@3x'] ]} caption="pixelDensity > 2 : @3x" />
+									</Grid_Cell>
+								</Grid>
+							</Pane>
+						</Grid_Cell>
+					</Grid>
+				</Pane>
+			</Section>
 		)
-		*/
 	}
 
 }

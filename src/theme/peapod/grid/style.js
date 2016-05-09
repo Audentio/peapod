@@ -1,28 +1,9 @@
-var Pod_Vars = require('../../vars.js');
+var Pod_Vars = require('vars.js');
 
 import {Sheet} from 'stylesheet.js';
 
 var sheet = new Sheet('grid'),
 	main = sheet.addMain();
-
-//Variables
-sheet.setValues({
-	breakpoints: {
-		small: '610',
-		medium: '800',
-		large: '1024',
-		xlarge: '1500'
-	},
-	xsmall: '@media (minWidth: 1px)',
-	small: '@media (minWidth: 610px)',
-	medium: '@media (minWidth: 800px)',
-	large: '@media (minWidth: 1024px)',
-	xlarge: '@media (minWidth: 1500px)',
-	smallLt: '@media (maxWidth: 609px)',
-	mediumLt: '@media (maxWidth: 799px)',
-	largeLt: '@media (maxWidth: 1023px)',
-	xlargeLt: '@media (maxWidth: 1499px)'
-});
 
 main.addSelector({
 	common: {
@@ -121,43 +102,6 @@ for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop
 			alignSelf: choices[choiceIndex]
 		}
 	});
-}
-
-var sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'],
-	abbrevs = ['xs', 'sm', 'md', 'lg', 'xl']
-
-for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
-	for (var i = 0; i < 13; i++) { // loop through size values
-		sheet.addCondition([abbrevs[sizeIndex]] + '_' + i).addStyler({[abbrevs[sizeIndex]]: i});
-		main.addSelector({
-			condition: [[abbrevs[sizeIndex]] + '_' + i],
-			common: {
-				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: { width: (100 * (i / 12)) + '%' }
-			}
-		});
-
-		sheet.addCondition([abbrevs[sizeIndex]] + 'Push_' + i).addStyler({[abbrevs[sizeIndex] + 'Push']: i});
-		main.addSelector({
-			condition: [[abbrevs[sizeIndex]] + 'Push_' + i],
-			common: {
-				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
-					position: 'relative',
-					left: (100 * (i / 12)) + '%'
-				}
-			}
-		});
-
-		sheet.addCondition([abbrevs[sizeIndex]] + 'Pull_' + i).addStyler({[abbrevs[sizeIndex] + 'Pull']: i});
-		main.addSelector({
-			condition: [[abbrevs[sizeIndex]] + 'Pull_' + i],
-			common: {
-				[Pod_Vars.get('grid.' + sizes[sizeIndex])]: {
-					position: 'relative',
-					left: (-100 * (i / 12)) + '%'
-				}
-			}
-		});
-	}
 }
 
 module.exports = sheet;

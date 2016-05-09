@@ -1,13 +1,8 @@
-//import React from 'react'
-//import ReactDOM from 'react-dom'
-import _ from 'lodash'
-
 //Peapod
 
 module.exports = {};
 
-var components = [],
-	ignoreComponents = [
+var ignoreComponents = [
 		'__template',
 		'Animation',
 		'Core',
@@ -18,8 +13,14 @@ window.Pod = {
 	wrapper: require('./wrapper.jsx'),
 };
 
-var init = function(themeName = 'peapod') {
-	var req = require.context('./theme', true, /^\.\/.*\.jsx$/),
+var themeReq = require.context('./theme', true, /theme.js$/),
+	themeKeys = themeReq.keys(),
+	themeLen = themeKeys.length;
+
+var init = function(themeName = 'peapod', ignoreComponents = []) {
+	var styleSheets = {},
+		componentNames = {},
+		req = require.context('./theme', true, /^\.\/.*\.jsx?$/),
 		fileNames = req.keys();
 
 	for (var fileIndex = 0, fileLen = fileNames.length; fileIndex < fileLen; fileIndex++) {
@@ -29,48 +30,58 @@ var init = function(themeName = 'peapod') {
 			styleName = "";
 
 		if (splitName[0] == themeName) {
-			for (var splitIndex = 1, splitLen = splitName.length; splitIndex < (splitLen - 1); splitIndex++) {
-				var splitVal = splitName[splitIndex],
-					splitValUpper = "";
-				if (splitVal.length == 1) {
-					splitValUpper = splitVal.charAt(0).toUpperCase()
-				} else {
-					splitValUpper = splitVal.charAt(0).toUpperCase() + splitVal.slice(1)
+			var splitLen = splitName.length,
+				fileType = splitName[splitLen - 1];
+
+			if (fileType == 'component.jsx' || fileType == 'style.js') {
+				for (var splitIndex = 1; splitIndex < (splitLen - 1); splitIndex++) {
+					var splitVal = splitName[splitIndex],
+						splitValUpper = "";
+
+					if (splitVal.length == 1) {
+						splitValUpper = splitVal.charAt(0).toUpperCase()
+					} else {
+						splitValUpper = splitVal.charAt(0).toUpperCase() + splitVal.slice(1)
+					}
+
+					if (componentName == "") {
+						componentName = splitValUpper;
+						styleName = splitVal;
+					} else {
+						componentName += '_' + splitValUpper;
+						styleName += '_' + splitVal;
+					}
 				}
-				if (componentName == "") {
-					componentName = splitValUpper;
-					styleName = splitVal;
-				} else {
-					componentName += '_' + splitValUpper;
-					styleName += '_' + splitVal;
+
+				if (ignoreComponents.indexOf(componentName) == -1) {
+					if (fileType == 'component.jsx') {
+						componentNames[componentName] = fileName;
+					} else if (fileType == 'style.js') {
+						styleSheets[styleName] = fileName;
+					}
 				}
 			}
-
-			module.exports[componentName] = req(fileName);
-	 		console.log(splitName);
-			console.log(componentName);
-			console.log(styleName);
-			console.log('================')
 		}
 	}
 
-	window.Pod_Vars = window.Pod_Vars || require('./vars.js');
-	window.Pod_Styler = window.Pod_Styler || require('./styler.js');
+	window.Pod_Vars = window.Pod_Vars || require('vars.js');
+	window.Pod_Styler = window.Pod_Styler || require('styler.js');
 
-	/*
-	for (var i = 0, len = fileNames.length; i < len; i++) {
-		var fileName = fileNames[i].replace('./', '').replace('.jsx', ''),
-			componentName = fileName.charAt(0).toUpperCase() + fileName.slice(1);
+	for (var themeIndex = 0; themeIndex < themeLen; themeIndex++) {
+		var themeFileName = themeKeys[themeIndex];
 
-		if (ignoreComponents.indexOf(componentName) == -1) {
-			components.push(componentName);
-			window.Pod[fileName] = req('./' + fileName + '.jsx');
+		if (themeFileName.indexOf('./' + themeName + '/') > -1) {
+			var theme = themeReq(themeFileName);
+			Pod_Styler.addLibrary(theme.themeParent, theme.themeName, styleSheets, req, theme.globalVars);
 		}
 	}
 
-	var base = require('./theme/base.js');
-	base(components);
-	*/
+	var componentNameKeys = Object.keys(componentNames);
+
+	for (var componentNameIndex = 0, componentNameLen = componentNameKeys.length; componentNameIndex < componentNameLen; componentNameIndex++) {
+		var componentName = componentNameKeys[componentNameIndex];
+		module.exports[componentName] = req(componentNames[componentName]);
+	}
 }
 
 if (module.hot) {
@@ -81,7 +92,6 @@ if (module.hot) {
 	}
 }
 
-init();
+init('peapod', ignoreComponents);
 
-console.log(module.exports);
 //module.exports = [Pod, Pod_Vars, Pod_Styler, components];

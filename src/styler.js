@@ -11,7 +11,7 @@ var enableMissingStyleWarning = false;
 
 window.Pod_Styler = window.Pod_Styler || {
 	libraries: [],
-	currentLibrary: 'base',
+	currentLibrary: 'peapod',
 	enableCache: false,
 	enableVarCache: false,
 	cache: {},
@@ -31,34 +31,26 @@ window.Pod_Styler = window.Pod_Styler || {
 	},
 
 	// registers a library
-	addLibrary: function(parentName, libraryName, componentNames, requireFunc, globalVars) {
+	addLibrary: function(parentName, libraryName, componentFiles, requireFunc, globalVars) {
 		console.log('Adding Library ' + libraryName);
+
 		Pod_Styler.varCache = {};
 		Pod_Styler.removeLibrary(libraryName);
 
 		Pod_Vars.register(globalVars);
 
-		let components = {};
-		for (let i = 0, len = componentNames.length; i < len; i++) {
-			let componentName = componentNames[i],
-				stylesheet = null;
+		let components = {},
+			componentKeys = Object.keys(componentFiles);
+		for (let i = 0, len = componentKeys.length; i < len; i++) {
+			let componentName = componentKeys[i],
+				stylesheet = requireFunc(componentFiles[componentName]);
 
-			try {
-				stylesheet = requireFunc('./' + componentName.charAt(0).toLowerCase() + componentName.slice(1) + '.js');
-			} catch(err) {
-				if (err.code !== 'MODULE_NOT_FOUND') {
-					throw err; // Re-throw non-"Module not found" errors
-				} else {
-					console.warn(err);
-				}
-			}
-
-			components[componentName] = stylesheet;
+			components[componentName] = stylesheet(componentName);
 		}
 
 		let library = {
 			parentName: parentName,
-			componentNames: componentNames,
+			componentFiles: componentFiles,
 			components: components,
 			name: libraryName,
 			type: 'normal',
