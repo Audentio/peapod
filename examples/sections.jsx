@@ -5,7 +5,7 @@ import Strong from 'components/strong'
 import Code from 'components/code'
 
 
-var firstComponents = ['HeroSection', 'FixedSection']
+var firstComponents = ['HeroSection', 'FixedSection', 'ParallaxSection']
 
 var components = []
 var req = require.context('./sectionComponents', false, /^\.\/.*\.jsx$/),
