@@ -16,7 +16,7 @@ export default class DeviceSection extends React.Component {
                 </Pod.contentWrap>
 
                 <Pod.scrollable horizontal={true} styler={{center: true}}>
-                    <Pod.device device='iphone' variant="black" version="6" styler={{style: {display: 'inline-block'}}}>
+                    <Pod.device device='iphone' variant="black" styler={{style: {display: 'inline-block'}}}>
                         <Pod.heading kind="h5">Not Scrollable</Pod.heading>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
@@ -24,13 +24,13 @@ export default class DeviceSection extends React.Component {
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                     </Pod.device>
 
-                    <Pod.device device='iphone' variant="black" version="6" styler={{style: {display: 'inline-block'}}}>
+                    <Pod.device device='iphone' variant="black" styler={{style: {display: 'inline-block'}}}>
                         <Pod.lazy distance="50" height="100%">
                             <Pod.embed width="100%" height="100%" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
                         </Pod.lazy>
                     </Pod.device>
 
-                    <Pod.device device='iphone' variant="black" version="6" styler={{scrollable: true, style: {display: 'inline-block'}}}>
+                    <Pod.device device='iphone' variant="black" styler={{scrollable: true, style: {display: 'inline-block'}}}>
                         <Pod.heading kind="h5">Scrollable</Pod.heading>
                         <Pod.block>
                             <Pod.blockLeft>
@@ -51,17 +51,25 @@ export default class DeviceSection extends React.Component {
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                     </Pod.device>
 
-                    <Pod.device device='phone' variant="black" version="6" orientation='horizontal'styler={{scrollable: true, style: {display: 'inline-block'}}}>
+                    <Pod.device device='phone' variant="black" orientation='horizontal'styler={{scrollable: true, style: {display: 'inline-block'}}}>
                         <Pod.lazy distance="50" height="100%">
                             <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
                         </Pod.lazy>
                     </Pod.device>
 
-                    <Pod.device device='iphone' variant="black" version="6" styler={{style: {display: 'inline-block'}}}>
+                    <Pod.device device='macbook' variant="gold" styler={{style: {display: 'inline-block'}}}>
                             <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
                     </Pod.device>
 
-                    <Pod.device device='iphone' variant="black" version="6" styler={{scrollable: true, style: {display: 'inline-block'}}}>
+                    <Pod.device device='macbook' variant="spacegrey" styler={{style: {display: 'inline-block'}}}>
+                            <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
+                    </Pod.device>
+
+                    <Pod.device device='macbook' variant="silver" styler={{style: {display: 'inline-block'}}}>
+                            <Pod.embed width="100%" height="100%" src="http://www.themehouse.com/" />
+                    </Pod.device>
+
+                    <Pod.device device='iphone' variant="black" styler={{scrollable: true, style: {display: 'inline-block'}}}>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
                         <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>

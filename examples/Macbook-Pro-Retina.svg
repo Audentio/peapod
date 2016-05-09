@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="733px" height="427px" viewBox="0 0 733 427" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>macbook pro retina</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="593" height="404" rx="23"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="593" height="404" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#151515" offset="0%"></stop>
+            <stop stop-color="#2C2C2C" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#96979B" offset="0%"></stop>
+            <stop stop-color="#2A2B2D" offset="100%"></stop>
+        </linearGradient>
+        <path d="M0.595439579,13.6209246 C0.595439579,13.6209246 8.17168193,21.189435 29.6271788,23.1882023 L697.370953,23.1882023 C697.370953,23.1882023 715.172122,21.8492474 726.718825,13.9508308 L17.4199616,13.9508308 L0.595439579,13.6209246 Z" id="path-5"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-7">
+            <stop stop-color="#808185" offset="0%"></stop>
+            <stop stop-color="#CFD0D2" offset="0.797475782%"></stop>
+            <stop stop-color="#949599" offset="2.10447825%"></stop>
+            <stop stop-color="#A7A8AC" offset="3.73190757%"></stop>
+            <stop stop-color="#B6B7BB" offset="4.23426959%"></stop>
+            <stop stop-color="#CFD0D4" offset="0.212489602%"></stop>
+            <stop stop-color="#D8D8D8" offset="9.64049628%"></stop>
+            <stop stop-color="#DDDEE0" offset="90.9095999%"></stop>
+            <stop stop-color="#B1B2B4" offset="95.6196111%"></stop>
+            <stop stop-color="#C2C3C7" offset="98.2552801%"></stop>
+            <stop stop-color="#F1F3F2" offset="99.12764%"></stop>
+            <stop stop-color="#E9EBEA" offset="99.3572084%"></stop>
+            <stop stop-color="#D4D5D7" offset="99.730501%"></stop>
+            <stop stop-color="#7A7B7F" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="37.2336119%" x2="0%" y2="37.2336116%" id="linearGradient-8">
+            <stop stop-color="#949599" offset="0%"></stop>
+            <stop stop-color="#9E9FA3" offset="3.58222603%"></stop>
+            <stop stop-color="#B9BABC" offset="5.16614898%"></stop>
+            <stop stop-color="#E0E1E3" offset="8.56026958%"></stop>
+            <stop stop-color="#D8D9DB" offset="91.8293618%"></stop>
+            <stop stop-color="#C2C3C5" offset="94.5446582%"></stop>
+            <stop stop-color="#8D8E90" offset="100%"></stop>
+        </linearGradient>
+        <path d="M312.427373,0.463198334 C312.427373,0.463198334 312.509683,6.25465166 318.306528,9.02124229 L408.452624,9.02124229 C408.452624,9.02124229 413.411779,7.22088261 414.515506,0.463198328 L313.888621,0.463198328" id="path-9"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-10">
+            <feGaussianBlur stdDeviation="0.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.301441866 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="macbook-pro-retina" transform="translate(3.000000, 0.000000)">
+            <g id="monitor" transform="translate(67.000000, 0.000000)">
+                <rect id="screen-border" fill="#121212" x="0" y="1" width="593" height="396" rx="23"></rect>
+                <use stroke="#C6C6C6" mask="url(#mask-2)" stroke-width="4" xlink:href="#path-1"></use>
+                <rect id="screen" fill="#FFFFFF" x="19" y="26" width="556" height="348"></rect>
+            </g>
+            <g id="camera" transform="translate(360.000000, 12.000000)">
+                <circle id="Oval-5" fill="url(#linearGradient-3)" cx="4" cy="4" r="4"></circle>
+                <circle id="Oval-6" fill="#103470" cx="4" cy="4" r="2"></circle>
+            </g>
+            <g id="bottom" transform="translate(0.000000, 397.000000)">
+                <g id="lower-bottom">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                    <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+                </g>
+                <rect id="upper-bottom" fill="url(#linearGradient-7)" x="1" y="0" width="726" height="14"></rect>
+                <g id="indent">
+                    <use fill="url(#linearGradient-8)" fill-rule="evenodd" xlink:href="#path-9"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
