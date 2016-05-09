@@ -4,6 +4,9 @@ import Paragraph from 'components/paragraph'
 import Strong from 'components/strong'
 import Code from 'components/code'
 
+
+var firstComponents = ['HeroSection', 'FixedSection']
+
 var components = []
 var req = require.context('./sectionComponents', false, /^\.\/.*\.jsx$/),
     fileNames = req.keys();
@@ -14,8 +17,20 @@ for (var i = 0, len = fileNames.length; i < len; i++) {
         componentName = componentName+'Section'
 
         window[componentName] = req('./' + fileName + '.jsx').default;
-        components.push(React.createElement(window[componentName], null));
+        components.push(componentName);
 }
+
+var componentsOutput = []
+components.unshift(...firstComponents)
+for (var i = 0; i<components.length; i++) {
+    componentsOutput.push(React.createElement(window[components[i]], null))
+}
+// React.createElement(window[componentName], null)
+
+
+console.log(components, componentsOutput)
+
+
 
 
 // var lazyload = (
@@ -30,7 +45,7 @@ class Sections extends React.Component {
     render () {
         return (
             <div>
-                {components}
+                {componentsOutput}
             </div>
         )
     }
