@@ -27,12 +27,6 @@ for (var i = 0; i<components.length; i++) {
 }
 // React.createElement(window[componentName], null)
 
-
-console.log(components, componentsOutput)
-
-
-
-
 // var lazyload = (
 // <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 // <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
