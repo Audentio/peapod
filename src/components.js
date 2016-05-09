@@ -1,5 +1,7 @@
 //Peapod
 
+import Wrapper from 'wrapper.jsx';
+
 module.exports = {};
 
 var ignoreComponents = [
@@ -26,8 +28,8 @@ var init = function(themeName = 'peapod', ignoreComponents = []) {
 	for (var fileIndex = 0, fileLen = fileNames.length; fileIndex < fileLen; fileIndex++) {
 		var fileName = fileNames[fileIndex],
 			splitName = fileName.replace('./', '').split('/'),
-			componentName = "",
-			styleName = "";
+			componentName = '',
+			styleName = '';
 
 		if (splitName[0] == themeName) {
 			var splitLen = splitName.length,
@@ -36,15 +38,15 @@ var init = function(themeName = 'peapod', ignoreComponents = []) {
 			if (fileType == 'component.jsx' || fileType == 'style.js') {
 				for (var splitIndex = 1; splitIndex < (splitLen - 1); splitIndex++) {
 					var splitVal = splitName[splitIndex],
-						splitValUpper = "";
+						splitValUpper = '';
 
 					if (splitVal.length == 1) {
-						splitValUpper = splitVal.charAt(0).toUpperCase()
+						splitValUpper = splitVal.charAt(0).toUpperCase();
 					} else {
-						splitValUpper = splitVal.charAt(0).toUpperCase() + splitVal.slice(1)
+						splitValUpper = splitVal.charAt(0).toUpperCase() + splitVal.slice(1);
 					}
 
-					if (componentName == "") {
+					if (componentName == '') {
 						componentName = splitValUpper;
 						styleName = splitVal;
 					} else {
@@ -82,8 +84,11 @@ var init = function(themeName = 'peapod', ignoreComponents = []) {
 	var componentNameKeys = Object.keys(componentNames);
 
 	for (var componentNameIndex = 0, componentNameLen = componentNameKeys.length; componentNameIndex < componentNameLen; componentNameIndex++) {
-		var componentName = componentNameKeys[componentNameIndex];
-		module.exports[componentName] = req(componentNames[componentName]);
+		var componentName = componentNameKeys[componentNameIndex],
+			component = req(componentNames[componentName]);
+		//module.exports[componentName] = component(componentName);
+
+		module.exports[componentName] = Wrapper(component);
 	}
 }
 
