@@ -23,6 +23,7 @@ var Timestamp = React.createClass({
 		//dateTime
 		//new Date() / UNIX time / ISO 8601 / (deprecated) RFC2822
 		time: React.PropTypes.oneOfType([
+			React.PropTypes.object,
 			React.PropTypes.string,
 			React.PropTypes.number
 		]),
