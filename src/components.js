@@ -57,7 +57,10 @@ var init = function(themeName = 'peapod', ignoreComponents = []) {
 					if (fileType == 'component.jsx') {
 						componentNames[componentName] = fileName;
 					} else if (fileType == 'style.js') {
-						styleSheets[styleName] = fileName;
+						styleSheets[styleName] = {
+							fileName: fileName,
+							componentName: componentName,
+						};
 					}
 				}
 			}

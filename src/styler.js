@@ -43,9 +43,9 @@ window.Pod_Styler = window.Pod_Styler || {
 			componentKeys = Object.keys(componentFiles);
 		for (let i = 0, len = componentKeys.length; i < len; i++) {
 			let componentName = componentKeys[i],
-				stylesheet = requireFunc(componentFiles[componentName]);
+				stylesheet = requireFunc(componentFiles[componentName].fileName);
 
-			components[componentName] = stylesheet(componentName);
+			components[componentFiles[componentName].componentName] = stylesheet(componentName);
 		}
 
 		let library = {
@@ -279,7 +279,7 @@ window.Pod_Styler = window.Pod_Styler || {
 				state: instance.state || {},
 				props: instance.props || {},
 				styler: styler,
-				componentName: componentName.toLowerCase(),
+				componentName: componentName,
 				scene: scene
 			};
 
