@@ -33,12 +33,11 @@ module.exports = {
 
 	module: {
 
-		preLoaders: [{
-			test: /\.json$/,
-			loader: 'json'
-		}],
-
 		loaders: [
+			{
+				include: /\.json$/,
+	    		loaders: ['json-loader']
+			}, 
 			{
 				test: /\.jsx?$/,
 				loaders: ['react-hot', 'babel'],

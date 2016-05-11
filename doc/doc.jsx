@@ -5,9 +5,9 @@ import ReactDOMServer from 'react-dom/server'
 import _ from 'lodash'
 
 //Peapod
-import 'peapod/vars'
-import 'peapod/styler'
-import 'peapod/components'
+import 'vars'
+import 'styler'
+import 'components'
 
 var Color = require("color")
 var Remarkable = require('remarkable');
