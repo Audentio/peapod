@@ -32,7 +32,6 @@ class Draggable extends React.Component {
 
     onDragStart(event){
         // event.preventDefault();
-        console.log(event)
         if (typeof this.props.onDragStart == 'function')
             this.props.onDragStart(event)
     }

@@ -55,7 +55,6 @@ class Datepicker extends React.Component {
 
     onChange(date) {
         date = new Date(date)
-        console.log(date);
         var value = this.dateValue(date);
         this.setState({
             value,

@@ -31,7 +31,6 @@ class Tooltip extends React.Component {
     componentWillMount() {
         var {show, hovering} = this.props
         this.state = {show, hovering}
-        console.log(this.state)
     }
 
     componentWillReceiveProps(nextProps) {

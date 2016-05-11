@@ -20,10 +20,6 @@ import {globals, addDays, setDayOfWeek, getDates, resetTime, daysInMonth, getMon
 */
 class Calendar extends React.Component {
 
-    constructor() {
-        super();
-    }
-
     componentWillMount() {
         const now = (this.props.date && this.props.month && this.props.year) ?
             new Date(this.props.year, this.props.month, this.props.date) :
