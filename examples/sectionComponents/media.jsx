@@ -22,10 +22,10 @@ export default class MediaSection extends React.Component {
                                     <Pod.heading kind="h4">Not a media element(Level 1 elements)</Pod.heading>
                                     <Pod.paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint quaerat ex, rerum nulla officia expedita deleniti excepturi debitis vitae ea deserunt. Nihil quo voluptate ad atque veritatis, officia itaque sunt!
 
-                                        <Pod.anchor to="apples.com">Anchor</Pod.anchor>.
-                                        <Pod.anchor to="www.apples.com">Anchor</Pod.anchor>.
-                                        <Pod.anchor to="http://apples.com">Anchor</Pod.anchor>.
-                                        <Pod.anchor to="https://apples.com">Anchor</Pod.anchor>.
+                                        <Pod.anchor href="apples.com">Anchor</Pod.anchor>.
+                                        <Pod.anchor href="www.apples.com">Anchor</Pod.anchor>.
+                                        <Pod.anchor href="http://apples.com">Anchor</Pod.anchor>.
+                                        <Pod.anchor href="https://apples.com">Anchor</Pod.anchor>.
                                     </Pod.paragraph>
                                 </Pod.block>
                             </Pod.block>
