@@ -8,7 +8,7 @@ var sheet = new Sheet('Parallax'),
 //Conditions
 //Variables
 sheet.setValues({
-    height: '100vh',
+    height: '50vh',
     width: '100vw'
 });
 
@@ -16,9 +16,9 @@ main.addSelector({
     common: {
         height: '$Parallax.height',
         width: '$Parallax.width',
-        perspective: '1px',
         overflow: 'hidden',
-        position: 'relative'
+        position: 'relative',
+        background:'red'
     }
 });
 front.addSelector({
@@ -27,7 +27,7 @@ front.addSelector({
         width: '$Parallax.width',
         position: 'absolute',
         top: 0, left: 0,
-        transform: 'translateZ(0)',
+        willChange: 'transform'
     }
 });
 back.addSelector({
@@ -36,7 +36,7 @@ back.addSelector({
         width: '$Parallax.width',
         position: 'absolute',
         top: 0, left: 0,
-        transform: 'translateZ(-2px) scale(3)'
+        willChange: 'transform'
     }
 });
 

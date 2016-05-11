@@ -5,6 +5,9 @@ var sheet = new Sheet('menuItem'),
     anchor = sheet.addPart('anchor'),
     subtext = sheet.addPart('subtext');
 
+// Conditions
+sheet.addCondition('hovered').addProp({hovered: true});
+
 //Variables
 sheet.setValues({});
 
@@ -21,6 +24,11 @@ main.addSelector({
         ':hover': {
             background: '$palette.grey100'
         }
+    }
+}).addSelector({
+    condition: ['hovered'],
+    common: {
+        background: '$palette.grey100'
     }
 });
 
