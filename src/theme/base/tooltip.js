@@ -7,10 +7,28 @@ var sheet = new Sheet('tooltip'),
     text = sheet.addPart('text');
 
 // Conditions
-sheet.addCondition('positionLeft').addStyler({position: 'left'});
+sheet.addCondition('positionTop').addFunction(function (instance) {
+    var styler = new Object(instance.props.styler);
+    return styler.hasOwnProperty('position') && /^top/.exec(styler.position);
+});
+sheet.addCondition('positionTopRight').addStyler({position: 'top-right'});
+sheet.addCondition('positionTopLeft').addStyler({position: 'top-left'});
+
 sheet.addCondition('positionRight').addStyler({position: undefined});
-sheet.addCondition('positionTop').addStyler({position: 'top'});
-sheet.addCondition('positionBottom').addStyler({position: 'bottom'});
+
+sheet.addCondition('positionBottom').addFunction(function (instance) {
+    var styler = new Object(instance.props.styler);
+    return styler.hasOwnProperty('position') && /^bottom/.exec(styler.position);
+});
+sheet.addCondition('positionBottomRight').addStyler({position: 'bottom-right'});
+sheet.addCondition('positionBottomLeft').addStyler({position: 'bottom-left'});
+
+sheet.addCondition('positionLeft').addFunction(function (instance) {
+    var styler = new Object(instance.props.styler);
+    return styler.hasOwnProperty('position') && /^left/.exec(styler.position);
+});
+
+
 sheet.addCondition('mobile').addStyler({mobile: true});
 
 
@@ -62,22 +80,9 @@ tooltip.addSelector({
         lineHeight: '$tooltip.mobile.height',
         fontSize: '$tooltip.mobile.fontSize',
     }
-}).addSelector({
-    condition: ['positionRight'],
-    common: {
-        left: '100%',
-        top: '50%',
-        marginLeft: '$tooltip.margin',
-        transform: 'translateY(-50%)'
-    }
-}).addSelector({
-    condition: ['positionLeft'],
-    common: {
-        left: 'auto', right: '100%',
-        marginLeft: 0, marginRight: '$tooltip.margin',
-        transform: 'translateY(-50%)'
-    }
-}).addSelector({
+})
+// top
+.addSelector({
     condition: ['positionTop'],
     common: {
         left: '50%',
@@ -88,6 +93,32 @@ tooltip.addSelector({
         transform: 'translateX(-50%)'
     }
 }).addSelector({
+    condition: ['positionTopRight'],
+    common: {
+        right: '0',
+        left: 'auto',
+        transform: 'none'
+    }
+}).addSelector({
+    condition: ['positionTopLeft'],
+    common: {
+        right: 'auto',
+        left: '0',
+        transform: 'none'
+    }
+})
+// right
+.addSelector({
+    condition: ['positionRight'],
+    common: {
+        left: '100%',
+        top: '50%',
+        marginLeft: '$tooltip.margin',
+        transform: 'translateY(-50%)'
+    }
+})
+// bottom
+.addSelector({
     condition: ['positionBottom'],
     common: {
         left: '50%',
@@ -96,15 +127,35 @@ tooltip.addSelector({
         marginTop: '$tooltip.margin',
         transform: 'translateX(-50%)'
     }
+}).addSelector({
+    condition: ['positionBottomRight'],
+    common: {
+        right: '0',
+        left: 'auto',
+        transform: 'none'
+    }
+}).addSelector({
+    condition: ['positionBottomLeft'],
+    common: {
+        right: 'auto',
+        left: '0',
+        transform: 'none'
+    }
+})
+// left
+.addSelector({
+    condition: ['positionLeft'],
+    common: {
+        left: 'auto',
+        right: '100%',
+        marginLeft: 0, marginRight: '$tooltip.margin',
+        transform: 'translateY(-50%)'
+    }
 });
 
 arrow.addSelector({
     common: {}
 });
-
-text.addSelector({
-    common: {}
-})
 
 
 module.exports = sheet;

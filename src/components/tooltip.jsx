@@ -45,7 +45,7 @@ class Tooltip extends React.Component {
         var tooltip = (this.props.show) ? (
             <div style={style.tooltip}>
                <div style={style.arrow}></div>
-               <div style={style.text}>{this.props.children}</div>
+               <div>{this.props.children}</div>
             </div>
         ) : '';
 
