@@ -17,8 +17,8 @@ import {isFunction as _isFunction} from 'lodash'
 import {Table_Row, Table_Header} from 'components.js';
 
 
-var Table_Inner = React.createClass({
-	propTypes: {
+module.exports = class Table_Inner extends React.Component {
+	static propTypes = {
 		columnNames: React.PropTypes.oneOfType([
             React.PropTypes.object,
             React.PropTypes.func
@@ -29,14 +29,14 @@ var Table_Inner = React.createClass({
 		children: React.PropTypes.object,
 		rowKey: React.PropTypes.string,
 		hoveredRow: React.PropTypes.number
-	},
+	}
 
-	shouldComponentUpdate: function(nextProps, nextState) {
+	shouldComponentUpdate(nextProps, nextState) {
 		//return true;
 		return !lodash.isEqual(nextProps, this.props)
-	},
+	}
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		var columnNames = this.props.columnNames;
@@ -70,6 +70,4 @@ var Table_Inner = React.createClass({
 			</div>
 		);
 	}
-})
-
-module.exports = Wrapper(Table_Inner);
+};

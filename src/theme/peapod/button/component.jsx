@@ -7,7 +7,6 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 
 /**
@@ -19,24 +18,20 @@ import Wrapper from 'wrapper.jsx';
 * @param {string} [kind=default] - Generic button style/state (danger/warning/success)
 *
 */
-var Button = React.createClass({
+module.exports = class Button extends React.Component {
 
 	//Validate props
-	propTypes: {
-		label: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.object ]),
+	static propTypes = {
 		href: React.PropTypes.string,
 		disabled: React.PropTypes.bool
-	},
+	}
 
 	//Default props
-	getDefaultProps: function() {
-		return {
-			label: 'Submit',
-			styler: {}
-		}
-	},
+	static defaultProps = {
+		label: 'Submit',
+	}
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		//Anchor tag <a> if href specified
@@ -60,6 +55,4 @@ var Button = React.createClass({
 		}
 	}
 
-});
-
-module.exports = Wrapper(Button);
+};

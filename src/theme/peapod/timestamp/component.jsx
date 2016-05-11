@@ -7,7 +7,6 @@ import React from 'react';
 import moment from 'moment';
 
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 import {merge as _merge} from 'lodash'
 
 
@@ -17,22 +16,35 @@ import {merge as _merge} from 'lodash'
 * @element Pod_liveTimestamp
 * @property {(string|integer|Object)} time - Date() / UNIX time / ISO 8601
 */
-var Pod_liveTimestamp = React.createClass({
+module.exports = class Timestamp extends React.Component {
 
-	getDefaultProps: function(){
-		return {
-			time: Math.floor( Date.now() / 1000 ),
-			timezone: "UTC",
-			output: "absolute",
-			outputTimezone: null, //inherit input timezone
-			showTime: true,
-			showDate: true,
-			format: null //timezone overrides output, showTime and showDate 'MMMM Do YYYY, h:mm a'
+	constructor(props, context) {
+		super(props, context);
+
+		this.createMomentObject();
+
+		if (props.output == "relative") {
+			this.state = {
+				timeElapsed: this.timeElapsed()
+			}
+		} else {
+			this.state = {}
 		}
-	},
+
+	}
+
+	static defaultProps = {
+		time: Math.floor( Date.now() / 1000 ),
+		timezone: "UTC",
+		output: "absolute",
+		outputTimezone: null, //inherit input timezone
+		showTime: true,
+		showDate: true,
+		format: null //timezone overrides output, showTime and showDate 'MMMM Do YYYY, h:mm a'
+	}
 
 	//create moment object from time prop
-	createMomentObject: function(){
+	createMomentObject(){
 
 		//try as unix timestamp
 		var momentObject = moment.unix(Number(this.props.time))
@@ -42,25 +54,18 @@ var Pod_liveTimestamp = React.createClass({
 		}
 
 		this.timestamp = momentObject;
-	},
+	}
 
 	/* returns the amount of seconds elapsed since {this.props.time} */
-	timeElapsed: function(){
+	timeElapsed() {
 		return this.timestamp.fromNow();
-	},
+	}
 
-	getInitialState: function() {
-
+	componentWillUpdate() {
 		this.createMomentObject();
+	}
 
-		return (this.props.output == "relative") ? { timeElapsed: this.timeElapsed() } : null
-	},
-
-	componentWillUpdate: function(){
-		this.createMomentObject();
-	},
-
-	componentDidMount: function(){
+	componentDidMount() {
 
 		if (this.props.output == "relative") {
 			let self = this;
@@ -71,14 +76,14 @@ var Pod_liveTimestamp = React.createClass({
 				})
 			}, 1000*60) //60 seconds
 		}
-	},
+	}
 
-	componentWillUnmount: function(){
+	componentWillUnmount() {
 		//stop repeater
 		window.clearTimeout( this._timer )
-	},
+	}
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this),
 			display,
 			format = this.props.format;
@@ -119,6 +124,4 @@ var Pod_liveTimestamp = React.createClass({
 			</span>
 		)
 	}
-});
-
-module.exports = Wrapper(Pod_liveTimestamp);
+};

@@ -5,25 +5,18 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
-
-
-//var lodash = require('lodash')
-//var reduce = lodash.reduce;
-//var isPlainObject = lodash.isPlainObject;
-//var isUndefined = lodash.isUndefined;
 
 import {reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined} from 'lodash'
 
 import {Table_Cell} from 'components.js';
 
-var Table_Row = React.createClass({
-	shouldComponentUpdate: function(nextProps, nextState) {
+module.exports = class Table_Row extends React.Component {
+	shouldComponentUpdate(nextProps, nextState) {
 		//return true;
 		return !lodash.isEqual(nextProps, this.props)
-	},
+	}
 
-	render: function() {
+	render() {
 		var row = this.props.row,
 			rowKey = this.props.rowKey,
 			i = this.props.i,
@@ -87,6 +80,4 @@ var Table_Row = React.createClass({
 		);
 	}
 
-});
-
-module.exports = Wrapper(Table_Row);
+};

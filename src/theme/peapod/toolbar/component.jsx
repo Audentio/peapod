@@ -8,8 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
-
 
 /**
 * Template component
@@ -17,7 +15,7 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_modal
 *
 */
-class Toolbar extends React.Component {
+module.exports = class Toolbar extends React.Component {
 
     constructor() {
         super();
@@ -35,5 +33,3 @@ class Toolbar extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Toolbar);

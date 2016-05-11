@@ -8,14 +8,19 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 import {Heading} from 'components.js'
 
 /**
 * Card component
 * @element Code
 */
-class Card extends React.Component {
+module.exports = class Card extends React.Component {
+
+	static defaultProps = {
+	    title: false,
+	    actionBar: false,
+	    actionBarLocation: 'bottom'
+	}
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -58,11 +63,3 @@ class Card extends React.Component {
     }
 
 };
-
-Card.defaultProps = {
-    title: false,
-    actionBar: false,
-    actionBarLocation: 'bottom'
-};
-
-module.exports = Wrapper(Card);

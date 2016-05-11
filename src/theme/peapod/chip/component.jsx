@@ -8,19 +8,18 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 import {Icon} from 'components.js'
 
 /**
 * Card component
 * @element Code
 */
-class Chip extends React.Component {
+module.exports = class Chip extends React.Component {
 
-    defaultProps = {
-        deleteTrigger: false,
-        photo: false
-    }
+	static defaultProps = {
+		deleteTrigger: false,
+		photo: false
+	}
 
     componentWillMount() {
         this.state = {
@@ -59,5 +58,3 @@ class Chip extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Chip);

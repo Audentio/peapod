@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 import {Icon} from 'components.js';
 
 /**
@@ -21,10 +20,23 @@ import {Icon} from 'components.js';
 * @param {string} [placeholder] - Placeholder text
 *
 */
-var Input = React.createClass({
+module.exports = class Input extends React.Component {
+
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {
+			value: this.props.value,
+			focus: false,
+
+			///8
+			placeholder: (this.props.value && this.props.value.length > 1) ? '' : this.props.placeholder,
+			evaluation: null //validation state
+		}
+	}
 
 	//Validate props
-	propTypes: {
+	static propTypes = {
 		type: React.PropTypes.oneOf(['text','password', 'email', 'url', 'number']),
 		value: React.PropTypes.string,
 		placeholder: React.PropTypes.string,
@@ -34,34 +46,21 @@ var Input = React.createClass({
 			React.PropTypes.bool
 		]),
 		validationResponse: React.PropTypes.object
-	},
+	}
 
-	getDefaultProps: function(){
-		return {
-			type: 'text',
+	static defaultProps = {
+		type: 'text',
 
-			//validation is disabled by default
-			validate: false,
-			validationResponse: {
-				invalid: 'Invalid input',
-				valid: 'Valid',
-				empty: 'This field is required'
-			}
+		//validation is disabled by default
+		validate: false,
+		validationResponse: {
+			invalid: 'Invalid input',
+			valid: 'Valid',
+			empty: 'This field is required'
 		}
-	},
+	}
 
-	getInitialState: function() {
-		return {
-			value: this.props.value,
-			focus: false,
-
-			///8
-			placeholder: (this.props.value && this.props.value.length > 1) ? '' : this.props.placeholder,
-			evaluation: null //validation state
-		}
-	},
-
-	evaluate: function(value){
+	evaluate(value){
 
 		//If value is empty
 		// -- return 'empty' if required
@@ -87,9 +86,9 @@ var Input = React.createClass({
 				return 'valid'
 
 		}
-	},
+	}
 
-	validate: function(value = this.state.value) {
+	validate(value = this.state.value) {
 
 		//no validation required. halt
 		if(!this.props.validate)
@@ -101,9 +100,9 @@ var Input = React.createClass({
 
 		this.setState({evaluation:evaluation})
 
-	},
+	}
 
-	onChangeHandler: function(e){
+	onChangeHandler(e){
 		var value = e.target.value,
 			placeholder = ( value.length > 0 ) ? '' : this.props.placeholder,
 			callback = this.props.callback || function() {};
@@ -116,13 +115,13 @@ var Input = React.createClass({
 		callback(value)
 
 		this.setState({ value: value , placeholder: placeholder });
-	},
+	}
 
-	onFocus: function(e){
+	onFocus(e){
 		this.setState({ focus: true })
-	},
+	}
 
-	onBlur: function(e){
+	onBlur(e){
 		this.setState({ focus: false })
 
 		//autofix missing protocol
@@ -139,9 +138,9 @@ var Input = React.createClass({
 		} else {
 			this.validate()
 		}
-	},
+	}
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		//Message to show in response box
@@ -178,7 +177,4 @@ var Input = React.createClass({
 		);
 	}
 
-});
-
-
-module.exports = Wrapper(Input);
+};

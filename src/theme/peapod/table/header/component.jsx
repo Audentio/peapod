@@ -5,8 +5,6 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
-
 
 //var lodash = require('lodash')
 //var reduce = lodash.reduce;
@@ -14,13 +12,13 @@ import {reduce as _reduce} from 'lodash'
 
 import {Icon, Table_Cell} from 'components.js';
 
-var Table_Header = React.createClass({
-	propTypes: {
+module.exports = class Table_Header extends React.Component {
+	static propTypes = {
 		config: React.PropTypes.object,
 		columns: React.PropTypes.array
-	},
+	}
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle({props: {
 			styler: {
 				styleLike: 'Table_Inner',
@@ -58,6 +56,4 @@ var Table_Header = React.createClass({
 			</div>
 		)
 	}
-})
-
-module.exports = Wrapper(Table_Header);
+};

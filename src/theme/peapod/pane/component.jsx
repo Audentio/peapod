@@ -9,32 +9,32 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
+module.exports = class Pane extends React.Component {
+	constructor(props, context) {
+		super(props, context);
 
-var Pane = React.createClass({
-	childContextTypes: {
-		_podPaneWidth: React.PropTypes.number
-	},
-
-	getInitialState() {
-		return {
+		this.state = {
 			_podPaneWidth: -1
 		}
-	},
+	}
+
+	static childContextTypes = {
+		_podPaneWidth: React.PropTypes.number
+	}
 
 	getChildContext() {
 		return {
 			_podPaneWidth: this.state._podPaneWidth
 		}
-	},
+	}
 
 	componentDidMount() {
 		//initial check
 		this.widthCheck();
 		//start listening for viewport events
-		window.addEventListener('resize', this.widthCheck)
-	},
+		window.addEventListener('resize', this.widthCheck.bind(this))
+	}
 
 	widthCheck() {
 		var element = this.refs.pane
@@ -47,7 +47,7 @@ var Pane = React.createClass({
 		if (width != this.state._podPaneWidth){
 			this.setState({_podPaneWidth: width});
 		}
-	},
+	}
 
 	render() {
 		var {styler, children, ...other} = this.props,
@@ -59,6 +59,4 @@ var Pane = React.createClass({
 			</div>
 		);
 	}
-});
-
-module.exports = Wrapper(Pane);
+};

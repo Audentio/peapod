@@ -8,8 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
-
 
 /**
 * Template component
@@ -17,9 +15,9 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_hr
 *
 */
-var Hr = React.createClass({
+module.exports = class Hr extends React.Component {
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 		return (
 			<hr style={style.main} />
@@ -27,6 +25,4 @@ var Hr = React.createClass({
 
 	}
 
-});
-
-module.exports = Wrapper(Hr);
+};

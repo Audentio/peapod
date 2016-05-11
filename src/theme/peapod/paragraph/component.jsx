@@ -8,8 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
-
 
 /**
 * Template component
@@ -17,9 +15,9 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_template
 *
 */
-var Paragraph = React.createClass({
+module.exports = class Paragraph extends React.Component {
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		return (
@@ -30,6 +28,4 @@ var Paragraph = React.createClass({
 
 	}
 
-});
-
-module.exports = Wrapper(Paragraph);
+};

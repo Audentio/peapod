@@ -5,12 +5,9 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
 
-
-
-var Grid_Cell = React.createClass({
-	render: function() {
+ module.exports = class Grid_Cell extends React.Component {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 		return (
 			<div style={style.main}>
@@ -19,6 +16,4 @@ var Grid_Cell = React.createClass({
 		);
 	}
 
-});
-
-module.exports = Wrapper(Grid_Cell);
+};

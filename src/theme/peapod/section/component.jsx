@@ -5,11 +5,9 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
-
-var Section = React.createClass({
-	render: function() {
+module.exports = class Section extends React.Component {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		return (
@@ -19,6 +17,4 @@ var Section = React.createClass({
 		);
 	}
 
-});
-
-module.exports = Wrapper(Section);
+};

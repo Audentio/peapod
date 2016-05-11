@@ -8,13 +8,12 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * Embed component
 * @element Code
 */
-class Embed extends React.Component {
+module.exports = class Embed extends React.Component {
 
     render() {
         this.style = Pod_Styler.getStyle(this);
@@ -32,5 +31,3 @@ class Embed extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Embed);

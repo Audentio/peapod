@@ -6,7 +6,6 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * Radio component (single radio item)
@@ -18,18 +17,20 @@ import Wrapper from 'wrapper.jsx';
 *
 */
 
-var Radio = React.createClass({
+module.exports = class Radio extends React.Component {
 
-    propTypes: {
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {
+			checked: props.checked == true,
+		}
+	}
+
+    static propTypes = {
         group: React.PropTypes.string.isRequired,
         label: React.PropTypes.string
-    },
-
-	getInitialState() {
-		return {
-			checked: this.props.checked == true,
-		}
-	},
+    }
 
 	onChangeHandler(e){
 		if (typeof(this.props.onChange) !== 'undefined') this.props.onChange(e.target.checked);
@@ -51,7 +52,7 @@ var Radio = React.createClass({
         }
 
         this.setState({ checked: this.refs.input.checked })
-	},
+	}
 
 	componentWillReceiveProps(nextProps) {
 		if (typeof(nextProps.checked) !== 'undefined') {
@@ -59,11 +60,11 @@ var Radio = React.createClass({
 				checked: nextProps.checked == true
 			})
 		}
-	},
+	}
 
 	componentWillMount() {
 		if (typeof(this.props.onChange) !== 'undefined') this.props.onChange(this.state.checked);
-	},
+	}
 
 	render(){
         var style = Pod_Styler.getStyle(this);
@@ -72,13 +73,11 @@ var Radio = React.createClass({
 				<label style={style.wrapper_inner}>
 					<span style={style.radio_outer}>
                         <span style={style.radio_inner}></span>
-						<input ref="input" type="radio" style={style.radio_element} onChange={this.onChangeHandler} name={this.props.group} {...this.props} />
+						<input ref="input" type="radio" style={style.radio_element} onChange={this.onChangeHandler.bind(this)} name={this.props.group} {...this.props} />
 					</span>
 					<span style={style.label} >{this.props.label}</span>
 				</label>
 			</div>
 		);
 	}
-})
-
-module.exports = Wrapper(Radio);
+}

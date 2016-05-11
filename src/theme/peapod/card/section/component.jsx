@@ -8,13 +8,17 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * Card component
 * @element Code
 */
-class Card_Section extends React.Component {
+module.exports = class Card_Section extends React.Component {
+
+	static defaultProps = {
+	    mediaTitle: false
+	};
+
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -35,9 +39,3 @@ class Card_Section extends React.Component {
     }
 
 };
-
-Card_Section.defaultProps = {
-    mediaTitle: false
-};
-
-module.exports = Wrapper(Card_Section);

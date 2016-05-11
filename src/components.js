@@ -86,8 +86,6 @@ var init = function(themeName = 'peapod', ignoreComponents = []) {
 	for (var componentNameIndex = 0, componentNameLen = componentNameKeys.length; componentNameIndex < componentNameLen; componentNameIndex++) {
 		var componentName = componentNameKeys[componentNameIndex],
 			component = req(componentNames[componentName]);
-		//module.exports[componentName] = component(componentName);
-
 		module.exports[componentName] = Wrapper(component);
 	}
 }

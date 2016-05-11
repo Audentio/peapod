@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 
 /**
@@ -17,9 +16,9 @@ import Wrapper from 'wrapper.jsx';
 * @element Strong
 *
 */
-var Strong = React.createClass({
+module.exports = class Strong extends React.Component {
 
-	render: function() {
+	render() {
 		let style = Pod_Styler.getStyle(this);
 
 		return (
@@ -29,6 +28,4 @@ var Strong = React.createClass({
 		)
 	}
 
-})
-
-module.exports = Wrapper(Strong)
+}

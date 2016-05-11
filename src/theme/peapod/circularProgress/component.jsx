@@ -5,27 +5,23 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
 
-var CircularProgress = React.createClass({
-
-	propTypes: {
+module.exports = class CircularProgress extends React.Component {
+	static propTypes = {
 		value: 			React.PropTypes.number,
 		max: 			React.PropTypes.number
-	},
+	}
 
-	getDefaultProps() {
-		return {
-			value: 0,
-			max: 100
-        }
-	},
+	static defaultProps = {
+		value: 0,
+		max: 100
+	}
 
-    getTransform(){
+	getTransform(){
         return {
             transform: `rotate(${this.props.value*1.8}deg)`
         };
-    },
+    }
 
     render() {
 		var style = Pod_Styler.getStyle(this);
@@ -47,7 +43,4 @@ var CircularProgress = React.createClass({
             </div>
         )
     }
-
-})
-
-module.exports = Wrapper(CircularProgress)
+}

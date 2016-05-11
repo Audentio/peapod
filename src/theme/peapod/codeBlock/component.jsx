@@ -6,7 +6,6 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 import Pod_Helper from 'helper.js'
 
 
@@ -26,18 +25,18 @@ import Highlightjs from 'highlight.js/lib/highlight.js'
 * @param {boolean} [highlight=true] - Enable syntax highlighting
 * @param {string} [language] - Manually specify language (auto-selected by default)
 */
-var CodeBlock = React.createClass({
+module.exports = class CodeBlock extends React.Component {
 
-    propTypes: {
+    static propTypes = {
         highlight: React.PropTypes.bool,
         language: React.PropTypes.string
-    },
+    }
 
-    getDefaultProps() {
-        highlight: true
-    },
+	static defaultProps = {
+		highlight: true
+	}
 
-    highlightCode(){
+    highlightCode() {
         var container = this.refs.codeContainer,
             _this = this;
 
@@ -64,20 +63,20 @@ var CodeBlock = React.createClass({
 
         container.innerHTML = highlighted.value
         container.setAttribute('data-lang', highlighted.language)
-    },
+    }
 
     componentWillMount() {
         if(!window.hljs) window.hljs = Highlightjs;
         Pod_Helper.addStylesheet('HLJS', '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/github-gist.min.css')
-    },
+    }
 
     componentWillUpdate() {
         this.highlightCode()
-    },
+    }
 
     componentDidMount(){
         this.highlightCode()
-    },
+    }
 
 	render() {
         var style = Pod_Styler.getStyle(this)
@@ -87,7 +86,4 @@ var CodeBlock = React.createClass({
     		</pre>
 		);
 	}
-
-});
-
-module.exports = Wrapper(CodeBlock);
+};

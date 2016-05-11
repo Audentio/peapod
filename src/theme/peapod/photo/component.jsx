@@ -7,8 +7,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
-
 import {Icon} from 'components.js';
 import Pod_helper from 'helper.js'
 
@@ -48,13 +46,18 @@ var options = Pod_helper.options('Pea_photo', {
 * @param {bool} [lightbox] - Enable lightbox on instance
 * @param {bool} [lightboxAnimation] - Animated lightbox (ability to turn off for specific high-res images)
 */
-var Photo = React.createClass({
+module.exports = class Photo extends React.Component {
 
-	docDefault: {
-		src: 'test.jpg'
-	},
+	constructor(props, context) {
+		super(props, context);
 
-	propTypes: {
+		this.state = {
+			visible: (this.props.lazy) ? false : true,
+			lightboxVisible: false,
+			fullscreenIcon: (Pod_helper.fullscreen.isEnabled()) ? 'fullscreen_exit' : 'fullscreen'		}
+	}
+
+	static propTypes = {
 		src: React.PropTypes.string.isRequired,
 		hidpiData: React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.bool ]),
 		alt: React.PropTypes.string,
@@ -63,36 +66,24 @@ var Photo = React.createClass({
 		lazyDistance: React.PropTypes.number,
 		lightbox: React.PropTypes.bool,
 		lightboxAnimation: React.PropTypes.bool
-	},
+	}
 
+	static defaultProps = {
+		hidpiData: options.hidpi,
+		lazy: options.lazy,
+		lazyDistance: options.lazyDistance,
+		lightbox: options.lightbox,
+		styler: options.styler,
+		lightboxAnimation: options.lightboxAnimation
+	}
 
-	getDefaultProps: function() {
-		return {
-			hidpiData: options.hidpi,
-			lazy: options.lazy,
-			lazyDistance: options.lazyDistance,
-			lightbox: options.lightbox,
-			styler: options.styler,
-			lightboxAnimation: options.lightboxAnimation
-		}
-	},
-
-
-	getInitialState: function() {
-		return {
-			visible: (this.props.lazy) ? false : true,
-			lightboxVisible: false,
-			fullscreenIcon: (Pod_helper.fullscreen.isEnabled()) ? 'fullscreen_exit' : 'fullscreen'
-		};
-	},
-
-	keyHandler: function(e){
+	keyHandler(e){
 		if(e.keyCode == Pod_helper.keymap['esc']){
 			this.hideLightbox();
 		}
-	},
+	}
 
-	toggleFullscreen: function(){
+	toggleFullscreen(){
 		Pod_helper.fullscreen.toggle()
 
 		if(Pod_helper.fullscreen.isEnabled()){
@@ -100,10 +91,10 @@ var Photo = React.createClass({
 		} else {
 			this.setState({fullscreenIcon: 'fullscreen'})
 		}
-	},
+	}
 
 	//show lightbox
-	showLightbox: function(){
+	showLightbox(){
 
 		if(!this.props.lightbox){
 			return false;
@@ -116,11 +107,11 @@ var Photo = React.createClass({
 
 		//add keyboard listener
 		window.addEventListener('keydown', this.keyHandler)
-	},
+	}
 
 	//hide lightbox
 	//uses setTimeout to delay hiding lightbox - page scrolls to top without that.
-	hideLightbox: function(){
+	hideLightbox(){
 		/*
 		var delay = 0, _this = this;
 
@@ -152,11 +143,11 @@ var Photo = React.createClass({
 		//remove keyboard listener
 		window.removeEventListener('keydown', this.keyHandler)
 
-	},
+	}
 
 	//Onclick handler
 	//decides whether to hide or not
-	lightboxOnClick: function(e){
+	lightboxOnClick(e){
 
 		//overlay is clicked
 		//hide
@@ -171,11 +162,11 @@ var Photo = React.createClass({
 			newWindow.focus();
 		}
 
-	},
+	}
 
 	//Check if element is within the defined viewport range
 	// -- {lazyDistance}px above and below current viewport
-	lazyCheck: function() {
+	lazyCheck() {
 
 		var bounds = ReactDOM.findDOMNode(this).getBoundingClientRect(),
 		scrollTop = window.pageYOffset,
@@ -187,14 +178,14 @@ var Photo = React.createClass({
 			this.removeListener(); //stop listening, the show is over
 		}
 
-	},
+	}
 
-	removeListener: function() {
+	removeListener() {
 		window.removeEventListener('scroll', this.lazyCheck);
 		window.removeEventListener('resize', this.lazyCheck);
-	},
+	}
 
-	componentDidMount: function() {
+	componentDidMount() {
 
 		//initial check
 		this.lazyCheck();
@@ -202,20 +193,20 @@ var Photo = React.createClass({
 		//start listening for viewport events
 		if(this.props.lazy) { window.addEventListener('scroll', this.lazyCheck) }
 
-	},
+	}
 
 	//re-check on update
-	componentDidUpdate: function() {
+	componentDidUpdate() {
 		if(!this.state.visible) this.lazyCheck();
-	},
+	}
 
 	//stop listening if component is about to unmount
-	componentWillUnmount: function() {
+	componentWillUnmount() {
 		this.removeListener();
-	},
+	}
 
 
-	componentWillMount: function(){
+	componentWillMount(){
 
 		var hiDpiData = this.props.hidpiData;
 
@@ -243,28 +234,27 @@ var Photo = React.createClass({
 		else { //hiDPI is disabled. Load normal resource
 			this.imageURL = this.props.src;
 		}
+	}
 
-	},
-
-	downloadFile: function(){
+	downloadFile(){
 		Pod_helper.downloadFile(this.imageURL)
-	},
+	}
 
-	openInNew: function(){
+	openInNew(){
 		if( Pod_helper.fullscreen.isEnabled() ) {
 			Pod_helper.fullscreen.exit();
 			this.setState({fullscreenIcon: 'fullscreen'});
 		}
 		var newTab = window.open(this.imageURL, '_blank');
   		newTab.focus();
-	},
+	}
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		return (
 			<div style={style.main}>
-				<img onClick={this.showLightbox} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
+				<img onClick={this.showLightbox.bind(this)} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
 					style={style.image} />
 
 				{	this.props.caption &&
@@ -279,15 +269,15 @@ var Photo = React.createClass({
 						</div>
 
 						<div style={style.lightboxActions}>
-							<Icon styler={{style: style.lightboxAction}} onClick={this.hideLightbox}>close</Icon>
+							<Icon styler={{style: style.lightboxAction}} onClick={this.hideLightbox.bind(this)}>close</Icon>
 							{	Pod_helper.fullscreen.isAvailable() &&
-								<Icon styler={{style: style.lightboxAction}} onClick={this.toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
+								<Icon styler={{style: style.lightboxAction}} onClick={this.toggleFullscreen.bind(this)}>{this.state.fullscreenIcon}</Icon>
 							}
 
 							{	this.props.allowDownload &&
-								<Icon onClick={this.downloadFile} styler={{style: style.lightboxAction}}>file_download</Icon> }
+								<Icon onClick={this.downloadFile.bind(this)} styler={{style: style.lightboxAction}}>file_download</Icon> }
 
-							<Icon onClick={this.openInNew} styler={{style: style.lightboxAction}}>open_in_new</Icon>
+							<Icon onClick={this.openInNew.bind(this)} styler={{style: style.lightboxAction}}>open_in_new</Icon>
 
 						</div>
 					</div>
@@ -295,6 +285,4 @@ var Photo = React.createClass({
 			</div>
 		);
 	}
-});
-
-module.exports = Wrapper(Photo)
+};

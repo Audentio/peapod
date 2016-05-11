@@ -1,9 +1,8 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 import {Portal, Menu as Pod_Menu, Menu_Item} from 'components.js'
 
-class Menu extends React.Component {
+module.exports = class Menu extends React.Component {
     constructor() {
         super();
 
@@ -11,6 +10,11 @@ class Menu extends React.Component {
             show: false
         }
     }
+
+	static defaultProps = {
+	    click: false,
+	    json: false
+	}
 
     mouseEnter() {
         this.setState({show: true})
@@ -113,10 +117,3 @@ class Menu extends React.Component {
         }
     }
 };
-
-Menu.defaultProps = {
-    click: false,
-    json: false
-};
-
-module.exports = Wrapper(Menu);

@@ -3,13 +3,11 @@
  *  LICENSE: <%= package.licence %>
  */
 
- import React from 'react';
- import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
+import React from 'react';
+import Pod_Styler from 'styler.js';
 
-
-var Div = React.createClass({
-	render: function() {
+module.exports = class Div extends React.Component {
+	render() {
 		var {styler, children, ...other} = this.props,
 			style = Pod_Styler.getStyle(this);
 
@@ -20,6 +18,4 @@ var Div = React.createClass({
 		);
 	}
 
-});
-
-module.exports = Wrapper(Div);
+};

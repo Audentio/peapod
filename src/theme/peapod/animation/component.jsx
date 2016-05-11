@@ -8,7 +8,6 @@ import Radium from 'radium';
 
 import {merge as _merge} from 'lodash'
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * Animation wrapper: Add animation prop to components
@@ -92,4 +91,4 @@ var Pod_animation = ComposedComponent => class extends React.Component {
 
 }
 
-module.exports = Wrapper(Pod_animation);
+module.exports = Pod_animation;

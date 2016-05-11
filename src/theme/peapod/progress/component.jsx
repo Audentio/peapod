@@ -5,7 +5,6 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
 
 /**
 * Icon component
@@ -14,19 +13,17 @@
 * @param {number} [vaulue=-1] - Progress value. Negative values render indeterminate progress
 * @param {string} [max=100] - Max value. Default is 100 so `value` is basically a percentage unless max is changed
 */
-var Progress = React.createClass({
+module.exports = class Progress extends React.Component {
 
-	propTypes: {
+	static propTypes = {
 		value: 			React.PropTypes.number,
 		max: 			React.PropTypes.number
-	},
+	}
 
-	getDefaultProps() {
-		return {
-			value: -1,
-			max: 100
-		}
-	},
+	static defaultProsp = {
+		value: -1,
+		max: 100
+	}
 
 	getScale() {
 		var progress = (this.props.value < 0) ? 0 : this.props.value;
@@ -34,7 +31,7 @@ var Progress = React.createClass({
 		return {
             transform: `scaleX(${scale})`
         };
-	},
+	}
 
 	render() {
 		var style = Pod_Styler.getStyle(this);
@@ -46,6 +43,4 @@ var Progress = React.createClass({
 		)
 	}
 
-});
-
-module.exports = Wrapper(Progress);
+};

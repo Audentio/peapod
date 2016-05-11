@@ -3,9 +3,8 @@
  *  LICENSE: <%= package.licence %>
  */
 
- import React from 'react';
- import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
+import React from 'react';
+import Pod_Styler from 'styler.js';
 import {Icon} from 'components.js';
 
 
@@ -17,18 +16,32 @@ import {Icon} from 'components.js';
 * @param {string} [ID] - Unique identifier for persistent state storage
 *
 */
-var Alert = React.createClass({
+module.exports = class Alert extends React.Component {
 
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {
+			dismissed: this.isDismissed()
+		}
+	}
 
 	//Validate props
-	propTypes: {
+	static propTypes = {
 		dismissable: React.PropTypes.bool,
 		id: React.PropTypes.string
-	},
+	}
+
+	static defaultProps = {
+		dismissable: true,
+		styler: {
+			kind: 'general'
+		}
+	}
 
 
 	//Check if user dismissed the alert already
-	isDismissed: function() {
+	isDismissed() {
 
 		var persistentState = localStorage[`Pod_alert_${this.props.id}_hidden`];
 
@@ -37,12 +50,12 @@ var Alert = React.createClass({
 		}
 
 		return false
-	},
+	}
 
 
 	//@fucntion dismiss()
 	//onDismiss handler
-	dismiss: function() {
+	dismiss() {
 
 		//set state
 		this.setState({
@@ -59,27 +72,10 @@ var Alert = React.createClass({
 			//set persistent state (localStorage)
 			localStorage[`Pod_alert_${this.props.id}_hidden`] = true
 		}
-	},
+	}
 
 
-	getDefaultProps: function(){
-		return {
-			dismissable: true,
-			styler: {
-				kind: 'general'
-			}
-		}
-	},
-
-
-	getInitialState: function(){
-		return {
-			dismissed: this.isDismissed()
-		}
-	},
-
-
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		return (
@@ -103,7 +99,4 @@ var Alert = React.createClass({
 	}
 
 
-});
-
-
-module.exports = Wrapper(Alert);
+};

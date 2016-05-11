@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 
 /**
@@ -17,7 +16,7 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_modal
 *
 */
-class FixedElement extends React.Component {
+module.exports = class FixedElement extends React.Component {
 
     constructor() {
         super();
@@ -26,6 +25,10 @@ class FixedElement extends React.Component {
             origionalHeight: 0
         }
     }
+
+	static defaultProps = {
+	    onScroll: true
+	}
 
     componentDidMount() {
         var element = this.fixedElem
@@ -81,9 +84,3 @@ class FixedElement extends React.Component {
         }
     }
 };
-
-FixedElement.defaultProps = {
-    onScroll: true
-};
-
-module.exports = Wrapper(FixedElement);

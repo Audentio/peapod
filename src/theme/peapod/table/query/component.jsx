@@ -5,7 +5,6 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
 
 import {Button, Icon, Grid, Div, Portal} from 'components.js';
 
@@ -19,8 +18,8 @@ var topButtonStyle = {
 	margin: '$gutter.internal'
 }
 
-var Table_Query = React.createClass({
-	render: function() {
+module.exports = class Table_Query extends React.Component {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		var queries = this.props.queries || [],
@@ -76,6 +75,4 @@ var Table_Query = React.createClass({
 			</Div>
 		)
 	}
-})
-
-module.exports = Wrapper(Table_Query);
+};

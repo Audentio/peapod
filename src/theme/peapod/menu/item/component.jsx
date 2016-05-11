@@ -1,8 +1,10 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
-class Menu_Item extends React.Component {
+module.exports = class Menu_Item extends React.Component {
+	static defaultProps = {
+	    subtext: ' '
+	}
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -28,9 +30,3 @@ class Menu_Item extends React.Component {
         }
     }
 };
-
-Menu_Item.defaultProps = {
-    subtext: ' '
-};
-
-module.exports = Wrapper(Menu_Item);

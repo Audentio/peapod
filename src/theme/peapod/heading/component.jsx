@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 
 /**
@@ -17,7 +16,10 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_template
 *
 */
-class Heading extends React.Component {
+module.exports = class Heading extends React.Component {
+	static defaultProps = {
+		kind: 'h1'
+	}
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -32,9 +34,3 @@ class Heading extends React.Component {
     }
 
 };
-
-Heading.defaultProps = {
-    kind: 'h1'
-};
-
-module.exports = Wrapper(Heading);

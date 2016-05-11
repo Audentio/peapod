@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 import {Icon, Divider} from 'components.js'
 
@@ -16,7 +15,7 @@ import {Icon, Divider} from 'components.js'
 * ListItem component
 * @element Code
 */
-class List_Item extends React.Component {
+module.exports = class List_Item extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -59,5 +58,3 @@ class List_Item extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(List_Item);

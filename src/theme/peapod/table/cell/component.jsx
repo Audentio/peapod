@@ -3,18 +3,17 @@
  *  LICENSE: <%= package.licence %>
  */
 
- import React from 'react';
- import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
+import React from 'react';
+import Pod_Styler from 'styler.js';
 
-var Table_Cell = React.createClass({
+module.exports = class Table_Cell extends React.Component {
 
-	shouldComponentUpdate: function(nextProps, nextState) {
+	shouldComponentUpdate(nextProps, nextState) {
 		return true;
 		//return !lodash.isEqual(nextProps, this.props)
-	},
+	}
 
-	render: function() {
+	render() {
 		var column = this.props.column || {
 				centered: false,
 				hovered: false,
@@ -43,6 +42,4 @@ var Table_Cell = React.createClass({
 			</div>
 		)
 	}
-})
-
-module.exports = Wrapper(Table_Cell);
+};

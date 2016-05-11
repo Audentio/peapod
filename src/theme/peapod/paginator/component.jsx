@@ -22,9 +22,9 @@ function paginate(data, o) {
     };
 }
 
-var Paginator = React.createClass({
+class Paginator extends React.Component {
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		var page = this.props.page,
@@ -54,8 +54,8 @@ var Paginator = React.createClass({
 			</div>
 		)
 	}
-})
+}
 
 Paginator.paginate = paginate;
 
-module.exports = Wrapper(Paginator);
+module.exports = Paginator;

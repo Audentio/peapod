@@ -3,7 +3,6 @@ import shallowCompare from 'react/lib/shallowCompare';
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 import {Icon, Grid} from 'components.js';
 
@@ -18,9 +17,17 @@ function isNodeInRoot(node, root) {
 	return false;
 }
 
-var Portal = React.createClass({
+module.exports = class Portal extends React.Component {
 
-	propTypes: {
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {
+			active: false
+		}
+	}
+
+	static propTypes = {
 		className: React.PropTypes.string,
 		style: React.PropTypes.object,
 		children: React.PropTypes.element.isRequired,
@@ -32,31 +39,24 @@ var Portal = React.createClass({
 		onClose: React.PropTypes.func,
 		beforeClose: React.PropTypes.func,
 		noArrow: React.PropTypes.bool
-	},
+	}
 
-
-	getInitialState: function() {
-		return {
-			active: false
-		}
-	},
-
-	componentDidMount: function() {
+	componentDidMount() {
 		if (this.props.closeOnEsc) {
-			document.addEventListener('keydown', this.handleKeydown);
+			document.addEventListener('keydown', this.handleKeydown.bind(this));
 		}
 
 		if (this.props.closeOnOutsideClick) {
-			document.addEventListener('mousedown', this.handleOutsideMouseClick);
-			document.addEventListener('touchstart', this.handleOutsideMouseClick);
+			document.addEventListener('mousedown', this.handleOutsideMouseClick.bind(this));
+			document.addEventListener('touchstart', this.handleOutsideMouseClick.bind(this));
 		}
 
 		if (this.props.isOpened) {
 			this.openPortal(this.props);
 		}
-	},
+	}
 
-	componentWillReceiveProps: function(newProps) {
+	componentWillReceiveProps(newProps) {
 		// portal's 'is open' state is handled through the prop isOpened
 		if (typeof newProps.isOpened !== 'undefined') {
 			if (newProps.isOpened) {
@@ -75,9 +75,9 @@ var Portal = React.createClass({
 		if (typeof newProps.isOpened === 'undefined' && this.state.active) {
 			this.renderPortal(newProps);
 		}
-	},
+	}
 
-	componentWillUnmount: function() {
+	componentWillUnmount() {
 		if (this.props.closeOnEsc) {
 			document.removeEventListener('keydown', this.handleKeydown);
 		}
@@ -88,13 +88,13 @@ var Portal = React.createClass({
 		}
 
 		this.closePortal();
-	},
+	}
 
-	shouldComponentUpdate: function(nextProps, nextState) {
+	shouldComponentUpdate(nextProps, nextState) {
 		return shallowCompare(this, nextProps, nextState);
-	},
+	}
 
-	renderPortal: function(props) {
+	renderPortal(props) {
 		var trigger = this.trigger,
 			styler = Pod_Styler.getStyle({props: {
 				styler: {
@@ -144,10 +144,9 @@ var Portal = React.createClass({
 		this.node.style.left = left + 'px';
 		this.node.style.top = top + 'px';
 		this.node.style.visibility = 'visible';
-	},
+	}
 
-
-	render: function() {
+	render() {
 		if (this.props.trigger) {
 			var arrowIcon = (this.state.active) ? 'arrow_drop_up' : 'arrow_drop_down';
 
@@ -162,9 +161,9 @@ var Portal = React.createClass({
 		} else {
 			return <div>Specify a trigger...</div>;
 		}
-	},
+	}
 
-	openPortal: function(props, e) {
+	openPortal(props, e) {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -175,9 +174,9 @@ var Portal = React.createClass({
 		if (this.props.onOpen) {
 			this.props.onOpen(this.node);
 		}
-	},
+	}
 
-	closePortal: function() {
+	closePortal() {
 		const resetPortalState = () => {
 			if (this.node) {
 				ReactDOM.unmountComponentAtNode(this.node);
@@ -197,21 +196,19 @@ var Portal = React.createClass({
 		if (this.props.onClose) {
 			this.props.onClose();
 		}
-	},
+	}
 
-	handleOutsideMouseClick: function(e) {
+	handleOutsideMouseClick(e) {
 		if (!this.state.active) { return; }
 		if (isNodeInRoot(e.target, findDOMNode(this.portal)) || e.target.tagName === 'HTML') { return; }
 		e.stopPropagation();
 		this.closePortal();
-	},
+	}
 
-	handleKeydown: function(e) {
+	handleKeydown(e) {
 		// ESC
 		if (e.keyCode === 27 && this.state.active) {
 			this.closePortal();
 		}
-	},
-})
-
-module.exports = Wrapper(Portal);
+	}
+};

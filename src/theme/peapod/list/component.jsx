@@ -8,13 +8,12 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * List component
 * @element Code
 */
-class List extends React.Component {
+module.exports = class List extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -28,5 +27,3 @@ class List extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(List);

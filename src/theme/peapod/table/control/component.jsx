@@ -5,11 +5,9 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
 
-
-var Table_Control = React.createClass({
-	render: function() {
+ module.exports = class Table_Control extends React.Component {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		return (
@@ -18,6 +16,4 @@ var Table_Control = React.createClass({
 			</div>
 		);
 	}
-})
-
-module.exports = Wrapper(Table_Control);
+};

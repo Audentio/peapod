@@ -5,7 +5,6 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
 
 
  import {Portal, Button} from 'components.js';
@@ -21,14 +20,16 @@ var topButtonStyle = {
 	margin: '$gutter.internal'
 }
 
-var Table_Preset = React.createClass({
-	getInitialState: function() {
-		return {
-			presets: this.props.presets
-		}
-	},
+module.exports = class Table_Preset extends React.Component {
+	constructor(props, context) {
+		super(props, context);
 
-	checkPresetConditions: function(index) {
+		this.state = {
+			presets: props.presets
+		}
+	}
+
+	checkPresetConditions(index) {
 		var checked = false,
 			preset = this.props.presets[index],
 			queries = this.props.queries;
@@ -78,9 +79,9 @@ var Table_Preset = React.createClass({
 		}
 
 		return checked;
-	},
+	}
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		var presets = this.state.presets,
@@ -129,6 +130,4 @@ var Table_Preset = React.createClass({
 			</div>
 		);
 	}
-})
-
-module.exports = Wrapper(Table_Preset);
+}

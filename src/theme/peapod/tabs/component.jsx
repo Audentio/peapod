@@ -1,8 +1,5 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
-
-
 
 var TabTriggers = React.createClass({
 	render: function() {
@@ -46,33 +43,23 @@ var TabPanel = React.createClass({
 
 
 
-var Tabs = React.createClass({
+module.exports = class Tabs extends React.Component {
 
-	//Validate props
-	propTypes: {
+	constructor(props, context) {
+		super(props, context);
 
-	},
-
-	getInitialState: function() {
-		return {
-			activeTab: this.props.activeTab
+		this.state = {
+			activeTab: props.activeTab
 		}
-	},
+	}
 
-	//Default props
-	getDefaultProps: function() {
-		return {
-
-		}
-	},
-
-	setTab: function(key) {
+	setTab(key) {
 		this.setState({
 			activeTab: key
 		})
-	},
+	}
 
-	render: function() {
+	render() {
 		var tabs = this.props.tabs || [],
 			activeTab = this.state.activeTab,
 			style = Pod_Styler.getStyle(this);
@@ -117,6 +104,4 @@ var Tabs = React.createClass({
 
 	}
 
-});
-
-module.exports = Wrapper(Tabs);
+};

@@ -7,13 +7,12 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * BlockQuote component
 * @element Code
 */
-class BlockQuote extends React.Component {
+module.exports = class BlockQuote extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -27,5 +26,3 @@ class BlockQuote extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(BlockQuote);

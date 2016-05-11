@@ -1,12 +1,11 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 import {Icon} from 'components.js';
 
-var Label = React.createClass({
+module.exports = class Label extends React.Component {
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		var icon = (typeof(this.props.icon) !== 'undefined' && this.props.icon.length) ? <Icon styler={{style: style.icon}}>{this.props.icon}</Icon> : null
@@ -17,6 +16,4 @@ var Label = React.createClass({
 			</div>
 		)
 	}
-});
-
-module.exports = Wrapper(Label);
+};

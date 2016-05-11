@@ -8,14 +8,13 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 import {Anchor} from 'components.js'
 
 /**
 * Breadcrumbs component
 * @element Code
 */
-class Breadcrumb extends React.Component {
+module.exports = class Breadcrumb extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -46,5 +45,3 @@ class Breadcrumb extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Breadcrumb);

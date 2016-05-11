@@ -8,13 +8,12 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * ImageContainer component
 * @element Code
 */
-class Device extends React.Component {
+module.exports = class Device extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -36,5 +35,3 @@ class Device extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Device);

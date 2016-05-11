@@ -7,15 +7,14 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * Lazy component
 * @element Code
 */
-class Lazy extends React.Component {
+module.exports = class Lazy extends React.Component {
 
-    defaultProps = {
+    static defaultProps = {
         visible: false,
         distance: 100,
         placeholder: false
@@ -69,5 +68,3 @@ class Lazy extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Lazy);

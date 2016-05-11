@@ -9,15 +9,14 @@
 // import { Link } from 'react-router'
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * Anchor component
 * @element Code
 */
-class Anchor extends React.Component {
+module.exports = class Anchor extends React.Component {
 
-    defaultProps: {
+    static defaultProps = {
         internal: false
     }
 
@@ -37,5 +36,3 @@ class Anchor extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Anchor);

@@ -8,15 +8,14 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 /**
 * Code component
 * @element Code
 */
-var Code = React.createClass({
+module.exports = class Code extends React.Component {
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 		return (
 			<code style={style.main}>
@@ -26,6 +25,4 @@ var Code = React.createClass({
 
 	}
 
-});
-
-module.exports = Wrapper(Code);
+};

@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 
 /**
@@ -17,7 +16,7 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_modal
 *
 */
-class Overlay extends React.Component {
+module.exports = class Overlay extends React.Component {
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -32,5 +31,3 @@ class Overlay extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Overlay);

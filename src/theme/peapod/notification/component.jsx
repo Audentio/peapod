@@ -18,19 +18,26 @@ import {Icon} from 'components.js'
 * @param {string} [ID] - Unique identifier for persistent state storage
 *
 */
-var Notification = React.createClass({
+module.exports = class Notification extends React.Component {
 
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {
+			dismissed: this.isDismissed()
+		}
+	}
 
 	//Validate props
-	propTypes: {
+	static propTypes = {
 		dismissable: React.PropTypes.bool,
 		id: React.PropTypes.string,
 		title: React.PropTypes.string
-	},
+	}
 
 
 	//Check if user dismissed the notification already
-	isDismissed: function() {
+	isDismissed() {
 
 		var persistentState = localStorage[`Pod_notification_${this.props.id}_hidden`];
 
@@ -39,12 +46,12 @@ var Notification = React.createClass({
 		}
 
 		return false
-	},
+	}
 
 
 	//@fucntion dismiss()
 	//onDismiss handler
-	dismiss: function() {
+	dismiss() {
 
 		//set state
 		this.setState({
@@ -54,34 +61,24 @@ var Notification = React.createClass({
 		//set persistent state (localStorage)
 		localStorage[`Pod_notification_${this.props.id}_hidden`] = true
 
-	},
+	}
 
 
-	componentWillMount: function() {
+	componentWillMount() {
 		if (this.props.dismissable && this.props.id === undefined) {
 			console.warn('Pod_notification: ID not supplied for dismissable notification. State will not be persistent')
 			return false;
 		}
-	},
+	}
 
 
-	getDefaultProps: function(){
-		return {
-			styler: {
-				kind: 'general'
-			}
+	static defaultProps = {
+		styler: {
+			kind: 'general'
 		}
-	},
+	}
 
-
-	getInitialState: function(){
-		return {
-			dismissed: this.isDismissed()
-		}
-	},
-
-
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		return (
@@ -107,7 +104,4 @@ var Notification = React.createClass({
 	}
 
 
-});
-
-
-module.exports = Wrapper(Notification)
+};

@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 
 /**
@@ -17,7 +16,7 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_modal
 *
 */
-class Modal extends React.Component {
+module.exports = class Modal extends React.Component {
 
     constructor() {
         super();
@@ -25,6 +24,10 @@ class Modal extends React.Component {
         //     hidden: false
         // };
     }
+
+	static defaultProps = {
+	    overlay: true
+	}
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -46,9 +49,3 @@ class Modal extends React.Component {
     }
 
 };
-
-Modal.defaultProps = {
-    overlay: true
-};
-
-module.exports = Wrapper(Modal);

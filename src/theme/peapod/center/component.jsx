@@ -8,7 +8,6 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 
 /**
@@ -17,7 +16,7 @@ import Wrapper from 'wrapper.jsx';
 * @element Pod_modal
 *
 */
-class Center extends React.Component {
+module.exports = class Center extends React.Component {
 
     constructor() {
         super();
@@ -37,5 +36,3 @@ class Center extends React.Component {
     }
 
 };
-
-module.exports = Wrapper(Center);

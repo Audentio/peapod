@@ -8,14 +8,18 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 import {Block, Heading, Paragraph, Photo} from 'components.js'
 
 /**
 * Media component
 * @element Code
 */
-class Media extends React.Component {
+module.exports = class Media extends React.Component {
+	static defaultProps = {
+		title: false,
+	    image: false,
+	    alignImage: 'right'
+	}
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -43,11 +47,3 @@ class Media extends React.Component {
     }
 
 };
-
-Media.defaultProps = {
-    title: false,
-    image: false,
-    alignImage: 'right'
-};
-
-module.exports = Wrapper(Media);

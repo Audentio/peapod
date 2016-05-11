@@ -5,15 +5,15 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
 
 
-var External = React.createClass({
+module.exports = class External extends React.Component {
 
-  render: function() {
+  render() {
     return <div />;
-  },
-  componentDidMount: function() {
+  }
+  
+  componentDidMount() {
       var node = ReactDOM.findDOMNode(this);
       var ele = document.getElementById(this.props.getID);
       if (typeof(ele) !== 'undefined') {
@@ -22,6 +22,4 @@ var External = React.createClass({
       }
   }
 
-});
-
-module.exports = Wrapper(External);
+};

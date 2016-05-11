@@ -10,30 +10,26 @@
 //Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
 
-var Pod_template = React.createClass({
+module.exports = class Template extends React.Component {
 
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {}
+	}
 	//Validate props
-	propTypes: {
+	static propTypes = {
 
-	},
-
-	getInitialState: function() {
-		return {
-
-		}
-	},
+	}
 
 	//Default props
-	getDefaultProps: function() {
-		return {
+	static defaultProps =  {
+		
+	}
 
-		}
-	},
-
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 		return (
 			<div style={style.main}
@@ -44,6 +40,4 @@ var Pod_template = React.createClass({
 	}
 
 });
-
-module.exports = Wrapper(Pod_template);
 */
