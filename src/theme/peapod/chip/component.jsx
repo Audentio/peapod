@@ -9,6 +9,7 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
+import {Icon} from 'components.js'
 
 /**
 * Card component
@@ -37,7 +38,7 @@ class Chip extends React.Component {
         var style = Pod_Styler.getStyle(this);
 
         var deleteTrigger = (this.props.deleteTrigger) ? (
-            <Pod.icon styler={{style: style.deleteTrigger}} onClick={() => {this.removeChip()}}>close</Pod.icon>
+            <Icon styler={{style: style.deleteTrigger}} onClick={() => {this.removeChip()}}>close</Icon>
         ) : '';
         var photo = (this.props.photo) ? (
             <img src={this.props.photo} style={style.photo}/>

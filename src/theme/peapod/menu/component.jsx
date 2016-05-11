@@ -1,6 +1,7 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
+import {Portal, Menu as Pod_Menu, Menu_Item} from 'components.js'
 
 class Menu extends React.Component {
     constructor() {
@@ -31,18 +32,18 @@ class Menu extends React.Component {
 
                 if (childjson[i].children != undefined) {
                     childrencomonents.push(
-                        <Pod.menu
+                        <Pod_Menu
                             styler={{level:1}}
                             key={i}
                             json={childjson[i].children}
                             trigger={
-                                <Pod.menuItem key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Pod.menuItem>
+                                <Menu_Item key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Menu_Item>
                             }
                         />
                     )
                 } else {
                     childrencomonents.push(
-                       <Pod.menuItem key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Pod.menuItem>
+                       <Menu_Item key={i} href={childjson[i].href} subtext={childjson[i].subtext}>{childjson[i].text}</Menu_Item>
                     )
                 }
             }
@@ -79,7 +80,7 @@ class Menu extends React.Component {
 
         if (this.props.portal) {
             return(
-                <Pod.portal
+                <Portal
                     trigger={this.props.trigger}
                     closeOnOutsideClick={true}
                     noArrow={true}
@@ -87,7 +88,7 @@ class Menu extends React.Component {
                     <div style={style.portal}>
                         {childrencomonents}
                     </div>
-                </Pod.portal>
+                </Portal>
             )
         } else {
             return (

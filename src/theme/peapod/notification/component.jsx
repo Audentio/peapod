@@ -7,6 +7,7 @@
  import Pod_Styler from 'styler.js';
  import Wrapper from 'wrapper.jsx';
 
+import {Icon} from 'components.js'
 
 
 /**
@@ -96,7 +97,7 @@ var Notification = React.createClass({
 						{this.props.children}
 					</span>
 					{this.props.dismissable &&
-						<Pod.icon onClick={this.dismiss} styler={{style: style.dismissIcon}} color="#07ADD4">close</Pod.icon>
+						<Icon onClick={this.dismiss} styler={{style: style.dismissIcon}} color="#07ADD4">close</Icon>
 					}
 				</div>
 			}

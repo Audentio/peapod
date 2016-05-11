@@ -9,7 +9,7 @@ var Label = React.createClass({
 	render: function() {
 		var style = Pod_Styler.getStyle(this);
 
-		var icon = (typeof(this.props.icon) !== 'undefined' && this.props.icon.length) ? <Pod_icon styler={{style: style.icon}}>{this.props.icon}</Pod_icon> : null
+		var icon = (typeof(this.props.icon) !== 'undefined' && this.props.icon.length) ? <Icon styler={{style: style.icon}}>{this.props.icon}</Icon> : null
 
 		return (
 			<div style={style.main}>

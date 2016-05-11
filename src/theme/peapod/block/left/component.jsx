@@ -9,6 +9,7 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
+import {Block} from 'components.js'
 
 /**
 * Block_Left component
@@ -20,9 +21,9 @@ class Block_Left extends React.Component {
         var style = Pod_Styler.getStyle(this);
 
         return (
-            <Pod.block {...this.props} align="left">
+            <Block {...this.props} align="left">
                 {this.props.children}
-            </Pod.block>
+            </Block>
         );
 
     }

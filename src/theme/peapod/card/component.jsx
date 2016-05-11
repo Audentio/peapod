@@ -9,6 +9,7 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
+import {Heading} from 'components.js'
 
 /**
 * Card component
@@ -22,7 +23,7 @@ class Card extends React.Component {
         var objectCheck = new Object(this.props);
 
         var titleElement = (typeof objectCheck.title === "string") ?
-            (<Pod.heading kind="h4" styler={{secondary:true}}>{this.props.title}</Pod.heading>) :
+            (<Heading kind="h4" styler={{secondary:true}}>{this.props.title}</Heading>) :
             objectCheck.title;
 
         var title = (objectCheck.title) ? (

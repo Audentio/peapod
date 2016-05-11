@@ -9,6 +9,7 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
+import {Anchor} from 'components.js'
 
 /**
 * Breadcrumbs component
@@ -30,7 +31,7 @@ class Breadcrumb extends React.Component {
 			var seperator = (i + 1 != children.length) ? '/' : '';
 			breadcrumbshtml.push(
                 <li key={i} style={{display: 'inline'}}>
-                	<Pod.anchor styler={{style: style.listitem}}>{children[i]}</Pod.anchor>
+                	<Anchor styler={{style: style.listitem}}>{children[i]}</Anchor>
                 	 {seperator}
                	</li>
             )

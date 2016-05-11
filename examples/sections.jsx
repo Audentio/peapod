@@ -1,11 +1,15 @@
 import React from 'react'
 
-/*
-var singleTest = true;
+
+var singleTest = false;
 
 
 // import sections
+/*
+
+*/
 import HeroSection from './sectionComponents/hero.jsx'
+import FixedSection from './sectionComponents/fixed.jsx'
 import MediaSection from './sectionComponents/media.jsx'
 import TypographySection from './sectionComponents/typography.jsx'
 import FromsSection from './sectionComponents/forms.jsx'
@@ -15,7 +19,6 @@ import DeviceSection from './sectionComponents/device.jsx'
 import BreadcrumbSection from './sectionComponents/breadcrumb.jsx'
 import BlockquoteSection from './sectionComponents/blockquote.jsx'
 import ChipsSection from './sectionComponents/chips.jsx'
-import FixedSection from './sectionComponents/fixed.jsx'
 import MenusSection from './sectionComponents/menus.jsx'
 import ModalsSection from './sectionComponents/modals.jsx'
 import CardsSection from './sectionComponents/cards.jsx'
@@ -37,30 +40,34 @@ import TusharDev from './developmentComponents/tusharDev.jsx'
 
 // FixedSection
 
+/*
+
+*/
+
 var elements = (!singleTest) ? (
     <div>
-        <HeroSection />
-        <MediaSection />
-        <TypographySection />
-        <FromsSection />
-        <ScrollableSection />
-        <EmbedSection />
-        <DeviceSection />
-        <BreadcrumbSection />
-        <BlockquoteSection />
-        <ChipsSection />
-        <FixedSection />
-        <PhotosSection />
-        <MenusSection />
-        <GridSection />
-        <ModalsSection />
-        <CardsSection />
-        <ListsSection />
-        <ButtonsSection />
-        <IconsSection />
-        <MicroSection />
-        <LabelSection />
-        <TabsSection />
+		<HeroSection />
+		<FixedSection />
+		<MediaSection />
+		<TypographySection />
+		<FromsSection />
+		<EmbedSection />
+		<GridSection />
+		<DeviceSection />
+		<BreadcrumbSection />
+		<BlockquoteSection />
+		<ChipsSection />
+		<MenusSection />
+		<ModalsSection />
+		<CardsSection />
+		<ListsSection />
+		<ButtonsSection />
+		<PhotosSection />
+		<ScrollableSection />
+		<IconsSection />
+		<MicroSection />
+		<LabelSection />
+		<TabsSection />
         <AlertsSection />
         <ProgressSection />
     </div>
@@ -71,11 +78,6 @@ var elements = (!singleTest) ? (
         <TusharDev />
     </div>
 );
-*/
-
-import KylerDev from './developmentComponents/kylerDev.jsx'
-
-var elements = (<div><KylerDev /></div>)
 
 class Sections extends React.Component {
     render () {

@@ -7,6 +7,7 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
+import Pod_Helper from 'helper.js'
 
 
 //@Tushar including Highlightjs seems to be causing "Module parse failed: Maximum call stack size exceeded" -- KC

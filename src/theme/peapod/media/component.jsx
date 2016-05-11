@@ -9,6 +9,7 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
+import {Block, Heading, Paragraph, Photo} from 'components.js'
 
 /**
 * Media component
@@ -20,23 +21,23 @@ class Media extends React.Component {
         var style = Pod_Styler.getStyle(this);
 
         var image = (this.props.image) ? (
-            <Pod.block align={this.props.alignImage}>
-                <Pod.photo src={this.props.image}/>
-            </Pod.block>
+            <Block align={this.props.alignImage}>
+                <Photo src={this.props.image}/>
+            </Block>
         ) : '' ;
 
-        var title = (this.props.title) ? (<Pod.heading kind="h4">{this.props.title}</Pod.heading>): '';
+        var title = (this.props.title) ? (<Heading kind="h4">{this.props.title}</Heading>): '';
 
         return (
-            <Pod.block style={style.main}>
+            <Block style={style.main}>
                 {image}
-                <Pod.block>
+                <Block>
                     {title}
-                    <Pod.paragraph>
+                    <Paragraph>
                         {this.props.children}
-                    </Pod.paragraph>
-                </Pod.block>
-            </Pod.block>
+                    </Paragraph>
+                </Block>
+            </Block>
         );
 
     }

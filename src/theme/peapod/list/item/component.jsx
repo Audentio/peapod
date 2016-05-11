@@ -10,6 +10,8 @@ import React from 'react';
 import Pod_Styler from 'styler.js';
 import Wrapper from 'wrapper.jsx';
 
+import {Icon, Divider} from 'components.js'
+
 /**
 * ListItem component
 * @element Code
@@ -35,7 +37,7 @@ class List_Item extends React.Component {
         }
 
         if (this.props.icon) {
-            icon = (<Pod.icon styler={{style: style.icon}} onClick={this.props.onIconClick}>{this.props.icon}</Pod.icon>);
+            icon = (<Icon styler={{style: style.icon}} onClick={this.props.onIconClick}>{this.props.icon}</Icon>);
         }
 
         if (this.props.secondary) {
@@ -50,7 +52,7 @@ class List_Item extends React.Component {
                     {this.props.children}
                     {secondary}
                 </div>
-                <Pod.divider styler={dividerProps}></Pod.divider>
+                <Divider styler={dividerProps}></Divider>
             </div>
         );
 

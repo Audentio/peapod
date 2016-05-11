@@ -1,162 +1,158 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+import Pod from 'components.js'
 
 export default class CardsSection extends React.Component {
 
     render () {
         return (
             <div>
-                <Pod.section key={'cards'}>
-                    <Pod.contentWrap>
+                <Pod.Section key={'cards'}>
+                    <Pod.ContentWrap>
 
-                        <Pod.heading>Cards</Pod.heading>
-                        <Pod.card styler={{style:{width: '350px'}}}>
-                            <Pod.cardSection styler={{kind:'media-section'}} mediaTitle={
+                        <Pod.Heading>Cards</Pod.Heading>
+                        <Pod.Card styler={{style:{width: '350px'}}}>
+                            <Pod.Card_Section styler={{kind:'media-section'}} mediaTitle={
                                 <div>
-                                    <Pod.cardSection styler={{kind:'title-small'}}>
-                                        <Pod.heading kind="h4" styler={{secondary: true}}>Hello there</Pod.heading>
-                                        <Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
-                                    </Pod.cardSection>
+                                    <Pod.Card_Section styler={{kind:'title-small'}}>
+                                        <Pod.Heading kind="h4" styler={{secondary: true}}>Hello there</Pod.Heading>
+                                        <Pod.Paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.Paragraph>
+                                    </Pod.Card_Section>
 
-                                    <Pod.cardSection styler={{kind:'action-bar'}}>
-                                        <Pod.button label="Agree" />
-                                        <Pod.button label="Disagree" />
-                                    </Pod.cardSection>
+                                    <Pod.Card_Section styler={{kind:'action-bar'}}>
+                                        <Pod.Button label="Agree" />
+                                        <Pod.Button label="Disagree" />
+                                    </Pod.Card_Section>
                                 </div>
                             }>
-                                <Pod.photo src="image.png" styler={{ style: { display: 'block' } }}/>
-                            </Pod.cardSection>
-                        </Pod.card>
+                                <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }}/>
+                            </Pod.Card_Section>
+                        </Pod.Card>
 
-                        <Pod.card styler={{style:{width: '350px'}}}>
-                            <Pod.cardSection>
-                                <Pod.cardSection styler={{kind:'media-area'}}>
-                                    <Pod.photo src="image.png"/>
-                                </Pod.cardSection>
-                                <Pod.cardSection styler={{kind:'media-area-icons'}}>
-                                <Pod.button styler={{type: 'icon'}} label={
-                                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
+                        <Pod.Card styler={{style:{width: '350px'}}}>
+                            <Pod.Card_Section>
+                                <Pod.Card_Section styler={{kind:'media-area'}}>
+                                    <Pod.Photo src="image.png"/>
+                                </Pod.Card_Section>
+                                <Pod.Card_Section styler={{kind:'media-area-icons'}}>
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.Icon>)
                                 } />
 
-                                <Pod.button styler={{type: 'icon'}} label={
-                                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.icon>)
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.Icon>)
                                 } />
 
-                                <Pod.button styler={{type: 'icon'}} label={
-                                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.Icon>)
                                 } />
-                                </Pod.cardSection>
-                            </Pod.cardSection>
-                        </Pod.card>
+                                </Pod.Card_Section>
+                            </Pod.Card_Section>
+                        </Pod.Card>
 
-                        <Pod.card styler={{style:{width: '350px'}}}>
-                            <Pod.cardSection styler={{kind:'media-section'}}>
-                                <Pod.photo src="image.png"/>
-                            </Pod.cardSection>
+                        <Pod.Card styler={{style:{width: '350px'}}}>
+                            <Pod.Card_Section styler={{kind:'media-section'}}>
+                                <Pod.Photo src="image.png"/>
+                            </Pod.Card_Section>
 
-                            <Pod.cardSection styler={{kind:'action-bar'}}>
-                                <Pod.button styler={{type: 'icon'}} label={
-                                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
-                                } />
-
-                                <Pod.button styler={{type: 'icon'}} label={
-                                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.icon>)
+                            <Pod.Card_Section styler={{kind:'action-bar'}}>
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.Icon>)
                                 } />
 
-                                <Pod.button styler={{type: 'icon'}} label={
-                                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.Icon>)
                                 } />
-                            </Pod.cardSection>
-                        </Pod.card>
 
-                        <Pod.card styler={{style:{width: '350px'}}}>
-                            <Pod.cardSection styler={{kind:'title-supports'}}>
-                                <Pod.cardSection styler={{kind:'media', float: 'right'}}>
-                                    <Pod.photo src="image.png" styler={{style:{width: '100px'}}}/>
-                                </Pod.cardSection>
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.Icon>)
+                                } />
+                            </Pod.Card_Section>
+                        </Pod.Card>
 
-                                <Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
-                                <Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
-                            </Pod.cardSection>
+                        <Pod.Card styler={{style:{width: '350px'}}}>
+                            <Pod.Card_Section styler={{kind:'title-supports'}}>
+                                <Pod.Card_Section styler={{kind:'media', float: 'right'}}>
+                                    <Pod.Photo src="image.png" styler={{style:{width: '100px'}}}/>
+                                </Pod.Card_Section>
 
-                            <Pod.cardSection styler={{kind:'action-bar'}}>
-                                <Pod.button label="Agree" />
-                                <Pod.button label="Disagree" />
-                            </Pod.cardSection>
-                        </Pod.card>
+                                <Pod.Heading kind="h5" styler={{secondary: true}}>Hello there</Pod.Heading>
+                                <Pod.Paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.Paragraph>
+                            </Pod.Card_Section>
 
-                        <Pod.card styler={{style:{width: '350px'}}}>
-                            <Pod.cardSection styler={{kind:'title-supports'}}>
+                            <Pod.Card_Section styler={{kind:'action-bar'}}>
+                                <Pod.Button label="Agree" />
+                                <Pod.Button label="Disagree" />
+                            </Pod.Card_Section>
+                        </Pod.Card>
 
-                                <Pod.heading kind="h5" styler={{secondary: true}}>Hello there</Pod.heading>
-                                <Pod.paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.paragraph>
-                            </Pod.cardSection>
+                        <Pod.Card styler={{style:{width: '350px'}}}>
+                            <Pod.Card_Section styler={{kind:'title-supports'}}>
 
-                            <Pod.cardSection>
-                                <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
-                            </Pod.cardSection>
+                                <Pod.Heading kind="h5" styler={{secondary: true}}>Hello there</Pod.Heading>
+                                <Pod.Paragraph styler={{secondary: true}}>Lorem ipsum dolor sit</Pod.Paragraph>
+                            </Pod.Card_Section>
 
-                            <Pod.cardSection styler={{kind:'action-bar'}}>
-                                <Pod.button label="Agree" />
-                                <Pod.button label="Disagree" />
-                            </Pod.cardSection>
-                        </Pod.card>
-                    </Pod.contentWrap>
-                </Pod.section>
+                            <Pod.Card_Section>
+                                <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.Paragraph>
+                            </Pod.Card_Section>
 
-                <Pod.section key={'simplecards'}>
-                    <Pod.contentWrap>
+                            <Pod.Card_Section styler={{kind:'action-bar'}}>
+                                <Pod.Button label="Agree" />
+                                <Pod.Button label="Disagree" />
+                            </Pod.Card_Section>
+                        </Pod.Card>
+                    </Pod.ContentWrap>
+                </Pod.Section>
 
-                        <Pod.heading>Simple Cards</Pod.heading>
+                <Pod.Section key={'simplecards'}>
+                    <Pod.ContentWrap>
 
-                        <Pod.card styler={{padded:true, style:{width: '350px'}}} title="Simple Card" actionBar={(
+                        <Pod.Heading>Simple Cards</Pod.Heading>
+
+                        <Pod.Card styler={{padded:true, style:{width: '350px'}}} title="Simple Card" actionBar={(
                             <div>
-                                <Pod.button styler={{type: 'icon'}} label={
-                                        (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.icon>)
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                        (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.Icon>)
                                     } />
 
-                                <Pod.button styler={{type: 'icon'}} label={
-                                    (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.Icon>)
                                 } />
                             </div>
                         )}>
-                            <Pod.photo src="image.png"/>
-                        </Pod.card>
+                            <Pod.Photo src="image.png"/>
+                        </Pod.Card>
 
-                        <Pod.card styler={{style:{width: '350px'}}} actionBar={(
+                        <Pod.Card styler={{style:{width: '350px'}}} actionBar={(
                                 <div>
-                                    <Pod.button styler={{type: 'icon'}} label={
-                                            (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.icon>)
+                                    <Pod.Button styler={{type: 'icon'}} label={
+                                            (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.Icon>)
                                         } />
 
-                                    <Pod.button styler={{type: 'icon'}} label={
-                                        (<Pod.icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.icon>)
+                                    <Pod.Button styler={{type: 'icon'}} label={
+                                        (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.Icon>)
                                     } />
                                 </div>
                             )}>
-                                <Pod.photo src="image.png"/>
-                            </Pod.card>
+                                <Pod.Photo src="image.png"/>
+                            </Pod.Card>
 
-                        <Pod.card styler={{padded:true, style:{width: '350px'}}} title="Simple Card" actionBar={(
+                        <Pod.Card styler={{padded:true, style:{width: '350px'}}} title="Simple Card" actionBar={(
                                 <div>
-                                    <Pod.button label="Button" />
+                                    <Pod.Button label="Button" />
 
-                                    <Pod.button label="Another Button" />
+                                    <Pod.Button label="Another Button" />
                                 </div>
                             )}>
-                            <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
-                        </Pod.card>
+                            <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.Paragraph>
+                        </Pod.Card>
 
-                        <Pod.card styler={{padded:true, style:{width: '350px'}}} title="Simple Card">
-                            <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.paragraph>
-                        </Pod.card>
+                        <Pod.Card styler={{padded:true, style:{width: '350px'}}} title="Simple Card">
+                            <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.Paragraph>
+                        </Pod.Card>
 
-                    </Pod.contentWrap>
-                </Pod.section>
+                    </Pod.ContentWrap>
+                </Pod.Section>
             </div>
         )
     }
