@@ -1,6 +1,6 @@
 import {Sheet} from '../../stylesheet.js';
 
-var sheet = new Sheet('Tooltip'),
+var sheet = new Sheet('tooltip'),
     main = sheet.addMain(),
     tooltip = sheet.addPart('tooltip'),
     arrow = sheet.addPart('arrow'),
@@ -8,13 +8,29 @@ var sheet = new Sheet('Tooltip'),
 
 // Conditions
 sheet.addCondition('positionLeft').addStyler({position: 'left'});
-sheet.addCondition('positionRight').addStyler({position: 'right'});
+sheet.addCondition('positionRight').addStyler({position: undefined});
 sheet.addCondition('positionTop').addStyler({position: 'top'});
 sheet.addCondition('positionBottom').addStyler({position: 'bottom'});
+sheet.addCondition('mobile').addStyler({mobile: true});
 
 
 //Variables
-sheet.setValues({});
+sheet.setValues({
+    background: '$palette.grey700',
+    color: '#fff',
+    height: '22px',
+    borderRadius: '$border.radius.small',
+    opacity: '90%',
+    padding: '$gutter.extrasmall',
+    fontSize: '10px',
+    margin: '$gutter.extrasmall',
+
+    mobile: {
+        padding: '$gutter.small',
+        height: '32px',
+        fontSize: '14px'
+    }
+});
 
 main.addSelector({
     common: {
@@ -25,23 +41,40 @@ main.addSelector({
 
 tooltip.addSelector({
     common: {
-        padding: '5px 10px',
-        background: 'rgba(0,0,0,.5)',
+        paddingLeft: '$tooltip.padding',
+        paddingRight: '$tooltip.padding',
+        height: '$tooltip.height',
+        lineHeight: '$tooltip.height',
+        fontSize: '$tooltip.fontSize',
+        background: '$palette.grey700',
+        color:'$tooltip.color',
+        borderRadius: '$tooltip.borderRadius',
+        opacity: '$tooltip.opacity',
         position: 'absolute',
-        color:'#fff',
         whiteSpace: 'nowrap',
-        borderRadius: '3px',
-
+    }
+}).addSelector({
+    condition: ['mobile'],
+    common: {
+        paddingLeft: '$tooltip.mobile.padding',
+        paddingRight: '$tooltip.mobile.padding',
+        height: '$tooltip.mobile.height',
+        lineHeight: '$tooltip.mobile.height',
+        fontSize: '$tooltip.mobile.fontSize',
+    }
+}).addSelector({
+    condition: ['positionRight'],
+    common: {
         left: '100%',
         top: '50%',
-        marginLeft: '5px',
+        marginLeft: '$tooltip.margin',
         transform: 'translateY(-50%)'
     }
 }).addSelector({
     condition: ['positionLeft'],
     common: {
         left: 'auto', right: '100%',
-        marginLeft: 0, marginRight: '5px',
+        marginLeft: 0, marginRight: '$tooltip.margin',
         transform: 'translateY(-50%)'
     }
 }).addSelector({
@@ -51,7 +84,7 @@ tooltip.addSelector({
         top: 'auto',
         bottom: '100%',
         marginLeft: 0,
-        marginBottom: '5px',
+        marginBottom: '$tooltip.margin',
         transform: 'translateX(-50%)'
     }
 }).addSelector({
@@ -60,7 +93,7 @@ tooltip.addSelector({
         left: '50%',
         top: '100%',
         marginLeft: 0,
-        marginTop: '5px',
+        marginTop: '$tooltip.margin',
         transform: 'translateX(-50%)'
     }
 });
