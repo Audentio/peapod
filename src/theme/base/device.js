@@ -10,6 +10,9 @@ var sheet = new Sheet('device'),
 //Conditions
 sheet.addCondition('scrollable').addStyler({scrollable: true});
 sheet.addCondition('horizontal').addProp({orientation: 'horizontal'});
+sheet.addCondition('trueScaling').addProp({trueScaling: true});
+sheet.addCondition('scale').addProp({scale: ['!=', undefined]});
+
 
 var devices = {
     standard: {
@@ -24,13 +27,17 @@ var devices = {
             versions: {
                 six: {
                     // 'styles'
-                    width: '320px',
-                    height: '600px',
+                    width: 245,
+                    height: 500,
                     offset: {
-                        top: 71,
-                        right: 31,
-                        bottom: 71,
-                        left: 31
+                        top: 59,
+                        right: 15,
+                        bottom: 59,
+                        left: 15
+                    },
+                    viewport: {
+                        width: 375,
+                        height: 667
                     }
                 }
             },
@@ -38,110 +45,110 @@ var devices = {
                 black: {
                     svg: 'url(iPhone-6-Black.svg)',
                     position: {
-                        bottom: 'calc(50% - 300px)',
-                        left: 'calc(50% - 160px)'
-                    }
-                }
-            }
-        },
-        macbook: {
-            standard: {
-                version: 'one',
-                variant: 'spacegrey'
-            },
-            versions: {
-                one: {
-                    // 'styles'
-                    width: '600px',
-                    height: '300px',
-                    offset: {
-                        top: 23,
-                        right: 106,
-                        bottom: 34,
-                        left: 105
-                    }
-                }
-            },
-            variants: {
-                gold: {
-                    svg: 'url(Macbook-Gold.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0
-                    }
-                },
-                silver: {
-                    svg: 'url(Macbook-Silver.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0
-                    }
-                },
-                spacegrey: {
-                    svg: 'url(Macbook-SpaceGrey.svg)',
-                    position: {
                         bottom: 0,
                         left: 0
                     }
                 }
             }
         },
-        macbookpro: {
-            standard: {
-                version: '2015',
-                variant: '15'
-            },
-            versions: {
-                '2015': {
-                    // 'styles'
-                    width: '600px',
-                    height: '300px',
-                    offset: {
-                        top: 19,
-                        right: 104,
-                        bottom: 36,
-                        left: 104
-                    }
-                }
-            },
-            variants: {
-                '15': {
-                    svg: 'url(Macbook-Pro-Retina.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0
-                    }
-                }
-            }
-        },
-        imac: {
-            standard: {
-                version: '2016',
-                variant: 'silver'
-            },
-            versions: {
-                '2016': {
-                    // 'styles'
-                    width: '600px',
-                    height: '400px',
-                    offset: {
-                        top: 19,
-                        right: 77,
-                        bottom: 129,
-                        left: 77
-                    }
-                }
-            },
-            variants: {
-                silver: {
-                    svg: 'url(iMac.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0
-                    }
-                }
-            }
-        },
+        // macbook: {
+        //     standard: {
+        //         version: 'one',
+        //         variant: 'spacegrey'
+        //     },
+        //     versions: {
+        //         one: {
+        //             // 'styles'
+        //             width: '600px',
+        //             height: '300px',
+        //             offset: {
+        //                 top: 23,
+        //                 right: 106,
+        //                 bottom: 34,
+        //                 left: 105
+        //             }
+        //         }
+        //     },
+        //     variants: {
+        //         gold: {
+        //             svg: 'url(Macbook-Gold.svg)',
+        //             position: {
+        //                 bottom: 0,
+        //                 left: 0
+        //             }
+        //         },
+        //         silver: {
+        //             svg: 'url(Macbook-Silver.svg)',
+        //             position: {
+        //                 bottom: 0,
+        //                 left: 0
+        //             }
+        //         },
+        //         spacegrey: {
+        //             svg: 'url(Macbook-SpaceGrey.svg)',
+        //             position: {
+        //                 bottom: 0,
+        //                 left: 0
+        //             }
+        //         }
+        //     }
+        // },
+        // macbookpro: {
+        //     standard: {
+        //         version: '2015',
+        //         variant: '15'
+        //     },
+        //     versions: {
+        //         '2015': {
+        //             // 'styles'
+        //             width: '600px',
+        //             height: '300px',
+        //             offset: {
+        //                 top: 19,
+        //                 right: 104,
+        //                 bottom: 36,
+        //                 left: 104
+        //             }
+        //         }
+        //     },
+        //     variants: {
+        //         '15': {
+        //             svg: 'url(Macbook-Pro-Retina.svg)',
+        //             position: {
+        //                 bottom: 0,
+        //                 left: 0
+        //             }
+        //         }
+        //     }
+        // },
+        // imac: {
+        //     standard: {
+        //         version: '2016',
+        //         variant: 'silver'
+        //     },
+        //     versions: {
+        //         '2016': {
+        //             // 'styles'
+        //             width: '600px',
+        //             height: '400px',
+        //             offset: {
+        //                 top: 19,
+        //                 right: 77,
+        //                 bottom: 129,
+        //                 left: 77
+        //             }
+        //         }
+        //     },
+        //     variants: {
+        //         silver: {
+        //             svg: 'url(iMac.svg)',
+        //             position: {
+        //                 bottom: 0,
+        //                 left: 0
+        //             }
+        //         }
+        //     }
+        // },
     }
 }
 
@@ -154,6 +161,8 @@ var standardVariant = devices.devices[standardDevice].standard.variant;
 var getStandard = devices.devices[standardDevice];
 var getStandardVersion = getStandard.versions[standardVersion];
 var getStandardVariant = getStandard.variants[standardVariant];
+
+// console.log(Pod_Vars.get('getProp:scale'))
 
 main.addSelector({
     common: {
@@ -205,6 +214,14 @@ innerscreen.addSelector({
         right: getStandardVersion.offset.bottom,
         bottom: getStandardVersion.offset.left,
         left: getStandardVersion.offset.top,
+    }
+}).addSelector({
+    condition: ['trueScaling'],
+    common: {
+        width: getStandardVersion.viewport.width,
+        height: getStandardVersion.viewport.height,
+        transform: 'scale(' + ((getStandardVersion.width -  getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width ) + ')', // should be 0.688
+        transformOrigin: '0 0'
     }
 });
 scrollable.addSelector({
@@ -297,7 +314,15 @@ for(var index in devices.devices) {
             bottom: getStandardVersion.offset.left,
             left: getStandardVersion.offset.top,
         }
-    })
+    }).addSelector({
+    condition: ['trueScaling', 'device' + deviceindex],
+        common: {
+            width: getStandardVersion.viewport.width,
+            height: getStandardVersion.viewport.height,
+            transform: 'scale(' + ((getStandardVersion.width -  getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width ) + ')', // should be 0.688
+            transformOrigin: '0 0'
+        }
+    });
 
     for(var index in versions) {
         var versionindex = index;
@@ -339,6 +364,14 @@ for(var index in devices.devices) {
                 right: versions[versionindex].offset.bottom,
                 bottom: versions[versionindex].offset.left,
                 left: versions[versionindex].offset.top,
+            }
+        }).addSelector({
+            condition: ['trueScaling', 'device' + deviceindex],
+            common: {
+                width: versions[versionindex].viewport.width,
+                height: versions[versionindex].viewport.height,
+                transform: 'scale(' + ((versions[versionindex].width -  versions[versionindex].offset.right - versions[versionindex].offset.left) / versions[versionindex].viewport.width ) + ')', // should be 0.688
+                transformOrigin: '0 0'
             }
         });
 
