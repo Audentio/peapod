@@ -51,48 +51,52 @@ var devices = {
                 }
             }
         },
-        // macbook: {
-        //     standard: {
-        //         version: 'one',
-        //         variant: 'spacegrey'
-        //     },
-        //     versions: {
-        //         one: {
-        //             // 'styles'
-        //             width: '600px',
-        //             height: '300px',
-        //             offset: {
-        //                 top: 23,
-        //                 right: 106,
-        //                 bottom: 34,
-        //                 left: 105
-        //             }
-        //         }
-        //     },
-        //     variants: {
-        //         gold: {
-        //             svg: 'url(Macbook-Gold.svg)',
-        //             position: {
-        //                 bottom: 0,
-        //                 left: 0
-        //             }
-        //         },
-        //         silver: {
-        //             svg: 'url(Macbook-Silver.svg)',
-        //             position: {
-        //                 bottom: 0,
-        //                 left: 0
-        //             }
-        //         },
-        //         spacegrey: {
-        //             svg: 'url(Macbook-SpaceGrey.svg)',
-        //             position: {
-        //                 bottom: 0,
-        //                 left: 0
-        //             }
-        //         }
-        //     }
-        // },
+        macbook: {
+            standard: {
+                version: 'one',
+                variant: 'spacegrey'
+            },
+            versions: {
+                one: {
+                    // 'styles'
+                    width: 500,
+                    height: 290,
+                    offset: {
+                        top: 21,
+                        right: 62,
+                        bottom: 33,
+                        left: 62
+                    },
+                    viewport: {
+                        width: 1024,
+                        height: 640
+                    }
+                }
+            },
+            variants: {
+                gold: {
+                    svg: 'url(Macbook-Gold.svg)',
+                    position: {
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+                silver: {
+                    svg: 'url(Macbook-Silver.svg)',
+                    position: {
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+                spacegrey: {
+                    svg: 'url(Macbook-SpaceGrey.svg)',
+                    position: {
+                        bottom: 0,
+                        left: 0
+                    }
+                }
+            }
+        },
         // macbookpro: {
         //     standard: {
         //         version: '2015',
