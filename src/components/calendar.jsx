@@ -48,11 +48,20 @@ class Calendar extends React.Component {
     updateCalendar(month, year) {
         this.setState({ month, year })
     }
+
     updateToday(today) {
         this.setState({ today })
         if (this.props.onClick) {
             this.props.onClick(today)
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const now = (nextProps.date && nextProps.month && nextProps.year) ?
+            new Date(nextProps.year, nextProps.month, nextProps.date) :
+            new Date();
+
+        this.setState({ today: now })
     }
 
     render() {
@@ -62,6 +71,7 @@ class Calendar extends React.Component {
 
         const dateArray = getMonthFromDate(activeDay);
 
+        // move these into CalendarMonthBar
         const dayBefore = addDays(dateArray[0],-1);
         const dayAfter = addDays(dateArray[dateArray.length-1], 1);
 

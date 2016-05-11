@@ -52,6 +52,18 @@ var Input = React.createClass({
 		}
 	},
 
+	componentWillReceiveProps: function(nextProps) {
+        var value = nextProps.value,
+            placeholder = ( value.length > 0 ) ? '' : this.props.placeholder;
+
+        //evaluate if evaluated before
+        if(this.state.evaluation !== null) {
+            this.validate(value)
+        }
+
+        this.setState({ value: value , placeholder: placeholder });
+    },
+
 	getInitialState: function() {
 		return {
 			value: this.props.value,

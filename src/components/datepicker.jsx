@@ -55,6 +55,7 @@ class Datepicker extends React.Component {
 
     onChange(date) {
         date = new Date(date)
+        console.log(date);
         var value = this.dateValue(date);
         this.setState({
             value,
@@ -63,7 +64,6 @@ class Datepicker extends React.Component {
             month: date.getMonth(),
             year: date.getFullYear()
         });
-        console.log(date, value)
     }
 
     render() {
@@ -79,7 +79,7 @@ class Datepicker extends React.Component {
         return (
             <Pod.portal
                 trigger={trigger}
-                // closeOnOutsideClick={true}
+                closeOnOutsideClick={true}
                 closeOnEsc={true}
                 noArrow={true}
             >
