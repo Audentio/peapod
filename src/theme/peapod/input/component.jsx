@@ -37,7 +37,7 @@ module.exports = class Input extends React.Component {
 
 	//Validate props
 	static propTypes = {
-		type: React.PropTypes.oneOf(['text','password', 'email', 'url', 'number']),
+		type: React.PropTypes.oneOf(['text','password', 'email', 'url', 'number', 'hidden', 'date']),
 		value: React.PropTypes.string,
 		placeholder: React.PropTypes.string,
 		required: React.PropTypes.bool,
