@@ -1,9 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+import Pod from 'components.js'
 
 export default class DroppableSection extends React.Component {
     constructor() {
@@ -24,11 +20,11 @@ export default class DroppableSection extends React.Component {
 
         return (
             <div key={'droppable'}>
-                <Pod.section>
-                    <Pod.contentWrap>
-                        <Pod.droppable onDrop={this.onDrop}>{dropped}</Pod.droppable>
-                    </Pod.contentWrap>
-                </Pod.section>
+                <Pod.Section>
+                    <Pod.ContentWrap>
+                        <Pod.Droppable onDrop={this.onDrop}>{dropped}</Pod.Droppable>
+                    </Pod.ContentWrap>
+                </Pod.Section>
             </div>
         )
     }

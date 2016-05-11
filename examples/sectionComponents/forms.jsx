@@ -1,61 +1,58 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+import Pod from 'components.js'
+
 
 export default class FormsSection extends React.Component {
 
     render () {
 
         return(
-            <Pod.section key={'forms'}>
-                <Pod.contentWrap>
+            <Pod.Section key={'forms'}>
+                <Pod.ContentWrap>
 
-                    <Pod.heading>Forms</Pod.heading>
+                    <Pod.Heading>Forms</Pod.Heading>
 
-                    <Paragraph>Placeholder can by styled with <Code>placeholderStyle</Code> styler prop</Paragraph>
-                    <Pod.input placeholder="Styled placeholders" styler={{placeholderStyle: {color: 'red', opacity: '.4', textDecoration: 'underline'}}}/> <br />
+                    <Pod.Paragraph>Placeholder can by styled with <Pod.Code>placeholderStyle</Pod.Code> styler prop</Pod.Paragraph>
+                    <Pod.Input placeholder="Styled placeholders" styler={{placeholderStyle: {color: 'red', opacity: '.4', textDecoration: 'underline'}}}/> <br />
 
-                    <Paragraph>Basic Input types</Paragraph>
-                    <Pod.input placeholder="text" styler={{scene:'material'}} /> <br />
-                    <Pod.input placeholder="password" type="password" styler={{scene:'material'}} /> <br />
-                    <Pod.input placeholder="number" type="number" styler={{scene:'material'}} /> <br />
-                    <Paragraph>URL: Protocol <Code>http</Code> is added <Code>onBlur</Code> if none specificed</Paragraph>
-                    <Pod.input placeholder="URL (http(s)/ftp)" type="url" styler={{scene:'material'}} validate validationResponse={{invalid: 'Not a valid URL', valid: 'way to go!'}} /> <br />
+                    <Pod.Paragraph>Basic Input types</Pod.Paragraph>
+                    <Pod.Input placeholder="text" styler={{scene:'material'}} /> <br />
+                    <Pod.Input placeholder="password" type="password" styler={{scene:'material'}} /> <br />
+                    <Pod.Input placeholder="number" type="number" styler={{scene:'material'}} /> <br />
+                    <Pod.Paragraph>URL: Protocol <Pod.Code>http</Pod.Code> is added <Pod.Code>onBlur</Pod.Code> if none specificed</Pod.Paragraph>
+                    <Pod.Input placeholder="URL (http(s)/ftp)" type="url" styler={{scene:'material'}} validate validationResponse={{invalid: 'Not a valid URL', valid: 'way to go!'}} /> <br />
 
                     <br />
 
-                    <Paragraph><Strong>Validation</Strong>: doesn't run until blur. Thereafter it runs <Code>onChange</Code></Paragraph>
+                    <Pod.Paragraph><Pod.Strong>Validation</Pod.Strong>: doesn't run until blur. Thereafter it runs <Pod.Code>onChange</Pod.Code></Pod.Paragraph>
 
-                    <Pod.input placeholder="email (required)" type="email" required validate /> <br />
-                    <Pod.input placeholder="email (optional)" type="email" styler={{scene:'material'}} validate /> <br />
+                    <Pod.Input placeholder="email (required)" type="email" required validate /> <br />
+                    <Pod.Input placeholder="email (optional)" type="email" styler={{scene:'material'}} validate /> <br />
                     <br />
 
 
 
-                    <Pod.checkbox kind="primary" checked={true} />
+                    <Pod.Checkbox kind="primary" checked={true} />
 
                     <br /><br />
 
-                    <Paragraph>Radio</Paragraph>
+                    <Pod.Paragraph>Radio</Pod.Paragraph>
                     <div>
-                        <Pod.radio id="ra1" group="group1" label="item 1" />
-                        <Pod.radio id="ra2" group="group1" label="item 2" />
-                        <Pod.radio id="ra3" group="group1" label="item 3" />
-                        <Pod.radio id="ra4" group="group1" label="item 4" />
+                        <Pod.Radio id="ra1" group="group1" label="item 1" />
+                        <Pod.Radio id="ra2" group="group1" label="item 2" />
+                        <Pod.Radio id="ra3" group="group1" label="item 3" />
+                        <Pod.Radio id="ra4" group="group1" label="item 4" />
                     </div>
-                    <Pod.hr styler={{style:{width:100,margin: '15px 0'}}} />
+                    <Pod.Hr styler={{style:{width:100,margin: '15px 0'}}} />
                     <div>
-                        <Pod.radio group="group2" label="item A" />
-                        <Pod.radio group="group2" label="item B" />
-                        <Pod.radio group="group2" label="item C" />
-                        <Pod.radio group="group2" label="item D" />
+                        <Pod.Radio group="group2" label="item A" />
+                        <Pod.Radio group="group2" label="item B" />
+                        <Pod.Radio group="group2" label="item C" />
+                        <Pod.Radio group="group2" label="item D" />
                     </div>
 
-                </Pod.contentWrap>
-            </Pod.section>
+                </Pod.ContentWrap>
+            </Pod.Section>
         )
     }
 
