@@ -27,7 +27,7 @@ var Input = React.createClass({
 
 	//Validate props
 	propTypes: {
-		type: React.PropTypes.oneOf(['text','password', 'email', 'url', 'number']),
+		type: React.PropTypes.oneOf(['text','password', 'email', 'url', 'number', 'hidden', 'date']),
 		value: React.PropTypes.string,
 		placeholder: React.PropTypes.string,
 		required: React.PropTypes.bool,
@@ -121,7 +121,7 @@ var Input = React.createClass({
 	},
 
 	onFocus: function(e){
-		this.setState({ focus: true })
+		this.props.onFocus || this.setState({ focus: true })
 	},
 
 	onBlur: function(e){

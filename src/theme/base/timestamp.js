@@ -10,8 +10,7 @@ sheet.setValues({});
 
 main.addSelector({
 	common: {
-		cursor: 'default',
-		color: 'red'
+		cursor: 'default'
 	}
 })
 

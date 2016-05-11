@@ -36,14 +36,112 @@ var devices = {
             },
             variants: {
                 black: {
-                    svg: 'url(iphone.svg)',
+                    svg: 'url(iPhone-6-Black.svg)',
                     position: {
                         bottom: 'calc(50% - 300px)',
                         left: 'calc(50% - 160px)'
                     }
                 }
             }
-        }
+        },
+        macbook: {
+            standard: {
+                version: 'one',
+                variant: 'spacegrey'
+            },
+            versions: {
+                one: {
+                    // 'styles'
+                    width: '600px',
+                    height: '300px',
+                    offset: {
+                        top: 23,
+                        right: 106,
+                        bottom: 34,
+                        left: 105
+                    }
+                }
+            },
+            variants: {
+                gold: {
+                    svg: 'url(Macbook-Gold.svg)',
+                    position: {
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+                silver: {
+                    svg: 'url(Macbook-Silver.svg)',
+                    position: {
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+                spacegrey: {
+                    svg: 'url(Macbook-SpaceGrey.svg)',
+                    position: {
+                        bottom: 0,
+                        left: 0
+                    }
+                }
+            }
+        },
+        macbookpro: {
+            standard: {
+                version: '2015',
+                variant: '15'
+            },
+            versions: {
+                '2015': {
+                    // 'styles'
+                    width: '600px',
+                    height: '300px',
+                    offset: {
+                        top: 19,
+                        right: 104,
+                        bottom: 36,
+                        left: 104
+                    }
+                }
+            },
+            variants: {
+                '15': {
+                    svg: 'url(Macbook-Pro-Retina.svg)',
+                    position: {
+                        bottom: 0,
+                        left: 0
+                    }
+                }
+            }
+        },
+        imac: {
+            standard: {
+                version: '2016',
+                variant: 'silver'
+            },
+            versions: {
+                '2016': {
+                    // 'styles'
+                    width: '600px',
+                    height: '400px',
+                    offset: {
+                        top: 19,
+                        right: 77,
+                        bottom: 129,
+                        left: 77
+                    }
+                }
+            },
+            variants: {
+                silver: {
+                    svg: 'url(iMac.svg)',
+                    position: {
+                        bottom: 0,
+                        left: 0
+                    }
+                }
+            }
+        },
     }
 }
 
@@ -110,6 +208,11 @@ innerscreen.addSelector({
     }
 });
 scrollable.addSelector({
+    common: {
+        width: '100%',
+        height: '100%'
+    }
+}).addSelector({
     condition: ['scrollable'],
     common: {
         overflowX: 'hidden',
@@ -131,23 +234,23 @@ overlay.addSelector({
 
     }
 });
-
 for(var index in devices.devices) {
-    if (index != 'standard') {continue;}
     var device = devices.devices[index];
+    var deviceindex = index;
 
-    sheet.addCondition('device' + index).addProp({device: index});
+    sheet.addCondition('device' + deviceindex).addProp({device: deviceindex});
 
     var standardVersion = device.standard.version;
     var standardVariant = device.standard.variant;
-    var getStandardVersion = device[standardVersion];
-    var getStandardVariant = device[standardVariant];
 
-    var versions = devices.devices[index].versions;
-    var variants = devices.devices[index].variants;
+    var versions = devices.devices[deviceindex].versions;
+    var variants = devices.devices[deviceindex].variants;
+
+    var getStandardVersion = device.versions[standardVersion];
+    var getStandardVariant = device.variants[standardVariant];
 
     main.addSelector({
-        condition: ['device' + index],
+        condition: ['device' + deviceindex],
         common: {
             position: 'relative',
             backgroundSize: '100% 100%',
@@ -157,14 +260,14 @@ for(var index in devices.devices) {
             height: getStandardVersion.height
         }
     }).addSelector({
-        condition: ['device' + index, 'horizontal'],
+        condition: ['device' + deviceindex, 'horizontal'],
         common: {
             width: getStandardVersion.height,
             height: getStandardVersion.width
         }
     });
     background.addSelector({
-        condition: ['device' + index],
+        condition: ['device' + deviceindex],
         common: {
             position: 'relative',
             backgroundSize: '100% 100%',
@@ -177,7 +280,7 @@ for(var index in devices.devices) {
         }
     });
     innerscreen.addSelector({
-        condition: ['device' + index],
+        condition: ['device' + deviceindex],
         common: {
             position: 'absolute',
             top: getStandardVersion.offset.top,
@@ -187,7 +290,7 @@ for(var index in devices.devices) {
             overflow: 'hidden'
         }
     }).addSelector({
-        condition: ['horizontal'],
+        condition: ['horizontal', 'device' + deviceindex],
         common: {
             top: getStandardVersion.offset.right,
             right: getStandardVersion.offset.bottom,
@@ -197,54 +300,58 @@ for(var index in devices.devices) {
     })
 
     for(var index in versions) {
-        sheet.addCondition('version' + index).addProp({version: index});
+        var versionindex = index;
+
+        sheet.addCondition('version' + versionindex).addProp({version: versionindex});
 
         main.addSelector({
-            condition: ['version' + index, 'device' + index],
+            condition: ['version' + versionindex, 'device' + deviceindex],
             common: {
-                width: versions[index].width,
-                height: versions[index].height
+                width: versions[versionindex].width,
+                height: versions[versionindex].height
             }
         }).addSelector({
-            condition: ['version' + index, 'device' + index, 'horizontal'],
+            condition: ['version' + versionindex, 'device' + deviceindex, 'horizontal'],
             common: {
-                width: versions[index].height,
-                height: versions[index].width
+                width: versions[versionindex].height,
+                height: versions[versionindex].width
             }
         });
         background.addSelector({
-            condition: ['version' + index, 'device' + index],
+            condition: ['version' + versionindex, 'device' + deviceindex],
             common: {
-                width: versions[index].width,
-                height: versions[index].height
+                width: versions[versionindex].width,
+                height: versions[versionindex].height
             }
         })
         innerscreen.addSelector({
-            condition: ['version' + index, 'device' + index],
+            condition: ['version' + versionindex, 'device' + deviceindex],
             common: {
-                top: versions[index].offset.top,
-                right: versions[index].offset.right,
-                bottom: versions[index].offset.bottom,
-                left: versions[index].offset.left,
+                top: versions[versionindex].offset.top,
+                right: versions[versionindex].offset.right,
+                bottom: versions[versionindex].offset.bottom,
+                left: versions[versionindex].offset.left,
             }
         }).addSelector({
-            condition: ['horizontal'],
+            condition: ['horizontal', 'version' + versionindex, 'device' + deviceindex],
             common: {
-                top: versions[index].offset.right,
-                right: versions[index].offset.bottom,
-                bottom: versions[index].offset.left,
-                left: versions[index].offset.top,
+                top: versions[versionindex].offset.right,
+                right: versions[versionindex].offset.bottom,
+                bottom: versions[versionindex].offset.left,
+                left: versions[versionindex].offset.top,
             }
         });
 
         for(var index in variants) {
-            sheet.addCondition('variant' + index).addProp({variant: index});
+            var variantindex = index;
+
+            sheet.addCondition('variant' + variantindex).addProp({variant: variantindex});
             background.addSelector({
-                condition: ['variant' + index, 'device' + index],
+                condition: ['variant' + variantindex, 'device' + deviceindex],
                 common: {
-                    backgroundImage: variants[index].svg,
-                    bottom: variants[index].position.bottom,
-                    left: variants[index].position.left
+                    backgroundImage: variants[variantindex].svg,
+                    bottom: variants[variantindex].position.bottom,
+                    left: variants[variantindex].position.left
                 }
             });
         }
