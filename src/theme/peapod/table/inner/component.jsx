@@ -5,8 +5,6 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
-
 
 //var lodash = require('lodash')
 //var isFunction = lodash.isFunction;

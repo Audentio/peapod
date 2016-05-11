@@ -1,8 +1,7 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
 
-class Menu_Sub extends React.Component {
+module.exports = class Menu_Sub extends React.Component {
     constructor() {
         super();
 
@@ -36,5 +35,3 @@ class Menu_Sub extends React.Component {
         )
     }
 };
-
-module.exports = Wrapper(Menu_Sub);

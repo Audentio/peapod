@@ -5,7 +5,6 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
- import Wrapper from 'wrapper.jsx';
 
 import {Icon} from 'components.js'
 
@@ -102,6 +101,4 @@ module.exports = class Notification extends React.Component {
 		)
 
 	}
-
-
 };

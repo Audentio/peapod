@@ -5,8 +5,6 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import Wrapper from 'wrapper.jsx';
-
 
 var lodash = require('lodash') // TODO FIX THIS
 var reduce = lodash.reduce;
@@ -18,19 +16,21 @@ var sorter = lodash.sortBy;
 import {Button, Checkbox, Icon, Paginator, Grid, Div, Portal, Table_Query, Table_Inner, Table_Preset, Table_Control, Table_Header} from 'components.js';
 
 
-var Table = React.createClass({
+module.exports = class Alert extends React.Component {
 
-	getInitialState: function() {
-		var data = this.props.data;
-		var isFetching = this.props.isFetching;
-		var columns = this.props.columns;
-		var presets = this.props.presets;
+	constructor(props, context) {
+		super(props, context);
+
+		var data = props.data;
+		var isFetching = props.isFetching;
+		var columns = props.columns;
+		var presets = props.presets;
 
 		for (var i = 0, len = columns.length; i < len; i++) {
 			if (isFunction(columns[i].cell)) columns[i].cell = columns[i].cell.bind(this); // bind cell functions
 		}
 
-		return {
+		this.state = {
 			data: lodash.values(data),
 			isFetching: isFetching,
 			hoveredRow: -1,
@@ -106,24 +106,24 @@ var Table = React.createClass({
 			columns: columns,
 			presets: presets
 		}
-	},
+	}
 
-	componentWillReceiveProps: function(nextProps) {
+	componentWillReceiveProps(nextProps) {
 		var data = lodash.values(nextProps.data);
 
 		this.setState({data: data})
-	},
+	}
 
-	makeHeader: function() {
+	makeHeader() {
 		var headerConfig = this.state.header;
 		var columns = this.state.columns;
 		// return if you don't want a header
 		return (
 			<Table_Header config={headerConfig} columns={columns} />
 		)
-	},
+	}
 
-	checkAll: function(val) {
+	checkAll(val) {
 		var data = this.state.data;
 
 		if (typeof(data) !== 'undefined') {
@@ -135,9 +135,9 @@ var Table = React.createClass({
 				data: data
 			})
 		}
-	},
+	}
 
-	sortColumn: function(data, column, order) {
+	sortColumn(data, column, order) {
 		if (!column) {
 			return data;
 		}
@@ -148,9 +148,9 @@ var Table = React.createClass({
 			return lodash.reverse(sorter(data, [column.property]));
 		}
 		return sorter(data, [column.property]);
-	},
+	}
 
-	filterData: function(data, query) {
+	filterData(data, query) {
 		var filtered = [];
 		if (typeof(data) !== 'undefined') {
 			for (var i = 0, len = data.length; i < len; i++) {
@@ -188,17 +188,17 @@ var Table = React.createClass({
 			}
 		}
 		return filtered;
-	},
+	}
 
-	search: function(data, columns, queries) {
+	search(data, columns, queries) {
 		var filtered = data;
 		for (var i = 0, len = queries.length; i < len; i++) {
 			filtered = this.filterData(filtered, queries[i]);
 		}
 		return filtered;
-	},
+	}
 
-	getTableData: function() {
+	getTableData() {
 		var columns = this.state.columns,
 			data = this.state.data,
 			pagination = this.state.pagination,
@@ -235,9 +235,9 @@ var Table = React.createClass({
 		})
 
 		return Paginator.paginate(data, pagination); // subset current page's data
-	},
+	}
 
-	addQueryOnePerColumn: function(column, comparison, value, display) {
+	addQueryOnePerColumn(column, comparison, value, display) {
 		var newQueries = [],
 			queries = this.state.search,
 			newQuery = {
@@ -253,9 +253,9 @@ var Table = React.createClass({
 
 		newQueries.push(newQuery)
 		this.setState({search: newQueries});
-	},
+	}
 
-	addQuery: function(column, comparison, value, display) {
+	addQuery(column, comparison, value, display) {
 		var search = this.state.search,
 			queryExists = false,
 			newQuery = {
@@ -273,9 +273,9 @@ var Table = React.createClass({
 			search.push(newQuery)
 			this.setState({search: search});
 		}
-	},
+	}
 
-	removeColumnQuery: function(column) {
+	removeColumnQuery(column) {
 		var newQueries = [],
 			queries = this.state.search;
 
@@ -284,9 +284,9 @@ var Table = React.createClass({
 		}
 
 		this.setState({search: newQueries});
-	},
+	}
 
-	removeQuery: function(index) {
+	removeQuery(index) {
 		var newQueries = [],
 			queries = this.state.search;
 
@@ -295,9 +295,9 @@ var Table = React.createClass({
 		}
 
 		this.setState({search: newQueries});
-	},
+	}
 
-	render: function() {
+	render() {
 		var style = Pod_Styler.getStyle(this);
 
 		var columns = this.state.columns,
@@ -341,7 +341,7 @@ var Table = React.createClass({
 								<Checkbox styler={{
 										varSet: 'dark'
 									}}
-									onChange={this.checkAll}></Checkbox>
+									onChange={this.checkAll.bind(this)}></Checkbox>
 							</Div>
 							{presets}
 						</div>
@@ -422,8 +422,8 @@ var Table = React.createClass({
 							pages={paginated.pages}
 							perPage={paginated.perPage}
 							total={paginated.total}
-							clickPrevious={this.clickPrevious}
-							clickNext={this.clickNext}
+							clickPrevious={this.clickPrevious.bind(this)}
+							clickNext={this.clickNext.bind(this)}
 							styler={{
 								onePage: paginated.pages == 1 && paginated.page == 0
 							}}
@@ -433,17 +433,17 @@ var Table = React.createClass({
 
 			</div>
 		);
-	},
+	}
 
-	clickPrevious: function() {
+	clickPrevious() {
 		this.changePage(this.state.pagination.page - 1)
-	},
+	}
 
-	clickNext: function() {
+	clickNext() {
 		this.changePage(this.state.pagination.page + 1)
-	},
+	}
 
-	changePage: function(page) {
+	changePage(page) {
 		if (page >= 0  && page < (this.getTableData().total / this.state.pagination.perPage))
 		this.setState({pagination: {
 			page: page,
@@ -451,6 +451,4 @@ var Table = React.createClass({
 		}});
 	}
 
-});
-
-module.exports = Wrapper(Table);
+};
