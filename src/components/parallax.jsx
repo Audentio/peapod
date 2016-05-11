@@ -27,14 +27,12 @@ class Parallax extends React.Component {
 
     onScroll(event) {
         var element = this.refs.Parallax
-        var rect = element.getBoundingClientRect()
-        this.setState({height: (window.innerHeight / 2) - rect.top});
+        var elementOnScreen = window.scrollY - (element.offsetTop - window.innerHeight)
+        element.scrollTop = elementOnScreen * 0.5
     }
 
     render() {
         var style = Pod_Styler.getStyle(this);
-        style.back['transform'] = 'translateY(-'+String(this.state.height * 0.5)+'px)';
-        style.front['transform'] = 'translateY(-'+String((this.state.height * 1))+'px)';
 
         return (
             <div style={style.main} onScroll={this.onScroll} ref="Parallax">
