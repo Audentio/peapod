@@ -17,29 +17,31 @@ import {Block, Heading, Paragraph, Photo} from 'components.js'
 module.exports = class Media extends React.Component {
 	static defaultProps = {
 		title: false,
-	    image: false,
-	    alignImage: 'left'
+	    figure: false,
+	    align: 'left',
+        figureVertical: 'top',
+        contentVertical: 'top',
+        figureWidth: 'auto'
 	}
 
     render() {
         var style = Pod_Styler.getStyle(this);
 
-        var image = (this.props.image) ? (
-            <Block align={this.props.alignImage}>
-                <Photo src={this.props.image}/>
+        var image = (typeof this.props.figure === 'string') ? <Photo src={this.props.figure}/> : this.props.figure;
+        var figure = (this.props.figure) ? (
+            <Block align={this.props.align} styler={{mainStyle: style.figure}}>
+                {image}
             </Block>
         ) : '' ;
 
         var title = (this.props.title) ? (<Heading kind="h4">{this.props.title}</Heading>): '';
 
         return (
-            <Block style={style.main}>
-                {image}
-                <Block>
+            <Block styler={{mainStyle: style.main}}>
+                {figure}
+                <Block styler={{mainStyle: style.content}}>
                     {title}
-                    <Paragraph>
-                        {this.props.children}
-                    </Paragraph>
+                    {this.props.children}
                 </Block>
             </Block>
         );
