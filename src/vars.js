@@ -97,9 +97,11 @@ window.Pod_Vars = window.Pod_Vars || {
 
 		if (onlyBase || results.length == 1) {
 			if (results.length == 0) {
-				throw "Unable to find variable named: " + name;
+				//throw "Unable to find variable named: " + name;
+				console.warn("Unable to find variable named: " + name);
+			} else {
+				return results[results.length - 1].val;
 			}
-			return results[results.length - 1].val;
 		}
 
 		return results;

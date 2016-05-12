@@ -1,9 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+import Pod from 'components.js';
 
 export default class TabsSection extends React.Component {
 
@@ -20,14 +16,14 @@ export default class TabsSection extends React.Component {
         ]
 
         return (
-            <Pod.section key={'tabs'}>
-                <Pod.contentWrap>
-                    <Pod.heading>Tabs</Pod.heading>
+            <Pod.Section key={'tabs'}>
+                <Pod.ContentWrap>
+                    <Pod.Heading>Tabs</Pod.Heading>
 
-                    <Pod.tabs tabs={tabs} activeTab={1}></Pod.tabs>
-                    <Pod.div>Testing</Pod.div>
-                </Pod.contentWrap>
-            </Pod.section>
+                    <Pod.Tabs tabs={tabs} activeTab={1}></Pod.Tabs>
+                    <Pod.Div>Testing</Pod.Div>
+                </Pod.ContentWrap>
+            </Pod.Section>
         )
     }
 

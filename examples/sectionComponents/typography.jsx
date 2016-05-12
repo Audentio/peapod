@@ -1,9 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+import Pod from 'components.js'
+import Pod_Helper from 'helper.js'
 
 export default class TypographySection extends React.Component {
 
@@ -70,54 +67,54 @@ class SomeClass:
 ... prompt'''`;
 
         return(
-            <Pod.section key={'typography'}>
-                <Pod.contentWrap>
+            <Pod.Section key={'typography'}>
+                <Pod.ContentWrap>
 
-                    <Pod.heading>Typography</Pod.heading>
+                    <Pod.Heading>Typography</Pod.Heading>
 
-                    <Pod.heading kind="h4">Paragraph</Pod.heading>
-                    <Pod.paragraph>
-                        This is a paragraph. This is a paragraph. This is a paragraph.
-                        This is a paragraph. This is a paragraph. This is a paragraph.
-                        This is a paragraph. This is a paragraph. This is a paragraph.
-                        This is a paragraph. This is a paragraph. This is a paragraph.
-                        This is a paragraph. This is a paragraph. This is a paragraph.
-                        This is a paragraph. This is a paragraph.
-                                Text <Code>Inline code</Code> text
-                    </Pod.paragraph>
+                    <Pod.Heading kind="h4">Paragraph</Pod.Heading>
+                    <Pod.Paragraph>
+                        This is a Paragraph. This is a Paragraph. This is a Paragraph.
+                        This is a Paragraph. This is a Paragraph. This is a Paragraph.
+                        This is a Paragraph. This is a Paragraph. This is a Paragraph.
+                        This is a Paragraph. This is a Paragraph. This is a Paragraph.
+                        This is a Paragraph. This is a Paragraph. This is a Paragraph.
+                        This is a Paragraph. This is a Paragraph.
+                                Text <Pod.Code>Inline code</Pod.Code> text
+                    </Pod.Paragraph>
 
-                    <Pod.heading kind="h4">Code</Pod.heading>
+                    <Pod.Heading kind="h4">Code</Pod.Heading>
 
-                    <Pod.codeBlock language="javascript">{codeExample__javascript}</Pod.codeBlock>
-                    <Pod.codeBlock>{codeExample__css}</Pod.codeBlock>
-                    <Pod.codeBlock>{codeExample__cpp}</Pod.codeBlock>
-                    <Pod.codeBlock>{codeExample__python}</Pod.codeBlock>
+                    <Pod.CodeBlock language="javascript">{codeExample__javascript}</Pod.CodeBlock>
+                    <Pod.CodeBlock>{codeExample__css}</Pod.CodeBlock>
+                    <Pod.CodeBlock>{codeExample__cpp}</Pod.CodeBlock>
+                    <Pod.CodeBlock>{codeExample__python}</Pod.CodeBlock>
 
-                    <Pod.heading kind="h4">Horizontal Rule</Pod.heading>
-                    <Pod.hr height="1" />
+                    <Pod.Heading kind="h4">Horizontal Rule</Pod.Heading>
+                    <Pod.Hr height="1" />
 
-                    <Pod.heading kind="h4">Headings</Pod.heading>
+                    <Pod.Heading kind="h4">Headings</Pod.Heading>
 
-                    <Pod.heading kind="h1">Headings 1</Pod.heading>
-                    <Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+                    <Pod.Heading kind="h1">Headings 1</Pod.Heading>
+                    <Pod.Paragraph>Testing line heights for Headings</Pod.Paragraph>
 
-                    <Pod.heading kind="h2">Headings 2</Pod.heading>
-                    <Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+                    <Pod.Heading kind="h2">Headings 2</Pod.Heading>
+                    <Pod.Paragraph>Testing line heights for Headings</Pod.Paragraph>
 
-                    <Pod.heading kind="h3">Headings 3</Pod.heading>
-                    <Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+                    <Pod.Heading kind="h3">Headings 3</Pod.Heading>
+                    <Pod.Paragraph>Testing line heights for Headings</Pod.Paragraph>
 
-                    <Pod.heading kind="h4">Headings 4</Pod.heading>
-                    <Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+                    <Pod.Heading kind="h4">Headings 4</Pod.Heading>
+                    <Pod.Paragraph>Testing line heights for Headings</Pod.Paragraph>
 
-                    <Pod.heading kind="h5">Headings 5</Pod.heading>
-                    <Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+                    <Pod.Heading kind="h5">Headings 5</Pod.Heading>
+                    <Pod.Paragraph>Testing line heights for Headings</Pod.Paragraph>
 
-                    <Pod.heading kind="h6">Headings 6</Pod.heading>
-                    <Pod.paragraph>Testing line heights for headings</Pod.paragraph>
+                    <Pod.Heading kind="h6">Headings 6</Pod.Heading>
+                    <Pod.Paragraph>Testing line heights for Headings</Pod.Paragraph>
 
-                </Pod.contentWrap>
-            </Pod.section>
+                </Pod.ContentWrap>
+            </Pod.Section>
         )
     }
 

@@ -1,25 +1,21 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+import Pod from 'components.js'
 
 export default class ScrollableSection extends React.Component {
 
     render () {
         return (
-            <Pod.section key={'section'}>
-                <Pod.contentWrap>
-                    <Pod.heading>Section + Wrapper + Scrollable</Pod.heading>
-                    <Pod.scrollable height='100px'>
-                        <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.paragraph>
-                        <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.paragraph>
-                        <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.paragraph>
-                        <Pod.paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.paragraph>
-                    </Pod.scrollable>
-                </Pod.contentWrap>
-            </Pod.section>
+            <Pod.Section key={'section'}>
+                <Pod.ContentWrap>
+                    <Pod.Heading>Section + Wrapper + Scrollable</Pod.Heading>
+                    <Pod.Scrollable height='100px'>
+                        <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.Paragraph>
+                        <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.Paragraph>
+                        <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.Paragraph>
+                        <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.Paragraph>
+                    </Pod.Scrollable>
+                </Pod.ContentWrap>
+            </Pod.Section>
         )
     }
 

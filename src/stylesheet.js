@@ -452,43 +452,46 @@ class Style {
 	}
 
 	getStyle(instance) {
-		var style = _Clone(this.style);
+		if (instance !== undefined && instance.componentName == 'GridCell') {
+			var style = _Clone(this.style);
 
-		if (typeof(style) == 'object') {
-			let keys = Object.keys(style);
-			for (let keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
-				let key = keys[keyIndex];
-				if (key.indexOf('@media') == 0) {
+			if (typeof(style) == 'object') {
+				let keys = Object.keys(style);
+				for (let keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
+					let key = keys[keyIndex];
+					if (key.indexOf('@media') == 0) {
 
-					let keySize = key.split(' ').join('').replace('@media(', '').replace('px)', '').split(':');
-					if (keySize.length == 2) {
-						let paneWidth = instance.context._podPaneWidth,
-							queryType = keySize[0],
-							queryValue = keySize[1];
-						if (typeof(paneWidth) == "number") {
-							if (queryType == 'minWidth') {
-								if (paneWidth >= queryValue) {
-									style = _Merge({}, style, style[key]);
+						let keySize = key.split(' ').join('').replace('@media(', '').replace('px)', '').split(':');
+						if (keySize.length == 2) {
+							let paneWidth = instance.context._podPaneWidth,
+								queryType = keySize[0],
+								queryValue = keySize[1];
+							if (typeof(paneWidth) == "number") {
+								if (queryType == 'minWidth') {
+									if (paneWidth >= queryValue) {
+										style = _Merge({}, style, style[key]);
+									}
+									delete style[key]
+								} else if (queryType == 'maxWidth') {
+									if (paneWidth < queryValue) {
+										style = _Merge({}, style, style[key]);
+									}
+									delete style[key]
+								} else {
+									console.warn("Unsupported value for media query");
 								}
-								delete style[key]
-							} else if (queryType == 'maxWidth') {
-								if (paneWidth < queryValue) {
-									style = _Merge({}, style, style[key]);
-								}
-								delete style[key]
-							} else {
-								throw "Unsupported value for media query";
 							}
-						}
 
-					} else {
-						throw "Invalid media query";
+						} else {
+							throw "Invalid media query";
+						}
 					}
 				}
 			}
-		}
 
-		return style;
+			return style;
+		}
+		return this.style;
 	}
 }
 

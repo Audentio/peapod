@@ -34,18 +34,18 @@ module.exports = {
 	module: {
 		noParse: [/highlight\.js\/lib\/languages/], //highlightjs fix
 
-		preLoaders: [{
-			test: /\.json$/,
-			loader: 'json'
-		}],
-
-		loaders: [{
-			test: /\.jsx?$/,
-			loaders: ['react-hot', 'babel'],
-			include: [
-				path.join(__dirname, 'src'),
-				path.join(__dirname, 'examples')
-			]
-		}]
+		loaders: [
+			{
+				include: /\.json$/,
+	    		loaders: ['json-loader']
+			}, {
+				test: /\.jsx?$/,
+				loaders: ['react-hot', 'babel'],
+				include: [
+					path.join(__dirname, 'src'),
+					path.join(__dirname, 'examples')
+				]
+			}
+		]
 	}
 };
