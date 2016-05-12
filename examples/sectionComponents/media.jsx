@@ -26,6 +26,7 @@ export default class MediaSection extends React.Component {
                                 </Pod.Block>
                             </Pod.Block>
                         </Pod.Grid_Cell>
+
                         <Pod.Grid_Cell styler={{md:6}}>
                             <Pod.Media image="smallimg.png" title="A media element">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
