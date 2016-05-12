@@ -1,21 +1,13 @@
 {
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
-  },
-  "env": {
-    "browser": true,
-    "node": true
-  },
+  "extends": "airbnb",
   "parser": "babel-eslint",
-  "rules": {
-    "quotes": [2, "single"],
-    "strict": [2, "never"],
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2
+  "ecmaFeatures": {
+    "classes": true,
   },
-  "plugins": [
-    "react"
-  ]
+  "rules": {
+    "max-len": ["error", 400],
+    "camelcase": ["off", {properties: "never"}],
+    'no-underscore-dangle': ["off", { "allow": [] }],
+    'import/no-unresolved': ["off"]
+  }
 }
