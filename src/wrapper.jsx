@@ -23,6 +23,6 @@ const Pod_Wrapper = function(NewComponent) {
   //return Radium(NewComponent);
 
   return Pod_Enhance(Radium(NewComponent));
-}
+};
 
 module.exports = Pod_Wrapper;

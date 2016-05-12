@@ -20,7 +20,7 @@ var config = {
 	// ../../wherever/module
 	resolve: {
 		unsafeCache: true,
-		modulesDirectories: ['node_modules', './src'],
+		modulesDirectories: ['node_modules', 'src'],
 		extensions: ['', '.js', '.jsx', '.json'],
 		alias: {
 			react: path.resolve('./node_modules/react'),
@@ -39,7 +39,7 @@ var config = {
 			{
 				include: /\.json$/,
 	    		loaders: ['json-loader']
-			}, 
+			},
 			//JSX files go through hotloader and Babel
 			{
 				test: /\.jsx?$/,

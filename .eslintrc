@@ -1,7 +1,13 @@
 {
   "extends": "airbnb",
+  "parser": "babel-eslint",
+  "ecmaFeatures": {
+    "classes": true,
+  },
   "rules": {
     "max-len": ["error", 400],
-    "camelcase": ["error", {properties: "never"}]
+    "camelcase": ["off", {properties: "never"}],
+    'no-underscore-dangle': ["off", { "allow": [] }],
+    'import/no-unresolved': ["off"]
   }
 }
