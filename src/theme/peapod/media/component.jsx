@@ -34,15 +34,19 @@ module.exports = class Media extends React.Component {
             </Block>
         ) : '' ;
 
+        var figureLeft = (this.props.align == 'left') ? figure : '';
+        var figureRight = (this.props.align == 'right') ? figure : '';
+
         var title = (this.props.title) ? (<Heading kind="h4">{this.props.title}</Heading>): '';
 
         return (
             <Block styler={{mainStyle: style.main}}>
-                {figure}
+                {figureLeft}
                 <Block styler={{mainStyle: style.content}}>
                     {title}
                     {this.props.children}
                 </Block>
+                {figureRight}
             </Block>
         );
 
