@@ -12,13 +12,13 @@ var Pod_Enhance = ComposedComponent => class extends Component {
 	componentDidMount() {
 		//this.setState({ data: 'Hello' });
 	}
+	*/
 
 	componentDidMount() {
 		ComposedComponent.contextTypes = {
 			_podPaneWidth: React.PropTypes.number
 		}
 	}
-	*/
 
 	render() {
 		return <ComposedComponent {...this.props} />;
@@ -26,9 +26,9 @@ var Pod_Enhance = ComposedComponent => class extends Component {
 };
 
 var Pod_Wrapper = function(NewComponent) {
-	return Radium(NewComponent);
+	//return Radium(NewComponent);
 
-	//return Pod_Enhance(Radium(NewComponent));
+	return Pod_Enhance(Radium(NewComponent));
 }
 
 module.exports = Pod_Wrapper

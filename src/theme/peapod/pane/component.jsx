@@ -68,9 +68,6 @@ module.exports = class Pane extends React.Component {
 				},
 
 				updateAll() {
-					//window.Pod_Panes.getAll();
-					//window.Pod_Panes.setAll();
-
 					for (var i = 0, len = Object.keys(window.Pod_Panes.items).length; i < len; i++) {
 						 Pod_Panes.items[i].set(Pod_Panes.items[i].get());
 					}
