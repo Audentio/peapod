@@ -22,7 +22,7 @@ module.exports = class Pane extends React.Component {
   }
 
   static propTypes = {
-    children: React.PropTypes.element.isRequired,
+    children: React.PropTypes.any,
     styler: React.PropTypes.object,
   }
 
