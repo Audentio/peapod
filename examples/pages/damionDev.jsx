@@ -86,7 +86,13 @@ return(
 
         <br /><br /><br />
 
-        <Pod.Device trueScaling={true} styler={{style: {display: 'inline-block'}}}>
+        <Pod.Device trueScaling={true} orientation='horizontal' styler={{style: {display: 'inline-block'}}}>
+            <Pod.Lazy distance="50" height="100%">
+                <Pod.Embed width="100%" height="100%" src="http://themehouse.com" />Hey
+            </Pod.Lazy>
+        </Pod.Device>
+
+        <Pod.Device orientation='horizontal' styler={{style: {display: 'inline-block'}}}>
             <Pod.Lazy distance="50" height="100%">
                 <Pod.Embed width="100%" height="100%" src="http://themehouse.com" />Hey
             </Pod.Lazy>
