@@ -41,7 +41,6 @@ export default class Demo extends React.Component {
                 <Pod.FixedElement key={'fixednavigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
                     <Pod.Toolbar>
                         <Pod.ContentWrap>
-                            <Pod.Icon styler={{style: {height: '32px', display: 'inline-block', lineHeight: '32px', width: '32px', float: 'left'}}}>menu</Pod.Icon>
                             <Pod.Button label="Download the app" styler={{style: {float:'right'} }} />
 
 
@@ -70,6 +69,26 @@ export default class Demo extends React.Component {
                         </Pod.ContentWrap>
                     </Pod.Toolbar>
                 </Pod.FixedElement>
+
+                <Pod.Section styler={{style: {paddingBottom: 0, border: 'none'}}}>
+                    <Pod.ContentWrap>
+                        <Pod.Alert dismissable={true} id="generalAlert">
+                            We have just updated to some new version <Pod.Anchor to="/demo">Check it out!</Pod.Anchor>
+                        </Pod.Alert>
+                    </Pod.ContentWrap>
+                </Pod.Section>
+
+                <Pod.Section>
+                    <Pod.ContentWrap>
+                        <Pod.Media image="profile.jpg" alignImage="right">
+                            <Pod.Heading>We Do Stuff</Pod.Heading>
+                            <Pod.Paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, ducimus suscipit aspernatur a nihil nisi repellendus pariatur sapiente, atque inventore accusamus ea ipsum iusto, quaerat mollitia blanditiis odio nobis iure. </Pod.Paragraph>
+                            <Pod.Paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, ducimus suscipit aspernatur a nihil nisi repellendus pariatur sapiente, atque inventore accusamus ea ipsum iusto, quaerat mollitia blanditiis odio nobis iure. </Pod.Paragraph>
+                            <Pod.Paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, ducimus suscipit aspernatur a nihil nisi repellendus pariatur sapiente, atque inventore accusamus ea ipsum iusto, quaerat mollitia blanditiis odio nobis iure. </Pod.Paragraph>
+                            <Pod.Paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, ducimus suscipit aspernatur a nihil nisi repellendus pariatur sapiente, atque inventore accusamus ea ipsum iusto, quaerat mollitia blanditiis odio nobis iure. </Pod.Paragraph>
+                        </Pod.Media>
+                    </Pod.ContentWrap>
+                </Pod.Section>
 
                 <Pod.Section styler={{style: {backgroundColor: '#efefef'}}}>
                     <Pod.ContentWrap>
@@ -120,7 +139,7 @@ export default class Demo extends React.Component {
                     </Pod.ContentWrap>
                 </Pod.Section>
 
-                <Pod.Section styler={{style: {backgroundColor: '#000', padding: 0}}}>
+                <Pod.Section styler={{style: {backgroundColor: '#000', padding: 0,border: 'none'}}}>
                     <Pod.Parallax background={(<div style={{width:'100%', height: '100%', backgroundImage: 'url(demo/bg2.jpg)', backgroundSize: 'cover', backgroundPosition:'center center', opacity: '0.8', }}></div>)}>
                         <Pod.Center styler={{style: {color: 'white'}}}>
                             <Pod.Heading>Works on the New Macbook</Pod.Heading>
@@ -134,10 +153,36 @@ export default class Demo extends React.Component {
                     </Pod.Parallax>
                 </Pod.Section>
 
-                <Pod.Section styler={{style: {backgroundColor: '#927E6B', color: '#fff'}}}>
+                <Pod.Section styler={{style: {backgroundColor: '#efefef', border: 'none', textAlign: 'center'}}}>
+                    <Pod.ContentWrap>
+
+                        <Pod.Heading>What our customers say</Pod.Heading>
+
+                        <Pod.Grid>
+                            <Pod.Grid_Cell styler={{sm: 12, lg: 6}}>
+                                <Pod.Card styler={{style: {padding:'32px 16px'}}}>
+                                    <Pod.Testimonial img="profile.jpg" name="Damion Yeatman">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur laborum officiis eum dolores eius a maiores temporibus odit adipisci quis beatae voluptas, expedita molestias voluptatum illum porro consequuntur voluptate et.
+                                    </Pod.Testimonial>
+                                </Pod.Card>
+                            </Pod.Grid_Cell>
+                            <Pod.Grid_Cell styler={{sm: 12, lg: 6}}>
+                                <Pod.Card styler={{style: {padding:'32px 16px'}}}>
+                                    <Pod.Testimonial img="profile.jpg" name="Damion Yeatman">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur laborum officiis eum dolores eius a maiores temporibus odit adipisci quis beatae voluptas, expedita molestias voluptatum illum porro consequuntur voluptate et.
+                                    </Pod.Testimonial>
+                                </Pod.Card>
+                            </Pod.Grid_Cell>
+                        </Pod.Grid>
+
+                    </Pod.ContentWrap>
+                </Pod.Section>
+
+                <Pod.Section styler={{style: {backgroundColor: '#594E99', color: '#fff', border: 'none'}}}>
                     <Pod.ContentWrap>
                         <Pod.Grid>
                             <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3}}>
+                                <Pod.Heading kind="h5">Some Links</Pod.Heading>
                                 <Pod.List styler={{mainStyle: {maxHeight: 'auto'}}}>
                                     <Pod.List_Item>Item #1</Pod.List_Item>
                                     <Pod.List_Item>Item #2</Pod.List_Item>
@@ -147,6 +192,7 @@ export default class Demo extends React.Component {
                                 </Pod.List>
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3}}>
+                                <Pod.Heading kind="h5">Some More Links</Pod.Heading>
                                 <Pod.List styler={{mainStyle: {maxHeight: 'auto'}}}>
                                     <Pod.List_Item>Item #1</Pod.List_Item>
                                     <Pod.List_Item>Item #2</Pod.List_Item>
@@ -156,6 +202,7 @@ export default class Demo extends React.Component {
                                 </Pod.List>
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3}}>
+                                <Pod.Heading kind="h5">You Guesed It</Pod.Heading>
                                 <Pod.List styler={{mainStyle: {maxHeight: 'auto'}}}>
                                     <Pod.List_Item>Item #1</Pod.List_Item>
                                     <Pod.List_Item>Item #2</Pod.List_Item>
@@ -165,6 +212,7 @@ export default class Demo extends React.Component {
                                 </Pod.List>
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3}}>
+                                <Pod.Heading kind="h5">Even More Links</Pod.Heading>
                                 <Pod.List styler={{mainStyle: {maxHeight: 'auto'}}}>
                                     <Pod.List_Item>Item #1</Pod.List_Item>
                                     <Pod.List_Item>Item #2</Pod.List_Item>
