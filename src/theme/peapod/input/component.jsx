@@ -25,6 +25,10 @@ module.exports = class Input extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
+		this.onFocus = this.onFocus.bind(this);
+		this.onBlur = this.onBlur.bind(this);
+		this.onChangeHandler = this.onChangeHandler.bind(this)
+
 		this.state = {
 			value: this.props.value,
 			focus: false,
@@ -32,6 +36,18 @@ module.exports = class Input extends React.Component {
 			///8
 			placeholder: (this.props.value && this.props.value.length > 1) ? '' : this.props.placeholder,
 			evaluation: null //validation state
+		}
+	}
+
+	static defaultProps = {
+		type: 'text',
+
+		//validation is disabled by default
+		validate: false,
+		validationResponse: {
+			invalid: 'Invalid input',
+			valid: 'Valid',
+			empty: 'This field is required'
 		}
 	}
 
@@ -48,17 +64,17 @@ module.exports = class Input extends React.Component {
 		validationResponse: React.PropTypes.object
 	}
 
-	static defaultProps = {
-		type: 'text',
+	componentWillReceiveProps(nextProps) {
+        var value = nextProps.value,
+            placeholder = ( value && value.length > 0 ) ? '' : this.props.placeholder;
 
-		//validation is disabled by default
-		validate: false,
-		validationResponse: {
-			invalid: 'Invalid input',
-			valid: 'Valid',
-			empty: 'This field is required'
-		}
-	}
+        //evaluate if evaluated before
+        if(this.state.evaluation !== null) {
+            this.validate(value)
+        }
+
+        this.setState({ value, placeholder });
+    }
 
 	evaluate(value){
 

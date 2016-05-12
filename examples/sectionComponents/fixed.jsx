@@ -4,6 +4,8 @@ import Pod from 'components.js'
 export default class FixedSection extends React.Component {
 
     render () {
+return(<div></div>)
+
         return (
             <Pod.FixedElement key={'fixednavigation'} styler={{style: {top: 0, left: 0, width: '100%'}}}>
                 <Pod.Toolbar>

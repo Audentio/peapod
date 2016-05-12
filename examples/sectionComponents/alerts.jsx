@@ -5,6 +5,7 @@ import Pod from 'components.js'
 export default class AlertsSection extends React.Component {
 
     render () {
+
         var restoreAlerts = function(){
             for(var item in localStorage){
                 if(item.indexOf('Pod_alert_')>=0){

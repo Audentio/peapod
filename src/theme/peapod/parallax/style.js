@@ -17,9 +17,9 @@ module.exports = function(sheetName) {
 	    common: {
 	        height: '$parallax.height',
 	        width: '$parallax.width',
-	        perspective: '1px',
 	        overflow: 'hidden',
-	        position: 'relative'
+	        position: 'relative',
+	        background:'red'
 	    }
 	});
 	front.addSelector({
@@ -28,7 +28,8 @@ module.exports = function(sheetName) {
 	        width: '$parallax.width',
 	        position: 'absolute',
 	        top: 0, left: 0,
-	        transform: 'translateZ(0)',
+	        transform: '',
+	        willChange: 'transform'
 	    }
 	});
 	back.addSelector({
@@ -37,7 +38,10 @@ module.exports = function(sheetName) {
 	        width: '$parallax.width',
 	        position: 'absolute',
 	        top: 0, left: 0,
-	        transform: 'translateZ(-2px) scale(3)'
+	        transform: '',
+	        willChange: 'transform'
 	    }
 	});
+
+	return sheet;
 }
