@@ -3,6 +3,32 @@ import ReactDOM from 'react-dom'
 import Pod from 'components.js'
 
 export default class Demo extends React.Component {
+    constructor() {
+        super();
+        this.state = { value: 0, uniformValue: 0 }
+        this.startLoop = this.startLoop.bind(this)
+    }
+
+    startLoop(){
+        var _this = this;
+        this.loop = setInterval(function(){
+            var currentValue = _this.state.value;
+            _this.setState({
+                value: currentValue + Math.floor(Math.random()*10),
+                uniformValue: _this.state.uniformValue + 1
+            })
+            if(_this.state.value >= 100) {
+                //clearInterval(_this.loop) //Where's the fun in that?
+                _this.setState({
+                    value: 0 //GO AGAIN
+                })
+            }
+        }, 3000);
+    }
+
+    componentDidMount() {
+        this.startLoop()
+    }
 
     render () {
 
@@ -13,7 +39,7 @@ export default class Demo extends React.Component {
                     <Pod.ContentWrap>
                         <Pod.Grid>
 
-                            <Pod.Grid_Cell styler={{lg: 6, style: {height:'100vh'} }}>
+                            <Pod.Grid_Cell styler={{sm: 6, style: {height:'100vh'} }}>
                                 <Pod.Center>
                                     <div style={{textAlign: 'right', color:'white', display: 'inline-block'}}>
 
@@ -26,7 +52,7 @@ export default class Demo extends React.Component {
                                 </Pod.Center>
                             </Pod.Grid_Cell>
 
-                            <Pod.Grid_Cell styler={{lg: 6, style: {height:'100vh'} }}>
+                            <Pod.Grid_Cell styler={{sm: 6, style: {height:'100vh'} }}>
                                 <Pod.Center>
                                     <Pod.Device trueScaling={true} styler={{style: {display: 'inline-block'}}}>
                                         <Pod.Embed width="100%" height="100%" src="http://themehouse.com" />
@@ -70,7 +96,7 @@ export default class Demo extends React.Component {
                     </Pod.Toolbar>
                 </Pod.FixedElement>
 
-                <Pod.Section styler={{style: {paddingBottom: 0, border: 'none'}}}>
+                <Pod.Section styler={{style: {paddingBottom: '0px', border: 'none'}}}>
                     <Pod.ContentWrap>
                         <Pod.Alert dismissable={true} id="generalAlert">
                             We have just updated to some new version <Pod.Anchor to="/demo">Check it out!</Pod.Anchor>
@@ -80,7 +106,7 @@ export default class Demo extends React.Component {
 
                 <Pod.Section>
                     <Pod.ContentWrap>
-                        <Pod.Media image="profile.jpg" alignImage="right">
+                        <Pod.Media figure="profile.jpg" align="right">
                             <Pod.Heading>We Do Stuff</Pod.Heading>
                             <Pod.Paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, ducimus suscipit aspernatur a nihil nisi repellendus pariatur sapiente, atque inventore accusamus ea ipsum iusto, quaerat mollitia blanditiis odio nobis iure. </Pod.Paragraph>
                             <Pod.Paragraph> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, ducimus suscipit aspernatur a nihil nisi repellendus pariatur sapiente, atque inventore accusamus ea ipsum iusto, quaerat mollitia blanditiis odio nobis iure. </Pod.Paragraph>
@@ -95,42 +121,42 @@ export default class Demo extends React.Component {
                     <Pod.Grid>
                         <Pod.Grid_Cell styler={{lg: 6}}>
                             <Pod.Card styler={{style: {padding:'16px'}}}>
-                                <Pod.Media image="demo/img.png" alignImage="right" title="A media element">
+                                <Pod.Media figure="demo/img.png" align="right" title="A media element">
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                 </Pod.Media>
                             </Pod.Card>
                         </Pod.Grid_Cell>
                         <Pod.Grid_Cell styler={{lg: 6}}>
                             <Pod.Card styler={{style: {padding:'16px'}}}>
-                                <Pod.Media image="demo/img.png" title="A media element">
+                                <Pod.Media figure="demo/img.png" title="A media element">
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                 </Pod.Media>
                             </Pod.Card>
                         </Pod.Grid_Cell>
                         <Pod.Grid_Cell styler={{lg: 6}}>
                             <Pod.Card styler={{style: {padding:'16px'}}}>
-                                <Pod.Media image="demo/img.png" alignImage="right" title="A media element">
+                                <Pod.Media figure="demo/img.png" align="right" title="A media element">
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                 </Pod.Media>
                             </Pod.Card>
                         </Pod.Grid_Cell>
                         <Pod.Grid_Cell styler={{lg: 6}}>
                             <Pod.Card styler={{style: {padding:'16px'}}}>
-                                <Pod.Media image="demo/img.png" title="A media element">
+                                <Pod.Media figure="demo/img.png" title="A media element">
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                 </Pod.Media>
                             </Pod.Card>
                         </Pod.Grid_Cell>
                         <Pod.Grid_Cell styler={{lg: 6}}>
                             <Pod.Card styler={{style: {padding:'16px'}}}>
-                                <Pod.Media image="demo/img.png" alignImage="right" title="A media element">
+                                <Pod.Media figure="demo/img.png" align="right" title="A media element">
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                 </Pod.Media>
                             </Pod.Card>
                         </Pod.Grid_Cell>
                         <Pod.Grid_Cell styler={{lg: 6}}>
                             <Pod.Card styler={{style: {padding:'16px'}}}>
-                                <Pod.Media image="demo/img.png" title="A media element">
+                                <Pod.Media figure="demo/img.png" title="A media element">
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                 </Pod.Media>
                             </Pod.Card>
@@ -139,7 +165,81 @@ export default class Demo extends React.Component {
                     </Pod.ContentWrap>
                 </Pod.Section>
 
-                <Pod.Section styler={{style: {backgroundColor: '#000', padding: 0,border: 'none'}}}>
+                <Pod.Section>
+                    <Pod.ContentWrap styler={{style:{textAlign: 'center'}}}>
+                        <Pod.Card styler={{style:{width: '350px'}}} actionBar={(
+                            <div>
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                        (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.Icon>)
+                                    } />
+
+                                <Pod.Button styler={{type: 'icon'}} label={
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.Icon>)
+                                } />
+                            </div>
+                        )}>
+                            <Pod.Photo src="image.png"/>
+                        </Pod.Card>
+
+                        <Pod.Card styler={{padded:true, style:{width: '350px'}}} title="Simple Card" actionBar={(
+                            <div>
+                                <Pod.Button label="Button" />
+
+                                <Pod.Button label="Another Button" />
+                            </div>
+                        )}>
+                            <Pod.Chip>JavaScript</Pod.Chip>
+                            <Pod.Chip>JSON</Pod.Chip>
+                            <br />
+                            <br />
+                            Posted <Pod.Timestamp time={1455670800} output="relative" />
+                            <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Pod.Paragraph>
+                        </Pod.Card>
+
+                        <Pod.Card styler={{padded:true, style:{width: '350px'}}} title="Some CSS">
+                            <Pod.CodeBlock styler={{style: {overflow:'scroll'}}}>{`
+@import url('print.css');
+@page:right {
+ margin: 1cm 2cm 1.3cm 4cm;
+}
+
+@font-face {
+  font-family: Chunkfive; src: url('Chunkfive.otf');
+}
+
+div.text,
+#content,
+li[lang=ru] {
+  font: Tahoma, Chunkfive, sans-serif;
+  background: url('hatch.png') /* wtf? */;  color: #F0F0F0 !important;
+  width: 100%;
+}`}</Pod.CodeBlock>
+                        </Pod.Card>
+                        <Pod.Card styler={{padded:true, style:{width: '350px'}}} title="Shopping List">
+                            <Pod.List>
+                                <Pod.List_Item>Milk</Pod.List_Item>
+                                <Pod.List_Item>Eggs</Pod.List_Item>
+                                <Pod.List_Item>Bacon</Pod.List_Item>
+                                <Pod.List_Item>Coffee</Pod.List_Item>
+                            </Pod.List>
+                        </Pod.Card>
+                        <Pod.Card styler={{padded:true, style:{width: '350px', textAlign: 'center'}}} title="Fund Raiser Progress">
+                            <Pod.CircularProgress styler={{size:150}} value={this.state.uniformValue}>
+                                <div style={{fontSize: 30, fontWeight: 200}}>{this.state.uniformValue}%</div>
+                                <span style={{color: '#aaa'}}>progress...</span>
+                            </Pod.CircularProgress>
+                            <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Pod.Paragraph>
+                        </Pod.Card>
+
+                        <Pod.Card styler={{padded:true, style:{width: '350px', textAlign: 'center'}}} title="Don't forget to sign up to our Email">
+                            <Pod.Input placeholder="Your Name" />
+                            <Pod.Input placeholder="Your Email" type="email" validate={true} />
+                            <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Pod.Paragraph>
+                        </Pod.Card>
+                    </Pod.ContentWrap>
+                </Pod.Section>
+
+                <Pod.Section styler={{style: {backgroundColor: '#000', padding: '0px',border: 'none'}}}>
                     <Pod.Parallax background={(<div style={{width:'100%', height: '100%', backgroundImage: 'url(demo/bg2.jpg)', backgroundSize: 'cover', backgroundPosition:'center center', opacity: '0.8', }}></div>)}>
                         <Pod.Center styler={{style: {color: 'white'}}}>
                             <Pod.Heading>Works on the New Macbook</Pod.Heading>
