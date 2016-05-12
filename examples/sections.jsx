@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {Pane} from 'components.js'
 
 
 var firstComponents = ['HeroSection', 'FixedSection', 'ParallaxSection']
@@ -29,7 +29,9 @@ class Sections extends React.Component {
     render () {
         return (
             <div>
-                {componentsOutput}
+                <Pane>
+                  {componentsOutput}
+                </Pane>
             </div>
         )
     }
