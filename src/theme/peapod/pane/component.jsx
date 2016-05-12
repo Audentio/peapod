@@ -83,7 +83,7 @@ module.exports = class Pane extends React.Component {
 	}
 
 	componentWillUnmount() {
-		winodw.Pod_Panes.remove(this.paneIndex);
+		window.Pod_Panes.remove(this.paneIndex);
 	}
 
 	widthGet() {
