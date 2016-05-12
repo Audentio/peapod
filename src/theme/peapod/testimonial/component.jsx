@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import {Icon} from 'components.js';
+import {Icon, Photo, Anchor, BlockQuote} from 'components.js';
 
 
 /**
@@ -21,11 +21,11 @@ module.exports = class Testimonial extends React.Component {
 	    var style = Pod_Styler.getStyle(this);
 
 	    var image = (this.props.img) ? (
-	        <Pod.photo styler={{mainStyle: style.photo, imageStyle: style.photo }} src={this.props.img} />
+	        <Photo styler={{mainStyle: style.photo, imageStyle: style.photo }} src={this.props.img} />
 	    ) : '';
 
 	    var company = (this.props.img) ? (
-	        <Pod.anchor to={this.props.link}>{this.props.comp}</Pod.anchor>
+	        <Anchor to={this.props.link}>{this.props.comp}</Anchor>
 	    ) : (
 	        <div>{this.props.comp}</div>
 	    );
@@ -35,7 +35,7 @@ module.exports = class Testimonial extends React.Component {
 	    return (
 	        <div style={style.main}>
 	            {image}
-	            <Pod.blockQuote styler={{mainStyle: style.blockQuote}}>{this.props.children}</Pod.blockQuote>
+	            <BlockQuote styler={{mainStyle: style.blockQuote}}>{this.props.children}</BlockQuote>
 	            {name}
 	            {company}
 	        </div>

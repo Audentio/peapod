@@ -1,5 +1,6 @@
 import {Sheet} from 'stylesheet.js';
-import devices from './devicePresets.js'
+
+import devices from './presets.js'
 
 module.exports = function(sheetName) {
 	var sheet = new Sheet(sheetName);
@@ -9,11 +10,14 @@ module.exports = function(sheetName) {
 	var overlay = sheet.addPart('overlay');
 	var scrollable = sheet.addPart('scrollable');
 
+
 	//Conditions
 	sheet.addCondition('scrollable').addStyler({scrollable: true});
 	sheet.addCondition('horizontal').addProp({orientation: 'horizontal'});
+
 	sheet.addCondition('trueScaling').addProp({trueScaling: true});
 	sheet.addCondition('scale').addProp({scale: ['!=', undefined]});
+
 
 	//Variables
 	sheet.setValues(devices);
@@ -25,7 +29,6 @@ module.exports = function(sheetName) {
 	var getStandardVersion = getStandard.versions[standardVersion];
 	var getStandardVariant = getStandard.variants[standardVariant];
 
-	// console.log(Pod_Vars.get('getProp:scale'))
 
 	main.addSelector({
 	    common: {
@@ -254,5 +257,6 @@ module.exports = function(sheetName) {
 	    }
 
 	}
+
 	return sheet;
 }

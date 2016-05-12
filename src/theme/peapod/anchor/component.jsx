@@ -6,9 +6,9 @@
 
 
 //Dependencies
+// import { Link } from 'react-router'
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import {Link} from 'react-router'
 
 /**
 * Anchor component
@@ -20,17 +20,18 @@ module.exports = class Anchor extends React.Component {
         internal: false
     }
 
+    // regex for internal ?
+
     render() {
         var style = Pod_Styler.getStyle(this);
 
-        var regex = /^(https?:\/\/|ftp:\/\/)/g;
-        if (regex.test(this.props.to) && !this.props.internal) {
-            return (<a style={style.main} href={this.props.href}>{this.props.children}</a>);
-        }
-        else {
-            // dont ask me why the to value needs to be this way :L
-            return(<Link to={`${this.props.href}`} style={style.main}>{this.props.children}</Link>)
-        }
+        // var regex = /^(https?:\/\/|ftp:\/\/)/g;
+        // if (regex.test(this.props.to) && !this.props.internal) {
+            return (<a style={style.main} href={this.props.to}>{this.props.children}</a>);
+        // }
+        // else {
+        //     return(<Link style={style.main} to={this.props.to}>{this.props.children}</Link>)
+        // }
 
     }
 

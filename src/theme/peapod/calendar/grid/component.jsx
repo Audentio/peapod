@@ -3,7 +3,7 @@ import {globals, addDays, setDayOfWeek, getDates, resetTime, daysInMonth, getMon
 import React from 'react';
 import Pod_Styler from 'styler.js';
 
-import {CalendarDaysOfWeek, CalendarDay as Calendar_DaysOfWeek, Calendar_Day} from 'components.js'
+import {Calendar_DaysOfWeek, Calendar_Day} from 'components.js'
 
 module.exports = class Calendar_Grid extends React.Component {
 

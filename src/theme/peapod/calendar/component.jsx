@@ -1,6 +1,6 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import {Card, CalendarMonthBar, CalendarGrid as Pod_card, Calendar_MonthBar, Calendar_Grid} from 'components.js'
+import {Card, Calendar_MonthBar, Calendar_Grid} from 'components.js'
 
 import {globals, addDays, setDayOfWeek, getDates, resetTime, daysInMonth, getMonthFromDate, getLocalMonth} from './calendarHelper.js'
 
@@ -65,24 +65,22 @@ module.exports = class Calendar extends React.Component {
         var dayoptions = { weekday: 'short', month: 'short', day: 'numeric' };
 
         return (
-            <Pod_card>
-                <div style={style.main}>
-                    <div style={style.dateBar}>
-                        <div style={style.year}>{this.state.today.getFullYear()}</div>
-                        <div style={style.date}>{this.state.today.toLocaleDateString(globals.locale, dayoptions)}</div>
-                    </div>
-                    <Calendar_MonthBar
-                        // get these down
-                        onClick={this.updateCalendar}
-                        currentDate={activeDay}
-                        nextMonth={nextMonth}
-                        prevMonth={prevMonth}
-                        nextYear={nextYear}
-                        prevYear={prevYear}
-                    />
-                    <Calendar_Grid dateArray={dateArray} onClick={this.updateToday} />
+            <div style={style.main}>
+                <div style={style.dateBar}>
+                    <div style={style.year}>{this.state.today.getFullYear()}</div>
+                    <div style={style.date}>{this.state.today.toLocaleDateString(globals.locale, dayoptions)}</div>
                 </div>
-            </Pod_card>
+                <Calendar_MonthBar
+                    // get these down
+                    onClick={this.updateCalendar}
+                    currentDate={activeDay}
+                    nextMonth={nextMonth}
+                    prevMonth={prevMonth}
+                    nextYear={nextYear}
+                    prevYear={prevYear}
+                />
+                <Calendar_Grid dateArray={dateArray} onClick={this.updateToday} />
+            </div>
         );
 
     }
