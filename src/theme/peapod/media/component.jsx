@@ -18,7 +18,7 @@ module.exports = class Media extends React.Component {
 	static defaultProps = {
 		title: false,
 	    image: false,
-	    alignImage: 'right'
+	    alignImage: 'left'
 	}
 
     render() {
