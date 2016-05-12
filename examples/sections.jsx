@@ -1,8 +1,5 @@
 import React from 'react'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+
 
 
 var firstComponents = ['HeroSection', 'FixedSection', 'ParallaxSection']
@@ -23,17 +20,10 @@ for (var i = 0, len = fileNames.length; i < len; i++) {
 var componentsOutput = []
 components.unshift(...firstComponents)
 for (var i = 0; i<components.length; i++) {
-    componentsOutput.push(React.createElement(window[components[i]], null))
+    componentsOutput.push(React.createElement(window[components[i]], {key: 'section' + i}))
 }
 // React.createElement(window[componentName], null)
 
-// var lazyload = (
-// <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-// <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-// <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-// <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-// <Pod.photo src="mrRobot.jpg" lazy={true} caption="Lazy load!" hidpiData={false} />
-// )
 
 class Sections extends React.Component {
     render () {

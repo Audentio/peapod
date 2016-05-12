@@ -1,72 +1,68 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+import Pod from 'components.js'
 
 export default class MenusSection extends React.Component {
 
     render () {
         return (
-            <Pod.section key={'menus'}>
-                <Pod.contentWrap>
+            <Pod.Section key={'Menus'}>
+                <Pod.ContentWrap>
 
-                    <Pod.heading>Menus</Pod.heading>
+                    <Pod.Heading>Menus</Pod.Heading>
 
-                    <Pod.menu trigger={
-                        <Pod.button label="On Hover" />
+                    <Pod.Menu trigger={
+                        <Pod.Button label="On Hover" />
                     }>
-                        <Pod.menuItem href="#" subtext="1">
+                        <Pod.Menu_Item href="#" subtext="1">
                             Something about something
-                        </Pod.menuItem>
-                        <Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
-                        <Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
-                        <Pod.divider></Pod.divider>
-                        <Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
-                            <Pod.menu styler={{level:1}} trigger={
-                                <Pod.menuItem subtext="5">And another</Pod.menuItem>
+                        </Pod.Menu_Item>
+                        <Pod.Menu_Item href="#" subtext="2">Something else</Pod.Menu_Item>
+                        <Pod.Menu_Item href="#" subtext="3">Another thing</Pod.Menu_Item>
+                        <Pod.Divider></Pod.Divider>
+                        <Pod.Menu_Item href="#" subtext="4">Yet another thing</Pod.Menu_Item>
+                            <Pod.Menu styler={{level:1}} trigger={
+                                <Pod.Menu_Item subtext="5">And another</Pod.Menu_Item>
                             }>
-                                <Pod.menuItem href="#">Another thing</Pod.menuItem>
-                                <Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-                                <Pod.menuItem href="#">And another</Pod.menuItem>
-                                <Pod.menu styler={{level:1}} trigger={
-                                    <Pod.menuItem subtext="5">And another</Pod.menuItem>
+                                <Pod.Menu_Item href="#">Another thing</Pod.Menu_Item>
+                                <Pod.Menu_Item href="#">Yet another thing</Pod.Menu_Item>
+                                <Pod.Menu_Item href="#">And another</Pod.Menu_Item>
+                                <Pod.Menu styler={{level:1}} trigger={
+                                    <Pod.Menu_Item subtext="5">And another</Pod.Menu_Item>
                                 }>
-                                    <Pod.menuItem href="#">Another thing</Pod.menuItem>
-                                    <Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-                                    <Pod.menuItem href="#">And another</Pod.menuItem>
-                                </Pod.menu>
-                            </Pod.menu>
-                    </Pod.menu>
+                                    <Pod.Menu_Item href="#">Another thing</Pod.Menu_Item>
+                                    <Pod.Menu_Item href="#">Yet another thing</Pod.Menu_Item>
+                                    <Pod.Menu_Item href="#">And another</Pod.Menu_Item>
+                                </Pod.Menu>
+                            </Pod.Menu>
+                    </Pod.Menu>
 
-                    <Pod.menu portal={true} trigger={
-                        <Pod.button label="On Click" />
+                    <Pod.Menu portal={true} trigger={
+                        <Pod.Button label="On Click" />
                     }>
-                        <Pod.menuItem href="#" subtext="1">
+                        <Pod.Menu_Item href="#" subtext="1">
                             Something about something
-                        </Pod.menuItem>
-                        <Pod.menuItem href="#" subtext="2">Something else</Pod.menuItem>
-                        <Pod.menuItem href="#" subtext="3">Another thing</Pod.menuItem>
-                        <Pod.menuItem href="#" subtext="4">Yet another thing</Pod.menuItem>
-                            <Pod.menu styler={{level:1}} click={true} trigger={
-                                <Pod.menuItem subtext="5">And another</Pod.menuItem>
+                        </Pod.Menu_Item>
+                        <Pod.Menu_Item href="#" subtext="2">Something else</Pod.Menu_Item>
+                        <Pod.Menu_Item href="#" subtext="3">Another thing</Pod.Menu_Item>
+                        <Pod.Menu_Item href="#" subtext="4">Yet another thing</Pod.Menu_Item>
+                            <Pod.Menu styler={{level:1}} click={true} trigger={
+                                <Pod.Menu_Item subtext="5">And another</Pod.Menu_Item>
                             }>
-                                <Pod.menuItem href="#">Another thing</Pod.menuItem>
-                                <Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-                                <Pod.menuItem href="#">And another</Pod.menuItem>
-                                <Pod.menu click={true} styler={{level:1}} trigger={
-                                    <Pod.menuItem subtext="5">And another</Pod.menuItem>
+                                <Pod.Menu_Item href="#">Another thing</Pod.Menu_Item>
+                                <Pod.Menu_Item href="#">Yet another thing</Pod.Menu_Item>
+                                <Pod.Menu_Item href="#">And another</Pod.Menu_Item>
+                                <Pod.Menu click={true} styler={{level:1}} trigger={
+                                    <Pod.Menu_Item subtext="5">And another</Pod.Menu_Item>
                                 }>
-                                    <Pod.menuItem href="#">Another thing</Pod.menuItem>
-                                    <Pod.menuItem href="#">Yet another thing</Pod.menuItem>
-                                    <Pod.menuItem href="#">And another</Pod.menuItem>
-                                </Pod.menu>
-                            </Pod.menu>
-                    </Pod.menu>
+                                    <Pod.Menu_Item href="#">Another thing</Pod.Menu_Item>
+                                    <Pod.Menu_Item href="#">Yet another thing</Pod.Menu_Item>
+                                    <Pod.Menu_Item href="#">And another</Pod.Menu_Item>
+                                </Pod.Menu>
+                            </Pod.Menu>
+                    </Pod.Menu>
 
-                    <Pod.menu trigger={
-                        <Pod.button label="On Hover from JSON" />
+                    <Pod.Menu trigger={
+                        <Pod.Button label="On Hover from JSON" />
                     } json={[
                         {text: 'Hello World', href: '#'},
                         {text: 'Hello World 36', href: '#',
@@ -80,8 +76,8 @@ export default class MenusSection extends React.Component {
                     ]} />
 
 
-                </Pod.contentWrap>
-            </Pod.section>
+                </Pod.ContentWrap>
+            </Pod.Section>
         )
     }
 

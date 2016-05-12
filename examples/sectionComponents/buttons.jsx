@@ -1,36 +1,32 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import 'components'
-import Paragraph from 'components/paragraph'
-import Strong from 'components/strong'
-import Code from 'components/code'
+import Pod from 'components.js'
 
 export default class ButtonsSection extends React.Component {
 
     render () {
         return (
-            <Pod.section key={'buttons'}>
-                <Pod.contentWrap>
+            <Pod.Section key={'buttons'}>
+                <Pod.ContentWrap>
 
-                    <Pod.heading>Buttons</Pod.heading>
+                    <Pod.Heading>Buttons</Pod.Heading>
 
-                    <Pod.button label="Default" />
-                    <Pod.button label="General" styler={{kind: 'general'}} />
-                    <Pod.button label="Primary" styler={{kind:'primary'}} />
-                    <Pod.button label="Success" styler={{kind:'success'}} />
-                    <Pod.button label="Danger" styler={{kind:'danger'}} />
-                    <Pod.button label="Warning" styler={{kind:'warning'}} />
+                    <Pod.Button label="Default" />
+                    <Pod.Button label="General" styler={{kind: 'general'}} />
+                    <Pod.Button label="Primary" styler={{kind:'primary'}} />
+                    <Pod.Button label="Success" styler={{kind:'success'}} />
+                    <Pod.Button label="Danger" styler={{kind:'danger'}} />
+                    <Pod.Button label="Warning" styler={{kind:'warning'}} />
 
                     <br /><br />
-                    <Pod.button label="Raised" styler={{kind: "primary", raised: true}} />
-                    <Pod.button label="Round" styler={{kind: "primary", round: true}} />
-                    <Pod.button label="Disabled" styler={{kind:"primary", disabled: true}} />
-                    <Pod.button styler={{kind: "success", round:true, raised: true}} />
-                    <Pod.button styler={{kind: "base"}} onClick={function(){alert('test')}} label="onClick handler" />
-                    <Pod.button styler={{kind: "base"}} href="http://peapod.io" label="Anchor/Link" kind="primary" />
+                    <Pod.Button label="Raised" styler={{kind: "primary", raised: true}} />
+                    <Pod.Button label="Round" styler={{kind: "primary", round: true}} />
+                    <Pod.Button label="Disabled" styler={{kind:"primary", disabled: true}} />
+                    <Pod.Button styler={{kind: "success", round:true, raised: true}} />
+                    <Pod.Button styler={{kind: "base"}} onClick={function(){alert('test')}} label="onClick handler" />
+                    <Pod.Button styler={{kind: "base"}} href="http://peapod.io" label="Anchor/Link" kind="primary" />
 
-                </Pod.contentWrap>
-            </Pod.section>
+                </Pod.ContentWrap>
+            </Pod.Section>
         )
     }
 

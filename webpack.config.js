@@ -33,13 +33,13 @@ var config = {
 	],
 
 	module: {
-		preLoaders: [{
-			test: /\.json$/,
-			loader: 'json'
-		}],
 
 		loaders: [
 
+			{
+				include: /\.json$/,
+	    		loaders: ['json-loader']
+			}, 
 			//JSX files go through hotloader and Babel
 			{
 				test: /\.jsx?$/,
