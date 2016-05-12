@@ -1,17 +1,17 @@
 
-import Radium from 'radium';
+import radium from 'radium';
 import React, { Component } from 'react';
 
-let Pod_Enhance = ComposedComponent => class extends Component {
-  constructor() {
-    super(...arguments);
+const enhance = ComposedComponent => class extends Component {
+  constructor(...args) {
+    super(...args);
     this.state = this.state || {};
   }
 
   componentDidMount() {
-    ComposedComponent.contextTypes = {
-      _podPaneWidth: React.PropTypes.number
-    }
+    ComposedComponent.contextTypes = { // eslint-disable-line
+      _podPaneWidth: React.PropTypes.number,
+    };
   }
 
   render() {
@@ -19,10 +19,8 @@ let Pod_Enhance = ComposedComponent => class extends Component {
   }
 };
 
-const Pod_Wrapper = function(NewComponent) {
-  //return Radium(NewComponent);
-
-  return Pod_Enhance(Radium(NewComponent));
+const Pod_Wrapper = function wrap(NewComponent) {
+  return enhance(radium(NewComponent));
 };
 
 module.exports = Pod_Wrapper;
