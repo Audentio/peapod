@@ -15,7 +15,7 @@ import {merge as _merge} from 'lodash'
 * Create formatted & self-updating timestamps from dateTime.
 *
 */
-module.exports = class Input extends React.Component {
+module.exports = class Timestamp extends React.Component {
 
 	constructor(props, context) {
 		super(props, context);
@@ -221,4 +221,4 @@ module.exports = class Input extends React.Component {
 			</span>
 		)
 	}
-};
+}

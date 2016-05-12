@@ -11,8 +11,7 @@ module.exports = function(sheetName) {
 
 	main.addSelector({
 		common: {
-			cursor: 'default',
-			color: 'red'
+			cursor: 'default'
 		}
 	})
 
