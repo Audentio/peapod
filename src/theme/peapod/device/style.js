@@ -53,15 +53,15 @@ module.exports = function(sheetName) {
 	        backgroundImage: getStandardVariant.svg,
 	        width: getStandardVersion.width,
 	        height: getStandardVersion.height,
-	        position: 'absolute',
-	        bottom: getStandardVariant.position.bottom,
-	        left: getStandardVariant.position.left
+	        position: 'absolute'
 	    }
 	}).addSelector({
 	    condition: ['horizontal'],
 	    common: {
 	        transform: 'rotate(-90deg)',
-	        transformOrigin: 'center'
+	        transformOrigin: '50% 50%',
+	        bottom: getStandardVariant.position.bottom,
+	        left: getStandardVariant.position.left
 	    }
 	});
 	innerscreen.addSelector({
@@ -186,7 +186,7 @@ module.exports = function(sheetName) {
 	            top: getStandardVersion.offset.left,
 	            right: getStandardVersion.offset.bottom,
 	            bottom: getStandardVersion.offset.right,
-	            left: getStandardVersion.offset.top,
+	            left: getStandardVersion.offset.top
 	        }
 	    }).addSelector({
 	    condition: ['trueScaling', 'device' + deviceindex],

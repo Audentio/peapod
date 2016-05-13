@@ -29,8 +29,8 @@ var devices = {
                 black: {
                     svg: 'url(iPhone-6-Black.svg)',
                     position: {
-                        bottom: 0,
-                        left: 0
+                        bottom: 'calc(-5px - 50%)',
+                        left: 'calc(378px - 50%)'
                     }
                 }
             }
@@ -52,8 +52,8 @@ var devices = {
                         left: 62
                     },
                     viewport: {
-                        width: 1024,
-                        height: 640
+                        width: 1280,
+                        height: 800
                     }
                 }
             },
