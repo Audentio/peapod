@@ -6,14 +6,14 @@
  import React from 'react';
  import Pod_Styler from 'styler.js';
 
-import {reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined} from 'lodash'
+import {reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined, isEqual as _isEqual} from 'lodash'
 
 import {Table_Cell} from 'components.js';
 
 module.exports = class Table_Row extends React.Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		//return true;
-		return !lodash.isEqual(nextProps, this.props)
+		return !_isEqual(nextProps, this.props)
 	}
 
 	render() {
