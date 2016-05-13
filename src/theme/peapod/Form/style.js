@@ -13,13 +13,22 @@ module.exports = function(sheetName) {
 	form.addSelector({
 		common: {
 			position: 'relative',
-			paddingTop: 15
+			paddingTop: 15,
+			WebkitFilter: 'none',
+			transition: '.2s'
+		}
+	})
+
+	main.addSelector({
+		condition: 'disabled',
+		common: {
+			WebkitFilter: 'blur(3px)'
 		}
 	})
 
 	overlay.addSelector({
 		common: {
-			backgroundColor: 'rgba(255,255,255, 0.5)',
+			backgroundColor: 'rgba(255,255,255, 0)',
 			position: 'absolute',
 			top: 0,
 			left: 0,

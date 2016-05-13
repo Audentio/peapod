@@ -51,6 +51,8 @@ module.exports = class Form extends React.Component {
 
 		var xhr_data = encodeURIComponent(JSON.stringify(formData));
 
+		//console.log(xhr_data)
+
 		//_this.loading_start();
 
 		var xhr_config = {

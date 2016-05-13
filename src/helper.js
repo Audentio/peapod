@@ -188,13 +188,16 @@ var Pod_helper = {
 
         xmlhttp = new XMLHttpRequest();
 
-        console.log('XHR: '+ opts.method +' '+ opts.url)
+        console.group('XHR: '+ opts.method +' '+ opts.url)
+        console.log('config: %o', opts)
+        console.groupEnd('XHR: '+ opts.method +' '+ opts.url)
 
         xmlhttp.open(opts.method, opts.url, true);
 
         xmlhttp.timeout = opts.timeout;
 
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //xmlhttp.setRequestHeader("SiteId", "1");
 
         if(opts.ontimeout){
             xmlhttp.ontimeout = opts.ontimeout
@@ -204,7 +207,6 @@ var Pod_helper = {
             var req_complete = xmlhttp.readyState === XMLHttpRequest.DONE,
                 req_success = req_complete && xmlhttp.status === 200,
                 req_error = req_complete && xmlhttp.status !== 200;
-
             if(req_success && opts.success){
                 opts.success(this.responseText, xmlhttp.status, xmlhttp.statusText);
             }
