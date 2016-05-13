@@ -9,6 +9,8 @@
     "camelcase": ["off", {properties: "never"}],
     'no-underscore-dangle': ["off", { "allow": [] }],
     'import/no-unresolved': ["off"],
-     "indent": ["error", 4],
+    "indent": ["error", 4],
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-indent-props": ["error", 4]
   }
 }
