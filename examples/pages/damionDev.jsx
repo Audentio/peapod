@@ -21,7 +21,6 @@ export default class DamionDev extends React.Component {
     }
 
     render() {
-
         // const title = (
         //     <Pod.Section>
         //         <Pod.ContentWrap>
@@ -32,45 +31,112 @@ export default class DamionDev extends React.Component {
 
         // const background = (<div style={{width: '100%', height: '100%', background: 'url(mrRobot.jpg)', backgroundSize: 'cover'}}></div>);
 
-        return(
+        return (
             <div key={'dev'}>
-                <Pod.DatePicker />
+                {/*<Pod.DatePicker />
 
-                <br /><br /><br />
-                <br /><br /><br />
+                    <br /><br /><br />
+                    <br /><br /><br />
 
-                <div style={{ width: '200px', height: '200px', background:'#efefef' }}>
+                    <div style={{ width: '200px', height: '200px', background: '#efefef' }}>
                     <Pod.Center>Hey</Pod.Center>
-                </div>
+                    </div>
 
-                <br /><br /><br />
-                <br /><br /><br />
+                    <br /><br /><br />
+                    <br /><br /><br />
 
-                <Pod.Droppable window>Droppable</Pod.Droppable>
+                    <Pod.Droppable window>Droppable</Pod.Droppable>
 
-                <br /><br /><br />
-                <br /><br /><br />
+                    <br /><br /><br />
+                <br /><br /><br />*/}
 
-                <Pod.Scrollable horizontal={true} styler={{center: true}}>
-                    <Pod.Device trueScaling={true} orientation='horizontal' styler={{style: {display: 'inline-block'}}}>
+                <Pod.Scrollable horizontal styler={{ center: true }}>
+                    <Pod.Device trueScaling orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
                         <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }}/>
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Lazy>
                     </Pod.Device>
 
-                    <Pod.Device orientation='horizontal' styler={{style: {display: 'inline-block'}}}>
+                    <Pod.Device styler={{ style: { display: 'inline-block' } }}>
                         <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }}/>
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Lazy>
                     </Pod.Device>
-                    <Pod.Device styler={{style: {display: 'inline-block'}}}>
+
+                </Pod.Scrollable>
+
+                <Pod.Scrollable horizontal styler={{ center: true }}>
+
+                    <Pod.Device trueScaling device="macbook" styler={{ style: { display: 'inline-block' } }}>
                         <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }}/>
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Lazy>
                     </Pod.Device>
-                    <Pod.Device trueScaling={true} device="macbook" styler={{style: {display: 'inline-block'}}}>
+
+                    <Pod.Device trueScaling device="macbook" variant="silver" styler={{ style: { display: 'inline-block' } }}>
                         <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }}/>
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+
+                    <Pod.Device trueScaling device="macbook" variant="gold" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                </Pod.Scrollable>
+
+                <Pod.Scrollable horizontal styler={{ center: true }}>
+
+                    <Pod.Device trueScaling device="macbookpro" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device trueScaling device="macbookpro" version="13" variant='2015' styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                </Pod.Scrollable>
+
+                <Pod.Scrollable horizontal styler={{ center: true }}>
+
+                    <Pod.Device trueScaling device="imac" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                </Pod.Scrollable>
+
+                <Pod.Scrollable horizontal styler={{ center: true }}>
+
+                    <Pod.Device trueScaling device="ipadpro" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device trueScaling device="ipadpro" variant="gold" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device trueScaling device="ipadpro" variant="rosegold" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device device="ipadpro" variant="spacegrey" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Lazy>
                     </Pod.Device>
 
@@ -88,11 +154,11 @@ export default class DamionDev extends React.Component {
                 <br /><br /><br />
                 <br /><br /><br />
 
-                <Pod.Media figure="profile.jpg" contentVertical='middle'>
+                <Pod.Media figure="profile.jpg" contentVertical="middle">
                     <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam eius illo nostrum voluptates! Porro laborum, temporibus ad molestiae illum doloribus. Magnam minima similique ea, voluptates dolorum quam ad adipisci voluptate.</Pod.Paragraph>
                 </Pod.Media>
 
             </div>
-        )
+        );
     }
 }
