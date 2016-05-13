@@ -44,8 +44,9 @@ window.Pod_Styler = window.Pod_Styler || {
         for (let i = 0, len = componentKeys.length; i < len; i++) {
             let componentName = componentKeys[i],
             stylesheet = requireFunc(componentFiles[componentName].fileName);
-
-            components[componentFiles[componentName].componentName] = stylesheet(componentName);
+            if (typeof(stylesheet) === 'function') {
+                components[componentFiles[componentName].componentName] = stylesheet(componentName);
+            }
         }
 
         let library = {
