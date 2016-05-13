@@ -9,6 +9,7 @@ module.exports = function(sheetName) {
 		placeholder = sheet.addPart('placeholder'),
 		label = sheet.addPart('label'),
 		icon = sheet.addPart('icon'),
+		charCounter = sheet.addPart('charCounter'),
 		evaluation = sheet.addPart('evaluation');
 
 	var bouncy = {
@@ -45,6 +46,8 @@ module.exports = function(sheetName) {
 	var bounceKeyframes3 = Radium.keyframes(bouncy, 'bounce3')
 
 	sheet.addCondition('focused').addState({focus: true});
+	sheet.addCondition('type-textarea').addProp({type: 'textarea'});
+	sheet.addCondition('showCounter').addProp({showCounter: true})
 	sheet.addCondition('evaluation-valid').addState({evaluation: 'valid'});
 	sheet.addCondition('evaluation-invalid').addState({evaluation: 'invalid'});
 	sheet.addCondition('evaluation-empty').addState({evaluation: 'empty'}); //only when "required" is true
@@ -65,6 +68,12 @@ module.exports = function(sheetName) {
 			right: '0px',
 			bottom: '0px',
 			left: '0px'
+		},
+		textareaPadding: {
+			top: 10,
+			right: 0,
+			bottom: 10,
+			left: 0
 		},
 		border: {
 			color: '$palette.blue400',
@@ -104,12 +113,25 @@ module.exports = function(sheetName) {
 			position: 'relative',
 			color: '$input.color.text',
 			backgroundColor: '$input.color.background',
-			borderWidth: '$input.border.width',
+			//borderWidth: '$input.border.width',
+			borderBottomWidth: '2px', //above doesn't work for some reason
 			borderStyle: '$input.border.style',
-			borderColor: '$input.border.color',
+			borderColor: '$palette.grey300',
 			borderRadius: '$input.border.radius',
 			marginBottom: '$gutter.extrasmall',
 			transition: 'border-color 100ms',
+		}
+	}).addSelector({
+		condition: 'type-textarea',
+		common: {
+			display: 'block',
+			width: '500px',
+			height: 'auto'
+		}
+	}).addSelector({
+		condition: ['type-textarea', 'showCounter'],
+		common: {
+			marginBottom: 30
 		}
 	}).addSelector({
 		condition: 'focused',
@@ -161,6 +183,13 @@ module.exports = function(sheetName) {
 			transition: 'padding 100ms'
 		}
 	}).addSelector({
+		condition: 'type-textarea',
+		common: {
+			maxWidth: '100%',
+			paddingTop: '$input.textareaPadding.top',
+			paddingBottom: '$input.textareaPadding.bottom'
+		}
+	}).addSelector({
 		condition: 'focused',
 		common: {
 			paddingLeft: '0px'
@@ -184,6 +213,14 @@ module.exports = function(sheetName) {
 			textOverflow: 'ellipsis',
 			fontSize: '$font.size.large',
 			transition: 'padding 100ms',
+		}
+	}).addSelector({
+		condition: 'type-textarea',
+		common: {
+			lineHeight: 'normal',
+			height: '100%',
+			paddingTop: '$input.textareaPadding.top',
+			paddingBottom: '$input.textareaPadding.bottom'
 		}
 	}).addSelector({
 		condition: 'focused',
@@ -228,6 +265,15 @@ module.exports = function(sheetName) {
 			animation: 'x 500ms 0s 1',
 			animationName: bounceKeyframes3,
 			color: '$color.success.base'
+		}
+	});
+
+	charCounter.addSelector({
+		common: {
+			position: 'absolute',
+			bottom: 0,
+			left: 0,
+			marginBottom: -25
 		}
 	})
 

@@ -1,0 +1,17 @@
+{
+  "name": "peapod-cli",
+  "version": "1.0.0",
+  "description": "Command-line utils for peapod development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "peapod": "./index.js"
+  },
+  "author": "Audentio",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
+}
