@@ -9,7 +9,7 @@
 //var lodash = require('lodash')
 //var isFunction = lodash.isFunction;
 
-import {isFunction as _isFunction} from 'lodash'
+import {isFunction as _isFunction, isEqual as _isEqual} from 'lodash'
 
 
 import {Table_Row, Table_Header} from 'components.js';
@@ -31,7 +31,7 @@ module.exports = class Table_Inner extends React.Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		//return true;
-		return !lodash.isEqual(nextProps, this.props)
+		return !_isEqual(nextProps, this.props)
 	}
 
 	render() {
@@ -47,7 +47,7 @@ module.exports = class Table_Inner extends React.Component {
 		return (
 			<div style={{overflowX: 'auto'}}>
 				<div style={style.main}>
-					{isFunction(columnNames) ? columnNames(columns) : <Table_Header config={columnNames} columns={columns} />}
+					{_isFunction(columnNames) ? columnNames(columns) : <Table_Header config={columnNames} columns={columns} />}
 					{
 						data.map(function(row, i) {
 							return (

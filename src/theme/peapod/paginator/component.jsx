@@ -4,26 +4,7 @@ import Wrapper from 'wrapper.jsx';
 
 import {Icon, Grid, Div} from 'components.js';
 
-function paginate(data, o) {
-    data = data || [];
-
-    var page = o.page || 0;
-    var perPage = o.perPage;
-
-    var amountOfPages = Math.ceil(data.length / perPage);
-    var startPage = page < amountOfPages? page: 0;
-
-    return {
-		total: data.length,
-        data: data.slice(startPage * perPage, startPage * perPage + perPage),
-        page: startPage,
-		pages: amountOfPages,
-		perPage: perPage
-    };
-}
-
 class Paginator extends React.Component {
-
 	render() {
 		var style = Pod_Styler.getStyle(this);
 
@@ -56,6 +37,22 @@ class Paginator extends React.Component {
 	}
 }
 
-Paginator.paginate = paginate;
+Paginator.__proto__.paginate = function(data, o) {
+    data = data || [];
+
+    var page = o.page || 0;
+    var perPage = o.perPage;
+
+    var amountOfPages = Math.ceil(data.length / perPage);
+    var startPage = page < amountOfPages? page: 0;
+
+    return {
+        total: data.length,
+        data: data.slice(startPage * perPage, startPage * perPage + perPage),
+        page: startPage,
+        pages: amountOfPages,
+        perPage: perPage
+    };
+}
 
 module.exports = Paginator;
