@@ -8,10 +8,13 @@ import { Input, Portal, Calendar, Card } from 'components.js';
 */
 module.exports = class DatePicker extends React.Component {
 
-    constructor() {
-        super();
+    componentWillMount() {
+        console.log(this.props.date)
 
-        const date = new Date();
+        const date = (this.props.date) ? new Date(this.props.date) :
+            new Date();
+
+        // const date = new Date();
         this.state = {
             date,
             day: date.getDate(),
@@ -22,9 +25,7 @@ module.exports = class DatePicker extends React.Component {
 
         this.onFocus = this.onFocus.bind(this);
         this.onChange = this.onChange.bind(this);
-    }
 
-    componentWillMount() {
         const value = this.dateValue(this.state.date);
         this.setState({ value });
     }
