@@ -46,6 +46,11 @@ export default class DamionDev extends React.Component {
                 <br /><br /><br />
                 <br /><br /><br />
 
+                <Pod.Droppable window>Droppable</Pod.Droppable>
+
+                <br /><br /><br />
+                <br /><br /><br />
+
                 <Pod.Scrollable horizontal={true} styler={{center: true}}>
                     <Pod.Device trueScaling={true} orientation='horizontal' styler={{style: {display: 'inline-block'}}}>
                         <Pod.Lazy distance="50" height="100%">
