@@ -33,12 +33,11 @@ export default class Demo extends React.Component {
     render () {
 
         return(
-            <div key={'demopage'}>
+            <Pod.Pane key={'demopage'}>
                 <Pod.Hero key={'hero'} styler={{cover: true, style: {backgroundImage: 'url(demo/bg.jpg)'}}}>
 
                     <Pod.ContentWrap>
                         <Pod.Grid>
-
                             <Pod.Grid_Cell styler={{sm: 6, style: {height:'100vh'} }}>
                                 <Pod.Center>
                                     <div style={{textAlign: 'right', color:'white', display: 'inline-block'}}>
@@ -281,7 +280,7 @@ li[lang=ru] {
                 <Pod.Section styler={{style: {backgroundColor: '#594E99', color: '#fff', border: 'none'}}}>
                     <Pod.ContentWrap>
                         <Pod.Grid>
-                            <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3}}>
+                            <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3, style: {padding: '0px 16px'}}}>
                                 <Pod.Heading kind="h5">Some Links</Pod.Heading>
                                 <Pod.List styler={{mainStyle: {maxHeight: 'auto'}}}>
                                     <Pod.List_Item>Item #1</Pod.List_Item>
@@ -291,7 +290,7 @@ li[lang=ru] {
                                     <Pod.List_Item>Item #5</Pod.List_Item>
                                 </Pod.List>
                             </Pod.Grid_Cell>
-                            <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3}}>
+                            <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3, style: {padding: '0px 16px'}}}>
                                 <Pod.Heading kind="h5">Some More Links</Pod.Heading>
                                 <Pod.List styler={{mainStyle: {maxHeight: 'auto'}}}>
                                     <Pod.List_Item>Item #1</Pod.List_Item>
@@ -301,7 +300,7 @@ li[lang=ru] {
                                     <Pod.List_Item>Item #5</Pod.List_Item>
                                 </Pod.List>
                             </Pod.Grid_Cell>
-                            <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3}}>
+                            <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3, style: {padding: '0px 16px'}}}>
                                 <Pod.Heading kind="h5">You Guesed It</Pod.Heading>
                                 <Pod.List styler={{mainStyle: {maxHeight: 'auto'}}}>
                                     <Pod.List_Item>Item #1</Pod.List_Item>
@@ -311,7 +310,7 @@ li[lang=ru] {
                                     <Pod.List_Item>Item #5</Pod.List_Item>
                                 </Pod.List>
                             </Pod.Grid_Cell>
-                            <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3}}>
+                            <Pod.Grid_Cell styler={{sm: 12, md:6, lg: 3, style: {padding: '0px 16px'}}}>
                                 <Pod.Heading kind="h5">Even More Links</Pod.Heading>
                                 <Pod.List styler={{mainStyle: {maxHeight: 'auto'}}}>
                                     <Pod.List_Item>Item #1</Pod.List_Item>
@@ -330,7 +329,7 @@ li[lang=ru] {
                         Copyright 2016 &copy; ThemeHouse
                     </Pod.ContentWrap>
                 </Pod.Section>
-            </div>
+            </Pod.Pane>
         )
 
     }
