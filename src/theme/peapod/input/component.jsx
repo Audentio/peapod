@@ -6,9 +6,10 @@
 
 
 //Dependencies
-import React from 'react';
-import Pod_Styler from 'styler.js';
-import {Icon} from 'components.js';
+import React from 'react'
+import Pod_Styler from 'styler.js'
+import shallowCompare from 'react-addons-shallow-compare'
+import {Icon} from 'components.js'
 
 /**
 * Multipurpose Input component
@@ -25,22 +26,26 @@ module.exports = class Input extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
-		this.onFocus = this.onFocus.bind(this);
-		this.onBlur = this.onBlur.bind(this);
+		this.onFocus = this.onFocus.bind(this)
+		this.onBlur = this.onBlur.bind(this)
 		this.onChangeHandler = this.onChangeHandler.bind(this)
+
+		var charCounter = (this.props.charLimit > 0) ? this.props.value.length + '/' + this.props.charLimit : this.props.value.length;
 
 		this.state = {
 			value: this.props.value,
 			focus: false,
-
-			///8
 			placeholder: (this.props.value && this.props.value.length > 1) ? '' : this.props.placeholder,
+			charCounter: (this.props.type == "textarea" && this.props.showCounter) ? charCounter : null,
 			evaluation: null //validation state
 		}
 	}
 
 	static defaultProps = {
 		type: 'text',
+		value: '',
+		showCounter: true,
+		charLimit: 0,
 
 		//validation is disabled by default
 		validate: false,
@@ -53,7 +58,7 @@ module.exports = class Input extends React.Component {
 
 	//Validate props
 	static propTypes = {
-		type: React.PropTypes.oneOf(['text','password', 'email', 'url', 'number', 'hidden', 'date']),
+		type: React.PropTypes.oneOf(['text','textarea','password', 'email', 'url', 'number', 'hidden', 'date']),
 		value: React.PropTypes.string,
 		placeholder: React.PropTypes.string,
 		required: React.PropTypes.bool,
@@ -65,15 +70,7 @@ module.exports = class Input extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-        var value = nextProps.value,
-            placeholder = ( value && value.length > 0 ) ? '' : this.props.placeholder;
-
-        //evaluate if evaluated before
-        if(this.state.evaluation !== null) {
-            this.validate(value)
-        }
-
-        this.setState({ value, placeholder });
+        this.onChangeHandler(nextProps.value, false);
     }
 
 	evaluate(value){
@@ -118,8 +115,9 @@ module.exports = class Input extends React.Component {
 
 	}
 
-	onChangeHandler(e){
-		var value = e.target.value,
+	onChangeHandler(e, cb = true){
+
+		var value = (typeof e === 'string') ? e : e.target.value,
 			placeholder = ( value.length > 0 ) ? '' : this.props.placeholder,
 			callback = this.props.callback || function() {};
 
@@ -128,9 +126,15 @@ module.exports = class Input extends React.Component {
 			this.validate(value)
 		}
 
-		callback(value)
+		if(cb===true) {
+			callback(value)
+		}
 
-		this.setState({ value: value , placeholder: placeholder });
+		this.setState({
+			value: value ,
+			placeholder: placeholder,
+			charCounter: (this.props.charLimit > 0) ? value.length + '/' + this.props.charLimit : value.length
+		});
 	}
 
 	onFocus(e){
@@ -156,11 +160,38 @@ module.exports = class Input extends React.Component {
 		}
 	}
 
+	shouldComponentUpdate = function(nextProps, nextState) {
+		return shallowCompare(this, nextProps, nextState)
+	}
+
 	render() {
-		var style = Pod_Styler.getStyle(this);
+		var style = Pod_Styler.getStyle(this),
 
 		//Message to show in response box
-		var validationResponse = this.props.validationResponse[this.state.evaluation]
+		validationResponse = this.props.validationResponse[this.state.evaluation],
+		input_markup =
+			(this.props.type == "textarea") ?
+			<textarea
+				name={this.props.name}
+				style={style.input}
+				value={this.state.value}
+				required={this.props.required}
+
+				onChange={this.onChangeHandler}
+				onFocus={this.onFocus}
+				onBlur={this.onBlur} />
+			:
+			<input
+				name={this.props.name}
+				type={this.props.type}
+				style={style.input}
+				value={this.state.value}
+				required={this.props.required}
+
+				onChange={this.onChangeHandler}
+				onFocus={this.onFocus}
+				onBlur={this.onBlur} />
+			;
 
 		return (
 			<div style={style.main}>
@@ -175,16 +206,10 @@ module.exports = class Input extends React.Component {
 					<span style={style.placeholder}>{this.props.placeholder}</span>
 				}
 
-				<input
-					name={this.props.name}
-					type={this.props.type}
-					style={style.input}
-					value={this.state.value}
-					required={this.props.required}
+				{input_markup}
 
-					onChange={this.onChangeHandler}
-					onFocus={this.onFocus}
-					onBlur={this.onBlur} />
+				{this.props.type == "textarea" && this.props.showCounter && <div style={style.charCounter}>{this.state.charCounter} Characters</div>}
+
 				{
 					(this.state.evaluation !== null) &&
 					<div style={style.evaluation}>{validationResponse}</div>
