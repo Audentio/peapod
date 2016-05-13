@@ -1,10 +1,10 @@
 import {Sheet} from 'stylesheet.js';
 
 module.exports = function(sheetName) {
-	var sheet = new Sheet(sheetName),
-	    main = sheet.addMain(),
-	    anchor = sheet.addPart('anchor'),
-	    subtext = sheet.addPart('subtext');
+	var sheet = new Sheet(sheetName);
+	var main = sheet.addMain();
+	var anchor = sheet.addPart('anchor');
+	var subtext = sheet.addPart('subtext');
 
 	//Variables
 	sheet.setValues({});
