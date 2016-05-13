@@ -15,12 +15,19 @@
 */
 module.exports = class Progress extends React.Component {
 
+    constructor(props, context){
+
+        super(props, context)
+
+        this.getScale = this.getScale.bind(this)
+    }
+
 	static propTypes = {
 		value: 			React.PropTypes.number,
 		max: 			React.PropTypes.number
 	}
 
-	static defaultProsp = {
+	static defaultProps = {
 		value: -1,
 		max: 100
 	}
