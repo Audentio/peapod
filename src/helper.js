@@ -1,7 +1,7 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
 import {merge as _merge} from 'lodash'
 
@@ -10,7 +10,7 @@ var Pod_helper = {
     //some things are left to the reader's imagination
     //--
     keymap: {
-    	'esc': 27
+        'esc': 27
     },
 
     //Check if device is touch-enabled
@@ -24,15 +24,15 @@ var Pod_helper = {
     //@returns {Object} - Options object with default options overridden by Pod.options[component_name]
     options: function(name, opts){
 
-    	var options = opts || {};
+        var options = opts || {};
 
-    	//Merge with global options object
-    	//global object overrides default settings defined above
-    	if(Pod.options[name]) {
-    		_.merge(options, Pod.options[name]);
-    	}
+        //Merge with global options object
+        //global object overrides default settings defined above
+        if(Pod.options[name]) {
+            _.merge(options, Pod.options[name]);
+        }
 
-    	return options;
+        return options;
 
     },
 
@@ -42,14 +42,14 @@ var Pod_helper = {
     //disables scrolling on non-touch devices without hiding scrollbar
     scrolling: function(allowScroll){
 
-    	//Touch
-    	if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
-    		if(allowScroll){
+        //Touch
+        if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
+            if(allowScroll){
                 document.removeEventListener('touchmove', this.noTouchScrolling)
             } else {
                 document.addEventListener('touchmove', this.noTouchScrolling)
             }
-    	}
+        }
 
         document.body.style.overflow = (allowScroll) ? '' : 'scroll'; //overflowY doesn't disable scrolling on safari
         document.documentElement.style.overflow = (allowScroll) ? '' : 'hidden'; //overflowY doesn't disable scrolling on safari
@@ -140,7 +140,7 @@ var Pod_helper = {
 
     addScript: function(params){
         if(document.getElementById('Peapod_'+params.id+'_script'))
-            return false;
+        return false;
 
         var addToPage = function(cb){
             var script = document.createElement('script');
@@ -203,10 +203,11 @@ var Pod_helper = {
             xmlhttp.ontimeout = opts.ontimeout
         }
 
-	    xmlhttp.onreadystatechange = function() {
+        xmlhttp.onreadystatechange = function() {
             var req_complete = xmlhttp.readyState === XMLHttpRequest.DONE,
                 req_success = req_complete && xmlhttp.status === 200,
                 req_error = req_complete && xmlhttp.status !== 200;
+
             if(req_success && opts.success){
                 opts.success(this.responseText, xmlhttp.status, xmlhttp.statusText);
             }
@@ -216,7 +217,7 @@ var Pod_helper = {
             if(req_complete && opts.complete){
                 opts.complete(this.responseText, xmlhttp.status, xmlhttp.statusText);
             }
-	    }
+        }
 
         if(opts.progress){
             xmlhttp.addEventListener("progress", function(e){
@@ -230,64 +231,64 @@ var Pod_helper = {
     },
 
     serialize(form) {
-    	if (!form || form.nodeName !== "FORM") {
-    		return;
-    	}
-    	var i, j, q = [];
-    	for (i = form.elements.length - 1; i >= 0; i = i - 1) {
-    		if (form.elements[i].name === "") {
-    			continue;
-    		}
-    		switch (form.elements[i].nodeName) {
-    		case 'INPUT':
-    			switch (form.elements[i].type) {
-    			case 'text':
-    			case 'hidden':
-    			case 'password':
-    			case 'button':
-    			case 'reset':
-    			case 'submit':
-    				q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
-    				break;
-    			case 'checkbox':
-    			case 'radio':
-    				if (form.elements[i].checked) {
-    					q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
-    				}
-    				break;
-    			case 'file':
-    				break;
-    			}
-    			break;
-    		case 'TEXTAREA':
-    			q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
-    			break;
-    		case 'SELECT':
-    			switch (form.elements[i].type) {
-    			case 'select-one':
-    				q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
-    				break;
-    			case 'select-multiple':
-    				for (j = form.elements[i].options.length - 1; j >= 0; j = j - 1) {
-    					if (form.elements[i].options[j].selected) {
-    						q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].options[j].value));
-    					}
-    				}
-    				break;
-    			}
-    			break;
-    		case 'BUTTON':
-    			switch (form.elements[i].type) {
-    			case 'reset':
-    			case 'submit':
-    			case 'button':
-    				q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
-    				break;
-    			}
-    			break;
-    		}
-    	}
-    	return q.join("&");
+        if (!form || form.nodeName !== "FORM") {
+            return;
+        }
+        var i, j, q = [];
+        for (i = form.elements.length - 1; i >= 0; i = i - 1) {
+            if (form.elements[i].name === "") {
+                continue;
+            }
+            switch (form.elements[i].nodeName) {
+                case 'INPUT':
+                switch (form.elements[i].type) {
+                    case 'text':
+                    case 'hidden':
+                    case 'password':
+                    case 'button':
+                    case 'reset':
+                    case 'submit':
+                    q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
+                    break;
+                    case 'checkbox':
+                    case 'radio':
+                    if (form.elements[i].checked) {
+                        q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
+                    }
+                    break;
+                    case 'file':
+                    break;
+                }
+                break;
+                case 'TEXTAREA':
+                q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
+                break;
+                case 'SELECT':
+                switch (form.elements[i].type) {
+                    case 'select-one':
+                    q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
+                    break;
+                    case 'select-multiple':
+                    for (j = form.elements[i].options.length - 1; j >= 0; j = j - 1) {
+                        if (form.elements[i].options[j].selected) {
+                            q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].options[j].value));
+                        }
+                    }
+                    break;
+                }
+                break;
+                case 'BUTTON':
+                switch (form.elements[i].type) {
+                    case 'reset':
+                    case 'submit':
+                    case 'button':
+                    q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
+                    break;
+                }
+                break;
+            }
+        }
+        return q.join("&");
     }
 }
 

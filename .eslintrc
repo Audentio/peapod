@@ -8,6 +8,7 @@
     "max-len": ["error", 400],
     "camelcase": ["off", {properties: "never"}],
     'no-underscore-dangle': ["off", { "allow": [] }],
-    'import/no-unresolved': ["off"]
+    'import/no-unresolved': ["off"],
+     "indent": ["error", 4],
   }
 }
