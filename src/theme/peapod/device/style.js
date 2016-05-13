@@ -167,8 +167,12 @@ module.exports = function (sheetName) {
                 width: getStandardVersion.width,
                 height: getStandardVersion.height,
                 position: 'absolute',
+            }
+        }).addSelector({
+            condition: ['horizontal', 'device' + deviceindex],
+            common: {
+                left: getStandardVariant.position.left,
                 bottom: getStandardVariant.position.bottom,
-                left: getStandardVariant.position.left
             }
         });
         innerscreen.addSelector({
@@ -194,6 +198,14 @@ module.exports = function (sheetName) {
             common: {
                 width: getStandardVersion.viewport.width,
                 height: getStandardVersion.viewport.height,
+                transform: 'scale(' + ((getStandardVersion.width -  getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width ) + ')', // should be 0.688
+                transformOrigin: '0 0'
+            }
+        }).addSelector({
+            condition: ['horizontal', 'trueScaling', 'device' + deviceindex],
+            common: {
+                width: getStandardVersion.viewport.height,
+                height: getStandardVersion.viewport.width,
                 transform: 'scale(' + ((getStandardVersion.width -  getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width ) + ')', // should be 0.688
                 transformOrigin: '0 0'
             }
@@ -256,6 +268,11 @@ module.exports = function (sheetName) {
                 sheet.addCondition('variant' + variantindex).addProp({variant: variantindex});
                 background.addSelector({
                     condition: ['variant' + variantindex, 'device' + deviceindex],
+                    common: {
+                        backgroundImage: variants[variantindex].svg,
+                    }
+                }).addSelector({
+                    condition: ['horizontal', 'variant' + variantindex, 'device' + deviceindex],
                     common: {
                         backgroundImage: variants[variantindex].svg,
                         bottom: variants[variantindex].position.bottom,

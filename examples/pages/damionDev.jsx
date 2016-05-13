@@ -63,6 +63,42 @@ export default class DamionDev extends React.Component {
                         </Pod.Lazy>
                     </Pod.Device>
 
+                    <Pod.Device device="iphone" version={6} variant="spacegrey" trueScaling orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device trueScaling device="iphone" version={6} variant="spacegrey" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device device="iphone" version={6} variant="gold" trueScaling orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device trueScaling device="iphone" version={6} variant="gold" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device device="iphone" version={6} variant="rosegold" trueScaling orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
+                    <Pod.Device trueScaling device="iphone" version={6} variant="rosegold" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+
                 </Pod.Scrollable>
 
                 <Pod.Scrollable horizontal styler={{ center: true }}>
@@ -121,8 +157,18 @@ export default class DamionDev extends React.Component {
                             <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Lazy>
                     </Pod.Device>
+                    <Pod.Device trueScaling device="ipadpro" orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
 
                     <Pod.Device trueScaling device="ipadpro" variant="gold" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+                    <Pod.Device trueScaling device="ipadpro" variant="gold" orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
                         <Pod.Lazy distance="50" height="100%">
                             <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Lazy>
@@ -133,8 +179,18 @@ export default class DamionDev extends React.Component {
                             <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Lazy>
                     </Pod.Device>
+                    <Pod.Device trueScaling device="ipadpro" variant="rosegold" orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
 
-                    <Pod.Device device="ipadpro" variant="spacegrey" styler={{ style: { display: 'inline-block' } }}>
+                    <Pod.Device trueScaling device="ipadpro" variant="spacegrey" styler={{ style: { display: 'inline-block' } }}>
+                        <Pod.Lazy distance="50" height="100%">
+                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                        </Pod.Lazy>
+                    </Pod.Device>
+                    <Pod.Device trueScaling device="ipadpro" variant="spacegrey" orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
                         <Pod.Lazy distance="50" height="100%">
                             <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Lazy>

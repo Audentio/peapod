@@ -5,11 +5,11 @@ const devices = {
     devices: {
         iphone: {
             standard: {
-                version: 'six',
-                variant: 'black',
+                version: 6,
+                variant: 'silver',
             },
             versions: {
-                six: {
+                6: {
                     // 'styles'
                     width: 245,
                     height: 500,
@@ -26,8 +26,29 @@ const devices = {
                 },
             },
             variants: {
-                black: {
-                    svg: 'url(devices/iPhone-6-Black.svg)',
+                silver: {
+                    svg: 'url(devices/iPhone-6-Silver.svg)',
+                    position: {
+                        bottom: 'calc(-5px - 50%)',
+                        left: 'calc(378px - 50%)',
+                    },
+                },
+                gold: {
+                    svg: 'url(devices/iPhone-6-Gold.svg)',
+                    position: {
+                        bottom: 'calc(-5px - 50%)',
+                        left: 'calc(378px - 50%)',
+                    },
+                },
+                rosegold: {
+                    svg: 'url(devices/iPhone-6-Rose-Gold.svg)',
+                    position: {
+                        bottom: 'calc(-5px - 50%)',
+                        left: 'calc(378px - 50%)',
+                    },
+                },
+                spacegrey: {
+                    svg: 'url(devices/iPhone-6-Space-Grey.svg)',
                     position: {
                         bottom: 'calc(-5px - 50%)',
                         left: 'calc(378px - 50%)',
@@ -186,29 +207,29 @@ const devices = {
                 silver: {
                     svg: 'url(devices/iPad-Pro-12-Silver.svg)',
                     position: {
-                        bottom: 0,
-                        left: 0,
+                        bottom: '-73px',
+                        left: '73px',
                     },
                 },
                 gold: {
                     svg: 'url(devices/iPad-Pro-12-Gold.svg)',
                     position: {
-                        bottom: 0,
-                        left: 0,
+                        bottom: '-73px',
+                        left: '73px',
                     },
                 },
                 rosegold: {
                     svg: 'url(devices/iPad-Pro-12-Rose-Gold.svg)',
                     position: {
-                        bottom: 0,
-                        left: 0,
+                        bottom: '-73px',
+                        left: '73px',
                     },
                 },
                 spacegrey: {
                     svg: 'url(devices/iPad-Pro-12-Space-Grey.svg)',
                     position: {
-                        bottom: 0,
-                        left: 0,
+                        bottom: '-73px',
+                        left: '73px',
                     },
                 },
             },
