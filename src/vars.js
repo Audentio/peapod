@@ -1,112 +1,103 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
-var lodash = require('lodash')
+import lodash from 'lodash';
 
-var maxDepth = 20;
+const maxDepth = 20;
 
 window.Pod_Vars = window.Pod_Vars || {
-	sources: [],
-	cache: {},
+  sources: [],
+  cache: {},
 
-	register: function(vars, level = (this.sources.length - 1)) {
-		if (level < 0) {
-			level = 0;
-		}
-		this.sources[level] = lodash.merge(this.sources[level], vars);
-	},
+  register(vars, level = (this.sources.length - 1)) {
+    let sourceLevel = level;
+    if (level < 0) {
+      sourceLevel = 0;
+    }
+    this.sources[sourceLevel] = lodash.merge(this.sources[sourceLevel], vars);
+  },
 
-	processResult: function(val, varSetOverride, depth) {
-		if (typeof(val) == 'string' && val.indexOf('$') == 0 && depth < 20) {
-			return Pod_Vars.get(val.replace('$', ''), varSetOverride, depth + 1); // recursively try to find
-		} else {
-			if (depth >= maxDepth) {
-				throw "Max variable depth of " + maxDepth + " reached.  Do you have a circular variable reference?";
-			}
-			return val;
-		}
-	},
+  processResult(val, varSetOverride, depth) {
+    if (typeof(val) === 'string' && val.indexOf('$') === 0 && depth < 20) {
+      return window.Pod_Vars.get(val.replace('$', ''), varSetOverride, depth + 1); // recursively try to find
+    }
 
-	getVarFromSource: function(source, varSet, name) {
-		var splitName = name.split('.'),
-			currentSource = source[varSet];
+    if (depth >= maxDepth) {
+      throw new Error(`Max variable depth of ${maxDepth} reached.  Do you have a circular variable reference?`);
+    }
+    return val;
+  },
 
-		for (var i = 0, len = splitName.length; i < len; i++) {
-			if (typeof(currentSource) !== 'undefined') {
-				var nextSource = currentSource[splitName[i]];
-				if (typeof(nextSource) !== 'function') {
-					currentSource = nextSource;
-				} else {
-					if (name == 'button.font.size') {
-						console.log(splitName[i])
-						console.log(currentSource);
-					}
-					return nextSource(varSet);
-				}
+  getVarFromSource(source, varSet, name) {
+    const splitName = name.split('.');
+    let currentSource = source[varSet];
 
-			} else {
-				return undefined;
-			}
-		}
-		return currentSource;
-	},
+    for (let i = 0, len = splitName.length; i < len; i++) {
+      if (typeof(currentSource) !== 'undefined') {
+        const nextSource = currentSource[splitName[i]];
+        if (typeof(nextSource) !== 'function') {
+          currentSource = nextSource;
+        } else {
+          return nextSource(varSet);
+        }
+      } else {
+        return undefined;
+      }
+    }
+    return currentSource;
+  },
 
-	get: function(name, varSetOverride, getDepth) {
-		var results = [],
-			onlyBase = true,
-			depth = getDepth || 0;
+  get(name, varSetOverride, getDepth) {
+    const results = [];
+    let onlyBase = true;
+    const depth = getDepth || 0;
 
-		for (var sourceIndex = 0, sourceLen = Pod_Vars.sources.length; sourceIndex < sourceLen; sourceIndex++) {
-			var source = Pod_Vars.sources[sourceIndex];
-			if (typeof(source) !== 'undefined') {
-				var vars = source;
-				if (typeof(vars) !== 'undefined') {
-					for (var i = 0, len = Object.keys(vars).length; i < len; i++) {
-						var varSet = Object.keys(vars)[i],
-							varVal = Pod_Vars.getVarFromSource(vars, varSet, name);
+    for (let sourceIndex = 0, sourceLen = window.Pod_Vars.sources.length; sourceIndex < sourceLen; sourceIndex++) {
+      const source = window.Pod_Vars.sources[sourceIndex];
+      if (typeof(source) !== 'undefined') {
+        const vars = source;
+        if (typeof(vars) !== 'undefined') {
+          for (let i = 0, len = Object.keys(vars).length; i < len; i++) {
+            const varSet = Object.keys(vars)[i];
+            const varVal = window.Pod_Vars.getVarFromSource(vars, varSet, name);
+            const setVarSetOverride = typeof(varSetOverride) === 'undefined';
 
-						var setVarVal = typeof(varVal) !== 'undefined',
-							notAFunction = typeof(varVal) !== 'function',
-							setVarSetOverride = typeof(varSetOverride) === 'undefined';
+            if (typeof(varVal) !== 'undefined' && typeof(varVal) !== 'function' && (setVarSetOverride || (typeof(varSetOverride) !== 'undefined' && (varSetOverride === varSet || varSet === 'common' || varSet === 'normal')))) {
+              if (varSet !== 'common' && varSet !== 'normal') onlyBase = false;
+              const val = window.Pod_Vars.processResult(varVal, varSet, depth);
+              results.push({
+                vars: varSet,
+                val,
+              });
+            }
+          }
+        }
+      }
+    }
 
-						if (typeof(varVal) !== 'undefined' && typeof(varVal) !== 'function' && (setVarSetOverride || (typeof(varSetOverride) !== 'undefined' && (varSetOverride == varSet || varSet == 'common' || varSet == 'normal')))) {
-							if (varSet !== 'common' && varSet !== 'normal') onlyBase = false;
-							var val = Pod_Vars.processResult(varVal, varSet, depth);
-							results.push({
-								vars: varSet,
-								val: val
-							});
-						}
-					}
-				}
-			}
-		}
+    if (typeof(varSetOverride) !== 'undefined') {
+      for (let i = results.length - 1; i >= 0; i--) {
+        if (varSetOverride === 'common' && results[i].vars === 'normal') return results[i].val;
+        if (results[i].vars === varSetOverride) return results[i].val;
+      }
 
-		if (typeof(varSetOverride) !== 'undefined') {
-			for (var i = results.length - 1; i >= 0; i--) {
-				if (varSetOverride == 'common' && results[i].vars == 'normal') return results[i].val
-				if (results[i].vars == varSetOverride) return results[i].val;
-			}
+      for (let i = results.length - 1; i >= 0; i--) {
+        if (results[i].vars === 'common') return results[i].val;
+      }
+    }
 
-			for (var i = results.length - 1; i >= 0; i--) {
-				if (results[i].vars == 'common') return results[i].val;
-			}
-		}
+    if (onlyBase || results.length === 1) {
+      if (results.length === 0) {
+        console.warn(`Unable to find variable named: ${name}`); // eslint-disable-line no-console
+      }
+      return results[results.length - 1].val;
+    }
 
-		if (onlyBase || results.length == 1) {
-			if (results.length == 0) {
-				//throw "Unable to find variable named: " + name;
-				console.warn("Unable to find variable named: " + name);
-			} else {
-				return results[results.length - 1].val;
-			}
-		}
-
-		return results;
-	}
+    return results;
+  },
 };
 
 
-module.exports = Pod_Vars;
+module.exports = window.Pod_Vars;

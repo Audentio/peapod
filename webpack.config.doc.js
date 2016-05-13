@@ -19,7 +19,7 @@ module.exports = {
 	// ../../wherever/module
 	resolve: {
 		unsafeCache: true,
-		modulesDirectories: ['node_modules','./src'],
+		modulesDirectories: ['node_modules','src'],
 		extensions: ['','.js', '.jsx', '.json'],
 		alias: {
 			react: path.resolve('./node_modules/react'),
@@ -37,7 +37,7 @@ module.exports = {
 			{
 				include: /\.json$/,
 	    		loaders: ['json-loader']
-			}, 
+			},
 			{
 				test: /\.jsx?$/,
 				loaders: ['react-hot', 'babel'],
