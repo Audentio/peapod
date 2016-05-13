@@ -19,7 +19,6 @@ module.exports = function(sheetName) {
 	        width: '$parallax.width',
 	        overflow: 'hidden',
 	        position: 'relative',
-	        background:'red'
 	    }
 	});
 	front.addSelector({

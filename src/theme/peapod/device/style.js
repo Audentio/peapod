@@ -76,9 +76,9 @@ module.exports = function(sheetName) {
 	}).addSelector({
 	    condition: ['horizontal'],
 	    common: {
-	        top: getStandardVersion.offset.right,
+	        top: getStandardVersion.offset.left,
 	        right: getStandardVersion.offset.bottom,
-	        bottom: getStandardVersion.offset.left,
+	        bottom: getStandardVersion.offset.right,
 	        left: getStandardVersion.offset.top,
 	    }
 	}).addSelector({
@@ -86,6 +86,14 @@ module.exports = function(sheetName) {
 	    common: {
 	        width: getStandardVersion.viewport.width,
 	        height: getStandardVersion.viewport.height,
+	        transform: 'scale(' + ((getStandardVersion.width -  getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width ) + ')', // should be 0.688
+	        transformOrigin: '0 0'
+	    }
+	}).addSelector({
+	    condition: ['trueScaling', 'horizontal'],
+	    common: {
+	        width: getStandardVersion.viewport.height,
+	        height: getStandardVersion.viewport.width,
 	        transform: 'scale(' + ((getStandardVersion.width -  getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width ) + ')', // should be 0.688
 	        transformOrigin: '0 0'
 	    }
@@ -175,9 +183,9 @@ module.exports = function(sheetName) {
 	    }).addSelector({
 	        condition: ['horizontal', 'device' + deviceindex],
 	        common: {
-	            top: getStandardVersion.offset.right,
+	            top: getStandardVersion.offset.left,
 	            right: getStandardVersion.offset.bottom,
-	            bottom: getStandardVersion.offset.left,
+	            bottom: getStandardVersion.offset.right,
 	            left: getStandardVersion.offset.top,
 	        }
 	    }).addSelector({
@@ -226,9 +234,9 @@ module.exports = function(sheetName) {
 	        }).addSelector({
 	            condition: ['horizontal', 'version' + versionindex, 'device' + deviceindex],
 	            common: {
-	                top: versions[versionindex].offset.right,
+	                top: versions[versionindex].offset.left,
 	                right: versions[versionindex].offset.bottom,
-	                bottom: versions[versionindex].offset.left,
+	                bottom: versions[versionindex].offset.right,
 	                left: versions[versionindex].offset.top,
 	            }
 	        }).addSelector({
