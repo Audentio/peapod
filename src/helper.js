@@ -107,10 +107,10 @@ var Pod_Helper = {
         },
 
         toggle: function(){
-            if (Pod_helper.fullscreen.isEnabled()) {
-                Pod_helper.fullscreen.exit()
+            if (Pod_Helper.fullscreen.isEnabled()) {
+                Pod_Helper.fullscreen.exit()
             } else {
-                Pod_helper.fullscreen.enter()
+                Pod_Helper.fullscreen.enter()
             }
         },
 

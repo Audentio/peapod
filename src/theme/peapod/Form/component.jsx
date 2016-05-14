@@ -6,7 +6,7 @@
 /* Dependencies */
 import React from 'react'
 import Pod_Styler from 'styler'
-import Pod_helper from 'helper'
+import Pod_Helper from 'helper'
 import {Progress} from 'components'
 
 /**
@@ -91,7 +91,7 @@ module.exports = class Form extends React.Component {
 			xhr_config.complete = (response, status) => callback(response, status)
 		}
 
-		Pod_helper.xhr(xhr_config)
+		Pod_Helper.xhr(xhr_config)
 
 		ev.preventDefault();
 
@@ -117,7 +117,7 @@ module.exports = class Form extends React.Component {
 
 		_this.loading_start()
 
-		Pod_helper.xhr({
+		Pod_Helper.xhr({
 			cache: false,
 			url: source,
 			method: 'GET',
