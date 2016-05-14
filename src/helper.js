@@ -5,7 +5,7 @@
 
 import {merge as _merge} from 'lodash'
 
-var Pod_helper = {
+var Pod_Helper = {
 
     //some things are left to the reader's imagination
     //--
@@ -172,33 +172,47 @@ var Pod_helper = {
         }
     },
 
+    //XHR helper function
+    //
     xhr: function(args){
 
         var opts, xmlhttp;
 
+        //Default options
         opts = {
             method: 'GET',
-            timeout: 3000 //ms
+            timeout: 3000,
+            cache: false,
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded"
+            }
         }
         _merge(opts, args)
 
+        if(!opts.url){
+            throw new Error('[XHR] url must be defined')
+        }
+
+        //Cache control
+        //Adds random number param at end to make sure new version is downloaded
         if(opts.cache === false) {
-            opts.url += '?rand=' + Math.random()
+            var param = (opts.url.indexOf('?') === -1) ? '?rand=' + Math.random() : '&rand=' + Math.random();
+            opts.url += param;
         }
 
         xmlhttp = new XMLHttpRequest();
 
-        console.group('XHR: '+ opts.method +' '+ opts.url)
-        console.log('config: %o', opts)
-        console.groupEnd('XHR: '+ opts.method +' '+ opts.url)
-
         xmlhttp.open(opts.method, opts.url, true);
 
+        //set request headers
+        for (var header in opts.headers) {
+            xmlhttp.setRequestHeader(header, opts.headers[header]);
+        }
+
+        //set timeout
         xmlhttp.timeout = opts.timeout;
 
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        //xmlhttp.setRequestHeader("SiteId", "1");
-
+        //callback: Timeout
         if(opts.ontimeout){
             xmlhttp.ontimeout = opts.ontimeout
         }
@@ -208,27 +222,42 @@ var Pod_helper = {
                 req_success = req_complete && xmlhttp.status === 200,
                 req_error = req_complete && xmlhttp.status !== 200;
 
-            if(req_success && opts.success){
-                opts.success(this.responseText, xmlhttp.status, xmlhttp.statusText);
-            }
-            if(req_error && opts.error){
-                opts.error(xmlhttp.status, xmlhttp.statusText);
-            }
-            if(req_complete && opts.complete){
-                opts.complete(this.responseText, xmlhttp.status, xmlhttp.statusText);
-            }
+            //callback: Success
+            if(req_success && opts.success)
+                opts.success(this.responseText, xmlhttp.status, xmlhttp.statusText)
+
+            //calback: Error
+            if(req_error && opts.error)
+                opts.error(xmlhttp.status, xmlhttp.statusText)
+
+            //callback: Complete
+            if(req_complete && opts.complete)
+                opts.complete(this.responseText, xmlhttp.status, xmlhttp.statusText)
         }
 
+        //callback: Progressr
         if(opts.progress){
             xmlhttp.addEventListener("progress", function(e){
                 var progress = (e.lengthComputable) ? Math.ceil( (e.loaded / e.total) * 100 ) : null;
-
                 opts.progress(progress, e)
             });
         }
 
+        //callback: beforeSend
+        //--this allows modifying xmlhttp properties
+        //--overrides everything else
+        if(opts.beforeSend){
+            opts.beforeSend(xmlhttp, opts);
+        }
+
+        console.groupCollapsed('[XHR] %c'+ opts.method +'%c '+ opts.url, 'color: blue', 'color: #666')
+        console.log('config: %o', opts)
+        console.groupEnd('[XHR] '+ opts.method +' '+ opts.url)
+
+        //Let's go
         xmlhttp.send(opts.data)
     },
+
 
     serialize(form) {
         if (!form || form.nodeName !== "FORM") {
@@ -292,4 +321,6 @@ var Pod_helper = {
     }
 }
 
-export default Pod_helper
+window.Pod_Helper = Pod_Helper;
+
+export default Pod_Helper
