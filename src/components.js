@@ -103,4 +103,3 @@ const req = require.context('./theme', true, /^\.\/.*\.jsx?$/);
 init('peapod', ignoreComponents, themeReq, req);
 
 module.exports.init = init;
-// module.exports = [Pod, Pod_Vars, Pod_Styler, components];
