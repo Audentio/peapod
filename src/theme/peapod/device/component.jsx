@@ -5,7 +5,7 @@
 */
 
 
-//Dependencies
+// Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
 
@@ -16,9 +16,9 @@ import Pod_Styler from 'styler.js';
 module.exports = class Device extends React.Component {
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
 
-        var overlay = (this.props.overlay) ? (<div style={style.overlay}></div>): '';
+        const overlay = (this.props.overlay) ? (<div style={style.overlay}></div>): '';
 
         return (
             <div style={style.main}>
@@ -31,7 +31,5 @@ module.exports = class Device extends React.Component {
                 </div>
             </div>
         );
-
     }
-
 };

@@ -18,21 +18,23 @@ import Pod_Styler from 'styler.js';
 */
 module.exports = class Center extends React.Component {
 
-    constructor() {
-        super();
-    }
+    static defaultProps = {
+        align: 'center',
+        valign: 'middle',
+    };
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
 
         return (
             <div style={style.main}>
-                <div style={style.inner}>
-                    {this.props.children}
+                <div style={style.outer}>
+                    <div style={style.inner}>
+                        {this.props.children}
+                    </div>
                 </div>
             </div>
         );
-
     }
 
 };

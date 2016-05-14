@@ -1,16 +1,22 @@
 {
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "ecmaFeatures": {
-        "classes": true,
-    },
-    "rules": {
-        "max-len": ["error", 400],
-        "camelcase": ["off", {properties: "never"}],
-        'no-underscore-dangle': ["off", { "allow": [] }],
-        'import/no-unresolved': ["off"],
-        "indent": ["error", 4],
-        "react/jsx-indent": ["error", 4],
-        "react/jsx-indent-props": ["error", 4]
-    }
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "ecmaFeatures": {
+    "classes": true,
+  },
+  "rules": {
+    "max-len": ["error", 400],
+    "camelcase": ["off", {properties: "never"}],
+    'no-underscore-dangle': ["off", { "allow": [] }],
+    'import/no-unresolved': ["off"],
+    "indent": ["error", 4],
+
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-indent-props": ["error", 4],
+    "react/prefer-stateless-function": "off",
+
+    "no-param-reassign": "off",
+    "func-names": "off",
+    'no-trailing-spaces': "off"
+  }
 }

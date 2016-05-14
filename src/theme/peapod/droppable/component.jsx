@@ -4,7 +4,7 @@
 * LICENSE: <%= package.licence %>
 */
 
-//Dependencies
+// Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
 
@@ -14,62 +14,100 @@ import Pod_Styler from 'styler.js';
 */
 module.exports = class Droppable extends React.Component {
 
+    static propTypes = {
+        droppable: React.PropTypes.bool,
+        multiple: React.PropTypes.bool,
+        window: React.PropTypes.bool,
+
+        onDragStart: React.PropTypes.func,
+        onDragEnter: React.PropTypes.func,
+        onDrop: React.PropTypes.func,
+        onDragOver: React.PropTypes.func,
+        onDragLeave: React.PropTypes.func,
+        onDragEnd: React.PropTypes.func,
+
+        children: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.object,
+        ]),
+    }
+
     static defaultProps = {
-    	droppable: true,
-    	multiple: true
+        droppable: true,
+        multiple: true,
+        window: false,
     }
 
     componentWillMount() {
-        this.onDragStart = this.onDragStart.bind(this)
-        this.onDragEnter = this.onDragEnter.bind(this)
-        this.onDrop = this.onDrop.bind(this)
-        this.onDragOver = this.onDragOver.bind(this)
-        this.onDragLeave = this.onDragLeave.bind(this)
-    	this.onDragEnd = this.onDragEnd.bind(this)
+        this.onDragStart = this.onDragStart.bind(this);
+        this.onDragEnter = this.onDragEnter.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+        this.onDragOver = this.onDragOver.bind(this);
+        this.onDragLeave = this.onDragLeave.bind(this);
+        this.onDragEnd = this.onDragEnd.bind(this);
+
+        if (this.props.window) {
+            window.addEventListener('dragover', this.onDragEnter);
+            window.addEventListener('dragenter', this.onDragEnter);
+
+            window.addEventListener('drop', this.onDrop);
+        }
     }
 
-    onDragStart(event){
+    onDragStart(event) {
         event.preventDefault();
 
-        if (typeof this.props.onDragStart == 'function')
-            this.props.onDragStart(event)
+        if (typeof this.props.onDragStart === 'function') {
+            this.props.onDragStart(event);
+        }
     }
-    onDragEnter(event){
+
+    onDragEnter(event) {
+        event.dataTransfer.dropEffect = 'copy';
         event.preventDefault();
 
-        if (typeof this.props.onDragEnter == 'function')
-            this.props.onDragEnter(event)
+        if (typeof this.props.onDragEnter === 'function') {
+            this.props.onDragEnter(event);
+        }
     }
-    onDrop(event){
+    onDrop(event) {
         event.preventDefault();
 
-        if (typeof this.props.onDrop == 'function')
-            this.props.onDrop(event)
+        if (typeof this.props.onDrop === 'function') {
+            this.props.onDrop(event);
+        }
     }
-    onDragOver(event){
+
+    onDragOver(event) {
+        event.dataTransfer.dropEffect = 'copy';
         event.preventDefault();
 
-        if (typeof this.props.onDragOver == 'function')
-            this.props.onDragOver(event)
+        if (typeof this.props.onDragOver === 'function') {
+            this.props.onDragOver(event);
+        }
     }
-    onDragLeave(event){
+
+    onDragLeave(event) {
         event.preventDefault();
 
-        if (typeof this.props.onDragLeave == 'function')
-            this.props.onDragLeave(event)
+        if (typeof this.props.onDragLeave === 'function') {
+            this.props.onDragLeave(event);
+        }
     }
-    onDragEnd(event){
+
+    onDragEnd(event) {
         event.preventDefault();
 
-        if (typeof this.props.onDragEnd == 'function')
-            this.props.onDragEnd(event)
+        if (typeof this.props.onDragEnd === 'function') {
+            this.props.onDragEnd(event);
+        }
     }
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
 
         return (
-        	<div
+            <div
                 style={style.main}
 
                 onDragStart={this.onDragStart}
@@ -82,7 +120,6 @@ module.exports = class Droppable extends React.Component {
                 {this.props.children}
             </div>
         );
-
     }
 
 };
