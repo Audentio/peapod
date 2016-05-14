@@ -47,7 +47,7 @@ class Style {
     }
 
     splitStyle(style) {
-        let splitStyle = style.trim().split(/ +/);
+        const splitStyle = style.trim().split(/ +/);
         const splitStyleLen = splitStyle.length;
 
         for (let splitIndex = 0; splitIndex < splitStyleLen; splitIndex++) {
@@ -295,7 +295,7 @@ class Part {
 
             if (selectorCondition !== null) {
                 for (let conditionIndex = 0, conditionLen = selectorCondition.length; conditionIndex < conditionLen; conditionIndex++) {
-                    let conditionName = conditionIndex[conditionIndex];
+                    const conditionName = conditionIndex[conditionIndex];
                     const condition = conditions[conditionName];
                     const conditionValid = selector.checkCondition(condition);
                     selectorValid.push({
@@ -436,7 +436,7 @@ class Condition {
     validateCondition(conditionVal, instanceVal) {
         const keys = Object.keys(conditionVal);
         for (let i = 0, len = keys.length; i < len; i++) {
-            let key = keys[i];
+            const key = keys[i];
             const objVal = instanceVal[key];
             const selVal = conditionVal[key];
 
@@ -565,7 +565,7 @@ class Sheet {
     }
 
     getAllStyling(instance, scene = 'normal', conditions) {
-        let result = {};
+        const result = {};
         const partKeys = Object.keys(this.parts);
 
         for (let i = 0, len = partKeys.length; i < len; i++) {
