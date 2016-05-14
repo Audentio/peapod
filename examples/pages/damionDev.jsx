@@ -31,8 +31,35 @@ export default class DamionDev extends React.Component {
 
         // const background = (<div style={{width: '100%', height: '100%', background: 'url(mrRobot.jpg)', backgroundSize: 'cover'}}></div>);
 
+        // <Pod.Menu trigger={
+        //     <Pod.Button label="On Hover from JSON" />
+        // } json={} />
+
         return (
             <div key={'dev'}>
+                <Pod.Json
+                    json={{
+                        Menu: {
+                            JsonParse: ['trigger'],
+                            trigger: {
+                                Button: {
+                                    label: 'on hover',
+                                },
+                            },
+                            json: [
+                            { text: 'Hello World', href: '#' },
+                            { text: 'Hello World 36', href: '#',
+                                children: [
+                                { text: 'Hello World 387', href: '#' },
+                                { text: 'Hello World 123', href: '#', subtext: '2' },
+                                ],
+                            },
+                            { text: 'Hello World 387', href: '#' },
+                            { text: 'Hello World 123', href: '#', subtext: '2' },
+                            ],
+                        },
+                    }}
+                />
                 {/*<Pod.DatePicker />
 
                     <br /><br /><br />
