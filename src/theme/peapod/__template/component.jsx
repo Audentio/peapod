@@ -4,8 +4,6 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-
 /*
 //Dependencies
 import React from 'react';
@@ -26,7 +24,7 @@ module.exports = class Template extends React.Component {
 
 	//Default props
 	static defaultProps =  {
-		
+
 	}
 
 	render() {

@@ -1,26 +1,26 @@
-import {Sheet} from 'stylesheet.js';
+import { Sheet } from 'stylesheet.js';
 
-module.exports = function(sheetName) {
-	var sheet = new Sheet(sheetName),
-	    main = sheet.addMain(),
-	    listitem = sheet.addPart('listitem');
+module.exports = function (sheetName) {
+	                                        var sheet = new Sheet(sheetName),
+	                                            main = sheet.addMain(),
+	                                            listitem = sheet.addPart('listitem');
 
-	//Conditions
+	// Conditions
 
-	//Variables
-	sheet.setValues({});
+	// Variables
+	                                        sheet.setValues({});
 
 
-	main.addSelector({
-	    common: {}
+	                                        main.addSelector({
+	                                            common: {},
 	});
 
-	listitem.addSelector({
-	    common: {
-	        display: 'inline-block',
-	        padding: '8px'
-	    }
+	                                        listitem.addSelector({
+	                                            common: {
+	                                                display: 'inline-block',
+	                                                padding: '8px',
+	    },
 	});
 
-	return sheet;
-}
+	                                        return sheet;
+};
