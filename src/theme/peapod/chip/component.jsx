@@ -5,10 +5,10 @@
 */
 
 
-//Dependencies
+// Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import {Icon} from 'components.js'
+import { Icon } from 'components.js'
 
 /**
 * Card component

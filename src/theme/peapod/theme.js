@@ -317,13 +317,13 @@ const globalVars = {
                 large: '16px',
                 xlarge: '1.8rem',
                 xxlarge: '2.4rem',
-                xxxlarge: '3.0rem'
+                xxxlarge: '3.0rem',
             },
             weight: {
                 light: '300',
                 normal: '400',
                 medium: '500',
-                bold: '700'
+                bold: '700',
             },
             margins: {
                 display4: '112px',
@@ -337,7 +337,7 @@ const globalVars = {
                 body1: '20px',
                 caption: '12px',
                 button: '14px',
-            }
+            },
         },
 
         // Borders
@@ -347,8 +347,8 @@ const globalVars = {
             style: 'solid',
             radius: {
                 small: '2px',
-                large: '4px'
-            }
+                large: '4px',
+            },
         },
 
         // Colors
@@ -417,12 +417,12 @@ const globalVars = {
             large: '32px',
             small: '24px',
             internal: '16px',
-            extrasmall: '8px'
+            extrasmall: '8px',
         },
 
         // Transitions
         transition: {
-            duration: '150ms'
+            duration: '150ms',
         },
 
         // Panels
@@ -431,29 +431,29 @@ const globalVars = {
                 purple: {
                     dark: '#686F9D',
                     base: '#838CC7',
-                    light: '#979DCE'
+                    light: '#979DCE',
                 },
                 teal: {
                     dark: '#428E94',
                     base: '#58B3B9',
-                    light: '#7ABEC4'
+                    light: '#7ABEC4',
                 },
                 pink: {
                     dark: '#934473',
                     base: '#B95890',
-                    light: '#C376A1'
+                    light: '#C376A1',
                 },
                 redDark: {
                     dark: '#CC4A43',
                     base: '#EE655E',
-                    light: '#F18375'
+                    light: '#F18375',
                 },
                 orangeDark: {
                     dark: '#D6714B',
                     base: '#EE855E',
-                    light: '#EF9976'
-                }
-            }
+                    light: '#EF9976',
+                },
+            },
         },
 
         shadows: {
@@ -461,22 +461,22 @@ const globalVars = {
             d2: '0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)',
             d3: '0 12px 15px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19)',
             d4: '0 16px 28px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21)',
-            d5: '0 27px 24px 0 rgba(0,0,0,0.2),0 40px 77px 0 rgba(0,0,0,0.22)'
+            d5: '0 27px 24px 0 rgba(0,0,0,0.2),0 40px 77px 0 rgba(0,0,0,0.22)',
         },
 
         opacity: {
-            notAllowed: '.7'
+            notAllowed: '.7',
         },
 
         site: {
-            maxWidth: 1200
-        }
+            maxWidth: 1200,
+        },
 
-    }
-}
+    },
+};
 
 module.exports = {
     themeName: themeName,
     themeParent: themeParent,
-    globalVars: globalVars
-}
+    globalVars: globalVars,
+};

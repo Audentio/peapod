@@ -5,10 +5,10 @@
 */
 
 
-//Dependencies
+// Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import {Anchor} from 'components.js'
+import { Anchor } from 'components.js';
 
 /**
 * Breadcrumbs component
@@ -19,22 +19,22 @@ module.exports = class Breadcrumb extends React.Component {
     render() {
         var style = Pod_Styler.getStyle(this);
 
-		var children = this.props.children;
+        var children = this.props.children;
 
-		if (typeof children == "string") {
-			children = this.props.childer.split('/')
-		}
+        if (typeof children == "string") {
+            children = this.props.childer.split('/')
+        }
 
-		var breadcrumbshtml = [];
-		for (var i = 0; i < children.length; i++) {
-			var seperator = (i + 1 != children.length) ? '/' : '';
-			breadcrumbshtml.push(
+        var breadcrumbshtml = [];
+        for (var i = 0; i < children.length; i++) {
+            var seperator = (i + 1 != children.length) ? '/' : '';
+            breadcrumbshtml.push(
                 <li key={i} style={{display: 'inline'}}>
-                	<Anchor styler={{style: style.listitem}}>{children[i]}</Anchor>
-                	 {seperator}
-               	</li>
+                    <Anchor styler={{style: style.listitem}}>{children[i]}</Anchor>
+                    {seperator}
+                </li>
             )
-		}
+        }
 
         return (
             <ul style={style.main}>

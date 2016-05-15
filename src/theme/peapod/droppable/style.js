@@ -18,4 +18,6 @@ module.exports = function (sheetName) {
             fontSize: '3em',
         },
     });
+
+    return sheet;
 };
