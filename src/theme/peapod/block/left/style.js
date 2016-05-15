@@ -1,18 +1,18 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-	                                        var sheet = new Sheet(sheetName),
-		                                        main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
-	// Conditions
+    // Conditions
 
-	// Variables
-	                                        sheet.setValues({});
+    // Variables
+    sheet.setValues({});
 
-	                                        main.addSelector({
-		                                        common: {
-		},
-	});
+    main.addSelector({
+        common: {
+        },
+    });
 
-	                                        return sheet;
+    return sheet;
 };

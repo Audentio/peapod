@@ -72,7 +72,7 @@ module.exports = class Alert extends React.Component {
 
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
 
         return (
             <div style={style.main} id={this.props.id}>
@@ -85,13 +85,12 @@ module.exports = class Alert extends React.Component {
                             {this.props.children}
                         </span>
                         {this.props.dismissable &&
-                            <Icon onClick={this.dismiss} styler={{style:style.dismissIcon}} color="#07ADD4">close</Icon>
+                            <Icon onClick={this.dismiss} styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon>
                         }
                     </div>
                 }
             </div>
-        )
-
+        );
     }
 
 
