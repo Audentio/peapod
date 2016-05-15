@@ -123,7 +123,7 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
         if (showComponents.indexOf(sheetName) > -1) {
             return 	<Component styler={condition.styler} {...defaults}>{defaultChildren}</Component>
         } else {
-            return <span>(Could not render)</span>
+            return <span>(Not in `showComponents` in `doc.jsx`)</span>
         }
 
     }
@@ -144,7 +144,7 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 
             return (
                 <li style={{margin: '10px 0'}} key={i}>
-                    <Pod.CodeBlock>
+                    <Pod.CodeBlock highlight={false}>
                         {when}
                         {scenes}
                     </Pod.CodeBlock>
@@ -233,7 +233,7 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
                             <h2>Condition: {name}</h2>
                             <Pod.Div styler={{style: {margin: '1rem 0', paddingLeft: '20px', borderLeft: '4px solid {$color.info.base}'}}}>
                                 {renderedComponent}
-                                <Pod.CodeBlock>
+                                <Pod.CodeBlock highlight={false}>
                                     {styler}
                                     {state}
                                     {props}
@@ -259,8 +259,6 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
                 },
 
                 doc(sheetName, component) {
-                    console.log(sheetName);
-                    console.log(component);
                     var partsResult = [],
                     parts = component.getParts(),
                     partNames = Object.keys(parts),
@@ -342,13 +340,13 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
                         var sandboxResults = <div>
                             {sandboxDoc}
                             {renderedComponent}
-                            <Pod.CodeBlock>{componentJSX}</Pod.CodeBlock>
+                            <Pod.CodeBlock highlight={false}>{componentJSX}</Pod.CodeBlock>
                         </div>
 
                         var tabs = [
                             {
                                 trigger: "Variables",
-                                content: <Pod.CodeBlock>{variables}</Pod.CodeBlock>,
+                                content: <Pod.CodeBlock highlight={false}>{variables}</Pod.CodeBlock>,
                             }, {
                                 trigger: "Conditions",
                                 content: conditionResults
@@ -389,8 +387,6 @@ var jsonDoc = function(obj, scene, key, depth = 0) {
 
             var LibrariesDoc = React.createClass({
                 doc: function() {
-                    window._peapodRoot = this;
-
                     var libraries = Pod_Styler.getLibraryStack(),
                     libraryResult = [];
                     for (var i = 0, len = libraries.length; i < len; i++) {
