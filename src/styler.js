@@ -41,7 +41,12 @@ window.Pod_Styler = window.Pod_Styler || {
             const componentName = componentKeys[i];
             const stylesheet = requireFunc(componentFiles[componentName].fileName);
             if (typeof(stylesheet) === 'function') {
-                components[componentFiles[componentName].componentName] = stylesheet(componentName); // get the stylesheet for any components in the current library
+                const sheetStyle = stylesheet(componentName);
+                if (typeof(sheetStyle) === 'undefined') {
+                    throw new Error(`No Styling found for ${componentName}.  Does ${componentFiles[componentName].fileName} return 'sheet'?`);
+                } else {
+                    components[componentFiles[componentName].componentName] = sheetStyle; // get the stylesheet for any components in the current library
+                }
             }
         }
 
