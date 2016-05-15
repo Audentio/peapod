@@ -1,9 +1,8 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
-/* Dependencies */
 import React from 'react'
 import Pod_Styler from 'styler.js'
 
@@ -14,14 +13,12 @@ import Pod_Styler from 'styler.js'
 */
 module.exports = class {{%name%}} extends React.Component {
 
-	render() {
+    render() {
+        const style = Pod_Styler.getStyle(this)
 
-		var style = Pod_Styler.getStyle(this)
-
-		return (
-			<span style={style.main}>Hello World!</span>
-		)
-
-	}
+        return (
+            <span style={style.main}>Hello World!</span>
+        )
+    }
 
 }
