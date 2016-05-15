@@ -27,11 +27,11 @@ module.exports = class Form extends React.Component {
     }
 
     static propTypes = {
-        children: React.PropTypes.node,
         action: React.PropTypes.string.isRequired,
-        method: React.PropTypes.string,
         autoPopulate: React.PropTypes.bool,
+        children: React.PropTypes.node,
         fetch: React.PropTypes.string,
+        method: React.PropTypes.string,
         renderSubmit: React.PropTypes.bool,
     }
 
@@ -41,11 +41,11 @@ module.exports = class Form extends React.Component {
     }
 
     submit(ev) {
-        const _this = this;
+        const _this = this
         const form = _this.refs.form
-        const formData = {};
+        const formData = {}
 
-        // build formData
+        // get formData
         for (let i = 0; i < form.elements.length; i++) {
             const e = form.elements[i];
             if (e.type !== 'submit') formData[e.name] = e.value;

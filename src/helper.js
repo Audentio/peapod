@@ -21,6 +21,7 @@ const Pod_Helper = {
     // disables touch scrolling on touch enabled devices
     // disables scrolling on non-touch devices without hiding scrollbar
     scrolling: (allowScroll) => {
+        return
         // Touch
         if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
             if (allowScroll) {
@@ -185,13 +186,19 @@ const Pod_Helper = {
             const req_error = req_complete && xmlhttp.status !== 200
 
             // callback: Success
-            if (req_success && opts.success) opts.success(this.responseText, xmlhttp.status, xmlhttp.statusText)
+            if (req_success && opts.success) {
+                opts.success(xmlhttp.responseText)
+            }
 
             // calback: Error
-            if (req_error && opts.error) opts.error(xmlhttp.status, xmlhttp.statusText)
+            if (req_error && opts.error) {
+                opts.error(xmlhttp.status, xmlhttp.statusText)
+            }
 
             // callback: Complete
-            if (req_complete && opts.complete) opts.complete(this.responseText, xmlhttp.status, xmlhttp.statusText)
+            if (req_complete && opts.complete) {
+                opts.complete(xmlhttp.responseText, xmlhttp.status, xmlhttp.statusText)
+            }
         }
 
         // callback: Progressr
@@ -207,20 +214,14 @@ const Pod_Helper = {
         // --overrides everything else
         if (opts.beforeSend) opts.beforeSend(xmlhttp, opts);
 
-        // Console stuff
-        //
+        // temp
         const reqPath = (opts.url.indexOf('?') > 0) ? opts.url.split('?')[0] : opts.url
-
         console.groupCollapsed(`[XHR] %c${opts.method}%c ${reqPath}`, 'color: blue', 'color: #666')
-
         console.log(`%cFull URL: %c${opts.url}`, 'font-weight:bold', 'font-weight:normal')
         console.log('%cConfig: %o', 'font-weight:bold', opts)
-
         if (opts.data) console.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal')
-
         console.groupEnd(`[XHR] ${opts.method} ${opts.url}`)
 
-        // Let's go
         xmlhttp.send(opts.data)
     },
 
