@@ -1,9 +1,9 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    calendar = sheet.addPart('calendar');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const calendar = sheet.addPart('calendar');
 
     // Conditions
     // Variables
@@ -18,4 +18,6 @@ module.exports = function (sheetName) {
     calendar.addSelector({
         common: {},
     });
+
+    return sheet;
 };

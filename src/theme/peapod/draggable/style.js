@@ -1,8 +1,8 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Conditions
 
@@ -11,11 +11,13 @@ module.exports = function (sheetName) {
 
     main.addSelector({
         common: {
-            width:'100%',
+            width: '100%',
             height: '300px',
             background: '#efefef',
-            padding:'30px',
+            padding: '30px',
             fontSize: '3em',
         },
     });
+
+    return sheet;
 };
