@@ -1,13 +1,14 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    portal = sheet.addPart('portal'),
-    trigger = sheet.addPart('trigger');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const portal = sheet.addPart('portal');
+    const trigger = sheet.addPart('trigger');
 
     sheet.addCondition('level').addStyler({ level: 1 });
     sheet.addCondition('left').addStyler({ left: true });
+    sheet.addCondition('button').addStyler({ button: true });
 
     var add = (valueone, valuetwo) => {
         return (parseFloat(Pod_Vars.get(valueone)) + parseFloat(Pod_Vars.get(valuetwo)));
