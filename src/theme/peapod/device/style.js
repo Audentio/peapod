@@ -287,6 +287,19 @@ module.exports = function (sheetName) {
             }
         }
 
+        for (var index in variants) {
+            var variantindex = index;
+
+            sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
+
+            getDeviceStyles(getDeviceStandardVersion, variants[variantindex], {
+                name: deviceindex,
+                version: undefined,
+                variant: variantindex,
+            });
+
+        }
+
     }
 
     return sheet;
