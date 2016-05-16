@@ -8,7 +8,6 @@ module.exports = function (sheetName) {
 
     sheet.addCondition('level').addStyler({ level: 1 });
     sheet.addCondition('left').addStyler({ left: true });
-    sheet.addCondition('button').addStyler({ button: true });
 
     var add = (valueone, valuetwo) => {
         return (parseFloat(Pod_Vars.get(valueone)) + parseFloat(Pod_Vars.get(valuetwo)));
