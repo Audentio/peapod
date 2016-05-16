@@ -7,13 +7,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Pod_Styler from 'styler.js';
-import {Icon} from 'components.js';
-import Pod_helper from 'helper.js'
+import { Icon } from 'components.js';
+import Pod_Helper from 'helper.js'
 
-var options = Pod_helper.options('Pea_photo', {
-
+const options = {
 	//this acts as src for lazyLoaded images until they're loaded
-	defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
+    defaultImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=',
 
 	//lazy loading
 	lazy: false,
@@ -30,7 +29,7 @@ var options = Pod_helper.options('Pea_photo', {
 
 	//Animate Lightbox entry-exit
 	lightboxAnimation: true
-});
+}
 
 
 /**
@@ -54,7 +53,7 @@ module.exports = class Photo extends React.Component {
 		this.state = {
 			visible: (this.props.lazy) ? false : true,
 			lightboxVisible: false,
-			fullscreenIcon: (Pod_helper.fullscreen.isEnabled()) ? 'fullscreen_exit' : 'fullscreen'		}
+			fullscreenIcon: (Pod_Helper.fullscreen.isEnabled()) ? 'fullscreen_exit' : 'fullscreen'		}
 	}
 
 	static propTypes = {
@@ -78,15 +77,15 @@ module.exports = class Photo extends React.Component {
 	}
 
 	keyHandler(e){
-		if(e.keyCode == Pod_helper.keymap['esc']){
+		if(e.keyCode == Pod_Helper.keymap.ESC){
 			this.hideLightbox();
 		}
 	}
 
 	toggleFullscreen(){
-		Pod_helper.fullscreen.toggle()
+		Pod_Helper.fullscreen.toggle()
 
-		if(Pod_helper.fullscreen.isEnabled()){
+		if(Pod_Helper.fullscreen.isEnabled()){
 			this.setState({fullscreenIcon: 'fullscreen_exit'})
 		} else {
 			this.setState({fullscreenIcon: 'fullscreen'})
@@ -103,7 +102,7 @@ module.exports = class Photo extends React.Component {
 		this.setState({lightboxVisible: true})
 
 		//enable scrolling
-		Pod_helper.scrolling(false)
+		Pod_Helper.scrolling(false)
 
 		//add keyboard listener
 		window.addEventListener('keydown', this.keyHandler)
@@ -115,9 +114,9 @@ module.exports = class Photo extends React.Component {
 		/*
 		var delay = 0, _this = this;
 
-		if( Pod_helper.fullscreen.isEnabled() ) {
+		if( Pod_Helper.fullscreen.isEnabled() ) {
 			delay = 100;
-			Pod_helper.fullscreen.exit()
+			Pod_Helper.fullscreen.exit()
 		}
 
 		setTimeout(function(){
@@ -125,20 +124,20 @@ module.exports = class Photo extends React.Component {
 
 			//enable scrolling
 			//document.documentElement.style.overflow = ''
-			Pod_helper.scrolling(true)
+			Pod_Helper.scrolling(true)
 
 			//remove keyboard listener
 			window.removeEventListener('keydown', _this.keyHandler)
 		}, delay)*/
 
-		if( Pod_helper.fullscreen.isEnabled() ) {
-			Pod_helper.fullscreen.exit();
+		if( Pod_Helper.fullscreen.isEnabled() ) {
+			Pod_Helper.fullscreen.exit();
 			this.setState({fullscreenIcon: 'fullscreen'});
 		}
 
 		this.setState({lightboxVisible: false});
 
-		Pod_helper.scrolling(true)
+		Pod_Helper.scrolling(true)
 
 		//remove keyboard listener
 		window.removeEventListener('keydown', this.keyHandler)
@@ -237,12 +236,12 @@ module.exports = class Photo extends React.Component {
 	}
 
 	downloadFile(){
-		Pod_helper.downloadFile(this.imageURL)
+		Pod_Helper.downloadFile(this.imageURL)
 	}
 
 	openInNew(){
-		if( Pod_helper.fullscreen.isEnabled() ) {
-			Pod_helper.fullscreen.exit();
+		if( Pod_Helper.fullscreen.isEnabled() ) {
+			Pod_Helper.fullscreen.exit();
 			this.setState({fullscreenIcon: 'fullscreen'});
 		}
 		var newTab = window.open(this.imageURL, '_blank');
@@ -270,7 +269,7 @@ module.exports = class Photo extends React.Component {
 
 						<div style={style.lightboxActions}>
 							<Icon styler={{style: style.lightboxAction}} onClick={this.hideLightbox.bind(this)}>close</Icon>
-							{	Pod_helper.fullscreen.isAvailable() &&
+							{	Pod_Helper.fullscreen.isAvailable() &&
 								<Icon styler={{style: style.lightboxAction}} onClick={this.toggleFullscreen.bind(this)}>{this.state.fullscreenIcon}</Icon>
 							}
 

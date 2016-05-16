@@ -1,13 +1,12 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
-/* Dependencies */
 import React from 'react'
 import Pod_Styler from 'styler'
-import Pod_helper from 'helper'
-import {Progress} from 'components'
+import Pod_Helper from 'helper'
+import { Progress } from 'components'
 
 /**
 *
@@ -16,172 +15,153 @@ import {Progress} from 'components'
 */
 module.exports = class Form extends React.Component {
 
-	constructor(props, context) {
-		super(props, context);
+    constructor(props, context) {
+        super(props, context);
 
-		this.state = {
-			fields: this.props.children,
-			disabled: false
-		}
-	}
+        this.submit = this.submit.bind(this)
 
-	static propTypes = {
-		action: React.PropTypes.string.isRequired,
-		autoPopulate: React.PropTypes.bool,
-		fetch: React.PropTypes.string,
-		renderSubmit: React.PropTypes.bool
-	}
+        this.state = {
+            fields: this.props.children,
+            disabled: false,
+        }
+    }
 
-	static defaultProps = {
-		method: 'GET',
-		renderSubmit: false
-	}
+    static propTypes = {
+        action: React.PropTypes.string.isRequired,
+        autoPopulate: React.PropTypes.bool,
+        children: React.PropTypes.node,
+        fetch: React.PropTypes.string,
+        method: React.PropTypes.string,
+        renderSubmit: React.PropTypes.bool,
+    }
 
-	submit(ev){
-		let _this = this;
+    static defaultProps = {
+        method: 'GET',
+        renderSubmit: false,
+    }
 
-		var form = this.refs.form,
-			formData = {};
+    submit(ev) {
+        const _this = this
+        const form = _this.refs.form
+        const formData = {}
 
-		for ( var i = 0; i < form.elements.length; i++ ) {
-			var e = form.elements[i];
-			if(e.type !== 'submit')
-				formData[e.name] = e.value;
-		}
+        // get formData
+        for (let i = 0; i < form.elements.length; i++) {
+            const e = form.elements[i];
+            if (e.type !== 'submit') formData[e.name] = e.value;
+        }
 
-		var xhr_data = encodeURIComponent(JSON.stringify(formData));
+        const xhr_data = encodeURIComponent(JSON.stringify(formData));
 
-		//_this.loading_start();
+        const xhr_config = {
+            cache: false,
+            url: this.props.action,
+            method: this.props.method,
+            data: `json_data=${xhr_data}`,
+        }
 
-		var xhr_config = {
-			cache: false,
-			url: this.props.action,
-			method: this.props.method,
-			data: 'json_data='+xhr_data,
-			success: function(res){
-				//console.log(JSON.parse(res))
-			},
-			error: function(status){
-				console.log('whoops' + status)
-			},
-			complete: function(res, status){
-				//_this.loading_stop();
-			}
-		}
+        const callback = _this.props.callback;
 
-		var callback = _this.props.callback;
+        if (typeof callback === 'object') {
+            if (callback.progress) xhr_config.progress = (progress, e) => callback.progress(progress, e)
 
-		if(typeof callback == "object") {
-			if(callback.progress) {
-				xhr_config.progress = (progress, e) => callback.progress(progress, e)
-			}
-			if(callback.success) {
-				xhr_config.success = (response, status) => callback.success(response, status)
-			}
-			if(callback.error) {
-				xhr_config.error = (response, status) => callback.error(response, status)
-			}
-			if(callback.complete) {
-				xhr_config.complete = (response, status) => callback.complete(response, status)
-			}
-		}
-		else if(typeof callback == "function") {
-			xhr_config.complete = (response, status) => callback(response, status)
-		}
+            if (callback.success) xhr_config.success = (response, status) => callback.success(response, status)
 
-		Pod_helper.xhr(xhr_config)
+            if (callback.error) xhr_config.error = (response, status) => callback.error(response, status)
 
-		ev.preventDefault();
+            if (callback.complete) xhr_config.complete = (response, status) => callback.complete(response, status)
+        } else if (typeof callback === 'function') {
+            xhr_config.complete = (response, status) => callback(response, status)
+        }
 
-	}
+        Pod_Helper.xhr(xhr_config)
 
-	//Make form inaccessible
-	loading_start(){
-		this.setState({
-			disabled: true
-		})
-	}
+        ev.preventDefault();
+    }
 
-	//revert
-	loading_stop(){
-		this.setState({
-			disabled: false
-		})
-	}
+    // Make form inaccessible
+    loading_start() {
+        this.setState({
+            disabled: true,
+        })
+    }
 
-	populate(source, reRender = true) {
-		let _this = this;
-		let form = this.refs.form;
+    // Make form accesible
+    loading_stop() {
+        this.setState({
+            disabled: false,
+        })
+    }
 
-		_this.loading_start()
+    populate(source) {
+        const _this = this;
 
-		Pod_helper.xhr({
-			cache: false,
-			url: source,
-			method: 'GET',
-			complete: function(res,status){
-				_this.loading_stop()
-			},
-			progress: function(progress, e){
-				_this.setState({
-					downloadProgress: progress
-				})
-			},
-			success: function(res){
-				_this.setState({
-					downloadProgress: null
-				})
-				var data;
+        _this.loading_start()
 
-				try{
-					data = JSON.parse(res);
-				} catch(e) {
-					//no bueno
-					console.error('[Form] Unable to parse response. Please check endpoint ' + source)
-					return false
-				}
+        Pod_Helper.xhr({
+            cache: false,
+            url: source,
+            method: 'GET',
+            complete: () => {
+                _this.loading_stop()
+            },
+            progress: (progress) => {
+                _this.setState({
+                    downloadProgress: progress,
+                })
+            },
+            success: (res) => {
+                _this.setState({
+                    downloadProgress: null,
+                })
 
-				//Update child input values
-				_this.setState({
-					fields: React.Children.map(_this.props.children, child => {
-						if(child.props && child.props.name && data.hasOwnProperty(child.props.name)) {
-							return React.cloneElement(child, {
-								value: data[child.props.name]
-							})
-						}
-						return child
-					})
-				})
-			},
-			error: function(){
-				console.error('Failed to fetch data. Please try reloading')
-			}
-		})
-	}
+                let data;
 
-	componentDidMount() {
-		if(this.props.fetch) {
-			this.populate(this.props.fetch)
-		}
-	}
+                try {
+                    data = JSON.parse(res);
+                } catch (e) {
+                    // no bueno
+                    console.error(`[Form] Unable to parse response. Please check endpoint ${source}`)
+                    return
+                }
 
-	render() {
+                // Update child input values
+                _this.setState({
+                    fields: React.Children.map(_this.props.children, child => {
+                        if (child.props && child.props.name && data.hasOwnProperty(child.props.name)) {
+                            return React.cloneElement(child, {
+                                value: data[child.props.name],
+                            })
+                        }
+                        return child
+                    }),
+                })
+            },
+            error: () => {
+                console.error('Failed to fetch data. Please try reloading')
+            },
+        })
+    }
 
-		var style = Pod_Styler.getStyle(this),
-			hasDownloadProgress = this.state.downloadProgress !== null && !isNaN(this.state.downloadProgress);
+    componentDidMount() {
+        if (this.props.fetch) this.populate(this.props.fetch)
+    }
 
-		return (
-			<form style={style.form} ref="form" method={this.props.method} action={this.props.action} onSubmit={this.submit.bind(this)}>
-				<div style={style.main}>
-				    {this.state.fields}
-					{this.props.renderSubmit && <input type="submit" style={style.submit} />}
-				</div>
-				<div style={style.overlay}>
-					{hasDownloadProgress && <Progress value={this.state.downloadProgress} />}
-				</div>
-			</form>
-		)
+    render() {
+        const style = Pod_Styler.getStyle(this)
+        const hasDownloadProgress = (this.state.downloadProgress !== null) && !isNaN(this.state.downloadProgress);
 
-	}
+        return (
+            <form style={style.form} ref="form" method={this.props.method} action={this.props.action} onSubmit={this.submit}>
+                <div style={style.main}>
+                    {this.state.fields}
+                    {this.props.renderSubmit && <input type="submit" style={style.submit} />}
+                </div>
+                <div style={style.overlay}>
+                    {hasDownloadProgress && <Progress value={this.state.downloadProgress} />}
+                </div>
+            </form>
+        )
+    }
 
 }

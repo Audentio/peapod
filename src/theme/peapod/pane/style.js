@@ -1,20 +1,20 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function style(sheetName) {
-  let sheet = new Sheet(sheetName);
-  const main = sheet.addMain();
+    let sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
   // Conditions
 
   // Variables
-  sheet.setValues({});
+    sheet.setValues({});
 
-  main.addSelector({
-    common: {
-      display: 'block',
-      width: '100%',
-    },
-  });
+    main.addSelector({
+        common: {
+            display: 'block',
+            width: '100%',
+        },
+    });
 
-  return sheet;
+    return sheet;
 };

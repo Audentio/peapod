@@ -1,10 +1,10 @@
-import {Sheet} from 'stylesheet.js';
+import { Sheet } from 'stylesheet.js';
 
-module.exports = function(sheetName) {
+module.exports = function (sheetName) {
     var sheet = new Sheet(sheetName);
     var main = sheet.addMain();
 
-    //Variables
+    // Variables
     sheet.setValues({});
 
     main.addSelector({
@@ -14,9 +14,9 @@ module.exports = function(sheetName) {
             background: '#fff',
             overflow: 'hidden',
             padding: 0,
-            margin: 0
-        }
-    })
+            margin: 0,
+        },
+    });
 
     return sheet;
-}
+};

@@ -1,15 +1,15 @@
-import {Sheet} from 'stylesheet.js';
+import { Sheet } from 'stylesheet.js';
 
-module.exports = function(sheetName) {
+module.exports = function (sheetName) {
     var sheet = new Sheet(sheetName);
     var main = sheet.addMain();
 
-    //Variables
+    // Variables
     sheet.setValues({});
 
     main.addSelector({
-        common: {}
+        common: {},
     });
 
     return sheet;
-}
+};

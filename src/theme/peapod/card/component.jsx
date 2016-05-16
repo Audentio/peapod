@@ -5,10 +5,10 @@
 */
 
 
-//Dependencies
+// Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import {Heading} from 'components.js'
+import { Heading } from 'components.js'
 
 /**
 * Card component
@@ -16,11 +16,11 @@ import {Heading} from 'components.js'
 */
 module.exports = class Card extends React.Component {
 
-	static defaultProps = {
-	    title: false,
-	    actionBar: false,
-	    actionBarLocation: 'bottom'
-	}
+    static defaultProps = {
+        title: false,
+        actionBar: false,
+        actionBarLocation: 'bottom'
+    }
 
     render() {
         var style = Pod_Styler.getStyle(this);
@@ -28,8 +28,8 @@ module.exports = class Card extends React.Component {
         var objectCheck = new Object(this.props);
 
         var titleElement = (typeof objectCheck.title === "string") ?
-            (<Heading kind="h4" styler={{secondary:true}}>{this.props.title}</Heading>) :
-            objectCheck.title;
+        (<Heading kind="h4" styler={{secondary:true}}>{this.props.title}</Heading>) :
+        objectCheck.title;
 
         var title = (objectCheck.title) ? (
             <div style={style.title}>

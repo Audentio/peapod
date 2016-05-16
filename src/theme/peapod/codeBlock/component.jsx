@@ -33,10 +33,12 @@ module.exports = class CodeBlock extends React.Component {
     }
 
 	static defaultProps = {
-		highlight: true
+		highlight: true,
 	}
 
     highlightCode() {
+        if (!this.props.highlight) return;
+
         var container = this.refs.codeContainer,
             _this = this;
 
@@ -79,7 +81,8 @@ module.exports = class CodeBlock extends React.Component {
     }
 
 	render() {
-        var style = Pod_Styler.getStyle(this)
+        var style = Pod_Styler.getStyle(this);
+
 		return (
             <pre className="prettyprint" style={style.main}>
     			<code ref="codeContainer">{this.props.children}</code>

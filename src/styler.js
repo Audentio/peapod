@@ -3,11 +3,8 @@
 *  LICENSE: <%= package.licence %>
 */
 
-var lodash = require('lodash');
-import {Style} from './stylesheet.js'
-
-var debugInfo = false; // requires patched Radium
-var enableMissingStyleWarning = false;
+import { merge as _merge, isEqual as _isEqual } from 'lodash';
+import { Style } from './stylesheet.js';
 
 window.Pod_Styler = window.Pod_Styler || {
     libraries: [],
@@ -18,12 +15,12 @@ window.Pod_Styler = window.Pod_Styler || {
     varCache: {},
     maxCacheLength: 20,
 
-    removeLibrary: function(libraryName) {
-        for (var i = 0, len = Pod_Styler.libraries.length; i < len; i++) {
-            var library = Pod_Styler.libraries[i];
-            if (library.name == libraryName) {
-                console.log('Removing Library: ' + libraryName);
-                Pod_Styler.libraries.splice(i, 1);
+    removeLibrary(libraryName) {
+        for (let i = 0, len = window.Pod_Styler.libraries.length; i < len; i++) {
+            const library = window.Pod_Styler.libraries[i];
+            if (library.name === libraryName) {
+                console.log(`Removing Library: ${libraryName}`); // eslint-disable-line no-console
+                window.Pod_Styler.libraries.splice(i, 1);
                 len = len - 1;
                 i = i - 1;
             }
@@ -31,58 +28,63 @@ window.Pod_Styler = window.Pod_Styler || {
     },
 
     // registers a library
-    addLibrary: function(parentName, libraryName, componentFiles, requireFunc, globalVars) {
-        console.log('Adding Library ' + libraryName);
+    addLibrary(parentName, libraryName, componentFiles, requireFunc, globalVars) {
+        window.Pod_Styler.varCache = {}; // clear variable cache
+        window.Pod_Styler.removeLibrary(libraryName); // remove and previous styling from library
+        console.log(`Adding Library ${libraryName}`); // eslint-disable-line no-console
 
-        Pod_Styler.varCache = {};
-        Pod_Styler.removeLibrary(libraryName);
+        window.Pod_Vars.register(globalVars); // add global variables to variable resolution
 
-        Pod_Vars.register(globalVars);
-
-        let components = {},
-        componentKeys = Object.keys(componentFiles);
+        const components = {};
+        const componentKeys = Object.keys(componentFiles);
         for (let i = 0, len = componentKeys.length; i < len; i++) {
-            let componentName = componentKeys[i],
-            stylesheet = requireFunc(componentFiles[componentName].fileName);
+            const componentName = componentKeys[i];
+            const stylesheet = requireFunc(componentFiles[componentName].fileName);
             if (typeof(stylesheet) === 'function') {
-                components[componentFiles[componentName].componentName] = stylesheet(componentName);
+                const sheetStyle = stylesheet(componentName);
+                if (typeof(sheetStyle) === 'undefined') {
+                    throw new Error(`No Styling found for ${componentName}.  Does ${componentFiles[componentName].fileName} return 'sheet'?`);
+                } else {
+                    components[componentFiles[componentName].componentName] = sheetStyle; // get the stylesheet for any components in the current library
+                }
             }
         }
 
-        let library = {
-            parentName: parentName,
-            componentFiles: componentFiles,
-            components: components,
+        const library = {
+            parentName,
+            componentFiles,
+            components,
             name: libraryName,
             type: 'normal',
-            globalVars: globalVars,
-        }
+            globalVars,
+        };
 
-        Pod_Styler.libraries.push(library);
+        window.Pod_Styler.libraries.push(library);
     },
 
-    // changes the library in use
-    setLibrary: function(name) {
-        Pod_Styler.currentLibrary = name;
+    // changes the library in use, must be done after adding a child theme.
+    setLibrary(name) {
+        window.Pod_Styler.currentLibrary = name;
     },
 
     // gets the stack of libraries
-    getLibrary: function(name) {
-        for (var i = 0, len = Pod_Styler.libraries.length; i < len; i++) {
-            var library = Pod_Styler.libraries[i];
-            if (library.name == name) return library;
+    getLibrary(name) {
+        for (let i = 0, len = window.Pod_Styler.libraries.length; i < len; i++) {
+            const library = window.Pod_Styler.libraries[i];
+            if (library.name === name) return library;
         }
 
-        throw "Could not find library named: " + name;
+        throw new Error(`Could not find library named: ${name}`);
     },
 
-    getLibraryStack: function() {
-        var currentName = Pod_Styler.currentLibrary,
-        stack = [],
-        depth = 0;
+    // creates an ordered array of libraries currently applied
+    getLibraryStack() {
+        let currentName = window.Pod_Styler.currentLibrary;
+        const stack = [];
+        let depth = 0;
 
         while (currentName !== 'root' && depth <= 30) {
-            var library = Pod_Styler.getLibrary(currentName);
+            const library = window.Pod_Styler.getLibrary(currentName);
             stack.unshift(library); // prepend
             currentName = library.parentName;
             depth = depth + 1;
@@ -92,83 +94,88 @@ window.Pod_Styler = window.Pod_Styler || {
         stack.push({
             type: 'local',
             components: {},
-            name: '_local'
+            name: '_local',
         });
-        //apply pre local styling to very beginning of stack
+        // apply pre local styling to very beginning of stack
         stack.unshift({
             type: 'local',
             components: {},
-            name: '_preLocal'
+            name: '_preLocal',
         });
 
-        if (depth >= 30) throw "Maximum Library stack size reached."
+        if (depth >= 30) throw new Error('Maximum Library stack size reached.');
 
         return stack;
     },
 
-    // combines each library into an array
-    buildSources: function(obj) {
-        var sources = [],
-        libraries = Pod_Styler.getLibraryStack(),
-        conditions = {}, // all conditions available to component
-        parts = {}, // all parts available to component
-        componentName = obj.componentName,
-        scene = obj.scene;
+    // collapses each active library into an array of parts and conditions specific to the component
+    buildSources(obj) {
+        const sources = [];
+        const libraries = window.Pod_Styler.getLibraryStack(); // currently applying libraries
+        const conditions = {}; // all conditions available to component
+        const parts = {}; // all parts available to component
+        const componentName = obj.componentName;
+        const scene = obj.scene; // scene applying to object
 
-        for (var i = 0, len = libraries.length; i < len; i++) {
-            var library = libraries[i],
-            component = library.components[componentName];
+        // get information from libraries about current component
+        for (let i = 0, len = libraries.length; i < len; i++) {
+            const library = libraries[i];
+            const component = library.components[componentName];
 
             if (typeof(component) !== 'undefined') {
-                var condition = component.getConditions(),
-                conditionKeys = Object.keys(condition),
-                part = component.getParts(),
-                partKeys = Object.keys(part);
+                const condition = component.getConditions();
+                const conditionKeys = Object.keys(condition);
+                const part = component.getParts();
+                const partKeys = Object.keys(part);
 
-                for (var i = 0, len = conditionKeys.length; i < len; i++) {
-                    var key = conditionKeys[i];
+                // get all conditions for the component overwriting any defined in parents with those defined in children
+                for (let conditionIndex = 0, conditionLen = conditionKeys.length; conditionIndex < conditionLen; conditionIndex++) {
+                    const key = conditionKeys[conditionIndex];
                     conditions[key] = condition[key];
                 }
 
-                for (var i = 0, len = partKeys.length; i < len; i++) {
-                    var key = partKeys[i];
+                // get all parts for the component overwriting any defined in parents with those defined in children
+                for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
+                    const key = partKeys[partIndex];
                     parts[key] = key;
                 }
             }
         }
 
-        for (var i = 0, len = libraries.length; i < len; i++) {
-            var library = libraries[i],
-            source = null;
-            if (library.type == "local") {
-                var localStyle = {},
-                partKeys = Object.keys(parts),
-                suffix = (library.name == '_preLocal') ? 'Pre' : '';
+        // collapse styling from each active library
+        for (let i = 0, len = libraries.length; i < len; i++) {
+            const library = libraries[i];
+            let source = null;
+            if (library.type === 'local') { // special libraries to add local inline styling
+                const localStyle = {};
+                const partKeys = Object.keys(parts);
+                const suffix = (library.name === '_preLocal') ? 'Pre' : '';
 
-                for (var partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
-                    var part = partKeys[partIndex];
+                // get local styling for any parts
+                for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
+                    const part = partKeys[partIndex];
 
-                    if (part == 'main' && typeof(obj.styler.mainStyle) == 'undefined' && suffix == '') {
-                        if (typeof(obj.styler.style) !== 'undefined') localStyle[part] = new Style(obj.styler.style).getStyle();
+                    if (part === 'main' && typeof(obj.styler.mainStyle) === 'undefined' && suffix === '') {
+                        if (typeof(obj.styler.style) !== 'undefined') { // special case for `styler.style` applying to main
+                            localStyle[part] = new Style(obj.styler.style).getStyle(); // process styling for media queries, shorthand, etc.
+                        }
                     } else {
-                        if (typeof(obj.styler[part + 'Style' + suffix]) !== 'undefined') localStyle[part] = new Style(obj.styler[part + 'Style' + suffix]).getStyle();
+                        if (typeof(obj.styler[`${part}Style${suffix}`]) !== 'undefined') { // any other inline styling that isn't `styler.style`
+                            localStyle[part] = new Style(obj.styler[`${part}Style${suffix}`]).getStyle(); // process styling for media queries, shorthand, etc.
+                        }
                     }
                 }
 
                 if (Object.keys(localStyle).length > 0) source = localStyle; // if a localStyle was applied, then make it the source
-            } else {
-                var sourceSheet = library.components[componentName];
-                if (sourceSheet !== null) {
-                    if (typeof(sourceSheet) == 'undefined') {
-                        if (enableMissingStyleWarning) console.warn('Could not find styling for ' + componentName + ' in ' + library.name + '.')
-                    } else {
-                        source = sourceSheet.getAllStyling(obj, scene, conditions); // pass in collapsed conditions
-                    }
+            } else { // styling from style.js
+                const sourceSheet = library.components[componentName];
+                if (sourceSheet !== null && typeof(sourceSheet) !== 'undefined') {
+                    source = sourceSheet.getAllStyling(obj, scene, conditions); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
                 }
             }
 
             if (typeof(source) !== 'undefined' && source !== null) {
-                sources.push(source);
+                sources.push(source); // add styling from source if any was found in the library
             }
         }
 
@@ -176,232 +183,238 @@ window.Pod_Styler = window.Pod_Styler || {
     },
 
     // make inline css from sources array
-    processSources: function(obj, sources) {
-        var style = {},
-        scene = obj.scene;
+    processSources(obj, sources) {
+        const style = {};
+        const scene = obj.scene;
+        const componentName = obj.displayName;
 
-        for (var sourceIndex = 0, sourceLen = sources.length; sourceIndex < sourceLen; sourceIndex++) {
-            var source = sources[sourceIndex],
-            partKeys = Object.keys(source);
-            for (var partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
-                var partKey = partKeys[partIndex],
-                part = source[partKey],
-                partStyle = {};
+        // go through each source's styling
+        for (let sourceIndex = 0, sourceLen = sources.length; sourceIndex < sourceLen; sourceIndex++) {
+            const source = sources[sourceIndex];
+            const partKeys = Object.keys(source);
+            for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) { // then through each part in the source
+                const partKey = partKeys[partIndex];
+                const part = source[partKey];
+                let partStyle = {};
 
                 if (part !== null && typeof(part) !== 'undefined') {
-                    var ruleKeys = Object.keys(part);
-                    for (var ruleIndex = 0, ruleLen = ruleKeys.length; ruleIndex < ruleLen; ruleIndex++) {
-                        var ruleKey = ruleKeys[ruleIndex],
-                        computedRuleKey = Pod_Styler.parseVariableValue(ruleKey, obj, scene),
-                        computedVar = part[ruleKey];
+                    const ruleKeys = Object.keys(part);
+                    for (let ruleIndex = 0, ruleLen = ruleKeys.length; ruleIndex < ruleLen; ruleIndex++) { // then through each property in the part
+                        const ruleKey = ruleKeys[ruleIndex];
+                        const computedRuleKey = window.Pod_Styler.parseVariableValue(ruleKey, obj, scene); // resolve variables in the property key
+                        let computedVar = part[ruleKey];
 
-                        if (typeof(computedVar) == 'object') { // merge style objects
-                        var computedKeys = Object.keys(computedVar);
+                        if (typeof(computedVar) === 'object') { // merge style objects
+                            const computedKeys = Object.keys(computedVar);
 
-                        for (var varIndex = 0, varLen = computedKeys.length; varIndex < varLen; varIndex++) {
-                            var computedKey = computedKeys[varIndex],
-                            resultVar = Pod_Styler.parseVariableValue(computedVar[computedKey], obj, scene);
+                            for (let varIndex = 0, varLen = computedKeys.length; varIndex < varLen; varIndex++) { // then through each property in the rule
+                                const computedKey = computedKeys[varIndex];
+                                const resultVar = window.Pod_Styler.parseVariableValue(computedVar[computedKey], obj, scene); // resolve variables in the property
 
-                            if (typeof(resultVar) == 'string') {
-                                if (resultVar.indexOf('!unset') == -1) {
-                                    computedVar[computedKey] = resultVar;
-                                } else {
-                                    if (computedKey == 'all') {
-                                        computedVar = {};
+                                if (typeof(resultVar) === 'string') {
+                                    if (resultVar.indexOf('!unset') === -1) {
+                                        computedVar[computedKey] = resultVar; // styling applies
                                     } else {
-                                        delete computedVar[computedKey]
+                                        if (computedKey === 'all') {
+                                            computedVar = {}; // unset all styling
+                                        } else {
+                                            delete computedVar[computedKey]; // able to unset styling for a specific key
+                                        }
+                                    }
+                                } else {
+                                    computedVar[computedKey] = resultVar;
+                                }
+                            }
+
+                            if (typeof(partStyle[ruleKey]) !== 'undefined') { // merge if key already exists
+                                partStyle[computedRuleKey] = Object.assign(partStyle[computedRuleKey], computedVar);
+                            } else { // otherwise add the key
+                                partStyle[computedRuleKey] = computedVar;
+                            }
+                        } else { // merge normal styliing
+                            const resultVar = window.Pod_Styler.parseVariableValue(computedVar, obj, scene);
+                            if (typeof(resultVar) === 'string') {
+                                if (typeof(partStyle[ruleKey]) === 'string' && partStyle[ruleKey].indexOf('!important') > -1) {
+                                    if (resultVar.indexOf('!important') === -1) {
+                                        console.warn(`You have overridden the styling '${ruleKey}: ${partStyle[ruleKey]}' with '${ruleKey}: ${resultVar}' in ${componentName}-${partKey} which could cause significant styling errors.  This must be changed to '${ruleKey}: ${resultVar}!' to indicate you are sure you want to override this value.`); // eslint-disable-line no-console
+                                    }
+                                }
+                            }
+
+                            if (typeof(resultVar) === 'string') {
+                                if (resultVar.indexOf('!unset') === -1) {
+                                    partStyle[computedRuleKey] = resultVar; // add styling
+                                } else {
+                                    if (computedRuleKey === 'all') {
+                                        partStyle = {}; // unset all styling
+                                    } else {
+                                        delete computedVar[computedRuleKey]; // unset specific key
                                     }
                                 }
                             } else {
-                                computedVar[computedKey] = resultVar;
+                                partStyle[computedRuleKey] = resultVar;
                             }
                         }
-
-                        if (typeof(partStyle[ruleKey]) !== 'undefined') { // merge if key already exists
-                        partStyle[computedRuleKey] = Object.assign(partStyle[computedRuleKey], computedVar);
-                    } else { // otherwise add the key
-                        partStyle[computedRuleKey] = computedVar;
                     }
+                }
 
+                if (typeof(style[partKey]) === 'undefined') {
+                    style[partKey] = partStyle;
                 } else {
-                    var resultVar = Pod_Styler.parseVariableValue(computedVar, obj, scene);
-                    if (typeof(resultVar) == 'string'){
-                        if (typeof(partStyle[ruleKey]) == 'string' && partStyle[ruleKey].indexOf('!important') > -1) {
-                            if (resultVar.indexOf('!important') == -1) {
-                                console.warn("You have overridden the styling '" + ruleKey + ": " + partStyle[ruleKey] + "' with '" + ruleKey + ": " + resultVar + "' in " + componentName + "-" + partKey + " which could cause significant styling errors.  This must be changed to '" + ruleKey + ": " + resultVar + "!' to indicate you are sure you want to override this value.");
-                            }
-                        }
-                    }
-
-                    if (typeof(resultVar) == 'string') {
-                        if (resultVar.indexOf('!unset') == -1) {
-                            partStyle[computedRuleKey] = resultVar;
-                        } else {
-                            if (computedRuleKey == 'all') {
-                                partStyle = {};
-                            } else {
-                                delete computedVar[computedKey]
-                            }
-                        }
-                    } else {
-                        partStyle[computedRuleKey] = resultVar;
-                    }
+                    style[partKey] = Object.assign(style[partKey], partStyle);
                 }
             }
         }
 
-        if (typeof(style[partKey]) == 'undefined') {
-            style[partKey] = partStyle;
+        // remove any ! for important styling
+        const keys = Object.keys(style);
+        for (let i = 0, len = Object.keys(style).length; i < len; i++) {
+            const key = keys[i];
+            if (typeof(style[key]) === 'string') {
+                style[key] = style[key].replace('!', '');
+            }
+        }
+
+        return style;
+    },
+
+    // make an object with information about component being styled
+    makeInstanceObj(instance, localStyler) {
+        const propsStyler = (typeof(instance) !== 'undefined' && typeof(instance.props) !== 'undefined' && typeof(instance.props.styler) !== 'undefined') ? instance.props.styler : {};
+        const styler = _merge(propsStyler, localStyler) || {};
+        const componentName = styler.styleLike || instance.constructor.displayName; // name of the component
+        const scene = styler.scene || 'normal';
+        const obj = {
+            context: instance.context || {},
+            state: instance.state || {},
+            props: instance.props || {},
+            styler,
+            componentName,
+            scene,
+        };
+
+        return obj;
+    },
+
+    getStyleFromCache(obj, componentName) {
+        if (typeof(this.cache[componentName]) === 'undefined') this.cache[componentName] = [];
+        for (let i = 0, len = this.cache[componentName].length; i < len; i++) {
+            const cacheVal = this.cache[componentName][i];
+            if (this.checkCacheEquality(obj, cacheVal)) {
+                return cacheVal.style;
+            }
+        }
+        return false;
+    },
+
+    addStyleToCache(obj, style) {
+        const componentName = obj.componentName;
+
+        if (typeof(window.Pod_Styler.cache[componentName]) === 'undefined') window.Pod_Styler.cache[componentName] = [];
+
+        const len = window.Pod_Styler.cache[componentName].length;
+        for (let i = 0; i < len; i++) {
+            const cacheVal = window.Pod_Styler.cache[componentName][i];
+            if (window.Pod_Styler.checkCacheEquality(obj, cacheVal)) return false;
+        }
+        if (len > window.Pod_Styler.maxCacheLength) window.Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
+        window.Pod_Styler.cache[componentName].push({ obj, style });
+
+        return true;
+    },
+
+    checkCacheEquality(obj, cacheVal) {
+        const stylerEqual = _isEqual(obj.styler, cacheVal.styler);
+        const stateEqual = _isEqual(obj.state, cacheVal.state);
+        const propsEqual = _isEqual(obj.props, cacheVal.props);
+        const contextEqual = _isEqual(obj.context, cacheVal.context);
+        let radiumEqual = false;
+
+        if ((typeof(obj.state) === 'undefined') && (typeof(cacheVal.state) === 'undefined')) {
+            radiumEqual = true;
+        } else if ((obj.state == null) && (cacheVal.state == null)) {
+            radiumEqual = true;
+        } else if ((typeof(obj.state) === 'undefined' || obj.state == null) || (typeof(cacheVal.state) === 'undefined' || cacheVal.state == null)) {
+            radiumEqual = false;
         } else {
-            style[partKey] = Object.assign(style[partKey], partStyle);
+            radiumEqual = (obj.state._radiumStyleState === cacheVal.state._radiumStyleState);
         }
-    }
-}
 
+        return stylerEqual && stateEqual && propsEqual && contextEqual && radiumEqual;
+    },
 
-var keys = Object.keys(style)
-for (var i = 0, len = Object.keys(style).length; i < len; i++) {
-    var key = keys[i];
-    if (typeof(style[key]) == 'string') {
-        style[key] = style[key].replace('!', '');
-    }
-}
+    // gets object of styling for parts of a component
+    getStyle(instance, localStyler = {}) {
+        const obj = window.Pod_Styler.makeInstanceObj(instance, localStyler);
 
-return style;
-},
-
-makeInstanceObj: function(instance, localStyler) {
-    var propsStyler = (typeof(instance) !== 'undefined' && typeof(instance.props) !== 'undefined' && typeof(instance.props.styler) !== 'undefined') ? instance.props.styler : {},
-    styler = lodash.merge(propsStyler, localStyler) || {},
-    componentName = styler.styleLike || instance.constructor.displayName,
-    scene = styler.scene || 'normal',
-    obj = {
-        context: instance.context || {},
-        state: instance.state || {},
-        props: instance.props || {},
-        styler: styler,
-        componentName: componentName,
-        scene: scene
-    };
-
-    return obj;
-},
-
-getStyleFromCache: function(obj, componentName) {
-    if (typeof(this.cache[componentName]) == 'undefined') this.cache[componentName] = [];
-    for (var i = 0, len = this.cache[componentName].length; i < len; i++) {
-        var cacheVal = this.cache[componentName][i];
-        if (this.checkCacheEquality(obj, cacheVal)) {
-            return cacheVal.style;
-        }
-    }
-    return false;
-},
-
-addStyleToCache: function(obj, style) {
-    var componentName = obj.componentName;
-
-    if (typeof(Pod_Styler.cache[componentName]) == 'undefined') Pod_Styler.cache[componentName] = [];
-    for (var i = 0, len = Pod_Styler.cache[componentName].length; i < len; i++) {
-        var cacheVal = Pod_Styler.cache[componentName][i];
-        if (Pod_Styler.checkCacheEquality(obj, cacheVal)) return false;
-    }
-    if (len > Pod_Styler.maxCacheLength) Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
-    Pod_Styler.cache[componentName].push({obj: obj, style: style});
-},
-
-checkCacheEquality: function(obj, cacheVal) {
-    var stylerEqual = lodash.isEqual(obj.styler, cacheVal.styler),
-    stateEqual = lodash.isEqual(obj.state, cacheVal.state),
-    propsEqual = lodash.isEqual(obj.props, cacheVal.props),
-    contextEqual = lodash.isEqual(obj.context, cacheVal.context),
-    radiumEqual = false;
-
-    if ((typeof(obj.state) === 'undefined') && (typeof(cacheVal.state) === 'undefined')) {
-        radiumEqual = true;
-    } else if ((obj.state == null) && (cacheVal.state == null)) {
-        radiumEqual = true;
-    } else if ((typeof(obj.state) === 'undefined' || obj.state == null) || (typeof(cacheVal.state) === 'undefined' || cacheVal.state == null)) {
-        radiumEqual = false;
-    } else {
-        radiumEqual = obj.state._radiumStyleState == cacheVal.state._radiumStyleState;
-    }
-
-    return stylerEqual && stateEqual && propsEqual && contextEqual && radiumEqual;
-},
-
-getStyle: function(instance, localStyler = {}) {
-    var obj = Pod_Styler.makeInstanceObj(instance, localStyler);
-
-    if (Pod_Styler.enableCache) {
-        var cacheVal = this.getStyleFromCache(obj, obj.componentName || "_");
-        if (cacheVal !== false) {
-            return cacheVal;
-        }
-    }
-
-    var sources = Pod_Styler.buildSources(obj);
-    var style = Pod_Styler.processSources(obj, sources);
-
-    if (Pod_Styler.enableCache) {
-        this.addStyleToCache(obj, style);
-    }
-
-    return style;
-},
-
-parseVariableValue: function(computedVar, obj, scene) {
-    var styler = obj.styler || {};
-
-    if (typeof(computedVar) == 'array') {
-        for (var computedIndex = computedVar.length - 1; computedIndex >= 0; computedIndex--) { // go through in reverse order to find most specific
-            if (computedVar[computedIndex].vars == scene || computedVar[computedIndex].vars == "common") {
-                computedVar = computedVar[computedIndex].val;
-                break;
+        if (window.Pod_Styler.enableCache) { // use value from cache
+            const cacheVal = this.getStyleFromCache(obj, obj.componentName || '_');
+            if (cacheVal !== false) {
+                return cacheVal;
             }
         }
-    }
 
-    if (typeof(computedVar) == 'string') {
-        computedVar = Pod_Styler.processVariableString(computedVar, obj, scene);
-    }
-    return computedVar;
-},
+        const sources = window.Pod_Styler.buildSources(obj); // build sources from libraries for component
+        const style = window.Pod_Styler.processSources(obj, sources); // built style from sources
 
-processVariableString: function(computedVar, obj, scene) {
+        if (window.Pod_Styler.enableCache) { // save to cache
+            this.addStyleToCache(obj, style);
+        }
 
-    if (computedVar.indexOf('$') > -1) {
-        var computedKey = computedVar;
-        if (!this.enableVarCache || typeof(this.varCache[computedVar + '_' + scene]) == 'undefined') {
-            if (computedVar.indexOf('{') > -1 && computedVar.indexOf('}') > -1) { // RegEx based Pod_Vars.get
-            var regEx = /\{\$\S*\}/g,
-            matches = computedVar.match(regEx);
+        return style;
+    },
 
-            for (var i = 0, len = matches.length; i < len; i++) {
-                var match = matches[i];
-                computedVar = computedVar.replace(match, Pod_Vars.get(match.replace('{$', '').replace('}', ''), scene));
+    // will resolve a string to it's actual computed value
+    parseVariableValue(computedVar, obj, scene) {
+        if (typeof(computedVar) === 'object') {
+            for (let computedIndex = computedVar.length - 1; computedIndex >= 0; computedIndex--) { // go through in reverse order to find most specific
+                if (computedVar[computedIndex].vars === scene || computedVar[computedIndex].vars === 'common') {
+                    computedVar = computedVar[computedIndex].val;
+                    break;
+                }
             }
-        } else { // simple Pod_Vars.get on whole value
-            computedVar = Pod_Vars.get(computedVar.replace('$', ''), scene);
         }
-        if (this.enableVarCache) {
-            this.varCache[computedKey + '_' + scene] = computedVar;
+
+        if (typeof(computedVar) === 'string') {
+            computedVar = window.Pod_Styler.processVariableString(computedVar, obj, scene);
         }
-    } else {
-        computedVar = this.varCache[computedKey + '_' + scene]; // get variable from cache rather than parse string
-    }
-} else if (computedVar.indexOf('getProp:') > -1) {
-    computedVar = obj.props[computedVar.replace('getProp:', '')];
-} else if (computedVar.indexOf('getState:') > -1) {
-    computedVar = obj.state[computedVar.replace('getState:', '')];
-} else if (computedVar.indexOf('getStyler:') > -1) {
-    computedVar = obj.styler[computedVar.replace('getStyler:', '')];
-} else if (computedVar.indexOf('getContext:') > -1) {
-    computedVar = obj.context[computedVar.replace('getContext:', '')];
-}
-return computedVar;
-},
+        return computedVar;
+    },
 
-}
+    // will resolve $variable syntax into actual values
+    processVariableString(computedVar, obj, scene) {
+        if (computedVar.indexOf('$') > -1) { // variable present
+            const computedKey = computedVar;
+            if (!this.enableVarCache || typeof(this.varCache[`${computedVar}_${scene}`]) === 'undefined') {
+                if (computedVar.indexOf('{') > -1 && computedVar.indexOf('}') > -1) { // RegEx based Pod_Vars.get
+                    const regEx = /\{\$\S*\}/g;
+                    const matches = computedVar.match(regEx);
 
-module.exports = Pod_Styler;
+                    for (let i = 0, len = matches.length; i < len; i++) {
+                        const match = matches[i];
+                        computedVar = computedVar.replace(match, window.Pod_Vars.get(match.replace('{$', '').replace('}', ''), scene)); // resolve multiple variables
+                    }
+                } else { // simple Pod_Vars.get on whole value
+                    computedVar = window.Pod_Vars.get(computedVar.replace('$', ''), scene); // resolve single variable
+                }
+                if (this.enableVarCache) {
+                    this.varCache[`${computedKey}_${scene}`] = computedVar;
+                }
+            } else {
+                computedVar = this.varCache[`${computedKey}_${scene}`]; // get variable from cache rather than parse string
+            }
+        } else if (computedVar.indexOf('getProp:') > -1) {
+            computedVar = obj.props[computedVar.replace('getProp:', '')]; // get property from instance
+        } else if (computedVar.indexOf('getState:') > -1) {
+            computedVar = obj.state[computedVar.replace('getState:', '')]; // get state from instance
+        } else if (computedVar.indexOf('getStyler:') > -1) {
+            computedVar = obj.styler[computedVar.replace('getStyler:', '')]; // get styler from instance
+        } else if (computedVar.indexOf('getContext:') > -1) {
+            computedVar = obj.context[computedVar.replace('getContext:', '')]; // get context from instance
+        }
+        return computedVar;
+    },
+
+};
+
+module.exports = window.Pod_Styler;

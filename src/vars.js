@@ -3,9 +3,9 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import lodash from 'lodash';
+import { merge as _merge } from 'lodash';
 
-const maxDepth = 20;
+const maxDepth = 30; // will attempt to resolve variables throug this many levels
 
 window.Pod_Vars = window.Pod_Vars || {
     sources: [],
@@ -16,7 +16,7 @@ window.Pod_Vars = window.Pod_Vars || {
         if (level < 0) {
             sourceLevel = 0;
         }
-        this.sources[sourceLevel] = lodash.merge(this.sources[sourceLevel], vars);
+        this.sources[sourceLevel] = _merge(this.sources[sourceLevel], vars);
     },
 
     processResult(val, varSetOverride, depth) {
@@ -25,7 +25,7 @@ window.Pod_Vars = window.Pod_Vars || {
         }
 
         if (depth >= maxDepth) {
-            throw new Error(`Max variable depth of ${maxDepth} reached.  Do you have a circular variable reference?`);
+            throw new Error(`Max variable depth of ${maxDepth} reached when resolving ${val}.  Do you have a circular variable reference?`);
         }
         return val;
     },

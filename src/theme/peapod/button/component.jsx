@@ -20,39 +20,39 @@ import Pod_Styler from 'styler.js';
 */
 module.exports = class Button extends React.Component {
 
-	//Validate props
-	static propTypes = {
-		href: React.PropTypes.string,
-		disabled: React.PropTypes.bool
-	}
+    //Validate props
+    static propTypes = {
+        href: React.PropTypes.string,
+        disabled: React.PropTypes.bool
+    }
 
-	//Default props
-	static defaultProps = {
-		label: 'Submit',
-	}
+    //Default props
+    static defaultProps = {
+        label: 'Submit',
+    }
 
-	render() {
-		var style = Pod_Styler.getStyle(this);
+    render() {
+        var style = Pod_Styler.getStyle(this);
 
-		//Anchor tag <a> if href specified
-		if (this.props.href) {
-			return (
-				<a href={this.props.href} style={style.main} onClick={this.props.onClick}>
-					{this.props.children || this.props.label}
-				</a>
-			);
-		}
+        //Anchor tag <a> if href specified
+        if (this.props.href) {
+            return (
+                <a href={this.props.href} style={style.main} onClick={this.props.onClick}>
+                    {this.props.children || this.props.label}
+                </a>
+            );
+        }
 
-		//Default: <button> tag
-		else {
-			return (
-				<button
-					style={style.main}
-					onClick={this.props.onClick}>
-					{this.props.children || this.props.label}
-				</button>
-			);
-		}
-	}
+        //Default: <button> tag
+        else {
+            return (
+                <button
+                    style={style.main}
+                    onClick={this.props.onClick}>
+                    {this.props.children || this.props.label}
+                </button>
+            );
+        }
+    }
 
 };
