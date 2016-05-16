@@ -7,13 +7,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Pod_Styler from 'styler.js';
-import {Icon} from 'components.js';
+import { Icon } from 'components.js';
 import Pod_Helper from 'helper.js'
 
-var options = Pod_Helper.options('Pea_photo', {
-
+const options = {
 	//this acts as src for lazyLoaded images until they're loaded
-	defaultImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=",
+    defaultImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=',
 
 	//lazy loading
 	lazy: false,
@@ -30,7 +29,7 @@ var options = Pod_Helper.options('Pea_photo', {
 
 	//Animate Lightbox entry-exit
 	lightboxAnimation: true
-});
+}
 
 
 /**
@@ -78,7 +77,7 @@ module.exports = class Photo extends React.Component {
 	}
 
 	keyHandler(e){
-		if(e.keyCode == Pod_Helper.keymap['esc']){
+		if(e.keyCode == Pod_Helper.keymap.ESC){
 			this.hideLightbox();
 		}
 	}
