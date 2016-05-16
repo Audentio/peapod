@@ -3,7 +3,7 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import { merge as _merge } from 'lodash'
+import { merge as _merge } from 'lodash';
 
 const Pod_Helper = {
 
@@ -20,7 +20,7 @@ const Pod_Helper = {
             if (allowScroll) {
                 document.removeEventListener('touchmove', this.noTouchScrolling)
             } else {
-                document.addEventListener('touchmove', this.noTouchScrolling)
+                document.addEventListener('touchmove', this.noTouchScrolling);
             }
         }
 
@@ -33,7 +33,6 @@ const Pod_Helper = {
     },
 
     fullscreen: {
-
         isAvailable: () => {
             if (document.fullscreenEnabled ||
                 document.msFullscreenEnabled ||
@@ -82,7 +81,7 @@ const Pod_Helper = {
 
         toggle: (elem) => {
             if (Pod_Helper.fullscreen.isEnabled()) {
-                Pod_Helper.fullscreen.exit()
+                Pod_Helper.fullscreen.exit();
             } else {
                 Pod_Helper.fullscreen.enter(elem)
             }
@@ -109,7 +108,7 @@ const Pod_Helper = {
             document.head.appendChild(stylesheet)
             return true
         }
-        return false
+        return false;
     },
 
     addScript: (params) => {
@@ -396,4 +395,4 @@ const Pod_Helper = {
 
 window.Pod_Helper = Pod_Helper;
 
-export default Pod_Helper
+export default Pod_Helper;

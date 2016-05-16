@@ -8,19 +8,19 @@ export const globals = {
     daysPerWeek: 7,
     startingDay: 0, // sunday = 0, monday = 1 ect...
     locale: window.navigator.language,
-    forceSix: true
-}
+    forceSix: true,
+};
 
 // allow addDays on date
 export function addDays(date, days) {
-    date = new Date(date)
+    date = new Date(date);
     date.setDate(date.getDate() + days);
     return date;
-};
+}
 export function setDayOfWeek(date, dayOfWeek) {
-    date = new Date(date)
+    date = new Date(date);
     return date.setDate(date.getDate() - date.getDay() + dayOfWeek);
-};
+}
 
 // get list of date between two dates
 export function getDates(firstDate, secondDate) {
@@ -30,7 +30,7 @@ export function getDates(firstDate, secondDate) {
     let dateArray = [];
     let currentDate = startDate;
     while (currentDate <= stopDate) {
-        dateArray.push(currentDate)
+        dateArray.push(currentDate);
         currentDate = addDays(currentDate, 1);
     }
     return dateArray;
@@ -38,11 +38,11 @@ export function getDates(firstDate, secondDate) {
 
 // reset the time on dates
 export function resetTime(date) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
 // get days in month
-export function daysInMonth(month,year) {
+export function daysInMonth(month, year) {
     return new Date(year, month, 0).getDate();
 }
 
@@ -52,12 +52,12 @@ export function getMonthFromDate(date) {
     const year = date.getFullYear();
     const dayCount = daysInMonth(month + 1, year);
 
-    const firstDate = new Date(year, month)
+    const firstDate = new Date(year, month);
 
-    return getDates(firstDate, addDays(firstDate, dayCount-1));
+    return getDates(firstDate, addDays(firstDate, dayCount - 1));
 }
 
 // get local month
 export function getLocalMonth(date) {
-    return date.toLocaleDateString(globals.locale, { month: "long" });
+    return date.toLocaleDateString(globals.locale, { month: 'long' });
 }

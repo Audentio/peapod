@@ -4,7 +4,6 @@
 * LICENSE: <%= package.licence %>
 */
 
-
 import React from 'react';
 import Pod_Styler from 'styler.js';
 

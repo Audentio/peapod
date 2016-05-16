@@ -1,20 +1,20 @@
-import {Sheet} from 'stylesheet.js';
+import { Sheet } from 'stylesheet.js';
 
-module.exports = function(sheetName) {
-	var sheet = new Sheet(sheetName),
-	    main = sheet.addMain();
+module.exports = function (sheetName) {
+    var sheet = new Sheet(sheetName),
+    main = sheet.addMain();
 
-	//Conditions
+    // Conditions
 
-	//Variables
+    // Variables
 
-	main.addSelector({
-	    common: {
-	        padding: '16px',
-	        borderBottom: '1px solid #ddd',
-	        background: '#fff'
-	    }
-	});
+    main.addSelector({
+        common: {
+            padding: '16px',
+            borderBottom: '1px solid #ddd',
+            background: '#fff',
+        },
+    });
 
-	return sheet;
-}
+    return sheet;
+};

@@ -4,10 +4,8 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-
 /*
-//Dependencies
+// Dependencies
 import React from 'react';
 import Pod_Styler from 'styler.js';
 
@@ -26,7 +24,7 @@ module.exports = class Template extends React.Component {
 
 	//Default props
 	static defaultProps =  {
-		
+
 	}
 
 	render() {
