@@ -159,7 +159,7 @@ const Pod_Helper = {
 
         // Cache-control
         // Adds random number param at end to make sure new version is downloaded
-        if (opts.cache === false) {
+        if (opts.cache === false && opts.method === 'GET') {
             const param = (opts.url.indexOf('?') === -1) ? `?rand=${Math.random()}` : `&rand=${Math.random()}`;
             opts.url += param;
         }
@@ -214,8 +214,9 @@ const Pod_Helper = {
         if (opts.beforeSend) opts.beforeSend(xmlhttp, opts);
 
         // temp
-        const reqPath = (opts.url.indexOf('?') > 0) ? opts.url.split('?')[0] : opts.url
-        console.groupCollapsed(`[XHR] %c${opts.method}%c ${reqPath}`, 'color: blue', 'color: #666')
+        const reqFilename = opts.url.substring(opts.url.lastIndexOf('/') + 1)
+        const reqFilename_clean = (reqFilename.indexOf('?') > 0) ? reqFilename.substr(0, reqFilename.lastIndexOf('?')) : reqFilename
+        console.groupCollapsed(`[XHR] %c${opts.method}%c ${reqFilename_clean}`, 'color: blue', 'color: #666')
         console.log(`%cFull URL: %c${opts.url}`, 'font-weight:bold', 'font-weight:normal')
         console.log('%cConfig: %o', 'font-weight:bold', opts)
         if (opts.data) console.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal')
