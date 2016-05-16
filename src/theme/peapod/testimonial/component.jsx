@@ -24,13 +24,21 @@ module.exports = class Testimonial extends React.Component {
             <Photo styler={{ mainStyle: style.photo, imageStyle: style.photo }} src={this.props.img} />
         ) : '';
 
-        var company = (this.props.img) ? (
-            <Anchor to={this.props.link}>{this.props.comp}</Anchor>
+        var name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
+        var comp = (this.props.comp) ? (<div>{this.props.comp}</div>) : '';
+
+        var link = (this.props.link) ? (
+            <Anchor to={this.props.link}>
+                {name}
+                {comp}
+            </Anchor>
         ) : (
-            <div>{this.props.comp}</div>
+            <div>
+                {name}
+                {comp}
+            </div>
         );
 
-        var name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
 
         return (
             <div style={style.main}>
@@ -42,8 +50,7 @@ module.exports = class Testimonial extends React.Component {
                         {this.props.children}
                     </BlockQuote>
                 </div>
-                {name}
-                {company}
+                {link}
             </div>
         );
 
