@@ -77,7 +77,7 @@ module.exports = class Photo extends React.Component {
 	}
 
 	keyHandler(e){
-		if(e.keyCode == Pod_Helper.keymap['esc']){
+		if(e.keyCode == Pod_Helper.keymap.ESC){
 			this.hideLightbox();
 		}
 	}

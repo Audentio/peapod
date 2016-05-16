@@ -24,6 +24,7 @@ module.exports = class Icon extends React.Component {
         label: React.PropTypes.string,
         color: React.PropTypes.string,
         onClick: React.PropTypes.func,
+        style: React.PropTypes.object,
     }
 
 
@@ -40,7 +41,7 @@ module.exports = class Icon extends React.Component {
         const style = Pod_Styler.getStyle(this)
 
         return (
-            <i {...this.props} className="material-icons" onClick={this.props.onClick} aria-label={this.props.label} title={this.props.label} style={style.main}>
+            <i {...this.props} className="material-icons" onClick={this.props.onClick} aria-label={this.props.label} title={this.props.label} style={[style.main, this.props.style]}>
                 {this.props.children}
             </i>
         );
