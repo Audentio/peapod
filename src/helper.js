@@ -5,47 +5,20 @@
 
 import { merge as _merge } from 'lodash';
 
-var Pod_Helper = {
-
-    // some things are left to the reader's imagination
-    //--
-    keymap: {
-        'esc': 27,
-    },
+const Pod_Helper = {
 
     // Check if device is touch-enabled
-    isTouch: function () {
-        return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
-    },
-
-    // Create Component options
-    // @param {string} name - Component name
-    // @param {Object} [opts] - Default configuration for plugin
-    // @returns {Object} - Options object with default options overridden by Pod.options[component_name]
-    options: function (name, opts) {
-
-        var options = opts || {};
-
-        // Merge with global options object
-        // global object overrides default settings defined above
-        if (Pod.options[name]) {
-            _.merge(options, Pod.options[name]);
-        }
-
-        return options;
-
-    },
+    isTouch: () => ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0),
 
     // control page scrolling
-    //--
+    // --
     // disables touch scrolling on touch enabled devices
     // disables scrolling on non-touch devices without hiding scrollbar
-    scrolling: function (allowScroll) {
-
+    scrolling: (allowScroll) => {
         // Touch
         if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
             if (allowScroll) {
-                document.removeEventListener('touchmove', this.noTouchScrolling);
+                document.removeEventListener('touchmove', this.noTouchScrolling)
             } else {
                 document.addEventListener('touchmove', this.noTouchScrolling);
             }
@@ -53,34 +26,34 @@ var Pod_Helper = {
 
         document.body.style.overflow = (allowScroll) ? '' : 'scroll'; // overflowY doesn't disable scrolling on safari
         document.documentElement.style.overflow = (allowScroll) ? '' : 'hidden'; // overflowY doesn't disable scrolling on safari
-
     },
 
-    noTouchScrolling: function (e) {
-        e.preventDefault();
+    noTouchScrolling: (e) => {
+        e.preventDefault()
     },
 
     fullscreen: {
-
-        isAvailable: function () {
-            return (
-                document.fullscreenEnabled ||
+        isAvailable: () => {
+            if (document.fullscreenEnabled ||
                 document.msFullscreenEnabled ||
                 document.mozFullscreenEnabled ||
-                document.webkitFullscreenEnabled
-            );
+                document.webkitFullscreenEnabled) {
+                return true
+            }
+            return false
         },
 
-        isEnabled: function () {
-            return (
-                document.fullscreenElement ||
+        isEnabled: () => {
+            if (document.fullscreenElement ||
                 document.msFullscreenElement ||
                 document.mozFullScreenElement ||
-                document.webkitFullscreenElement
-            );
+                document.webkitFullscreenElement) {
+                return true
+            }
+            return false
         },
 
-        enter: function (elem) {
+        enter: (elem) => {
             elem = (elem instanceof HTMLElement) ? elem : document.documentElement;
 
             if (elem.requestFullscreen) {
@@ -94,7 +67,7 @@ var Pod_Helper = {
             }
         },
 
-        exit: function () {
+        exit: () => {
             if (document.exitFullscreen) {
                 document.exitFullscreen();
             } else if (document.msExitFullscreen) {
@@ -106,169 +79,161 @@ var Pod_Helper = {
             }
         },
 
-        toggle: function () {
+        toggle: (elem) => {
             if (Pod_Helper.fullscreen.isEnabled()) {
                 Pod_Helper.fullscreen.exit();
             } else {
-                Pod_Helper.fullscreen.enter();
+                Pod_Helper.fullscreen.enter(elem)
             }
         },
 
         lastScrollPos: null,
     },
 
-    downloadFile: function (url, filename) {
-        var downLink = document.createElement('a');
-        downLink.href = url;
-        downLink.download = filename || url.substring(url.lastIndexOf('/') + 1, url.length);
-        downLink.click();
+    downloadFile: (url, filename) => {
+        const downLink = document.createElement('a')
+        downLink.href = url
+        downLink.download = filename || url.substring(url.lastIndexOf('/') + 1, url.length)
+        downLink.click()
     },
 
-    addStylesheet: function (id, path, callback) {
-        if (!document.getElementById('Peapod_' + id + '_stylesheet')) {
-            var stylesheet = document.createElement('link');
-            stylesheet.id = 'Peapod_' + id + '_stylesheet';
-            stylesheet.rel = 'stylesheet';
-            stylesheet.type = 'text/css';
-            stylesheet.href = path;
-            stylesheet.onload = callback;
-            document.head.appendChild(stylesheet);
-            return true;
+    addStylesheet: (id, path, callback) => {
+        if (!document.getElementById(`Peapod_${id}_stylesheet`)) {
+            const stylesheet = document.createElement('link');
+            stylesheet.id = `Peapod_${id}_stylesheet`
+            stylesheet.rel = 'stylesheet'
+            stylesheet.type = 'text/css'
+            stylesheet.href = path
+            stylesheet.onload = callback
+            document.head.appendChild(stylesheet)
+            return true
         }
         return false;
     },
 
-    addScript: function (params) {
-        if (document.getElementById('Peapod_' + params.id + '_script'))
-            return false;
+    addScript: (params) => {
+        if (document.getElementById(`Peapod_${params.id}_script`)) {
+            return false
+        }
 
-        var addToPage = function (cb) {
-            var script = document.createElement('script');
-            script.id = 'Peapod_' + params.id + '_script';
-            script.type = 'text/javascript';
-            script.src = params.url;
-            if (cb) script.onload = cb;
-            document.head.appendChild(script);
-            return true;
-        };
+        const addToPage = (cb) => {
+            const script = document.createElement('script');
+            script.id = `Peapod_${params.id}_script`
+            script.type = 'text/javascript'
+            script.src = params.url
+            if (cb) script.onload = (res, status) => cb(script, status)
+            document.head.appendChild(script)
+            return true
+        }
 
         if (params.ajax) {
-            var request = new XMLHttpRequest();
-            request.open('GET', params.url, true);
-            request.onreadystatechange = function () {
-                if (request.readyState !== 4) return;
-                if (request.status === 200) {
-                    addToPage(function () {
-                        params.callback(request);
-                    });
-                } else {
-                    params.callback(request);
-                }
-            };
-            request.send();
+            Pod_Helper.xhr({
+                url: params.url,
+                success: () => addToPage(params.callback),
+                error: () => {
+                    console.error('[addScript] Unable to load script')
+                },
+            })
+        } else {
+            addToPage(params.callback(false, 0))
         }
-        else {
-            addToPage(params.callback);
-        }
+
+        return true
     },
 
     // XHR helper function
-    //
-    xhr: function (args) {
-
-        var opts, xmlhttp;
-
+    xhr: (args) => {
         // Default options
-        opts = {
+        let opts = {
             method: 'GET',
             timeout: 3000,
             cache: false,
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded',
             },
-        };
-        _merge(opts, args);
-
-        if (!opts.url) {
-            throw new Error('[XHR] url must be defined');
         }
+        opts = _merge(opts, args)
 
-        // Cache control
+        if (!opts.url) throw new Error('[XHR] url must be defined')
+
+        // Cache-control
         // Adds random number param at end to make sure new version is downloaded
-        if (opts.cache === false) {
-            var param = (opts.url.indexOf('?') === -1) ? '?rand=' + Math.random() : '&rand=' + Math.random();
+        if (opts.cache === false && opts.method === 'GET') {
+            const param = (opts.url.indexOf('?') === -1) ? `?rand=${Math.random()}` : `&rand=${Math.random()}`;
             opts.url += param;
         }
 
-        xmlhttp = new XMLHttpRequest();
+        const xmlhttp = new XMLHttpRequest();
 
         xmlhttp.open(opts.method, opts.url, true);
 
         // set request headers
-        for (var header in opts.headers) {
-            xmlhttp.setRequestHeader(header, opts.headers[header]);
+        for (const header in opts.headers) {
+            if (opts.headers.hasOwnProperty(header)) xmlhttp.setRequestHeader(header, opts.headers[header]);
         }
 
         // set timeout
         xmlhttp.timeout = opts.timeout;
 
         // callback: Timeout
-        if (opts.ontimeout) {
-            xmlhttp.ontimeout = opts.ontimeout;
-        }
+        if (opts.ontimeout) xmlhttp.ontimeout = opts.ontimeout
 
-        xmlhttp.onreadystatechange = function () {
-            var req_complete = xmlhttp.readyState === XMLHttpRequest.DONE,
-                req_success = req_complete && xmlhttp.status === 200,
-                req_error = req_complete && xmlhttp.status !== 200;
+        xmlhttp.onreadystatechange = () => {
+            const req_complete = xmlhttp.readyState === XMLHttpRequest.DONE
+            const req_success = req_complete && xmlhttp.status === 200
+            const req_error = req_complete && xmlhttp.status !== 200
 
             // callback: Success
-            if (req_success && opts.success)
-                opts.success(this.responseText, xmlhttp.status, xmlhttp.statusText);
+            if (req_success && opts.success) {
+                opts.success(xmlhttp.responseText)
+            }
 
             // calback: Error
-            if (req_error && opts.error)
-                opts.error(xmlhttp.status, xmlhttp.statusText);
+            if (req_error && opts.error) {
+                opts.error(xmlhttp.status, xmlhttp.statusText)
+            }
 
             // callback: Complete
-            if (req_complete && opts.complete)
-                opts.complete(this.responseText, xmlhttp.status, xmlhttp.statusText);
-        };
+            if (req_complete && opts.complete) {
+                opts.complete(xmlhttp.responseText, xmlhttp.status, xmlhttp.statusText)
+            }
+        }
 
         // callback: Progressr
         if (opts.progress) {
-            xmlhttp.addEventListener('progress', function (e) {
-                var progress = (e.lengthComputable) ? Math.ceil((e.loaded / e.total) * 100) : null;
-                opts.progress(progress, e);
-            });
+            xmlhttp.addEventListener('progress', (e) => {
+                const progress = (e.lengthComputable) ? Math.ceil((e.loaded / e.total) * 100) : null
+                opts.progress(progress, e)
+            })
         }
 
         // callback: beforeSend
         // --this allows modifying xmlhttp properties
         // --overrides everything else
-        if (opts.beforeSend) {
-            opts.beforeSend(xmlhttp, opts);
-        }
+        if (opts.beforeSend) opts.beforeSend(xmlhttp, opts);
 
-        console.groupCollapsed('[XHR] %c' + opts.method + '%c ' + opts.url, 'color: blue', 'color: #666');
-        console.log('config: %o', opts);
-        console.groupEnd('[XHR] ' + opts.method + ' ' + opts.url);
+        // temp
+        const reqFilename = opts.url.substring(opts.url.lastIndexOf('/') + 1)
+        const reqFilename_clean = (reqFilename.indexOf('?') > 0) ? reqFilename.substr(0, reqFilename.lastIndexOf('?')) : reqFilename
+        console.groupCollapsed(`[XHR] %c${opts.method}%c ${reqFilename_clean}`, 'color: blue', 'color: #666')
+        console.log(`%cFull URL: %c${opts.url}`, 'font-weight:bold', 'font-weight:normal')
+        console.log('%cConfig: %o', 'font-weight:bold', opts)
+        if (opts.data) console.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal')
+        console.groupEnd(`[XHR] ${opts.method} ${opts.url}`)
 
-        // Let's go
-        xmlhttp.send(opts.data);
+        xmlhttp.send(opts.data)
     },
 
-
     serialize(form) {
-        if (!form || form.nodeName !== 'FORM') {
-            return;
-        }
-        var i, j, q = [];
-        for (i = form.elements.length - 1; i >= 0; i = i - 1) {
-            if (form.elements[i].name === '') {
-                continue;
-            }
+        if (!form || form.nodeName !== 'FORM') return false
+
+        const q = [];
+
+        for (let i = form.elements.length - 1; i >= 0; i = i - 1) {
+            if (form.elements[i].name === '') continue
+
             switch (form.elements[i].nodeName) {
+
             case 'INPUT':
                 switch (form.elements[i].type) {
                 case 'text':
@@ -277,41 +242,44 @@ var Pod_Helper = {
                 case 'button':
                 case 'reset':
                 case 'submit':
-                    q.push(form.elements[i].name + '=' + encodeURIComponent(form.elements[i].value));
+                    q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].value)}`);
                     break;
                 case 'checkbox':
                 case 'radio':
                     if (form.elements[i].checked) {
-                        q.push(form.elements[i].name + '=' + encodeURIComponent(form.elements[i].value));
+                        q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].value)}`);
                     }
                     break;
                 case 'file':
                     break;
                 }
                 break;
+
             case 'TEXTAREA':
-                q.push(form.elements[i].name + '=' + encodeURIComponent(form.elements[i].value));
+                q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].value)}`);
                 break;
+
             case 'SELECT':
                 switch (form.elements[i].type) {
                 case 'select-one':
-                    q.push(form.elements[i].name + '=' + encodeURIComponent(form.elements[i].value));
+                    q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].value)}`);
                     break;
                 case 'select-multiple':
-                    for (j = form.elements[i].options.length - 1; j >= 0; j = j - 1) {
+                    for (let j = form.elements[i].options.length - 1; j >= 0; j = j - 1) {
                         if (form.elements[i].options[j].selected) {
-                            q.push(form.elements[i].name + '=' + encodeURIComponent(form.elements[i].options[j].value));
+                            q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].options[j].value)}`);
                         }
                     }
                     break;
                 }
                 break;
+
             case 'BUTTON':
                 switch (form.elements[i].type) {
                 case 'reset':
                 case 'submit':
                 case 'button':
-                    q.push(form.elements[i].name + '=' + encodeURIComponent(form.elements[i].value));
+                    q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].value)}`);
                     break;
                 }
                 break;
@@ -319,7 +287,111 @@ var Pod_Helper = {
         }
         return q.join('&');
     },
-};
+
+    // some things are left to the reader's imagination
+    // --
+    keymap: {
+        BACKSPACE: 8,
+        TAB: 9,
+        ENTER: 13,
+        SHIFT: 16,
+        CTRL: 17,
+        ALT: 18,
+        PAUSE: 19,
+        CAPS_LOCK: 20,
+        ESCAPE: 27,
+        SPACE: 32,
+        PAGE_UP: 33,
+        PAGE_DOWN: 34,
+        END: 35,
+        HOME: 36,
+        LEFT_ARROW: 37,
+        UP_ARROW: 38,
+        RIGHT_ARROW: 39,
+        DOWN_ARROW: 40,
+        INSERT: 45,
+        DELETE: 46,
+        KEY_0: 48,
+        KEY_1: 49,
+        KEY_2: 50,
+        KEY_3: 51,
+        KEY_4: 52,
+        KEY_5: 53,
+        KEY_6: 54,
+        KEY_7: 55,
+        KEY_8: 56,
+        KEY_9: 57,
+        KEY_A: 65,
+        KEY_B: 66,
+        KEY_C: 67,
+        KEY_D: 68,
+        KEY_E: 69,
+        KEY_F: 70,
+        KEY_G: 71,
+        KEY_H: 72,
+        KEY_I: 73,
+        KEY_J: 74,
+        KEY_K: 75,
+        KEY_L: 76,
+        KEY_M: 77,
+        KEY_N: 78,
+        KEY_O: 79,
+        KEY_P: 80,
+        KEY_Q: 81,
+        KEY_R: 82,
+        KEY_S: 83,
+        KEY_T: 84,
+        KEY_U: 85,
+        KEY_V: 86,
+        KEY_W: 87,
+        KEY_X: 88,
+        KEY_Y: 89,
+        KEY_Z: 90,
+        LEFT_META: 91,
+        RIGHT_META: 92,
+        SELECT: 93,
+        NUMPAD_0: 96,
+        NUMPAD_1: 97,
+        NUMPAD_2: 98,
+        NUMPAD_3: 99,
+        NUMPAD_4: 100,
+        NUMPAD_5: 101,
+        NUMPAD_6: 102,
+        NUMPAD_7: 103,
+        NUMPAD_8: 104,
+        NUMPAD_9: 105,
+        MULTIPLY: 106,
+        ADD: 107,
+        SUBTRACT: 109,
+        DECIMAL: 110,
+        DIVIDE: 111,
+        F1: 112,
+        F2: 113,
+        F3: 114,
+        F4: 115,
+        F5: 116,
+        F6: 117,
+        F7: 118,
+        F8: 119,
+        F9: 120,
+        F10: 121,
+        F11: 122,
+        F12: 123,
+        NUM_LOCK: 144,
+        SCROLL_LOCK: 145,
+        SEMICOLON: 186,
+        EQUALS: 187,
+        COMMA: 188,
+        DASH: 189,
+        PERIOD: 190,
+        FORWARD_SLASH: 191,
+        GRAVE_ACCENT: 192,
+        OPEN_BRACKET: 219,
+        BACK_SLASH: 220,
+        CLOSE_BRACKET: 221,
+        SINGLE_QUOTE: 222,
+    },
+}
 
 window.Pod_Helper = Pod_Helper;
 
