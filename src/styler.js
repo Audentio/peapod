@@ -366,6 +366,10 @@ window.Pod_Styler = window.Pod_Styler || {
 
     // will resolve a string to it's actual computed value
     parseVariableValue(computedVar, obj, scene) {
+        if (typeof(computedVar) === 'function') {
+            computedVar = computedVar(obj, scene);
+        }
+
         if (typeof(computedVar) === 'object') {
             for (let computedIndex = computedVar.length - 1; computedIndex >= 0; computedIndex--) { // go through in reverse order to find most specific
                 if (computedVar[computedIndex].vars === scene || computedVar[computedIndex].vars === 'common') {
