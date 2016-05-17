@@ -16,6 +16,15 @@ module.exports = class Table_Row extends React.Component {
 		return !_isEqual(nextProps, this.props)
 	}
 
+    parseBooleans(content) {
+        for (const item in content) {
+            if (item === 'value') {
+                if (content[item] === true) content[item] = 'true';
+                else if (content[item] === false) content[item] = 'false';
+            }
+        }
+    }
+
 	render() {
 		var row = this.props.row,
 			rowKey = this.props.rowKey,
@@ -31,6 +40,7 @@ module.exports = class Table_Row extends React.Component {
 				checked: row.checked == true,
 				hovered: hoveredRow == i
 			});
+        const _this = this;
 
 		return (
 			<div {...rowProps(row, i)}
@@ -70,6 +80,8 @@ module.exports = class Table_Row extends React.Component {
 						if (row.can_edit != true && (property == 'edit' || property == 'checkbox')) {
 							content = {};
 						}
+
+                        _this.parseBooleans(content)
 
 						return (
 							<Table_Cell key={j + '-cell'} column={column} index={j}>{content.value}</Table_Cell>
