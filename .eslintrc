@@ -8,6 +8,12 @@
     "max-len": ["error", 400],
     "camelcase": ["off", {properties: "never"}],
     'no-underscore-dangle': ["off", { "allow": [] }],
+    'no-restricted-syntax': [
+        2,
+        'DebuggerStatement',
+        'LabeledStatement',
+        'WithStatement',
+    ],
     'import/no-unresolved': ["off"],
     "indent": ["error", 4],
 
