@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import { Stepper_Step } from 'components.js';
+import { Stepper_Step, Stepper_StepTitle } from 'components.js';
 
 module.exports = class Stepper extends React.Component {
 
@@ -15,7 +15,7 @@ module.exports = class Stepper extends React.Component {
         this.state = {
             active: 0,
             steps: {},
-            complete: 0,
+            complete: 50,
         };
 
         this.onStepTitleClick = this.onStepTitleClick.bind(this);
@@ -32,9 +32,9 @@ module.exports = class Stepper extends React.Component {
     }
 
     onStepTitleClick(active) {
-        // if (!this.props.skippable) {
-        //     return false;
-        // }
+        if (!this.props.skippable) {
+            return false;
+        }
         console.log(active);
 
         const thisstep = this.refs[`stepperStep${active}`];
@@ -43,6 +43,8 @@ module.exports = class Stepper extends React.Component {
         }
 
         this.setState({ active });
+
+        return true;
     }
 
     goToNextStep() {
@@ -85,38 +87,26 @@ module.exports = class Stepper extends React.Component {
         const steps = [];
 
         for (let i = 0; i < stepCount; i++) {
-            let styler;
-            let parentStyler;
-
-            if (i === this.state.active) {
-                styler = Object.assign({}, style.stepelem, style.activestep);
-            } else {
-                styler = style.stepelem;
-            }
-
-            if (i === 0) {
-                parentStyler = Object.assign({}, style.step, style.stepFirst);
-            } else if ((i + 1) === stepCount) {
-                parentStyler = Object.assign({}, style.step, style.stepLast);
-            } else {
-                parentStyler = style.step;
-            }
+            const thisChild = this.props.children[i];
+            const title = thisChild.props.title;
+            const subtitle = thisChild.props.subtitle;
+            const option = thisChild.props.option;
+            const validation = thisChild.props.validation;
 
             steps.push(
-                <div style={parentStyler} key={`steps-${i}`}>
-                    <div style={{ textAlign: 'center', display: 'inline-block' }}>
-                        <div
-                            key={`step-${i}`}
-                            style={styler}
-                            /* onClick={() => this.onStepTitleClick(i)}*/
-                        >
-                            {i + 1}
-                        </div>
-
-                        <div style={style.stepTitle}>{this.props.children[i].props.title}</div>
-                    </div>
-                </div>
+                <Stepper_StepTitle
+                    id={i}
+                    onClick={this.onStepTitleClick}
+                    option={option}
+                    subtitle={subtitle}
+                    title={title}
+                    active={i === this.state.active}
+                    validation={validation}
+                />
             );
+            if ((i + 1) !== stepCount) {
+                steps.push(<div style={style.stepLine}></div>);
+            }
         }
 
         let i = 0;
@@ -136,13 +126,12 @@ module.exports = class Stepper extends React.Component {
         return (
             <div style={style.main}>
                 <div style={{ position: 'relative', background: '#fff' }}>
-                    <div style={style.progress}></div>
-                    <div style={style.stepLine}></div>
+                    {/* <div style={style.progress}></div>*/}
+
                     <div style={style.steps}>
                         {steps}
                     </div>
                 </div>
-
 
                 {children[this.state.active]}
             </div>

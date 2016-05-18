@@ -6,6 +6,9 @@ module.exports = class Stepper_Step extends React.Component {
 
     static propTypes = {
         children: React.PropTypes.any,
+        onContinue: React.PropTypes.func,
+        onBack: React.PropTypes.func,
+        validation: React.PropTypes.func,
     }
 
     constructor() {
@@ -20,7 +23,9 @@ module.exports = class Stepper_Step extends React.Component {
 
     onContinue() {
         this.setState({ complete: 100 });
-        this.props.onContinue();
+        if (!this.props.validation || this.props.validation()) {
+            this.props.onContinue();
+        }
     }
     onBack() {
         this.setState({ complete: 100 });
@@ -32,16 +37,15 @@ module.exports = class Stepper_Step extends React.Component {
 
         return (
             <div style={style.main}>
-                {this.props.children}
+                <div style={style.content}>
+                    {this.props.children}
+                </div>
 
-                <br />
-                <br />
-
-                <Button label="Back" onClick={this.onBack}></Button>
+                <Button label="Back" onClick={this.onBack} />
 
                 <div style={{ float: 'right' }}>
-                    <Button label="Cancel"></Button>
-                    <Button label="Continue" onClick={this.onContinue}></Button>
+                    <Button label="Cancel" />
+                    <Button label="Continue" onClick={this.onContinue} />
                 </div>
             </div>
         );
