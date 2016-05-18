@@ -10,7 +10,6 @@ module.exports = function (sheetName) {
     const overlay = sheet.addPart('overlay');
     const scrollable = sheet.addPart('scrollable');
 
-
     // Conditions
     sheet.addCondition('scrollable').addStyler({ scrollable: true });
     sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
@@ -18,87 +17,204 @@ module.exports = function (sheetName) {
     sheet.addCondition('trueScaling').addProp({ trueScaling: true });
     sheet.addCondition('scale').addProp({ scale: ['!=', undefined] });
 
-
     // Variables
     sheet.setValues(devices);
 
-    var standardDevice = devices.standard.device;
-    var standardVersion = devices.devices[standardDevice].standard.version;
-    var standardVariant = devices.devices[standardDevice].standard.variant;
-    var getStandard = devices.devices[standardDevice];
-    var getStandardVersion = getStandard.versions[standardVersion];
-    var getStandardVariant = getStandard.variants[standardVariant];
+    // Set all variables for different devices
+    let getDeviceStyles = function (version, variant, deviceVals) {
+        let devicename;
+        let deviceversion;
+        let devicevariant;
 
+        if (deviceVals) {
+            devicename = (deviceVals.name) ? 'device' + deviceVals.name : undefined;
+            deviceversion = (deviceVals.version) ? 'version' + deviceVals.version : undefined;
+            devicevariant = (deviceVals.variant) ? 'variant' + deviceVals.variant : undefined;
+        }
 
-    main.addSelector({
-        common: {
-            position: 'relative',
-            backgroundSize: '100% 100%',
-            position: 'relative',
+        main.addSelector({
+            condition: [deviceversion, devicename].filter((e) => e),
+            common: {
+                position: 'relative',
+                backgroundSize: '100% 100%',
 
-            width: getStandardVersion.width,
-            height: getStandardVersion.height,
-        },
-    }).addSelector({
-        condition: ['horizontal'],
-        common: {
-            width: getStandardVersion.height,
-            height: getStandardVersion.width,
-        },
-    });
-    background.addSelector({
-        common: {
-            position: 'relative',
-            backgroundSize: '100% 100%',
-            backgroundImage: getStandardVariant.svg,
-            width: getStandardVersion.width,
-            height: getStandardVersion.height,
-            position: 'absolute',
-        },
-    }).addSelector({
-        condition: ['horizontal'],
-        common: {
-            transform: 'rotate(-90deg)',
-            transformOrigin: '50% 50%',
-            bottom: getStandardVariant.position.bottom,
-            left: getStandardVariant.position.left,
-        },
-    });
-    innerscreen.addSelector({
-        common: {
-            position: 'absolute',
-            top: getStandardVersion.offset.top,
-            right: getStandardVersion.offset.right,
-            bottom: getStandardVersion.offset.bottom,
-            left: getStandardVersion.offset.left,
-            overflow: 'hidden',
-            background: 'white',
-        },
-    }).addSelector({
-        condition: ['horizontal'],
-        common: {
-            top: getStandardVersion.offset.left,
-            right: getStandardVersion.offset.bottom,
-            bottom: getStandardVersion.offset.right,
-            left: getStandardVersion.offset.top,
-        },
-    }).addSelector({
-        condition: ['trueScaling'],
-        common: {
-            width: getStandardVersion.viewport.width,
-            height: getStandardVersion.viewport.height,
-            transform: 'scale(' + ((getStandardVersion.width - getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width) + ')', // should be 0.688
-            transformOrigin: '0 0',
-        },
-    }).addSelector({
-        condition: ['trueScaling', 'horizontal'],
-        common: {
-            width: getStandardVersion.viewport.height,
-            height: getStandardVersion.viewport.width,
-            transform: 'scale(' + ((getStandardVersion.width - getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width) + ')', // should be 0.688
-            transformOrigin: '0 0',
-        },
-    });
+                width: version.width,
+                height: version.height,
+            },
+        }).addSelector({
+            condition: ['horizontal', deviceversion, devicename].filter((e) => e),
+            common: {
+                width: version.height,
+                height: version.width,
+            },
+        }).addSelector({
+            condition: ['scale', deviceversion, devicename].filter((e) => e),
+            common: {
+                width(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return (version.width * scale) + 'px';
+                },
+                height(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return (version.height * scale) + 'px';
+                },
+            },
+        }).addSelector({
+            condition: ['scale', 'horizontal', deviceversion, devicename].filter((e) => e),
+            common: {
+                height(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return (version.width * scale) + 'px';
+                },
+                width(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return (version.height * scale) + 'px';
+                },
+            },
+        });
+        background.addSelector({
+            condition: [devicevariant, deviceversion, devicename].filter((e) => e),
+            common: {
+                position: 'relative',
+                backgroundSize: '100% 100%',
+                backgroundImage: variant,
+                width: version.width,
+                height: version.height,
+                position: 'absolute',
+            },
+        }).addSelector({
+            condition: ['horizontal', devicevariant, deviceversion, devicename].filter((e) => e),
+            common: {
+                transform: 'translateX(-50%) translateY(50%) rotate(-90deg)',
+                transformOrigin: '50% 50%',
+                bottom: '50%',
+                left: '50%',
+            },
+        }).addSelector({
+            condition: ['scale', deviceversion, devicename].filter((e) => e),
+            common: {
+                width(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return (version.width * scale);
+                },
+                height(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return (version.height * scale) + 'px';
+                },
+            },
+        });
+        innerscreen.addSelector({
+            condition: [deviceversion, devicename].filter((e) => e),
+            common: {
+                position: 'absolute',
+                top: version.offset.top,
+                right: version.offset.right,
+                bottom: version.offset.bottom,
+                left: version.offset.left,
+                overflow: 'hidden',
+                background: 'white',
+            },
+        }).addSelector({
+            condition: ['horizontal', deviceversion, devicename].filter((e) => e),
+            common: {
+                top: version.offset.left,
+                right: version.offset.bottom,
+                bottom: version.offset.right,
+                left: version.offset.top,
+            },
+        }).addSelector({
+            condition: ['scale', deviceversion, devicename].filter((e) => e),
+            common: {
+                top(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return version.offset.top * scale;
+                },
+                right(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return version.offset.right * scale;
+                },
+                bottom(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return version.offset.bottom * scale;
+                },
+                left(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return version.offset.left * scale;
+                },
+            },
+        }).addSelector({
+            condition: ['scale', deviceversion, devicename].filter((e) => e),
+            common: {
+                top(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return version.offset.left * scale;
+                },
+                right(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return version.offset.bottom * scale;
+                },
+                bottom(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return version.offset.right * scale;
+                },
+                left(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return version.offset.top * scale;
+                },
+            },
+        }).addSelector({
+            condition: ['trueScaling', deviceversion, devicename].filter((e) => e),
+            common: {
+                width: version.viewport.width,
+                height: version.viewport.height,
+                transform: 'scale(' + ((version.width - version.offset.right - version.offset.left) / version.viewport.width) + ')', // should be 0.688
+                transformOrigin: '0 0',
+            },
+        }).addSelector({
+            condition: ['trueScaling', 'scale', deviceversion, devicename].filter((e) => e),
+            common: {
+                transform(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
+                },
+            },
+        }).addSelector({
+            condition: ['trueScaling', 'horizontal', deviceversion, devicename].filter((e) => e),
+            common: {
+                width: version.viewport.height,
+                height: version.viewport.width,
+                transform: 'scale(' + ((version.width - version.offset.right - version.offset.left) / version.viewport.width) + ')', // should be 0.688
+                transformOrigin: '0 0',
+            },
+        }).addSelector({
+            condition: ['trueScaling', 'horizontal', 'scale', deviceversion, devicename].filter((e) => e),
+            common: {
+                width: version.viewport.height,
+                height: version.viewport.width,
+                transform(obj, scene) {
+                    const scale = parseInt(obj.props.scale);
+                    return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
+                },
+            },
+        });
+    };
+
+    const standardDevice = devices.standard.device;
+    const getStandard = devices.devices[standardDevice];
+    const standardVersion = getStandard.standard.version;
+    const standardVariant = getStandard.standard.variant;
+    const getStandardVersion = getStandard.versions[standardVersion];
+    const getStandardVariant = getStandard.variants[standardVariant];
+
+    // not used
+    const getStandardValues = {
+        name: standardDevice,
+        version: standardVersion,
+        variant: standardVariant,
+    };
+
+    getDeviceStyles(getStandardVersion, getStandardVariant);
+
     scrollable.addSelector({
         common: {
             width: '100%',
@@ -126,160 +242,62 @@ module.exports = function (sheetName) {
 
         },
     });
-    for (var index in devices.devices) {
-        var device = devices.devices[index];
-        var deviceindex = index;
+    for (let index in devices.devices) {
+        const device = devices.devices[index];
+        const deviceindex = index;
 
         sheet.addCondition('device' + deviceindex).addProp({ device: deviceindex });
 
-        var standardVersion = device.standard.version;
-        var standardVariant = device.standard.variant;
+        const standardDeviceVersion = device.standard.version;
+        const standardDeviceVariant = device.standard.variant;
 
-        var versions = devices.devices[deviceindex].versions;
-        var variants = devices.devices[deviceindex].variants;
+        const versions = devices.devices[deviceindex].versions;
+        const variants = devices.devices[deviceindex].variants;
 
-        var getStandardVersion = device.versions[standardVersion];
-        var getStandardVariant = device.variants[standardVariant];
+        const getDeviceStandardVersion = device.versions[standardDeviceVersion];
+        const getDeviceStandardVariant = device.variants[standardDeviceVariant];
 
-        main.addSelector({
-            condition: ['device' + deviceindex],
-            common: {
-                position: 'relative',
-                backgroundSize: '100% 100%',
-                position: 'relative',
-
-                width: getStandardVersion.width,
-                height: getStandardVersion.height,
-            },
-        }).addSelector({
-            condition: ['device' + deviceindex, 'horizontal'],
-            common: {
-                width: getStandardVersion.height,
-                height: getStandardVersion.width,
-            },
-        });
-        background.addSelector({
-            condition: ['device' + deviceindex],
-            common: {
-                position: 'relative',
-                backgroundSize: '100% 100%',
-                backgroundImage: getStandardVariant.svg,
-                width: getStandardVersion.width,
-                height: getStandardVersion.height,
-                position: 'absolute',
-            },
-        }).addSelector({
-            condition: ['horizontal', 'device' + deviceindex],
-            common: {
-                left: getStandardVariant.position.left,
-                bottom: getStandardVariant.position.bottom,
-            },
-        });
-        innerscreen.addSelector({
-            condition: ['device' + deviceindex],
-            common: {
-                position: 'absolute',
-                top: getStandardVersion.offset.top,
-                right: getStandardVersion.offset.right,
-                bottom: getStandardVersion.offset.bottom,
-                left: getStandardVersion.offset.left,
-                overflow: 'hidden',
-            },
-        }).addSelector({
-            condition: ['horizontal', 'device' + deviceindex],
-            common: {
-                top: getStandardVersion.offset.left,
-                right: getStandardVersion.offset.bottom,
-                bottom: getStandardVersion.offset.right,
-                left: getStandardVersion.offset.top,
-            },
-        }).addSelector({
-            condition: ['trueScaling', 'device' + deviceindex],
-            common: {
-                width: getStandardVersion.viewport.width,
-                height: getStandardVersion.viewport.height,
-                transform: 'scale(' + ((getStandardVersion.width - getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width) + ')', // should be 0.688
-                transformOrigin: '0 0',
-            },
-        }).addSelector({
-            condition: ['horizontal', 'trueScaling', 'device' + deviceindex],
-            common: {
-                width: getStandardVersion.viewport.height,
-                height: getStandardVersion.viewport.width,
-                transform: 'scale(' + ((getStandardVersion.width - getStandardVersion.offset.right - getStandardVersion.offset.left) / getStandardVersion.viewport.width) + ')', // should be 0.688
-                transformOrigin: '0 0',
-            },
+        getDeviceStyles(getDeviceStandardVersion, getDeviceStandardVariant, {
+            name: deviceindex,
+            version: undefined,
+            variant: undefined,
         });
 
         for (var index in versions) {
             var versionindex = index;
-
             sheet.addCondition('version' + versionindex).addProp({ version: versionindex });
 
-            main.addSelector({
-                condition: ['version' + versionindex, 'device' + deviceindex],
-                common: {
-                    width: versions[versionindex].width,
-                    height: versions[versionindex].height,
-                },
-            }).addSelector({
-                condition: ['version' + versionindex, 'device' + deviceindex, 'horizontal'],
-                common: {
-                    width: versions[versionindex].height,
-                    height: versions[versionindex].width,
-                },
-            });
-            background.addSelector({
-                condition: ['version' + versionindex, 'device' + deviceindex],
-                common: {
-                    width: versions[versionindex].width,
-                    height: versions[versionindex].height,
-                },
-            });
-            innerscreen.addSelector({
-                condition: ['version' + versionindex, 'device' + deviceindex],
-                common: {
-                    top: versions[versionindex].offset.top,
-                    right: versions[versionindex].offset.right,
-                    bottom: versions[versionindex].offset.bottom,
-                    left: versions[versionindex].offset.left,
-                },
-            }).addSelector({
-                condition: ['horizontal', 'version' + versionindex, 'device' + deviceindex],
-                common: {
-                    top: versions[versionindex].offset.left,
-                    right: versions[versionindex].offset.bottom,
-                    bottom: versions[versionindex].offset.right,
-                    left: versions[versionindex].offset.top,
-                },
-            }).addSelector({
-                condition: ['trueScaling', 'version' + versionindex, 'device' + deviceindex],
-                common: {
-                    width: versions[versionindex].viewport.width,
-                    height: versions[versionindex].viewport.height,
-                    transform: 'scale(' + ((versions[versionindex].width - versions[versionindex].offset.right - versions[versionindex].offset.left) / versions[versionindex].viewport.width) + ')', // should be 0.688
-                    transformOrigin: '0 0',
-                },
+            getDeviceStyles(versions[versionindex], getDeviceStandardVariant, {
+                name: deviceindex,
+                version: versionindex,
+                variant: undefined,
             });
 
             for (var index in variants) {
                 var variantindex = index;
 
                 sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
-                background.addSelector({
-                    condition: ['variant' + variantindex, 'device' + deviceindex],
-                    common: {
-                        backgroundImage: variants[variantindex].svg,
-                    },
-                }).addSelector({
-                    condition: ['horizontal', 'variant' + variantindex, 'device' + deviceindex],
-                    common: {
-                        backgroundImage: variants[variantindex].svg,
-                        bottom: variants[variantindex].position.bottom,
-                        left: variants[variantindex].position.left,
-                    },
+
+                getDeviceStyles(versions[versionindex], variants[variantindex], {
+                    name: deviceindex,
+                    version: versionindex,
+                    variant: variantindex,
                 });
+
             }
+        }
+
+        for (var index in variants) {
+            var variantindex = index;
+
+            sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
+
+            getDeviceStyles(getDeviceStandardVersion, variants[variantindex], {
+                name: deviceindex,
+                version: undefined,
+                variant: variantindex,
+            });
+
         }
 
     }

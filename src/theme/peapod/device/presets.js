@@ -26,34 +26,10 @@ const devices = {
                 },
             },
             variants: {
-                silver: {
-                    svg: 'url(devices/iPhone-6-Silver.svg)',
-                    position: {
-                        bottom: 'calc(-5px - 50%)',
-                        left: 'calc(378px - 50%)',
-                    },
-                },
-                gold: {
-                    svg: 'url(devices/iPhone-6-Gold.svg)',
-                    position: {
-                        bottom: 'calc(-5px - 50%)',
-                        left: 'calc(378px - 50%)',
-                    },
-                },
-                rosegold: {
-                    svg: 'url(devices/iPhone-6-Rose-Gold.svg)',
-                    position: {
-                        bottom: 'calc(-5px - 50%)',
-                        left: 'calc(378px - 50%)',
-                    },
-                },
-                spacegrey: {
-                    svg: 'url(devices/iPhone-6-Space-Grey.svg)',
-                    position: {
-                        bottom: 'calc(-5px - 50%)',
-                        left: 'calc(378px - 50%)',
-                    },
-                },
+                silver: 'url(devices/iPhone-6-Silver.svg)',
+                gold: 'url(devices/iPhone-6-Gold.svg)',
+                rosegold: 'url(devices/iPhone-6-Rose-Gold.svg)',
+                spacegrey: 'url(devices/iPhone-6-Space-Grey.svg)',
             },
         },
         macbook: {
@@ -79,27 +55,9 @@ const devices = {
                 },
             },
             variants: {
-                gold: {
-                    svg: 'url(devices/Macbook-Gold.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0,
-                    },
-                },
-                silver: {
-                    svg: 'url(devices/Macbook-Silver.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0,
-                    },
-                },
-                spacegrey: {
-                    svg: 'url(devices/Macbook-SpaceGrey.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0,
-                    },
-                },
+                gold: 'url(devices/Macbook-Gold.svg)',
+                silver: 'url(devices/Macbook-Silver.svg)',
+                spacegrey: 'url(devices/Macbook-SpaceGrey.svg)',
             },
         },
         macbookpro: {
@@ -140,13 +98,7 @@ const devices = {
                 },
             },
             variants: {
-                2015: {
-                    svg: 'url(devices/Macbook-Pro-Retina.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0,
-                    },
-                },
+                2015: 'url(devices/Macbook-Pro-Retina.svg)',
             },
         },
         imac: {
@@ -172,13 +124,7 @@ const devices = {
                 },
             },
             variants: {
-                silver: {
-                    svg: 'url(devices/iMac.svg)',
-                    position: {
-                        bottom: 0,
-                        left: 0,
-                    },
-                },
+                silver: 'url(devices/iMac.svg)',
             },
         },
         ipadpro: {
@@ -204,34 +150,10 @@ const devices = {
                 },
             },
             variants: {
-                silver: {
-                    svg: 'url(devices/iPad-Pro-12-Silver.svg)',
-                    position: {
-                        bottom: '-73px',
-                        left: '73px',
-                    },
-                },
-                gold: {
-                    svg: 'url(devices/iPad-Pro-12-Gold.svg)',
-                    position: {
-                        bottom: '-73px',
-                        left: '73px',
-                    },
-                },
-                rosegold: {
-                    svg: 'url(devices/iPad-Pro-12-Rose-Gold.svg)',
-                    position: {
-                        bottom: '-73px',
-                        left: '73px',
-                    },
-                },
-                spacegrey: {
-                    svg: 'url(devices/iPad-Pro-12-Space-Grey.svg)',
-                    position: {
-                        bottom: '-73px',
-                        left: '73px',
-                    },
-                },
+                silver: 'url(devices/iPad-Pro-12-Silver.svg)',
+                gold: 'url(devices/iPad-Pro-12-Gold.svg)',
+                rosegold: 'url(devices/iPad-Pro-12-Rose-Gold.svg)',
+                spacegrey: 'url(devices/iPad-Pro-12-Space-Grey.svg)',
             },
         },
     },

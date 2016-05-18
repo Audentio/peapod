@@ -6,6 +6,9 @@ module.exports = function (sheetName) {
     var anchor = sheet.addPart('anchor');
     var subtext = sheet.addPart('subtext');
 
+    // Conditions
+    sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
+
     // Variables
     sheet.setValues({});
 
@@ -22,6 +25,13 @@ module.exports = function (sheetName) {
             ':hover': {
                 background: '$palette.grey100',
             },
+        },
+    }).addSelector({
+        condition: ['horizontal'],
+        common: {
+            display: 'inline-block',
+            paddingLeft: 0,
+            paddingRight: 0,
         },
     });
 
