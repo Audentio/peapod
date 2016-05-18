@@ -11,39 +11,39 @@ module.exports = function (sheetName) {
             lightRow: {
                 background: 'transparent',
                 color: '$color.text.body',
-                hover: '#EDF0F4',
+                hover: '#F5F6F7',
             },
             darkRow: {
-                background: '$color.base.table',
-                color: '$color.text.body',
-                hover: '#EDF0F4',
+                background: '$table.color.lightRow.background',
+                color: '$table.color.lightRow.color',
+                hover: '$table.color.lightRow.hover',
             },
             header: {
-                background: '#525F6D',
-                color: '$color.text.white',
+                background: '#FFF',
+                color: '$color.text.lighter',
                 hover: '#525F6D',
             },
             checked: {
-                background: '#E6E9ED',
+                background: 'rgb(224, 231, 236)',
                 color: '$color.text.dark',
                 hover: '$palette.blueGrey300',
             },
             columnHovered: {
-                background: '#EDF0F4',
+                background: 'initial',
                 color: '$color.text.body',
-                headerBackground: '$color.base.active',
-                headerColor: '$table.color.header.color',
+                headerBackground: '$table.color.header.background',
+                headerColor: '$color.text.dark',
             },
             controls: {
-                background: '#647383',
-                color: '#ABBAC9',
+                background: '#FFF',
+                color: '$palette.grey600',
             },
             editIcon: {
                 color: '#ABBAC7',
             },
         },
         border: {
-            color: '$palette.grey200',
+            color: '$palette.grey300',
             radius: '$border.radius.large',
             width: '1px',
             style: 'solid',
@@ -55,8 +55,9 @@ module.exports = function (sheetName) {
         font: {
             family: 'inherit',
             size: '$font.size.normal',
-            headerFamily: '$font.family.secondary',
-            headerSize: '$font.size.xsmall',
+            headerFamily: '$font.family.primary',
+            headerSize: '$font.size.small',
+            headerWeight: '$font.weight.medium',
         },
         headerHeight: '5rem',
         footerHeight: '5rem',
@@ -65,6 +66,7 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             width: '100%',
+            display: 'block',
             borderRadius: '$table.border.radius',
             overflowX: 'auto',
         },

@@ -5,6 +5,7 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
+ import PureRender from 'pureRender';
 
 //var lodash = require('lodash')
 //var reduce = lodash.reduce;
@@ -13,6 +14,9 @@ import {reduce as _reduce} from 'lodash'
 import {Icon, Table_Cell} from 'components.js';
 
 module.exports = class Table_Header extends React.Component {
+
+    //shouldComponentUpdate = PureRender;
+
 	static propTypes = {
 		config: React.PropTypes.object,
 		columns: React.PropTypes.array

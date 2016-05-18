@@ -5,8 +5,9 @@
 
 import React from 'react';
 import Pod_Styler from 'styler';
+import PureRender from 'pureRender';
 
-import { isFunction, sorter, values as _values, reverse as _reverse } from 'lodash';
+import { isFunction, sortBy as _sorter, values as _values, reverse as _reverse, merge as _merge } from 'lodash';
 
 import {
     Button,
@@ -14,6 +15,7 @@ import {
     Icon,
     Paginator,
     Grid,
+    Card,
     Div,
     Portal,
     Table_Query as TableQuery,
@@ -25,6 +27,8 @@ import {
 
 
 module.exports = class Table extends React.Component {
+
+    //shouldComponentUpdate = PureRender;
 
     constructor(props, context) {
         super(props, context);
@@ -117,6 +121,7 @@ module.exports = class Table extends React.Component {
         isFetching: React.PropTypes.any,
         columns: React.PropTypes.any,
         presets: React.PropTypes.any,
+        styler: React.PropTypes.object,
     }
 
     componentWillReceiveProps(nextProps) {
@@ -156,6 +161,8 @@ module.exports = class Table extends React.Component {
             }
 
             this.setState({ data });
+
+            this.forceUpdate()
         }
     }
 
@@ -167,9 +174,9 @@ module.exports = class Table extends React.Component {
         const ascending = column.sort === 'asc' ? 'desc' : 'asc';
 
         if (ascending === 'desc') {
-            return _reverse(sorter(data, [column.property]));
+            return _reverse(_sorter(data, [column.property]));
         }
-        return sorter(data, [column.property]);
+        return _sorter(data, [column.property]);
     }
 
     filterData = (data, query) => {
@@ -357,7 +364,7 @@ module.exports = class Table extends React.Component {
             null;
 
         return (
-            <div style={style.main}>
+            <Card styler={_merge({ style: style.main }, this.props.styler)}>
                 <TableControl>
                     <Grid styler={{ justifyContent: 'space-between', style: { height: '$table.headerHeight', lineHeight: '$table.headerHeight' } }}>
                         <div>
@@ -377,31 +384,19 @@ module.exports = class Table extends React.Component {
                         <Grid>
                             <TableQuery queries={queries} removeQuery={this.removeQuery} />
 
-                            <Div
+                            <Icon
                                 styler={{
                                     style: {
-                                        display: 'inline-block',
-                                        borderLeftWidth: '1px',
-                                        borderLeftStyle: 'solid',
-                                        borderLeftColor: '#778A9D',
                                         height: '$table.headerHeight',
+                                        fontSize: '$font.size.xxlarge',
+                                        lineHeight: '$table.headerHeight',
+                                        paddingLeft: '$gutter.extrasmall',
+                                        paddingRight: '$gutter.extrasmall',
                                     },
                                 }}
                             >
-                                <Icon
-                                    styler={{
-                                        style: {
-                                            height: '$table.headerHeight',
-                                            fontSize: '$font.size.xxlarge',
-                                            lineHeight: '$table.headerHeight',
-                                            paddingLeft: '$gutter.small',
-                                            paddingRight: '$gutter.small',
-                                        },
-                                    }}
-                                >
-                                    search
-                                </Icon>
-                            </Div>
+                                more_vert
+                            </Icon>
                         </Grid>
                     </Grid>
                 </TableControl>
@@ -465,7 +460,7 @@ module.exports = class Table extends React.Component {
                     </Grid>
                 </div>
 
-            </div>
+            </Card>
         );
     }
 
