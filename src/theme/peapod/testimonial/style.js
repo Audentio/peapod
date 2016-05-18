@@ -1,10 +1,12 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName);
-    var main = sheet.addMain();
-    var photo = sheet.addPart('photo');
-    var blockQuote = sheet.addPart('blockQuote');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const photo = sheet.addPart('photo');
+    const blockQuote = sheet.addPart('blockQuote');
+    const quoteIconRight = sheet.addPart('quoteIconRight');
+    const quoteIconLeft = sheet.addPart('quoteIconLeft');
 
     sheet.addCondition('kindGeneral').addStyler({ kind: 'general' });
     sheet.addCondition('kindInfo').addStyler({ kind: 'info' });
@@ -33,6 +35,22 @@ module.exports = function (sheetName) {
             border: 'none',
         },
     });
-
+    quoteIconRight.addSelector({
+        common: {
+            fontSize: '120px',
+            float: 'right',
+            marginTop: '-15px',
+            color: 'rgba(0,0,0,.1)',
+        },
+    });
+    quoteIconLeft.addSelector({
+        common: {
+            fontSize: '120px',
+            float: 'left',
+            marginTop: '-15px',
+            color: 'rgba(0,0,0,.1)',
+            transform: 'scaleX(-1)',
+        },
+    });
     return sheet;
 };

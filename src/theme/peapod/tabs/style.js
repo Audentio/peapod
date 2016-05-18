@@ -2,11 +2,11 @@ import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
     var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    trigger = sheet.addPart('trigger'),
-    panel = sheet.addPart('panel'),
-    triggers = sheet.addPart('triggers'),
-    panels = sheet.addPart('panels');
+        main = sheet.addMain(),
+        trigger = sheet.addPart('trigger'),
+        panel = sheet.addPart('panel'),
+        triggers = sheet.addPart('triggers'),
+        panels = sheet.addPart('panels');
 
     // Conditions
     sheet.addCondition('active').addStyler({ active: true });
@@ -18,24 +18,30 @@ module.exports = function (sheetName) {
     // Selectors
     main.addSelector({
         common: {
-            borderLeft: '10px solid {$color.primary.base}',
+            // borderLeft: '10px solid {$color.primary.base}',
         },
     });
 
     trigger.addSelector({
         common: {
             display: 'inline-block',
-            padding: '$gutter.internal',
-            backgroundColor: '$color.base.hover',
-            color: '#FFF',
+            height: '48px',
+            lineHeight: '48px',
+            paddingRight: '$gutter.small',
+            paddingLeft: '$gutter.small',
+            // backgroundColor: '$color.base.hover',
+            color: '$color.base.hover',
+            textDecoration: 'uppercase',
             marginRight: '1px',
             cursor: 'pointer',
         },
     }).addSelector({
         condition: ['active'],
         common: {
-            color: '#FFF',
-            backgroundColor: '$color.base.base',
+            color: '$color.primary.base',
+            borderBottomWidth: '2px',
+            borderStyle: 'solid',
+            borderColor: '$color.primary.base',
         },
     });
 
@@ -49,8 +55,8 @@ module.exports = function (sheetName) {
     triggers.addSelector({
         common: {
             backgroundColor: '$color.base.table',
-            marginTop: '{$gutter.internal}',
-            padding: '0 {$gutter.internal}',
+            // marginTop: '{$gutter.internal}',
+            // padding: '0 {$gutter.internal}',
         },
     });
 

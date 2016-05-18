@@ -7,7 +7,7 @@ export default class DamionDev extends React.Component {
 
     constructor() {
         super();
-        this.state = { showtool: false };
+        this.state = { validOne: false };
 
         this.onMouseEnter = this.onMouseEnter.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -19,227 +19,79 @@ export default class DamionDev extends React.Component {
     onMouseLeave() {
         this.setState({ showtool: false });
     }
+    validateInput(e) {
+        this.setState({ validOne: e.isValid });
+    }
 
     render() {
-        // const title = (
-        //     <Pod.Section>
-        //         <Pod.ContentWrap>
-        //             <Pod.Heading styler={{secondary: true}}>Development Enviroment</Pod.Heading>
-        //         </Pod.ContentWrap>
-        //     </Pod.Section>
-        // )
-
-        // const background = (<div style={{width: '100%', height: '100%', background: 'url(mrRobot.jpg)', backgroundSize: 'cover'}}></div>);
-
-        // <Pod.Menu trigger={
-        //     <Pod.Button label="On Hover from JSON" />
-        // } json={} />
-
         return (
-            <div key={'dev'}>
-                <Pod.Json
+            <div key={'dev'} style={{ marginTop: '50px' }}>
+                {/* <Pod.Json
                     json={{
-                        Menu: {
-                            JsonParse: ['trigger'],
-                            trigger: {
-                                Button: {
-                                    label: 'on hover',
-                                },
-                            },
-                            json: [
-                            { text: 'Hello World', href: '#' },
-                            { text: 'Hello World 36', href: '#',
-                                children: [
-                                { text: 'Hello World 387', href: '#' },
-                                { text: 'Hello World 123', href: '#', subtext: '2' },
-                                ],
-                            },
-                            { text: 'Hello World 387', href: '#' },
-                            { text: 'Hello World 123', href: '#', subtext: '2' },
-                            ],
-                        },
+                    DatePicker: {
+                    date: '2017-11-20',
+                    },
+                    Menu: {
+                    JsonParse: ['trigger'],
+                    trigger: {
+                    Button: {
+                    label: 'on hover',
+                    },
+                    },
+                    json: [
+                    { text: 'Hello World', href: '#' },
+                    { text: 'Hello World 36', href: '#',
+                    children: [
+                    { text: 'Hello World 387', href: '#' },
+                    { text: 'Hello World 123', href: '#', subtext: '2' },
+                    ],
+                    },
+                    { text: 'Hello World 387', href: '#' },
+                    { text: 'Hello World 123', href: '#', subtext: '2' },
+                    ],
+                    },
                     }}
-                />
-                {/*<Pod.DatePicker />
+                />*/}
 
-                    <br /><br /><br />
-                    <br /><br /><br />
+                <Pod.Section styler={{ mainStyle: { background: 'transparent' } }}>
+                    <Pod.ContentWrap>
+                        <Pod.Card styler={{ style: { width: '700px', margin: '0 auto', display: 'block' } }}>
+                            <Pod.Stepper skippable>
+                                <Pod.Stepper_Step title="Apples" validation={() => true}>
+                                    {/* <Pod.Label>Email Address</Pod.Label>*/}
+                                    <Pod.Input
+                                        type="email"
+                                        validate
+                                        label="Hey"
+                                        placeholder="email"
+                                        required
+                                        onChange={this.validateInput}
+                                    />
+                                </Pod.Stepper_Step>
 
-                    <div style={{ width: '200px', height: '200px', background: '#efefef' }}>
-                    <Pod.Center>Hey</Pod.Center>
-                    </div>
+                                <Pod.Stepper_Step title="Pears">
+                                    <Pod.Paragraph>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </Pod.Paragraph>
+                                </Pod.Stepper_Step>
 
-                    <br /><br /><br />
-                    <br /><br /><br />
+                                <Pod.Stepper_Step title="Bananas">
+                                    <Pod.Paragraph>Card Number</Pod.Paragraph>
+                                    <Pod.Input label="Hey" placeholder="***************"></Pod.Input>
+                                </Pod.Stepper_Step>
+                            </Pod.Stepper>
+                        </Pod.Card>
+                    </Pod.ContentWrap>
+                </Pod.Section>
 
-                    <Pod.Droppable window>Droppable</Pod.Droppable>
-
-                    <br /><br /><br />
-                <br /><br /><br />*/}
-
-                <Pod.Scrollable horizontal styler={{ center: true }}>
-                    <Pod.Device trueScaling orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device device="iphone" version={6} variant="spacegrey" trueScaling orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device trueScaling device="iphone" version={6} variant="spacegrey" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device device="iphone" version={6} variant="gold" trueScaling orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device trueScaling device="iphone" version={6} variant="gold" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device device="iphone" version={6} variant="rosegold" trueScaling orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device trueScaling device="iphone" version={6} variant="rosegold" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                </Pod.Scrollable>
-
-                <Pod.Scrollable horizontal styler={{ center: true }}>
-
-                    <Pod.Device trueScaling device="macbook" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device trueScaling device="macbook" variant="silver" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-
-                    <Pod.Device trueScaling device="macbook" variant="gold" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                </Pod.Scrollable>
-
-                <Pod.Scrollable horizontal styler={{ center: true }}>
-
-                    <Pod.Device trueScaling device="macbookpro" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device trueScaling device="macbookpro" version="13" variant='2015' styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                </Pod.Scrollable>
-
-                <Pod.Scrollable horizontal styler={{ center: true }}>
-
-                    <Pod.Device trueScaling device="imac" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                </Pod.Scrollable>
-
-                <Pod.Scrollable horizontal styler={{ center: true }}>
-
-                    <Pod.Device trueScaling device="ipadpro" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-                    <Pod.Device trueScaling device="ipadpro" orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device trueScaling device="ipadpro" variant="gold" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-                    <Pod.Device trueScaling device="ipadpro" variant="gold" orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device trueScaling device="ipadpro" variant="rosegold" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-                    <Pod.Device trueScaling device="ipadpro" variant="rosegold" orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                    <Pod.Device trueScaling device="ipadpro" variant="spacegrey" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-                    <Pod.Device trueScaling device="ipadpro" variant="spacegrey" orientation="horizontal" styler={{ style: { display: 'inline-block' } }}>
-                        <Pod.Lazy distance="50" height="100%">
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                        </Pod.Lazy>
-                    </Pod.Device>
-
-                </Pod.Scrollable>
-
-                <br /><br /><br />
-                <br /><br /><br />
-
-                <Pod.Center></Pod.Center>
-
-                <Pod.List style="square">
+                {/* <Pod.List style="square">
                     <Pod.List_Item>Hey</Pod.List_Item>
-                </Pod.List>
-
-                <br /><br /><br />
-                <br /><br /><br />
-
-                <Pod.Media figure="profile.jpg" contentVertical="middle">
-                    <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam eius illo nostrum voluptates! Porro laborum, temporibus ad molestiae illum doloribus. Magnam minima similique ea, voluptates dolorum quam ad adipisci voluptate.</Pod.Paragraph>
-                </Pod.Media>
+                </Pod.List>*/}
 
             </div>
         );

@@ -6,15 +6,15 @@
 import React from 'react';
 import Pod_Styler from 'styler.js';
 
-module.exports = class Div extends React.Component {
+module.exports = class Aside extends React.Component {
     render() {
         const { styler, children, ...other } = this.props;
         const style = Pod_Styler.getStyle(this);
 
         return (
-            <div {...other} style={style.main}>
+            <aside {...other} style={style.main}>
                 {this.props.children}
-            </div>
+            </aside>
         );
     }
 
