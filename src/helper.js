@@ -4,6 +4,7 @@
 */
 
 import { merge as _merge } from 'lodash';
+import Logger from 'logger.js';
 
 const Pod_Helper = {
 
@@ -18,7 +19,7 @@ const Pod_Helper = {
         // Touch
         if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
             if (allowScroll) {
-                document.removeEventListener('touchmove', this.noTouchScrolling)
+                document.removeEventListener('touchmove', this.noTouchScrolling);
             } else {
                 document.addEventListener('touchmove', this.noTouchScrolling);
             }
@@ -29,7 +30,7 @@ const Pod_Helper = {
     },
 
     noTouchScrolling: (e) => {
-        e.preventDefault()
+        e.preventDefault();
     },
 
     fullscreen: {
@@ -38,9 +39,9 @@ const Pod_Helper = {
                 document.msFullscreenEnabled ||
                 document.mozFullscreenEnabled ||
                 document.webkitFullscreenEnabled) {
-                return true
+                return true;
             }
-            return false
+            return false;
         },
 
         isEnabled: () => {
@@ -48,9 +49,9 @@ const Pod_Helper = {
                 document.msFullscreenElement ||
                 document.mozFullScreenElement ||
                 document.webkitFullscreenElement) {
-                return true
+                return true;
             }
-            return false
+            return false;
         },
 
         enter: (elem) => {
@@ -83,7 +84,7 @@ const Pod_Helper = {
             if (Pod_Helper.fullscreen.isEnabled()) {
                 Pod_Helper.fullscreen.exit();
             } else {
-                Pod_Helper.fullscreen.enter(elem)
+                Pod_Helper.fullscreen.enter(elem);
             }
         },
 
@@ -91,54 +92,54 @@ const Pod_Helper = {
     },
 
     downloadFile: (url, filename) => {
-        const downLink = document.createElement('a')
-        downLink.href = url
-        downLink.download = filename || url.substring(url.lastIndexOf('/') + 1, url.length)
-        downLink.click()
+        const downLink = document.createElement('a');
+        downLink.href = url;
+        downLink.download = filename || url.substring(url.lastIndexOf('/') + 1, url.length);
+        downLink.click();
     },
 
     addStylesheet: (id, path, callback) => {
         if (!document.getElementById(`Peapod_${id}_stylesheet`)) {
             const stylesheet = document.createElement('link');
-            stylesheet.id = `Peapod_${id}_stylesheet`
-            stylesheet.rel = 'stylesheet'
-            stylesheet.type = 'text/css'
-            stylesheet.href = path
-            stylesheet.onload = callback
-            document.head.appendChild(stylesheet)
-            return true
+            stylesheet.id = `Peapod_${id}_stylesheet`;
+            stylesheet.rel = 'stylesheet';
+            stylesheet.type = 'text/css';
+            stylesheet.href = path;
+            stylesheet.onload = callback;
+            document.head.appendChild(stylesheet);
+            return true;
         }
         return false;
     },
 
     addScript: (params) => {
         if (document.getElementById(`Peapod_${params.id}_script`)) {
-            return false
+            return false;
         }
 
         const addToPage = (cb) => {
             const script = document.createElement('script');
-            script.id = `Peapod_${params.id}_script`
-            script.type = 'text/javascript'
-            script.src = params.url
-            if (cb) script.onload = (res, status) => cb(script, status)
-            document.head.appendChild(script)
-            return true
-        }
+            script.id = `Peapod_${params.id}_script`;
+            script.type = 'text/javascript';
+            script.src = params.url;
+            if (cb) script.onload = (res, status) => cb(script, status);
+            document.head.appendChild(script);
+            return true;
+        };
 
         if (params.ajax) {
             Pod_Helper.xhr({
                 url: params.url,
                 success: () => addToPage(params.callback),
                 error: () => {
-                    console.error('[addScript] Unable to load script')
+                    Logger.error('[addScript] Unable to load script');
                 },
-            })
+            });
         } else {
-            addToPage(params.callback(false, 0))
+            addToPage(params.callback(false, 0));
         }
 
-        return true
+        return true;
     },
 
     // XHR helper function
@@ -151,10 +152,10 @@ const Pod_Helper = {
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded',
             },
-        }
-        opts = _merge(opts, args)
+        };
+        opts = _merge(opts, args);
 
-        if (!opts.url) throw new Error('[XHR] url must be defined')
+        if (!opts.url) throw new Error('[XHR] url must be defined');
 
         // Cache-control
         // Adds random number param at end to make sure new version is downloaded
@@ -176,35 +177,35 @@ const Pod_Helper = {
         xmlhttp.timeout = opts.timeout;
 
         // callback: Timeout
-        if (opts.ontimeout) xmlhttp.ontimeout = opts.ontimeout
+        if (opts.ontimeout) xmlhttp.ontimeout = opts.ontimeout;
 
         xmlhttp.onreadystatechange = () => {
-            const req_complete = xmlhttp.readyState === XMLHttpRequest.DONE
-            const req_success = req_complete && xmlhttp.status === 200
-            const req_error = req_complete && xmlhttp.status !== 200
+            const req_complete = xmlhttp.readyState === XMLHttpRequest.DONE;
+            const req_success = req_complete && xmlhttp.status === 200;
+            const req_error = req_complete && xmlhttp.status !== 200;
 
             // callback: Success
             if (req_success && opts.success) {
-                opts.success(xmlhttp.responseText)
+                opts.success(xmlhttp.responseText);
             }
 
             // calback: Error
             if (req_error && opts.error) {
-                opts.error(xmlhttp.status, xmlhttp.statusText)
+                opts.error(xmlhttp.status, xmlhttp.statusText);
             }
 
             // callback: Complete
             if (req_complete && opts.complete) {
-                opts.complete(xmlhttp.responseText, xmlhttp.status, xmlhttp.statusText)
+                opts.complete(xmlhttp.responseText, xmlhttp.status, xmlhttp.statusText);
             }
-        }
+        };
 
         // callback: Progressr
         if (opts.progress) {
             xmlhttp.addEventListener('progress', (e) => {
-                const progress = (e.lengthComputable) ? Math.ceil((e.loaded / e.total) * 100) : null
-                opts.progress(progress, e)
-            })
+                const progress = (e.lengthComputable) ? Math.ceil((e.loaded / e.total) * 100) : null;
+                opts.progress(progress, e);
+            });
         }
 
         // callback: beforeSend
@@ -213,24 +214,24 @@ const Pod_Helper = {
         if (opts.beforeSend) opts.beforeSend(xmlhttp, opts);
 
         // temp
-        const reqFilename = opts.url.substring(opts.url.lastIndexOf('/') + 1)
-        const reqFilename_clean = (reqFilename.indexOf('?') > 0) ? reqFilename.substr(0, reqFilename.lastIndexOf('?')) : reqFilename
-        console.groupCollapsed(`[XHR] %c${opts.method}%c ${reqFilename_clean}`, 'color: blue', 'color: #666')
-        console.log(`%cFull URL: %c${opts.url}`, 'font-weight:bold', 'font-weight:normal')
-        console.log('%cConfig: %o', 'font-weight:bold', opts)
-        if (opts.data) console.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal')
-        console.groupEnd(`[XHR] ${opts.method} ${opts.url}`)
+        const reqFilename = opts.url.substring(opts.url.lastIndexOf('/') + 1);
+        const reqFilename_clean = (reqFilename.indexOf('?') > 0) ? reqFilename.substr(0, reqFilename.lastIndexOf('?')) : reqFilename;
+        Logger.groupCollapsed(`[XHR] %c${opts.method}%c ${reqFilename_clean}`, 'color: blue', 'color: #666');
+        Logger.log(`%cFull URL: %c${opts.url}`, 'font-weight:bold', 'font-weight:normal');
+        Logger.log('%cConfig: %o', 'font-weight:bold', opts);
+        if (opts.data) Logger.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal');
+        Logger.groupEnd(`[XHR] ${opts.method} ${opts.url}`);
 
-        xmlhttp.send(opts.data)
+        xmlhttp.send(opts.data);
     },
 
     serialize(form) {
-        if (!form || form.nodeName !== 'FORM') return false
+        if (!form || form.nodeName !== 'FORM') return false;
 
         const q = [];
 
         for (let i = form.elements.length - 1; i >= 0; i = i - 1) {
-            if (form.elements[i].name === '') continue
+            if (form.elements[i].name === '') continue;
 
             switch (form.elements[i].nodeName) {
 
@@ -252,6 +253,7 @@ const Pod_Helper = {
                     break;
                 case 'file':
                     break;
+                // no default
                 }
                 break;
 
@@ -271,6 +273,7 @@ const Pod_Helper = {
                         }
                     }
                     break;
+                // no default
                 }
                 break;
 
@@ -281,8 +284,11 @@ const Pod_Helper = {
                 case 'button':
                     q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].value)}`);
                     break;
+                // no default
                 }
                 break;
+
+            // no default
             }
         }
         return q.join('&');
@@ -391,7 +397,7 @@ const Pod_Helper = {
         CLOSE_BRACKET: 221,
         SINGLE_QUOTE: 222,
     },
-}
+};
 
 window.Pod_Helper = Pod_Helper;
 
