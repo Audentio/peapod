@@ -17,7 +17,7 @@ module.exports = function (sheetName) {
 
     main.addSelector({
         common: {
-            cursor: 'default',
+            // cursor: 'default',
             fontSize: '$icon.font.size',
         },
     }).addSelector({

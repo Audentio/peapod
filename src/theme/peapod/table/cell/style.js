@@ -24,42 +24,43 @@ module.exports = function (sheetName) {
             paddingRight: '$table.gutter.horizontal',
             fontSize: 'inherit',
             fontFamily: '$table.font.family',
-            borderWidth: '$table.border.width',
             borderStyle: '$table.border.style',
             borderColor: '$table.border.color',
+            borderBottomWidth: '$table.border.width',
             borderLeftWidth: 0,
             borderTopWidth: 0,
+            borderRightWidth: 0,
         },
-    }).addSelector({
-        condition: ['firstCell'],
-        common: {
-            borderLeftWidth: '$table.border.width',
-        },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['centered'],
         common: {
             textAlign: 'center',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['hovered', 'sortable'],
         common: {
             color: '$table.color.columnHovered.color',
             background: '$table.color.columnHovered.background',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['header'],
         common: {
             borderLeftWidth: 0,
             borderRightWidth: 0,
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['header', 'hovered', 'sortable'],
         common: {
             color: '$table.color.columnHovered.headerColor',
             background: '$table.color.columnHovered.headerBackground',
             cursor: 'pointer',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['noData'],
         common: {
             borderLeftWidth: 0,
