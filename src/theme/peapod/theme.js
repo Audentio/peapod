@@ -406,6 +406,7 @@ const globalVars = {
             text: {
                 body: '#647383',
                 light: '#424B54',
+                lighter: 'rgb(137, 148, 158)',
                 base: '#30373E',
                 dark: '#2b3137',
                 white: '$palette.white',
