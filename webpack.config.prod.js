@@ -1,7 +1,7 @@
 var path = require('path'); // eslint-disable-line
 
 const config = {
-    devtool: '#inline-source-map',
+    devtool: 'eval-cheap-module-source-map',
     entry: {
         styler: [path.resolve('./src/styler.js')],
         components: [path.resolve('./src/components.js')],

@@ -4,7 +4,8 @@
 */
 
 import React from 'react'
-import Pod_Styler from 'styler.js'
+import Pod_Styler from 'styler'
+import PureRender from 'pureRender'
 
 /**
 *
@@ -12,6 +13,8 @@ import Pod_Styler from 'styler.js'
 *
 */
 module.exports = class {{%name%}} extends React.Component {
+
+    shouldComponentUpdate: PureRender
 
     render() {
         const style = Pod_Styler.getStyle(this)

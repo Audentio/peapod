@@ -23,7 +23,7 @@ module.exports = function (sheetName) {
         color: {
             text: '$color.text.dark',
             background: '$palette.grey50',
-            backgroundChecked: '$palette.grey500',
+            backgroundChecked: '$palette.blue500',
             icon: '$color.text.white',
         },
         border: {
@@ -123,6 +123,7 @@ module.exports = function (sheetName) {
         common: {
             color: '$checkbox.color.icon',
             position: 'absolute',
+            cursor: 'pointer',
             top: '53%',
             transform: 'translateY(-50%)',
             left: '1px',

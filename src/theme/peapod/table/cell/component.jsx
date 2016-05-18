@@ -5,13 +5,12 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
+import PureRender from 'pureRender';
 
 module.exports = class Table_Cell extends React.Component {
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return true;
-		//return !lodash.isEqual(nextProps, this.props)
-	}
+
+	//shouldComponentUpdate = PureRender;
 
 	render() {
 		var column = this.props.column || {
