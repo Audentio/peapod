@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-// import { Stepper_Step } from 'components.js';
+import { Stepper_Step } from 'components.js';
 
 module.exports = class Stepper extends React.Component {
 
@@ -15,10 +15,12 @@ module.exports = class Stepper extends React.Component {
         this.state = {
             active: 0,
             steps: {},
-            complete: 25,
+            complete: 0,
         };
 
         this.onStepTitleClick = this.onStepTitleClick.bind(this);
+        this.goToNextStep = this.goToNextStep.bind(this);
+        this.goToBackStep = this.goToBackStep.bind(this);
     }
 
     static propTypes = {
@@ -35,12 +37,30 @@ module.exports = class Stepper extends React.Component {
         // }
         console.log(active);
 
+        const thisstep = this.refs[`stepperStep${active}`];
+        if (thisstep) {
+            console.log(thisstep.state);
+        }
+
         this.setState({ active });
     }
 
     goToNextStep() {
-        const current = this.state.active;
-        this.setState({ active: current + 1 });
+        const active = this.state.active + 1;
+
+        const persent = (100 / this.props.children.length) * (active);
+
+        const complete = (persent > this.state.complete) ? persent : this.state.complete;
+
+        if (active < this.props.children.length) {
+            this.setState({ active, complete });
+        }
+    }
+    goToBackStep() {
+        const active = this.state.active - 1;
+        if (active >= 0) {
+            this.setState({ active });
+        }
     }
 
     componentWillMount() {
@@ -88,7 +108,7 @@ module.exports = class Stepper extends React.Component {
                         <div
                             key={`step-${i}`}
                             style={styler}
-                            onClick={() => this.onStepTitleClick(i)}
+                            /* onClick={() => this.onStepTitleClick(i)}*/
                         >
                             {i + 1}
                         </div>
@@ -99,7 +119,19 @@ module.exports = class Stepper extends React.Component {
             );
         }
 
-
+        let i = 0;
+        const children = this.props.children.map((result) => {
+            const childstep = (
+                <Stepper_Step
+                    {...result.props}
+                    ref={`stepperStep${i - 1}`}
+                    onContinue={this.goToNextStep}
+                    onBack={this.goToBackStep}
+                />
+            );
+            i++;
+            return childstep;
+        });
 
         return (
             <div style={style.main}>
@@ -111,7 +143,8 @@ module.exports = class Stepper extends React.Component {
                     </div>
                 </div>
 
-                {this.props.children[this.state.active]}
+
+                {children[this.state.active]}
             </div>
         );
     }

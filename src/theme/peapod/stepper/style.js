@@ -24,7 +24,7 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             width: '100%',
-            border: '1px solid #ccc',
+            // border: '1px solid #ccc',
         },
     });
 
@@ -37,6 +37,7 @@ module.exports = function (sheetName) {
             padding: '20px',
             // background: '#dfdfdf',
             zIndex: '1',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
         },
     });
 
@@ -73,10 +74,10 @@ module.exports = function (sheetName) {
             textAlign: 'center',
             background: '#9E9E9E',
             color: 'white',
-            ':hover': {
-                background: '$palette.blue400',
-                cursor: 'pointer',
-            },
+            // ':hover': {
+            //     background: '$palette.blue400',
+            //     cursor: 'pointer',
+            // },
         },
     });
     activestep.addSelector({

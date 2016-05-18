@@ -12,9 +12,9 @@ module.exports = function (sheetName) {
 
     main.addSelector({
         common: {
-            padding: '$gutter.large',
+            padding: '$gutter.small',
             width: '100%',
-            background: '#fafafa',
+            // background: '#fafafa',
         },
     });
 
