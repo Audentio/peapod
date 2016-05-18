@@ -5,6 +5,7 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
+ import PureRender from 'pureRender';
 
 
  import {Portal, Button} from 'components.js';
@@ -21,6 +22,9 @@ var topButtonStyle = {
 }
 
 module.exports = class Table_Preset extends React.Component {
+
+    shouldComponentUpdate = PureRender;
+
 	constructor(props, context) {
 		super(props, context);
 

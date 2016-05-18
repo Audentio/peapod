@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Pod_Styler from 'styler';
-import shallowCompare from 'react-addons-shallow-compare';
+import PureRender from 'pureRender';
 import { Icon, Progress } from 'components';
 import Pod_Helper from 'helper';
 import moment from 'moment';
@@ -16,6 +16,8 @@ import moment from 'moment';
 *
 */
 module.exports = class Video extends React.Component {
+
+    shouldComponentUpdate = PureRender;
 
     constructor(props, state) {
         super(props, state);
@@ -226,10 +228,6 @@ module.exports = class Video extends React.Component {
         this.unbindEvents();
     }
     // -- end
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return shallowCompare(this, nextProps, nextState);
-    }
 
     render() {
         const style = Pod_Styler.getStyle(this);

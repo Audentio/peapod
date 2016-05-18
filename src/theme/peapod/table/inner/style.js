@@ -47,7 +47,7 @@ module.exports = function (sheetName) {
             background: '$table.color.header.background',
             fontFamily: '$table.font.headerFamily',
             fontSize: '$table.font.headerSize',
-            textTransform: 'uppercase',
+            fontWeight: '$table.font.headerWeight',
         },
     }).addSelector({
         condition: ['checked'],

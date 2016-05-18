@@ -5,6 +5,7 @@
 
  import React from 'react';
  import Pod_Styler from 'styler.js';
+ import PureRender from 'pureRender';
 
 //var lodash = require('lodash')
 //var isFunction = lodash.isFunction;
@@ -16,6 +17,9 @@ import {Table_Row, Table_Header} from 'components.js';
 
 
 module.exports = class Table_Inner extends React.Component {
+
+    //shouldComponentUpdate = PureRender;
+
 	static propTypes = {
 		columnNames: React.PropTypes.oneOfType([
             React.PropTypes.object,
