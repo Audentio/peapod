@@ -9,7 +9,7 @@ import { Input, Portal, Calendar, Card } from 'components.js';
 module.exports = class DatePicker extends React.Component {
 
     componentWillMount() {
-        console.log(this.props.date)
+        console.log(this.props.date);
 
         const date = (this.props.date) ? new Date(this.props.date) :
             new Date();
@@ -36,7 +36,7 @@ module.exports = class DatePicker extends React.Component {
         const month = date.getMonth() + 1;
         const day = date.getDate();
 
-        return year + '-' + ("0" + month).slice(-2) + '-' + ("0" + day).slice(-2);
+        return year + '-' + ('0' + month).slice(-2) + '-' + ('0' + day).slice(-2);
     }
 
     onFocus(event) {
@@ -68,7 +68,7 @@ module.exports = class DatePicker extends React.Component {
         return (
             <Portal
                 trigger={trigger}
-                // closeOnOutsideClick={true} add remove to the calendar instead.
+                closeOnOutsideClick 
                 noArrow
             >
                 <div style={style.main}>

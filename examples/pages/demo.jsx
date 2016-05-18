@@ -54,7 +54,7 @@ export default class Demo extends React.Component {
                             <Pod.Grid_Cell styler={{ sm: 6, style: { height:'100vh' } }}>
                                 <Pod.Center>
                                     <Pod.Device trueScaling styler={{ style: { display: 'inline-block' } }}>
-                                        <Pod.Embed width="100%" height="100%" src="http://themehouse.com" />h
+                                        <Pod.Embed width="100%" height="100%" src="http://themehouse.com" />
                                     </Pod.Device>
                                 </Pod.Center>
                             </Pod.Grid_Cell>
@@ -93,18 +93,18 @@ export default class Demo extends React.Component {
                                 { text: 'Other Projects', href: '#',
                                 children: [
                                 { text: 'Theme House', href: '#' },
-                                        { text: 'Pinto', href: '#' },
-                                        ],
-                                    },
-                                    { text: 'Peapod', href: '#' },
-                                    ],
+                                { text: 'Pinto', href: '#' },
+                                ],
+                                },
+                                { text: 'Peapod', href: '#' },
+                                ],
                                 },
                                 { text: '.Sketch files', href: '#' },
                                 { text: 'HTML Templates', href: '#' },
                                 { text: 'Wordpress Themes', href: '#' },
-                            ]}
-                            />
-                            <Pod.Button label="About" styler={{ kind: 'general' }} />
+                                ]}
+                                />
+                                <Pod.Button label="About" styler={{ kind: 'general' }} />
                             <Pod.Button label="Contact" styler={{ kind: 'general' }} />*/}
                         </Pod.ContentWrap>
                     </Pod.Toolbar>
@@ -132,50 +132,50 @@ export default class Demo extends React.Component {
 
                 <Pod.Section styler={{ style: { backgroundColor: '#efefef' } }}>
                     <Pod.ContentWrap>
-                    <Pod.Grid>
-                        <Pod.Grid_Cell styler={{ lg: 6 }}>
-                            <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                <Pod.Media figure="demo/img.png" align="right" title="A media element">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
-                                </Pod.Media>
-                            </Pod.Card>
-                        </Pod.Grid_Cell>
-                        <Pod.Grid_Cell styler={{ lg: 6 }}>
-                            <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                <Pod.Media figure="demo/img.png" title="A media element">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
-                                </Pod.Media>
-                            </Pod.Card>
-                        </Pod.Grid_Cell>
-                        <Pod.Grid_Cell styler={{ lg: 6 }}>
-                            <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                <Pod.Media figure="demo/img.png" align="right" title="A media element">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
-                                </Pod.Media>
-                            </Pod.Card>
-                        </Pod.Grid_Cell>
-                        <Pod.Grid_Cell styler={{ lg: 6 }}>
-                            <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                <Pod.Media figure="demo/img.png" title="A media element">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
-                                </Pod.Media>
-                            </Pod.Card>
-                        </Pod.Grid_Cell>
-                        <Pod.Grid_Cell styler={{ lg: 6 }}>
-                            <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                <Pod.Media figure="demo/img.png" align="right" title="A media element">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
-                                </Pod.Media>
-                            </Pod.Card>
-                        </Pod.Grid_Cell>
-                        <Pod.Grid_Cell styler={{ lg: 6 }}>
-                            <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                <Pod.Media figure="demo/img.png" title="A media element">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
-                                </Pod.Media>
-                            </Pod.Card>
-                        </Pod.Grid_Cell>
-                    </Pod.Grid>
+                        <Pod.Grid>
+                            <Pod.Grid_Cell styler={{ lg: 6 }}>
+                                <Pod.Card styler={{ style: { padding:'16px' } }}>
+                                    <Pod.Media figure="demo/img.png" align="right" title="A media element">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
+                                    </Pod.Media>
+                                </Pod.Card>
+                            </Pod.Grid_Cell>
+                            <Pod.Grid_Cell styler={{ lg: 6 }}>
+                                <Pod.Card styler={{ style: { padding:'16px' } }}>
+                                    <Pod.Media figure="demo/img.png" title="A media element">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
+                                    </Pod.Media>
+                                </Pod.Card>
+                            </Pod.Grid_Cell>
+                            <Pod.Grid_Cell styler={{ lg: 6 }}>
+                                <Pod.Card styler={{ style: { padding:'16px' } }}>
+                                    <Pod.Media figure="demo/img.png" align="right" title="A media element">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
+                                    </Pod.Media>
+                                </Pod.Card>
+                            </Pod.Grid_Cell>
+                            <Pod.Grid_Cell styler={{ lg: 6 }}>
+                                <Pod.Card styler={{ style: { padding:'16px' } }}>
+                                    <Pod.Media figure="demo/img.png" title="A media element">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
+                                    </Pod.Media>
+                                </Pod.Card>
+                            </Pod.Grid_Cell>
+                            <Pod.Grid_Cell styler={{ lg: 6 }}>
+                                <Pod.Card styler={{ style: { padding:'16px' } }}>
+                                    <Pod.Media figure="demo/img.png" align="right" title="A media element">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
+                                    </Pod.Media>
+                                </Pod.Card>
+                            </Pod.Grid_Cell>
+                            <Pod.Grid_Cell styler={{ lg: 6 }}>
+                                <Pod.Card styler={{ style: { padding:'16px' } }}>
+                                    <Pod.Media figure="demo/img.png" title="A media element">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
+                                    </Pod.Media>
+                                </Pod.Card>
+                            </Pod.Grid_Cell>
+                        </Pod.Grid>
                     </Pod.ContentWrap>
                 </Pod.Section>
 
@@ -184,8 +184,8 @@ export default class Demo extends React.Component {
                         <Pod.Card styler={{ style:{ width: '350px' } }} actionBar={(
                             <div>
                                 <Pod.Button styler={{ type: 'icon' }} label={
-                                        (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.Icon>)
-                                    }
+                                    (<Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.Icon>)
+                                }
                                 />
 
                                 <Pod.Button styler={{ type: 'icon' }} label={
@@ -216,22 +216,22 @@ export default class Demo extends React.Component {
 
                         <Pod.Card styler={{ padded:true, style:{ width: '350px' } }} title="Some CSS">
                             <Pod.CodeBlock styler={{ style: { overflow:'scroll' } }}>{`
-@import url('print.css');
-@page:right {
- margin: 1cm 2cm 1.3cm 4cm;
-}
+                                @import url('print.css');
+                                @page:right {
+                                margin: 1cm 2cm 1.3cm 4cm;
+                                }
 
-@font-face {
-  font-family: Chunkfive; src: url('Chunkfive.otf');
-}
+                                @font-face {
+                                font-family: Chunkfive; src: url('Chunkfive.otf');
+                                }
 
-div.text,
-#content,
-li[lang=ru] {
-  font: Tahoma, Chunkfive, sans-serif;
-  background: url('hatch.png') /* wtf? */;  color: #F0F0F0 !important;
-  width: 100%;
-}`}</Pod.CodeBlock>
+                                div.text,
+                                #content,
+                                li[lang=ru] {
+                                font: Tahoma, Chunkfive, sans-serif;
+                                background: url('hatch.png') /* wtf? */;  color: #F0F0F0 !important;
+                                width: 100%;
+                            }`}</Pod.CodeBlock>
                         </Pod.Card>
                         <Pod.Card styler={{ padded:true, style:{ width: '350px' } }} title="Shopping List">
                             <Pod.List>
@@ -286,7 +286,7 @@ li[lang=ru] {
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{ sm: 12, lg: 6 }}>
                                 <Pod.Card styler={{ style: { padding:'32px 16px' } }}>
-                                    <Pod.Testimonial img="profile.jpg" name="Damion Yeatman">
+                                    <Pod.Testimonial img="profile.jpg" name="Damion Yeatman" link="http://google.com">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur laborum officiis eum dolores eius a maiores temporibus odit adipisci quis beatae voluptas, expedita molestias voluptatum illum porro consequuntur voluptate et.
                                     </Pod.Testimonial>
                                 </Pod.Card>
