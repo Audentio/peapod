@@ -1,27 +1,25 @@
-import React from 'react'
-import { render, ReactDOM } from 'react-dom'
-import { Router, Route, Link, browserHistory } from 'react-router'
+import React from 'react';
+import { render } from 'react-dom';
+import { Router, Route, browserHistory } from 'react-router';
 
-import _ from 'lodash'
+import Sections from './sections.jsx';
 
-import Sections from './sections.jsx'
+import DamionDev from './pages/damionDev.jsx';
+import KylerDev from './pages/kylerDev.jsx';
+import TusharDev from './pages/tusharDev.jsx';
 
-import DamionDev from './pages/damionDev.jsx'
-import KylerDev from './pages/kylerDev.jsx'
-import TusharDev from './pages/tusharDev.jsx'
+import Demo from './pages/demo.jsx';
 
-import Demo from './pages/demo.jsx'
+import SingleComponent from './pages/singleComponent.jsx';
 
 render((
-  <Router history={browserHistory}>
-    <Route path="/" component={Sections}></Route>
-    <Route path="/damion" component={DamionDev}></Route>
-    <Route path="/kyler" component={KylerDev}></Route>
-    <Route path="/tushar" component={TusharDev}></Route>
+    <Router history={browserHistory}>
+        <Route path="/" component={Sections} />
+        <Route path="/damion" component={DamionDev} />
+        <Route path="/kyler" component={KylerDev} />
+        <Route path="/tushar" component={TusharDev} />
+        <Route path="/demo" component={Demo} />
 
-
-    <Route path="/demo" component={Demo}></Route>
-  </Router>
-), document.getElementById('mainContainer'))
-
-// ReactDOM.render(<Sections />, document.getElementById('mainContainer'));
+        <Route path="/:componentName" component={SingleComponent} />
+    </Router>
+), document.getElementById('mainContainer'));
