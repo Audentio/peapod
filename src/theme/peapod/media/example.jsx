@@ -1,15 +1,14 @@
-import React from 'react'
-import Pod from 'components.js'
+import React from 'react';
+import Pod from 'components.js';
 
-export default class MediaSection extends React.Component {
+module.exports = class MediaExample extends React.Component {
 
-    render () {
-        return(
-            <Pod.Section key={'media'}>
+    render() {
+        return (
+            <div>
                 <Pod.ContentWrap>
-                    <Pod.Heading>Media Elements</Pod.Heading>
                     <Pod.Grid>
-                        <Pod.Grid_Cell styler={{md:6}}>
+                        <Pod.Grid_Cell styler={{ md: 6 }}>
                             <Pod.Block>
                                 <Pod.Block_Left>
                                     <Pod.Photo src="smallimg.png" />
@@ -27,7 +26,7 @@ export default class MediaSection extends React.Component {
                             </Pod.Block>
                         </Pod.Grid_Cell>
 
-                        <Pod.Grid_Cell styler={{md:6}}>
+                        <Pod.Grid_Cell styler={{ md: 6 }}>
                             <Pod.Media image="smallimg.png" title="A media element">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                             </Pod.Media>
@@ -35,8 +34,8 @@ export default class MediaSection extends React.Component {
                     </Pod.Grid>
 
                 </Pod.ContentWrap>
-            </Pod.Section>
-        )
+            </div>
+        );
     }
 
 }
