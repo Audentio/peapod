@@ -16,6 +16,7 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
     const themeLen = themeKeys.length;
     const styleSheets = {};
     const componentNames = {};
+    const examplePages = {};
     const fileNames = req.keys();
 
     for (let fileIndex = 0, fileLen = fileNames.length; fileIndex < fileLen; fileIndex++) {
@@ -28,35 +29,35 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
             const splitLen = splitName.length;
             const fileType = splitName[splitLen - 1];
 
-            if (fileType === 'component.jsx' || fileType === 'style.js') {
-                for (let splitIndex = 1; splitIndex < (splitLen - 1); splitIndex++) {
-                    const splitVal = splitName[splitIndex];
-                    let splitValUpper = '';
+            for (let splitIndex = 1; splitIndex < (splitLen - 1); splitIndex++) {
+                const splitVal = splitName[splitIndex];
+                let splitValUpper = '';
 
-                    if (splitVal.length === 1) {
-                        splitValUpper = splitVal.charAt(0).toUpperCase();
-                    } else {
-                        splitValUpper = splitVal.charAt(0).toUpperCase() + splitVal.slice(1);
-                    }
-
-                    if (componentName === '') {
-                        componentName = splitValUpper;
-                        styleName = splitVal;
-                    } else {
-                        componentName = `${componentName}_${splitValUpper}`;
-                        styleName = `${styleName}_${splitVal}`;
-                    }
+                if (splitVal.length === 1) {
+                    splitValUpper = splitVal.charAt(0).toUpperCase();
+                } else {
+                    splitValUpper = splitVal.charAt(0).toUpperCase() + splitVal.slice(1);
                 }
 
-                if (ignore.indexOf(componentName) === -1) {
-                    if (fileType === 'component.jsx') {
-                        componentNames[componentName] = fileName;
-                    } else if (fileType === 'style.js') {
-                        styleSheets[styleName] = {
-                            fileName,
-                            componentName,
-                        };
-                    }
+                if (componentName === '') {
+                    componentName = splitValUpper;
+                    styleName = splitVal;
+                } else {
+                    componentName = `${componentName}_${splitValUpper}`;
+                    styleName = `${styleName}_${splitVal}`;
+                }
+            }
+
+            if (ignore.indexOf(componentName) === -1) {
+                if (fileType === 'component.jsx') {
+                    componentNames[componentName] = fileName;
+                } else if (fileType === 'style.js') {
+                    styleSheets[styleName] = {
+                        fileName,
+                        componentName,
+                    };
+                } else if (fileType === 'example.jsx') {
+                    examplePages[componentName] = fileName;
                 }
             }
         }
@@ -79,6 +80,19 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
         const componentName = componentNameKeys[componentNameIndex];
         const component = req(componentNames[componentName]);
         module.exports[componentName] = wrapper(component);
+
+        if (typeof(module.exports.Examples) === 'undefined') {
+            module.exports.Examples = {};
+        }
+
+        if (typeof(examplePages[componentName]) === 'undefined') {
+            if (componentName.indexOf('_') === -1) { // only for base components
+                console.warn(`Missing example page for ${componentName}`); // eslint-disable-line no-console
+            }
+        } else {
+            const example = req(examplePages[componentName]);
+            module.exports.Examples[componentName] = wrapper(example);
+        }
     }
 
     return module.exports;
@@ -86,12 +100,6 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
 
 if (module.hot) {
     module.hot.accept();
-    /*
-    if (typeof(window._peapodRoot) !== 'undefined') {
-        init();
-        window._peapodRoot.forceUpdate();
-    }
-    */
 }
 
 const ignoreComponents = [

@@ -1,16 +1,13 @@
-import React from 'react'
-import Pod from 'components.js'
+import React from 'react';
+import Pod from 'components.js';
 
-export default class MicroSection extends React.Component {
+module.exports = class TimestampExample extends React.Component {
 
-    render () {
-        var tzTestTime = "2016-05-04T12:00:00Z";
+    render() {
+        const tzTestTime = '2016-05-04T12:00:00Z';
         return (
-            <Pod.Section key={'micro'}>
+            <div>
                 <Pod.ContentWrap>
-
-                    <Pod.Heading>Microcomponents</Pod.Heading>
-
                     <Pod.Heading kind="h5">Timestamps</Pod.Heading>
                     <Pod.Paragraph>Hover on Timestamps to see absolute date-time.</Pod.Paragraph>
 
@@ -26,23 +23,23 @@ export default class MicroSection extends React.Component {
                     <Pod.Paragraph>
                         <Pod.Code>output=relative</Pod.Code> <Pod.Timestamp time={1455670800} output="relative" /> <br />
                         <Pod.Code>output=calendar</Pod.Code> <Pod.Timestamp time={1455670800} output="calendar" /> <br />
-                        <Pod.Code>output=calendar (with recent date)</Pod.Code> <Pod.Timestamp time={(new Date().setDate(new Date().getDate() -1))/1000} output="calendar" /> <br />
+                        <Pod.Code>output=calendar (with recent date)</Pod.Code> <Pod.Timestamp time={(new Date().setDate(new Date().getDate() - 1)) / 1000} output="calendar" /> <br />
                         <Pod.Code>output=absolute (default)</Pod.Code> <Pod.Timestamp time={1455670800} /> <br />
-                        <Pod.Code>{`showDate={false}`}</Pod.Code> <Pod.Timestamp time={1455670800} showDate={false}></Pod.Timestamp> <br />
-                        <Pod.Code>{`showTime={false}`}</Pod.Code> <Pod.Timestamp time={1455670800} showTime={false}></Pod.Timestamp> <br />
-                        <Pod.Code>{`format="ddd, hA" (overrides above settings)`}</Pod.Code> <Pod.Timestamp time={1455670800} format={'ddd, hA'}></Pod.Timestamp>
+                        <Pod.Code>{'showDate={false}'}</Pod.Code> <Pod.Timestamp time={1455670800} showDate={false}></Pod.Timestamp> <br />
+                        <Pod.Code>{'showTime={false}'}</Pod.Code> <Pod.Timestamp time={1455670800} showTime={false}></Pod.Timestamp> <br />
+                        <Pod.Code>{'format="ddd, hA" (overrides above settings)'}</Pod.Code> <Pod.Timestamp time={1455670800} format={'ddd, hA'}></Pod.Timestamp>
                     </Pod.Paragraph>
 
                     <Pod.Strong>Timezone control</Pod.Strong>
                     <Pod.Paragraph>
                         Same dateTime used for all examples (<Pod.Code>2016-05-04T12:00:00Z</Pod.Code>). UTC is default for input, client timezone is default for output<br /><br />
 
-                        <Pod.Code>just time passed</Pod.Code> <Pod.Timestamp showTimezone={true} time={tzTestTime} /> <br />
+                        <Pod.Code>just time passed</Pod.Code> <Pod.Timestamp showTimezone time={tzTestTime} /> <br />
                         <Pod.Code>showTimezone=false</Pod.Code> <Pod.Timestamp time={tzTestTime} showTimezone={false} /> <br />
-                        <Pod.Code>timezone=America/Chicago</Pod.Code> <Pod.Timestamp showTimezone={true} time={tzTestTime} timezone="America/Chicago" /> <br />
-                        <Pod.Code>timezone=America/New_York</Pod.Code> <Pod.Timestamp showTimezone={true} time={tzTestTime} timezone="America/New_York" /> <br />
-                        <Pod.Code>outputTimezone=America/Chicago</Pod.Code> <Pod.Timestamp showTimezone={true} time={tzTestTime} outputTimezone="America/Chicago" /> <br />
-                        <Pod.Code>outputTimezone=America/New_York</Pod.Code> <Pod.Timestamp showTimezone={true} time={tzTestTime} outputTimezone="America/New_York" /> <br />
+                        <Pod.Code>timezone=America/Chicago</Pod.Code> <Pod.Timestamp showTimezone time={tzTestTime} timezone="America/Chicago" /> <br />
+                        <Pod.Code>timezone=America/New_York</Pod.Code> <Pod.Timestamp showTimezone time={tzTestTime} timezone="America/New_York" /> <br />
+                        <Pod.Code>outputTimezone=America/Chicago</Pod.Code> <Pod.Timestamp showTimezone time={tzTestTime} outputTimezone="America/Chicago" /> <br />
+                        <Pod.Code>outputTimezone=America/New_York</Pod.Code> <Pod.Timestamp showTimezone time={tzTestTime} outputTimezone="America/New_York" /> <br />
                         <Pod.Code>timezone=Asia/Kolkata, outputTimezone=America/Chicago</Pod.Code> <Pod.Timestamp time={tzTestTime} timezone="Asia/Kolkata" outputTimezone="America/Chicago" /> <br />
                     </Pod.Paragraph>
 
@@ -50,8 +47,7 @@ export default class MicroSection extends React.Component {
 
 
                 </Pod.ContentWrap>
-            </Pod.Section>
-        )
+            </div>
+        );
     }
-
 }

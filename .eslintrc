@@ -23,6 +23,7 @@
 
     "no-param-reassign": "off",
     "func-names": "off",
-    'no-trailing-spaces': "off"
+    'no-trailing-spaces': "off",
+    'react/jsx-pascal-case': 'off',
   }
 }
