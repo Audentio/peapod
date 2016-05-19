@@ -1,5 +1,6 @@
 import { merge as _Merge, clone as _Clone } from 'lodash';
 import Pod_Vars from './vars.js';
+import Logger from 'logger';
 
 const pod_debug = false; // if true, will add a debug object to the inline style produced
 
@@ -172,7 +173,7 @@ class Style {
                                     }
                                     delete style[key];
                                 } else {
-                                    console.warn(`Unsupported value for media query: ${style[key]}`); // eslint-disable-line no-console
+                                    Logger.warn(`Unsupported value for media query: ${style[key]}`);
                                 }
                             }
                         } else {
@@ -238,7 +239,7 @@ class Selector {
         }
 
         if (typeof(condition) === 'undefined') {
-            console.warn(`No definition for condition:  ${conditionName}`); // eslint-disable-line no-console
+            Logger.warn(`No definition for condition:  ${conditionName}`);
         }
 
         return condition.isTrue(instance);
@@ -496,7 +497,7 @@ class Sheet {
         this.doc = '';
         this.docDefault = null;
         if (name === 'undefined') {
-            console.error('Sheet created without a name specified.'); // eslint-disable-line no-console
+            Logger.error('Sheet created without a name specified.');
         }
         this.name = name;
     }

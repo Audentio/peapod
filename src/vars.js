@@ -4,6 +4,7 @@
 */
 
 import { merge as _merge } from 'lodash';
+import Logger from 'logger';
 
 const maxDepth = 30; // will attempt to resolve variables throug this many levels
 
@@ -90,7 +91,7 @@ window.Pod_Vars = window.Pod_Vars || {
 
         if (onlyBase || results.length === 1) {
             if (results.length === 0) {
-                console.warn(`Unable to find variable named: ${name}`); // eslint-disable-line no-console
+                Logger.warn(`Unable to find variable named: ${name}`);
             }
             return results[results.length - 1].val;
         }
