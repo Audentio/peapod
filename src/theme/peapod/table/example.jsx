@@ -1,7 +1,7 @@
 import React from 'react';
 import Pod from 'components';
 
-export default class TableSection extends React.Component {
+module.exports = class TableExample extends React.Component {
 
     dummyData() {
         const rows = {
@@ -81,14 +81,14 @@ export default class TableSection extends React.Component {
 
     render() {
         return (
-            <Pod.Section key={'tabs'}>
+            <div>
                 <Pod.ContentWrap>
                     <Pod.Table
                         data={this.dummyData().rows}
                         columns={this.dummyData().columns}
                     />
                 </Pod.ContentWrap>
-            </Pod.Section>
+            </div>
         );
     }
 }

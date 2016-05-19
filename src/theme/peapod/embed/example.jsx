@@ -1,23 +1,18 @@
-import React from 'react'
-import Pod from 'components.js'
+import React from 'react';
+import Pod from 'components.js';
 
-export default class EmbedSection extends React.Component {
+module.exports = class EmbedExample extends React.Component {
 
-    render () {
-
-        return(
-            <Pod.Section key={'Embed'}>
+    render() {
+        return (
+            <div>
                 <Pod.ContentWrap>
-                    <Pod.Heading>Embed</Pod.Heading>
-
                     <Pod.Lazy height="480px" distance="50">
                         <Pod.Embed width="100%" height="480px" src="https://www.youtube.com/embed/QhUzmR8eZAo" />
                     </Pod.Lazy>
-
-
                 </Pod.ContentWrap>
-            </Pod.Section>
-        )
+            </div>
+        );
     }
 
 }
