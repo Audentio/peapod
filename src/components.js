@@ -7,7 +7,6 @@ import Logger from 'logger';
 
 module.exports = {
     Examples: {},
-    NoWrap: {},
 };
 
 window.Pod = {
@@ -84,7 +83,7 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
         const componentName = componentNameKeys[componentNameIndex];
         const component = req(componentNames[componentName]);
         module.exports[componentName] = wrapper(component);
-        module.exports.NoWrap[componentName] = component;
+        module.exports[`NoWrap_${componentName}`] = component;
 
         if (typeof(examplePages[componentName]) === 'undefined') {
             if (componentName.indexOf('_') === -1) { // only for base components
