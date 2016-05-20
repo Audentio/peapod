@@ -18,13 +18,13 @@ module.exports = function (sheetName) {
     }).addSelector({
         condition: ['positionLeft'],
         common: {
-            width: '50vw',
+            width: '50%',
             float: 'left',
         },
     }).addSelector({
         condition: ['positionRight'],
         common: {
-            width: '50vw',
+            width: '50%',
             float: 'right',
         },
     });

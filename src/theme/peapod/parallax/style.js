@@ -10,7 +10,7 @@ module.exports = function (sheetName) {
     // Variables
     sheet.setValues({
         height: '100vh',
-        width: '100vw',
+        width: '100%',
     });
 
     main.addSelector({

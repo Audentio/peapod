@@ -6,7 +6,7 @@ module.exports = class FixedElementExample extends React.Component {
     render() {
         return (
             <div>
-                <Pod.FixedElement styler={{ style: { top: 0, left: 0, width: '100%' } }}>
+                <Pod.FixedElement styler={{ style: { top: 0, right: 0, width: '100%' } }} containerWidth>
                     <Pod.Toolbar>
                         <Pod.ContentWrap>
                             <Pod.Icon styler={{ style: { height: '32px', display: 'inline-block', lineHeight: '32px', width: '32px', float: 'left' } }}>menu</Pod.Icon>

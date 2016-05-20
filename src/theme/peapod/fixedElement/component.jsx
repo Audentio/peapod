@@ -22,50 +22,66 @@ module.exports = class FixedElement extends React.Component {
         super();
         this.state = {
             position: 'static',
-            origionalHeight: 0
-        }
+            origionalHeight: 0,
+            width: '100%',
+        };
     }
 
-	static defaultProps = {
-	    onScroll: true
-	}
+    static propTypes = {
+        onScroll: React.PropTypes.bool,
+        containerWidth: React.PropTypes.bool,
+        children: React.PropTypes.any,
+    }
+
+    static defaultProps = {
+        onScroll: true,
+        containerWidth: false,
+    }
 
     componentDidMount() {
-        var element = this.fixedElem
-        var elemRect = element.getBoundingClientRect()
+        const elementInit = this.fixedElem;
+        const elemRectInit = elementInit.getBoundingClientRect();
 
-        this.origionalPosition = elemRect.top  + window.scrollY
+        this.origionalPosition = elemRectInit.top + window.scrollY;
         this.setState({
-            origionalHeight: element.scrollHeight
-        })
+            origionalHeight: elementInit.scrollHeight,
+        });
 
-        document.addEventListener("scroll", () => {
-            var element = this.fixedElem
-            var elemRect = element.getBoundingClientRect()
+        document.addEventListener('scroll', () => {
+            const element = this.fixedElem;
+            const elemRect = element.getBoundingClientRect();
 
-            this.origionalPosition = elemRect.top  + window.scrollY
-            var doc = document.documentElement;
-            var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+            this.origionalPosition = elemRect.top + window.scrollY;
+            const doc = document.documentElement;
+            const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-            var positionStyle =
-                (top > this.origionalPosition) ?
-                'fixed' :
-                'static';
+            const positionStyle = (top > this.origionalPosition) ? 'fixed' : 'static';
+
+            let containerWidth = '100%';
+
+            if (this.props.containerWidth) {
+                containerWidth = element.offsetWidth;
+            }
 
             this.setState({
-                position: positionStyle
-            })
+                position: positionStyle,
+                width: containerWidth,
+            });
         });
     }
 
     render() {
-        var style = Pod_Styler.getStyle(this);
-        style.main['position'] = this.state.position
+        const style = Pod_Styler.getStyle(this);
+        style.main.position = this.state.position;
 
-        var fixedStyle = {
+        if (this.props.containerWidth) {
+            style.main.width = this.state.width;
+        }
+
+        const fixedStyle = {
             height: this.state.origionalHeight,
             // transform: 'translate3d(0, 0, 0)'
-        }
+        };
 
         if (this.props.onScroll) {
             return (
@@ -75,12 +91,11 @@ module.exports = class FixedElement extends React.Component {
                     </div>
                 </div>
             );
-        } else {
-            return (
-                <div style={style.main}>
-                    {this.props.children}
-                </div>
-            )
         }
+        return (
+            <div style={style.main}>
+                {this.props.children}
+            </div>
+        );
     }
 };
