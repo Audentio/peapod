@@ -3,6 +3,7 @@
 import wrapper from './wrapper.jsx';
 import Vars from './vars.js';
 import Styler from './styler.js';
+import Logger from 'logger';
 
 module.exports = {};
 
@@ -87,7 +88,7 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
 
         if (typeof(examplePages[componentName]) === 'undefined') {
             if (componentName.indexOf('_') === -1) { // only for base components
-                console.warn(`Missing example page for ${componentName}`); // eslint-disable-line no-console
+                Logger.warn(`Missing example page for ${componentName}`);
             }
         } else {
             const example = req(examplePages[componentName]);

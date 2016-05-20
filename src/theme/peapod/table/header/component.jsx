@@ -42,17 +42,19 @@ module.exports = class Table_Header extends React.Component {
 						return result;
 					}, {});
 
-					var arrowStyler = {
+					var arrowStyle = {
 						style: {
 							fontSize: '$font.size.large',
-							float: 'right',
-							lineHeight: '$table.font.headerSize'
+                            position: 'relative',
+                            top: -1,
+                            verticalAlign: 'middle',
+                            marginLeft: 5,
 						}
 					}
 
 					return (
 						<Table_Cell key={i + '-header'} column={column} header={true} {...columnHeader}>
-							{column.header}{column.sort == 'desc' ? <Icon styler={arrowStyler}>arrow_drop_down</Icon> : ''}{column.sort == 'asc' ? <Icon styler={arrowStyler}>arrow_drop_up</Icon> : ''}
+							{column.header}{column.sort == 'desc' ? <Icon styler={arrowStyle}>arrow_downward</Icon> : ''}{column.sort == 'asc' ? <Icon styler={arrowStyle}>arrow_upward</Icon> : ''}
 						</Table_Cell>
 					)
 				})

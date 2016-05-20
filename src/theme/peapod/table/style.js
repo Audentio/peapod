@@ -10,7 +10,7 @@ module.exports = function (sheetName) {
         color: {
             lightRow: {
                 background: 'transparent',
-                color: '$color.text.body',
+                color: '$color.text.dark',
                 hover: '#F5F6F7',
             },
             darkRow: {
@@ -30,7 +30,7 @@ module.exports = function (sheetName) {
             },
             columnHovered: {
                 background: 'initial',
-                color: '$color.text.body',
+                color: '$color.text.dark',
                 headerBackground: '$table.color.header.background',
                 headerColor: '$color.text.dark',
             },
