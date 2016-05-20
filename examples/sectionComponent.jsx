@@ -11,11 +11,11 @@ module.exports = class SectionComponent extends React.Component {
         const Example = Examples[this.props.name];
 
         if (typeof(this.props.noName) !== 'undefined' && this.props.noName.indexOf(this.props.name) > -1) {
-            return (<div><Example /></div>);
+            return (<div id={this.props.name}><Example /></div>);
         }
 
         return (
-            <Section>
+            <Section id={this.props.name}>
                 <ContentWrap>
                     <Heading>{this.props.name}</Heading>
                 </ContentWrap>
