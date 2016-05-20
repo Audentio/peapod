@@ -5,7 +5,10 @@ import Vars from './vars.js';
 import Styler from './styler.js';
 import Logger from 'logger';
 
-module.exports = {};
+module.exports = {
+    Examples: {},
+    NoWrap: {},
+};
 
 window.Pod = {
     options: {},
@@ -81,10 +84,7 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
         const componentName = componentNameKeys[componentNameIndex];
         const component = req(componentNames[componentName]);
         module.exports[componentName] = wrapper(component);
-
-        if (typeof(module.exports.Examples) === 'undefined') {
-            module.exports.Examples = {};
-        }
+        module.exports.NoWrap[componentName] = component;
 
         if (typeof(examplePages[componentName]) === 'undefined') {
             if (componentName.indexOf('_') === -1) { // only for base components
