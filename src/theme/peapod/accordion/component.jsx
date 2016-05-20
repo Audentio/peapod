@@ -34,7 +34,6 @@ module.exports = class Accordion extends React.Component {
 
         let i = 0;
         const children = thisChildren.map((child) => {
-            console.log(i);
             const html = (
                 <Accordion_Section
                     {...child.props}
