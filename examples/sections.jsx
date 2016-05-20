@@ -1,6 +1,7 @@
 import React from 'react';
 import Pod from 'components.js';
 import SectionComponent from './sectionComponent.jsx';
+import SingleComponent from './pages/singleComponent.jsx';
 
 const firstComponents = ['Hero', 'FixedElement', 'Parallax'];
 const noName = ['Hero'];
@@ -13,7 +14,7 @@ const addComponent = function (key, i, type) {
 
     exampleList.push(
         <Pod.List_Item styler={{ style: { height: 'auto', padding: '6px 16px' } }}>
-                <Pod.Button styler={{ kind: 'general' }} href={`#${key}`}>{key}</Pod.Button>
+                <Pod.Button styler={{ kind: 'general' }} href={`http://localhost:3002#${key}`}>{key}</Pod.Button>
                 <Pod.Block_Right>
                     <Pod.Button styler={{ kind: 'general' }} href={`/${key}`}>
                         <Pod.Icon>launch</Pod.Icon>
@@ -41,7 +42,17 @@ for (let i = 0, len = exampleComponents.length; i < len; i++) {
 }
 
 export default class Sections extends React.Component {
+    static propTypes = {
+        params: React.PropTypes.any,
+    }
+
     render() {
+        let examples = componentsOutput;
+
+        if (typeof(this.props.params) !== 'undefined' && typeof(this.props.params.componentName) !== 'undefined') {
+            examples = <SingleComponent params={this.props.params} />;
+        }
+
         return (
             <div>
                 <Pod.Pane>
@@ -62,7 +73,7 @@ export default class Sections extends React.Component {
                         </Pod.Grid_Cell>
                         <Pod.Grid_Cell styler={{ style: { position: 'relative' }, md: 12, lg: 9, xl: 10 }}>
                             <Pod.Pane>
-                                {componentsOutput}
+                                {examples}
                             </Pod.Pane>
                         </Pod.Grid_Cell>
                     </Pod.Grid>

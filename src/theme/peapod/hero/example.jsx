@@ -12,7 +12,7 @@ module.exports = class HeroExample extends React.Component {
                             <Pod.Card styler={{ disguised: true, style: { maxWidth: '500px' } }}>
 
                                 <Pod.Card_Section styler={{ kind: 'title-supports' }}>
-                                    <Pod.Heading kind="h2" styler={{ secondary: true }}>I'm a card in disguese!</Pod.Heading>
+                                    <Pod.Heading kind="h2" styler={{ secondary: true }}>I'm a card in disguise!</Pod.Heading>
                                     <Pod.Heading kind="h5" styler={{ secondary: true }}>Damion: Add option to look this way to cards</Pod.Heading>
                                 </Pod.Card_Section>
                                 <Pod.Card_Section styler={{ kind: 'supporting-text' }}>

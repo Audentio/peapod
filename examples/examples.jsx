@@ -10,8 +10,6 @@ import TusharDev from './pages/tusharDev.jsx';
 
 import Demo from './pages/demo.jsx';
 
-import SingleComponent from './pages/singleComponent.jsx';
-
 render((
     <Router history={browserHistory}>
         <Route path="/" component={Sections} />
@@ -20,6 +18,6 @@ render((
         <Route path="/tushar" component={TusharDev} />
         <Route path="/demo" component={Demo} />
 
-        <Route path="/:componentName" component={SingleComponent} />
+        <Route path="/:componentName" component={Sections} />
     </Router>
 ), document.getElementById('mainContainer'));
