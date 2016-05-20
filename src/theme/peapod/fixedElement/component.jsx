@@ -38,16 +38,42 @@ module.exports = class FixedElement extends React.Component {
         containerWidth: false,
     }
 
+    shouldComponentUpdate() {
+        return true;
+    }
+
     componentDidMount() {
         const elementInit = this.fixedElem;
         const elemRectInit = elementInit.getBoundingClientRect();
 
+        let containerWidthInit = '100%';
+
+        if (this.props.containerWidth) {
+            containerWidthInit = elementInit.offsetWidth;
+        }
+
         this.origionalPosition = elemRectInit.top + window.scrollY;
-        this.setState({
+        this.setState({ // eslint-disable-line react/no-did-mount-set-state
             origionalHeight: elementInit.scrollHeight,
+            width: containerWidthInit,
         });
 
         document.addEventListener('scroll', () => {
+            const element = this.fixedElem;
+            const elemRect = element.getBoundingClientRect();
+
+            this.origionalPosition = elemRect.top + window.scrollY;
+            const doc = document.documentElement;
+            const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+
+            const positionStyle = (top > this.origionalPosition) ? 'fixed' : 'static';
+
+            this.setState({
+                position: positionStyle,
+            });
+        });
+
+        window.addEventListener('resize', () => {
             const element = this.fixedElem;
             const elemRect = element.getBoundingClientRect();
 
