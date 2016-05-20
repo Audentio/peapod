@@ -46,16 +46,9 @@ module.exports = class FixedElement extends React.Component {
         const elementInit = this.fixedElem;
         const elemRectInit = elementInit.getBoundingClientRect();
 
-        let containerWidthInit = '100%';
-
-        if (this.props.containerWidth) {
-            containerWidthInit = elementInit.offsetWidth;
-        }
-
         this.origionalPosition = elemRectInit.top + window.scrollY;
         this.setState({ // eslint-disable-line react/no-did-mount-set-state
             origionalHeight: elementInit.scrollHeight,
-            width: containerWidthInit,
         });
 
         document.addEventListener('scroll', () => {
