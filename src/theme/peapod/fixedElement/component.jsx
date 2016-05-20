@@ -68,9 +68,18 @@ module.exports = class FixedElement extends React.Component {
 
             const positionStyle = (top > this.origionalPosition) ? 'fixed' : 'static';
 
-            this.setState({
-                position: positionStyle,
-            });
+            if (this.state.position !== positionStyle) {
+                let containerWidth = '100%';
+
+                if (this.props.containerWidth) {
+                    containerWidth = element.offsetWidth;
+                }
+
+                this.setState({
+                    position: positionStyle,
+                    width: containerWidth,
+                });
+            }
         });
 
         window.addEventListener('resize', () => {
