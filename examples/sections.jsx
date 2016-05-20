@@ -62,11 +62,15 @@ export default class Sections extends React.Component {
                                 <Pod.Card styler={{ style: { width: '100%' } }}>
 
                                     <Pod.Card_Section styler={{ kind: 'title-small' }}>
-                                        <Pod.Heading kind="h6" styler={{ secondary: true }}>Examples</Pod.Heading>
+                                        <Pod.Heading kind="h6" styler={{ secondary: true }}>
+                                            <Pod.Button styler={{ kind: 'general', style: { color: '$palette.black', fontSize: '$font.size.large' } }} href={`http://localhost:3002`}>Examples</Pod.Button>
+                                        </Pod.Heading>
                                     </Pod.Card_Section>
 
-                                    <Pod.List styler={{ style: { maxHeight: '100%' } }}>
-                                        {exampleList}
+                                    <Pod.List styler={{ style: { maxHeight: 'calc(100vh - 100px)' } }}>
+                                        <Pod.Scrollable>
+                                            {exampleList}
+                                        </Pod.Scrollable>
                                     </Pod.List>
                                 </Pod.Card>
                             </Pod.FixedElement>
