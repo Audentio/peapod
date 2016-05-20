@@ -15,12 +15,14 @@ module.exports = class SectionComponent extends React.Component {
         }
 
         return (
-            <Section id={this.props.name}>
-                <ContentWrap>
-                    <Heading>{this.props.name}</Heading>
-                </ContentWrap>
-                <Example />
-            </Section>
+            <div id={this.props.name}>
+                <Section>
+                    <ContentWrap>
+                        <Heading>{this.props.name}</Heading>
+                    </ContentWrap>
+                    <Example />
+                </Section>
+            </div>
         );
     }
 };
