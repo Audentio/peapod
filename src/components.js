@@ -101,12 +101,6 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
 
 if (module.hot) {
     module.hot.accept();
-    /*
-    if (typeof(window._peapodRoot) !== 'undefined') {
-        init();
-        window._peapodRoot.forceUpdate();
-    }
-    */
 }
 
 const ignoreComponents = [
