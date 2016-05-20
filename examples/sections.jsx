@@ -1,36 +1,83 @@
 import React from 'react';
-import { Pane, Examples } from 'components.js';
+import Pod from 'components.js';
 import SectionComponent from './sectionComponent.jsx';
+import SingleComponent from './pages/singleComponent.jsx';
 
 const firstComponents = ['Hero', 'FixedElement', 'Parallax'];
 const noName = ['Hero'];
 
 const componentsOutput = [];
+const exampleList = [];
+
+const addComponent = function (key, i, type) {
+    componentsOutput.push(<SectionComponent noName={noName} name={key} key={`Section ${type}${i}`} />);
+
+    exampleList.push(
+        <Pod.List_Item styler={{ style: { height: 'auto', padding: '6px 16px' } }}>
+                <Pod.Button styler={{ kind: 'general' }} href={`http://localhost:3002#${key}`}>{key}</Pod.Button>
+                <Pod.Block_Right>
+                    <Pod.Button styler={{ kind: 'general' }} href={`/${key}`}>
+                        <Pod.Icon>launch</Pod.Icon>
+                    </Pod.Button>
+                </Pod.Block_Right>
+        </Pod.List_Item>
+    );
+};
+
 for (let i = 0, len = firstComponents.length; i < len; i++) {
     const key = firstComponents[i];
-    if (typeof(Examples[key]) !== 'undefined') {
-        const Example = Examples[key];
-        componentsOutput.push(<SectionComponent noName={noName} name={key} key={`Section First ${i}`}><Example /></SectionComponent>);
+    if (typeof(Pod.Examples[key]) !== 'undefined') {
+        addComponent(key, i, 'First ');
     } else {
         console.warn(`Missing Example for First Component ${key}.`); // eslint-disable-line no-console
     }
 }
 
-const exampleComponents = Object.keys(Examples);
+const exampleComponents = Object.keys(Pod.Examples);
 for (let i = 0, len = exampleComponents.length; i < len; i++) {
     const key = exampleComponents[i];
     if (firstComponents.indexOf(key) === -1) {
-        componentsOutput.push(<SectionComponent noName={noName} name={key} key={`Section ${i}`} />);
+        addComponent(key, i, 'Second ');
     }
 }
 
 export default class Sections extends React.Component {
+    static propTypes = {
+        params: React.PropTypes.any,
+    }
+
     render() {
+        let examples = componentsOutput;
+
+        if (typeof(this.props.params) !== 'undefined' && typeof(this.props.params.componentName) !== 'undefined') {
+            examples = <SingleComponent params={this.props.params} />;
+        }
+
         return (
             <div>
-                <Pane>
-                    {componentsOutput}
-                </Pane>
+                <Pod.Pane>
+                    <Pod.Grid>
+                        <Pod.Grid_Cell styler={{ style: { padding: '10px 20px 10px 10px' }, md: 12, lg: 3, xl: 2 }}>
+                            <Pod.FixedElement containerWidth>
+                                <Pod.Card styler={{ style: { width: '100%' } }}>
+
+                                    <Pod.Card_Section styler={{ kind: 'title-small' }}>
+                                        <Pod.Heading kind="h6" styler={{ secondary: true }}>Examples</Pod.Heading>
+                                    </Pod.Card_Section>
+
+                                    <Pod.List styler={{ style: { maxHeight: '100%' } }}>
+                                        {exampleList}
+                                    </Pod.List>
+                                </Pod.Card>
+                            </Pod.FixedElement>
+                        </Pod.Grid_Cell>
+                        <Pod.Grid_Cell styler={{ style: { position: 'relative' }, md: 12, lg: 9, xl: 10 }}>
+                            <Pod.Pane>
+                                {examples}
+                            </Pod.Pane>
+                        </Pod.Grid_Cell>
+                    </Pod.Grid>
+                </Pod.Pane>
             </div>
         );
     }

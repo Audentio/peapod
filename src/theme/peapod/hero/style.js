@@ -11,7 +11,7 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             display: 'block',
-            width: '100vw',
+            width: '100%',
             height: '100vh',
             backgroundPosition: 'center center',
         },
