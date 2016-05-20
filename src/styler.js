@@ -5,6 +5,7 @@
 
 import { merge as _merge, isEqual as _isEqual } from 'lodash';
 import { Style } from './stylesheet.js';
+import Logger from 'logger';
 
 window.Pod_Styler = window.Pod_Styler || {
     libraries: [],
@@ -19,7 +20,7 @@ window.Pod_Styler = window.Pod_Styler || {
         for (let i = 0, len = window.Pod_Styler.libraries.length; i < len; i++) {
             const library = window.Pod_Styler.libraries[i];
             if (library.name === libraryName) {
-                console.log(`Removing Library: ${libraryName}`); // eslint-disable-line no-console
+                Logger.log(`Removing Library: ${libraryName}`);
                 window.Pod_Styler.libraries.splice(i, 1);
                 len = len - 1;
                 i = i - 1;
@@ -31,7 +32,7 @@ window.Pod_Styler = window.Pod_Styler || {
     addLibrary(parentName, libraryName, componentFiles, requireFunc, globalVars) {
         window.Pod_Styler.varCache = {}; // clear variable cache
         window.Pod_Styler.removeLibrary(libraryName); // remove and previous styling from library
-        console.log(`Adding Library ${libraryName}`); // eslint-disable-line no-console
+        Logger.log(`Adding Library ${libraryName}`);
 
         window.Pod_Vars.register(globalVars); // add global variables to variable resolution
 
@@ -236,7 +237,7 @@ window.Pod_Styler = window.Pod_Styler || {
                             if (typeof(resultVar) === 'string') {
                                 if (typeof(partStyle[ruleKey]) === 'string' && partStyle[ruleKey].indexOf('!important') > -1) {
                                     if (resultVar.indexOf('!important') === -1) {
-                                        console.warn(`You have overridden the styling '${ruleKey}: ${partStyle[ruleKey]}' with '${ruleKey}: ${resultVar}' in ${componentName}-${partKey} which could cause significant styling errors.  This must be changed to '${ruleKey}: ${resultVar}!' to indicate you are sure you want to override this value.`); // eslint-disable-line no-console
+                                        Logger.warn(`You have overridden the styling '${ruleKey}: ${partStyle[ruleKey]}' with '${ruleKey}: ${resultVar}' in ${componentName}-${partKey} which could cause significant styling errors.  This must be changed to '${ruleKey}: ${resultVar}!' to indicate you are sure you want to override this value.`);
                                     }
                                 }
                             }

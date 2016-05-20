@@ -1,8 +1,11 @@
 import { Sheet } from 'stylesheet.js';
+import Radium from 'radium';
 
 module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
     const main = sheet.addMain();
+    const ripple = sheet.addPart('ripple');
+    const rippleContainer = sheet.addPart('rippleContainer');
 
     // Conditions
     sheet.addCondition('raised').addStyler({ raised: true });
@@ -20,6 +23,30 @@ module.exports = function (sheetName) {
     sheet.addCondition('kindInfo').addStyler({ kind: 'info' });
     sheet.addCondition('kindDanger').addStyler({ kind: 'danger' });
     sheet.addCondition('kindSuccess').addStyler({ kind: 'success' });
+
+/*
+    const rippleSteps = {
+        '0%': {
+            transform: 'scale(0)',
+        },
+        '20%': {
+            transform: 'scale(1)',
+        },
+        '100%': {
+            opacity: 0,
+            transform: 'scale(1)',
+        },
+    };*/
+
+    const rippleSteps = {
+        '100%': {
+            borderRadius: '100%',
+            opacity: 0,
+            transform: 'scale(2.5)',
+        },
+    };
+
+    const rippleAnimation = Radium.keyframes(rippleSteps, 'rippleAnimation');
 
     // Variables
     sheet.setValues({
@@ -61,6 +88,7 @@ module.exports = function (sheetName) {
             display: 'inline-block',
             borderRadius: '$button.border.radius',
             border: 'none',
+            position: 'relative',
             // borderStyle: '$button.border.style',
             // borderColor: '$button.border.color',
 
@@ -98,29 +126,33 @@ module.exports = function (sheetName) {
         condition: ['notDisabled'],
         common: {
             cursor: 'pointer',
-
+            /*
             ':active': {
                 transform: 'scale({$button.transition.scale})',
                 transitionDuration: '$button.transition.duration',
-            },
+            },*/
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'disabled',
         common: {
             cursor: 'not-allowed',
             opacity: '$opacity.notAllowed',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['raised'],
         common: {
             boxShadow: '$shadows.d1',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['block'],
         common: {
             display: 'block',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['round'],
         common: {
             borderRadius: '1000000px',
@@ -135,7 +167,8 @@ module.exports = function (sheetName) {
             borderColor: '$palette.grey200',
             borderWidth: '$border.width',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['kindGeneral', 'notDisabled'],
         common: {
             ':hover': {
@@ -157,7 +190,8 @@ module.exports = function (sheetName) {
             backgroundColor: '$button.color.base.background',
             color: '$button.color.base.color',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['kindBase', 'notDisabled'],
         common: {
             ':hover': {
@@ -177,7 +211,8 @@ module.exports = function (sheetName) {
             backgroundColor: '$color.primary.base',
             color: '$button.color.text.light',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['kindPrimary', 'notDisabled'],
         common: {
             ':hover': {
@@ -195,7 +230,8 @@ module.exports = function (sheetName) {
             backgroundColor: '$color.warning.base',
             color: '$button.color.text.dark',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['kindWarning', 'notDisabled'],
         common: {
             ':hover': {
@@ -213,7 +249,8 @@ module.exports = function (sheetName) {
             backgroundColor: '$color.info.base',
             color: '$button.color.text.light',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['kindInfo', 'notDisabled'],
         common: {
             ':hover': {
@@ -233,7 +270,8 @@ module.exports = function (sheetName) {
             backgroundColor: '$color.danger.base',
             color: '$button.color.text.light',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['kindDanger', 'notDisabled'],
         common: {
             ':hover': {
@@ -253,7 +291,8 @@ module.exports = function (sheetName) {
             backgroundColor: '$color.success.base',
             color: '$button.color.text.light',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['kindSuccess', 'notDisabled'],
         common: {
             ':hover': {
@@ -263,6 +302,31 @@ module.exports = function (sheetName) {
                 backgroundColor: '$color.success.active',
                 color: '$button.color.text.light',
             },
+        },
+    });
+
+    rippleContainer.addSelector({
+        common: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            pointerEvents: 'none',
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
+        },
+    });
+
+    ripple.addSelector({
+        common: {
+            backgroundColor: 'rgba(0,0,0,0.2)',
+            borderRadius: '100%',
+            transform: 'scale(0)',
+            transformOrigin: 'center 50%',
+            display: 'block',
+            position: 'absolute',
+            animation: 'x 850ms ease-out',
+            animationName: rippleAnimation,
         },
     });
 
