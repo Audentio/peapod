@@ -11,21 +11,45 @@ module.exports = class Accordion_Section extends React.Component {
         children: React.PropTypes.any,
     }
 
+    constructor() {
+        super();
+
+        this.state = {
+            open: false,
+            animateClose: false,
+        };
+
+        this.titleClick = this.titleClick.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.active) {
+            this.setState({ open: false, animateClose: true });
+        }
+    }
+    componentWillUnmount() {
+        // setTimeout();
+    }
+
+    titleClick() {
+        this.setState({ open: true });
+        this.props.onTitleClick(this.props.id);
+    }
+
     render() {
         // const { styler, children, ...other } = this.props;
         const style = Pod_Styler.getStyle(this);
 
         // const contentStyle = Object.assign({}, style.content, style.contentLast);
 
-        const content = (this.props.active) ? (<div style={style.content}>{this.props.children}</div>) : '';
+        const content = (this.props.active || this.state.animateClose) ? (<div style={style.content}>{this.props.children}</div>) : '';
 
         return (
             <div style={style.main}>
-                <div style={style.title} onClick={() => {
-                    this.props.onTitleClick(this.props.id);
-                }}
-                >{this.props.title}</div>
-                {content}
+                <div style={style.title} onClick={this.titleClick}>{this.props.title}</div>
+                <div style={style.contentWrap}>
+                    {content}
+                </div>
             </div>
         );
     }
