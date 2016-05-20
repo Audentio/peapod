@@ -7,7 +7,7 @@ module.exports = class ParallaxExample extends React.Component {
         return (
             <Pod.Parallax
                 background={(
-                    <div style={{ width: '100%', height: '100%', backgroundImage: 'url(mrRobot.jpg)', backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
+                    <div style={{ width: '100%', height: '100%', backgroundImage: 'url(demo/bg2.jpg)', backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
                 )}
             >
                 <Pod.Center>
@@ -16,4 +16,4 @@ module.exports = class ParallaxExample extends React.Component {
             </Pod.Parallax>
         );
     }
-}
+};
