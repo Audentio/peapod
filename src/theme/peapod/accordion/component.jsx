@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Pod_Styler from 'styler.js';
-import { Accordian_Section } from 'components.js';
+import { Accordion_Section } from 'components.js';
 
 module.exports = class Accordion extends React.Component {
     static propTypes = {
@@ -36,7 +36,7 @@ module.exports = class Accordion extends React.Component {
         const children = thisChildren.map((child) => {
             console.log(i);
             const html = (
-                <Accordian_Section
+                <Accordion_Section
                     {...child.props}
                     id={i}
                     key={i} // to stop errors
