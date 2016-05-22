@@ -15,6 +15,7 @@
         'WithStatement',
     ],
     'import/no-unresolved': ["off"],
+    'prefer-template': ["off"],
     "indent": ["error", 4],
 
     "react/jsx-indent": ["error", 4],
