@@ -30,6 +30,7 @@ module.exports = class Video extends React.Component {
         this.state = {
             currentTime: 0,
             volume: 100,
+            playing: false,
         };
     }
 
@@ -79,6 +80,8 @@ module.exports = class Video extends React.Component {
     }
 
     swipeHandler = (e) => {
+        if (this.state.playing === false) return;
+
         e.preventDefault();
 
         // Not supported by browser. *cough* IE
@@ -101,12 +104,8 @@ module.exports = class Video extends React.Component {
         }
 
         if (Math.abs(deltaY) > Math.abs(deltaX)) {
-            // if (deltaY < 0) direction = 'UP'
-            // if (deltaY > 0) direction = 'DOWN'
             this.prevAxis = 'Y';
         } else {
-            // if (deltaX < 0) direction = 'LEFT'
-            // if (deltaX > 0) direction = 'RIGHT'
             this.prevAxis = 'X';
         }
 
@@ -221,13 +220,15 @@ module.exports = class Video extends React.Component {
     hoveredState = (e) => {
         this.setState({ main_hovered: (e.type === 'mouseenter') });
     }
+    // -- end
+
     componentDidMount() {
         this.bindEvents();
     }
+
     componentWillUnmount() {
         this.unbindEvents();
     }
-    // -- end
 
     render() {
         const style = Pod_Styler.getStyle(this);
