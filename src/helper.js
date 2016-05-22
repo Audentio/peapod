@@ -148,9 +148,9 @@ const Pod_Helper = {
         let opts = {
             method: 'GET',
             timeout: 3000,
-            cache: false,
+            cache: true,
             headers: {
-                'Content-type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
         };
         opts = _merge(opts, args);
@@ -217,6 +217,7 @@ const Pod_Helper = {
         const reqFilename = opts.url.substring(opts.url.lastIndexOf('/') + 1);
         const reqFilename_clean = (reqFilename.indexOf('?') > 0) ? reqFilename.substr(0, reqFilename.lastIndexOf('?')) : reqFilename;
         Logger.groupCollapsed(`[XHR] %c${opts.method}%c ${reqFilename_clean}`, 'color: blue', 'color: #666');
+        Logger.trace();
         Logger.log(`%cFull URL: %c${opts.url}`, 'font-weight:bold', 'font-weight:normal');
         Logger.log('%cConfig: %o', 'font-weight:bold', opts);
         if (opts.data) Logger.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal');
