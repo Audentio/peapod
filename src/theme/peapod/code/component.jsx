@@ -4,9 +4,7 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Pod_Styler from 'styler.js';
 
 /**
@@ -15,14 +13,19 @@ import Pod_Styler from 'styler.js';
 */
 module.exports = class Code extends React.Component {
 
-	render() {
-		var style = Pod_Styler.getStyle(this);
-		return (
-			<code style={style.main}>
-				{this.props.children}
-			</code>
-		);
+    static propTypes = {
+        children: PropTypes.string,
+    }
 
-	}
+    render() {
+        const style = Pod_Styler.getStyle(this);
+        const { children: code } = this.props;
+
+        return (
+            <code style={style.main}>
+                {code}
+            </code>
+        );
+    }
 
 };
