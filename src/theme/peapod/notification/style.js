@@ -1,12 +1,11 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    wrapper = sheet.addPart('wrapper'),
-    title = sheet.addPart('title'),
-    message = sheet.addPart('message'),
-    dismissIcon = sheet.addPart('dismissIcon');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const wrapper = sheet.addPart('wrapper');
+    const title = sheet.addPart('title');
+    const dismissIcon = sheet.addPart('dismissIcon');
 
     sheet.addCondition('kindGeneral').addStyler({ kind: 'general' });
     sheet.addCondition('kindInfo').addStyler({ kind: 'info' });
@@ -25,10 +24,13 @@ module.exports = function (sheetName) {
         },
     });
 
+    main.addSelector({
+        common: {},
+    });
+
     wrapper.addSelector({
         common: {
             fontSize: '13px',
-            position: 'relative',
             padding: '1.3rem 4rem 1.3rem 1.5rem',
             borderRadius: '$border.radius.large',
             position: 'fixed',
@@ -38,27 +40,32 @@ module.exports = function (sheetName) {
             zIndex: '999',
             color: 'rgba(255,255,255,.8)',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindGeneral',
         common: {
             backgroundColor: '$notification.background.general',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindSuccess',
         common: {
             backgroundColor: '$notification.background.success',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindInfo',
         common: {
             backgroundColor: '$notification.background.info',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindWarning',
         common: {
             backgroundColor: '$notification.background.warning',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindDanger',
         common: {
             backgroundColor: '$notification.background.danger',
