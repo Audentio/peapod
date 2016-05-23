@@ -5,27 +5,28 @@
 */
 
 
-// Dependencies
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Pod_Styler from 'styler.js';
 
 
 /**
-* <Strong>
-*
 * @element Strong
 *
 */
-module.exports = class Strong extends React.Component {
+module.exports = class Strong extends Component {
 
-	render() {
-		let style = Pod_Styler.getStyle(this);
+    static propTypes = {
+        children: PropTypes.any,
+    }
 
-		return (
-			<strong style={[style.main, {fontWeight: 'bold'}]}>
+    render() {
+        const style = Pod_Styler.getStyle(this);
+
+        return (
+            <strong style={[style.main, { fontWeight: 'bold' }]}>
                 {this.props.children}
             </strong>
-		)
-	}
+        );
+    }
 
-}
+};
