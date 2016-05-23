@@ -185,7 +185,5 @@ module.exports = function (sheetName) {
         },
     });
 
-    console.log(sheet);
-
     return sheet;
 };
