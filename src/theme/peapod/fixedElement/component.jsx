@@ -20,12 +20,6 @@ module.exports = class FixedElement extends React.Component {
 
     constructor() {
         super();
-        this.state = {
-            position: 'static',
-            origionalHeight: 0,
-            width: '100%',
-        };
-
         this.onScroll = this.onScroll.bind(this);
     }
 
@@ -50,11 +44,17 @@ module.exports = class FixedElement extends React.Component {
         const elemRectInit = elementInit.getBoundingClientRect();
 
         this.origionalPosition = elemRectInit.top + window.scrollY;
-        this.setState({ // eslint-disable-line react/no-did-mount-set-state
-            origionalHeight: elementInit.scrollHeight,
-        });
+        const origionalHeight = elementInit.scrollHeight;
+        const alwaysFixed = this.origionalPosition === 0 || this.props.alwaysFixed;
 
-        if (this.props.alwaysFixed) {
+        this.state = {
+            position: 'static',
+            origionalHeight,
+            width: '100%',
+            alwaysFixed,
+        };
+
+        if (this.state.alwaysFixed) {
             this.onScroll();
         } else {
             document.addEventListener('scroll', this.onScroll);
@@ -71,7 +71,7 @@ module.exports = class FixedElement extends React.Component {
         const doc = document.documentElement;
         const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-        const positionStyle = (top > this.origionalPosition || this.props.alwaysFixed) ? 'fixed' : 'static';
+        const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'static';
 
         let containerWidth = '100%';
 
