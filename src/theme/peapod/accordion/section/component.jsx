@@ -31,8 +31,8 @@ module.exports = class Accordion_Section extends React.Component {
     }
 
     titleClick() {
-        this.props.onTitleClick(this.props.id);
-        // this.setState({ open: !this.state.open });
+        const thisID = (this.state.open) ? -1 : this.props.id;
+        this.props.onTitleClick(thisID);
     }
 
     render() {

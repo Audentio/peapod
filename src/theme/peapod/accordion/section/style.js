@@ -131,10 +131,9 @@ module.exports = function (sheetName) {
             borderColor: '#ddd',
             borderWidth: '0',
             width: '100%',
-            // transition: 'max-height 0.5s, border-width 0 .5s',
             overflow: 'hidden',
             transitionProperty: 'max-height, border-width',
-            transitionDuration: '0.5s, .5s',
+            transitionDuration: '.3s, .3s',
         },
     }).addSelector({
         condition: ['isLast'],
