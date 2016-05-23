@@ -50,7 +50,7 @@ module.exports = class Card extends React.Component {
         }
 
         return (
-            <div style={style.main}>
+            <div style={style.main} {...this.props}>
                 {actionBarTop}
                 {title}
 
