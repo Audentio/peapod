@@ -27,7 +27,7 @@ if (color.className.indexOf('main') == -1) ret = ret + '\n' + camelize(newLine) 
 console.log(ret);
 */
 
-import { Sheet } from '../../stylesheet.js';
+import { Sheet } from '../../utility/stylesheet.js';
 
 const themeName = 'peapod';
 const themeParent = 'root';

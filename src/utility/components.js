@@ -111,8 +111,8 @@ const ignoreComponents = [
     'Animation',
     'Core',
 ];
-const themeReq = require.context('./theme', true, /theme.js$/);
-const req = require.context('./theme', true, /^\.\/.*\.jsx?$/);
+const themeReq = require.context('../theme', true, /theme.js$/);
+const req = require.context('../theme', true, /^\.\/.*\.jsx?$/);
 
 init('peapod', ignoreComponents, themeReq, req);
 
