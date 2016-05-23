@@ -16,7 +16,6 @@ const enhance = ComposedComponent => class extends Component {
 
     render() {
         const component = <ComposedComponent {...this.props} />;
-        console.log(Lazy);
         const wrapped = (this.props.lazy) ?
             <Lazy>{component}</Lazy> :
             component;

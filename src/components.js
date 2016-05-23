@@ -7,11 +7,11 @@ import Logger from 'logger';
 
 module.exports = {
     Examples: {},
+    Wrapper: wrapper,
 };
 
 window.Pod = {
     options: {},
-    wrapper,
 };
 
 const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {

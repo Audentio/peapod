@@ -11,7 +11,7 @@ module.exports = class Accordion extends React.Component {
     static propTypes = {
         children: React.PropTypes.any,
     }
-
+    
     constructor() {
         super();
 
