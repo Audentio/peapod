@@ -3,7 +3,6 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import { merge as _merge } from 'lodash';
 import Logger from 'logger.js';
 
 const Pod_Helper = {
@@ -153,7 +152,7 @@ const Pod_Helper = {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         };
-        opts = _merge(opts, args);
+        opts = Object.assign({}, opts, args);
 
         if (!opts.url) throw new Error('[XHR] url must be defined');
 
@@ -223,6 +222,7 @@ const Pod_Helper = {
         if (opts.data) Logger.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal');
         Logger.groupEnd(`[XHR] ${opts.method} ${opts.url}`);
 
+        console.log(opts.data)
         xmlhttp.send(opts.data);
     },
 
@@ -242,14 +242,16 @@ const Pod_Helper = {
                 case 'hidden':
                 case 'password':
                 case 'button':
-                case 'reset':
+                case 'date':
                 case 'submit':
                     q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].value)}`);
                     break;
                 case 'checkbox':
                 case 'radio':
                     if (form.elements[i].checked) {
-                        q.push(`${form.elements[i].name}=${encodeURIComponent(form.elements[i].value)}`);
+                        let value = form.elements[i].value;
+                        value = (value === 'on') ? 1 : 0;
+                        q.push(`${form.elements[i].name}=${encodeURIComponent(value)}`);
                     }
                     break;
                 case 'file':
@@ -402,4 +404,4 @@ const Pod_Helper = {
 
 window.Pod_Helper = Pod_Helper;
 
-export default Pod_Helper;
+module.exports = Pod_Helper;
