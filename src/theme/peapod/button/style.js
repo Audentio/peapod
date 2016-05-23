@@ -180,10 +180,6 @@ module.exports = function (sheetName) {
     });
 
 
-
-
-
-
     for (let index in buttons) {
         const conditionName = `kind${index.charAt(0).toUpperCase() + index.slice(1)}`;
 

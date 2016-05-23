@@ -26,5 +26,6 @@
     "func-names": "off",
     'no-trailing-spaces': "off",
     'react/jsx-pascal-case': 'off',
+    "ignoreChainWithDepth": ['off', 20],
   }
 }
