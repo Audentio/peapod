@@ -82,7 +82,7 @@ module.exports = class ListExample extends React.Component {
                         <Pod.Card_Section styler={{ kind: 'title-small' }}>
                             <Pod.Heading kind="h6" styler={{ secondary: true }}>List with large images</Pod.Heading>
                         </Pod.Card_Section>
-
+                        
                         <Pod.List>
                             <Pod.List_Item image={'assets/media/image.png'} styler={{ imgSize: 'large' }}>Item #1</Pod.List_Item>
                             <Pod.List_Item image={'assets/media/image.png'} styler={{ imgSize: 'large' }}>Item #2</Pod.List_Item>
