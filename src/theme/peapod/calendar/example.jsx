@@ -6,7 +6,7 @@ module.exports = class AccordionExample extends React.Component {
     render() {
         return (
             <Pod.ContentWrap>
-                Example
+                <Pod.Calendar />
             </Pod.ContentWrap>
         );
     }

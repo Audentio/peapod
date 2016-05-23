@@ -1,9 +1,10 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName);
-    var main = sheet.addMain();
-    var button = sheet.addPart('button');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const button = sheet.addPart('button');
+    const icon = sheet.addPart('icon');
 
     // Variables
     sheet.setValues({});
@@ -34,6 +35,17 @@ module.exports = function (sheetName) {
             display: 'block',
             float:'left',
             textDecoration: 'none',
+            position: 'relative',
+        },
+    });
+
+    icon.addSelector({
+        common: {
+            fontSize: '2em',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translateX(-50%) translateY(-50%)',
         },
     });
 
