@@ -46,14 +46,14 @@ module.exports = function (sheetName) {
     });
     stepTitle.addSelector({
         common: {
-            padding: '5px',
+            padding: '5px 8px 5px 0',
             display: 'inline-block',
             textAlign: 'left',
         },
     }).addSelector({
         condition: ['hasSubTitle'],
         common: {
-            padding: '0 5px',
+            padding: '0 8px 0 0',
             display: 'inline-block',
             textAlign: 'left',
         },
@@ -74,8 +74,8 @@ module.exports = function (sheetName) {
             textAlign: 'center',
             background: '#9E9E9E',
             color: 'white',
-            marginLeft: '5px',
-            marginRight: '5px',
+            marginLeft: '8px',
+            marginRight: '8px',
             verticalAlign: 'top',
             // ':hover': {
             //     background: '$palette.blue400',

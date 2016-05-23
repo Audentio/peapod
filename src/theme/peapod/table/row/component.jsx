@@ -25,6 +25,7 @@ module.exports = class Table_Row extends React.Component {
     }
 
 	render() {
+
 		var row = this.props.row,
 			rowKey = this.props.rowKey,
 			i = this.props.i,

@@ -1,6 +1,6 @@
-
 import radium from 'radium';
 import React, { Component } from 'react';
+import Lazy from 'theme/peapod/lazy/component.jsx';
 
 const enhance = ComposedComponent => class extends Component {
     constructor(...args) {
@@ -15,7 +15,12 @@ const enhance = ComposedComponent => class extends Component {
     }
 
     render() {
-        return <ComposedComponent {...this.props} />;
+        const component = <ComposedComponent {...this.props} />;
+        const wrapped = (this.props.lazy) ?
+            <Lazy>{component}</Lazy> :
+            component;
+
+        return wrapped;
     }
 };
 
