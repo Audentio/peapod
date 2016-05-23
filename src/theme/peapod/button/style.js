@@ -14,6 +14,8 @@ module.exports = function (sheetName) {
     sheet.addCondition('round').addStyler({ round: true });
     sheet.addCondition('disabled').addStyler({ disabled: true });
     sheet.addCondition('notDisabled').addStyler({ disabled: undefined });
+    sheet.addCondition('dense').addStyler({ dense: true });
+    sheet.addCondition('dialog').addStyler({ dialog: true });
 
     sheet.addCondition('icon').addStyler({ type: 'icon' });
     sheet.addCondition('text').addStyler({ type: 'text' });
@@ -49,11 +51,14 @@ module.exports = function (sheetName) {
             width: '$border.width',
             style: '$border.style',
         },
-        height: '32px',
+        height: '36px',
+        denseHeight: '32px',
         lineHeight: '$button.height',
+        denseLineHeight: '$button.denseHeight',
         font: {
             family: '$font.family.primary',
-            size: '$font.size.button',
+            size: '14px',
+            denseSize: '13px',
             weight: '$font.weight.medium',
         },
         transition: {
@@ -80,16 +85,36 @@ module.exports = function (sheetName) {
             lineHeight: '$button.lineHeight',
             paddingTop: '0px',
             paddingBottom: '0px',
-            paddingLeft: '$gutter.extrasmall',
-            paddingRight: '$gutter.extrasmall',
+            paddingLeft: '$gutter.internal',
+            paddingRight: '$gutter.internal',
             height: '$button.height',
             textAlign: 'center',
             outline: 'none',
             userSelect: 'none',
             verticalAlign: 'bottom',
 
+            minWidth: '88px',
+
             color: '$button.color.base.color',
             backgroundColor: '$button.color.base.background',
+        },
+    })
+    .addSelector({
+        condition: ['dense'],
+        common: {
+            height: '$button.denseHeight',
+            lineHeight: '$button.denseLineHeight',
+            fontSize: '$button.font.denseSize',
+        },
+    })
+    .addSelector({
+        condition: ['dialog'],
+        common: {
+            paddingLeft: '$gutter.extrasmall',
+            paddingRight: '$gutter.extrasmall',
+            marginLeft: '$gutter.extrasmall',
+            marginRight: '$gutter.extrasmall',
+            minWidth: '64px',
         },
     })
     .addSelector({
@@ -116,6 +141,7 @@ module.exports = function (sheetName) {
             paddingBottom: '0px',
             paddingLeft: '4px',
             paddingRight: '4px',
+            minWidth: 'auto',
             color: '$button.color.base.background',
             background: 'transparent',
             fontSize: '$font.size.headline',

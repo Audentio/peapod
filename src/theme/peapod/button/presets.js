@@ -23,7 +23,7 @@ const buttons = {
 
         hover: {
             primary: '$color.primary.hover',
-            secondary: '$button.color.text.light',
+            secondary: '$button.color.text.dark',
         },
     },
     warning: {
@@ -59,7 +59,7 @@ const buttons = {
 
         hover: {
             primary: '$color.success.hover',
-            secondary: '$button.color.text.light',
+            secondary: '$button.color.text.dark',
         },
     },
 };
