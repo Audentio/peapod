@@ -25,11 +25,14 @@ module.exports = class FixedElement extends React.Component {
             origionalHeight: 0,
             width: '100%',
         };
+
+        this.onScroll = this.onScroll.bind(this);
     }
 
     static propTypes = {
         onScroll: React.PropTypes.bool,
         containerWidth: React.PropTypes.bool,
+        alwaysFixed: React.PropTypes.bool,
         children: React.PropTypes.any,
     }
 
@@ -51,50 +54,34 @@ module.exports = class FixedElement extends React.Component {
             origionalHeight: elementInit.scrollHeight,
         });
 
-        document.addEventListener('scroll', () => {
-            const element = this.fixedElem;
-            const elemRect = element.getBoundingClientRect();
+        if (this.props.alwaysFixed) {
+            this.onScroll();
+        } else {
+            document.addEventListener('scroll', this.onScroll);
+        }
 
-            this.origionalPosition = elemRect.top + window.scrollY;
-            const doc = document.documentElement;
-            const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+        window.addEventListener('resize', this.onScroll);
+    }
 
-            const positionStyle = (top > this.origionalPosition) ? 'fixed' : 'static';
+    onScroll() {
+        const element = this.fixedElem;
+        const elemRect = element.getBoundingClientRect();
 
-            if (this.state.position !== positionStyle) {
-                let containerWidth = '100%';
+        this.origionalPosition = elemRect.top + window.scrollY;
+        const doc = document.documentElement;
+        const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-                if (this.props.containerWidth) {
-                    containerWidth = element.offsetWidth;
-                }
+        const positionStyle = (top > this.origionalPosition || this.props.alwaysFixed) ? 'fixed' : 'static';
 
-                this.setState({
-                    position: positionStyle,
-                    width: containerWidth,
-                });
-            }
-        });
+        let containerWidth = '100%';
 
-        window.addEventListener('resize', () => {
-            const element = this.fixedElem;
-            const elemRect = element.getBoundingClientRect();
+        if (this.props.containerWidth) {
+            containerWidth = element.offsetWidth;
+        }
 
-            this.origionalPosition = elemRect.top + window.scrollY;
-            const doc = document.documentElement;
-            const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-
-            const positionStyle = (top > this.origionalPosition) ? 'fixed' : 'static';
-
-            let containerWidth = '100%';
-
-            if (this.props.containerWidth) {
-                containerWidth = element.offsetWidth;
-            }
-
-            this.setState({
-                position: positionStyle,
-                width: containerWidth,
-            });
+        this.setState({
+            position: positionStyle,
+            width: containerWidth,
         });
     }
 
@@ -113,7 +100,7 @@ module.exports = class FixedElement extends React.Component {
 
         if (this.props.onScroll) {
             return (
-                <div style={fixedStyle} ref={(ref) => this.fixedElem = ref}>
+                <div style={fixedStyle} ref={(ref) => { this.fixedElem = ref; }}>
                     <div style={style.main} >
                         {this.props.children}
                     </div>

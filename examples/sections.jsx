@@ -58,7 +58,7 @@ export default class Sections extends React.Component {
                 <Pod.Pane>
                     <Pod.Grid>
                         <Pod.Grid_Cell styler={{ style: { padding: '10px 20px 10px 10px' }, md: 12, lg: 3, xl: 2 }}>
-                            <Pod.FixedElement containerWidth>
+                            <Pod.FixedElement containerWidth alwaysFixed>
                                 <Pod.Card styler={{ style: { width: '100%' } }}>
 
                                     <Pod.Card_Section styler={{ kind: 'title-small' }}>
