@@ -4,8 +4,7 @@
 * LICENSE: <%= package.licence %>
 */
 
-// Dependencies
-import React from 'react';
+import React, { Component } from 'react';
 import Pod_Styler from 'styler.js';
 
 /**
@@ -14,13 +13,14 @@ import Pod_Styler from 'styler.js';
 * @element Pod_hr
 *
 */
-module.exports = class Hr extends React.Component {
+module.exports = class Hr extends Component {
 
     render() {
-        const style = Pod_Styler.getStyle(this)
+        const style = Pod_Styler.getStyle(this);
+
         return (
             <hr style={style.main} />
-        )
+        );
     }
 
-}
+};

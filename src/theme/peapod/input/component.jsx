@@ -6,10 +6,11 @@
 
 
 // Dependencies
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Pod_Styler from 'styler';
 import { Icon } from 'components';
 import PureRender from 'pureRender';
+import shallowEqual from 'shallowequal';
 
 /**
 * Multipurpose Input component
@@ -28,14 +29,14 @@ module.exports = class Input extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        this.onChangeCallback = this.props.onChange;
+        const { placeholder, charLimit, value } = props;
 
-        const charCounter = (this.props.charLimit > 0) ? `${this.props.value.length}/${this.props.charLimit}` : this.props.value.length;
+        const charCounter = (charLimit > 0) ? `${value.length}/${charLimit}` : value.length;
 
         this.state = {
-            value: this.props.value,
+            value,
             focus: false,
-            placeholder: (this.props.value && this.props.value.length > 1) ? '' : this.props.placeholder,
+            placeholder: (value && value.length > 1) ? '' : placeholder,
             charCounter,
             evaluation: null, // validation state
         };
@@ -57,7 +58,7 @@ module.exports = class Input extends React.Component {
     }
 
     static propTypes = {
-        type: React.PropTypes.oneOf([
+        type: PropTypes.oneOf([
             'text',
             'textarea',
             'password',
@@ -67,23 +68,43 @@ module.exports = class Input extends React.Component {
             'hidden',
             'date',
         ]),
-        name: React.PropTypes.string,
-        value: React.PropTypes.string,
-        placeholder: React.PropTypes.string,
-        required: React.PropTypes.bool,
-        validate: React.PropTypes.oneOfType([
-            React.PropTypes.func,
-            React.PropTypes.bool,
+        orphan: PropTypes.bool,
+        name: PropTypes.string,
+        value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
         ]),
-        icon: React.PropTypes.string,
-        charLimit: React.PropTypes.number,
-        callback: React.PropTypes.func,
-        showCounter: React.PropTypes.bool,
-        validationResponse: React.PropTypes.object,
-        onChange: React.PropTypes.func,
+        placeholder: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.bool,
+        ]),
+        required: PropTypes.bool,
+        validate: PropTypes.oneOfType([
+            PropTypes.func,
+            PropTypes.bool,
+        ]),
+        icon: PropTypes.string,
+        charLimit: PropTypes.number,
+        callback: PropTypes.func,
+        showCounter: PropTypes.bool,
+        validationResponse: PropTypes.object,
+        onChange: PropTypes.func,
+    }
+
+    submitHandler = (e) => {
+        if (!this.props.onSubmit) return;
+
+        const input = e.target;
+        if (e.charCode === Pod_Helper.keymap.ENTER) {
+            e.preventDefault();
+            this.props.onSubmit({
+                value: input.value
+            })
+        }
     }
 
     componentWillReceiveProps(nextProps) {
+        if (!shallowEqual(this.props, nextProps)) return;
         this.onChangeHandler(nextProps.value, false);
     }
 
@@ -125,7 +146,8 @@ module.exports = class Input extends React.Component {
     }
 
     onChangeHandler = (e, cb = true) => {
-        const value = (typeof e === 'object') ? e.target.value : e.toString();
+        if (e === null) return;
+        const value = (typeof e === 'object') ? e.target.value : e;
         const placeholder = (value.length > 0) ? '' : this.props.placeholder;
         const callback = this.props.callback || function () { };
         const charCounter = (this.props.charLimit > 0) ? `${value.length}/${this.props.charLimit}` : value.length;
@@ -138,11 +160,11 @@ module.exports = class Input extends React.Component {
 
         if (cb === true) callback(value);
 
-        if (this.onChangeCallback) {
-            this.onChangeCallback({
+        if (this.props.onChange) {
+            this.props.onChange({
                 value,
                 isValid,
-            });
+            }, this.props.name);
         }
 
         this.setState({
@@ -162,7 +184,7 @@ module.exports = class Input extends React.Component {
         let isValid = true;
 
         // autofix missing protocol
-        // http is assumed
+        // http is assume
         if (this.props.type === 'url' && // URL type input
             this.props.validate !== false && // validation enabled
             this.state.value && this.state.value.length > 0 &&  // Value is non-empty & has a dot
@@ -176,22 +198,24 @@ module.exports = class Input extends React.Component {
             isValid = this.validate();
         }
 
-        if (this.onChangeCallback) {
-            this.onChangeCallback({
+        if (this.props.onChange) {
+            this.props.onChange({
                 value: this.state.value,
                 isValid,
-            });
+            }, this.props.name);
         }
     }
 
     render() {
         const style = Pod_Styler.getStyle(this);
+        const placeholder = (this.props.placeholder === true) ? this.props.name : this.props.placeholder;
 
         // Message to show in response box
         const validationResponse = this.props.validationResponse[this.state.evaluation];
         const input_markup = (this.props.type === 'textarea') ?
             <textarea
                 name={this.props.name}
+                onKeyPress={this.submitHandler}
                 style={style.input}
                 value={this.state.value}
                 required={this.props.required}
@@ -203,10 +227,12 @@ module.exports = class Input extends React.Component {
             :
             <input
                 name={this.props.name}
+                onKeyPress={this.submitHandler}
                 type={this.props.type}
                 style={style.input}
                 value={this.state.value}
                 required={this.props.required}
+                autoComplete="off"
 
                 onChange={this.onChangeHandler}
                 onFocus={this.onFocus}
@@ -215,13 +241,12 @@ module.exports = class Input extends React.Component {
 
         return (
             <div style={style.main}>
-
                 {this.props.icon &&
                     <Icon style={style.icon}>{this.props.icon}</Icon>
                 }
 
                 {this.state.placeholder &&
-                    <span style={style.placeholder}>{this.props.placeholder}</span>
+                    <span style={style.placeholder}>{placeholder}</span>
                 }
 
                 {input_markup}

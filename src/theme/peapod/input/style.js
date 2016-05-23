@@ -1,18 +1,15 @@
 import { Sheet } from 'stylesheet.js';
 import Radium from 'radium';
-import color from 'color';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    input = sheet.addPart('input'),
-    placeholder = sheet.addPart('placeholder'),
-    label = sheet.addPart('label'),
-    icon = sheet.addPart('icon'),
-    charCounter = sheet.addPart('charCounter'),
-    evaluation = sheet.addPart('evaluation');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const input = sheet.addPart('input');
+    const placeholder = sheet.addPart('placeholder');
+    const charCounter = sheet.addPart('charCounter');
+    const evaluation = sheet.addPart('evaluation');
 
-    var bouncy = {
+    const bouncy = {
         '0%': { transform: 'matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
         '3.4%': { transform: 'matrix3d(0.658, 0, 0, 0, 0, 0.703, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
         '4.7%': { transform: 'matrix3d(0.725, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
@@ -41,9 +38,7 @@ module.exports = function (sheetName) {
         '100%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
     };
 
-    var bounceKeyframes1 = Radium.keyframes(bouncy, 'bounce1');
-    var bounceKeyframes2 = Radium.keyframes(bouncy, 'bounce2');
-    var bounceKeyframes3 = Radium.keyframes(bouncy, 'bounce3');
+    const bounceKeyframes = Radium.keyframes(bouncy, 'bounce');
 
     sheet.addCondition('focused').addState({ focus: true });
     sheet.addCondition('type-textarea').addProp({ type: 'textarea' });
@@ -78,7 +73,7 @@ module.exports = function (sheetName) {
         border: {
             color: '$palette.blue400',
             radius: '0px',
-            width: '0px 0px 1px 0px',
+            width: '0px 0px 2px',
             style: 'solid',
         },
         font: {
@@ -113,39 +108,43 @@ module.exports = function (sheetName) {
             position: 'relative',
             color: '$input.color.text',
             backgroundColor: '$input.color.background',
-            // borderWidth: '$input.border.width',
-            borderBottomWidth: '2px', // above doesn't work for some reason
+            borderWidth: '0px 0px 2px', // @kyler using a variable here breaks it
             borderStyle: '$input.border.style',
             borderColor: '$palette.grey300',
             borderRadius: '$input.border.radius',
             marginBottom: '$gutter.extrasmall',
             transition: 'border-color 100ms',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'type-textarea',
         common: {
             display: 'block',
             width: '500px',
             height: 'auto',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['type-textarea', 'showCounter'],
         common: {
             marginBottom: 30,
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'focused',
         common: {
             borderColor: '$color.primary.base',
             borderWidth: '0px 0px 2px 0px',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'evaluation-valid',
         common: {
             backgroundColor: 'transparent',
             borderColor: '$color.success.base',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: ['evaluation-invalid'],
         common: {
             backgroundColor: 'transparent',
@@ -198,7 +197,6 @@ module.exports = function (sheetName) {
 
     placeholder.addSelector({
         common: {
-            height: '$input.height',
             lineHeight: '$input.height',
             position: 'absolute',
             width: '100%',
@@ -214,7 +212,8 @@ module.exports = function (sheetName) {
             fontSize: '$font.size.large',
             transition: 'padding 100ms',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'type-textarea',
         common: {
             lineHeight: 'normal',
@@ -222,7 +221,8 @@ module.exports = function (sheetName) {
             paddingTop: '$input.textareaPadding.top',
             paddingBottom: '$input.textareaPadding.bottom',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'focused',
         common: {
             paddingLeft: '0px',
@@ -245,25 +245,28 @@ module.exports = function (sheetName) {
             // fontWeight: 'bold',
             whiteSpace: 'nowrap',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'evaluation-invalid',
         common: {
             animation: 'x 500ms 0s 1',
-            animationName: bounceKeyframes1,
+            animationName: bounceKeyframes,
             color: '$color.danger.base',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'evaluation-empty',
         common: {
             animation: 'x 500ms 0s 1',
-            animationName: bounceKeyframes2,
+            animationName: bounceKeyframes,
             color: '$color.danger.base',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'evaluation-valid',
         common: {
             animation: 'x 500ms 0s 1',
-            animationName: bounceKeyframes3,
+            animationName: bounceKeyframes,
             color: '$color.success.base',
         },
     });

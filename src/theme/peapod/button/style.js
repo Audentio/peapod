@@ -24,20 +24,6 @@ module.exports = function (sheetName) {
     sheet.addCondition('kindDanger').addStyler({ kind: 'danger' });
     sheet.addCondition('kindSuccess').addStyler({ kind: 'success' });
 
-/*
-    const rippleSteps = {
-        '0%': {
-            transform: 'scale(0)',
-        },
-        '20%': {
-            transform: 'scale(1)',
-        },
-        '100%': {
-            opacity: 0,
-            transform: 'scale(1)',
-        },
-    };*/
-
     const rippleSteps = {
         '100%': {
             borderRadius: '100%',
@@ -89,9 +75,8 @@ module.exports = function (sheetName) {
             borderRadius: '$button.border.radius',
             border: 'none',
             position: 'relative',
-            // borderStyle: '$button.border.style',
-            // borderColor: '$button.border.color',
-
+            overflow: 'hidden', // prevent ripple overflow
+            WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // webkit bug with overflow & borderRadius
             textDecoration: 'none',
             textTransform: 'uppercase',
             fontFamily: '$button.font.family',
@@ -105,6 +90,7 @@ module.exports = function (sheetName) {
             height: '$button.height',
             textAlign: 'center',
             outline: 'none',
+            userSelect: 'none',
 
             color: '$button.color.base.color',
             backgroundColor: '$button.color.base.background',
@@ -126,11 +112,10 @@ module.exports = function (sheetName) {
         condition: ['notDisabled'],
         common: {
             cursor: 'pointer',
-            /*
-            ':active': {
-                transform: 'scale({$button.transition.scale})',
-                transitionDuration: '$button.transition.duration',
-            },*/
+            // ':active': {
+            //     transform: 'scale({$button.transition.scale})',
+            //     transitionDuration: '$button.transition.duration',
+            // },
         },
     })
     .addSelector({
@@ -155,7 +140,7 @@ module.exports = function (sheetName) {
     .addSelector({
         condition: ['round'],
         common: {
-            borderRadius: '1000000px',
+            borderRadius: '1000px',
         },
     })
 
@@ -176,11 +161,11 @@ module.exports = function (sheetName) {
                 borderColor: '$palette.grey300',
                 color: '$button.color.text.dark',
             },
-            ':active': {
-                backgroundColor: '$color.general.active',
-                borderColor: '$palette.grey400',
-                color: '$button.color.text.dark',
-            },
+            // ':active': {
+            //     backgroundColor: '$color.general.active',
+            //     borderColor: '$palette.grey400',
+            //     color: '$button.color.text.dark',
+            // },
         },
     })
 
@@ -198,10 +183,10 @@ module.exports = function (sheetName) {
                 backgroundColor: '$button.color.base.hover',
                 color: '$button.color.text.light',
             },
-            ':active': {
-                backgroundColor: '$button.color.base.active',
-                color: '$button.color.text.light',
-            },
+            // ':active': {
+            //     backgroundColor: '$button.color.base.active',
+            //     color: '$button.color.text.light',
+            // },
         },
     })
 
@@ -218,9 +203,9 @@ module.exports = function (sheetName) {
             ':hover': {
                 backgroundColor: '$color.primary.hover',
             },
-            ':active': {
-                backgroundColor: '$color.primary.active',
-            },
+            // ':active': {
+            //     backgroundColor: '$color.primary.active',
+            // },
         },
     })
 
@@ -237,9 +222,9 @@ module.exports = function (sheetName) {
             ':hover': {
                 backgroundColor: '$color.warning.hover',
             },
-            ':active': {
-                backgroundColor: '$color.warning.active',
-            },
+            // ':active': {
+            //     backgroundColor: '$color.warning.active',
+            // },
         },
     })
 
@@ -257,10 +242,10 @@ module.exports = function (sheetName) {
                 backgroundColor: '$color.info.hover',
                 color: '$button.color.text.dark',
             },
-            ':active': {
-                backgroundColor: '$color.info.active',
-                color: '$button.color.text.light',
-            },
+            // ':active': {
+            //     backgroundColor: '$color.info.active',
+            //     color: '$button.color.text.light',
+            // },
         },
     })
 
@@ -278,10 +263,10 @@ module.exports = function (sheetName) {
                 backgroundColor: '$color.danger.hover',
                 color: '$button.color.text.dark',
             },
-            ':active': {
-                backgroundColor: '$color.danger.active',
-                color: '$button.color.text.light',
-            },
+            // ':active': {
+            //     backgroundColor: '$color.danger.active',
+            //     color: '$button.color.text.light',
+            // },
         },
     })
 
@@ -298,10 +283,10 @@ module.exports = function (sheetName) {
             ':hover': {
                 backgroundColor: '$color.success.hover',
             },
-            ':active': {
-                backgroundColor: '$color.success.active',
-                color: '$button.color.text.light',
-            },
+            // ':active': {
+            //     backgroundColor: '$color.success.active',
+            //     color: '$button.color.text.light',
+            // },
         },
     });
 
@@ -313,7 +298,12 @@ module.exports = function (sheetName) {
             pointerEvents: 'none',
             width: '100%',
             height: '100%',
-            overflow: 'hidden',
+        },
+    })
+    .addSelector({
+        condition: 'disabled',
+        common: {
+            display: 'none',
         },
     });
 

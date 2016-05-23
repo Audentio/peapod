@@ -31,8 +31,9 @@ module.exports = class Checkbox extends React.Component {
 		}
 	}
 
-	onChangeHandler(e){
-		if (typeof(this.props.onChange) !== 'undefined') this.props.onChange(e.target.checked);
+	onChangeHandler = (e) => {
+        const value = (e.target.checked) ? 1 : 0;
+		if (typeof this.props.onChange !== 'undefined') this.props.onChange({ value }, this.props.name);
 
 		this.setChecked(e.target.checked);
 	}
@@ -74,7 +75,7 @@ module.exports = class Checkbox extends React.Component {
 			<div style={style.main}>
 				<label style={style.wrapper}>
 					<span style={style.box}>
-						<input style={style.input} onChange={this.onChangeHandler.bind(this)} className="Pod_checkbox__input" type="checkbox" checked={this.state.checked} />
+						<input name={this.props.name} style={style.input} onChange={this.onChangeHandler} className="Pod_checkbox__input" type="checkbox" checked={this.state.checked} />
 						<span style={style.innerBox}></span>
 						{icon}
 					</span>

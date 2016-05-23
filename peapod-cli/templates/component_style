@@ -1,14 +1,14 @@
-import { Sheet } from 'stylesheet.js'
+import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName)
-    const main = sheet.addMain()
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     main.addSelector({
         common: {
-
+            /* Your Style */
         },
-    })
+    });
 
     return sheet;
-}
+};

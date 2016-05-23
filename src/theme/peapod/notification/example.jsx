@@ -31,4 +31,4 @@ module.exports = class NotificationExample extends React.Component {
             </div>
         );
     }
-}
+};

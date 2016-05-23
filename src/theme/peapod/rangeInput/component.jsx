@@ -3,8 +3,8 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React from 'react';
-import Pod_Styler from 'styler.js';
+import React, { Component, PropTypes } from 'react';
+import Pod_Styler from 'styler';
 import shallowCompare from 'react-addons-shallow-compare';
 
 /**
@@ -12,7 +12,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 * RangeInput description
 *
 */
-module.exports = class RangeInput extends React.Component {
+module.exports = class RangeInput extends Component {
 
     constructor(props, state) {
         super(props, state);
@@ -28,14 +28,14 @@ module.exports = class RangeInput extends React.Component {
     }
 
     static propTypes = {
-        name: React.PropTypes.string,
-        value: React.PropTypes.oneOfType([
-            React.PropTypes.number,
-            React.PropTypes.array,
+        name: PropTypes.string,
+        value: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.array,
         ]),
-        min: React.PropTypes.number,
-        max: React.PropTypes.number,
-        step: React.PropTypes.number,
+        min: PropTypes.number,
+        max: PropTypes.number,
+        step: PropTypes.number,
     }
 
     static defaultProps = {
@@ -66,7 +66,8 @@ module.exports = class RangeInput extends React.Component {
         e.preventDefault();
         const track = this.refs.track;
         const track_left = track.getBoundingClientRect().left;
-        let handle_left = e.clientX - track_left;
+        const clientX = (e.touches === undefined) ? e.clientX : e.touches[0].clientX;
+        let handle_left = clientX - track_left;
 
         if (handle_left < 0) handle_left = 0;
         if (handle_left > track.offsetWidth) handle_left = track.offsetWidth;
@@ -78,15 +79,19 @@ module.exports = class RangeInput extends React.Component {
         e.preventDefault();
 
         this.updateHandle(e.clientX - this.refs.track.getBoundingClientRect().left);
-        this.startListening();
+        this.startListening(e);
     }
 
-    startListening = () => {
+    startListening = (e) => {
+        this.movementListener(e);
+
         this.setState({
             handleActive: true,
         });
         window.addEventListener('mousemove', this.movementListener);
         window.addEventListener('mouseup', this.stopListening);
+        window.addEventListener('touchmove', this.movementListener);
+        window.addEventListener('touchend', this.stopListening);
     }
 
     stopListening = () => {
@@ -95,6 +100,8 @@ module.exports = class RangeInput extends React.Component {
         });
         window.removeEventListener('mousemove', this.movementListener);
         window.removeEventListener('mouseup', this.stopListening);
+        window.removeEventListener('touchmove', this.movementListener);
+        window.removeEventListener('touchend', this.stopListening);
 
         // update input, finally
         this.refs.input.value = this.state.value;
@@ -102,12 +109,16 @@ module.exports = class RangeInput extends React.Component {
 
     componentDidMount() {
         this.refs.handle.addEventListener('mousedown', this.startListening);
+        this.refs.handle.addEventListener('touchstart', this.startListening);
         this.refs.container.addEventListener('mousedown', this.trackHandler);
+        this.refs.container.addEventListener('touchstart', this.trackHandler);
     }
 
     componentWillUnmount() {
         this.refs.handle.removeEventListener('mousedown', this.startListening);
         this.refs.container.removeEventListener('mousedown', this.trackHandler);
+        this.refs.handle.removeEventListener('touchstart', this.startListening);
+        this.refs.container.removeEventListener('touchstart', this.trackHandler);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -127,6 +138,7 @@ module.exports = class RangeInput extends React.Component {
                     <input ref="input" type="text" style={style.input} name={this.props.name} defaultValue={this.props.value} />
                     <div ref="handle" style={[style.handle, { left: this.state.handleLeft }]}></div>
                 </div>
+
                 {this.state.value}
             </div>
         );

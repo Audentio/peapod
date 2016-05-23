@@ -5,10 +5,10 @@
 */
 
 
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import Pod_Styler from 'styler';
 
-module.exports = class Button extends React.Component {
+class Button extends Component {
 
     // Validate props
     static propTypes = {
@@ -26,61 +26,66 @@ module.exports = class Button extends React.Component {
         noRipple: false,
     }
 
+    onClickHandler = (e) => {
+        const { onClick, noRipple } = this.props;
+
+        if (noRipple === false) {
+            this.ripple(e.clientX, e.clientY);
+        }
+
+        if (onClick) onClick(e);
+    }
+
     ripple(clientX, clientY) {
         const style = Pod_Styler.getStyle(this);
         const ripples = this.state.ripples || [];
-        const size = this.refs.rippleContainer.offsetWidth;
-        const containerX = this.refs.rippleContainer.getBoundingClientRect().left;
-        const containerY = this.refs.rippleContainer.getBoundingClientRect().top;
-
-        if (this.rippleCount === undefined) this.rippleCount = 0;
-        if (this.rippleCount === undefined) this.rippleCount = 0;
+        const containerRect = this.refs.rippleContainer.getBoundingClientRect();
+        const rippleSize = containerRect.width;
 
         const calculatedStyle = {
-            width: size,
-            height: size,
-            top: clientY - containerY - (size / 2),
-            left: clientX - containerX - (size / 2),
+            width: rippleSize,
+            height: rippleSize,
+            top: clientY - containerRect.top - (rippleSize / 2),
+            left: clientX - containerRect.left - (rippleSize / 2),
         };
 
+        if (this.rippleCount === undefined) this.rippleCount = 0;
+
         ripples.push(<span key={this.rippleCount} style={[style.ripple, calculatedStyle]}></span>);
+
         this.rippleCount++;
 
         this.setState({ ripples });
 
+        // Remove ripple
         setTimeout(() => {
             ripples.splice(0, 1);
             this.setState({ ripples });
         }, 1000);
     }
 
-    onClickHandler = (e) => {
-        if (this.props.onClick) this.props.onClick(e);
-
-        if (this.props.noRipple === false) {
-            this.ripple(e.clientX, e.clientY);
-        }
-    }
-
     render() {
         const style = Pod_Styler.getStyle(this);
         const ripple = <span ref="rippleContainer" style={style.rippleContainer}>{this.state.ripples}</span>;
+        const { children, label, href } = this.props;
 
         // Anchor tag <a> if href specified
-        if (this.props.href) {
+        if (href) {
             return (
-                <a href={this.props.href} style={style.main} onClick={this.onClickHandler}>
-                    {this.props.children || this.props.label} {ripple}
+                <a ref="button" href={href} style={style.main} onClick={this.onClickHandler}>
+                    {children || label} {ripple}
                 </a>
             );
         }
 
         // Default: <button> tag
         return (
-            <button style={style.main} onClick={this.onClickHandler}>
-                {this.props.children || this.props.label} {ripple}
+            <button ref="button" style={style.main} onClick={this.onClickHandler}>
+                {children || label} {ripple}
             </button>
         );
     }
 
-};
+}
+
+module.exports = Button;

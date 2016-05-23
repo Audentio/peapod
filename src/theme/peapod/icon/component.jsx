@@ -3,9 +3,9 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React from 'react';
-import Pod_Helper from 'helper.js'
-import Pod_Styler from 'styler.js';
+import React, { Component, PropTypes } from 'react';
+import Pod_Helper from 'helper';
+import Pod_Styler from 'styler';
 
 
 /**
@@ -16,15 +16,15 @@ import Pod_Styler from 'styler.js';
 * @param {string} color - Icon color
 * @param {string} label - Icon label (for tooltip and ARIA)
 */
-module.exports = class Icon extends React.Component {
+module.exports = class Icon extends Component {
 
     static propTypes = {
-        children: React.PropTypes.string.isRequired,
-        animation: React.PropTypes.string,
-        label: React.PropTypes.string,
-        color: React.PropTypes.string,
-        onClick: React.PropTypes.func,
-        style: React.PropTypes.object,
+        children: PropTypes.string.isRequired,
+        animation: PropTypes.string,
+        label: PropTypes.string,
+        color: PropTypes.string,
+        onClick: PropTypes.func,
+        style: PropTypes.object,
     }
 
 
@@ -34,15 +34,17 @@ module.exports = class Icon extends React.Component {
     }
 
     componentWillMount() {
-        Pod_Helper.addStylesheet('IconFont', '//fonts.googleapis.com/icon?family=Material+Icons')
+        Pod_Helper.addStylesheet('IconFont_MDI', '//fonts.googleapis.com/icon?family=Material+Icons');
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this)
+        const style = Pod_Styler.getStyle(this);
+        const mergedStyle = Object.assign({}, style.main, this.props.style);
+        const { label, children } = this.props;
 
         return (
-            <i {...this.props} className="material-icons" onClick={this.props.onClick} aria-label={this.props.label} title={this.props.label} style={[style.main, this.props.style]}>
-                {this.props.children}
+            <i {...this.props} className="material-icons" aria-label={label} title={label} style={mergedStyle}>
+                {children}
             </i>
         );
     }

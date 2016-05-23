@@ -30,6 +30,7 @@ module.exports = class Video extends React.Component {
         this.state = {
             currentTime: 0,
             volume: 100,
+            playing: false,
         };
     }
 
@@ -79,6 +80,8 @@ module.exports = class Video extends React.Component {
     }
 
     swipeHandler = (e) => {
+        if (this.state.playing === false) return;
+
         e.preventDefault();
 
         // Not supported by browser. *cough* IE
@@ -101,12 +104,8 @@ module.exports = class Video extends React.Component {
         }
 
         if (Math.abs(deltaY) > Math.abs(deltaX)) {
-            // if (deltaY < 0) direction = 'UP'
-            // if (deltaY > 0) direction = 'DOWN'
             this.prevAxis = 'Y';
         } else {
-            // if (deltaX < 0) direction = 'LEFT'
-            // if (deltaX > 0) direction = 'RIGHT'
             this.prevAxis = 'X';
         }
 
@@ -221,13 +220,15 @@ module.exports = class Video extends React.Component {
     hoveredState = (e) => {
         this.setState({ main_hovered: (e.type === 'mouseenter') });
     }
+    // -- end
+
     componentDidMount() {
         this.bindEvents();
     }
+
     componentWillUnmount() {
         this.unbindEvents();
     }
-    // -- end
 
     render() {
         const style = Pod_Styler.getStyle(this);
@@ -236,11 +237,12 @@ module.exports = class Video extends React.Component {
             width: '100%',
             height: style.controls.height,
         };
+        const { volume: currentVolume, currentTime, duration: currentDuration, playing } = this.state;
 
-        const playPauseIcon = (this.state.playing) ? 'pause' : 'play_arrow';
-        let volumeIcon = (this.state.volume > 0) ? 'volume_up' : 'volume_mute';
+        const playPauseIcon = (playing) ? 'pause' : 'play_arrow';
+        let volumeIcon = (currentVolume > 0) ? 'volume_up' : 'volume_mute';
 
-        if (volumeIcon === 'volume_up' && this.state.volume < 50) volumeIcon = 'volume_down';
+        if (volumeIcon === 'volume_up' && currentVolume < 50) volumeIcon = 'volume_down';
 
         return (
             <div ref="container" style={style.main} tabIndex={0}>
@@ -263,17 +265,17 @@ module.exports = class Video extends React.Component {
                     <div style={style.seekbar}>
                         <div style={seekbar_table_style}>
                             <div style={style.seekbar_time}>
-                                {this.durationString(this.state.currentTime)}
+                                {this.durationString(currentTime)}
                             </div>
 
                             <div style={style.seekbar_bar}>
-                                <Progress styler={style.seekbar_progress} value={this.state.currentTime} max={this.state.duration} />
+                                <Progress styler={style.seekbar_progress} value={currentTime} max={currentDuration} />
                             </div>
                         </div>
                     </div>
 
                     <div style={style.morecontrols}>
-                        <Icon style={style.volumeIcon}>{volumeIcon}</Icon> {this.state.volume}
+                        <Icon style={style.volumeIcon}>{volumeIcon}</Icon> {currentVolume}
                     </div>
                 </div>
             </div>
