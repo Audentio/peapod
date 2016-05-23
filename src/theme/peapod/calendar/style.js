@@ -1,11 +1,11 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName);
-    var main = sheet.addMain();
-    var dateBar = sheet.addPart('dateBar');
-    var year = sheet.addPart('year');
-    var date = sheet.addPart('date');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const dateBar = sheet.addPart('dateBar');
+    // const year = sheet.addPart('year');
+    const date = sheet.addPart('date');
 
     // Variables
     sheet.setValues({});

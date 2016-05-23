@@ -47,7 +47,7 @@ module.exports = class Accordion_Section extends React.Component {
         const subtitleProp = (typeof this.props.subtitle === 'string') ? [this.props.subtitle] : this.props.subtitle;
         if (subtitleProp) {
             subtitle = [];
-            for (var i = 0; i < subtitleProp.length; i++) {
+            for (let i = 0; i < subtitleProp.length; i++) {
                 subtitle.push(<div style={style.subtitle}>{subtitleProp[i]}</div>);
             }
         }

@@ -1,8 +1,8 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName);
-    var main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Conditions
     sheet.addCondition('notActive').addProp({ notActive: ['!=', undefined] });
@@ -17,7 +17,7 @@ module.exports = function (sheetName) {
             height: '40px',
             margin: '5px',
             lineHeight: '40px',
-            background:'#fff',
+            background: '#fff',
             textAlign: 'center',
             overflow: 'hidden',
             color: '$palette.grey900',
