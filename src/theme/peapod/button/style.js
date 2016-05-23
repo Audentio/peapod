@@ -86,6 +86,7 @@ module.exports = function (sheetName) {
             textAlign: 'center',
             outline: 'none',
             userSelect: 'none',
+            verticalAlign: 'bottom',
 
             color: '$button.color.base.color',
             backgroundColor: '$button.color.base.background',
