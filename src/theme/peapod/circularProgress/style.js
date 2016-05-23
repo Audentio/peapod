@@ -4,13 +4,13 @@ import _ from 'lodash';
 
 module.exports = function (sheetName) {
     var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    wrapper = sheet.addPart('wrapper'),
-    circle = sheet.addPart('circle'),
-    mask = sheet.addPart('mask'),
-    track = sheet.addPart('track'),
-    content = sheet.addPart('content'),
-    contentInner = sheet.addPart('contentInner');
+        main = sheet.addMain(),
+        wrapper = sheet.addPart('wrapper'),
+        circle = sheet.addPart('circle'),
+        mask = sheet.addPart('mask'),
+        track = sheet.addPart('track'),
+        content = sheet.addPart('content'),
+        contentInner = sheet.addPart('contentInner');
 
     sheet.addDocDefault({
         value: Math.random() * 100,
