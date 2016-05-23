@@ -14,7 +14,7 @@ module.exports = function (sheetName) {
             background: '#fff',
             overflow: 'hidden',
             padding: 0,
-            margin: 0,
+            margin: '$gutter.extrasmall',
         },
     });
 

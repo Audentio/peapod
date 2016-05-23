@@ -13,14 +13,21 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             float: 'left',
-            width: '50px',
-            height: '50px',
-            lineHeight: '50px',
+            width: '40px',
+            height: '40px',
+            margin: '5px',
+            lineHeight: '40px',
             background:'#fff',
             textAlign: 'center',
             overflow: 'hidden',
-            color: '#c78626',
+            color: '$palette.grey900',
             display: 'block',
+            borderRadius: '9999px',
+
+            ':hover': {
+                background: '$palette.teal500',
+                color: 'white',
+            },
         },
     }).addSelector({
         condition: ['notActive'],

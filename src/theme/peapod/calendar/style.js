@@ -12,21 +12,25 @@ module.exports = function (sheetName) {
 
     main.addSelector({
         common: {
-            width: '350px',
+            width: '366px',
+            background: '#fff',
+            fontSize: '12px',
         },
     });
 
     dateBar.addSelector({
         common: {
-            background: '$palette.blue400',
-            color: '#fff',
+            background: '$palette.teal500',
+            color: '$palette.grey400',
             padding: '$gutter.small',
+            fontWeight: 'bold',
         },
     });
 
     date.addSelector({
         common: {
             fontSize: '$font.size.display1',
+            color: 'white',
         },
     });
 
