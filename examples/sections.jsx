@@ -13,13 +13,13 @@ const addComponent = function (key, i, type) {
     componentsOutput.push(<SectionComponent noName={noName} name={key} key={`Section ${type}${i}`} />);
 
     exampleList.push(
-        <Pod.List_Item styler={{ style: { height: 'auto', padding: '6px 16px' } }}>
-                <Pod.Button styler={{ kind: 'general' }} href={`http://localhost:3002#${key}`}>{key}</Pod.Button>
-                <Pod.Block_Right>
-                    <Pod.Button styler={{ kind: 'general' }} href={`/${key}`}>
-                        <Pod.Icon>launch</Pod.Icon>
-                    </Pod.Button>
-                </Pod.Block_Right>
+        <Pod.List_Item key={key} styler={{ style: { height: 'auto', padding: '6px 16px' } }}>
+            <Pod.Button styler={{ kind: 'general' }} href={`http://localhost:3002#${key}`}>{key}</Pod.Button>
+            <Pod.Block_Right>
+                <Pod.Button styler={{ kind: 'general' }} href={`/${key}`}>
+                    <Pod.Icon>launch</Pod.Icon>
+                </Pod.Button>
+            </Pod.Block_Right>
         </Pod.List_Item>
     );
 };
@@ -63,7 +63,7 @@ export default class Sections extends React.Component {
 
                                     <Pod.Card_Section styler={{ kind: 'title-small' }}>
                                         <Pod.Heading kind="h6" styler={{ secondary: true }}>
-                                            <Pod.Button styler={{ kind: 'general', style: { color: '$palette.black', fontSize: '$font.size.large' } }} href={`http://localhost:3002`}>Examples</Pod.Button>
+                                            <Pod.Button styler={{ kind: 'general', style: { color: '$palette.black', fontSize: '$font.size.large' } }} href={'http://localhost:3002'}>Examples</Pod.Button>
                                         </Pod.Heading>
                                     </Pod.Card_Section>
 
