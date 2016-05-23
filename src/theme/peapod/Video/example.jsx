@@ -6,7 +6,7 @@ module.exports = class TimestampExample extends Component {
     render() {
         return (
             <ContentWrap>
-                <Video src="media/sample_long.mp4" poster="media/sample_poster.png" />
+                <Video src="assets/media/sample_long.mp4" poster="assets/media/sample_poster.png" />
             </ContentWrap>
         );
     }

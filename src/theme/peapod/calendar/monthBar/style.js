@@ -1,9 +1,10 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName);
-    var main = sheet.addMain();
-    var button = sheet.addPart('button');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const button = sheet.addPart('button');
+    const icon = sheet.addPart('icon');
 
     // Variables
     sheet.setValues({});
@@ -13,27 +14,40 @@ module.exports = function (sheetName) {
             width: '250px',
             height: '50px',
             lineHeight: '50px',
-            background:'#fff',
+            marginTop: '$gutter.extrasmall',
+            background: '#fff',
             textAlign: 'center',
             overflow: 'hidden',
-            color: '#c78626',
+            color: '$palette.grey800',
             display: 'block',
-            float:'left',
+            float: 'left',
         },
     });
 
     button.addSelector({
         common: {
-            width: '50px',
+            width: '58px',
             height: '50px',
             lineHeight: '50px',
-            background:'#fff',
+            marginTop: '$gutter.extrasmall',
+            background: 'white',
             textAlign: 'center',
             overflow: 'hidden',
-            color: '#c78626',
+            color: '$palette.grey600',
             display: 'block',
-            float:'left',
+            float: 'left',
             textDecoration: 'none',
+            position: 'relative',
+        },
+    });
+
+    icon.addSelector({
+        common: {
+            fontSize: '2em',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translateX(-50%) translateY(-50%)',
         },
     });
 

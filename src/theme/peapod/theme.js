@@ -477,7 +477,7 @@ const globalVars = {
 };
 
 module.exports = {
-    themeName: themeName,
-    themeParent: themeParent,
-    globalVars: globalVars,
+    themeName,
+    themeParent,
+    globalVars,
 };

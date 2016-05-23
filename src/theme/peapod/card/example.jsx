@@ -32,7 +32,7 @@ module.exports = class CardExample extends React.Component {
                             }
                         >
                             <Pod.Photo
-                                src="image.png"
+                                src="assets/media/image.png"
                                 styler={{
                                     style: {
                                         display: 'block',
@@ -51,7 +51,7 @@ module.exports = class CardExample extends React.Component {
                     >
                         <Pod.Card_Section>
                             <Pod.Card_Section styler={{ kind: 'media-area' }}>
-                                <Pod.Photo src="image.png" />
+                                <Pod.Photo src="assets/media/image.png" />
                             </Pod.Card_Section>
                             <Pod.Card_Section styler={{ kind: 'media-area-icons' }}>
                                 <Pod.Button
@@ -104,7 +104,7 @@ module.exports = class CardExample extends React.Component {
                         }}
                     >
                         <Pod.Card_Section styler={{ kind: 'media-section' }}>
-                            <Pod.Photo src="image.png" />
+                            <Pod.Photo src="assets/media/image.png" />
                         </Pod.Card_Section>
 
                         <Pod.Card_Section styler={{ kind: 'action-bar' }}>
@@ -134,7 +134,7 @@ module.exports = class CardExample extends React.Component {
                     <Pod.Card styler={{ style: { width: '350px' } }}>
                         <Pod.Card_Section styler={{ kind: 'title-supports' }}>
                             <Pod.Card_Section styler={{ kind: 'media', float: 'right' }}>
-                                <Pod.Photo src="image.png" styler={{ style: { width: '100px' } }} />
+                                <Pod.Photo src="assets/media/image.png" styler={{ style: { width: '100px' } }} />
                             </Pod.Card_Section>
 
                             <Pod.Heading kind="h5" styler={{ secondary: true }}>Hello there</Pod.Heading>
@@ -196,7 +196,7 @@ module.exports = class CardExample extends React.Component {
                             </div>
                         )}
                     >
-                        <Pod.Photo src="image.png" />
+                        <Pod.Photo src="assets/media/image.png" />
                     </Pod.Card>
 
                     <Pod.Card
@@ -218,7 +218,7 @@ module.exports = class CardExample extends React.Component {
                             </div>
                         )}
                     >
-                        <Pod.Photo src="image.png" />
+                        <Pod.Photo src="assets/media/image.png" />
                     </Pod.Card>
 
                     <Pod.Card
@@ -260,4 +260,4 @@ module.exports = class CardExample extends React.Component {
             </div>
         );
     }
-}
+};

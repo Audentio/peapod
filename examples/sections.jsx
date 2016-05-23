@@ -14,9 +14,9 @@ const addComponent = function (key, i, type) {
 
     exampleList.push(
         <Pod.List_Item key={key} styler={{ style: { height: 'auto', padding: '6px 16px' } }}>
-            <Pod.Button styler={{ kind: 'general' }} href={`http://localhost:3002#${key}`}>{key}</Pod.Button>
+            <Pod.Button styler={{ kind: 'general', type: 'text' }} href={`http://localhost:3002#${key}`}>{key}</Pod.Button>
             <Pod.Block_Right>
-                <Pod.Button styler={{ kind: 'general' }} href={`/${key}`}>
+                <Pod.Button styler={{ kind: 'general', type: 'text' }} href={`/${key}`}>
                     <Pod.Icon>launch</Pod.Icon>
                 </Pod.Button>
             </Pod.Block_Right>
@@ -58,12 +58,12 @@ export default class Sections extends React.Component {
                 <Pod.Pane>
                     <Pod.Grid>
                         <Pod.Grid_Cell styler={{ style: { padding: '10px 20px 10px 10px' }, md: 12, lg: 3, xl: 2 }}>
-                            <Pod.FixedElement containerWidth>
+                            <Pod.FixedElement containerWidth alwaysFixed>
                                 <Pod.Card styler={{ style: { width: '100%' } }}>
 
                                     <Pod.Card_Section styler={{ kind: 'title-small' }}>
                                         <Pod.Heading kind="h6" styler={{ secondary: true }}>
-                                            <Pod.Button styler={{ kind: 'general', style: { color: '$palette.black', fontSize: '$font.size.large' } }} href={'http://localhost:3002'}>Examples</Pod.Button>
+                                            <Pod.Button styler={{ kind: 'general', type: 'text', style: { color: '$palette.black', fontSize: '$font.size.large' } }} href={'http://localhost:3002'}>Examples</Pod.Button>
                                         </Pod.Heading>
                                     </Pod.Card_Section>
 

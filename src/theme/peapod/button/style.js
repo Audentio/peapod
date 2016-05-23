@@ -1,5 +1,6 @@
 import { Sheet } from 'stylesheet.js';
 import Radium from 'radium';
+import buttons from './presets.js';
 
 module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
@@ -13,16 +14,12 @@ module.exports = function (sheetName) {
     sheet.addCondition('round').addStyler({ round: true });
     sheet.addCondition('disabled').addStyler({ disabled: true });
     sheet.addCondition('notDisabled').addStyler({ disabled: undefined });
+    sheet.addCondition('dense').addStyler({ dense: true });
+    sheet.addCondition('dialog').addStyler({ dialog: true });
 
     sheet.addCondition('icon').addStyler({ type: 'icon' });
-
-    sheet.addCondition('kindGeneral').addStyler({ kind: 'general' });
-    sheet.addCondition('kindBase').addStyler({ kind: 'base' });
-    sheet.addCondition('kindPrimary').addStyler({ kind: 'primary' });
-    sheet.addCondition('kindWarning').addStyler({ kind: 'warning' });
-    sheet.addCondition('kindInfo').addStyler({ kind: 'info' });
-    sheet.addCondition('kindDanger').addStyler({ kind: 'danger' });
-    sheet.addCondition('kindSuccess').addStyler({ kind: 'success' });
+    sheet.addCondition('text').addStyler({ type: 'text' });
+    sheet.addCondition('bordered').addStyler({ type: 'bordered' });
 
     const rippleSteps = {
         '100%': {
@@ -54,11 +51,14 @@ module.exports = function (sheetName) {
             width: '$border.width',
             style: '$border.style',
         },
-        height: '32px',
+        height: '36px',
+        denseHeight: '32px',
         lineHeight: '$button.height',
+        denseLineHeight: '$button.denseHeight',
         font: {
             family: '$font.family.primary',
-            size: '$font.size.button',
+            size: '14px',
+            denseSize: '13px',
             weight: '$font.weight.medium',
         },
         transition: {
@@ -85,15 +85,53 @@ module.exports = function (sheetName) {
             lineHeight: '$button.lineHeight',
             paddingTop: '0px',
             paddingBottom: '0px',
-            paddingLeft: '$gutter.extrasmall',
-            paddingRight: '$gutter.extrasmall',
+            paddingLeft: '$gutter.internal',
+            paddingRight: '$gutter.internal',
             height: '$button.height',
             textAlign: 'center',
             outline: 'none',
             userSelect: 'none',
+            verticalAlign: 'bottom',
+
+            minWidth: '88px',
 
             color: '$button.color.base.color',
             backgroundColor: '$button.color.base.background',
+        },
+    })
+    .addSelector({
+        condition: ['dense'],
+        common: {
+            height: '$button.denseHeight',
+            lineHeight: '$button.denseLineHeight',
+            fontSize: '$button.font.denseSize',
+        },
+    })
+    .addSelector({
+        condition: ['dialog'],
+        common: {
+            paddingLeft: '$gutter.extrasmall',
+            paddingRight: '$gutter.extrasmall',
+            marginLeft: '$gutter.extrasmall',
+            marginRight: '$gutter.extrasmall',
+            minWidth: '64px',
+        },
+    })
+    .addSelector({
+        condition: ['text'],
+        common: {
+            color: '$button.color.base.background',
+            backgroundColor: 'transparent',
+        },
+    })
+    .addSelector({
+        condition: ['bordered'],
+        common: {
+            backgroundColor: 'transparent',
+            color: '$button.color.base.background',
+            borderWidth: '2px',
+            borderStyle: 'solid',
+            borderColor: '$button.color.base.background',
         },
     })
     .addSelector({
@@ -103,6 +141,7 @@ module.exports = function (sheetName) {
             paddingBottom: '0px',
             paddingLeft: '4px',
             paddingRight: '4px',
+            minWidth: 'auto',
             color: '$button.color.base.background',
             background: 'transparent',
             fontSize: '$font.size.headline',
@@ -112,10 +151,6 @@ module.exports = function (sheetName) {
         condition: ['notDisabled'],
         common: {
             cursor: 'pointer',
-            // ':active': {
-            //     transform: 'scale({$button.transition.scale})',
-            //     transitionDuration: '$button.transition.duration',
-            // },
         },
     })
     .addSelector({
@@ -142,153 +177,71 @@ module.exports = function (sheetName) {
         common: {
             borderRadius: '1000px',
         },
-    })
-
-    .addSelector({
-        condition: ['kindGeneral'],
-        common: {
-            backgroundColor: 'transparent',
-            color: '$color.general.base',
-            borderColor: '$palette.grey200',
-            borderWidth: '$border.width',
-        },
-    })
-    .addSelector({
-        condition: ['kindGeneral', 'notDisabled'],
-        common: {
-            ':hover': {
-                backgroundColor: '$color.general.hover',
-                borderColor: '$palette.grey300',
-                color: '$button.color.text.dark',
-            },
-            // ':active': {
-            //     backgroundColor: '$color.general.active',
-            //     borderColor: '$palette.grey400',
-            //     color: '$button.color.text.dark',
-            // },
-        },
-    })
-
-    .addSelector({
-        condition: ['kindBase'],
-        common: {
-            backgroundColor: '$button.color.base.background',
-            color: '$button.color.base.color',
-        },
-    })
-    .addSelector({
-        condition: ['kindBase', 'notDisabled'],
-        common: {
-            ':hover': {
-                backgroundColor: '$button.color.base.hover',
-                color: '$button.color.text.light',
-            },
-            // ':active': {
-            //     backgroundColor: '$button.color.base.active',
-            //     color: '$button.color.text.light',
-            // },
-        },
-    })
-
-    .addSelector({
-        condition: ['kindPrimary'],
-        common: {
-            backgroundColor: '$color.primary.base',
-            color: '$button.color.text.light',
-        },
-    })
-    .addSelector({
-        condition: ['kindPrimary', 'notDisabled'],
-        common: {
-            ':hover': {
-                backgroundColor: '$color.primary.hover',
-            },
-            // ':active': {
-            //     backgroundColor: '$color.primary.active',
-            // },
-        },
-    })
-
-    .addSelector({
-        condition: ['kindWarning'],
-        common: {
-            backgroundColor: '$color.warning.base',
-            color: '$button.color.text.dark',
-        },
-    })
-    .addSelector({
-        condition: ['kindWarning', 'notDisabled'],
-        common: {
-            ':hover': {
-                backgroundColor: '$color.warning.hover',
-            },
-            // ':active': {
-            //     backgroundColor: '$color.warning.active',
-            // },
-        },
-    })
-
-    .addSelector({
-        condition: ['kindInfo'],
-        common: {
-            backgroundColor: '$color.info.base',
-            color: '$button.color.text.light',
-        },
-    })
-    .addSelector({
-        condition: ['kindInfo', 'notDisabled'],
-        common: {
-            ':hover': {
-                backgroundColor: '$color.info.hover',
-                color: '$button.color.text.dark',
-            },
-            // ':active': {
-            //     backgroundColor: '$color.info.active',
-            //     color: '$button.color.text.light',
-            // },
-        },
-    })
-
-    .addSelector({
-        condition: ['kindDanger'],
-        common: {
-            backgroundColor: '$color.danger.base',
-            color: '$button.color.text.light',
-        },
-    })
-    .addSelector({
-        condition: ['kindDanger', 'notDisabled'],
-        common: {
-            ':hover': {
-                backgroundColor: '$color.danger.hover',
-                color: '$button.color.text.dark',
-            },
-            // ':active': {
-            //     backgroundColor: '$color.danger.active',
-            //     color: '$button.color.text.light',
-            // },
-        },
-    })
-
-    .addSelector({
-        condition: ['kindSuccess'],
-        common: {
-            backgroundColor: '$color.success.base',
-            color: '$button.color.text.light',
-        },
-    })
-    .addSelector({
-        condition: ['kindSuccess', 'notDisabled'],
-        common: {
-            ':hover': {
-                backgroundColor: '$color.success.hover',
-            },
-            // ':active': {
-            //     backgroundColor: '$color.success.active',
-            //     color: '$button.color.text.light',
-            // },
-        },
     });
+
+
+
+
+
+
+    for (let index in buttons) {
+        const conditionName = `kind${index.charAt(0).toUpperCase() + index.slice(1)}`;
+
+        sheet.addCondition(conditionName).addStyler({ kind: index });
+
+        // button
+        main.addSelector({
+            condition: [conditionName],
+            common: {
+                backgroundColor: buttons[index].primary,
+                color: buttons[index].secondary,
+            },
+        }).addSelector({
+            condition: [conditionName, 'notDisabled'],
+            common: {
+                ':hover': {
+                    backgroundColor: buttons[index].hover.primary,
+                    color: buttons[index].hover.secondary,
+                },
+            },
+        })
+        // text
+        .addSelector({
+            condition: ['text', conditionName],
+            common: {
+                backgroundColor: 'transparent',
+                color: buttons[index].primary,
+            },
+        }).addSelector({
+            condition: ['text', conditionName, 'notDisabled'],
+            common: {
+                ':hover': {
+                    backgroundColor: 'transparent',
+                    color: buttons[index].hover.primary,
+                },
+            },
+        })
+        // bordered text
+        .addSelector({
+            condition: ['bordered', conditionName],
+            common: {
+                backgroundColor: 'transparent',
+                color: buttons[index].primary,
+                borderWidth: '2px',
+                borderStyle: 'solid',
+                borderColor: buttons[index].primary,
+            },
+        }).addSelector({
+            condition: ['bordered', conditionName, 'notDisabled'],
+            common: {
+                ':hover': {
+                    backgroundColor: 'transparent',
+                    color: buttons[index].hover.primary,
+                    borderColor: buttons[index].hover.primary,
+                },
+            },
+        });
+    }
 
     rippleContainer.addSelector({
         common: {

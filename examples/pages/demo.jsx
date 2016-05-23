@@ -34,7 +34,7 @@ export default class Demo extends React.Component {
 
         return (
             <Pod.Pane key={'demopage'}>
-                <Pod.Hero key={'hero'} styler={{ cover: true, style: { backgroundImage: 'url(demo/bg.jpg)' } }}>
+                <Pod.Hero key={'hero'} styler={{ cover: true, style: { backgroundImage:assets / media / 'url(bg.jpg)' } }}>
 
                     <Pod.ContentWrap>
                         <Pod.Grid>
@@ -135,42 +135,42 @@ export default class Demo extends React.Component {
                         <Pod.Grid>
                             <Pod.Grid_Cell styler={{ lg: 6 }}>
                                 <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                    <Pod.Media figure="demo/img.png" align="right" title="A media element">
+                                    <Pod.Media figure="assets/media/img.png" align="right" title="A media element">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                     </Pod.Media>
                                 </Pod.Card>
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{ lg: 6 }}>
                                 <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                    <Pod.Media figure="demo/img.png" title="A media element">
+                                    <Pod.Media figure="assets/media/img.png" title="A media element">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                     </Pod.Media>
                                 </Pod.Card>
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{ lg: 6 }}>
                                 <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                    <Pod.Media figure="demo/img.png" align="right" title="A media element">
+                                    <Pod.Media figure="assets/media/img.png" align="right" title="A media element">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                     </Pod.Media>
                                 </Pod.Card>
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{ lg: 6 }}>
                                 <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                    <Pod.Media figure="demo/img.png" title="A media element">
+                                    <Pod.Media figure="assets/media/img.png" title="A media element">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                     </Pod.Media>
                                 </Pod.Card>
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{ lg: 6 }}>
                                 <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                    <Pod.Media figure="demo/img.png" align="right" title="A media element">
+                                    <Pod.Media figure="assets/media/img.png" align="right" title="A media element">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                     </Pod.Media>
                                 </Pod.Card>
                             </Pod.Grid_Cell>
                             <Pod.Grid_Cell styler={{ lg: 6 }}>
                                 <Pod.Card styler={{ style: { padding:'16px' } }}>
-                                    <Pod.Media figure="demo/img.png" title="A media element">
+                                    <Pod.Media figure="assets/media/img.png" title="A media element">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                                     </Pod.Media>
                                 </Pod.Card>
@@ -258,7 +258,7 @@ export default class Demo extends React.Component {
                 </Pod.Section>
 
                 <Pod.Section styler={{ style: { backgroundColor: '#000', padding: '0px', border: 'none' } }}>
-                    <Pod.Parallax background={(<div style={{ width:'100%', height: '100%', backgroundImage: 'url(demo/bg2.jpg)', backgroundSize: 'cover', backgroundPosition:'center center', opacity: '0.8' }}></div>)}>
+                    <Pod.Parallax background={(<div style={{ width:'100%', height: '100%', backgroundImage: 'url(assets/media/bg2.jpg)', backgroundSize: 'cover', backgroundPosition:'center center', opacity: '0.8' }}></div>)}>
                         <Pod.Center styler={{ style: { color: 'white' } }}>
                             <Pod.Heading>Works on the New Macbook</Pod.Heading>
                             <Pod.Device trueScaling device="macbook" styler={{ style: { display: 'inline-block' } }}>

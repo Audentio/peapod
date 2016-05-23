@@ -11,7 +11,7 @@ module.exports = class MediaExample extends React.Component {
                         <Pod.Grid_Cell styler={{ md: 6 }}>
                             <Pod.Block>
                                 <Pod.Block_Left>
-                                    <Pod.Photo src="smallimg.png" />
+                                    <Pod.Photo src="assets/media/smallimg.png" />
                                 </Pod.Block_Left>
                                 <Pod.Block>
                                     <Pod.Heading kind="h4">Not a media element(Level 1 elements)</Pod.Heading>
@@ -27,7 +27,7 @@ module.exports = class MediaExample extends React.Component {
                         </Pod.Grid_Cell>
 
                         <Pod.Grid_Cell styler={{ md: 6 }}>
-                            <Pod.Media image="smallimg.png" title="A media element">
+                            <Pod.Media image="assets/media/smallimg.png" title="A media element">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat.
                             </Pod.Media>
                         </Pod.Grid_Cell>
@@ -38,4 +38,4 @@ module.exports = class MediaExample extends React.Component {
         );
     }
 
-}
+};

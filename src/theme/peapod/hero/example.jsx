@@ -6,7 +6,7 @@ module.exports = class HeroExample extends React.Component {
     render() {
         return (
             <div>
-                <Pod.Hero key={'hero'} styler={{ cover: true, style: { backgroundImage: 'url(demo/bg.jpg)' } }}>
+                <Pod.Hero key={'hero'} styler={{ cover: true, style: { backgroundImage: 'url(assets/media/bg.jpg)' } }}>
                     <Pod.Hero_Overlay styler={{ position: 'left' }}>
                         <Pod.Center>
                             <Pod.Card styler={{ disguised: true, style: { maxWidth: '500px' } }}>
@@ -32,4 +32,4 @@ module.exports = class HeroExample extends React.Component {
         );
     }
 
-}
+};

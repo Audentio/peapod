@@ -12,10 +12,10 @@ module.exports = class DeviceExample extends React.Component {
                     <Pod.Scrollable horizontal styler={{ center: true }} >
                         <Pod.Device device="iphone" variant="black" styler={{ style: { display: 'inline-block' } }}>
                             <Pod.Heading kind="h5">Not Scrollable</Pod.Heading>
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Device>
 
                         <Pod.Device device="iphone" variant="black" styler={{ style: { display: 'inline-block' } }}>
@@ -28,7 +28,7 @@ module.exports = class DeviceExample extends React.Component {
                             <Pod.Heading kind="h5">Scrollable</Pod.Heading>
                             <Pod.Block>
                                 <Pod.Block_Left>
-                                    <Pod.Photo src="smallimg.png" styler={{ style: { display: 'block', width: '100px' } }} />
+                                    <Pod.Photo src="assets/media/smallimg.png" styler={{ style: { display: 'block', width: '100px' } }} />
                                 </Pod.Block_Left>
                                 <Pod.Block>
                                     <Pod.Heading kind="h4">Not a media element(Level 1 elements)</Pod.Heading>
@@ -36,13 +36,13 @@ module.exports = class DeviceExample extends React.Component {
                                 </Pod.Block>
                             </Pod.Block>
 
-                            <Pod.Media image="smallimg.png" title="A media element(Level 2 element)">
+                            <Pod.Media image="assets/media/smallimg.png" title="A media element(Level 2 element)">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui ex asperiores rem alias aspernatur quis fugiat eum tempore quaerat, culpa unde earum at recusandae ipsa fuga facilis doloremque minus expedita.
                             </Pod.Media>
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Device>
 
 
@@ -65,10 +65,10 @@ module.exports = class DeviceExample extends React.Component {
                         </Pod.Device>
 
                         <Pod.Device device="iphone" variant="black" styler={{ scrollable: true, style: { display: 'inline-block' } }}>
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
-                            <Pod.Photo src="image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
+                            <Pod.Photo src="assets/media/image.png" styler={{ style: { display: 'block' } }} />
                         </Pod.Device>
                     </Pod.Scrollable>
 
@@ -77,4 +77,4 @@ module.exports = class DeviceExample extends React.Component {
             </div>
         );
     }
-}
+};

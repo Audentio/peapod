@@ -26,10 +26,10 @@ const devices = {
                 },
             },
             variants: {
-                silver: 'url(devices/iPhone-6-Silver.svg)',
-                gold: 'url(devices/iPhone-6-Gold.svg)',
-                rosegold: 'url(devices/iPhone-6-Rose-Gold.svg)',
-                spacegrey: 'url(devices/iPhone-6-Space-Grey.svg)',
+                silver: 'url(assets/devices/iPhone-6-Silver.svg)',
+                gold: 'url(assets/devices/iPhone-6-Gold.svg)',
+                rosegold: 'url(assets/devices/iPhone-6-Rose-Gold.svg)',
+                spacegrey: 'url(assets/devices/iPhone-6-Space-Grey.svg)',
             },
         },
         macbook: {
@@ -55,9 +55,9 @@ const devices = {
                 },
             },
             variants: {
-                gold: 'url(devices/Macbook-Gold.svg)',
-                silver: 'url(devices/Macbook-Silver.svg)',
-                spacegrey: 'url(devices/Macbook-SpaceGrey.svg)',
+                gold: 'url(assets/devices/Macbook-Gold.svg)',
+                silver: 'url(assets/devices/Macbook-Silver.svg)',
+                spacegrey: 'url(assets/devices/Macbook-SpaceGrey.svg)',
             },
         },
         macbookpro: {
@@ -98,7 +98,7 @@ const devices = {
                 },
             },
             variants: {
-                2015: 'url(devices/Macbook-Pro-Retina.svg)',
+                2015: 'url(assets/devices/Macbook-Pro-Retina.svg)',
             },
         },
         imac: {
@@ -124,7 +124,7 @@ const devices = {
                 },
             },
             variants: {
-                silver: 'url(devices/iMac.svg)',
+                silver: 'url(assets/devices/iMac.svg)',
             },
         },
         ipadpro: {
@@ -150,10 +150,10 @@ const devices = {
                 },
             },
             variants: {
-                silver: 'url(devices/iPad-Pro-12-Silver.svg)',
-                gold: 'url(devices/iPad-Pro-12-Gold.svg)',
-                rosegold: 'url(devices/iPad-Pro-12-Rose-Gold.svg)',
-                spacegrey: 'url(devices/iPad-Pro-12-Space-Grey.svg)',
+                silver: 'url(assets/devices/iPad-Pro-12-Silver.svg)',
+                gold: 'url(assets/devices/iPad-Pro-12-Gold.svg)',
+                rosegold: 'url(assets/devices/iPad-Pro-12-Rose-Gold.svg)',
+                spacegrey: 'url(assets/devices/iPad-Pro-12-Space-Grey.svg)',
             },
         },
     },

@@ -11,7 +11,7 @@ module.exports = class Accordion extends React.Component {
     static propTypes = {
         children: React.PropTypes.any,
     }
-    
+
     constructor() {
         super();
 
@@ -42,6 +42,7 @@ module.exports = class Accordion extends React.Component {
                     onTitleClick={this.updateCurrent}
                     active={i === this.state.active}
                     isLast={(i + 1) === thisChildren.length}
+                    isFirst={(i) === 0}
                     vertical={this.props.vertical}
                 />
             );

@@ -1,8 +1,8 @@
 import { Sheet } from 'stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName);
-    var main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Variables
     sheet.setValues({});
@@ -14,7 +14,7 @@ module.exports = function (sheetName) {
             background: '#fff',
             overflow: 'hidden',
             padding: 0,
-            margin: 0,
+            margin: '$gutter.extrasmall',
         },
     });
 
