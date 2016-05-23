@@ -29,10 +29,13 @@ window.Pod_Styler = window.Pod_Styler || {
     },
 
     // registers a library
-    addLibrary(parentName, libraryName, componentFiles, requireFunc, globalVars) {
+    addLibrary(parentName, libraryName, componentFiles, requireFunc, globalSheet) {
         window.Pod_Styler.varCache = {}; // clear variable cache
         window.Pod_Styler.removeLibrary(libraryName); // remove and previous styling from library
         Logger.log(`Adding Library ${libraryName}`);
+
+        const globalVars = globalSheet.getValues();
+        const globalConditions = globalSheet.getConditions();
 
         window.Pod_Vars.register(globalVars); // add global variables to variable resolution
 
@@ -58,6 +61,7 @@ window.Pod_Styler = window.Pod_Styler || {
             name: libraryName,
             type: 'normal',
             globalVars,
+            globalConditions,
         };
 
         window.Pod_Styler.libraries.push(library);
@@ -113,27 +117,28 @@ window.Pod_Styler = window.Pod_Styler || {
     buildSources(obj) {
         const sources = [];
         const libraries = window.Pod_Styler.getLibraryStack(); // currently applying libraries
-        const conditions = {}; // all conditions available to component
+        let conditions = {}; // all conditions available to component
         const parts = {}; // all parts available to component
         const componentName = obj.componentName;
         const scene = obj.scene; // scene applying to object
 
         // get information from libraries about current component
-        for (let i = 0, len = libraries.length; i < len; i++) {
-            const library = libraries[i];
+        for (let libraryIndex = 0, libraryLen = libraries.length; libraryIndex < libraryLen; libraryIndex++) {
+            const library = libraries[libraryIndex];
+            const globalConditions = library.globalConditions;
             const component = library.components[componentName];
 
+            if (typeof(globalConditions) !== 'undefined') {
+                conditions = Object.assign({}, conditions, globalConditions); // merge in global conditions
+            }
+
             if (typeof(component) !== 'undefined') {
-                const condition = component.getConditions();
-                const conditionKeys = Object.keys(condition);
+                const componentConditions = component.getConditions();
                 const part = component.getParts();
                 const partKeys = Object.keys(part);
 
                 // get all conditions for the component overwriting any defined in parents with those defined in children
-                for (let conditionIndex = 0, conditionLen = conditionKeys.length; conditionIndex < conditionLen; conditionIndex++) {
-                    const key = conditionKeys[conditionIndex];
-                    conditions[key] = condition[key];
-                }
+                conditions = Object.assign({}, conditions, componentConditions);
 
                 // get all parts for the component overwriting any defined in parents with those defined in children
                 for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {

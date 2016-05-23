@@ -73,7 +73,7 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
         const themeFileName = themeKeys[themeIndex];
         if (themeFileName.indexOf(`./${themeName}/`) > -1) {
             const theme = themeReq(themeFileName);
-            window.Pod_Styler.addLibrary(theme.themeParent, theme.themeName, styleSheets, req, theme.globalVars);
+            window.Pod_Styler.addLibrary(theme.themeParent, theme.themeName, styleSheets, req, theme.sheet);
         }
     }
 
@@ -98,9 +98,11 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
     return module.exports;
 };
 
+/*
 if (module.hot) {
     module.hot.accept();
 }
+*/
 
 const ignoreComponents = [
     '__template',

@@ -589,4 +589,5 @@ class Sheet {
 module.exports = {
     Sheet,
     Style,
+    Condition,
 };

@@ -27,6 +27,8 @@ if (color.className.indexOf('main') == -1) ret = ret + '\n' + camelize(newLine) 
 console.log(ret);
 */
 
+import { Sheet } from '../../stylesheet.js';
+
 const themeName = 'peapod';
 const themeParent = 'root';
 const globalVars = {
@@ -476,8 +478,15 @@ const globalVars = {
     },
 };
 
+const sheet = new Sheet(themeName);
+
+sheet.setValues(globalVars, '', true);
+
+const warnMissingExample = true;
+
 module.exports = {
     themeName,
     themeParent,
-    globalVars,
+    sheet,
+    warnMissingExample,
 };
