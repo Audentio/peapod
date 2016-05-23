@@ -6,14 +6,9 @@ module.exports = function (sheetName) {
     const steps = sheet.addPart('steps');
     const progress = sheet.addPart('progress');
 
-
     const stepLine = sheet.addPart('stepLine');
 
     // Conditions
-    sheet.addCondition('hasSubTitle').addFunction((instance) => {
-        // console.log(instance.props);
-        return true;
-    });
 
     // Variables
     sheet.setValues({});
@@ -21,7 +16,6 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             width: '100%',
-            // border: '1px solid #ccc',
         },
     });
 
@@ -30,10 +24,9 @@ module.exports = function (sheetName) {
             position: 'relative',
             display: 'flex',
             width: '100%',
-            padding: '20px',
-            // background: '#dfdfdf',
+            padding: '19px 16px',
+            // height: '72px',
             zIndex: '1',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
         },
     });
 
@@ -43,28 +36,19 @@ module.exports = function (sheetName) {
             flex: '20 1 auto',
             borderBottom: '1px solid #E0E0E0',
             height: '17px',
-            // zIndex: '1',
         },
     });
 
     progress.addSelector({
         common: {
-            width: '100%',
-            height: '100%',
-            backgroundImage(obj) {
-                const persent = parseInt(obj.state.complete);
-                // const persent = 40;
-
-                return `
-                    radial-gradient(circle at left, blue 0%, blue 100px, transparent 100px, transparent 100%) , linear-gradient(to right, red ${persent}%, transparent ${persent}%)
-                `;
+            height: '300%',
+            top: '-100%',
+            left: '-200px',
+            width(obj) {
+                return `calc(${parseInt(obj.state.complete, 10)}% + 200px)`;
             },
-            backgroundPosition(obj) {
-                const persent = parseInt(obj.state.complete);
-                // const persent = 40;
-
-                return '50% 0%';
-            },
+            borderRadius: '100000px',
+            background: '#F5F5F5',
             position: 'absolute',
             zIndex: '1',
         },

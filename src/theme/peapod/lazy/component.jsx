@@ -17,34 +17,42 @@ module.exports = class Lazy extends React.Component {
     static defaultProps = {
         visible: false,
         distance: 100,
-        placeholder: false
+        placeholder: false,
+    }
+
+    constructor() {
+        super();
+        
+        this.state = {
+            visible: false,
+        };
     }
 
     componentDidMount() {
 
-        //initial check
+        // initial check
         this.lazyCheck();
 
         // bind this to lazy check always
-        this.lazyCheck = this.lazyCheck.bind(this)
+        this.lazyCheck = this.lazyCheck.bind(this);
 
-        //start listening for viewport events
-        window.addEventListener('scroll', this.lazyCheck)
-        window.addEventListener('resize', this.lazyCheck)
+        // start listening for viewport events
+        window.addEventListener('scroll', this.lazyCheck);
+        window.addEventListener('resize', this.lazyCheck);
 
     }
 
     lazyCheck() {
-        var element = this.refs.LazyElement
-        var bounds    = element.getBoundingClientRect();
+        var element = this.refs.LazyElement;
+        var bounds = element.getBoundingClientRect();
         var scrollTop = window.pageYOffset;
-        var top       = bounds.top + scrollTop;
-        var height    = bounds.bottom - bounds.top;
-        var distance  = this.props.distance;
+        var top = bounds.top + scrollTop;
+        var height = bounds.bottom - bounds.top;
+        var distance = this.props.distance;
 
-        if (top === 0 || (top <= (scrollTop + window.innerHeight + distance) && (top + height + distance) > scrollTop) ){
-            this.setState({visible: true});
-            this.removeListener(); //stop listening, the show is over
+        if (top === 0 || (top <= (scrollTop + window.innerHeight + distance) && (top + height + distance) > scrollTop)) {
+            this.setState({ visible: true });
+            this.removeListener(); // stop listening, the show is over
         }
     }
 
@@ -60,7 +68,7 @@ module.exports = class Lazy extends React.Component {
         var children = (this.state.visible) ? this.props.children : placeholder;
 
         return (
-            <div style={style.main} ref='LazyElement'>
+            <div style={style.main} ref="LazyElement">
                 {children}
             </div>
         );

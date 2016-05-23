@@ -7,6 +7,7 @@ module.exports = function (sheetName) {
 
     // Conditions
     sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
+    sheet.addCondition('hidden').addProp({ hidden: true });
 
     // Variables
     sheet.setValues({});
@@ -15,6 +16,12 @@ module.exports = function (sheetName) {
         common: {
             padding: '$gutter.small',
             width: '100%',
+            // background: '#fafafa',
+        },
+    }).addSelector({
+        condition: ['hidden'],
+        common: {
+            display: 'none',
             // background: '#fafafa',
         },
     });

@@ -15,7 +15,7 @@ module.exports = class Stepper extends React.Component {
         this.state = {
             active: 0,
             steps: {},
-            complete: 50,
+            complete: 0,
         };
 
         this.onStepTitleClick = this.onStepTitleClick.bind(this);
@@ -26,21 +26,23 @@ module.exports = class Stepper extends React.Component {
     static propTypes = {
         children: React.PropTypes.any,
         skippable: React.PropTypes.bool,
+        singleForm: React.PropTypes.bool,
     }
     static defaultProps = {
         skippable: false,
+        singleForm: false,
     }
 
     onStepTitleClick(active) {
         if (!this.props.skippable) {
             return false;
         }
-        console.log(active);
+        // console.log(active);
 
-        const thisstep = this.refs[`stepperStep${active}`];
-        if (thisstep) {
-            console.log(thisstep.state);
-        }
+        // const thisstep = this.refs[`stepperStep${active}`];
+        // if (thisstep) {
+        //     console.log(thisstep.state);
+        // }
 
         this.setState({ active });
 
@@ -69,7 +71,7 @@ module.exports = class Stepper extends React.Component {
         const stepValues = {};
 
         for (let i = 0; i < this.props.children.length; i++) {
-            stepValues['step-'.concat(i)] = 0;
+            stepValues[`step-${i}`] = 0;
         }
 
         this.setState(stepValues);
@@ -95,6 +97,7 @@ module.exports = class Stepper extends React.Component {
 
             steps.push(
                 <Stepper_StepTitle
+                    key={i}
                     id={i}
                     onClick={this.onStepTitleClick}
                     option={option}
@@ -105,35 +108,39 @@ module.exports = class Stepper extends React.Component {
                 />
             );
             if ((i + 1) !== stepCount) {
-                steps.push(<div style={style.stepLine}></div>);
+                steps.push(<div key={`line-${i}`} style={style.stepLine}></div>);
             }
         }
 
         let i = 0;
         const children = this.props.children.map((result) => {
+            const hidden = (this.props.singleForm && i !== this.state.active);
             const childstep = (
                 <Stepper_Step
                     {...result.props}
-                    ref={`stepperStep${i - 1}`}
+                    key={i}
                     onContinue={this.goToNextStep}
                     onBack={this.goToBackStep}
+                    hidden={hidden}
                 />
             );
             i++;
             return childstep;
         });
 
+        const child = (this.props.singleForm) ? children : children[this.state.active];
+
         return (
             <div style={style.main}>
-                <div style={{ position: 'relative', background: '#fff' }}>
-                    {/* <div style={style.progress}></div>*/}
+                <div style={{ position: 'relative', background: '#fff', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                    <div style={style.progress}></div>
 
                     <div style={style.steps}>
                         {steps}
                     </div>
                 </div>
 
-                {children[this.state.active]}
+                {child}
             </div>
         );
     }
