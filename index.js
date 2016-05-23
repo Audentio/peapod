@@ -1,5 +1,6 @@
 const Sheet = require('./dist/sheet.js');
 const Pod_Styler = require('./dist/styler.js');
+const Pod_Helper = require('./dist/helper.js');
 const Pod_Vars = require('./dist/vars.js');
 
 
@@ -7,6 +8,7 @@ module.exports = {
     Sheet: Sheet.Sheet,
     Pod_Styler,
     Pod_Vars,
+    Pod_Helper,
 };
 
 const components = require('./dist/components.js');

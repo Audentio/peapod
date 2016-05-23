@@ -1,14 +1,13 @@
-import React from 'react';
-import Pod from 'components.js';
+import React, { Component } from 'react';
+import { ContentWrap, Video } from 'components.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class TimestampExample extends Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                Example
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <Video src="media/sample_long.mp4" poster="media/sample_poster.png" />
+            </ContentWrap>
         );
     }
-
 };

@@ -1,16 +1,14 @@
 import { Sheet } from 'stylesheet.js';
-import Radium from 'radium';
 import _ from 'lodash';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-        main = sheet.addMain(),
-        wrapper = sheet.addPart('wrapper'),
-        circle = sheet.addPart('circle'),
-        mask = sheet.addPart('mask'),
-        track = sheet.addPart('track'),
-        content = sheet.addPart('content'),
-        contentInner = sheet.addPart('contentInner');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const circle = sheet.addPart('circle');
+    const mask = sheet.addPart('mask');
+    const track = sheet.addPart('track');
+    const content = sheet.addPart('content');
+    const contentInner = sheet.addPart('contentInner');
 
     sheet.addDocDefault({
         value: Math.random() * 100,
@@ -91,7 +89,7 @@ module.exports = function (sheetName) {
         },
     });
 
-    var mask_circle = {
+    const mask_circle = {
         width: '1em',
         height: '1em',
         transition: 'transform .2s linear',
@@ -113,37 +111,44 @@ module.exports = function (sheetName) {
             clip: 'rect(0 .5em 1em 0)',
             borderRadius: '50%',
         }),
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'strokeSet',
         common: {
             borderWidth: 'getStyler:stroke',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindPrimary',
         common: {
             borderColor: '$color.primary.base',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindSuccess',
         common: {
             borderColor: '$color.success.base',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindInfo',
         common: {
             borderColor: '$color.info.base',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindWarning',
         common: {
             borderColor: '$color.warning.active',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindDanger',
         common: {
             borderColor: '$color.danger.base',
         },
-    }).addSelector({
+    })
+    .addSelector({
         condition: 'kindSecondary',
         common: {
             borderColor: '$color.secondary.base',

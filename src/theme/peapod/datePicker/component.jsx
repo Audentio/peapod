@@ -9,8 +9,6 @@ import { Input, Portal, Calendar, Card } from 'components.js';
 module.exports = class DatePicker extends React.Component {
 
     componentWillMount() {
-        console.log(this.props.date);
-
         const date = (this.props.date) ? new Date(this.props.date) :
             new Date();
 
@@ -55,12 +53,13 @@ module.exports = class DatePicker extends React.Component {
             month: date.getMonth(),
             year: date.getFullYear(),
         });
+        if (this.props.onChange) this.props.onChange({ value }, this.props.name);
     }
     render() {
         const style = Pod_Styler.getStyle(this);
         const trigger = (
             <div>
-                <Input onFocus={this.onFocus} callback={this.onChange} type="date" value={this.state.value} />
+                <Input onFocus={this.onFocus} name={this.props.name} callback={this.onChange} type="date" value={this.state.value} />
                 {this.props.children}
             </div>
         );
@@ -68,7 +67,7 @@ module.exports = class DatePicker extends React.Component {
         return (
             <Portal
                 trigger={trigger}
-                closeOnOutsideClick 
+                closeOnOutsideClick
                 noArrow
             >
                 <div style={style.main}>

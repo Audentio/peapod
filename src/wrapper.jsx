@@ -9,7 +9,7 @@ const enhance = ComposedComponent => class extends Component {
     }
 
     componentDidMount() {
-        ComposedComponent.contextTypes = { // eslint-disable-line
+        ComposedComponent.contextTypes = {
             _podPaneWidth: React.PropTypes.number,
         };
     }

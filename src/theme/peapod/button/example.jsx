@@ -3,7 +3,7 @@ import Pod from 'components.js';
 
 module.exports = class ButtonExample extends React.Component {
 
-    makeAlert() {
+    makeAlert = () => {
         alert('test'); // eslint-disable-line no-alert
     }
 
@@ -23,7 +23,7 @@ module.exports = class ButtonExample extends React.Component {
                     <Pod.Button label="Round" styler={{ kind: 'primary', round: true }} />
                     <Pod.Button label="Disabled" styler={{ kind: 'primary', disabled: true }} />
                     <Pod.Button styler={{ kind: 'success', round: true, raised: true }} />
-                    <Pod.Button styler={{ kind: 'base' }} onClick={function () { this.makeAlert(); }} label="onClick handler" />
+                    <Pod.Button styler={{ kind: 'base' }} onClick={this.makeAlert} label="onClick handler" />
                     <Pod.Button styler={{ kind: 'base' }} href="http://peapod.io" label="Anchor/Link" kind="primary" />
                 </Pod.ContentWrap>
             </div>

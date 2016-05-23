@@ -20,4 +20,4 @@ module.exports = class IconExample extends React.Component {
             </div>
         );
     }
-}
+};

@@ -1,13 +1,13 @@
-import { Sheet } from 'stylesheet.js'
+import { Sheet } from 'stylesheet';
 
 module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName)
-    const main = sheet.addMain()
-    const input = sheet.addPart('input')
-    const track = sheet.addPart('track')
-    const handle = sheet.addPart('handle')
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const input = sheet.addPart('input');
+    const track = sheet.addPart('track');
+    const handle = sheet.addPart('handle');
 
-    sheet.addCondition('handleActive').addState({ handleActive: true })
+    sheet.addCondition('handleActive').addState({ handleActive: true });
 
     main.addSelector({
         common: {
@@ -15,26 +15,26 @@ module.exports = function (sheetName) {
             padding: '7px 0',
             marginBottom: 15,
         },
-    })
+    });
 
     input.addSelector({
         common: {
             display: 'none',
         },
-    })
+    });
 
     track.addSelector({
         common: {
-            backgroundColor: '#eee',
+            backgroundColor: '#DADADA',
             width: '100%',
             height: 4,
             position: 'relative',
         },
-    })
+    });
 
     const handleActiveStyle = {
-        backgroundColor: '#666',
-    }
+        boxShadow: 'rgba(0, 0, 0, 0.3) 0px 1px 5px',
+    };
 
     handle.addSelector({
         common: {
@@ -42,20 +42,26 @@ module.exports = function (sheetName) {
             height: 14,
             width: 14,
             borderRadius: 100,
-            backgroundColor: '#999',
+            backgroundColor: '#fff',
+            boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
             position: 'absolute',
             top: '50%',
             marginLeft: -7,
             marginTop: -7,
             ':hover': {
-                backgroundColor: '#888',
+                boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.3)',
             },
             ':active': handleActiveStyle,
         },
     }).addSelector({
         condition: 'handleActive',
         common: handleActiveStyle,
-    })
+    });
+
+    if ('ontouchstart' in window) {
+        handle.addSelector({
+        });
+    }
 
     return sheet;
-}
+};

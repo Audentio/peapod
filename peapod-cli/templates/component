@@ -3,25 +3,25 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React from 'react'
-import Pod_Styler from 'styler'
-import PureRender from 'pureRender'
+import React, { Component } from 'react';
+import Pod_Styler from 'styler';
+import PureRender from 'pureRender';
 
 /**
 *
 * {{%name%}} description
 *
 */
-module.exports = class {{%name%}} extends React.Component {
+module.exports = class {{%name%}} extends Component {
 
     shouldComponentUpdate: PureRender
 
     render() {
-        const style = Pod_Styler.getStyle(this)
+        const style = Pod_Styler.getStyle(this);
 
         return (
             <span style={style.main}>Hello World!</span>
-        )
+        );
     }
 
-}
+};

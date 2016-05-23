@@ -1,13 +1,15 @@
-import React from 'react';
-import Pod from 'components.js';
+import React, { Component } from 'react';
+import { ContentWrap, Input } from 'components.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class LabelExample extends Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                Example
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <Input placeholder="Placeholder..." /> <br />
+                <Input validate type="email" placeholder="your e-mail" /> <br />
+                <Input placeholder="Required*" required validate /> <br />
+            </ContentWrap>
         );
     }
 
