@@ -68,12 +68,14 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
 
     window.Pod_Vars = window.Pod_Vars || Vars;
     window.Pod_Styler = window.Pod_Styler || Styler;
+    let warnMissingExample = false;
 
     for (let themeIndex = 0; themeIndex < themeLen; themeIndex++) {
         const themeFileName = themeKeys[themeIndex];
         if (themeFileName.indexOf(`./${themeName}/`) > -1) {
             const theme = themeReq(themeFileName);
             window.Pod_Styler.addLibrary(theme.themeParent, theme.themeName, styleSheets, req, theme.sheet);
+            warnMissingExample = theme.warnMissingExample;
         }
     }
 
@@ -86,7 +88,7 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
         module.exports[`NoWrap_${componentName}`] = component;
 
         if (typeof(examplePages[componentName]) === 'undefined') {
-            if (componentName.indexOf('_') === -1) { // only for base components
+            if (componentName.indexOf('_') === -1 && warnMissingExample) { // only for base components
                 Logger.warn(`Missing example page for ${componentName}`);
             }
         } else {
