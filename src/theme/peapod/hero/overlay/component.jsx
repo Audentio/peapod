@@ -16,23 +16,21 @@ import Pod_Styler from 'utility/styler.js';
 * @element Pod_modal
 *
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        static defaultProps = {
-            position: 'center',
-        }
+    static defaultProps = {
+        position: 'center',
+    }
 
-        render() {
-            const style = Pod_Styler.getStyle(this);
+    render() {
+        const style = Pod_Styler.getStyle(this);
 
-            return (
-                <div style={style.main}>
-                    {this.props.children}
-                </div>
-            );
-        }
-    };
+        return (
+            <div style={style.main}>
+                {this.props.children}
+            </div>
+        );
+    }
 };

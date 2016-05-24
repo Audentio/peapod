@@ -12,117 +12,116 @@ import Pod_Styler from 'utility/styler.js';
 * Droppable component
 * @element Code
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
 
-        static propTypes = {
-            droppable: React.PropTypes.bool,
-            multiple: React.PropTypes.bool,
-            window: React.PropTypes.bool,
+    static displayName = componentName;
 
-            onDragStart: React.PropTypes.func,
-            onDragEnter: React.PropTypes.func,
-            onDrop: React.PropTypes.func,
-            onDragOver: React.PropTypes.func,
-            onDragLeave: React.PropTypes.func,
-            onDragEnd: React.PropTypes.func,
+    static propTypes = {
+        droppable: React.PropTypes.bool,
+        multiple: React.PropTypes.bool,
+        window: React.PropTypes.bool,
 
-            children: React.PropTypes.oneOfType([
-                React.PropTypes.string,
-                React.PropTypes.object,
-            ]),
+        onDragStart: React.PropTypes.func,
+        onDragEnter: React.PropTypes.func,
+        onDrop: React.PropTypes.func,
+        onDragOver: React.PropTypes.func,
+        onDragLeave: React.PropTypes.func,
+        onDragEnd: React.PropTypes.func,
+
+        children: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.object,
+        ]),
+    }
+
+    static defaultProps = {
+        droppable: true,
+        multiple: true,
+        window: false,
+    }
+
+    componentWillMount() {
+        this.onDragStart = this.onDragStart.bind(this);
+        this.onDragEnter = this.onDragEnter.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+        this.onDragOver = this.onDragOver.bind(this);
+        this.onDragLeave = this.onDragLeave.bind(this);
+        this.onDragEnd = this.onDragEnd.bind(this);
+
+        if (this.props.window) {
+            window.addEventListener('dragover', this.onDragEnter);
+            window.addEventListener('dragenter', this.onDragEnter);
+
+            window.addEventListener('drop', this.onDrop);
         }
+    }
 
-        static defaultProps = {
-            droppable: true,
-            multiple: true,
-            window: false,
+    onDragStart(event) {
+        event.preventDefault();
+
+        if (typeof this.props.onDragStart === 'function') {
+            this.props.onDragStart(event);
         }
+    }
 
-        componentWillMount() {
-            this.onDragStart = this.onDragStart.bind(this);
-            this.onDragEnter = this.onDragEnter.bind(this);
-            this.onDrop = this.onDrop.bind(this);
-            this.onDragOver = this.onDragOver.bind(this);
-            this.onDragLeave = this.onDragLeave.bind(this);
-            this.onDragEnd = this.onDragEnd.bind(this);
+    onDragEnter(event) {
+        event.dataTransfer.dropEffect = 'copy';
+        event.preventDefault();
 
-            if (this.props.window) {
-                window.addEventListener('dragover', this.onDragEnter);
-                window.addEventListener('dragenter', this.onDragEnter);
-
-                window.addEventListener('drop', this.onDrop);
-            }
+        if (typeof this.props.onDragEnter === 'function') {
+            this.props.onDragEnter(event);
         }
+    }
+    onDrop(event) {
+        event.preventDefault();
 
-        onDragStart(event) {
-            event.preventDefault();
-
-            if (typeof this.props.onDragStart === 'function') {
-                this.props.onDragStart(event);
-            }
+        if (typeof this.props.onDrop === 'function') {
+            this.props.onDrop(event);
         }
+    }
 
-        onDragEnter(event) {
-            event.dataTransfer.dropEffect = 'copy';
-            event.preventDefault();
+    onDragOver(event) {
+        event.dataTransfer.dropEffect = 'copy';
+        event.preventDefault();
 
-            if (typeof this.props.onDragEnter === 'function') {
-                this.props.onDragEnter(event);
-            }
+        if (typeof this.props.onDragOver === 'function') {
+            this.props.onDragOver(event);
         }
-        onDrop(event) {
-            event.preventDefault();
+    }
 
-            if (typeof this.props.onDrop === 'function') {
-                this.props.onDrop(event);
-            }
+    onDragLeave(event) {
+        event.preventDefault();
+
+        if (typeof this.props.onDragLeave === 'function') {
+            this.props.onDragLeave(event);
         }
+    }
 
-        onDragOver(event) {
-            event.dataTransfer.dropEffect = 'copy';
-            event.preventDefault();
+    onDragEnd(event) {
+        event.preventDefault();
 
-            if (typeof this.props.onDragOver === 'function') {
-                this.props.onDragOver(event);
-            }
+        if (typeof this.props.onDragEnd === 'function') {
+            this.props.onDragEnd(event);
         }
+    }
 
-        onDragLeave(event) {
-            event.preventDefault();
+    render() {
+        const style = Pod_Styler.getStyle(this);
 
-            if (typeof this.props.onDragLeave === 'function') {
-                this.props.onDragLeave(event);
-            }
-        }
+        return (
+            <div
+                style={style.main}
 
-        onDragEnd(event) {
-            event.preventDefault();
-
-            if (typeof this.props.onDragEnd === 'function') {
-                this.props.onDragEnd(event);
-            }
-        }
-
-        render() {
-            const style = Pod_Styler.getStyle(this);
-
-            return (
-                <div
-                    style={style.main}
-
-                    onDragStart={this.onDragStart}
-                    onDragEnter={this.onDragEnter}
-                    onDrop={this.onDrop}
-                    onDragOver={this.onDragOver}
-                    onDragLeave={this.onDragLeave}
-                    onDragEnd={this.onDragEnd}
-                >
-                    {this.props.children}
-                </div>
-            );
-        }
-    };
+                onDragStart={this.onDragStart}
+                onDragEnter={this.onDragEnter}
+                onDrop={this.onDrop}
+                onDragOver={this.onDragOver}
+                onDragLeave={this.onDragLeave}
+                onDragEnd={this.onDragEnd}
+            >
+                {this.props.children}
+            </div>
+        );
+    }
 };

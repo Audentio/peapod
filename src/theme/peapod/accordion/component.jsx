@@ -7,59 +7,57 @@ import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Accordion_Section } from 'utility/components.js';
 
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        static propTypes = {
-            children: React.PropTypes.any,
-        }
+    static propTypes = {
+        children: React.PropTypes.any,
+    }
 
-        constructor() {
-            super();
+    constructor() {
+        super();
 
-            this.state = {
-                active: 0,
-            };
+        this.state = {
+            active: 0,
+        };
 
-            this.updateCurrent = this.updateCurrent.bind(this);
-        }
+        this.updateCurrent = this.updateCurrent.bind(this);
+    }
 
-        updateCurrent(active) {
-            this.setState({ active });
-        }
+    updateCurrent(active) {
+        this.setState({ active });
+    }
 
-        render() {
-            // const { styler, children, ...other } = this.props;
-            const style = Pod_Styler.getStyle(this);
+    render() {
+        // const { styler, children, ...other } = this.props;
+        const style = Pod_Styler.getStyle(this);
 
-            const thisChildren = (this.props.children.length) ? this.props.children : [this.props.children];
+        const thisChildren = (this.props.children.length) ? this.props.children : [this.props.children];
 
-            let i = 0;
-            const children = thisChildren.map((child) => {
-                const html = (
-                    <Accordion_Section
-                        {...child.props}
-                        id={i}
-                        key={i} // to stop errors
-                        onTitleClick={this.updateCurrent}
-                        active={i === this.state.active}
-                        isLast={(i + 1) === thisChildren.length}
-                        isFirst={(i) === 0}
-                        vertical={this.props.vertical}
+        let i = 0;
+        const children = thisChildren.map((child) => {
+            const html = (
+                <Accordion_Section
+                    {...child.props}
+                    id={i}
+                    key={i} // to stop errors
+                    onTitleClick={this.updateCurrent}
+                    active={i === this.state.active}
+                    isLast={(i + 1) === thisChildren.length}
+                    isFirst={(i) === 0}
+                    vertical={this.props.vertical}
                     />
-                );
-                i = i + 1;
-                return html;
-            });
-
-            return (
-                <div style={style.main}>
-                    {children}
-                </div>
             );
-        }
+            i = i + 1;
+            return html;
+        });
 
-    };
+        return (
+            <div style={style.main}>
+                {children}
+            </div>
+        );
+    }
+
 };

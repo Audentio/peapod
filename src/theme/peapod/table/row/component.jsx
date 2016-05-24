@@ -10,90 +10,88 @@ import { merge as _merge, reduce as _reduce, isPlainObject as _isPlainObject, is
 
 import { Table_Cell } from 'utility/components.js';
 
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        //shouldComponentUpdate = PureRender;
+    //shouldComponentUpdate = PureRender;
 
-        parseBooleans(content) {
-            for (const item in content) {
-                if (item === 'value') {
-                    if (content[item] === true) content[item] = 'true';
-                    else if (content[item] === false) content[item] = 'false';
-                }
+    parseBooleans(content) {
+        for (const item in content) {
+            if (item === 'value') {
+                if (content[item] === true) content[item] = 'true';
+                else if (content[item] === false) content[item] = 'false';
             }
         }
+    }
 
-        render() {
-            const row = this.props.row;
-            const rowKey = this.props.rowKey;
-            const i = this.props.i;
-            const rowProps = this.props.rowProps;
-            const hoveredRow = this.props.hoveredRow;
-            const columns = this.props.columns;
-            const data = this.props.data;
-            const style = Pod_Styler.getStyle({}, {
-                styleLike: 'Table_Inner',
-                dark: i % 2 === 1,
-                firstRow: i === 0,
-                checked: row.checked === true,
-                hovered: hoveredRow === i,
-            });
-            const _this = this;
+    render() {
+        const row = this.props.row;
+        const rowKey = this.props.rowKey;
+        const i = this.props.i;
+        const rowProps = this.props.rowProps;
+        const hoveredRow = this.props.hoveredRow;
+        const columns = this.props.columns;
+        const data = this.props.data;
+        const style = Pod_Styler.getStyle({}, {
+            styleLike: 'Table_Inner',
+            dark: i % 2 === 1,
+            firstRow: i === 0,
+            checked: row.checked === true,
+            hovered: hoveredRow === i,
+        });
+        const _this = this;
 
-            return (
-                <div
-                    {...rowProps(row, i)}
-                    style={style.row}
-                >
-                    {
-                        columns.map(
-                            (column, j) => {
-                                const property = column.property;
-                                const value = row[property];
-                                const cell = column.cell || function (a) { return a; };
-                                let content;
+        return (
+            <div
+                {...rowProps(row, i)}
+                style={style.row}
+            >
+                {
+                    columns.map(
+                        (column, j) => {
+                            const property = column.property;
+                            const value = row[property];
+                            const cell = column.cell || function (a) { return a; };
+                            let content;
 
-                                content = _reduce([value].concat(cell), (v, fn) => {
-                                    if (v && React.isValidElement(v.value)) {
-                                        return v;
-                                    }
-
-                                    if (!_isPlainObject(value) && _isPlainObject(v)) {
-                                        return _merge(v, {
-                                            value: fn(v.value, data, i, property),
-                                        });
-                                    }
-
-                                    const val = fn(v, data, i, property);
-
-                                    if (val && !_isUndefined(val.value)) {
-                                        return val;
-                                    }
-
-                                    // formatter shortcut
-                                    return {
-                                        value: val,
-                                    };
-                                });
-
-                                content = content || {};
-                                if (row.can_edit !== true && (property === 'edit' || property === 'checkbox')) {
-                                    content = {};
+                            content = _reduce([value].concat(cell), (v, fn) => {
+                                if (v && React.isValidElement(v.value)) {
+                                    return v;
                                 }
 
-                                _this.parseBooleans(content);
+                                if (!_isPlainObject(value) && _isPlainObject(v)) {
+                                    return _merge(v, {
+                                        value: fn(v.value, data, i, property),
+                                    });
+                                }
 
-                                return (
-                                    <Table_Cell key={j + '-cell'} column={column} index={j}>{content.value}</Table_Cell>
-                                );
+                                const val = fn(v, data, i, property);
+
+                                if (val && !_isUndefined(val.value)) {
+                                    return val;
+                                }
+
+                                // formatter shortcut
+                                return {
+                                    value: val,
+                                };
+                            });
+
+                            content = content || {};
+                            if (row.can_edit !== true && (property === 'edit' || property === 'checkbox')) {
+                                content = {};
                             }
-                        )
-                    }
-                </div>
-            );
-        }
-    };
+
+                            _this.parseBooleans(content);
+
+                            return (
+                                <Table_Cell key={j + '-cell'} column={column} index={j}>{content.value}</Table_Cell>
+                            );
+                        }
+                    )
+                }
+            </div>
+        );
+    }
 };

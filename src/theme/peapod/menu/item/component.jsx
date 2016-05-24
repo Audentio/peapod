@@ -2,10 +2,10 @@ import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Button, Anchor } from 'utility/components.js';
 
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
         static displayName = componentName;
+
         static defaultProps = {
             subtext: ' ',
         }
@@ -23,25 +23,24 @@ module.exports = function (componentName) {
             </Button>);
         } else if (this.props.style === 'button') {
             returned = (<Button styler={{ kind: 'general' }}>
-            {subtext}
-            {this.props.children}
-        </Button>);
-    } else if (this.props.href) {
-        returned = (<div style={style.main}>
-            <Anchor to={this.props.href} style={style.anchor}>
                 {subtext}
                 {this.props.children}
-            </Anchor>
-        </div>);
-    } else {
-        returned = (
-            <div style={style.main}>
-                {subtext}
-                {this.props.children}
-            </div>
-        );
+            </Button>);
+        } else if (this.props.href) {
+            returned = (<div style={style.main}>
+                <Anchor to={this.props.href} style={style.anchor}>
+                    {subtext}
+                    {this.props.children}
+                </Anchor>
+            </div>);
+        } else {
+            returned = (
+                <div style={style.main}>
+                    {subtext}
+                    {this.props.children}
+                </div>
+            );
+        }
+        return returned;
     }
-    return returned;
-}
-};
 };
