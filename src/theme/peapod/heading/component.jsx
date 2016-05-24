@@ -16,21 +16,25 @@ import Pod_Styler from 'utility/styler.js';
 * @element Pod_template
 *
 */
-module.exports = class Heading extends React.Component {
-	static defaultProps = {
-		kind: 'h1'
-	}
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    render() {
-        var style = Pod_Styler.getStyle(this);
+        static displayName = componentName;
 
-        var tagname = this.props.kind;
+        static defaultProps = {
+            kind: 'h1'
+        }
 
-        return React.createElement(
-            tagname,
-            {style: style[tagname]},
-            this.props.children
-        )
-    }
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
+            const tagname = this.props.kind;
+
+            return React.createElement(
+                tagname,
+                { style: style[tagname] },
+                this.props.children
+            )
+        }
+    };
 };

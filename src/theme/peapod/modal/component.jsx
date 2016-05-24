@@ -16,36 +16,39 @@ import Pod_Styler from 'utility/styler.js';
 * @element Pod_modal
 *
 */
-module.exports = class Modal extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    constructor() {
-        super();
-        // this.state = {
-        //     hidden: false
-        // };
-    }
+        static displayName = componentName;
 
-	static defaultProps = {
-	    overlay: true
-	}
+        constructor() {
+            super();
+            // this.state = {
+            //     hidden: false
+            // };
+        }
 
-    render() {
-        var style = Pod_Styler.getStyle(this);
+        static defaultProps = {
+            overlay: true,
+        }
 
-        // var html = !this.state.hidden ? () : (<div />);
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
-        var modalBox = (
-            <div style={style.main}>
-                {this.props.children}
-            </div>
-        );
+            // var html = !this.state.hidden ? () : (<div />);
 
-        return (this.props.overlay) ?  (
-            <Pod.overlay>
-                {modalBox}
-            </Pod.overlay>
-        ) : modalBox
+            const modalBox = (
+                <div style={style.main}>
+                    {this.props.children}
+                </div>
+            );
 
-    }
+            return (this.props.overlay) ?  (
+                <Pod.overlay>
+                    {modalBox}
+                </Pod.overlay>
+            ) : modalBox
 
+        }
+    };
 };

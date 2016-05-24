@@ -56,7 +56,7 @@ var anim = {
 
 var Pod_animation = ComposedComponent => class extends React.Component {
 
-    static displayName = ComposedComponent.displayName;
+    static displayName = `${ComposedComponent.displayName}_Animation`;
 
     componentWillMount() {
 
@@ -89,6 +89,6 @@ var Pod_animation = ComposedComponent => class extends React.Component {
         return <ComposedComponent {...props} style={_style} />;
     }
 
-}
+};
 
-module.exports = Pod_animation;
+module.exports = function () { return Pod_animation; };

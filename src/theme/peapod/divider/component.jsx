@@ -13,17 +13,19 @@ import Pod_Styler from 'utility/styler.js';
 * Divider component
 * @element Code
 */
-module.exports = class Divider extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    render() {
-        var style = Pod_Styler.getStyle(this);
+        static displayName = componentName;
 
-        return (
-            <div style={style.main}>
-                {this.props.children}
-            </div>
-        );
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
-    }
-
+            return (
+                <div style={style.main}>
+                    {this.props.children}
+                </div>
+            );
+        }
+    };
 };

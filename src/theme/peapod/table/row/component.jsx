@@ -1,94 +1,99 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
- import React from 'react';
- import Pod_Styler from 'utility/styler.js';
+import React from 'react';
+import Pod_Styler from 'utility/styler.js';
 
-import {reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined, isEqual as _isEqual} from 'lodash'
+import { merge as _merge, reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined } from 'lodash';
 
-import {Table_Cell} from 'utility/components.js';
+import { Table_Cell } from 'utility/components.js';
 
-module.exports = class Table_Row extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-	//shouldComponentUpdate = PureRender;
+        static displayName = componentName;
 
-    parseBooleans(content) {
-        for (const item in content) {
-            if (item === 'value') {
-                if (content[item] === true) content[item] = 'true';
-                else if (content[item] === false) content[item] = 'false';
+        //shouldComponentUpdate = PureRender;
+
+        parseBooleans(content) {
+            for (const item in content) {
+                if (item === 'value') {
+                    if (content[item] === true) content[item] = 'true';
+                    else if (content[item] === false) content[item] = 'false';
+                }
             }
         }
-    }
 
-	render() {
+        render() {
+            const row = this.props.row;
+            const rowKey = this.props.rowKey;
+            const i = this.props.i;
+            const rowProps = this.props.rowProps;
+            const hoveredRow = this.props.hoveredRow;
+            const columns = this.props.columns;
+            const data = this.props.data;
+            const style = Pod_Styler.getStyle({}, {
+                styleLike: 'Table_Inner',
+                dark: i % 2 === 1,
+                firstRow: i === 0,
+                checked: row.checked === true,
+                hovered: hoveredRow === i,
+            });
+            const _this = this;
 
-		var row = this.props.row,
-			rowKey = this.props.rowKey,
-			i = this.props.i,
-			rowProps = this.props.rowProps,
-			hoveredRow = this.props.hoveredRow,
-			columns = this.props.columns,
-			data = this.props.data,
-			style = Pod_Styler.getStyle({}, {
-				styleLike: 'Table_Inner',
-				dark: i % 2 == 1,
-				firstRow: i == 0,
-				checked: row.checked == true,
-				hovered: hoveredRow == i
-			});
-        const _this = this;
+            return (
+                <div
+                    {...rowProps(row, i)}
+                    style={style.row}
+                >
+                    {
+                        columns.map(
+                            (column, j) => {
+                                const property = column.property;
+                                const value = row[property];
+                                const cell = column.cell || function (a) { return a; };
+                                let content;
 
-		return (
-			<div {...rowProps(row, i)}
-				style={style.row}
-			>
-				{
-					columns.map(function(column, j) {
-						var property = column.property,
-						value = row[property],
-						cell = column.cell || function(a) {return a},
-						content;
+                                content = _reduce([value].concat(cell), (v, fn) => {
+                                    if (v && React.isValidElement(v.value)) {
+                                        return v;
+                                    }
 
-						content = _reduce([value].concat(cell), (v, fn) => {
-							if(v && React.isValidElement(v.value)) {
-								return v;
-							}
+                                    if (!_isPlainObject(value) && _isPlainObject(v)) {
+                                        return _merge(v, {
+                                            value: fn(v.value, data, i, property),
+                                        });
+                                    }
 
-							if(!_isPlainObject(value) && _isPlainObject(v)) {
-								return merge(v, {
-									value: fn(v.value, data, i, property)
-								});
-							}
+                                    const val = fn(v, data, i, property);
 
-							var val = fn(v, data, i, property);
+                                    if (val && !_isUndefined(val.value)) {
+                                        return val;
+                                    }
 
-							if(val && !_isUndefined(val.value)) {
-								return val;
-							}
+                                    // formatter shortcut
+                                    return {
+                                        value: val,
+                                    };
+                                });
 
-							// formatter shortcut
-							return {
-								value: val
-							};
-						});
+                                content = content || {};
+                                if (row.can_edit !== true && (property === 'edit' || property === 'checkbox')) {
+                                    content = {};
+                                }
 
-						content = content || {};
-						if (row.can_edit != true && (property == 'edit' || property == 'checkbox')) {
-							content = {};
-						}
+                                _this.parseBooleans(content);
 
-                        _this.parseBooleans(content)
-
-						return (
-							<Table_Cell key={j + '-cell'} column={column} index={j}>{content.value}</Table_Cell>
-						)
-					})
-				}
-			</div>
-		);
-	}
-
+                                return (
+                                    <Table_Cell key={j + '-cell'} column={column} index={j}>{content.value}</Table_Cell>
+                                );
+                            }
+                        )
+                    }
+                </div>
+            );
+        }
+    };
 };

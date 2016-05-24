@@ -1,21 +1,24 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-module.exports = class Main extends React.Component {
-	render() {
-		var {styler, children, ...other} = this.props,
-			style = Pod_Styler.getStyle(this);
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-		return (
-			<main {...other} style={style.main}>
-				{this.props.children}
-			</main>
-		);
-	}
+        static displayName = componentName;
+        render() {
+            var {styler, children, ...other} = this.props,
+            style = Pod_Styler.getStyle(this);
 
+            return (
+                <main {...other} style={style.main}>
+                    {this.props.children}
+                </main>
+            );
+        }
+    };
 };

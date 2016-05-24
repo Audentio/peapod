@@ -12,136 +12,139 @@ import shallowCompare from 'react-addons-shallow-compare';
 * RangeInput description
 *
 */
-module.exports = class RangeInput extends Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    constructor(props, state) {
-        super(props, state);
+        static displayName = componentName;
 
-        this.previousClientX = null;
+        constructor(props, state) {
+            super(props, state);
 
-        const value_percentage = ((this.props.value - this.props.min) * 100) / (this.props.max - this.props.min);
+            this.previousClientX = null;
 
-        this.state = {
-            value: this.props.value,
-            handleLeft: `${value_percentage}%`,
-        };
-    }
+            const value_percentage = ((this.props.value - this.props.min) * 100) / (this.props.max - this.props.min);
 
-    static propTypes = {
-        name: PropTypes.string,
-        value: PropTypes.oneOfType([
-            PropTypes.number,
-            PropTypes.array,
-        ]),
-        min: PropTypes.number,
-        max: PropTypes.number,
-        step: PropTypes.number,
-    }
+            this.state = {
+                value: this.props.value,
+                handleLeft: `${value_percentage}%`,
+            };
+        }
 
-    static defaultProps = {
-        min: 0,
-        max: 100,
-        value: 0,
-        step: 1,
-    }
+        static propTypes = {
+            name: PropTypes.string,
+            value: PropTypes.oneOfType([
+                PropTypes.number,
+                PropTypes.array,
+            ]),
+            min: PropTypes.number,
+            max: PropTypes.number,
+            step: PropTypes.number,
+        }
 
-    updateHandle = (left) => {
-        const value_percentage = (left / this.refs.track.offsetWidth) * 100;
+        static defaultProps = {
+            min: 0,
+            max: 100,
+            value: 0,
+            step: 1,
+        }
 
-        this.setState({
-            handleLeft: left,
-            value: Math.round((value_percentage * (this.props.max - this.props.min) / 100) + this.props.min),
-        });
-    }
+        updateHandle = (left) => {
+            const value_percentage = (left / this.refs.track.offsetWidth) * 100;
 
-    update = (val) => {
-        const left = ((val - this.props.min) * 100) / (this.props.max - this.props.min);
-        this.setState({
-            handleLeft: `${left}%`,
-            value: val,
-        });
-    }
+            this.setState({
+                handleLeft: left,
+                value: Math.round((value_percentage * (this.props.max - this.props.min) / 100) + this.props.min),
+            });
+        }
 
-    movementListener = (e) => {
-        e.preventDefault();
-        const track = this.refs.track;
-        const track_left = track.getBoundingClientRect().left;
-        const clientX = (e.touches === undefined) ? e.clientX : e.touches[0].clientX;
-        let handle_left = clientX - track_left;
+        update = (val) => {
+            const left = ((val - this.props.min) * 100) / (this.props.max - this.props.min);
+            this.setState({
+                handleLeft: `${left}%`,
+                value: val,
+            });
+        }
 
-        if (handle_left < 0) handle_left = 0;
-        if (handle_left > track.offsetWidth) handle_left = track.offsetWidth;
+        movementListener = (e) => {
+            e.preventDefault();
+            const track = this.refs.track;
+            const track_left = track.getBoundingClientRect().left;
+            const clientX = (e.touches === undefined) ? e.clientX : e.touches[0].clientX;
+            let handle_left = clientX - track_left;
 
-        this.updateHandle(handle_left);
-    }
+            if (handle_left < 0) handle_left = 0;
+            if (handle_left > track.offsetWidth) handle_left = track.offsetWidth;
 
-    trackHandler = (e) => {
-        e.preventDefault();
+            this.updateHandle(handle_left);
+        }
 
-        this.updateHandle(e.clientX - this.refs.track.getBoundingClientRect().left);
-        this.startListening(e);
-    }
+        trackHandler = (e) => {
+            e.preventDefault();
 
-    startListening = (e) => {
-        this.movementListener(e);
+            this.updateHandle(e.clientX - this.refs.track.getBoundingClientRect().left);
+            this.startListening(e);
+        }
 
-        this.setState({
-            handleActive: true,
-        });
-        window.addEventListener('mousemove', this.movementListener);
-        window.addEventListener('mouseup', this.stopListening);
-        window.addEventListener('touchmove', this.movementListener);
-        window.addEventListener('touchend', this.stopListening);
-    }
+        startListening = (e) => {
+            this.movementListener(e);
 
-    stopListening = () => {
-        this.setState({
-            handleActive: false,
-        });
-        window.removeEventListener('mousemove', this.movementListener);
-        window.removeEventListener('mouseup', this.stopListening);
-        window.removeEventListener('touchmove', this.movementListener);
-        window.removeEventListener('touchend', this.stopListening);
+            this.setState({
+                handleActive: true,
+            });
+            window.addEventListener('mousemove', this.movementListener);
+            window.addEventListener('mouseup', this.stopListening);
+            window.addEventListener('touchmove', this.movementListener);
+            window.addEventListener('touchend', this.stopListening);
+        }
 
-        // update input, finally
-        this.refs.input.value = this.state.value;
-    }
+        stopListening = () => {
+            this.setState({
+                handleActive: false,
+            });
+            window.removeEventListener('mousemove', this.movementListener);
+            window.removeEventListener('mouseup', this.stopListening);
+            window.removeEventListener('touchmove', this.movementListener);
+            window.removeEventListener('touchend', this.stopListening);
 
-    componentDidMount() {
-        this.refs.handle.addEventListener('mousedown', this.startListening);
-        this.refs.handle.addEventListener('touchstart', this.startListening);
-        this.refs.container.addEventListener('mousedown', this.trackHandler);
-        this.refs.container.addEventListener('touchstart', this.trackHandler);
-    }
+            // update input, finally
+            this.refs.input.value = this.state.value;
+        }
 
-    componentWillUnmount() {
-        this.refs.handle.removeEventListener('mousedown', this.startListening);
-        this.refs.container.removeEventListener('mousedown', this.trackHandler);
-        this.refs.handle.removeEventListener('touchstart', this.startListening);
-        this.refs.container.removeEventListener('touchstart', this.trackHandler);
-    }
+        componentDidMount() {
+            this.refs.handle.addEventListener('mousedown', this.startListening);
+            this.refs.handle.addEventListener('touchstart', this.startListening);
+            this.refs.container.addEventListener('mousedown', this.trackHandler);
+            this.refs.container.addEventListener('touchstart', this.trackHandler);
+        }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return shallowCompare(this, nextProps, nextState);
-    }
+        componentWillUnmount() {
+            this.refs.handle.removeEventListener('mousedown', this.startListening);
+            this.refs.container.removeEventListener('mousedown', this.trackHandler);
+            this.refs.handle.removeEventListener('touchstart', this.startListening);
+            this.refs.container.removeEventListener('touchstart', this.trackHandler);
+        }
 
-    componentWillReceiveProps(nextProps) {
-        this.update(nextProps.value);
-    }
+        shouldComponentUpdate(nextProps, nextState) {
+            return shallowCompare(this, nextProps, nextState);
+        }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
+        componentWillReceiveProps(nextProps) {
+            this.update(nextProps.value);
+        }
 
-        return (
-            <div ref="container" style={style.main}>
-                <div ref="track" style={style.track}>
-                    <input ref="input" type="text" style={style.input} name={this.props.name} defaultValue={this.props.value} />
-                    <div ref="handle" style={[style.handle, { left: this.state.handleLeft }]}></div>
+        render() {
+            const style = Pod_Styler.getStyle(this);
+
+            return (
+                <div ref="container" style={style.main}>
+                    <div ref="track" style={style.track}>
+                        <input ref="input" type="text" style={style.input} name={this.props.name} defaultValue={this.props.value} />
+                        <div ref="handle" style={[style.handle, { left: this.state.handleLeft }]}></div>
+                    </div>
+
+                    {this.state.value}
                 </div>
-
-                {this.state.value}
-            </div>
-        );
-    }
-
+            );
+        }
+    };
 };

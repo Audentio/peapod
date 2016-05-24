@@ -13,17 +13,18 @@ import Pod_Styler from 'utility/styler.js';
 * Scrollable component
 * @element Code
 */
-module.exports = class Scrollable extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    render() {
-        var style = Pod_Styler.getStyle(this);
+        static displayName = componentName;
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
-        return (
-            <div style={style.main}>
-                {this.props.children}
-            </div>
-        );
-
-    }
-
+            return (
+                <div style={style.main}>
+                    {this.props.children}
+                </div>
+            );
+        }
+    };
 };

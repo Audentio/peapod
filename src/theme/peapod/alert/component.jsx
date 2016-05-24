@@ -15,83 +15,87 @@ import { Icon } from 'utility/components.js';
 * @param {string} [ID] - Unique identifier for persistent state storage
 *
 */
-module.exports = class Alert extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    constructor(props, context) {
-        super(props, context);
+        static displayName = componentName;
 
-        this.state = {
-            dismissed: this.isDismissed(),
-        };
-    }
+        constructor(props, context) {
+            super(props, context);
 
-    // Validate props
-    static propTypes = {
-        dismissable: React.PropTypes.bool,
-        id: React.PropTypes.string,
-    }
+            this.state = {
+                dismissed: this.isDismissed(),
+            };
+        }
 
-    static defaultProps = {
-        dismissable: true,
-        styler: {
-            kind: 'general',
-        },
-    }
+        // Validate props
+        static propTypes = {
+            dismissable: React.PropTypes.bool,
+            id: React.PropTypes.string,
+        }
+
+        static defaultProps = {
+            dismissable: true,
+            styler: {
+                kind: 'general',
+            },
+        }
 
 
-    // Check if user dismissed the alert already
-    isDismissed() {
-        const persistentState = localStorage[`Pod_alert_${this.props.id}_hidden`];
-        if (this.props.dismissable && persistentState && persistentState === 'true') {
+        // Check if user dismissed the alert already
+        isDismissed() {
+            const persistentState = localStorage[`Pod_alert_${this.props.id}_hidden`];
+            if (this.props.dismissable && persistentState && persistentState === 'true') {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        // @fucntion dismiss()
+        // onDismiss handler
+        dismiss() {
+            // set state
+            this.setState({
+                dismissed: true,
+            });
+
+            if (this.props.dismissable) {
+                if (this.props.id === undefined) {
+                    console.warn('Pod_Alert: ID not supplied for dismissable alert. State will not be persistent'); // eslint-disable-line no-console
+                    return false;
+                }
+
+                // set persistent state (localStorage)
+                localStorage[`Pod_alert_${this.props.id}_hidden`] = true;
+            }
             return true;
         }
 
-        return false;
-    }
 
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
-    // @fucntion dismiss()
-    // onDismiss handler
-    dismiss() {
-        // set state
-        this.setState({
-            dismissed: true,
-        });
+            return (
+                <div style={style.main} id={this.props.id}>
+                    {
+                        !this.state.dismissed &&
 
-        if (this.props.dismissable) {
-            if (this.props.id === undefined) {
-                console.warn('Pod_Alert: ID not supplied for dismissable alert. State will not be persistent'); // eslint-disable-line no-console
-                return false;
-            }
+                        <div style={style.wrapper}>
 
-            // set persistent state (localStorage)
-            localStorage[`Pod_alert_${this.props.id}_hidden`] = true;
+                            <span style={style.message}>
+                                {this.props.children}
+                            </span>
+                            {this.props.dismissable &&
+                                <Icon onClick={this.dismiss} styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon>
+                            }
+                        </div>
+                    }
+                </div>
+            );
         }
-        return true;
-    }
 
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-
-        return (
-            <div style={style.main} id={this.props.id}>
-                {
-                    !this.state.dismissed &&
-
-                    <div style={style.wrapper}>
-
-                        <span style={style.message}>
-                            {this.props.children}
-                        </span>
-                        {this.props.dismissable &&
-                            <Icon onClick={this.dismiss} styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon>
-                        }
-                    </div>
-                }
-            </div>
-        );
-    }
-
-
+    };
 };

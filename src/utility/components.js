@@ -83,9 +83,21 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
 
     for (let componentNameIndex = 0, componentNameLen = componentNameKeys.length; componentNameIndex < componentNameLen; componentNameIndex++) {
         const componentName = componentNameKeys[componentNameIndex];
-        const component = req(componentNames[componentName]);
+        let component = req(componentNames[componentName]);
+        if (typeof(component) === 'function' && !component.hasOwnProperty('arguments')) {
+            component = component(componentName);
+            if (typeof(component) === 'undefined') {
+                throw new Error(`${componentName} is not returning or is returning undefined`);
+            }
+            if (component.displayName !== componentName) {
+                Logger.warn(`${componentName} is not setting the component name correctly`);
+            }
+        } else {
+            Logger.warn(`${componentName} is not a function`);
+        }
+
         module.exports[componentName] = wrapper(component);
-        module.exports[`NoWrap_${componentName}`] = component;
+        // module.exports[`NoWrap_${componentName}`] = component;
 
         if (typeof(examplePages[componentName]) === 'undefined') {
             if (componentName.indexOf('_') === -1 && warnMissingExample) { // only for base components
