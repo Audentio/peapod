@@ -8,6 +8,8 @@ const enhance = ComposedComponent => class extends Component {
         this.state = this.state || {};
     }
 
+    static displayName = `${ComposedComponent.displayName}_Wrapper`;
+
     componentDidMount() {
         ComposedComponent.contextTypes = {
             _podPaneWidth: React.PropTypes.number,
