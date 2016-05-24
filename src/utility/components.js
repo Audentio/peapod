@@ -3,7 +3,7 @@
 import wrapper from './wrapper.jsx';
 import Vars from './vars.js';
 import Styler from './styler.js';
-import Logger from 'logger';
+import Logger from './logger.js';
 
 module.exports = {
     Examples: {},
@@ -68,12 +68,14 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
 
     window.Pod_Vars = window.Pod_Vars || Vars;
     window.Pod_Styler = window.Pod_Styler || Styler;
+    let warnMissingExample = false;
 
     for (let themeIndex = 0; themeIndex < themeLen; themeIndex++) {
         const themeFileName = themeKeys[themeIndex];
         if (themeFileName.indexOf(`./${themeName}/`) > -1) {
             const theme = themeReq(themeFileName);
-            window.Pod_Styler.addLibrary(theme.themeParent, theme.themeName, styleSheets, req, theme.globalVars);
+            window.Pod_Styler.addLibrary(theme.themeParent, theme.themeName, styleSheets, req, theme.sheet);
+            warnMissingExample = theme.warnMissingExample;
         }
     }
 
@@ -86,7 +88,7 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
         module.exports[`NoWrap_${componentName}`] = component;
 
         if (typeof(examplePages[componentName]) === 'undefined') {
-            if (componentName.indexOf('_') === -1) { // only for base components
+            if (componentName.indexOf('_') === -1 && warnMissingExample) { // only for base components
                 Logger.warn(`Missing example page for ${componentName}`);
             }
         } else {
@@ -98,17 +100,19 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
     return module.exports;
 };
 
+/*
 if (module.hot) {
     module.hot.accept();
 }
+*/
 
 const ignoreComponents = [
     '__template',
     'Animation',
     'Core',
 ];
-const themeReq = require.context('./theme', true, /theme.js$/);
-const req = require.context('./theme', true, /^\.\/.*\.jsx?$/);
+const themeReq = require.context('../theme', true, /theme.js$/);
+const req = require.context('../theme', true, /^\.\/.*\.jsx?$/);
 
 init('peapod', ignoreComponents, themeReq, req);
 

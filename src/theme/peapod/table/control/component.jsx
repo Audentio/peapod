@@ -4,8 +4,8 @@
  */
 
  import React from 'react';
- import Pod_Styler from 'styler.js';
- import PureRender from 'pureRender';
+ import Pod_Styler from 'utility/styler.js';
+ import PureRender from 'utility/pureRender.js';
 
  module.exports = class Table_Control extends React.Component {
 

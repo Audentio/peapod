@@ -7,9 +7,9 @@
 
 // Dependencies
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'styler';
-import { Icon } from 'components';
-import PureRender from 'pureRender';
+import Pod_Styler from 'utility/styler.js';
+import { Icon } from 'utility/components.js';
+import PureRender from 'utility/pureRender.js';
 import shallowEqual from 'shallowequal';
 
 /**

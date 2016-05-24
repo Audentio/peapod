@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ContentWrap, Video } from 'components.js';
+import { ContentWrap, Video } from 'utility/components.js';
 
 module.exports = class TimestampExample extends Component {
 

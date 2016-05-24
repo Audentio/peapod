@@ -5,10 +5,10 @@
 */
 
 import React, { PropTypes, Component } from 'react';
-import Pod_Styler from 'styler';
-import Pod_Helper from 'helper';
+import Pod_Styler from 'utility/styler.js';
+import Pod_Helper from 'utility/helper.js';
 import Highlightjs from 'highlight.js/lib/highlight.js';
-import PureRender from 'pureRender';
+import PureRender from 'utility/pureRender.js';
 
 const DefaultLanguages = ['cpp', 'cs', 'css', 'json', 'java', 'javascript', 'nginx', 'objectivec', 'perl', 'php', 'python', 'ruby', 'xml'];
 

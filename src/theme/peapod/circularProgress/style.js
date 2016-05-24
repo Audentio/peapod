@@ -1,4 +1,4 @@
-import { Sheet } from 'stylesheet.js';
+import { Sheet } from 'utility/stylesheet.js';
 import _ from 'lodash';
 
 module.exports = function (sheetName) {

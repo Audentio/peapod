@@ -1,10 +1,10 @@
-var Pod_Vars = require('vars.js');
+import Pod_Vars from 'utility/vars.js';
 
-import { Sheet } from 'stylesheet.js';
+import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Variables
     sheet.setValues({
@@ -42,8 +42,8 @@ module.exports = function (sheetName) {
     });
 
     // flex item align-self
-    var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
-    for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
+    const choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
+    for (let choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
         sheet.addCondition('alignSelf_' + choices[choiceIndex]).addStyler({ alignSelf: choices[choiceIndex] });
         main.addSelector({
             condition: ['alignSelf_' + choices[choiceIndex]],
@@ -53,11 +53,11 @@ module.exports = function (sheetName) {
         });
     }
 
-    var sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'],
-    abbrevs = ['xs', 'sm', 'md', 'lg', 'xl'];
+    const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
+    const abbrevs = ['xs', 'sm', 'md', 'lg', 'xl'];
 
-    for (var sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
-        for (var i = 0; i < 13; i++) { // loop through size values
+    for (let sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
+        for (let i = 0; i < 13; i++) { // loop through size values
             sheet.addCondition([abbrevs[sizeIndex]] + '_' + i).addStyler({ [abbrevs[sizeIndex]]: i });
             main.addSelector({
                 condition: [[abbrevs[sizeIndex]] + '_' + i],

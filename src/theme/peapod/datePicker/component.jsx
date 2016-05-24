@@ -1,6 +1,6 @@
 import React from 'react';
-const Pod_Styler = require('styler.js');
-import { Input, Portal, Calendar, Card } from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+import { Input, Portal, Calendar, Card } from 'utility/components.js';
 
 /**
 * DatePicker component

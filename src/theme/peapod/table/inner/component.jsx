@@ -4,8 +4,8 @@
  */
 
  import React from 'react';
- import Pod_Styler from 'styler.js';
- import PureRender from 'pureRender';
+ import Pod_Styler from 'utility/styler.js';
+ import PureRender from 'utility/pureRender.js';
 
 //var lodash = require('lodash')
 //var isFunction = lodash.isFunction;
@@ -13,7 +13,7 @@
 import {isFunction as _isFunction, isEqual as _isEqual} from 'lodash'
 
 
-import {Table_Row, Table_Header} from 'components.js';
+import {Table_Row, Table_Header} from 'utility/components.js';
 
 
 module.exports = class Table_Inner extends React.Component {

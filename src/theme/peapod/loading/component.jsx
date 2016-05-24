@@ -4,8 +4,8 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import { CircularProgress, Center } from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+import { CircularProgress, Center } from 'utility/components.js';
 
 module.exports = class Loading extends React.Component {
     static propTypes = {

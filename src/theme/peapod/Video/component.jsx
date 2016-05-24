@@ -4,10 +4,10 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'styler';
-import PureRender from 'pureRender';
-import { Icon, Progress } from 'components';
-import Pod_Helper from 'helper';
+import Pod_Styler from 'utility/styler.js';
+import PureRender from 'utility/pureRender.js';
+import { Icon, Progress } from 'utility/components.js';
+import Pod_Helper from 'utility/helper.js';
 import moment from 'moment';
 
 /**

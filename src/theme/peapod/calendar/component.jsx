@@ -1,6 +1,6 @@
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import {Card, Calendar_MonthBar, Calendar_Grid} from 'components.js'
+import Pod_Styler from 'utility/styler.js';
+import {Card, Calendar_MonthBar, Calendar_Grid} from 'utility/components.js';
 
 import {globals, addDays, setDayOfWeek, getDates, resetTime, daysInMonth, getMonthFromDate, getLocalMonth} from './calendarHelper.js'
 

@@ -1,4 +1,4 @@
-import { Sheet } from 'stylesheet.js';
+import { Sheet } from 'utility/stylesheet.js';
 import Radium from 'radium';
 import _ from 'lodash';
 

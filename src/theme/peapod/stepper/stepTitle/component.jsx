@@ -1,6 +1,6 @@
 import React from 'react';
-import Pod_Styler from 'styler.js';
-// import { Button } from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+// import { Button } from 'utility/components.js';
 
 module.exports = class Stepper_StepTitle extends React.Component {
 

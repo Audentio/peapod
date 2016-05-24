@@ -7,8 +7,8 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import { Heading } from 'components.js'
+import Pod_Styler from 'utility/styler.js';
+import { Heading } from 'utility/components.js'
 
 /**
 * Card component

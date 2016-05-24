@@ -4,7 +4,7 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import Pod_Styler from 'styler';
+import Pod_Styler from 'utility/styler.js';
 import shallowCompare from 'react-addons-shallow-compare';
 
 /**

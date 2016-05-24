@@ -2,9 +2,9 @@ import ReactDOM, {findDOMNode} from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
 
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
-import {Icon, Grid} from 'components.js';
+import {Icon, Grid} from 'utility/components.js';
 
 
 function isNodeInRoot(node, root) {

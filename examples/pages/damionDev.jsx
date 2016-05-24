@@ -1,6 +1,6 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
-import Pod from 'components.js';
+import Pod from 'utility/components.js';
 
 export default class DamionDev extends React.Component {
 // ugly but gives me more room to write :)

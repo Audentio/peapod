@@ -5,7 +5,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment-timezone';
-import Pod_Styler from 'styler';
+import Pod_Styler from 'utility/styler.js';
 
 
 /**

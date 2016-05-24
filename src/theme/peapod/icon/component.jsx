@@ -4,8 +4,8 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import Pod_Helper from 'helper';
-import Pod_Styler from 'styler';
+import Pod_Helper from 'utility/helper.js';
+import Pod_Styler from 'utility/styler.js';
 
 
 /**
