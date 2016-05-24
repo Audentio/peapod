@@ -1,6 +1,7 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Calendar_MonthBar, Calendar_Grid } from 'utility/components.js';
+import moment from 'moment-timezone';
 
 import { globals, addDays, getMonthFromDate } from './calendarHelper.js';
 
@@ -78,7 +79,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             <div style={style.main}>
                 <div style={style.dateBar}>
                     <div style={style.year}>{this.state.today.getFullYear()}</div>
-                    <div style={style.date}>{this.state.today.toLocaleDateString(globals.locale, dayoptions)}</div>
+                    <div style={style.date}>{moment(this.state.today).format('Do, MMMM')}</div>
                 </div>
                 <Calendar_MonthBar
                     // get these down
@@ -89,7 +90,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     nextYear={nextYear}
                     prevYear={prevYear}
                 />
-                <Calendar_Grid dateArray={dateArray} onClick={this.updateToday} />
+                <Calendar_Grid dateArray={getMonthFromDate(new Date(this.state.today))} onClick={this.updateToday} />
             </div>
         );
     }

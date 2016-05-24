@@ -18,23 +18,39 @@ module.exports = componentName => class Pod_Component extends React.Component {
         children: React.PropTypes.any,
     }
 
+    constructor() {
+        super();
+
+        this.prevButton = this.prevButton.bind(this);
+        this.nextButton = this.nextButton.bind(this);
+    }
+
+    prevButton() {
+        this.props.onClick(this.props.prevMonth, this.props.prevYear);
+        return false;
+    }
+    nextButton() {
+        this.props.onClick(this.props.nextMonth, this.props.nextYear);
+        return false;
+    }
+
     render() {
         const style = Pod_Styler.getStyle(this);
 
         return (
             <div>
                 <a
-                    href="javascript:void(false)"
                     style={style.button}
-                    onClick={function () { this.props.onClick(this.props.prevMonth, this.props.prevYear); }}
+                    onClick={this.prevButton}
                 >
                     <Icon styler={{ style: style.icon }}>keyboard_arrow_left</Icon>
                 </a>
-                <div style={style.main}>{getLocalMonth(this.props.currentDate)} {this.props.currentDate.getFullYear()}</div>
+                <div style={style.main}>
+                    {getLocalMonth(this.props.currentDate)} {this.props.currentDate.getFullYear()}
+                </div>
                 <a
-                    href="javascript:void(false)"
                     style={style.button}
-                    onClick={function () { this.props.onClick(this.props.nextMonth, this.props.nextYear); }}
+                    onClick={this.nextButton}
                 >
                     <Icon styler={{ style: style.icon }}>keyboard_arrow_right</Icon>
                 </a>

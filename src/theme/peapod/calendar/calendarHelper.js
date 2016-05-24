@@ -4,6 +4,8 @@
 * LICENSE: <%= package.licence %>
 */
 
+import moment from 'moment-timezone';
+
 export const globals = {
     daysPerWeek: 7,
     startingDay: 0, // sunday = 0, monday = 1 ect...
@@ -22,23 +24,23 @@ export function setDayOfWeek(date, dayOfWeek) {
     return date.setDate(date.getDate() - date.getDay() + dayOfWeek);
 }
 
+// reset the time on dates
+export function resetTime(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
 // get list of date between two dates
 export function getDates(firstDate, secondDate) {
     const startDate = resetTime(firstDate);
     const stopDate = resetTime(secondDate);
 
-    let dateArray = [];
+    const dateArray = [];
     let currentDate = startDate;
     while (currentDate <= stopDate) {
         dateArray.push(currentDate);
         currentDate = addDays(currentDate, 1);
     }
     return dateArray;
-}
-
-// reset the time on dates
-export function resetTime(date) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
 // get days in month
@@ -59,5 +61,6 @@ export function getMonthFromDate(date) {
 
 // get local month
 export function getLocalMonth(date) {
-    return date.toLocaleDateString(globals.locale, { month: 'long' });
+    return moment(date).format('MMMM');
+    // return date.toLocaleDateString(globals.locale, { month: 'long' });
 }
