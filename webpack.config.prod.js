@@ -1,4 +1,5 @@
 var path = require('path'); // eslint-disable-line
+var webpack = require('webpack') // eslint-disable-line
 
 const config = {
     devtool: 'eval-cheap-module-source-map',
@@ -22,6 +23,12 @@ const config = {
             react: path.resolve('./node_modules/react'),
         },
     },
+
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+        }),
+    ],
 
     externals: [
         {
