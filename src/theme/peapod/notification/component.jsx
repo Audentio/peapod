@@ -4,9 +4,9 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import Pod_Styler from 'styler';
-import { Icon } from 'components';
-import Logger from 'logger';
+import Pod_Styler from 'utility/styler.js';
+import { Icon } from 'utility/components.js';
+import Logger from 'utility/logger.js';
 
 
 /**

@@ -3,7 +3,7 @@
 import wrapper from './wrapper.jsx';
 import Vars from './vars.js';
 import Styler from './styler.js';
-import Logger from 'logger';
+import Logger from './logger.js';
 
 module.exports = {
     Examples: {},

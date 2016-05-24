@@ -1,4 +1,4 @@
-import { Sheet } from 'stylesheet.js';
+import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function style(sheetName) {
     let sheet = new Sheet(sheetName);

@@ -1,6 +1,6 @@
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import { Portal, Menu, Button as Pod_Menu, Menu_Item, Button } from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+import { Portal, Menu, Button as Pod_Menu, Menu_Item, Button } from 'utility/components.js';
 
 module.exports = class Menu extends React.Component {
     constructor() {

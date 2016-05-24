@@ -3,7 +3,7 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import Logger from 'logger.js';
+import Logger from './logger.js';
 
 const Pod_Helper = {
 

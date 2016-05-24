@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ContentWrap, Card, CircularProgress } from 'components';
+import { ContentWrap, Card, CircularProgress } from 'utility/components.js';
 
 const cardStyle = {
     style: {

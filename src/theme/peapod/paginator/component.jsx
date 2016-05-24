@@ -1,7 +1,7 @@
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
-import {Icon, Grid, Div} from 'components.js';
+import {Icon, Grid, Div} from 'utility/components.js';
 
 class Paginator extends React.Component {
 	render() {

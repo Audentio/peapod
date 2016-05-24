@@ -4,8 +4,8 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import { Accordion_Section } from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+import { Accordion_Section } from 'utility/components.js';
 
 module.exports = class Accordion extends React.Component {
     static propTypes = {

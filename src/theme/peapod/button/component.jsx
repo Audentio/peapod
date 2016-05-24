@@ -6,7 +6,7 @@
 
 
 import React, { PropTypes, Component } from 'react';
-import Pod_Styler from 'styler';
+import Pod_Styler from 'utility/styler.js';
 
 class Button extends Component {
 

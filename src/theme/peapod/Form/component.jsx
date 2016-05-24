@@ -3,10 +3,10 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React from 'react'
-import Pod_Styler from 'styler'
-import Pod_Helper from 'helper'
-import { Progress } from 'components'
+import React from 'react';
+import Pod_Styler from 'utility/styler.js';
+import Pod_Helper from 'utility/helper.js';
+import { Progress } from 'utility/components.js';
 
 /**
 *

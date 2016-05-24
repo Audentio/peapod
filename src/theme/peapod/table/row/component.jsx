@@ -4,12 +4,11 @@
  */
 
  import React from 'react';
- import Pod_Styler from 'styler.js';
- import PureRender from 'pureRender';
+ import Pod_Styler from 'utility/styler.js';
 
 import {reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined, isEqual as _isEqual} from 'lodash'
 
-import {Table_Cell} from 'components.js';
+import {Table_Cell} from 'utility/components.js';
 
 module.exports = class Table_Row extends React.Component {
 

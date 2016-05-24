@@ -4,8 +4,8 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import { Card, Icon } from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+import { Card, Icon } from 'utility/components.js';
 
 module.exports = class Accordion_Section extends React.Component {
     static propTypes = {

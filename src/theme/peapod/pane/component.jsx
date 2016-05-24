@@ -6,7 +6,7 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 module.exports = class Pane extends React.Component {
   constructor(props, context) {

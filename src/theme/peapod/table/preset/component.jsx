@@ -4,11 +4,11 @@
  */
 
  import React from 'react';
- import Pod_Styler from 'styler.js';
- import PureRender from 'pureRender';
+ import Pod_Styler from 'utility/styler.js';
+ import PureRender from 'utility/pureRender.js';
 
 
- import {Portal, Button} from 'components.js';
+ import {Portal, Button} from 'utility/components.js';
 
 
 var topButtonStyle = {

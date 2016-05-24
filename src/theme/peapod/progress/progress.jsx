@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'components.js';
+import Pod from 'utility/components.js';
 import Progressing from './example/progressing.jsx';
 import ProgressExamples from './example/progress.jsx';
 

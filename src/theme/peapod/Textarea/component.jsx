@@ -4,8 +4,8 @@
 */
 
 import React, { Component } from 'react';
-import Pod_Styler from 'styler';
-import { Input } from 'components';
+import Pod_Styler from 'utility/styler.js';
+import { Input } from 'utility/components.js';
 
 /**
 *

@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 var TabTriggers = React.createClass({
 	render: function() {

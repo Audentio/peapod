@@ -4,8 +4,8 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'styler';
-import PureRender from 'pureRender';
+import Pod_Styler from 'utility/styler.js';
+import PureRender from 'utility/pureRender.js';
 
 import { isFunction, sortBy as _sorter, values as _values, reverse as _reverse, merge as _merge } from 'lodash';
 
@@ -23,7 +23,7 @@ import {
     Table_Preset as TablePreset,
     Table_Control as TableControl,
     Table_Header as TableHeader,
-} from 'components';
+} from 'utility/components.js';
 
 
 module.exports = class Table extends React.Component {

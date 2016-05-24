@@ -1,9 +1,9 @@
-import {globals, addDays, setDayOfWeek, getDates, resetTime, daysInMonth, getMonthFromDate, getLocalMonth} from '../calendarHelper.js'
+import { globals, addDays, setDayOfWeek, getDates, resetTime, daysInMonth, getMonthFromDate, getLocalMonth } from '../calendarHelper.js';
 
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
-import {Calendar_DaysOfWeek, Calendar_Day} from 'components.js'
+import { Calendar_DaysOfWeek, Calendar_Day } from 'utility/components.js'
 
 module.exports = class Calendar_Grid extends React.Component {
 

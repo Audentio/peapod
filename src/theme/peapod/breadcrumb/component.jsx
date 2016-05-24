@@ -7,8 +7,8 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import { Anchor } from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+import { Anchor } from 'utility/components.js';
 
 /**
 * Breadcrumbs component

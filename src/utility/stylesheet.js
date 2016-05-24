@@ -1,6 +1,6 @@
 import { merge as _Merge, clone as _Clone } from 'lodash';
 import Pod_Vars from './vars.js';
-import Logger from 'logger';
+import Logger from './logger.js';
 
 const pod_debug = false; // if true, will add a debug object to the inline style produced
 

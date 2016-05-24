@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Pane, Grid, Grid_Cell, Photo, Heading } from 'components.js';
+import { Pane, Grid, Grid_Cell, Photo, Heading } from 'utility/components.js';
 
 module.exports = class GridExample extends React.Component {
     render() {

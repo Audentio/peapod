@@ -4,7 +4,7 @@
 */
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'styler';
+import Pod_Styler from 'utility/styler.js';
 
 module.exports = class CircularProgress extends React.Component {
 
@@ -32,7 +32,7 @@ module.exports = class CircularProgress extends React.Component {
 
         return (
             <div style={style.main}>
-                
+
                 <div style={style.track}></div>
 
                 <div style={style.maskTransformed}><div style={style.circleTransformed}></div></div>

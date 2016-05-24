@@ -4,14 +4,14 @@
  */
 
  import React from 'react';
- import Pod_Styler from 'styler.js';
- import PureRender from 'pureRender';
+ import Pod_Styler from 'utility/styler.js';
+ import PureRender from 'utility/pureRender.js';
 
 //var lodash = require('lodash')
 //var reduce = lodash.reduce;
 import {reduce as _reduce} from 'lodash'
 
-import {Icon, Table_Cell} from 'components.js';
+import {Icon, Table_Cell} from 'utility/components.js';
 
 module.exports = class Table_Header extends React.Component {
 

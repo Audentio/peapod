@@ -1,10 +1,8 @@
-var Pod_Vars = require('vars.js');
-
-import { Sheet } from 'stylesheet.js';
+import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     main.addSelector({
         common: {
@@ -34,8 +32,8 @@ module.exports = function (sheetName) {
     });
 
     // flex-direction
-    var choices = ['row', 'row-reverse', 'column', 'column-reverse'];
-    for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
+    let choices = ['row', 'row-reverse', 'column', 'column-reverse'];
+    for (let choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
         sheet.addCondition('flexDirection_' + choices[choiceIndex]).addStyler({ flexDirection: choices[choiceIndex] });
         main.addSelector({
             condition: ['flexDirection_' + choices[choiceIndex]],
@@ -46,8 +44,8 @@ module.exports = function (sheetName) {
     }
 
     // flex-wrap
-    var choices = ['nowrap', 'wrap', 'wrap-reverse'];
-    for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
+    choices = ['nowrap', 'wrap', 'wrap-reverse'];
+    for (let choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
         sheet.addCondition('flexWrap_' + choices[choiceIndex]).addStyler({ flexWrap: choices[choiceIndex] });
         main.addSelector({
             condition: ['flexWrap_' + choices[choiceIndex]],
@@ -58,8 +56,8 @@ module.exports = function (sheetName) {
     }
 
     // justify-content
-    var choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around'];
-    for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
+    choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around'];
+    for (let choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
         sheet.addCondition('justifyContent_' + choices[choiceIndex]).addStyler({ justifyContent: choices[choiceIndex] });
         main.addSelector({
             condition: ['justifyContent_' + choices[choiceIndex]],
@@ -70,8 +68,8 @@ module.exports = function (sheetName) {
     }
 
     // align-items
-    var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
-    for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
+    choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
+    for (let choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
         sheet.addCondition('alignItems_' + choices[choiceIndex]).addStyler({ alignItems: choices[choiceIndex] });
         main.addSelector({
             condition: ['alignItems_' + choices[choiceIndex]],
@@ -82,8 +80,8 @@ module.exports = function (sheetName) {
     }
 
     // align-content
-    var choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'stretch'];
-    for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
+    choices = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'stretch'];
+    for (let choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
         sheet.addCondition('alignContent_' + choices[choiceIndex]).addStyler({ alignContent: choices[choiceIndex] });
         main.addSelector({
             condition: ['alignContent_' + choices[choiceIndex]],
@@ -94,8 +92,8 @@ module.exports = function (sheetName) {
     }
 
     // flex item align-self
-    var choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
-    for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
+    choices = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
+    for (let choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
         sheet.addCondition('alignSelf_' + choices[choiceIndex]).addStyler({ alignSelf: choices[choiceIndex] });
         main.addSelector({
             condition: ['alignSelf_' + choices[choiceIndex]],

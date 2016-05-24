@@ -5,7 +5,7 @@
 
 import { merge as _merge, isEqual as _isEqual } from 'lodash';
 import { Style } from './stylesheet.js';
-import Logger from 'logger';
+import Logger from './logger.js';
 
 window.Pod_Styler = window.Pod_Styler || {
     libraries: [],

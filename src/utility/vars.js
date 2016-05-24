@@ -4,7 +4,7 @@
 */
 
 import { merge as _merge } from 'lodash';
-import Logger from 'logger';
+import Logger from './logger.js';
 
 const maxDepth = 30; // will attempt to resolve variables throug this many levels
 

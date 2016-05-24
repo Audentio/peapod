@@ -1,7 +1,7 @@
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
-import {Icon} from 'components.js';
+import {Icon} from 'utility/components.js';
 
 module.exports = class Label extends React.Component {
 
