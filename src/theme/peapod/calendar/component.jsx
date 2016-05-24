@@ -3,7 +3,7 @@ import Pod_Styler from 'utility/styler.js';
 import { Calendar_MonthBar, Calendar_Grid } from 'utility/components.js';
 import moment from 'moment-timezone';
 
-import { globals, addDays, getMonthFromDate } from './calendarHelper.js';
+import { addDays, getMonthFromDate } from './calendarHelper.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -72,8 +72,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const nextMonth = dayAfter.getMonth();
         const prevYear = dayBefore.getFullYear();
         const nextYear = dayAfter.getFullYear();
-
-        const dayoptions = { weekday: 'short', month: 'short', day: 'numeric' };
 
         return (
             <div style={style.main}>
