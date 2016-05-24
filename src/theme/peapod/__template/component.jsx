@@ -7,35 +7,40 @@
 /*
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 
-module.exports = class Template extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends Component {
 
-	constructor(props, context) {
-		super(props, context);
+    	constructor(props, context) {
+    		super(props, context);
 
-		this.state = {}
-	}
-	//Validate props
-	static propTypes = {
+    		this.state = {}
+    	}
 
-	}
+        static displayName = componentName;
 
-	//Default props
-	static defaultProps =  {
+    	// Validate props
+    	static propTypes = {
 
-	}
+    	}
 
-	render() {
-		var style = Pod_Styler.getStyle(this);
-		return (
-			<div style={style.main}
-				{this.props.children}>
-			</div>
-		);
+    	// Default props
+    	static defaultProps =  {
 
-	}
+    	}
 
-});
+    	render() {
+    		var style = Pod_Styler.getStyle(this);
+    		return (
+    			<div style={style.main}
+    				{this.props.children}>
+    			</div>
+    		);
+
+    	}
+
+    };
+};
 */

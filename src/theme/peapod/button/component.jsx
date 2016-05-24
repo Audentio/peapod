@@ -6,86 +6,88 @@
 
 
 import React, { PropTypes, Component } from 'react';
-import Pod_Styler from 'styler';
+import Pod_Styler from 'utility/styler.js';
 
-class Button extends Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends Component {
 
-    // Validate props
-    static propTypes = {
-        href: PropTypes.string,
-        disabled: PropTypes.bool,
-        onClick: PropTypes.func,
-        label: PropTypes.any,
-        children: PropTypes.any,
-        noRipple: PropTypes.bool,
-    }
+        static displayName = componentName;
 
-    // Default props
-    static defaultProps = {
-        label: 'Submit',
-        noRipple: false,
-    }
-
-    onClickHandler = (e) => {
-        const { onClick, noRipple } = this.props;
-
-        if (noRipple === false) {
-            this.ripple(e.clientX, e.clientY);
+        // Validate props
+        static propTypes = {
+            href: PropTypes.string,
+            disabled: PropTypes.bool,
+            onClick: PropTypes.func,
+            label: PropTypes.any,
+            children: PropTypes.any,
+            noRipple: PropTypes.bool,
         }
 
-        if (onClick) onClick(e);
-    }
+        // Default props
+        static defaultProps = {
+            label: 'Submit',
+            noRipple: false,
+        }
 
-    ripple(clientX, clientY) {
-        const style = Pod_Styler.getStyle(this);
-        const ripples = this.state.ripples || [];
-        const containerRect = this.refs.rippleContainer.getBoundingClientRect();
-        const rippleSize = containerRect.width;
+        onClickHandler = (e) => {
+            const { onClick, noRipple } = this.props;
 
-        const calculatedStyle = {
-            width: rippleSize,
-            height: rippleSize,
-            top: clientY - containerRect.top - (rippleSize / 2),
-            left: clientX - containerRect.left - (rippleSize / 2),
-        };
+            if (noRipple === false) {
+                this.ripple(e.clientX, e.clientY);
+            }
 
-        if (this.rippleCount === undefined) this.rippleCount = 0;
+            if (onClick) onClick(e);
+        }
 
-        ripples.push(<span key={this.rippleCount} style={[style.ripple, calculatedStyle]}></span>);
+        ripple(clientX, clientY) {
+            const style = Pod_Styler.getStyle(this);
+            const ripples = this.state.ripples || [];
+            const containerRect = this.refs.rippleContainer.getBoundingClientRect();
+            const rippleSize = containerRect.width;
 
-        this.rippleCount++;
+            const calculatedStyle = {
+                width: rippleSize,
+                height: rippleSize,
+                top: clientY - containerRect.top - (rippleSize / 2),
+                left: clientX - containerRect.left - (rippleSize / 2),
+            };
 
-        this.setState({ ripples });
+            if (this.rippleCount === undefined) this.rippleCount = 0;
 
-        // Remove ripple
-        setTimeout(() => {
-            ripples.splice(0, 1);
+            ripples.push(<span key={this.rippleCount} style={[style.ripple, calculatedStyle]}></span>);
+
+            this.rippleCount++;
+
             this.setState({ ripples });
-        }, 1000);
-    }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-        const ripple = <span ref="rippleContainer" style={style.rippleContainer}>{this.state.ripples}</span>;
-        const { children, label, href } = this.props;
+            // Remove ripple
+            setTimeout(() => {
+                ripples.splice(0, 1);
+                this.setState({ ripples });
+            }, 1000);
+        }
 
-        // Anchor tag <a> if href specified
-        if (href) {
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            const ripple = <span ref="rippleContainer" style={style.rippleContainer}>{this.state.ripples}</span>;
+            const { children, label, href } = this.props;
+
+            // Anchor tag <a> if href specified
+            if (href) {
+                return (
+                    <a ref="button" href={href} style={style.main} onClick={this.onClickHandler}>
+                        {children || label} {ripple}
+                    </a>
+                );
+            }
+
+            // Default: <button> tag
             return (
-                <a ref="button" href={href} style={style.main} onClick={this.onClickHandler}>
+                <button ref="button" style={style.main} onClick={this.onClickHandler}>
                     {children || label} {ripple}
-                </a>
+                </button>
             );
         }
 
-        // Default: <button> tag
-        return (
-            <button ref="button" style={style.main} onClick={this.onClickHandler}>
-                {children || label} {ripple}
-            </button>
-        );
-    }
-
-}
-
-module.exports = Button;
+    };
+};

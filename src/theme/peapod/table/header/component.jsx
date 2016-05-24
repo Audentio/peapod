@@ -1,65 +1,68 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
- import React from 'react';
- import Pod_Styler from 'styler.js';
- import PureRender from 'pureRender';
+import React from 'react';
+import Pod_Styler from 'utility/styler.js';
+import PureRender from 'utility/pureRender.js';
 
-//var lodash = require('lodash')
-//var reduce = lodash.reduce;
-import {reduce as _reduce} from 'lodash'
+import { reduce as _reduce } from 'lodash';
 
-import {Icon, Table_Cell} from 'components.js';
+import { Icon, Table_Cell } from 'utility/components.js';
 
-module.exports = class Table_Header extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    //shouldComponentUpdate = PureRender;
+        static displayName = componentName;
 
-	static propTypes = {
-		config: React.PropTypes.object,
-		columns: React.PropTypes.array
-	}
+        //shouldComponentUpdate = PureRender;
 
-	render() {
-		var style = Pod_Styler.getStyle({props: {
-			styler: {
-				styleLike: 'Table_Inner',
-				header: true
-			}
-		}});
+        static propTypes = {
+            config: React.PropTypes.object,
+            columns: React.PropTypes.array,
+        }
 
-		const config = this.props.config;
-		const columns = this.props.columns;
+        render() {
+            const style = Pod_Styler.getStyle({ props: {
+                styler: {
+                    styleLike: 'Table_Inner',
+                    header: true,
+                },
+            } });
 
-		return (
-			<div style={style.row}>
-				{columns.map( function(column, i) {
-					//apply any onEvent specified to cell
-					var columnHeader = _reduce(config, function(result, v, k){
-						result[k] = k.indexOf('on') === 0 ? v.bind(null, column) : v;
-						return result;
-					}, {});
+            const config = this.props.config;
+            const columns = this.props.columns;
 
-					var arrowStyle = {
-						style: {
-							fontSize: '$font.size.large',
-                            position: 'relative',
-                            top: -1,
-                            verticalAlign: 'middle',
-                            marginLeft: 5,
-						}
-					}
+            return (
+                <div style={style.row}>
+                    {columns.map(
+                        (column, i) => {
+                            // apply any onEvent specified to cell
+                            const columnHeader = _reduce(config, (result, v, k) => {
+                                result[k] = k.indexOf('on') === 0 ? v.bind(null, column) : v;
+                                return result;
+                            }, {});
 
-					return (
-						<Table_Cell key={i + '-header'} column={column} header={true} {...columnHeader}>
-							{column.header}{column.sort == 'desc' ? <Icon styler={arrowStyle}>arrow_downward</Icon> : ''}{column.sort == 'asc' ? <Icon styler={arrowStyle}>arrow_upward</Icon> : ''}
-						</Table_Cell>
-					)
-				})
-			}
-			</div>
-		)
-	}
+                            const arrowStyle = {
+                                style: {
+                                    fontSize: '$font.size.large',
+                                    position: 'relative',
+                                    top: -1,
+                                    verticalAlign: 'middle',
+                                    marginLeft: 5,
+                                },
+                            };
+
+                            return (
+                                <Table_Cell key={i + '-header'} column={column} header {...columnHeader}>
+                                    {column.header}{column.sort === 'desc' ? <Icon styler={arrowStyle}>arrow_downward</Icon> : ''}{column.sort === 'asc' ? <Icon styler={arrowStyle}>arrow_upward</Icon> : ''}
+                                </Table_Cell>
+                            );
+                        })
+                    }
+                </div>
+            );
+        }
+    };
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'components.js';
+import Pod from 'utility/components.js';
 import SectionComponent from './sectionComponent.jsx';
 import SingleComponent from './pages/singleComponent.jsx';
 
@@ -57,7 +57,7 @@ export default class Sections extends React.Component {
             <div>
                 <Pod.Pane>
                     <Pod.Grid>
-                        <Pod.Grid_Cell styler={{ style: { padding: '10px 20px 10px 10px' }, md: 12, lg: 3, xl: 2 }}>
+                        <Pod.Grid_Cell styler={{ style: { padding: '0px 20px 0px 0px' }, md: 12, lg: 3, xl: 2 }}>
                             <Pod.FixedElement containerWidth alwaysFixed>
                                 <Pod.Card styler={{ style: { width: '100%' } }}>
 

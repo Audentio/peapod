@@ -1,12 +1,14 @@
 var path = require('path'); // eslint-disable-line
+var webpack = require('webpack') // eslint-disable-line
+var CompressionPlugin = require("compression-webpack-plugin"); // eslint-disable-line
 
 const config = {
-    devtool: 'eval-cheap-module-source-map',
     entry: {
-        styler: [path.resolve('./src/styler.js')],
-        components: [path.resolve('./src/components.js')],
-        vars: [path.resolve('./src/vars.js')],
-        sheet: [path.resolve('./src/stylesheet.js')],
+        styler: [path.resolve('./src/utility/styler.js')],
+        components: [path.resolve('./src/utility/components.js')],
+        vars: [path.resolve('./src/utility/vars.js')],
+        sheet: [path.resolve('./src/utility/stylesheet.js')],
+        helper: [path.resolve('./src/utility/helper.js')],
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -21,6 +23,22 @@ const config = {
             react: path.resolve('./node_modules/react'),
         },
     },
+
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            minimize: true,
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new CompressionPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: /\.js$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.8,
+        }),
+    ],
 
     externals: [
         {

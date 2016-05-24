@@ -1,43 +1,47 @@
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import { Button, Anchor } from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+import { Button, Anchor } from 'utility/components.js';
 
-module.exports = class Menu_Item extends React.Component {
-    static defaultProps = {
-        subtext: ' ',
-    }
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    render() {
-        var style = Pod_Styler.getStyle(this);
+        static displayName = componentName;
+        static defaultProps = {
+            subtext: ' ',
+        }
 
-        var subtext = (this.props.subtext) ? (<div style={style.subtext}>{this.props.subtext}</div>) : '';
+        render() {
+            var style = Pod_Styler.getStyle(this);
 
-        let returned;
-        if (this.props.href && this.props.style === 'button') {
-            returned = (<Button href={this.props.href} styler={{ kind: 'general' }}>
+            var subtext = (this.props.subtext) ? (<div style={style.subtext}>{this.props.subtext}</div>) : '';
+
+            let returned;
+            if (this.props.href && this.props.style === 'button') {
+                returned = (<Button href={this.props.href} styler={{ kind: 'general' }}>
                 {subtext}
                 {this.props.children}
             </Button>);
         } else if (this.props.style === 'button') {
             returned = (<Button styler={{ kind: 'general' }}>
+            {subtext}
+            {this.props.children}
+        </Button>);
+    } else if (this.props.href) {
+        returned = (<div style={style.main}>
+            <Anchor to={this.props.href} style={style.anchor}>
                 {subtext}
                 {this.props.children}
-            </Button>);
-        } else if (this.props.href) {
-            returned = (<div style={style.main}>
-                <Anchor to={this.props.href} style={style.anchor}>
-                    {subtext}
-                    {this.props.children}
-                </Anchor>
-            </div>);
-        } else {
-            returned = (
-                <div style={style.main}>
-                    {subtext}
-                    {this.props.children}
-                </div>
-            );
-        }
-        return returned;
+            </Anchor>
+        </div>);
+    } else {
+        returned = (
+            <div style={style.main}>
+                {subtext}
+                {this.props.children}
+            </div>
+        );
     }
+    return returned;
+}
+};
 };

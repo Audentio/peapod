@@ -1,6 +1,6 @@
 import React from 'react';
-import Pod from 'components.js';
-import Pod_Helper from 'helper.js'; // eslint-disable-line
+import Pod from 'utility/components.js';
+import Pod_Helper from 'utility/helper.js'; // eslint-disable-line
 
 const codeExample__javascript =
 `function $initHighlight(block, flags) {

@@ -7,72 +7,76 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
-import Pod from 'components.js';
+import Pod_Styler from 'utility/styler.js';
+import Pod from 'utility/components.js';
 
 /**
 * Json component
 * @element Code
 */
-module.exports = class Json extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    static propTypes = {
-        json: React.PropTypes.object,
-    }
+        static displayName = componentName;
 
-    static defaultProps = {
-        json: {},
-    }
+        static propTypes = {
+            json: React.PropTypes.object,
+        }
 
-    parse(json) {
-        const objs = [];
-        for (let index in json) {
-            const Component = Pod[index];
-            let children = json[index].children;
-            const toParse = json[index].JsonParse;
+        static defaultProps = {
+            json: {},
+        }
 
-            if (toParse) {
-                for (let i = 0; i < toParse.length; i++) {
-                    json[index][toParse[i]] = this.parse(json[index][toParse[i]]);
+        parse(json) {
+            const objs = [];
+            for (let index in json) {
+                const Component = Pod[index];
+                let children = json[index].children;
+                const toParse = json[index].JsonParse;
+
+                if (toParse) {
+                    for (let i = 0; i < toParse.length; i++) {
+                        json[index][toParse[i]] = this.parse(json[index][toParse[i]]);
+                    }
+
+                    delete json[index].JsonParse;
                 }
 
-                delete json[index].JsonParse;
+                if (typeof children === 'object') {
+                    json[index].children = this.parse(children);
+                } else {
+                    json[index].children = children;
+                }
+
+                objs.push(<Component key={index} {...json[index]} />);
             }
 
-            if (typeof children === 'object') {
-                json[index].children = this.parse(children);
+            return objs;
+        }
+
+        componentWillMount() {
+            this.parse = this.parse.bind(this);
+
+            this.setState({
+                components: this.parse(this.props.json),
+            });
+        }
+
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            let components;
+
+            if (this.state.components.length > 1) {
+                components = (
+                    <div style={style.main}>
+                        {this.state.components}
+                    </div>
+                );
             } else {
-                json[index].children = children;
+                components = this.state.components[0];
             }
 
-            objs.push(<Component key={index} {...json[index]} />);
+            return components;
         }
-
-        return objs;
-    }
-
-    componentWillMount() {
-        this.parse = this.parse.bind(this);
-
-        this.setState({
-            components: this.parse(this.props.json),
-        });
-    }
-
-    render() {
-        const style = Pod_Styler.getStyle(this);
-        let components;
-
-        if (this.state.components.length > 1) {
-            components = (
-                <div style={style.main}>
-                    {this.state.components}
-                </div>
-            );
-        } else {
-            components = this.state.components[0];
-        }
-
-        return components;
-    }
+    };
 };

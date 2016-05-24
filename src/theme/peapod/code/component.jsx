@@ -5,27 +5,31 @@
 */
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 /**
 * Code component
 * @element Code
 */
-module.exports = class Code extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    static propTypes = {
-        children: PropTypes.string,
-    }
+        static displayName = componentName;
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-        const { children: code } = this.props;
+        static propTypes = {
+            children: PropTypes.string,
+        }
 
-        return (
-            <code style={style.main}>
-                {code}
-            </code>
-        );
-    }
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            const { children: code } = this.props;
 
+            return (
+                <code style={style.main}>
+                    {code}
+                </code>
+            );
+        }
+
+    };
 };

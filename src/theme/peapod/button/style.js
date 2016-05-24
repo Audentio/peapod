@@ -1,4 +1,4 @@
-import { Sheet } from 'stylesheet.js';
+import { Sheet } from 'utility/stylesheet.js';
 import Radium from 'radium';
 import buttons from './presets.js';
 
@@ -178,10 +178,6 @@ module.exports = function (sheetName) {
             borderRadius: '1000px',
         },
     });
-
-
-
-
 
 
     for (let index in buttons) {

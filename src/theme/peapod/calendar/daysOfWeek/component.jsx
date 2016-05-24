@@ -1,20 +1,25 @@
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
-module.exports = class Calendar_DaysOfWeek extends React.Component {
-    static propTypes = {
-        date: React.PropTypes.any,
-    }
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-        const date = new Date(this.props.date);
+        static displayName = componentName;
 
-        return (
-            <li style={style.main}>
-                {date.toLocaleDateString(window.navigator.language, { weekday: 'narrow' })}
-            </li>
-        );
-    }
+        static propTypes = {
+            date: React.PropTypes.any,
+        }
 
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            const date = new Date(this.props.date);
+
+            return (
+                <li style={style.main}>
+                    {date.toLocaleDateString(window.navigator.language, { weekday: 'narrow' })}
+                </li>
+            );
+        }
+
+    };
 };

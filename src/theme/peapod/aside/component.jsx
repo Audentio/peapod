@@ -4,18 +4,23 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
-module.exports = class Aside extends React.Component {
-    render() {
-        const { styler, children, ...other } = this.props;
-        const style = Pod_Styler.getStyle(this);
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-        return (
-            <aside {...other} style={style.main}>
-                {this.props.children}
-            </aside>
-        );
-    }
+        static displayName = componentName;
 
+        render() {
+            const { styler, children, ...other } = this.props;
+            const style = Pod_Styler.getStyle(this);
+
+            return (
+                <aside {...other} style={style.main}>
+                    {this.props.children}
+                </aside>
+            );
+        }
+
+    };
 };

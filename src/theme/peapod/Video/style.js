@@ -1,23 +1,23 @@
-import { Sheet } from 'stylesheet.js'
-import { merge as _merge } from 'lodash'
+import { Sheet } from 'utility/stylesheet.js';
+import { merge as _merge } from 'lodash';
 
 module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName)
-    const main = sheet.addMain()
-    const video = sheet.addPart('video')
-    const controls = sheet.addPart('controls')
-    const playpause = sheet.addPart('playpause')
-    const playpauseIcon = sheet.addPart('playpauseIcon')
-    const volumeIcon = sheet.addPart('volumeIcon')
-    const seekbar = sheet.addPart('seekbar')
-    const seekbar_progress = sheet.addPart('seekbar_progress')
-    const seekbar_time = sheet.addPart('seekbar_time')
-    const seekbar_bar = sheet.addPart('seekbar_bar')
-    const morecontrols = sheet.addPart('morecontrols')
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const video = sheet.addPart('video');
+    const controls = sheet.addPart('controls');
+    const playpause = sheet.addPart('playpause');
+    const playpauseIcon = sheet.addPart('playpauseIcon');
+    const volumeIcon = sheet.addPart('volumeIcon');
+    const seekbar = sheet.addPart('seekbar');
+    const seekbar_progress = sheet.addPart('seekbar_progress');
+    const seekbar_time = sheet.addPart('seekbar_time');
+    const seekbar_bar = sheet.addPart('seekbar_bar');
+    const morecontrols = sheet.addPart('morecontrols');
 
-    sheet.addCondition('main_hovered').addState({ main_hovered: true })
-    sheet.addCondition('playing').addState({ playing: true })
-    sheet.addCondition('fullscreen').addState({ fullscreen: true })
+    sheet.addCondition('main_hovered').addState({ main_hovered: true });
+    sheet.addCondition('playing').addState({ playing: true });
+    sheet.addCondition('fullscreen').addState({ fullscreen: true });
 
     main.addSelector({
         common: {
@@ -38,7 +38,7 @@ module.exports = function (sheetName) {
             width: '100%',
             height: '100%',
         },
-    })
+    });
 
     video.addSelector({
         common: {
@@ -52,7 +52,7 @@ module.exports = function (sheetName) {
             width: '100%',
             height: '100%',
         },
-    })
+    });
 
     controls.addSelector({
         common: {
@@ -86,14 +86,14 @@ module.exports = function (sheetName) {
         common: {
             height: 48,
         },
-    })
+    });
 
     const controls_section = {
         display: 'table-cell',
         verticalAlign: 'middle',
         zIndex: 1,
         textAlign: 'center',
-    }
+    };
 
     playpause.addSelector({
         common: _merge({}, controls_section, {
@@ -105,7 +105,7 @@ module.exports = function (sheetName) {
                 opacity: 1,
             },
         }),
-    })
+    });
 
     playpauseIcon.addSelector({
         common: {
@@ -113,20 +113,20 @@ module.exports = function (sheetName) {
             verticalAlign: 'bottom',
             fontSize: 24,
         },
-    })
+    });
 
     volumeIcon.addSelector({
         common: {
             verticalAlign: 'bottom',
             fontSize: 17,
         },
-    })
+    });
 
     seekbar.addSelector({
         common: _merge({}, controls_section, {
 
         }),
-    })
+    });
 
     seekbar_progress.addSelector({
         common: {
@@ -139,7 +139,7 @@ module.exports = function (sheetName) {
                 transition: '0.1s',
             },
         },
-    })
+    });
 
     seekbar_time.addSelector({
         common: {
@@ -148,7 +148,7 @@ module.exports = function (sheetName) {
             width: '50px',
             textAlign: 'left',
         },
-    })
+    });
 
     seekbar_bar.addSelector({
         common: {
@@ -156,13 +156,13 @@ module.exports = function (sheetName) {
             verticalAlign: 'middle',
             padding: '0 4px',
         },
-    })
+    });
 
     morecontrols.addSelector({
         common: _merge({}, controls_section, {
             width: '70px',
         }),
-    })
+    });
 
     return sheet;
-}
+};

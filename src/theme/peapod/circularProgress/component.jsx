@@ -4,50 +4,54 @@
 */
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'styler';
+import Pod_Styler from 'utility/styler.js';
 
-module.exports = class CircularProgress extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    static propTypes = {
-        value: PropTypes.number,
-        max: PropTypes.number,
-        children: PropTypes.oneOfType([
-            PropTypes.element,
-            PropTypes.node,
-            PropTypes.string,
-        ]),
-    }
+        static displayName = componentName;
 
-    static defaultProps = {
-        value: 0,
-        max: 100,
-    }
+        static propTypes = {
+            value: PropTypes.number,
+            max: PropTypes.number,
+            children: PropTypes.oneOfType([
+                PropTypes.element,
+                PropTypes.node,
+                PropTypes.string,
+            ]),
+        }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-        const { children: innerContent } = this.props;
+        static defaultProps = {
+            value: 0,
+            max: 100,
+        }
 
-        style.maskTransformed = Object.assign({}, style.mask, this.getTransform());
-        style.circleTransformed = Object.assign({}, style.circle, this.getTransform());
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            const { children: innerContent } = this.props;
 
-        return (
-            <div style={style.main}>
-                
-                <div style={style.track}></div>
+            style.maskTransformed = Object.assign({}, style.mask, this.getTransform());
+            style.circleTransformed = Object.assign({}, style.circle, this.getTransform());
 
-                <div style={style.maskTransformed}><div style={style.circleTransformed}></div></div>
-                <div style={style.mask}><div style={style.circleTransformed}></div></div>
+            return (
+                <div style={style.main}>
 
-                <div style={style.content}>
-                    <div style={style.contentInner}>
-                        {innerContent}
+                    <div style={style.track}></div>
+
+                    <div style={style.maskTransformed}><div style={style.circleTransformed}></div></div>
+                    <div style={style.mask}><div style={style.circleTransformed}></div></div>
+
+                    <div style={style.content}>
+                        <div style={style.contentInner}>
+                            {innerContent}
+                        </div>
                     </div>
+
                 </div>
+            );
+        }
 
-            </div>
-        );
-    }
+        getTransform = () => ({ transform: `rotate(${this.props.value * 1.8}deg)` })
 
-    getTransform = () => ({ transform: `rotate(${this.props.value * 1.8}deg)` })
-
+    };
 };

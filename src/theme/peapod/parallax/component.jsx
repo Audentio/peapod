@@ -7,39 +7,41 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 /**
 * Parallax component
 * @element Code
 */
-module.exports = class Parallax extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    constructor() {
-        super();
+        static displayName = componentName;
 
-        this.onScroll = this.onScroll.bind(this);
-        document.addEventListener("scroll", this.onScroll, false);
-    }
+        constructor() {
+            super();
 
-    onScroll(event) {
-        const element = this.refs.Parallax
-        const rect = element.getBoundingClientRect()
-        this.setState({height: (window.innerHeight / 2) - rect.top});
-    }
+            this.onScroll = this.onScroll.bind(this);
+            document.addEventListener('scroll', this.onScroll, false);
+        }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-        style.back['transform'] = 'translateY(-'+String(this.state.height * 0.5)+'px)';
-        style.front['transform'] = 'translateY(-'+String((this.state.height * 1))+'px)';
+        onScroll(event) {
+            const element = this.refs.Parallax;
+            const rect = element.getBoundingClientRect();
+            this.setState({ height: (window.innerHeight / 2) - rect.top });
+        }
 
-        return (
-            <div style={style.main} onScroll={this.onScroll} ref="Parallax">
-                <div style={style.back}>{this.props.background}</div>
-                <div style={style.front}>{this.props.children}</div>
-            </div>
-        );
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            style.back['transform'] = 'translateY(-'+String(this.state.height * 0.5)+'px)';
+            style.front['transform'] = 'translateY(-'+String((this.state.height * 1))+'px)';
 
-    }
-
+            return (
+                <div style={style.main} onScroll={this.onScroll} ref="Parallax">
+                    <div style={style.back}>{this.props.background}</div>
+                    <div style={style.front}>{this.props.children}</div>
+                </div>
+            );
+        }
+    };
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'components.js';
+import Pod from 'utility/components.js';
 
 module.exports = class TimestampExample extends React.Component {
 

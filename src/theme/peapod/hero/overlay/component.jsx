@@ -7,7 +7,7 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 
 /**
@@ -16,25 +16,23 @@ import Pod_Styler from 'styler.js';
 * @element Pod_modal
 *
 */
-module.exports = class Hero_Overlay extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    constructor() {
-        super();
-    }
+        static displayName = componentName;
 
-	static defaultProps = {
-	    position: 'center'
-	}
+        static defaultProps = {
+            position: 'center',
+        }
 
-    render() {
-        var style = Pod_Styler.getStyle(this);
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
-        return (
-            <div style={style.main}>
-                {this.props.children}
-            </div>
-        );
-
-    }
-
+            return (
+                <div style={style.main}>
+                    {this.props.children}
+                </div>
+            );
+        }
+    };
 };

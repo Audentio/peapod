@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'components.js';
+import Pod from 'utility/components.js';
 
 const rand = function (factor = 100) {
     return Math.floor(Math.random() * factor);

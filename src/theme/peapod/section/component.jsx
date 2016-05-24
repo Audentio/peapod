@@ -4,17 +4,20 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
-module.exports = class Section extends React.Component {
-	render() {
-		var style = Pod_Styler.getStyle(this);
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-		return (
-			<section varSet={this.props.varSet} style={style.main}>
-				{this.props.children}
-			</section>
-		);
-	}
+        static displayName = componentName;
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
+            return (
+                <section varSet={this.props.varSet} style={style.main}>
+                    {this.props.children}
+                </section>
+            );
+        }
+    };
 };

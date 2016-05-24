@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ContentWrap, Input } from 'components.js';
+import { ContentWrap, Input } from 'utility/components.js';
 
 module.exports = class LabelExample extends Component {
 

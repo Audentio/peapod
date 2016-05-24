@@ -4,10 +4,10 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'styler';
-import PureRender from 'pureRender';
-import { Icon, Progress } from 'components';
-import Pod_Helper from 'helper';
+import Pod_Styler from 'utility/styler.js';
+import PureRender from 'utility/pureRender.js';
+import { Icon, Progress } from 'utility/components.js';
+import Pod_Helper from 'utility/helper.js';
 import moment from 'moment';
 
 /**
@@ -15,271 +15,275 @@ import moment from 'moment';
 * Video description
 *
 */
-module.exports = class Video extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    shouldComponentUpdate = PureRender;
+        static displayName = componentName;
+            
+        shouldComponentUpdate = PureRender;
 
-    constructor(props, state) {
-        super(props, state);
+        constructor(props, state) {
+            super(props, state);
 
-        this.lastScrollLeft = 0;
-        this.playfn = null;
-        this.prevAxis = null;
-        this.durationFormat = 'mm:ss';
+            this.lastScrollLeft = 0;
+            this.playfn = null;
+            this.prevAxis = null;
+            this.durationFormat = 'mm:ss';
 
-        this.state = {
-            currentTime: 0,
-            volume: 100,
-            playing: false,
-        };
-    }
+            this.state = {
+                currentTime: 0,
+                volume: 100,
+                playing: false,
+            };
+        }
 
-    static propTypes = {
-        src: React.PropTypes.string.isRequired,
-        poster: React.PropTypes.string,
-        autoplay: React.PropTypes.bool,
-        controls: React.PropTypes.bool,
-        startFrom: React.PropTypes.string,
-    }
+        static propTypes = {
+            src: React.PropTypes.string.isRequired,
+            poster: React.PropTypes.string,
+            autoplay: React.PropTypes.bool,
+            controls: React.PropTypes.bool,
+            startFrom: React.PropTypes.string,
+        }
 
-    static defaultProps = {
-        autoplay: false,
-        controls: true,
-    }
+        static defaultProps = {
+            autoplay: false,
+            controls: true,
+        }
 
-    durationString = (duration, reverse) => {
-        if (reverse) {
-            const parts = duration.split(':');
-            let seconds = 0;
+        durationString = (duration, reverse) => {
+            if (reverse) {
+                const parts = duration.split(':');
+                let seconds = 0;
 
-            if (parts.length === 1) { // Seconds
-                Number(duration);
-            } else if (parts.length === 2) { // MM:SS
-                seconds = Number(parts[1]);
-                seconds += 60 * Number(parts[0]);
-            } else if (parts.length === 3) { // HH:MM:SS
-                seconds = Number(parts[2]);
-                seconds += 60 * Number(parts[1]);
-                seconds += 60 * 60 * Number(parts[0]);
+                if (parts.length === 1) { // Seconds
+                    Number(duration);
+                } else if (parts.length === 2) { // MM:SS
+                    seconds = Number(parts[1]);
+                    seconds += 60 * Number(parts[0]);
+                } else if (parts.length === 3) { // HH:MM:SS
+                    seconds = Number(parts[2]);
+                    seconds += 60 * Number(parts[1]);
+                    seconds += 60 * 60 * Number(parts[0]);
+                }
+
+                return seconds;
             }
 
-            return seconds;
+            return moment().startOf('day').seconds(duration)
+                   .format(this.durationFormat);
         }
 
-        return moment().startOf('day').seconds(duration)
-               .format(this.durationFormat);
-    }
+        keypressHandler = (e) => {
+            const keymap = Pod_Helper.keymap;
 
-    keypressHandler = (e) => {
-        const keymap = Pod_Helper.keymap;
+            if (e.keyCode === keymap.SPACE) {
+                e.preventDefault();
+                this.playPause();
+            }
+        }
 
-        if (e.keyCode === keymap.SPACE) {
+        swipeHandler = (e) => {
+            if (this.state.playing === false) return;
+
             e.preventDefault();
-            this.playPause();
+
+            // Not supported by browser. *cough* IE
+            if (e.deltaX === undefined) return;
+
+            // added for direction fidelity
+            const pull_x = 5;
+            const pull_y = 5;
+
+            let deltaX = e.wheelDeltaX;
+            let deltaY = e.wheelDeltaY;
+            // let direction = null
+
+            if (this.prevAxis === 'X') {
+                deltaX = deltaX + (Math.sign(e.wheelDeltaX) * pull_x);
+                if (deltaX === 0) deltaX = deltaX + pull_x;
+            } else if (this.prevAxis === 'Y') {
+                deltaY = deltaY + (Math.sign(e.wheelDeltaY) * pull_y);
+                if (deltaY === 0) deltaY = deltaY + pull_y;
+            }
+
+            if (Math.abs(deltaY) > Math.abs(deltaX)) {
+                this.prevAxis = 'Y';
+            } else {
+                this.prevAxis = 'X';
+            }
+
+
+            if (this.prevAxis === 'X') {
+            // Seek (up/down swipe)
+
+                const seekToTime = this.refs.video.currentTime - e.deltaX;
+
+                if (seekToTime < 0 || seekToTime > this.refs.video.duration) return;
+
+                this.refs.video.currentTime = seekToTime;
+                this.setState({
+                    currentTime: Math.ceil(this.refs.video.currentTime),
+                });
+            } else {
+            // Volume Control
+
+                const setVolumeTo = this.refs.video.volume + (e.deltaY / 200);
+
+                if (setVolumeTo < 0 || setVolumeTo > 1) return;
+
+                this.setVolume(setVolumeTo);
+            }
         }
-    }
 
-    swipeHandler = (e) => {
-        if (this.state.playing === false) return;
-
-        e.preventDefault();
-
-        // Not supported by browser. *cough* IE
-        if (e.deltaX === undefined) return;
-
-        // added for direction fidelity
-        const pull_x = 5;
-        const pull_y = 5;
-
-        let deltaX = e.wheelDeltaX;
-        let deltaY = e.wheelDeltaY;
-        // let direction = null
-
-        if (this.prevAxis === 'X') {
-            deltaX = deltaX + (Math.sign(e.wheelDeltaX) * pull_x);
-            if (deltaX === 0) deltaX = deltaX + pull_x;
-        } else if (this.prevAxis === 'Y') {
-            deltaY = deltaY + (Math.sign(e.wheelDeltaY) * pull_y);
-            if (deltaY === 0) deltaY = deltaY + pull_y;
-        }
-
-        if (Math.abs(deltaY) > Math.abs(deltaX)) {
-            this.prevAxis = 'Y';
-        } else {
-            this.prevAxis = 'X';
-        }
-
-
-        if (this.prevAxis === 'X') {
-        // Seek (up/down swipe)
-
-            const seekToTime = this.refs.video.currentTime - e.deltaX;
-
-            if (seekToTime < 0 || seekToTime > this.refs.video.duration) return;
-
-            this.refs.video.currentTime = seekToTime;
-            this.setState({
-                currentTime: Math.ceil(this.refs.video.currentTime),
+        bindEvents() {
+            // meta-data loaded
+            this.refs.video.addEventListener('loadedmetadata', () => {
+                this.setState({
+                    duration: Math.floor(this.refs.video.duration),
+                });
+                this.durationFormat = (this.refs.video.duration >= 60 * 60) ? 'HH:mm:ss' : this.durationFormat;
             });
-        } else {
-        // Volume Control
 
-            const setVolumeTo = this.refs.video.volume + (e.deltaY / 200);
+            // Keyboard Control
+            this.refs.container.addEventListener('keydown', this.keypressHandler);
 
-            if (setVolumeTo < 0 || setVolumeTo > 1) return;
+            // play-pause
+            this.refs.playpause.addEventListener('click', this.playPause);
 
-            this.setVolume(setVolumeTo);
+            // fullscreen
+            this.refs.video.addEventListener('dblclick', this.fullscreen);
+
+            // scroll seek
+            this.refs.container.addEventListener('mousewheel', this.swipeHandler);
+
+            // show-hide controls
+            this.refs.container.addEventListener('mouseenter', this.hoveredState);
+            this.refs.container.addEventListener('mouseleave', this.hoveredState);
         }
-    }
 
-    bindEvents() {
-        // meta-data loaded
-        this.refs.video.addEventListener('loadedmetadata', () => {
-            this.setState({
-                duration: Math.floor(this.refs.video.duration),
-            });
-            this.durationFormat = (this.refs.video.duration >= 60 * 60) ? 'HH:mm:ss' : this.durationFormat;
-        });
-
-        // Keyboard Control
-        this.refs.container.addEventListener('keydown', this.keypressHandler);
-
-        // play-pause
-        this.refs.playpause.addEventListener('click', this.playPause);
-
-        // fullscreen
-        this.refs.video.addEventListener('dblclick', this.fullscreen);
-
-        // scroll seek
-        this.refs.container.addEventListener('mousewheel', this.swipeHandler);
-
-        // show-hide controls
-        this.refs.container.addEventListener('mouseenter', this.hoveredState);
-        this.refs.container.addEventListener('mouseleave', this.hoveredState);
-    }
-
-    unbindEvents() {
-        this.refs.container.removeEventListener('mouseenter', this.hoveredState);
-        this.refs.container.removeEventListener('mouseleave', this.hoveredState);
-    }
-
-    // play video
-    play = () => {
-        this.refs.video.play();
-        this.setState({
-            playing: true,
-        });
-
-        const updateTime = () => {
-            this.setState({
-                currentTime: Math.floor(this.refs.video.currentTime),
-            });
-        };
-
-        updateTime();
-
-        this.playfn = setInterval(updateTime, 1000);
-    }
-
-    // pause video
-    pause = () => {
-        this.refs.video.pause();
-        this.setState({
-            playing: false,
-        });
-        clearInterval(this.playfn);
-    }
-
-    // toggle play/pause
-    playPause = () => {
-        if (this.state.playing) {
-            this.pause();
-        } else {
-            this.play();
+        unbindEvents() {
+            this.refs.container.removeEventListener('mouseenter', this.hoveredState);
+            this.refs.container.removeEventListener('mouseleave', this.hoveredState);
         }
-    }
 
-    // Set volume
-    setVolume = (volume) => {
-        this.refs.video.volume = volume;
+        // play video
+        play = () => {
+            this.refs.video.play();
+            this.setState({
+                playing: true,
+            });
 
-        this.setState({
-            volume: (volume.toFixed(2) * 100).toFixed(0),
-        });
-    }
+            const updateTime = () => {
+                this.setState({
+                    currentTime: Math.floor(this.refs.video.currentTime),
+                });
+            };
 
-    // fullscreen toggle
-    fullscreen = () => {
-        Pod_Helper.fullscreen.toggle(this.refs.container);
-        this.setState({
-            fullscreen: Pod_Helper.fullscreen.isEnabled(),
-        });
-    }
+            updateTime();
 
-    // Temporary hover stling fix
-    hoveredState = (e) => {
-        this.setState({ main_hovered: (e.type === 'mouseenter') });
-    }
-    // -- end
+            this.playfn = setInterval(updateTime, 1000);
+        }
 
-    componentDidMount() {
-        this.bindEvents();
-    }
+        // pause video
+        pause = () => {
+            this.refs.video.pause();
+            this.setState({
+                playing: false,
+            });
+            clearInterval(this.playfn);
+        }
 
-    componentWillUnmount() {
-        this.unbindEvents();
-    }
+        // toggle play/pause
+        playPause = () => {
+            if (this.state.playing) {
+                this.pause();
+            } else {
+                this.play();
+            }
+        }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-        const seekbar_table_style = {
-            display: 'table',
-            width: '100%',
-            height: style.controls.height,
-        };
-        const { volume: currentVolume, currentTime, duration: currentDuration, playing } = this.state;
+        // Set volume
+        setVolume = (volume) => {
+            this.refs.video.volume = volume;
 
-        const playPauseIcon = (playing) ? 'pause' : 'play_arrow';
-        let volumeIcon = (currentVolume > 0) ? 'volume_up' : 'volume_mute';
+            this.setState({
+                volume: (volume.toFixed(2) * 100).toFixed(0),
+            });
+        }
 
-        if (volumeIcon === 'volume_up' && currentVolume < 50) volumeIcon = 'volume_down';
+        // fullscreen toggle
+        fullscreen = () => {
+            Pod_Helper.fullscreen.toggle(this.refs.container);
+            this.setState({
+                fullscreen: Pod_Helper.fullscreen.isEnabled(),
+            });
+        }
 
-        return (
-            <div ref="container" style={style.main} tabIndex={0}>
-                <video
-                    ref="video"
-                    style={style.video}
-                    src={this.props.src}
-                    controls={false}
-                    autoPlay={this.props.autoplay}
-                    poster={this.props.poster}
-                >
-                  Sorry, your browser doesn't support embedded videos
-                </video>
+        // Temporary hover stling fix
+        hoveredState = (e) => {
+            this.setState({ main_hovered: (e.type === 'mouseenter') });
+        }
+        // -- end
 
-                <div style={style.controls}>
-                    <div style={style.playpause} ref="playpause">
-                        <Icon style={style.playpauseIcon}>{playPauseIcon}</Icon>
-                    </div>
+        componentDidMount() {
+            this.bindEvents();
+        }
 
-                    <div style={style.seekbar}>
-                        <div style={seekbar_table_style}>
-                            <div style={style.seekbar_time}>
-                                {this.durationString(currentTime)}
-                            </div>
+        componentWillUnmount() {
+            this.unbindEvents();
+        }
 
-                            <div style={style.seekbar_bar}>
-                                <Progress styler={style.seekbar_progress} value={currentTime} max={currentDuration} />
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            const seekbar_table_style = {
+                display: 'table',
+                width: '100%',
+                height: style.controls.height,
+            };
+            const { volume: currentVolume, currentTime, duration: currentDuration, playing } = this.state;
+
+            const playPauseIcon = (playing) ? 'pause' : 'play_arrow';
+            let volumeIcon = (currentVolume > 0) ? 'volume_up' : 'volume_mute';
+
+            if (volumeIcon === 'volume_up' && currentVolume < 50) volumeIcon = 'volume_down';
+
+            return (
+                <div ref="container" style={style.main} tabIndex={0}>
+                    <video
+                        ref="video"
+                        style={style.video}
+                        src={this.props.src}
+                        controls={false}
+                        autoPlay={this.props.autoplay}
+                        poster={this.props.poster}
+                    >
+                      Sorry, your browser doesn't support embedded videos
+                    </video>
+
+                    <div style={style.controls}>
+                        <div style={style.playpause} ref="playpause">
+                            <Icon style={style.playpauseIcon}>{playPauseIcon}</Icon>
+                        </div>
+
+                        <div style={style.seekbar}>
+                            <div style={seekbar_table_style}>
+                                <div style={style.seekbar_time}>
+                                    {this.durationString(currentTime)}
+                                </div>
+
+                                <div style={style.seekbar_bar}>
+                                    <Progress styler={style.seekbar_progress} value={currentTime} max={currentDuration} />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div style={style.morecontrols}>
-                        <Icon style={style.volumeIcon}>{volumeIcon}</Icon> {currentVolume}
+                        <div style={style.morecontrols}>
+                            <Icon style={style.volumeIcon}>{volumeIcon}</Icon> {currentVolume}
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
-    }
+            );
+        }
 
+    };
 };

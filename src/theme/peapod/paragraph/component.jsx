@@ -7,7 +7,7 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 /**
 * Template component
@@ -15,17 +15,19 @@ import Pod_Styler from 'styler.js';
 * @element Pod_template
 *
 */
-module.exports = class Paragraph extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-	render() {
-		var style = Pod_Styler.getStyle(this);
+        static displayName = componentName;
 
-		return (
-			<p style={style.main}>
-				{this.props.children}
-			</p>
-		);
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
-	}
-
+            return (
+                <p style={style.main}>
+                    {this.props.children}
+                </p>
+            );
+        }
+    };
 };

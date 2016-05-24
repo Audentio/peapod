@@ -6,29 +6,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Pod_Styler from 'styler.js';
-import { Icon } from 'components.js';
-import Pod_Helper from 'helper.js'
+import Pod_Styler from 'utility/styler.js';
+import { Icon } from 'utility/components.js';
+import Pod_Helper from 'utility/helper.js';
 
 const options = {
-	//this acts as src for lazyLoaded images until they're loaded
+    // this acts as src for lazyLoaded images until they're loaded
     defaultImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgMAYAADYANKqWpHYAAAAASUVORK5CYII=',
 
-	//lazy loading
-	lazy: false,
+    // lazy loading
+    lazy: false,
 
-	//load image if distance from viewport is smaller than this
-	lazyDistance: 500,
+    // load image if distance from viewport is smaller than this
+    lazyDistance: 500,
 
-	//Multi-dimensional array defining prefixes for different device pixeDensity
-	//set false to disable hiDPI loading
-	hidpi: [['1.5', '@2x']],
+    // Multi-dimensional array defining prefixes for different device pixeDensity
+    // set false to disable hiDPI loading
+    hidpi: [['1.5', '@2x']],
 
-	//show enlarged image in lightbox
-	lightbox: true,
+    // show enlarged image in lightbox
+    lightbox: true,
 
-	//Animate Lightbox entry-exit
-	lightboxAnimation: true
+    // Animate Lightbox entry-exit
+    lightboxAnimation: true,
 }
 
 
@@ -45,243 +45,250 @@ const options = {
 * @param {bool} [lightbox] - Enable lightbox on instance
 * @param {bool} [lightboxAnimation] - Animated lightbox (ability to turn off for specific high-res images)
 */
-module.exports = class Photo extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-	constructor(props, context) {
-		super(props, context);
+        static displayName = componentName;
 
-		this.state = {
-			visible: (this.props.lazy) ? false : true,
-			lightboxVisible: false,
-			fullscreenIcon: (Pod_Helper.fullscreen.isEnabled()) ? 'fullscreen_exit' : 'fullscreen'		}
-	}
+        constructor(props, context) {
+            super(props, context);
 
-	static propTypes = {
-		src: React.PropTypes.string.isRequired,
-		hidpiData: React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.bool ]),
-		alt: React.PropTypes.string,
-		caption: React.PropTypes.string,
-		lazy: React.PropTypes.bool,
-		lazyDistance: React.PropTypes.number,
-		lightbox: React.PropTypes.bool,
-		lightboxAnimation: React.PropTypes.bool
-	}
+            this.state = {
+                visible: (this.props.lazy === true),
+                lightboxVisible: false,
+                fullscreenIcon: (Pod_Helper.fullscreen.isEnabled()) ? 'fullscreen_exit' : 'fullscreen',
+            };
+        }
 
-	static defaultProps = {
-		hidpiData: options.hidpi,
-		lazy: options.lazy,
-		lazyDistance: options.lazyDistance,
-		lightbox: options.lightbox,
-		styler: options.styler,
-		lightboxAnimation: options.lightboxAnimation
-	}
+        static propTypes = {
+            src: React.PropTypes.string.isRequired,
+            hidpiData: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.bool]),
+            alt: React.PropTypes.string,
+            caption: React.PropTypes.string,
+            lazy: React.PropTypes.bool,
+            lazyDistance: React.PropTypes.number,
+            lightbox: React.PropTypes.bool,
+            lightboxAnimation: React.PropTypes.bool,
+            allowDownload: React.PropTypes.bool,
+        }
 
-	keyHandler(e){
-		if(e.keyCode == Pod_Helper.keymap.ESC){
-			this.hideLightbox();
-		}
-	}
+        static defaultProps = {
+            hidpiData: options.hidpi,
+            lazy: options.lazy,
+            lazyDistance: options.lazyDistance,
+            lightbox: options.lightbox,
+            styler: options.styler,
+            lightboxAnimation: options.lightboxAnimation,
+        }
 
-	toggleFullscreen(){
-		Pod_Helper.fullscreen.toggle()
+        keyHandler(e) {
+            if (e.keyCode === Pod_Helper.keymap.ESC) {
+                this.hideLightbox();
+            }
+        }
 
-		if(Pod_Helper.fullscreen.isEnabled()){
-			this.setState({fullscreenIcon: 'fullscreen_exit'})
-		} else {
-			this.setState({fullscreenIcon: 'fullscreen'})
-		}
-	}
+        toggleFullscreen() {
+            Pod_Helper.fullscreen.toggle();
 
-	//show lightbox
-	showLightbox(){
+            if (Pod_Helper.fullscreen.isEnabled()) {
+                this.setState({ fullscreenIcon: 'fullscreen_exit' });
+            } else {
+                this.setState({ fullscreenIcon: 'fullscreen' });
+            }
+        }
 
-		if(!this.props.lightbox){
-			return false;
-		}
+        // show lightbox
+        showLightbox() {
+            if (!this.props.lightbox) {
+                return false;
+            }
 
-		this.setState({lightboxVisible: true})
+            this.setState({ lightboxVisible: true });
 
-		//enable scrolling
-		Pod_Helper.scrolling(false)
+            // enable scrolling
+            Pod_Helper.scrolling(false);
 
-		//add keyboard listener
-		window.addEventListener('keydown', this.keyHandler)
-	}
+            // add keyboard listener
+            window.addEventListener('keydown', this.keyHandler);
 
-	//hide lightbox
-	//uses setTimeout to delay hiding lightbox - page scrolls to top without that.
-	hideLightbox(){
-		/*
-		var delay = 0, _this = this;
+            return true;
+        }
 
-		if( Pod_Helper.fullscreen.isEnabled() ) {
-			delay = 100;
-			Pod_Helper.fullscreen.exit()
-		}
+        // hide lightbox
+        // uses setTimeout to delay hiding lightbox - page scrolls to top without that.
+        hideLightbox() {
+            /*
+            var delay = 0, _this = this;
 
-		setTimeout(function(){
-			_this.setState({lightboxVisible: false});
+            if( Pod_Helper.fullscreen.isEnabled() ) {
+            delay = 100;
+            Pod_Helper.fullscreen.exit()
+            }
 
-			//enable scrolling
-			//document.documentElement.style.overflow = ''
-			Pod_Helper.scrolling(true)
+            setTimeout(function(){
+            _this.setState({lightboxVisible: false});
 
-			//remove keyboard listener
-			window.removeEventListener('keydown', _this.keyHandler)
-		}, delay)*/
+            //enable scrolling
+            //document.documentElement.style.overflow = ''
+            Pod_Helper.scrolling(true)
 
-		if( Pod_Helper.fullscreen.isEnabled() ) {
-			Pod_Helper.fullscreen.exit();
-			this.setState({fullscreenIcon: 'fullscreen'});
-		}
+            //remove keyboard listener
+            window.removeEventListener('keydown', _this.keyHandler)
+            }, delay)*/
 
-		this.setState({lightboxVisible: false});
+            if (Pod_Helper.fullscreen.isEnabled()) {
+                Pod_Helper.fullscreen.exit();
+                this.setState({ fullscreenIcon: 'fullscreen' });
+            }
 
-		Pod_Helper.scrolling(true)
+            this.setState({ lightboxVisible: false });
 
-		//remove keyboard listener
-		window.removeEventListener('keydown', this.keyHandler)
+            Pod_Helper.scrolling(true);
 
-	}
+            // remove keyboard listener
+            window.removeEventListener('keydown', this.keyHandler);
+        }
 
-	//Onclick handler
-	//decides whether to hide or not
-	lightboxOnClick(e){
+        // Onclick handler
+        // decides whether to hide or not
+        lightboxOnClick(e) {
+            // overlay is clicked
+            // hide
+            if (e.target.tagName !== 'IMG') {
+                this.hideLightbox();
+            } else {
+                // If image is clicked
+                // Open image in browser tab
+                const newWindow = window.open(e.target.src, '_blank');
+                newWindow.focus();
+            }
+        }
 
-		//overlay is clicked
-		//hide
-		if(e.target.tagName != 'IMG'){
-			this.hideLightbox();
-		}
+        // Check if element is within the defined viewport range
+        // -- {lazyDistance}px above and below current viewport
+        lazyCheck() {
+            const bounds = ReactDOM.findDOMNode(this).getBoundingClientRect();
+            const scrollTop = window.pageYOffset;
+            const top = bounds.top + scrollTop;
+            const height = bounds.bottom - bounds.top;
 
-		//If image is clicked
-		//Open image in browser tab
-		else {
-			var newWindow = window.open(e.target.src, '_blank')
-			newWindow.focus();
-		}
+            if (top === 0 || (top <= (scrollTop + window.innerHeight + options.lazyDistance) && (top + height + options.lazyDistance) > scrollTop)) {
+                this.setState({ visible: true });
+                this.removeListener(); // stop listening, the show is over
+            }
+        }
 
-	}
+        removeListener() {
+            window.removeEventListener('scroll', this.lazyCheck);
+            window.removeEventListener('resize', this.lazyCheck);
+        }
 
-	//Check if element is within the defined viewport range
-	// -- {lazyDistance}px above and below current viewport
-	lazyCheck() {
+        componentDidMount() {
+            // initial check
+            this.lazyCheck();
 
-		var bounds = ReactDOM.findDOMNode(this).getBoundingClientRect(),
-		scrollTop = window.pageYOffset,
-		top = bounds.top + scrollTop,
-		height = bounds.bottom - bounds.top;
+            // start listening for viewport events
+            if (this.props.lazy) {
+                window.addEventListener('scroll', this.lazyCheck);
+            }
+        }
 
-		if(top === 0 || (top <= (scrollTop + window.innerHeight + options.lazyDistance) && (top + height + options.lazyDistance) > scrollTop)){
-			this.setState({visible: true});
-			this.removeListener(); //stop listening, the show is over
-		}
+        // re-check on update
+        componentDidUpdate() {
+            if (!this.state.visible) {
+                this.lazyCheck();
+            }
+        }
 
-	}
+        // stop listening if component is about to unmount
+        componentWillUnmount() {
+            this.removeListener();
+        }
 
-	removeListener() {
-		window.removeEventListener('scroll', this.lazyCheck);
-		window.removeEventListener('resize', this.lazyCheck);
-	}
+        componentWillMount() {
+            const hiDpiData = this.props.hidpiData;
 
-	componentDidMount() {
+            if (hiDpiData) { // hiDPI resource is available
+                // break down the url
+                const url = this.props.src.split('.');
+                const extension = url.splice(-1, 1);
+                const filePath = url.join('.');
+                let suffix = '';
 
-		//initial check
-		this.lazyCheck();
+                // loop through hidpi array. Overrides are sequential
+                hiDpiData.forEach((item) => {
+                    // grab suffix from last apporpiate array
+                    suffix = (window.devicePixelRatio >= Number(item[0])) ? item[1] : suffix;
+                });
 
-		//start listening for viewport events
-		if(this.props.lazy) { window.addEventListener('scroll', this.lazyCheck) }
+                // Suffixed URL
+                this.imageURL = filePath + suffix + '.' + extension;
+            } else { // hiDPI is disabled. Load normal resource
+                this.imageURL = this.props.src;
+            }
+        }
 
-	}
+        downloadFile() {
+            Pod_Helper.downloadFile(this.imageURL);
+        }
 
-	//re-check on update
-	componentDidUpdate() {
-		if(!this.state.visible) this.lazyCheck();
-	}
+        openInNew() {
+            if (Pod_Helper.fullscreen.isEnabled()) {
+                Pod_Helper.fullscreen.exit();
+                this.setState({ fullscreenIcon: 'fullscreen' });
+            }
+            const newTab = window.open(this.imageURL, '_blank');
+            newTab.focus();
+        }
 
-	//stop listening if component is about to unmount
-	componentWillUnmount() {
-		this.removeListener();
-	}
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            const showLightbox = this.showLightbox.bind(this);
+            const hideLightbox = this.hideLightbox.bind(this);
+            const toggleFullscreen = this.toggleFullscreen.bind(this);
+            const downloadFile = this.downloadFile.bind(this);
+            const openInNew = this.openInNew.bind(this);
 
 
-	componentWillMount(){
+            return (
+                <div style={style.main}>
+                    <img
+                        onClick={showLightbox}
+                        src={this.state.visible ? this.imageURL : options.blankImage}
+                        alt={this.props.alt}
+                        style={style.image}
+                        />
 
-		var hiDpiData = this.props.hidpiData;
+                    {this.props.caption &&
+                        <span style={style.caption}>{this.props.caption}</span>
+                    }
 
-		if(hiDpiData) { //hiDPI resource is available
+                    {((this.props.lightbox && this.state.lightboxVisible) || this.props.lightboxAnimation) &&
+                        <div style={style.lightbox}>
 
-			//break down the url
-			var
-			url = this.props.src.split('.'),
-			extension = url.splice(-1,1),
-			filePath = url.join('.'),
-			suffix = '';
+                            <div style={style.lightboxInner}>
+                                <img
+                                    style={style.lightboxImage}
+                                    src={this.state.visible ? this.imageURL : options.blankImage}
+                                    role="presentation"
+                                    />
+                            </div>
 
-			//loop through hidpi array. Overrides are sequential
-			hiDpiData.forEach(function(item){
+                            <div style={style.lightboxActions}>
+                                <Icon styler={{ style: style.lightboxAction }} onClick={hideLightbox}>close</Icon>
+                                {Pod_Helper.fullscreen.isAvailable() &&
+                                    <Icon styler={{ style: style.lightboxAction }} onClick={toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
+                                }
 
-				//grab suffix from last apporpiate array
-				suffix = ( window.devicePixelRatio >= Number(item[0]) ) ? item[1] : suffix;
+                                {this.props.allowDownload && <Icon onClick={downloadFile} styler={{ style: style.lightboxAction }}>file_download</Icon>}
 
-			})
+                                <Icon onClick={openInNew} styler={{ style: style.lightboxAction }}>open_in_new</Icon>
 
-			//Suffixed URL
-			this.imageURL = filePath + suffix + '.' + extension;
-
-		}
-		else { //hiDPI is disabled. Load normal resource
-			this.imageURL = this.props.src;
-		}
-	}
-
-	downloadFile(){
-		Pod_Helper.downloadFile(this.imageURL)
-	}
-
-	openInNew(){
-		if( Pod_Helper.fullscreen.isEnabled() ) {
-			Pod_Helper.fullscreen.exit();
-			this.setState({fullscreenIcon: 'fullscreen'});
-		}
-		var newTab = window.open(this.imageURL, '_blank');
-  		newTab.focus();
-	}
-
-	render() {
-		var style = Pod_Styler.getStyle(this);
-
-		return (
-			<div style={style.main}>
-				<img onClick={this.showLightbox.bind(this)} src={this.state.visible ? this.imageURL : options.blankImage} alt={this.props.alt}
-					style={style.image} />
-
-				{	this.props.caption &&
-					<span style={style.caption}>{this.props.caption}</span>
-				}
-
-				{	((this.props.lightbox && this.state.lightboxVisible) || this.props.lightboxAnimation) &&
-					<div style={style.lightbox}>
-
-						<div style={style.lightboxInner}>
-							<img style={style.lightboxImage} src={this.state.visible ? this.imageURL : options.blankImage} />
-						</div>
-
-						<div style={style.lightboxActions}>
-							<Icon styler={{style: style.lightboxAction}} onClick={this.hideLightbox.bind(this)}>close</Icon>
-							{	Pod_Helper.fullscreen.isAvailable() &&
-								<Icon styler={{style: style.lightboxAction}} onClick={this.toggleFullscreen.bind(this)}>{this.state.fullscreenIcon}</Icon>
-							}
-
-							{	this.props.allowDownload &&
-								<Icon onClick={this.downloadFile.bind(this)} styler={{style: style.lightboxAction}}>file_download</Icon> }
-
-							<Icon onClick={this.openInNew.bind(this)} styler={{style: style.lightboxAction}}>open_in_new</Icon>
-
-						</div>
-					</div>
-				}
-			</div>
-		);
-	}
+                            </div>
+                        </div>
+                    }
+                </div>
+            );
+        }
+    };
 };

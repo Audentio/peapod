@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'components';
+import Pod from 'utility/components.js';
 
 module.exports = class TableExample extends React.Component {
 

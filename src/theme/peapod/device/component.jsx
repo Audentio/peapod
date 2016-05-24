@@ -7,29 +7,33 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 /**
 * ImageContainer component
 * @element Code
 */
-module.exports = class Device extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
+        static displayName = componentName;
 
-        const overlay = (this.props.overlay) ? (<div style={style.overlay}></div>): '';
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
-        return (
-            <div style={style.main}>
-                <div style={style.background}></div>
-                <div style={style.innerscreen}>
-                    {overlay}
-                    <div style={style.scrollable}>
-                        {this.props.children}
+            const overlay = (this.props.overlay) ? (<div style={style.overlay}></div>) : '';
+
+            return (
+                <div style={style.main}>
+                    <div style={style.background}></div>
+                    <div style={style.innerscreen}>
+                        {overlay}
+                        <div style={style.scrollable}>
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
-    }
+            );
+        }
+    };
 };

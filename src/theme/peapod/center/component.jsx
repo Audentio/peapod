@@ -7,7 +7,7 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 
 /**
@@ -16,25 +16,29 @@ import Pod_Styler from 'styler.js';
 * @element Pod_modal
 *
 */
-module.exports = class Center extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    static defaultProps = {
-        align: 'center',
-        valign: 'middle',
-    };
+        static displayName = componentName;
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
+        static defaultProps = {
+            align: 'center',
+            valign: 'middle',
+        };
 
-        return (
-            <div style={style.main}>
-                <div style={style.outer}>
-                    <div style={style.inner}>
-                        {this.props.children}
+        render() {
+            const style = Pod_Styler.getStyle(this);
+
+            return (
+                <div style={style.main}>
+                    <div style={style.outer}>
+                        <div style={style.inner}>
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
-    }
+            );
+        }
 
+    };
 };

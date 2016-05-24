@@ -7,23 +7,25 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 /**
 * Block component
 * @element Code
 */
-module.exports = class Block extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    render() {
-        var style = Pod_Styler.getStyle(this);
+        static displayName = componentName;
 
-        return (
-            <div style={style.main}>
-                {this.props.children}
-            </div>
-        );
+        render() {
+            var style = Pod_Styler.getStyle(this);
 
-    }
-
+            return (
+                <div style={style.main}>
+                    {this.props.children}
+                </div>
+            );
+        }
+    };
 };

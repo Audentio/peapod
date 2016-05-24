@@ -4,8 +4,8 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import Pod_Helper from 'helper';
-import Pod_Styler from 'styler';
+import Pod_Helper from 'utility/helper.js';
+import Pod_Styler from 'utility/styler.js';
 
 
 /**
@@ -16,37 +16,40 @@ import Pod_Styler from 'styler';
 * @param {string} color - Icon color
 * @param {string} label - Icon label (for tooltip and ARIA)
 */
-module.exports = class Icon extends Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    static propTypes = {
-        children: PropTypes.string.isRequired,
-        animation: PropTypes.string,
-        label: PropTypes.string,
-        color: PropTypes.string,
-        onClick: PropTypes.func,
-        style: PropTypes.object,
-    }
+        static displayName = componentName;
+
+        static propTypes = {
+            children: PropTypes.string.isRequired,
+            animation: PropTypes.string,
+            label: PropTypes.string,
+            color: PropTypes.string,
+            onClick: PropTypes.func,
+            style: PropTypes.object,
+        }
 
 
-    static defaultProps = {
-        size: '1rem',
-        color: 'inherit',
-    }
+        static defaultProps = {
+            size: '1rem',
+            color: 'inherit',
+        }
 
-    componentWillMount() {
-        Pod_Helper.addStylesheet('IconFont_MDI', '//fonts.googleapis.com/icon?family=Material+Icons');
-    }
+        componentWillMount() {
+            Pod_Helper.addStylesheet('IconFont_MDI', '//fonts.googleapis.com/icon?family=Material+Icons');
+        }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-        const mergedStyle = Object.assign({}, style.main, this.props.style);
-        const { label, children } = this.props;
+        render() {
+            const style = Pod_Styler.getStyle(this);
+            const mergedStyle = Object.assign({}, style.main, this.props.style);
+            const { label, children } = this.props;
 
-        return (
-            <i {...this.props} className="material-icons" aria-label={label} title={label} style={mergedStyle}>
-                {children}
-            </i>
-        );
-    }
-
+            return (
+                <i {...this.props} className="material-icons" aria-label={label} title={label} style={mergedStyle}>
+                    {children}
+                </i>
+            );
+        }
+    };
 };

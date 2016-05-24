@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, ContentWrap, Heading, Examples } from 'components.js';
+import { Section, ContentWrap, Heading, Examples } from 'utility/components.js';
 
 module.exports = class SectionComponent extends React.Component {
     static propTypes = {

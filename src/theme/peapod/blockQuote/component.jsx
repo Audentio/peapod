@@ -6,23 +6,26 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'styler.js';
+import Pod_Styler from 'utility/styler.js';
 
 /**
 * BlockQuote component
 * @element Code
 */
-module.exports = class BlockQuote extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    render() {
-        var style = Pod_Styler.getStyle(this);
+        static displayName = componentName;
 
-        return (
-            <blockquote style={style.main}>
-                {this.props.children}
-            </blockquote>
-        );
+        render() {
+            var style = Pod_Styler.getStyle(this);
 
-    }
+            return (
+                <blockquote style={style.main}>
+                    {this.props.children}
+                </blockquote>
+            );
+        }
 
+    };
 };

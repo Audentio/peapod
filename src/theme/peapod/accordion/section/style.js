@@ -1,4 +1,4 @@
-import { Sheet } from 'stylesheet.js';
+import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
@@ -184,8 +184,6 @@ module.exports = function (sheetName) {
             padding: '$gutter.small',
         },
     });
-
-    console.log(sheet);
 
     return sheet;
 };
