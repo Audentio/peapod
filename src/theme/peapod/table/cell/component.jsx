@@ -7,46 +7,44 @@ import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        static propTypes = {
-            column: React.PropTypes.any,
-            index: React.PropTypes.number,
-            header: React.PropTypes.bool,
-            children: React.PropTypes.any,
-        }
+    static propTypes = {
+        column: React.PropTypes.any,
+        index: React.PropTypes.number,
+        header: React.PropTypes.bool,
+        children: React.PropTypes.any,
+    }
 
-        shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
-        render() {
-            const column = this.props.column || {
-                centered: false,
-                hovered: false,
-                sort: '',
-                header: false,
-            };
-            const index = this.props.index;
-            const style = Pod_Styler.getStyle({ props: {
-                styler: {
-                    styleLike: 'Table_Cell',
-                    firstCell: index === 0,
-                    centered: column.centered === true,
-                    hovered: column.hovered === true,
-                    sortable: column.sortable === true,
-                    sortAsc: column.sort === 'asc',
-                    sortDesc: column.sort === 'desc',
-                    header: this.props.header === true,
-                },
-            } });
+    render() {
+        const column = this.props.column || {
+            centered: false,
+            hovered: false,
+            sort: '',
+            header: false,
+        };
+        const index = this.props.index;
+        const style = Pod_Styler.getStyle({ props: {
+            styler: {
+                styleLike: 'Table_Cell',
+                firstCell: index === 0,
+                centered: column.centered === true,
+                hovered: column.hovered === true,
+                sortable: column.sortable === true,
+                sortAsc: column.sort === 'asc',
+                sortDesc: column.sort === 'desc',
+                header: this.props.header === true,
+            },
+        } });
 
-            return (
-                <div {...this.props} style={style.main}>
-                    {this.props.children}
-                </div>
-            );
-        }
-    };
+        return (
+            <div {...this.props} style={style.main}>
+                {this.props.children}
+            </div>
+        );
+    }
 };

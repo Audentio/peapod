@@ -16,47 +16,45 @@ import { Icon, Photo, Anchor, BlockQuote } from 'utility/components.js';
 * @param {string} [ID] - Unique identifier for persistent state storage
 *
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
-        render() {
-            var style = Pod_Styler.getStyle(this);
+    static displayName = componentName;
+    render() {
+        var style = Pod_Styler.getStyle(this);
 
-            var image = (this.props.img) ? (
-                <Photo styler={{ mainStyle: style.photo, imageStyle: style.photo }} src={this.props.img} />
-            ) : '';
+        var image = (this.props.img) ? (
+            <Photo styler={{ mainStyle: style.photo, imageStyle: style.photo }} src={this.props.img} />
+        ) : '';
 
-            var name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
-            var comp = (this.props.comp) ? (<div>{this.props.comp}</div>) : '';
+        var name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
+        var comp = (this.props.comp) ? (<div>{this.props.comp}</div>) : '';
 
-            var link = (this.props.link) ? (
-                <Anchor to={this.props.link}>
-                    {name}
-                    {comp}
-                </Anchor>
-            ) : (
+        var link = (this.props.link) ? (
+            <Anchor to={this.props.link}>
+                {name}
+                {comp}
+            </Anchor>
+        ) : (
+            <div>
+                {name}
+                {comp}
+            </div>
+        );
+
+
+        return (
+            <div style={style.main}>
+                {image}
                 <div>
-                    {name}
-                    {comp}
+                    <Icon label="format_quote" styler={{ style: style.quoteIconRight }}>format_quote</Icon>
+                    <Icon label="format_quote" styler={{ style: style.quoteIconLeft }}>format_quote</Icon>
+                    <BlockQuote styler={{ mainStyle: style.blockQuote }}>
+                        {this.props.children}
+                    </BlockQuote>
                 </div>
-            );
+                {link}
+            </div>
+        );
 
-
-            return (
-                <div style={style.main}>
-                    {image}
-                    <div>
-                        <Icon label="format_quote" styler={{ style: style.quoteIconRight }}>format_quote</Icon>
-                        <Icon label="format_quote" styler={{ style: style.quoteIconLeft }}>format_quote</Icon>
-                        <BlockQuote styler={{ mainStyle: style.blockQuote }}>
-                            {this.props.children}
-                        </BlockQuote>
-                    </div>
-                    {link}
-                </div>
-            );
-
-        }
-    };
+    }
 };

@@ -19,100 +19,98 @@ var topButtonStyle = {
     margin: '$gutter.internal',
 };
 
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        //shouldComponentUpdate = PureRender;
+    //shouldComponentUpdate = PureRender;
 
-        render() {
-            const style = Pod_Styler.getStyle(this);
+    render() {
+        const style = Pod_Styler.getStyle(this);
 
-            const queries = this.props.queries || [];
-            const removeQuery = this.props.removeQuery || function() {};
-            const noQueries = (queries.length === 0) ? <div>No Queries</div> : null;
+        const queries = this.props.queries || [];
+        const removeQuery = this.props.removeQuery || function() {};
+        const noQueries = (queries.length === 0) ? <div>No Queries</div> : null;
 
-            const content = queries.map(
-                (query, i) => {
-                    if (query.display === false) return '';
+        const content = queries.map(
+            (query, i) => {
+                if (query.display === false) return '';
 
-                    return (
-                        <Div
-                            key={'tableQuery_' + query.column + '_' + query.value}
-                            styler={{
-                                style: {
-                                    display: 'block',
-                                    borderBottomColor: '$table.color.controls.color',
-                                    borderBottomWidth: '1px',
-                                    borderBottomStyle: 'solid',
-                                },
-                            }}
-                        >
-                            <Button
-                                styler={{
-                                    kind: 'base',
-                                    round: true,
-                                    style: topButtonStyle,
-                                }}
-                            >
-                                <Grid>
-                                    <div>'{query.column}' {query.comparison} '{query.value}'</div>
-                                    <Icon
-                                        onClick={removeQuery.bind(null, i)}
-                                        styler={{
-                                            style: {
-                                                color: '$color.text.white',
-                                                marginLeft: '$gutter.internal',
-                                            },
-                                        }}
-                                    >
-                                        close
-                                    </Icon>
-                                </Grid>
-                            </Button>
-                        </Div>
-                    );
-                }
-            );
-
-            return (
-                <Div styler={{ style: { display: 'inline-block' } }}>
-                    <Portal
-                        closeOnOutsideClick
-                        noArrow
-                        trigger={
-                            <Icon
-                                styler={{
-                                    style: {
-                                        height: '$table.headerHeight',
-                                        fontSize: '$font.size.xxlarge',
-                                        lineHeight: '$table.headerHeight',
-                                        paddingLeft: '$gutter.extrasmall',
-                                        paddingRight: '$gutter.extrasmall',
-                                    },
-                                }}
-                            >
-                                filter_list
-                            </Icon>
-                        }
+                return (
+                    <Div
+                        key={'tableQuery_' + query.column + '_' + query.value}
+                        styler={{
+                            style: {
+                                display: 'block',
+                                borderBottomColor: '$table.color.controls.color',
+                                borderBottomWidth: '1px',
+                                borderBottomStyle: 'solid',
+                            },
+                        }}
                     >
-                        <Div
+                        <Button
+                            styler={{
+                                kind: 'base',
+                                round: true,
+                                style: topButtonStyle,
+                            }}
+                        >
+                            <Grid>
+                                <div>'{query.column}' {query.comparison} '{query.value}'</div>
+                                <Icon
+                                    onClick={removeQuery.bind(null, i)}
+                                    styler={{
+                                        style: {
+                                            color: '$color.text.white',
+                                            marginLeft: '$gutter.internal',
+                                        },
+                                    }}
+                                >
+                                    close
+                                </Icon>
+                            </Grid>
+                        </Button>
+                    </Div>
+                );
+            }
+        );
+
+        return (
+            <Div styler={{ style: { display: 'inline-block' } }}>
+                <Portal
+                    closeOnOutsideClick
+                    noArrow
+                    trigger={
+                        <Icon
                             styler={{
                                 style: {
-                                    backgroundColor: '$table.color.controls.background',
-                                    borderTopColor: '$table.color.controls.color',
-                                    borderTopWidth: '1px',
-                                    borderTopStyle: 'solid',
+                                    height: '$table.headerHeight',
+                                    fontSize: '$font.size.xxlarge',
+                                    lineHeight: '$table.headerHeight',
+                                    paddingLeft: '$gutter.extrasmall',
+                                    paddingRight: '$gutter.extrasmall',
                                 },
                             }}
                         >
-                            {content}
-                            {noQueries}
-                        </Div>
-                    </Portal>
-                </Div>
-            );
-        }
-    };
+                            filter_list
+                        </Icon>
+                    }
+                >
+                    <Div
+                        styler={{
+                            style: {
+                                backgroundColor: '$table.color.controls.background',
+                                borderTopColor: '$table.color.controls.color',
+                                borderTopWidth: '1px',
+                                borderTopStyle: 'solid',
+                            },
+                        }}
+                    >
+                        {content}
+                        {noQueries}
+                    </Div>
+                </Portal>
+            </Div>
+        );
+    }
 };

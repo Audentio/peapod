@@ -15,19 +15,17 @@ import Pod_Styler from 'utility/styler.js';
 * @element Pod_template
 *
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        render() {
-            const style = Pod_Styler.getStyle(this);
+    render() {
+        const style = Pod_Styler.getStyle(this);
 
-            return (
-                <p style={style.main}>
-                    {this.props.children}
-                </p>
-            );
-        }
-    };
+        return (
+            <p style={style.main}>
+                {this.props.children}
+            </p>
+        );
+    }
 };

@@ -13,22 +13,20 @@ import { Block } from 'utility/components.js';
 * Block_Left component
 * @element Code
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        static propType = {
-            children: React.PropTypes.any,
-        }
+    static propType = {
+        children: React.PropTypes.any,
+    }
 
-        render() {
-            return (
-                <Block {...this.props} align="left">
-                    {this.props.children}
-                </Block>
-            );
-        }
+    render() {
+        return (
+            <Block {...this.props} align="left">
+                {this.props.children}
+            </Block>
+        );
+    }
 
-    };
 };
