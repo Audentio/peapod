@@ -12,8 +12,10 @@ module.exports = function (sheetName) {
     sheet.addCondition('raised').addStyler({ raised: true });
     sheet.addCondition('block').addStyler({ block: true });
     sheet.addCondition('round').addStyler({ round: true });
+
     sheet.addCondition('disabled').addStyler({ disabled: true });
     sheet.addCondition('notDisabled').addStyler({ disabled: ['!=', true] });
+
     sheet.addCondition('dense').addStyler({ dense: true });
     sheet.addCondition('dialog').addStyler({ dialog: true });
 
