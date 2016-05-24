@@ -76,7 +76,6 @@ module.exports = function (sheetName) {
             border: 'none',
             position: 'relative',
             overflow: 'hidden', // prevent ripple overflow
-            WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // webkit bug with overflow & borderRadius
             textDecoration: 'none',
             textTransform: 'uppercase',
             fontFamily: '$button.font.family',
@@ -91,8 +90,7 @@ module.exports = function (sheetName) {
             textAlign: 'center',
             outline: 'none',
             userSelect: 'none',
-            verticalAlign: 'bottom',
-
+            verticalAlign: 'middle',
             minWidth: '88px',
 
             color: '$button.color.base.color',
@@ -247,6 +245,8 @@ module.exports = function (sheetName) {
             pointerEvents: 'none',
             width: '100%',
             height: '100%',
+            borderRadius: 'inherit',
+            WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // webkit bug with overflow & borderRadius
         },
     })
     .addSelector({
