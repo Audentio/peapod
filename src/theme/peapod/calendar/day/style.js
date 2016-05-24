@@ -23,6 +23,7 @@ module.exports = function (sheetName) {
             color: '$palette.grey900',
             display: 'block',
             borderRadius: '9999px',
+            cursor: 'pointer',
 
             ':hover': {
                 background: '$palette.teal500',
@@ -32,7 +33,13 @@ module.exports = function (sheetName) {
     }).addSelector({
         condition: ['notActive'],
         common: {
-            color: '#fff',
+            color: 'transparent',
+            background: 'transparent',
+            pointerEvents: 'none',
+            ':hover': {
+                color: 'transparent',
+                background: 'transparent',
+            },
         },
     });
 

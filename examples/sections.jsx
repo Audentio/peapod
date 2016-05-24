@@ -75,7 +75,7 @@ export default class Sections extends React.Component {
                                 </Pod.Card>
                             </Pod.FixedElement>
                         </Pod.Grid_Cell>
-                        <Pod.Grid_Cell styler={{ style: { position: 'relative' }, md: 12, lg: 9, xl: 10 }}>
+                        <Pod.Grid_Cell styler={{ md: 12, lg: 9, xl: 10 }}>
                             <Pod.Pane>
                                 {examples}
                             </Pod.Pane>
