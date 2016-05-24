@@ -13,23 +13,21 @@ import Pod_Styler from 'utility/styler.js';
 * Embed component
 * @element Code
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        render() {
-            this.style = Pod_Styler.getStyle(this);
+    render() {
+        this.style = Pod_Styler.getStyle(this);
 
-            return (
-                <iframe
-                    style={this.style.main}
-                    src={this.props.src}
-                    frameborder="0"
-                    allowfullscreen
-                >
-                </iframe>
-            );
-        }
-    };
+        return (
+            <iframe
+                style={this.style.main}
+                src={this.props.src}
+                frameborder="0"
+                allowfullscreen
+            >
+            </iframe>
+        );
+    }
 };

@@ -7,23 +7,21 @@ import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
 
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
 
-        render() {
-            return <div />;
+    static displayName = componentName;
+
+    render() {
+        return <div />;
+    }
+
+    componentDidMount() {
+        var node = ReactDOM.findDOMNode(this);
+        var ele = document.getElementById(this.props.getID);
+        if (typeof(ele) !== 'undefined') {
+            node.innerHTML = document.getElementById(this.props.getID).innerHTML;
+            ele.style.display = 'none';
         }
-
-        componentDidMount() {
-            var node = ReactDOM.findDOMNode(this);
-            var ele = document.getElementById(this.props.getID);
-            if (typeof(ele) !== 'undefined') {
-                node.innerHTML = document.getElementById(this.props.getID).innerHTML;
-                ele.style.display = 'none';
-            }
-        }
-    };
-
+    }
 };

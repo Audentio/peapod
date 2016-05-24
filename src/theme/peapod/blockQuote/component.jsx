@@ -12,20 +12,18 @@ import Pod_Styler from 'utility/styler.js';
 * BlockQuote component
 * @element Code
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        render() {
-            var style = Pod_Styler.getStyle(this);
+    render() {
+        var style = Pod_Styler.getStyle(this);
 
-            return (
-                <blockquote style={style.main}>
-                    {this.props.children}
-                </blockquote>
-            );
-        }
+        return (
+            <blockquote style={style.main}>
+                {this.props.children}
+            </blockquote>
+        );
+    }
 
-    };
 };

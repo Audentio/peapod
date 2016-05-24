@@ -14,49 +14,48 @@ import { Icon } from 'utility/components.js'
 * Card component
 * @element Code
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
 
-        static defaultProps = {
-            deleteTrigger: false,
-            photo: false,
+    static displayName = componentName;
+
+    static defaultProps = {
+        deleteTrigger: false,
+        photo: false,
+    }
+
+    componentWillMount() {
+        this.state = {
+            showElement: true,
         }
+    }
 
-        componentWillMount() {
-            this.state = {
-                showElement: true,
-            }
+    removeChip() {
+        this.setState({
+            showElement: false,
+        });
+    }
+
+    render() {
+        const style = Pod_Styler.getStyle(this);
+
+        const deleteTrigger = (this.props.deleteTrigger) ? (
+            <Icon styler={{ style: style.deleteTrigger }} onClick={() => { this.removeChip(); }}>close</Icon>
+        ) : '';
+        const photo = (this.props.photo) ? (
+            <img src={this.props.photo} style={style.photo}/>
+        ) : '';
+
+        if (this.state.showElement) {
+            return (
+                <div style={style.main}>
+                    {photo}
+                    {deleteTrigger}
+                    {this.props.children}
+                </div>
+            );
         }
+        return null;
+    }
 
-        removeChip() {
-            this.setState({
-                showElement: false,
-            });
-        }
-
-        render() {
-            const style = Pod_Styler.getStyle(this);
-
-            const deleteTrigger = (this.props.deleteTrigger) ? (
-                <Icon styler={{ style: style.deleteTrigger }} onClick={() => { this.removeChip(); }}>close</Icon>
-            ) : '';
-            const photo = (this.props.photo) ? (
-                <img src={this.props.photo} style={style.photo}/>
-            ) : '';
-
-            if (this.state.showElement) {
-                return (
-                    <div style={style.main}>
-                        {photo}
-                        {deleteTrigger}
-                        {this.props.children}
-                    </div>
-                );
-            }
-            return null;
-        }
-
-    };
 };
