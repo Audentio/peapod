@@ -1,6 +1,6 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import { Portal, Menu, Button as Pod_Menu, Menu_Item, Button } from 'utility/components.js';
+import { Portal, Button as Pod_Menu, Menu_Item } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -10,6 +10,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         this.state = {
             show: false,
+            hovered: false,
         };
     }
 
@@ -33,10 +34,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     mouseEnter() {
-        this.setState({ show: true });
+        this.setState({ show: true, hovered: true });
     }
     mouseLeave() {
-        this.setState({ show: false });
+        this.setState({ show: false, hovered: false });
     }
 
     render() {
@@ -62,11 +63,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
                                     key={i}
                                     href={childjson[i].href}
                                     subtext={childjson[i].subtext}
-                                    >
+                                >
                                     {childjson[i].text}
                                 </Menu_Item>
                             }
-                            />
+                        />
                     );
                 } else {
                     childrencomonents.push(
@@ -74,7 +75,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                             key={i}
                             href={childjson[i].href}
                             subtext={childjson[i].subtext}
-                            >
+                        >
                             {childjson[i].text}
                         </Menu_Item>
                     );
@@ -82,10 +83,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
             }
         }
 
+        const newChildren = React.Children.map(childrencomonents, child => {
+            const subtext = child.props.subtext || ' ';
+            return React.cloneElement(child, { subtext });
+        });
+
         // Allow showing of children for non portal menus
         let children = (this.state.show) ? (
             <div style={style.main}>
-                {childrencomonents}
+                {newChildren}
             </div>
         ) : '';
 
@@ -96,9 +102,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     trigger={this.props.trigger}
                     closeOnOutsideClick
                     noArrow
-                    >
+                >
                     <div style={style.portal}>
-                        {childrencomonents}
+                        {newChildren}
                     </div>
                 </Portal>
             );
@@ -121,17 +127,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
                             this.mouseEnter();
                         }
                     }}
-                    >
-                    {this.props.trigger}
+                >
+                    {React.cloneElement(this.props.trigger, { hovered: this.state.hovered })}
                     {children}
                 </div>
             );
         } else {
-            let orientation = this.props.orientation;
+            const orientation = this.props.orientation;
             returnedMenu = (<div>
-                {React.Children.map(this.props.children, (element, idx) => {
-                    return React.cloneElement(element, { style: 'button', orientation });
-                })}
+                {React.Children.map(this.props.children, (element) => React.cloneElement(element, { style: 'button', orientation }))}
             </div>);
         }
 

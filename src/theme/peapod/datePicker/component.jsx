@@ -1,6 +1,6 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import { Input, Portal, Calendar, Card } from 'utility/components.js';
+import { Input, Portal, Calendar, Card, Button } from 'utility/components.js';
 
 /**
 * DatePicker component
@@ -8,8 +8,14 @@ import { Input, Portal, Calendar, Card } from 'utility/components.js';
 */
 module.exports = componentName => class Pod_Component extends React.Component {
 
-
     static displayName = componentName;
+
+    static propTypes = {
+        date: React.PropTypes.any,
+        name: React.PropTypes.any,
+        onChange: React.PropTypes.func,
+        children: React.PropTypes.any,
+    }
 
     componentWillMount() {
         const date = (this.props.date) ? new Date(this.props.date) :
@@ -63,7 +69,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const style = Pod_Styler.getStyle(this);
         const trigger = (
             <div>
-                <Input onFocus={this.onFocus} name={this.props.name} callback={this.onChange} type="date" value={this.state.value} />
+                <Button styler={{ kind: 'primary' }}>
+                    <Input styler={{ style: { border: 'none', color: 'white', minWidth: 0, pointerEvents: 'none' } }} onFocus={this.onFocus} name={this.props.name} callback={this.onChange} type="date" value={this.state.value} />
+                </Button>
                 {this.props.children}
             </div>
         );

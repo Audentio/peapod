@@ -38,6 +38,10 @@ module.exports = function (sheetName) {
             float: 'left',
             textDecoration: 'none',
             position: 'relative',
+            userSelect: 'none',
+            MozUserSelect: 'none',
+            WebkitUserSelect: 'none',
+            cursor: 'pointer',
         },
     });
 

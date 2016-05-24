@@ -19,20 +19,20 @@ module.exports = componentName => class Pod_Component extends React.Component {
             complete: 0,
         };
 
-        this.onContinue = this.onContinue.bind(this);
-        this.onBack = this.onBack.bind(this);
+        // this.onContinue = this.onContinue.bind(this);
+        // this.onBack = this.onBack.bind(this);
     }
 
-    onContinue() {
-        this.setState({ complete: 100 });
-        if (!this.props.validation || this.props.validation()) {
-            this.props.onContinue();
-        }
-    }
-    onBack() {
-        this.setState({ complete: 100 });
-        this.props.onBack();
-    }
+    // onContinue() {
+    //     this.setState({ complete: 100 });
+    //     if (!this.props.validation || this.props.validation()) {
+    //         this.props.onContinue();
+    //     }
+    // }
+    // onBack() {
+    //     this.setState({ complete: 100 });
+    //     this.props.onBack();
+    // }
 
     render() {
         const style = Pod_Styler.getStyle(this);
@@ -43,12 +43,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     {this.props.children}
                 </div>
 
-                <Button label="Back" onClick={this.onBack} />
+                {/* <Button label="Back" styler={{ disabled: (this.props.index === 0) }} onClick={this.onBack} />
 
                 <div style={{ float: 'right' }}>
                     <Button label="Cancel" />
                     <Button label="Continue" onClick={this.onContinue} />
-                </div>
+                </div>*/}
             </div>
         );
     }

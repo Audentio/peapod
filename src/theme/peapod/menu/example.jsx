@@ -9,7 +9,7 @@ module.exports = class MenuExample extends React.Component {
                 <Pod.ContentWrap>
 
                     <Pod.Menu trigger={<Pod.Button label="On Hover" />}>
-                        <Pod.Menu_Item href="#" subtext="1">
+                        <Pod.Menu_Item href="#">
                             Something about something
                         </Pod.Menu_Item>
                         <Pod.Menu_Item href="#" subtext="2">Something else</Pod.Menu_Item>
@@ -18,7 +18,7 @@ module.exports = class MenuExample extends React.Component {
                         <Pod.Menu_Item href="#" subtext="4">Yet another thing</Pod.Menu_Item>
                         <Pod.Menu
                             styler={{ level: 1 }}
-                            trigger={<Pod.Menu_Item subtext="5">And another</Pod.Menu_Item>}
+                            trigger={<Pod.Menu_Item href="5" subtext="5">And another</Pod.Menu_Item>}
                         >
                             <Pod.Menu_Item href="#">Another thing</Pod.Menu_Item>
                             <Pod.Menu_Item href="#">Yet another thing</Pod.Menu_Item>
@@ -26,7 +26,7 @@ module.exports = class MenuExample extends React.Component {
                             <Pod.Menu
                                 styler={{ level: 1 }}
                                 trigger={
-                                    <Pod.Menu_Item subtext="5">And another</Pod.Menu_Item>
+                                    <Pod.Menu_Item href="#" subtext="5">And another</Pod.Menu_Item>
                                 }
                             >
                                 <Pod.Menu_Item href="#">Another thing</Pod.Menu_Item>
@@ -75,8 +75,8 @@ module.exports = class MenuExample extends React.Component {
                             { text: 'Hello World', href: '#' },
                             { text: 'Hello World 36', href: '#',
                                 children: [
-                                    { text: 'Hello World 387', href: '#' },
-                                    { text: 'Hello World 123', href: '#', subtext: '2' },
+                                { text: 'Hello World 387', href: '#' },
+                                { text: 'Hello World 123', href: '#', subtext: '2' },
                                 ],
                             },
                             { text: 'Hello World 387', href: '#' },
@@ -88,4 +88,4 @@ module.exports = class MenuExample extends React.Component {
         );
     }
 
-}
+};

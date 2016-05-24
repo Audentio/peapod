@@ -12,8 +12,10 @@ module.exports = function (sheetName) {
     sheet.addCondition('raised').addStyler({ raised: true });
     sheet.addCondition('block').addStyler({ block: true });
     sheet.addCondition('round').addStyler({ round: true });
+
     sheet.addCondition('disabled').addStyler({ disabled: true });
-    sheet.addCondition('notDisabled').addStyler({ disabled: undefined });
+    sheet.addCondition('notDisabled').addStyler({ disabled: ['!=', true] });
+
     sheet.addCondition('dense').addStyler({ dense: true });
     sheet.addCondition('dialog').addStyler({ dialog: true });
 
@@ -76,7 +78,6 @@ module.exports = function (sheetName) {
             border: 'none',
             position: 'relative',
             overflow: 'hidden', // prevent ripple overflow
-            WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // webkit bug with overflow & borderRadius
             textDecoration: 'none',
             textTransform: 'uppercase',
             fontFamily: '$button.font.family',
@@ -91,8 +92,7 @@ module.exports = function (sheetName) {
             textAlign: 'center',
             outline: 'none',
             userSelect: 'none',
-            verticalAlign: 'bottom',
-
+            verticalAlign: 'middle',
             minWidth: '88px',
 
             color: '$button.color.base.color',
@@ -141,7 +141,7 @@ module.exports = function (sheetName) {
             paddingBottom: '0px',
             paddingLeft: '4px',
             paddingRight: '4px',
-            minWidth: 'auto',
+            minWidth: '0px',
             color: '$button.color.base.background',
             background: 'transparent',
             fontSize: '$font.size.headline',
@@ -247,6 +247,8 @@ module.exports = function (sheetName) {
             pointerEvents: 'none',
             width: '100%',
             height: '100%',
+            borderRadius: 'inherit',
+            WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // webkit bug with overflow & borderRadius
         },
     })
     .addSelector({

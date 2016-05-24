@@ -28,7 +28,6 @@ module.exports = function (sheetName) {
 
     content.addSelector({
         common: {
-            marginBottom: '$gutter.large',
             width: '100%',
             // background: '#fafafa',
         },
