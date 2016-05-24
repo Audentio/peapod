@@ -13,20 +13,23 @@ import Pod_Styler from 'utility/styler.js';
 * @element Strong
 *
 */
-module.exports = class Strong extends Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    static propTypes = {
-        children: PropTypes.any,
-    }
+        static displayName = componentName;
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
+        static propTypes = {
+            children: PropTypes.any,
+        }
 
-        return (
-            <strong style={[style.main, { fontWeight: 'bold' }]}>
-                {this.props.children}
-            </strong>
-        );
-    }
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
+            return (
+                <strong style={[style.main, { fontWeight: 'bold' }]}>
+                    {this.props.children}
+                </strong>
+            );
+        }
+    };
 };

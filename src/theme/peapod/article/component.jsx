@@ -6,16 +6,21 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-module.exports = class Article extends React.Component {
-    render() {
-        const { styler, children, ...other } = this.props;
-        const style = Pod_Styler.getStyle(this);
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-        return (
-            <article {...other} style={style.main}>
-                {this.props.children}
-            </article>
-        );
-    }
+        static displayName = componentName;
 
+        render() {
+            const { styler, children, ...other } = this.props;
+            const style = Pod_Styler.getStyle(this);
+
+            return (
+                <article {...other} style={style.main}>
+                    {this.props.children}
+                </article>
+            );
+        }
+
+    };
 };

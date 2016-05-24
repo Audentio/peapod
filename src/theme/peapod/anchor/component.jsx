@@ -14,24 +14,28 @@ import Pod_Styler from 'utility/styler.js';
 * Anchor component
 * @element Code
 */
-module.exports = class Anchor extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    static defaultProps = {
-        internal: false,
-    }
+        static displayName = componentName;
 
-    // regex for internal ?
+        static defaultProps = {
+            internal: false,
+        }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
+        // regex for internal ?
 
-        // var regex = /^(https?:\/\/|ftp:\/\/)/g;
-        // if (regex.test(this.props.to) && !this.props.internal) {
-        return (<a style={style.main} href={this.props.to}>{this.props.children}</a>);
-        // }
-        // else {
-        //     return(<Link style={style.main} to={this.props.to}>{this.props.children}</Link>)
-        // }
-    }
+        render() {
+            const style = Pod_Styler.getStyle(this);
 
+            // var regex = /^(https?:\/\/|ftp:\/\/)/g;
+            // if (regex.test(this.props.to) && !this.props.internal) {
+            return (<a style={style.main} href={this.props.to}>{this.props.children}</a>);
+            // }
+            // else {
+            //     return(<Link style={style.main} to={this.props.to}>{this.props.children}</Link>)
+            // }
+        }
+
+    };
 };

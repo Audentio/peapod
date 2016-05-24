@@ -13,18 +13,22 @@ import { Block } from 'utility/components.js';
 * BlockRight component
 * @element Code
 */
-module.exports = class Block_Right extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-    static propTypes = {
-        children: React.PropTypes.any,
-    }
+        static displayName = componentName;
 
-    render() {
-        return (
-            <Block {...this.props} align="right">
-                {this.props.children}
-            </Block>
-        );
-    }
+        static propTypes = {
+            children: React.PropTypes.any,
+        }
 
+        render() {
+            return (
+                <Block {...this.props} align="right">
+                    {this.props.children}
+                </Block>
+            );
+        }
+
+    };
 };

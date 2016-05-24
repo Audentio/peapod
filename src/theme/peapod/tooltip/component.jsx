@@ -1,7 +1,7 @@
 /*! Peapod v<%= package.version %>
- *  Copyright Audentio <%= package.year %>
- *  LICENSE: <%= package.licence %>
- */
+*  Copyright Audentio <%= package.year %>
+*  LICENSE: <%= package.licence %>
+*/
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
@@ -16,38 +16,42 @@ import {Icon} from 'utility/components.js';
 * @param {string} [ID] - Unique identifier for persistent state storage
 *
 */
-module.exports = class Tooltip extends React.Component {
-	static defaultProps = {
-	    show: false,
-	    hovering: false, // to add
-	    arrow: false // to add
-	}
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-	componentWillMount() {
-	    var {show, hovering} = this.props
-	    this.state = {show, hovering}
-	}
+        static displayName = componentName;
+        static defaultProps = {
+            show: false,
+            hovering: false, // to add
+            arrow: false // to add
+        }
 
-	componentWillReceiveProps(nextProps) {
-	    var {show, hovering} = nextProps
-	    this.setState({show, hovering})
-	}
+        componentWillMount() {
+            var {show, hovering} = this.props
+            this.state = {show, hovering}
+        }
 
-	render() {
-	    var style = Pod_Styler.getStyle(this);
+        componentWillReceiveProps(nextProps) {
+            var {show, hovering} = nextProps
+            this.setState({show, hovering})
+        }
 
-	    var tooltip = (this.props.show) ? (
-	        <div style={style.tooltip}>
-	           <div style={style.arrow}></div>
-	           <div>{this.props.children}</div>
-	        </div>
-	    ) : '';
+        render() {
+            var style = Pod_Styler.getStyle(this);
 
-	    return (
-	        <div style={style.main}>
-	            {tooltip}
-	        </div>
-	    );
+            var tooltip = (this.props.show) ? (
+                <div style={style.tooltip}>
+                    <div style={style.arrow}></div>
+                    <div>{this.props.children}</div>
+                </div>
+            ) : '';
 
-	}
+            return (
+                <div style={style.main}>
+                    {tooltip}
+                </div>
+            );
+
+        }
+    };
 };

@@ -8,207 +8,210 @@ import {Icon, Grid} from 'utility/components.js';
 
 
 function isNodeInRoot(node, root) {
-	while (node) {
-		if (node === root) {
-			return true;
-		}
-		node = node.parentNode;
-	}
-	return false;
+    while (node) {
+        if (node === root) {
+            return true;
+        }
+        node = node.parentNode;
+    }
+    return false;
 }
 
-module.exports = class Portal extends React.Component {
+module.exports = function (componentName) {
+    return class Pod_Component extends React.Component {
 
-	constructor(props, context) {
-		super(props, context);
+        static displayName = componentName;
 
-		this.state = {
-			active: false
-		}
-	}
+        constructor(props, context) {
+            super(props, context);
 
-	static propTypes = {
-		className: React.PropTypes.string,
-		style: React.PropTypes.object,
-		children: React.PropTypes.element.isRequired,
-		trigger: React.PropTypes.element,
-		closeOnEsc: React.PropTypes.bool,
-		closeOnOutsideClick: React.PropTypes.bool,
-		isOpened: React.PropTypes.bool,
-		onOpen: React.PropTypes.func,
-		onClose: React.PropTypes.func,
-		beforeClose: React.PropTypes.func,
-		noArrow: React.PropTypes.bool
-	}
+            this.state = {
+                active: false,
+            };
+        }
 
-	componentDidMount() {
-		if (this.props.closeOnEsc) {
-			document.addEventListener('keydown', this.handleKeydown.bind(this));
-		}
+        static propTypes = {
+            className: React.PropTypes.string,
+            style: React.PropTypes.object,
+            children: React.PropTypes.element.isRequired,
+            trigger: React.PropTypes.element,
+            closeOnEsc: React.PropTypes.bool,
+            closeOnOutsideClick: React.PropTypes.bool,
+            isOpened: React.PropTypes.bool,
+            onOpen: React.PropTypes.func,
+            onClose: React.PropTypes.func,
+            beforeClose: React.PropTypes.func,
+            noArrow: React.PropTypes.bool,
+        }
 
-		if (this.props.closeOnOutsideClick) {
-			document.addEventListener('mousedown', this.handleOutsideMouseClick.bind(this));
-			document.addEventListener('touchstart', this.handleOutsideMouseClick.bind(this));
-		}
+        componentDidMount() {
+            if (this.props.closeOnEsc) {
+                document.addEventListener('keydown', this.handleKeydown.bind(this));
+            }
 
-		if (this.props.isOpened) {
-			this.openPortal(this.props);
-		}
-	}
+            if (this.props.closeOnOutsideClick) {
+                document.addEventListener('mousedown', this.handleOutsideMouseClick.bind(this));
+                document.addEventListener('touchstart', this.handleOutsideMouseClick.bind(this));
+            }
 
-	componentWillReceiveProps(newProps) {
-		// portal's 'is open' state is handled through the prop isOpened
-		if (typeof newProps.isOpened !== 'undefined') {
-			if (newProps.isOpened) {
-				if (this.state.active) {
-					this.renderPortal(newProps);
-				} else {
-					this.openPortal(newProps);
-				}
-			}
-			if (!newProps.isOpened && this.state.active) {
-				this.closePortal();
-			}
-		}
+            if (this.props.isOpened) {
+                this.openPortal(this.props);
+            }
+        }
 
-		// portal handles its own 'is open' state
-		if (typeof newProps.isOpened === 'undefined' && this.state.active) {
-			this.renderPortal(newProps);
-		}
-	}
+        componentWillReceiveProps(newProps) {
+            // portal's 'is open' state is handled through the prop isOpened
+            if (typeof newProps.isOpened !== 'undefined') {
+                if (newProps.isOpened) {
+                    if (this.state.active) {
+                        this.renderPortal(newProps);
+                    } else {
+                        this.openPortal(newProps);
+                    }
+                }
+                if (!newProps.isOpened && this.state.active) {
+                    this.closePortal();
+                }
+            }
 
-	componentWillUnmount() {
-		if (this.props.closeOnEsc) {
-			document.removeEventListener('keydown', this.handleKeydown);
-		}
+            // portal handles its own 'is open' state
+            if (typeof newProps.isOpened === 'undefined' && this.state.active) {
+                this.renderPortal(newProps);
+            }
+        }
 
-		if (this.props.closeOnOutsideClick) {
-			document.removeEventListener('mousedown', this.handleOutsideMouseClick);
-			document.removeEventListener('touchstart', this.handleOutsideMouseClick);
-		}
+        componentWillUnmount() {
+            if (this.props.closeOnEsc) {
+                document.removeEventListener('keydown', this.handleKeydown);
+            }
 
-		this.closePortal();
-	}
+            if (this.props.closeOnOutsideClick) {
+                document.removeEventListener('mousedown', this.handleOutsideMouseClick);
+                document.removeEventListener('touchstart', this.handleOutsideMouseClick);
+            }
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return shallowCompare(this, nextProps, nextState);
-	}
+            this.closePortal();
+        }
 
-	renderPortal(props) {
-		var trigger = this.trigger,
-			styler = Pod_Styler.getStyle({props: {
-				styler: {
-					styleLike: 'Portal'
-				}
-			}});
+        shouldComponentUpdate(nextProps, nextState) {
+            return shallowCompare(this, nextProps, nextState);
+        }
 
-		if (!this.node) {
-			this.node = document.createElement('div');
+        renderPortal(props) {
+            const trigger = this.trigger;
+            const styler = Pod_Styler.getStyle({ props: {
+                styler: {
+                    styleLike: 'Portal',
+                },
+            } });
 
-			if (props.className) {
-				this.node.className = props.className;
-			}
+            if (!this.node) {
+                this.node = document.createElement('div');
 
-			this.node.style.visibility = 'hidden';
-			this.node.style.position = 'absolute';
+                if (props.className) {
+                    this.node.className = props.className;
+                }
 
-			var stylerProps = Object.keys(styler);
-			for (var i = 0, len = stylerProps.length; i < len; i++) {
-				var key = stylerProps[i];
-				this.node.style[key] = styler[key];
-			}
+                this.node.style.visibility = 'hidden';
+                this.node.style.position = 'absolute';
 
-			document.body.appendChild(this.node);
-		}
-		this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(this, React.cloneElement(props.children, {closePortal: this.closePortal}), this.node);
+                const stylerProps = Object.keys(styler);
+                for (let i = 0, len = stylerProps.length; i < len; i++) {
+                    const key = stylerProps[i];
+                    this.node.style[key] = styler[key];
+                }
 
-		var triggerPos = trigger.getBoundingClientRect(),
-		nodePos = this.node.getBoundingClientRect(),
-		windowHeight = window.innerHeight,
-		windowWidth = window.innerWidth,
-		left = trigger.offsetLeft,
-		top = trigger.offsetTop + trigger.offsetHeight;
+                document.body.appendChild(this.node);
+            }
+            this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(this, React.cloneElement(props.children, { closePortal: this.closePortal }), this.node);
 
-		if ((triggerPos.bottom + nodePos.height) > windowHeight) {
-			top = trigger.offsetTop - nodePos.height;
-		}
+            const triggerPos = trigger.getBoundingClientRect();
+            const nodePos = this.node.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const windowWidth = window.innerWidth;
+            let left = trigger.offsetLeft;
+            let top = trigger.offsetTop + trigger.offsetHeight;
 
-		if (triggerPos.left + nodePos.width > windowWidth) {
-			if (triggerPos.right - nodePos.width < 0) {
-				left = 0
-			} else {
-				left = triggerPos.right - nodePos.width
-			}
-		}
+            if ((triggerPos.bottom + nodePos.height) > windowHeight) {
+                top = trigger.offsetTop - nodePos.height;
+            }
 
-		this.node.style.left = left + 'px';
-		this.node.style.top = top + 'px';
-		this.node.style.visibility = 'visible';
-	}
+            if (triggerPos.left + nodePos.width > windowWidth) {
+                if (triggerPos.right - nodePos.width < 0) {
+                    left = 0;
+                } else {
+                    left = triggerPos.right - nodePos.width;
+                }
+            }
 
-	render() {
-		if (this.props.trigger) {
-			var arrowIcon = (this.state.active) ? 'arrow_drop_up' : 'arrow_drop_down';
+            this.node.style.left = left + 'px';
+            this.node.style.top = top + 'px';
+            this.node.style.visibility = 'visible';
+        }
 
-			var arrow = (this.props.noArrow == true) ? '' : <Icon styler={{style: {fontSize: '$font.size.large'}}}>{arrowIcon}</Icon>
+        render() {
+            if (this.props.trigger) {
+                const arrowIcon = (this.state.active) ? 'arrow_drop_up' : 'arrow_drop_down';
 
-		return <div style={{display: 'inline-block'}} onClick={this.openPortal.bind(this, this.props)}>
-				<Grid styler={{alignItems: 'center'}}>
-					{this.props.trigger}
-					{arrow}
-				</Grid>
-			</div>;
-		} else {
-			return <div>Specify a trigger...</div>;
-		}
-	}
+                const arrow = (this.props.noArrow === true) ? '' : <Icon styler={{ style: { fontSize: '$font.size.large' } }}>{arrowIcon}</Icon>;
 
-	openPortal(props, e) {
-		if (e) {
-			e.preventDefault();
-			e.stopPropagation();
-		}
-		this.trigger = e.currentTarget;
-		this.setState({active: true});
-		this.renderPortal(props);
-		if (this.props.onOpen) {
-			this.props.onOpen(this.node);
-		}
-	}
+                return <div style={{ display: 'inline-block' }} onClick={this.openPortal.bind(this, this.props)}>
+                    <Grid styler={{ alignItems: 'center' }}>
+                        {this.props.trigger}
+                        {arrow}
+                    </Grid>
+                </div>;
+            }
+            return <div>Specify a trigger...</div>;
+        }
 
-	closePortal() {
-		const resetPortalState = () => {
-			if (this.node) {
-				ReactDOM.unmountComponentAtNode(this.node);
-				document.body.removeChild(this.node);
-			}
-			this.portal = null;
-			this.node = null;
-			this.setState({active: false});
-		};
+        openPortal(props, e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            this.trigger = e.currentTarget;
+            this.setState({ active: true });
+            this.renderPortal(props);
+            if (this.props.onOpen) {
+                this.props.onOpen(this.node);
+            }
+        }
 
-		if (this.props.beforeClose) {
-			this.props.beforeClose(this.node, resetPortalState);
-		} else {
-			resetPortalState(this.node);
-		}
+        closePortal() {
+            const resetPortalState = () => {
+                if (this.node) {
+                    ReactDOM.unmountComponentAtNode(this.node);
+                    document.body.removeChild(this.node);
+                }
+                this.portal = null;
+                this.node = null;
+                this.setState({ active: false });
+            };
 
-		if (this.props.onClose) {
-			this.props.onClose();
-		}
-	}
+            if (this.props.beforeClose) {
+                this.props.beforeClose(this.node, resetPortalState);
+            } else {
+                resetPortalState(this.node);
+            }
 
-	handleOutsideMouseClick(e) {
-		if (!this.state.active) { return; }
-		if (isNodeInRoot(e.target, findDOMNode(this.portal)) || e.target.tagName === 'HTML') { return; }
-		e.stopPropagation();
-		this.closePortal();
-	}
+            if (this.props.onClose) {
+                this.props.onClose();
+            }
+        }
 
-	handleKeydown(e) {
-		// ESC
-		if (e.keyCode === 27 && this.state.active) {
-			this.closePortal();
-		}
-	}
+        handleOutsideMouseClick(e) {
+            if (!this.state.active) { return; }
+            if (isNodeInRoot(e.target, findDOMNode(this.portal)) || e.target.tagName === 'HTML') { return; }
+            e.stopPropagation();
+            this.closePortal();
+        }
+
+        handleKeydown(e) {
+            // ESC
+            if (e.keyCode === 27 && this.state.active) {
+                this.closePortal();
+            }
+        }
+    };
 };

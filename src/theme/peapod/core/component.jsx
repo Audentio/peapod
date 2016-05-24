@@ -72,4 +72,4 @@ Pod.helper.keymap = {
 	'esc': 27
 }
 
-export default Pod_core;
+export default function () { return Pod_core; }

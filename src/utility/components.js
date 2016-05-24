@@ -83,9 +83,11 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
 
     for (let componentNameIndex = 0, componentNameLen = componentNameKeys.length; componentNameIndex < componentNameLen; componentNameIndex++) {
         const componentName = componentNameKeys[componentNameIndex];
-        const component = req(componentNames[componentName]);
+        let component = req(componentNames[componentName]);
+        component = component(componentName);
+
         module.exports[componentName] = wrapper(component);
-        module.exports[`NoWrap_${componentName}`] = component;
+        // module.exports[`NoWrap_${componentName}`] = component;
 
         if (typeof(examplePages[componentName]) === 'undefined') {
             if (componentName.indexOf('_') === -1 && warnMissingExample) { // only for base components
