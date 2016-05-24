@@ -1,8 +1,8 @@
 var path = require('path'); // eslint-disable-line
 var webpack = require('webpack') // eslint-disable-line
+var CompressionPlugin = require("compression-webpack-plugin"); // eslint-disable-line
 
 const config = {
-    devtool: 'eval-cheap-module-source-map',
     entry: {
         styler: [path.resolve('./src/utility/styler.js')],
         components: [path.resolve('./src/utility/components.js')],
@@ -27,6 +27,16 @@ const config = {
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
+            minimize: true,
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new CompressionPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: /\.js$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.8,
         }),
     ],
 
