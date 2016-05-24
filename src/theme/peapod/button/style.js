@@ -141,7 +141,7 @@ module.exports = function (sheetName) {
             paddingBottom: '0px',
             paddingLeft: '4px',
             paddingRight: '4px',
-            minWidth: 'auto',
+            minWidth: '0px',
             color: '$button.color.base.background',
             background: 'transparent',
             fontSize: '$font.size.headline',
