@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import { Stepper_Step, Stepper_StepTitle } from 'utility/components.js';
+import { Stepper_Step, Stepper_StepTitle, Button } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -107,7 +107,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     title={title}
                     active={i === this.state.active}
                     validation={validation}
-                    />
+                />
             );
             if ((i + 1) !== stepCount) {
                 steps.push(<div key={`line-${i}`} style={style.stepLine}></div>);
@@ -115,34 +115,41 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
 
         let i = 0;
-        const children = this.props.children.map((result) => {
+        const children = React.Children.map(this.props.children, child => {
             const hidden = (this.props.singleForm && i !== this.state.active);
-            const childstep = (
-                <Stepper_Step
-                    {...result.props}
-                    key={i}
-                    onContinue={this.goToNextStep}
-                    onBack={this.goToBackStep}
-                    hidden={hidden}
-                    />
-            );
+            const index = i;
+            console.log(i, 'hello');
+            const newChild = React.cloneElement(child, {
+                hidden,
+                index,
+            });
             i++;
-            return childstep;
+            return newChild;
         });
 
         const child = (this.props.singleForm) ? children : children[this.state.active];
 
         return (
             <div style={style.main}>
+                {/* should not be inline styles */}
                 <div style={{ position: 'relative', background: '#fff', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
                     <div style={style.progress}></div>
-
+                    
                     <div style={style.steps}>
                         {steps}
                     </div>
                 </div>
 
-                {child}
+                <div style={style.animate}>{child}</div>
+
+                <div style={style.actionBar}>
+                    <Button label="Back" styler={{ dialog: true, disabled: 0 === this.state.active }} onClick={this.goToBackStep} />
+
+                    <div style={{ float: 'right' }}>
+                        <Button label="Cancel" styler={{ dialog: true }} />
+                        <Button label="Continue" styler={{ dialog: true }} onClick={this.goToNextStep} />
+                    </div>
+                </div>
             </div>
         );
     }
