@@ -243,6 +243,7 @@ module.exports = function (sheetName) {
         },
     });
     for (let index in devices.devices) {
+        console.info(index)
         const device = devices.devices[index];
         const deviceindex = index;
 
@@ -263,7 +264,7 @@ module.exports = function (sheetName) {
             variant: undefined,
         });
 
-        for (var index in versions) {
+        for (let index in versions) {
             var versionindex = index;
             sheet.addCondition('version' + versionindex).addProp({ version: versionindex });
 
@@ -273,7 +274,7 @@ module.exports = function (sheetName) {
                 variant: undefined,
             });
 
-            for (var index in variants) {
+            for (let index in variants) {
                 var variantindex = index;
 
                 sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
@@ -287,7 +288,7 @@ module.exports = function (sheetName) {
             }
         }
 
-        for (var index in variants) {
+        for (let index in variants) {
             var variantindex = index;
 
             sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
