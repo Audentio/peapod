@@ -5,6 +5,7 @@ module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
     const main = sheet.addMain();
     const input = sheet.addPart('input');
+    const pseudoInput = sheet.addPart('pseudoInput');
     const placeholder = sheet.addPart('placeholder');
     const charCounter = sheet.addPart('charCounter');
     const evaluation = sheet.addPart('evaluation');
@@ -162,8 +163,17 @@ module.exports = function (sheetName) {
 
     input.addSelector({
         common: {
-            height: '100%',
-            width: '100%',
+            display: 'none',
+        },
+    });
+
+    pseudoInput.addSelector({
+        common: {
+            lineHeight: '$input.height',
+            height: '$input.height',
+            width: 150,
+            minWidth: '100%',
+            maxWidth: '100%',
             paddingTop: '$input.padding.top',
             paddingRight: '$input.padding.right',
             paddingBottom: '$input.padding.bottom',
@@ -176,7 +186,6 @@ module.exports = function (sheetName) {
             appearance: 'none',
             border: 'none',
             outline: 'none',
-            lineHeight: 'normal',
             position: 'relative',
             zIndex: 2,
             transition: 'padding 100ms',

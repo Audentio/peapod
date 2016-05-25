@@ -4,266 +4,258 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { merge as _merge } from 'lodash';
 import Pod_Styler from 'utility/styler.js';
-import { Icon } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
-import shallowEqual from 'shallowequal';
-import Pod_Helper from 'utility/helper.js';
+import Logger from 'utility/logger.js';
+import { Validator, autoFixURL } from 'utility/InputHelper.js';
+import { Input_ValidationResponse } from 'utility/components.js';
 
 /**
-* Multipurpose Input component
+* Input component
 *
-* @element Pod_input
+* @element Input
 *
 * @param {string} [type=text] - Input type
 * @param {string} [value] - Input value
 * @param {string} [placeholder] - Placeholder text
+* @param {string} [name] - Input name
+* @param {boolean} [stateful=false] - Should component maintain value in state
+* @param {boolean} [required=false] - Field is required. Will show warning if left balnk
+* @param (boolean | object) [validate=false] - Enable validate. Optionally pass validation schema as object
+* @param {boolean} [primitive=false] - create hidden <input> element. Enable if you need it for form value
 *
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        shouldComponentUpdate = PureRender;
+    constructor(props, context) {
+        super(props, context);
 
-        constructor(props, context) {
-            super(props, context);
+        const { stateful, value: valueProp, validationSchema } = props;
 
-            const { placeholder, charLimit, value } = props;
-
-            const charCounter = (charLimit > 0) ? `${value.length}/${charLimit}` : value.length;
-
-            this.state = {
-                value,
-                focus: false,
-                placeholder: (value && value.length > 1) ? '' : placeholder,
-                charCounter,
-                evaluation: null, // validation state
-            };
-        }
-
-        static defaultProps = {
-            type: 'text',
-            value: '',
-            showCounter: true,
-            charLimit: 0,
-
-            // validation is disabled by default
-            validate: false,
-            validationResponse: {
-                invalid: 'Invalid input',
-                valid: 'Valid',
-                empty: 'This field is required',
+        // Merge validation schema
+        this.validationSchema = _merge({}, {
+            responses: {
+                valid: <Input_ValidationResponse valid icon="check_circle">This works.</Input_ValidationResponse>,
+                invalid: <Input_ValidationResponse invalid icon="error">Invalid input.</Input_ValidationResponse>,
+                empty: <Input_ValidationResponse empty icon="error">This field can not be left empty.</Input_ValidationResponse>,
             },
+        }, validationSchema);
+
+        // Maintain state
+        if (stateful) {
+            // make sure value is string or number
+            // else set empty string
+            const value = (typeof valueProp === 'string' || typeof valueProp === 'number') ? valueProp : '';
+            this.state = { value };
+        }
+    }
+
+    static propTypes = {
+        name: PropTypes.string,
+        placeholder: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.bool,
+        ]),
+        type: PropTypes.oneOf([
+            'text',
+            'textarea',
+            'password',
+            'number',
+            'email',
+            'url',
+            'hidden',
+            'date',
+        ]),
+        value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+        ]),
+        stateful: PropTypes.bool,
+        onChange: PropTypes.func,
+        onFocus: PropTypes.func,
+        onBlur: PropTypes.func,
+        required: PropTypes.bool,
+        validate: PropTypes.bool,
+        primitive: PropTypes.bool,
+        validationSchema: PropTypes.bool,
+    }
+
+    static defaultProps = {
+        value: '',
+        primitive: false,
+        validate: true,
+        required: false,
+        stateful: false,
+        type: 'text',
+    }
+
+    shouldComponentUpdate = PureRender;
+
+    componentDidMount() {
+        const { pseudoInput } = this.refs;
+        if ('oninput' in pseudoInput) { // Modern browsers
+            pseudoInput.addEventListener('input', this.onChange);
+        } else { // IE. sigh
+            pseudoInput.addEventListener('blur', this.onChange);
+            pseudoInput.addEventListener('keyup', this.onChange);
+            pseudoInput.addEventListener('paste', this.onChange);
+            pseudoInput.addEventListener('copy', this.onChange);
+            pseudoInput.addEventListener('cut', this.onChange);
+            pseudoInput.addEventListener('mouseup', this.onChange);
+        }
+    }
+
+    // Determines placeholder text
+    // depending on placeholder and value props
+    getPlaceholder(value) {
+        const { name, placeholder: placeholderProp } = this.props;
+
+        let placeholder = placeholderProp;
+
+        // Boolean - true (props.name becomes placeholder)
+        if (placeholderProp === true) placeholder = name;
+
+        // no placeholder if value has characters
+        if (value && value.length > 0) placeholder = false;
+
+        return placeholder;
+    }
+
+    // Change handler
+    // triggers onChange prop with value
+    onChange = e => {
+        const { stateful, onChange: callback } = this.props;
+        const value = e.target.innerText;
+
+        if (this.state.value === value) return; // no Change
+
+        // missing callback on stateless Input. throw warning
+        if (!callback && !stateful) {
+            Logger.warn('<Input> Unable to mutate controlled input. Use onChange callback or pass "stateful" prop.');
+            return;
         }
 
-        static propTypes = {
-            type: PropTypes.oneOf([
-                'text',
-                'textarea',
-                'password',
-                'email',
-                'url',
-                'number',
-                'hidden',
-                'date',
-            ]),
-            orphan: PropTypes.bool,
-            name: PropTypes.string,
-            value: PropTypes.oneOfType([
-                PropTypes.string,
-                PropTypes.number,
-            ]),
-            placeholder: PropTypes.oneOfType([
-                PropTypes.string,
-                PropTypes.bool,
-            ]),
-            required: PropTypes.bool,
-            validate: PropTypes.oneOfType([
-                PropTypes.func,
-                PropTypes.bool,
-            ]),
-            icon: PropTypes.string,
-            charLimit: PropTypes.number,
-            callback: PropTypes.func,
-            showCounter: PropTypes.bool,
-            validationResponse: PropTypes.object,
-            onChange: PropTypes.func,
+        // Validate
+        const validation = this.validate(value);
+        const isValid = validation === 'valid' || validation === null;
+
+        // Maintain internal state if stateful
+        if (stateful) this.setState({ value, isValid });
+
+        // trigger onChange callback
+        if (callback) callback({ value, isValid, validation });
+    }
+
+    // Validate input value
+    // -- returns 'valid', 'invalid', 'empty' or null
+    // -- validation response is decided based on those in getValidationMessage()
+    validate = value => {
+        const { type, required } = this.props;
+
+        // If value is empty
+        // -- return 'empty' if required
+        // -- else return null (makes sure there's no notice or style change)
+        if (value === undefined || value === '') return required ? 'empty' : null;
+
+        switch (type) {
+
+        case 'email': return Validator.email(value) ? 'valid' : 'invalid';
+
+        case 'url': return Validator.url(value) ? 'valid' : 'invalid';
+
+        default: return 'valid';
+
         }
+    }
 
-        submitHandler = (e) => {
-            if (!this.props.onSubmit) return;
+    onFocus = e => {
+        const { onFocus } = this.props;
 
-            const input = e.target;
-            if (e.charCode === Pod_Helper.keymap.ENTER) {
-                e.preventDefault();
-                this.props.onSubmit({
-                    value: input.value
-                })
-            }
-        }
+        // set focus for styling
+        this.setState({ focus: true });
 
-        componentWillReceiveProps(nextProps) {
-            if (!shallowEqual(this.props, nextProps)) return;
-            this.onChangeHandler(nextProps.value, false);
-        }
+        if (onFocus) onFocus(e);
+    }
 
-        evaluate = (value) => {
-            // If value is empty
-            // -- return 'empty' if required
-            // -- else return null (makes sure there's no notice or style change)
-            if (value === undefined || value === '') return (this.props.required) ? 'empty' : null;
+    onBlur = () => {
+        const { type, validate, stateful, name, onChange } = this.props;
+        const currentValue = stateful ? this.state.value : this.props.value;
 
-            switch (this.props.type) {
-                // Field type: E-mail
-                // uses a rather simple regex for validation
-            case 'email':
-                return (value.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/)) ? 'valid' : 'invalid';
+        let value = currentValue;
 
-            // Field type: URL
-            // verify a URL
-            case 'url':
-                var expr = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i // eslint-disable-line
-                return (value.match(expr)) ? 'valid' : 'invalid';
+        // autofix missing protocol in URL
+        if (type === 'url') value = autoFixURL(currentValue, validate);
 
-            // Regular text type field
-            default:
-                return 'valid';
-            }
-        }
+        // Validate
+        const isValid = this.validate(value);
 
-        validate = (value = this.state.value) => {
-            // no validation required.
-            if (this.props.validate === false) return true;
-
-            // Use custom validation function if passed
-            // else use predefined evaluation function
-            const evaluation = (typeof this.props.validate === 'function') ? this.props.validate(value) : this.evaluate(value);
-
-            this.setState({ evaluation });
-
-            return (evaluation === 'valid' || evaluation === null);
-        }
-
-        onChangeHandler = (e, cb = true) => {
-            if (e === null) return;
-            const value = (typeof e === 'object') ? e.target.value : e;
-            const placeholder = (value.length > 0) ? '' : this.props.placeholder;
-            const callback = this.props.callback || function () { };
-            const charCounter = (this.props.charLimit > 0) ? `${value.length}/${this.props.charLimit}` : value.length;
-            let isValid = true;
-
-            // evaluate if evaluated before
-            if (this.state.evaluation !== null) {
-                isValid = this.validate(value);
-            }
-
-            if (cb === true) callback(value);
-
-            if (this.props.onChange) {
-                this.props.onChange({
-                    value,
-                    isValid,
-                }, this.props.name);
-            }
-
+        if (stateful) {
             this.setState({
                 value,
-                placeholder,
-                charCounter,
+                focus: false,
+                isValid,
             });
-        }
-
-        onFocus = () => {
-            this.setState({ focus: true });
-        }
-
-        onBlur = () => {
+        } else {
             this.setState({ focus: false });
-
-            let isValid = true;
-
-            // autofix missing protocol
-            // http is assume
-            if (this.props.type === 'url' && // URL type input
-                this.props.validate !== false && // validation enabled
-                this.state.value && this.state.value.length > 0 &&  // Value is non-empty & has a dot
-                this.state.value.match(/(?:[a-z][a-z0-9_]*)(\.)(?:[a-z][a-z0-9_]*)/) && // There's a dot in between
-                this.state.value.indexOf('://') === -1 // protocol not defined
-            ) {
-                const value = `http://${this.state.value.trim()}`;
-                this.setState({ value });
-                isValid = this.validate(value);
-            } else {
-                isValid = this.validate();
-            }
-
-            if (this.props.onChange) {
-                this.props.onChange({
-                    value: this.state.value,
-                    isValid,
-                }, this.props.name);
-            }
         }
 
-        render() {
-            const style = Pod_Styler.getStyle(this);
-            const placeholder = (this.props.placeholder === true) ? this.props.name : this.props.placeholder;
+        // Trigger onChange callback if passed
+        if (onChange) onChange({ value, isValid }, name);
+    }
 
-            // Message to show in response box
-            const validationResponse = this.props.validationResponse[this.state.evaluation];
-            const input_markup = (this.props.type === 'textarea') ?
-                <textarea
-                    name={this.props.name}
-                    onKeyPress={this.submitHandler}
-                    style={style.input}
-                    value={this.state.value}
-                    required={this.props.required}
+    // Get validation response Message
+    // based on validation state and schema
+    getValidationMessage() {
 
-                    onChange={this.onChangeHandler}
-                    onFocus={this.onFocus}
-                    onBlur={this.onBlur}
-                />
-                :
-                <input
-                    name={this.props.name}
-                    onKeyPress={this.submitHandler}
-                    type={this.props.type}
-                    style={style.input}
-                    value={this.state.value}
-                    required={this.props.required}
-                    autoComplete="off"
+    }
 
-                    onChange={this.onChangeHandler}
-                    onFocus={this.onFocus}
-                    onBlur={this.onBlur}
-                />;
+    render() {
+        const style = Pod_Styler.getStyle(this);
+        const { primitive, stateful, name, type } = this.props;
 
-            return (
+        // use state.value if stateful
+        const value = stateful ? this.state.value : this.props.value;
+        const placeholder = this.getPlaceholder(value);
+
+        // Decide tagname based on type
+        const InputTag = type === 'textarea' ? 'textarea' : 'input';
+
+        // Validation response
+        const validationMessage = this.getValidationMessage();
+
+        return (
+            <div style={style.wrapper}>
                 <div style={style.main}>
-                    {this.props.icon &&
-                        <Icon style={style.icon}>{this.props.icon}</Icon>
-                    }
-
-                    {this.state.placeholder &&
+                    {placeholder &&
                         <span style={style.placeholder}>{placeholder}</span>
                     }
 
-                    {input_markup}
-
-                    {this.props.type === 'textarea' && this.props.showCounter
-                        && <div style={style.charCounter}>{this.state.charCounter} Characters</div>
-                    }
-
-                    {(this.state.evaluation !== null) &&
-                        <div style={style.evaluation}>{validationResponse}</div>
-                    }
+                    <div
+                        contentEditable="true"
+                        ref="pseudoInput"
+                        style={style.pseudoInput}
+                        onBlur={this.onBlur}
+                        onFocus={this.onFocus}
+                        dangerouslySetInnerHTML={{ __html: value }}
+                    />
                 </div>
-            );
-        }
-    };
+
+                {validationMessage}
+
+                {primitive &&
+                    <InputTag
+                        type={type}
+                        name={name}
+                        ref="input"
+                        value={value}
+                        style={style.input}
+                    />
+                }
+            </div>
+        );
+    }
 };
