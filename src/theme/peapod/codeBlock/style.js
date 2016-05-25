@@ -25,7 +25,7 @@ module.exports = function (sheetName) {
     label.addSelector({
         common: {
             display: 'inline-block',
-            borderBottom: '2px solid $color.general.base',
+            borderBottom: '2px solid {$color.general.base}',
             padding: '0 10px 5px 1px',
             textTransform: 'uppercase',
             fontFamily: '$font.family.primary',
