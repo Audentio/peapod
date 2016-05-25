@@ -60,7 +60,6 @@ module.exports = class ButtonExample extends React.Component {
                     <Pod.Heading kind="h4">Basic Examples</Pod.Heading>
                     <Pod.Button styler={{ kind: 'base' }} onClick={this.makeAlert} label="onClick handler" />
                     <Pod.Button styler={{ kind: 'base' }} href="http://peapod.io" label="Anchor/Link" kind="primary" />
-
                 </Pod.ContentWrap>
             </div>
         );

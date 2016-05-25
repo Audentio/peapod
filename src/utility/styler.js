@@ -207,7 +207,7 @@ window.Pod_Styler = window.Pod_Styler || {
                     const ruleKeys = Object.keys(part);
                     for (let ruleIndex = 0, ruleLen = ruleKeys.length; ruleIndex < ruleLen; ruleIndex++) { // then through each property in the part
                         const ruleKey = ruleKeys[ruleIndex];
-                        const computedRuleKey = window.Pod_Styler.parseVariableValue(ruleKey, obj, scene); // resolve variables in the property key
+                        const computedRuleKey = window.Pod_Styler.parseVariableValue(ruleKey, obj, scene, ''); // resolve variables in the property key
                         let computedVar = part[ruleKey];
 
                         if (typeof(computedVar) === 'object') { // merge style objects
@@ -215,7 +215,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
                             for (let varIndex = 0, varLen = computedKeys.length; varIndex < varLen; varIndex++) { // then through each property in the rule
                                 const computedKey = computedKeys[varIndex];
-                                const resultVar = window.Pod_Styler.parseVariableValue(computedVar[computedKey], obj, scene); // resolve variables in the property
+                                const resultVar = window.Pod_Styler.parseVariableValue(computedVar[computedKey], obj, scene, computedRuleKey); // resolve variables in the property
 
                                 if (typeof(resultVar) === 'string') {
                                     if (resultVar.indexOf('!unset') === -1) {
@@ -238,7 +238,7 @@ window.Pod_Styler = window.Pod_Styler || {
                                 partStyle[computedRuleKey] = computedVar;
                             }
                         } else { // merge normal styliing
-                            const resultVar = window.Pod_Styler.parseVariableValue(computedVar, obj, scene);
+                            const resultVar = window.Pod_Styler.parseVariableValue(computedVar, obj, scene, computedRuleKey);
                             if (typeof(resultVar) === 'string') {
                                 if (typeof(partStyle[ruleKey]) === 'string' && partStyle[ruleKey].indexOf('!important') > -1) {
                                     if (resultVar.indexOf('!important') === -1) {
@@ -269,6 +269,8 @@ window.Pod_Styler = window.Pod_Styler || {
                 } else {
                     style[partKey] = Object.assign(style[partKey], partStyle);
                 }
+
+                style[partKey] = this.transform(style[partKey]);
             }
         }
 
@@ -371,7 +373,7 @@ window.Pod_Styler = window.Pod_Styler || {
     },
 
     // will resolve a string to it's actual computed value
-    parseVariableValue(computedVar, obj, scene) {
+    parseVariableValue(computedVar, obj, scene, rule) {
         if (typeof(computedVar) === 'function') {
             computedVar = computedVar(obj, scene);
         }
@@ -423,6 +425,142 @@ window.Pod_Styler = window.Pod_Styler || {
             computedVar = obj.context[computedVar.replace('getContext:', '')]; // get context from instance
         }
         return computedVar;
+    },
+
+
+    addUnit(val) {
+        if (val === 0 || val === '0') {
+            return '0px';
+        }
+        return val;
+    },
+
+    transformKeys(styles, key, splitStyle, keyAppend) {
+        for (let i = 0, len = keyAppend.length; i < len; i++) {
+            let appendKey = keyAppend[i];
+            if (typeof(appendKey) === 'object') {
+                appendKey = appendKey[0];
+            } else {
+                appendKey = key + appendKey;
+            }
+            styles[appendKey] = splitStyle[i];
+        }
+        delete styles[key];
+        return styles;
+    },
+
+    spreadToFour(splitStyle) {
+        const splitStyleLen = splitStyle.length;
+
+        if (splitStyleLen === 1) {
+            splitStyle.push(splitStyle[0]);
+            splitStyle.push(splitStyle[0]);
+            splitStyle.push(splitStyle[0]);
+        } else if (splitStyleLen === 2) {
+            splitStyle.push(splitStyle[0]);
+            splitStyle.push(splitStyle[1]);
+        } else if (splitStyleLen === 3) {
+            splitStyle.push(splitStyle[1]);
+        }
+        return splitStyle;
+    },
+
+    splitStyle(style) {
+        const splitStyle = style.trim().split(/ +/);
+        const splitStyleLen = splitStyle.length;
+
+        for (let splitIndex = 0; splitIndex < splitStyleLen; splitIndex++) {
+            splitStyle[splitIndex] = this.addUnit(splitStyle[splitIndex]);
+        }
+
+        return splitStyle;
+    },
+
+    transform(styles, depth = 0) {
+        let newStyles = styles;
+
+        if (typeof(styles) === 'object' && styles !== undefined && styles !== null) {
+            const keys = Object.keys(styles);
+            for (let keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
+                const key = keys[keyIndex];
+                const style = newStyles[key];
+                const styleType = typeof(style);
+
+                if (styleType === 'string') {
+                    if (['padding', 'margin'].indexOf(key) > -1) {
+                        let splitStyle = this.splitStyle(newStyles[key]);
+                        splitStyle = this.spreadToFour(splitStyle);
+
+                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Top', 'Right', 'Bottom', 'Left']);
+                    } else if (['borderWidth', 'borderColor', 'borderStyle'].indexOf(key) > -1) {
+                        let splitStyle = this.splitStyle(newStyles[key]);
+                        splitStyle = this.spreadToFour(splitStyle);
+                        if (key === 'borderWidth') {
+                            newStyles = this.transformKeys(newStyles, key, splitStyle, [['borderTopWidth'], ['borderRightWidth'], ['borderBottomWidth'], ['borderLeftWidth']]);
+                        } else if (key === 'borderColor') {
+                            newStyles = this.transformKeys(newStyles, key, splitStyle, [['borderTopColor'], ['borderRightColor'], ['borderBottomColor'], ['borderLeftColor']]);
+                        } else if (key === 'borderStyle') {
+                            newStyles = this.transformKeys(newStyles, key, splitStyle, [['borderTopStyle'], ['borderRightStyle'], ['borderBottomStyle'], ['borderLeftStyle']]);
+                        }
+                    } else if (['border', 'borderTop', 'borderRight', 'borderBottom', 'borderLeft'].indexOf(key) > -1) {
+                        const splitStyle = this.splitStyle(newStyles[key]);
+                        const splitStyleLen = splitStyle.length;
+
+                        if (splitStyleLen === 1) {
+                            splitStyle.unshift(Pod_Vars.get('border.width'));
+                            splitStyle.push(Pod_Vars.get('border.color'));
+                        } else if (splitStyleLen === 2) {
+                            splitStyle.push(Pod_Vars.get('border.color'));
+                        }
+
+                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Width', 'Style', 'Color']);
+                    } else if (key === 'borderRadius') {
+                        let splitStyle = this.splitStyle(newStyles[key]);
+                        splitStyle = this.spreadToFour(splitStyle);
+
+                        newStyles = this.transformKeys(newStyles, key, splitStyle, [['borderTopLeftRadius'], ['borderTopRightRadius'], ['borderBottomRightRadius'], ['borderBottomLeftRadius']]);
+                    } else if (key === 'font') {
+                        const splitStyle = this.splitStyle(newStyles[key]);
+
+                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Style', 'Weight', 'Size', ['lineHeight'], 'Family']);
+                    } else if (key === 'background') {
+                        const splitStyle = this.splitStyle(newStyles[key]);
+                        const splitStyleLen = splitStyle.length;
+
+                        if (splitStyleLen === 1) {
+                            newStyles.backgroundColor = splitStyle[0];
+                            delete newStyles.background;
+                        } else {
+                            newStyles = this.transformKeys(newStyles, key, splitStyle, ['Color', 'Image', 'Repeat', 'Attachment', 'Position']);
+                        }
+                    } else if (key === 'flex') {
+                        const splitStyle = this.splitStyle(newStyles[key]);
+
+                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Grow', 'Shrink', 'Basis']);
+                    } else if (key === 'transition') {
+                        const splitStyle = this.splitStyle(newStyles[key]);
+                        const splitStyleLen = splitStyle.length;
+
+                        if (splitStyleLen === 1) {
+                            newStyles.transitionDuration = splitStyle[0];
+                            delete newStyles.transition;
+                        } else {
+                            newStyles = this.transformKeys(newStyles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
+                        }
+                    } else if (key === 'listStyle') {
+                        const splitStyle = this.splitStyle(newStyles[key]);
+
+                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Type', 'Position', 'Image']);
+                    } else {
+                        newStyles[key] = this.addUnit(style);
+                    }
+                } else if (styleType === 'object') {
+                    newStyles[key] = this.transform(style, depth + 1);
+                }
+            }
+        }
+
+        return newStyles;
     },
 
 };
