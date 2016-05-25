@@ -1,7 +1,10 @@
 import React from 'react';
 import Pod from 'utility/components.js';
+import PureRender from 'utility/pureRender.js';
 
 module.exports = class TimestampExample extends React.Component {
+
+	shouldComponentUpdate = PureRender;
 
     render() {
         const tzTestTime = '2016-05-04T12:00:00Z';
