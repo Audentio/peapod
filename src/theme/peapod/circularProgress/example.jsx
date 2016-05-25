@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ContentWrap, Card, CircularProgress } from 'utility/components.js';
+import PureRender from 'utility/pureRender.js';
 
 const cardStyle = {
     style: {

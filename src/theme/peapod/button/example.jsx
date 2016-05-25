@@ -1,13 +1,17 @@
 import React from 'react';
 import Pod from 'utility/components.js';
+import PureRender from 'utility/pureRender.js';
 
 module.exports = class ButtonExample extends React.Component {
+
+	shouldComponentUpdate = PureRender;
 
     makeAlert = () => {
         alert('test'); // eslint-disable-line no-alert
     }
 
     render() {
+
         return (
             <div>
                 <Pod.ContentWrap>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ContentWrap, Video } from 'utility/components.js';
+import PureRender from 'utility/pureRender.js';
 
 module.exports = class TimestampExample extends Component {
 
