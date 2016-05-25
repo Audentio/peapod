@@ -5,12 +5,12 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import { merge as _merge } from 'lodash';
 import Pod_Styler from 'utility/styler.js';
+import { merge as _merge } from 'lodash';
 import PureRender from 'utility/pureRender.js';
 import Logger from 'utility/logger.js';
 import { Validator, autoFixURL } from 'utility/InputHelper.js';
-import { Input_ValidationResponse } from 'utility/components.js';
+import Input_ValidationResponse from 'utility/components.js';
 
 /**
 * Input component
@@ -37,11 +37,12 @@ module.exports = componentName => class Pod_Component extends Component {
         const { stateful, value: valueProp, validationSchema } = props;
 
         // Merge validation schema
+        // THIS CODE HANGS STUFF
         this.validationSchema = _merge({}, {
             responses: {
-                valid: <Input_ValidationResponse valid icon="check_circle">This works.</Input_ValidationResponse>,
-                invalid: <Input_ValidationResponse invalid icon="error">Invalid input.</Input_ValidationResponse>,
-                empty: <Input_ValidationResponse empty icon="error">This field can not be left empty.</Input_ValidationResponse>,
+                valid: () => <Input_ValidationResponse valid icon="check_circle">This works.</Input_ValidationResponse>,
+                invalid: () => <Input_ValidationResponse invalid icon="error">Invalid input.</Input_ValidationResponse>,
+                empty: () => <Input_ValidationResponse empty icon="error">This field can not be left empty.</Input_ValidationResponse>,
             },
         }, validationSchema);
 
@@ -214,6 +215,7 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
+        console.log('render!!')
         const style = Pod_Styler.getStyle(this);
         const { primitive, stateful, name, type } = this.props;
 
@@ -235,6 +237,7 @@ module.exports = componentName => class Pod_Component extends Component {
                     }
 
                     <div
+                        className="testytest"
                         contentEditable="true"
                         ref="pseudoInput"
                         style={style.pseudoInput}
