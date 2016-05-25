@@ -427,7 +427,7 @@ window.Pod_Styler = window.Pod_Styler || {
         return computedVar;
     },
 
-
+    // transforms 0 to be 0px
     addUnit(val) {
         if (val === 0 || val === '0') {
             return '0px';
@@ -449,6 +449,7 @@ window.Pod_Styler = window.Pod_Styler || {
         return styles;
     },
 
+    // spreads an array of attributes out to be 4 (used for Top, Right, Bottom, Left)
     spreadToFour(splitStyle) {
         const splitStyleLen = splitStyle.length;
 
@@ -465,8 +466,9 @@ window.Pod_Styler = window.Pod_Styler || {
         return splitStyle;
     },
 
-    splitStyle(style) {
-        const splitStyle = style.trim().split(/ +/);
+    // splits style based on regular expression passed in
+    splitStyle(style, expression = / +/) {
+        const splitStyle = style.trim().split(expression);
         const splitStyleLen = splitStyle.length;
 
         for (let splitIndex = 0; splitIndex < splitStyleLen; splitIndex++) {
@@ -476,6 +478,7 @@ window.Pod_Styler = window.Pod_Styler || {
         return splitStyle;
     },
 
+    // transforms shorthand to longhand
     transform(styles, depth = 0) {
         let newStyles = styles;
 
@@ -507,10 +510,10 @@ window.Pod_Styler = window.Pod_Styler || {
                         const splitStyleLen = splitStyle.length;
 
                         if (splitStyleLen === 1) {
-                            splitStyle.unshift(Pod_Vars.get('border.width'));
-                            splitStyle.push(Pod_Vars.get('border.color'));
+                            splitStyle.unshift(window.Pod_Vars.get('border.width'));
+                            splitStyle.push(window.Pod_Vars.get('border.color'));
                         } else if (splitStyleLen === 2) {
-                            splitStyle.push(Pod_Vars.get('border.color'));
+                            splitStyle.push(window.Pod_Vars.get('border.color'));
                         }
 
                         newStyles = this.transformKeys(newStyles, key, splitStyle, ['Width', 'Style', 'Color']);
@@ -538,15 +541,57 @@ window.Pod_Styler = window.Pod_Styler || {
 
                         newStyles = this.transformKeys(newStyles, key, splitStyle, ['Grow', 'Shrink', 'Basis']);
                     } else if (key === 'transition') {
-                        const splitStyle = this.splitStyle(newStyles[key]);
-                        const splitStyleLen = splitStyle.length;
+                        const commaSplit = this.splitStyle(newStyles[key], /,/);
+                        const commaSplitLen = commaSplit.length;
+                        const transitionProperty = [];
+                        const transitionDuration = [];
+                        const transitionTiming = [];
+                        const transitionDelay = [];
 
-                        if (splitStyleLen === 1) {
-                            newStyles.transitionDuration = splitStyle[0];
-                            delete newStyles.transition;
-                        } else {
-                            newStyles = this.transformKeys(newStyles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
+                        for (let commaIndex = 0; commaIndex < commaSplitLen; commaIndex++) {
+                            const transitionSplit = this.splitStyle(commaSplit[commaIndex]);
+                            const transitionSplitLen = transitionSplit.length;
+
+                            if (transitionSplitLen === 1) {
+                                transitionProperty.push('all');
+                                transitionDuration.push(transitionSplit[0]);
+                                transitionTiming.push('linear');
+                                transitionDelay.push('0');
+                            } else if (transitionSplitLen === 2) {
+                                transitionProperty.push(transitionSplit[0]);
+                                transitionDuration.push(transitionSplit[1]);
+                                transitionTiming.push('linear');
+                                transitionDelay.push('0');
+                            } else if (transitionSplitLen === 3) {
+                                transitionProperty.push(transitionSplit[0]);
+                                transitionDuration.push(transitionSplit[1]);
+                                transitionTiming.push(transitionSplit[2]);
+                                transitionDelay.push('0');
+                            } else if (transitionSplitLen === 4) {
+                                transitionProperty.push(transitionSplit[0]);
+                                transitionDuration.push(transitionSplit[1]);
+                                transitionTiming.push(transitionSplit[2]);
+                                transitionDelay.push(transitionSplit[3]);
+                            }
                         }
+
+                        const splitStyle = [];
+
+                        for (let commaIndex = 0; commaIndex < commaSplitLen; commaIndex++) {
+                            if (splitStyle.length === 0) {
+                                splitStyle.push(transitionProperty[commaIndex]);
+                                splitStyle.push(transitionDuration[commaIndex]);
+                                splitStyle.push(transitionTiming[commaIndex]);
+                                splitStyle.push(transitionDelay[commaIndex]);
+                            } else {
+                                splitStyle[0] = `${splitStyle[0]}, ${transitionProperty[commaIndex]}`;
+                                splitStyle[1] = `${splitStyle[1]}, ${transitionDuration[commaIndex]}`;
+                                splitStyle[2] = `${splitStyle[2]}, ${transitionTiming[commaIndex]}`;
+                                splitStyle[3] = `${splitStyle[3]}, ${transitionDelay[commaIndex]}`;
+                            }
+                        }
+
+                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
                     } else if (key === 'listStyle') {
                         const splitStyle = this.splitStyle(newStyles[key]);
 
