@@ -38,7 +38,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     onClick() {
         if (/#/g.test(this.props.to)) {
-            const elem = document.querySelector(this.props.to.replace('http://localhost:3002', ''));
+            const elem = document.querySelector(this.props.to.replace(/.+#/, '#'));
 
 
             const elemRectInit = elem.getBoundingClientRect();
