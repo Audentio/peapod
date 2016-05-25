@@ -5,7 +5,7 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class ModalExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
     render() {
         return (
             <div>
@@ -68,4 +68,4 @@ module.exports = class ModalExample extends React.Component {
         );
     }
 
-}
+};

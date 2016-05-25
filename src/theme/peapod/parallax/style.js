@@ -2,9 +2,9 @@ import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
     var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    front = sheet.addPart('front'),
-    back = sheet.addPart('back');
+        main = sheet.addMain(),
+        front = sheet.addPart('front'),
+        back = sheet.addPart('back');
 
     // Conditions
     // Variables
@@ -19,13 +19,15 @@ module.exports = function (sheetName) {
             width: '$parallax.width',
             overflow: 'hidden',
             position: 'relative',
+            zIndex: '$zIndex.level0',
         },
     });
     front.addSelector({
         common: {
-            height: 'calc( ' + Pod_Vars.get('parallax.height') + ' * 2)',
+            height: `calc( ${Pod_Vars.get('parallax.height')} * 2)`,
             width: '$parallax.width',
             position: 'absolute',
+            zIndex: '$zIndex.level0',
             top: 0, left: 0,
             transform: '',
             willChange: 'transform',
@@ -36,6 +38,7 @@ module.exports = function (sheetName) {
             height: 'calc( ' + Pod_Vars.get('parallax.height') + ' * 2)',
             width: '$parallax.width',
             position: 'absolute',
+            zIndex: '$zIndex.level0',
             top: 0, left: 0,
             transform: '',
             willChange: 'transform',

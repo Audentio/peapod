@@ -4,28 +4,13 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
+import Pod from 'utility/components.js';
 
-
-/**
-* Template component
-*
-* @element Pod_modal
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
-
-    constructor() {
-        super();
-        // this.state = {
-        //     hidden: false
-        // };
-    }
 
     static defaultProps = {
         overlay: true,
@@ -34,19 +19,17 @@ module.exports = componentName => class Pod_Component extends React.Component {
     render() {
         const style = Pod_Styler.getStyle(this);
 
-        // var html = !this.state.hidden ? () : (<div />);
-
         const modalBox = (
             <div style={style.main}>
                 {this.props.children}
+                hahaha
             </div>
         );
 
-        return (this.props.overlay) ?  (
-            <Pod.overlay>
+        return (this.props.overlay) ? (
+            <Pod.Overlay>
                 {modalBox}
-            </Pod.overlay>
-        ) : modalBox
-
+            </Pod.Overlay>
+        ) : modalBox;
     }
 };

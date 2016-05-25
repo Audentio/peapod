@@ -18,7 +18,7 @@ module.exports = function (sheetName) {
         paddingTop: '$gutter.internal',
         paddingBottom: '$gutter.internal',
         borderRadius: '$border.radius.small',
-        zIndex: 3,
+        zIndex: '$zIndex.level6',
     });
 
     main.addSelector({
@@ -61,6 +61,8 @@ module.exports = function (sheetName) {
     trigger.addSelector({
         common: {
             display: 'inline-block',
+            zIndex: '$menu.zIndex',
+            position: 'relative',
         },
     }).addSelector({
         condition: ['level'],

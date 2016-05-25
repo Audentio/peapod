@@ -2,14 +2,14 @@ import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
     var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+        main = sheet.addMain();
 
     // Conditions
     // Variables
     main.addSelector({
         common: {
             position: 'static',
-            zIndex: '998',
+            zIndex: '$zIndex.level5',
             // transform: 'translate3d(0, 0, 0)'
             willChange: 'position',
         },

@@ -475,6 +475,20 @@ const globalVars = {
             maxWidth: 1200,
         },
 
+        zIndex: {
+            level0: 1,
+            level1: 1000,
+            level2: 2000,
+            level3: 3000,
+            level4: 4000,
+            level5: 5000,
+            level6: 6000,
+            level7: 7000,
+            level8: 8000,
+            level9: 9000,
+            level10: 10000,
+        },
+
     },
 };
 

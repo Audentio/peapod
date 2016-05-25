@@ -50,7 +50,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const alwaysFixed = this.origionalPosition === 0 || this.props.alwaysFixed;
 
         this.state = {
-            position: 'static',
+            position: 'relative',
             origionalHeight,
             width: '100%',
             alwaysFixed,
@@ -73,7 +73,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const doc = document.documentElement;
         const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-        const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'static';
+        const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'relative';
 
         let containerWidth = '100%';
 
