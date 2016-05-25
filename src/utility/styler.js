@@ -556,17 +556,17 @@ window.Pod_Styler = window.Pod_Styler || {
                                 transitionProperty.push('all');
                                 transitionDuration.push(transitionSplit[0]);
                                 transitionTiming.push('linear');
-                                transitionDelay.push('0');
+                                transitionDelay.push('0s');
                             } else if (transitionSplitLen === 2) {
                                 transitionProperty.push(transitionSplit[0]);
                                 transitionDuration.push(transitionSplit[1]);
                                 transitionTiming.push('linear');
-                                transitionDelay.push('0');
+                                transitionDelay.push('0s');
                             } else if (transitionSplitLen === 3) {
                                 transitionProperty.push(transitionSplit[0]);
                                 transitionDuration.push(transitionSplit[1]);
                                 transitionTiming.push(transitionSplit[2]);
-                                transitionDelay.push('0');
+                                transitionDelay.push('0s');
                             } else if (transitionSplitLen === 4) {
                                 transitionProperty.push(transitionSplit[0]);
                                 transitionDuration.push(transitionSplit[1]);
