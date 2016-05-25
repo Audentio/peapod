@@ -243,7 +243,6 @@ module.exports = function (sheetName) {
         },
     });
     for (let index in devices.devices) {
-        console.info(index)
         const device = devices.devices[index];
         const deviceindex = index;
 
