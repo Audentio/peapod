@@ -17,86 +17,84 @@ import Logger from 'utility/logger.js';
 * @param {string} [ID] - Unique identifier for persistent state storage
 *
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        constructor(props, context) {
-            super(props, context);
+    constructor(props, context) {
+        super(props, context);
 
-            this.state = {
-                dismissed: this.isDismissed(),
-            };
+        this.state = {
+            dismissed: this.isDismissed(),
+        };
+    }
+
+    static propTypes = {
+        dismissable: PropTypes.bool,
+        id: PropTypes.string,
+        title: PropTypes.string,
+        children: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.element,
+            PropTypes.node,
+        ]),
+    }
+
+    static defaultProps = {
+        styler: {
+            kind: 'general',
+        },
+    }
+
+    render() {
+        const style = Pod_Styler.getStyle(this);
+
+        return (
+            <div style={style.main} id={this.props.id}>
+                {!this.state.dismissed &&
+
+                    <div style={style.wrapper}>
+
+                        {this.props.title && <strong style={style.title}>{this.props.title}</strong>}
+
+                        <span style={style.message}>
+                            {this.props.children}
+                        </span>
+                        {this.props.dismissable &&
+                            <Icon onClick={this.dismiss} styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon>
+                        }
+                    </div>
+                }
+            </div>
+        );
+    }
+
+    // Check if user dismissed the notification already
+    isDismissed() {
+        const { id, dismissable } = this.props;
+        const persistentState = localStorage[`Pod_notification_${id}_hidden`];
+
+        if (dismissable && persistentState && persistentState === 'true') {
+            return true;
         }
 
-        static propTypes = {
-            dismissable: PropTypes.bool,
-            id: PropTypes.string,
-            title: PropTypes.string,
-            children: PropTypes.oneOfType([
-                PropTypes.string,
-                PropTypes.element,
-                PropTypes.node,
-            ]),
+        return false;
+    }
+
+    dismiss() {
+        this.setState({ dismissed: true });
+
+        // set persistent state (localStorage)
+        localStorage[`Pod_notification_${this.props.id}_hidden`] = true;
+    }
+
+    componentWillMount() {
+        if (this.props.dismissable && this.props.id === undefined) {
+            Logger.warn('Pod_notification: ID not supplied for dismissable notification. State will not be persistent');
+            Logger.trace();
+            return;
         }
-
-        static defaultProps = {
-            styler: {
-                kind: 'general',
-            },
-        }
-
-        render() {
-            const style = Pod_Styler.getStyle(this);
-
-            return (
-                <div style={style.main} id={this.props.id}>
-                    {!this.state.dismissed &&
-
-                        <div style={style.wrapper}>
-
-                            {this.props.title && <strong style={style.title}>{this.props.title}</strong>}
-
-                            <span style={style.message}>
-                                {this.props.children}
-                            </span>
-                            {this.props.dismissable &&
-                                <Icon onClick={this.dismiss} styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon>
-                            }
-                        </div>
-                    }
-                </div>
-            );
-        }
-
-        // Check if user dismissed the notification already
-        isDismissed() {
-            const { id, dismissable } = this.props;
-            const persistentState = localStorage[`Pod_notification_${id}_hidden`];
-
-            if (dismissable && persistentState && persistentState === 'true') {
-                return true;
-            }
-
-            return false;
-        }
-
-        dismiss() {
-            this.setState({ dismissed: true });
-
-            // set persistent state (localStorage)
-            localStorage[`Pod_notification_${this.props.id}_hidden`] = true;
-        }
-
-        componentWillMount() {
-            if (this.props.dismissable && this.props.id === undefined) {
-                Logger.warn('Pod_notification: ID not supplied for dismissable notification. State will not be persistent');
-                Logger.trace();
-                return;
-            }
-        }
+    }
 
 
-    };
 };

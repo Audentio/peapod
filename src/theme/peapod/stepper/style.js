@@ -5,6 +5,8 @@ module.exports = function (sheetName) {
     const main = sheet.addMain();
     const steps = sheet.addPart('steps');
     const progress = sheet.addPart('progress');
+    const actionBar = sheet.addPart('actionBar');
+    const animate = sheet.addPart('animate');
 
     const stepLine = sheet.addPart('stepLine');
 
@@ -16,6 +18,12 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             width: '100%',
+        },
+    });
+
+    animate.addSelector({
+        common: {
+            transition: 'max-height .3s',
         },
     });
 
@@ -51,6 +59,14 @@ module.exports = function (sheetName) {
             background: '#F5F5F5',
             position: 'absolute',
             zIndex: '1',
+        },
+    });
+
+    actionBar.addSelector({
+        common: {
+            paddingLeft: '$gutter.extrasmall',
+            paddingRight: '$gutter.extrasmall',
+            paddingBottom: '$gutter.internal',
         },
     });
 

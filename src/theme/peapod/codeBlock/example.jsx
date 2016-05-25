@@ -1,5 +1,6 @@
 import React from 'react';
 import Pod from 'utility/components.js';
+import PureRender from 'utility/pureRender.js';
 import Pod_Helper from 'utility/helper.js'; // eslint-disable-line
 
 const codeExample__javascript =
@@ -93,6 +94,8 @@ const codeExample__jsx =
 </Pod.ContentWrap>`;
 
 module.exports = class CodeBlockExample extends React.Component {
+
+	shouldComponentUpdate = PureRender;
     render() {
         return (
             <Pod.ContentWrap>

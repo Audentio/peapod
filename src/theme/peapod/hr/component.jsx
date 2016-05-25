@@ -13,17 +13,15 @@ import Pod_Styler from 'utility/styler.js';
 * @element Pod_hr
 *
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        render() {
-            const style = Pod_Styler.getStyle(this);
+    render() {
+        const style = Pod_Styler.getStyle(this);
 
-            return (
-                <hr style={style.main} />
-            );
-        }
-    };
+        return (
+            <hr style={style.main} />
+        );
+    }
 };

@@ -12,17 +12,15 @@ import { Input } from 'utility/components.js';
 * Textarea description
 *
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
+    static displayName = componentName;
 
-        render() {
-            const style = Pod_Styler.getStyle(this);
+    render() {
+        const style = Pod_Styler.getStyle(this);
 
-            return (
-                <Input {...this.props} style={style.main} type="textarea" />
-            );
-        }
-    };
+        return (
+            <Input {...this.props} style={style.main} type="textarea" />
+        );
+    }
 };

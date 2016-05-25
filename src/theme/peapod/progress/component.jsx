@@ -13,41 +13,40 @@ import Pod_Styler from 'utility/styler.js';
 * @param {number} [vaulue=-1] - Progress value. Negative values render indeterminate progress
 * @param {string} [max=100] - Max value. Default is 100 so `value` is basically a percentage unless max is changed
 */
-module.exports = function (componentName) {
-    return class Pod_Component extends React.Component {
+module.exports = componentName => class Pod_Component extends React.Component {
 
-        static displayName = componentName;
-        constructor(props, context) {
-            super(props, context);
-            this.getScale = this.getScale.bind(this);
-        }
 
-        static propTypes = {
-            value: React.PropTypes.number,
-            max: React.PropTypes.number,
-        }
+    static displayName = componentName;
+    constructor(props, context) {
+        super(props, context);
+        this.getScale = this.getScale.bind(this);
+    }
 
-        static defaultProps = {
-            value: -1,
-            max: 100,
-        }
+    static propTypes = {
+        value: React.PropTypes.number,
+        max: React.PropTypes.number,
+    }
 
-        getScale() {
-            const progress = (this.props.value < 0) ? 0 : this.props.value;
-            const scale = progress / this.props.max;
-            return {
-                transform: `scaleX(${scale})`,
-            };
-        }
+    static defaultProps = {
+        value: -1,
+        max: 100,
+    }
 
-        render() {
-            const style = Pod_Styler.getStyle(this)
+    getScale() {
+        const progress = (this.props.value < 0) ? 0 : this.props.value;
+        const scale = progress / this.props.max;
+        return {
+            transform: `scaleX(${scale})`,
+        };
+    }
 
-            return (
-                <div style={style.main}>
-                    <div style={[style.progress, this.getScale()]}></div>
-                </div>
-            )
-        }
-    };
+    render() {
+        const style = Pod_Styler.getStyle(this)
+
+        return (
+            <div style={style.main}>
+                <div style={[style.progress, this.getScale()]}></div>
+            </div>
+        )
+    }
 };

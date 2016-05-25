@@ -357,8 +357,8 @@ const globalVars = {
         color: {
             primary: {
                 base: '$palette.blue400',
-                hover: '#7ACDBD',
-                active: '#479A8A',
+                hover: '$palette.blue300',
+                active: '$palette.blue700',
             },
             secondary: {
                 base: '#00ACDB',
@@ -366,9 +366,9 @@ const globalVars = {
                 active: '#0089af',
             },
             general: {
-                base: '$palette.blue400',
-                hover: '$palette.grey100',
-                active: '$palette.grey200',
+                base: '$palette.grey400',
+                hover: '$palette.grey300',
+                active: '$palette.grey700',
             },
             warning: {
                 base: '$palette.yellow500',
