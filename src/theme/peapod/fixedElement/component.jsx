@@ -9,6 +9,8 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
+import { connect } from 'react-redux';
+import { addFixed } from '../../../../examples/actions';
 
 /**
 * Template component
@@ -29,12 +31,18 @@ module.exports = componentName => class Pod_Component extends React.Component {
         onScroll: React.PropTypes.bool,
         containerWidth: React.PropTypes.bool,
         alwaysFixed: React.PropTypes.bool,
+        addToScroll: React.PropTypes.bool,
         children: React.PropTypes.any,
     }
 
     static defaultProps = {
         onScroll: true,
         containerWidth: false,
+        addToScroll: false,
+    }
+
+    static contextTypes = {
+        store: React.PropTypes.object,
     }
 
     shouldComponentUpdate() {
@@ -63,6 +71,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
 
         window.addEventListener('resize', this.onScroll);
+
+        const { store } = this.context;
+        if (this.props.addToScroll) {
+            store.dispatch(addFixed(this.origionalPosition, origionalHeight));
+        }
     }
 
     onScroll() {
@@ -110,9 +123,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
             );
         }
         return (
-            <div style={style.main}>
-                {this.props.children}
-            </div>
-        );
+                <div style={style.main}>
+                    {this.props.children}
+                </div>
+            );
     }
 };

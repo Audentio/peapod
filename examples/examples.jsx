@@ -10,14 +10,24 @@ import TusharDev from './pages/tusharDev.jsx';
 
 import Demo from './pages/demo.jsx';
 
-render((
-    <Router history={browserHistory}>
-        <Route path="/" component={Sections} />
-        <Route path="/damion" component={DamionDev} />
-        <Route path="/kyler" component={KylerDev} />
-        <Route path="/tushar" component={TusharDev} />
-        <Route path="/demo" component={Demo} />
 
-        <Route path="/:componentName" component={Sections} />
-    </Router>
+import { createStore } from 'redux';
+import { connect, Provider } from 'react-redux';
+import fixedElems from './reducers';
+import { addFixed } from './actions';
+
+const store = createStore(fixedElems);
+
+render((
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/" component={Sections} />
+            <Route path="/damion" component={DamionDev} />
+            <Route path="/kyler" component={KylerDev} />
+            <Route path="/tushar" component={TusharDev} />
+            <Route path="/demo" component={Demo} />
+
+            <Route path="/:componentName" component={Sections} />
+        </Router>
+    </Provider>
 ), document.getElementById('mainContainer'));

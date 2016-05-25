@@ -39,7 +39,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         if (!this.props.skippable) {
             return false;
         }
-        // console.log(active);
 
         // const thisstep = this.refs[`stepperStep${active}`];
         // if (thisstep) {
@@ -118,7 +117,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const children = React.Children.map(this.props.children, child => {
             const hidden = (this.props.singleForm && i !== this.state.active);
             const index = i;
-            console.log(i, 'hello');
             const newChild = React.cloneElement(child, {
                 hidden,
                 index,
@@ -134,7 +132,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 {/* should not be inline styles */}
                 <div style={{ position: 'relative', background: '#fff', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
                     <div style={style.progress}></div>
-                    
+
                     <div style={style.steps}>
                         {steps}
                     </div>
