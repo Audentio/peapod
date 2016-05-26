@@ -6,6 +6,7 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:3002',
         'webpack/hot/only-dev-server',
+        'react-hot-loader/patch',
         './examples/examples.jsx',
     ],
 
@@ -40,7 +41,7 @@ module.exports = {
                 loaders: ['json-loader'],
             }, {
                 test: /\.jsx?$/,
-                loaders: ['react-hot', 'babel'],
+                loaders: ['babel'],
                 include: [
                     path.join(__dirname, 'src'),
                     path.join(__dirname, 'examples'),

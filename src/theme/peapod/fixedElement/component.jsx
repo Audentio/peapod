@@ -67,25 +67,27 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     onScroll() {
         const element = this.fixedElem;
-        const elemRect = element.getBoundingClientRect();
+        if (typeof(element) !== 'undefined' && element !== null) {
+            const elemRect = element.getBoundingClientRect();
 
-        this.origionalPosition = elemRect.top + window.scrollY;
-        const doc = document.documentElement;
-        const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+            this.origionalPosition = elemRect.top + window.scrollY;
+            const doc = document.documentElement;
+            const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-        const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'static';
+            const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'static';
 
-        let containerWidth = '100%';
+            let containerWidth = '100%';
 
-        if (this.props.containerWidth && positionStyle === 'fixed') {
-            containerWidth = element.offsetWidth;
-        }
+            if (this.props.containerWidth && positionStyle === 'fixed') {
+                containerWidth = element.offsetWidth;
+            }
 
-        if (this.state.position !== positionStyle || this.state.width !== containerWidth) {
-            this.setState({
-                position: positionStyle,
-                width: containerWidth,
-            });
+            if (this.state.position !== positionStyle || this.state.width !== containerWidth) {
+                this.setState({
+                    position: positionStyle,
+                    width: containerWidth,
+                });
+            }
         }
     }
 
