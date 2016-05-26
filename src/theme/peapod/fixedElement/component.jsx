@@ -9,6 +9,8 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
+import { connect } from 'react-redux';
+import { addFixed } from '../../../../examples/actions';
 
 /**
 * Template component
@@ -29,12 +31,18 @@ module.exports = componentName => class Pod_Component extends React.Component {
         onScroll: React.PropTypes.bool,
         containerWidth: React.PropTypes.bool,
         alwaysFixed: React.PropTypes.bool,
+        addToScroll: React.PropTypes.bool,
         children: React.PropTypes.any,
     }
 
     static defaultProps = {
         onScroll: true,
         containerWidth: false,
+        addToScroll: false,
+    }
+
+    static contextTypes = {
+        store: React.PropTypes.object,
     }
 
     shouldComponentUpdate() {
@@ -50,7 +58,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const alwaysFixed = this.origionalPosition === 0 || this.props.alwaysFixed;
 
         this.state = {
-            position: 'static',
+            position: 'relative',
             origionalHeight,
             width: '100%',
             alwaysFixed,
@@ -63,6 +71,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
 
         window.addEventListener('resize', this.onScroll);
+
+        const { store } = this.context;
+        if (this.props.addToScroll) {
+            store.dispatch(addFixed(this.origionalPosition, origionalHeight));
+        }
     }
 
     onScroll() {
@@ -74,7 +87,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const doc = document.documentElement;
             const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-            const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'static';
+            const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'relative';
 
             let containerWidth = '100%';
 

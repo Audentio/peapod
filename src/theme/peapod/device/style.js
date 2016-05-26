@@ -21,7 +21,7 @@ module.exports = function (sheetName) {
     sheet.setValues(devices);
 
     // Set all variables for different devices
-    let getDeviceStyles = function (version, variant, deviceVals) {
+    const getDeviceStyles = function (version, variant, deviceVals) {
         let devicename;
         let deviceversion;
         let devicevariant;
@@ -50,24 +50,24 @@ module.exports = function (sheetName) {
         }).addSelector({
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
-                width(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                width(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return (version.width * scale) + 'px';
                 },
-                height(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                height(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return (version.height * scale) + 'px';
                 },
             },
         }).addSelector({
             condition: ['scale', 'horizontal', deviceversion, devicename].filter((e) => e),
             common: {
-                height(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                height(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return (version.width * scale) + 'px';
                 },
-                width(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                width(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return (version.height * scale) + 'px';
                 },
             },
@@ -75,7 +75,6 @@ module.exports = function (sheetName) {
         background.addSelector({
             condition: [devicevariant, deviceversion, devicename].filter((e) => e),
             common: {
-                position: 'relative',
                 backgroundSize: '100% 100%',
                 backgroundImage: variant,
                 width: version.width,
@@ -93,12 +92,12 @@ module.exports = function (sheetName) {
         }).addSelector({
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
-                width(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                width(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return (version.width * scale);
                 },
-                height(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                height(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return (version.height * scale) + 'px';
                 },
             },
@@ -125,40 +124,40 @@ module.exports = function (sheetName) {
         }).addSelector({
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
-                top(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                top(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return version.offset.top * scale;
                 },
-                right(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                right(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return version.offset.right * scale;
                 },
-                bottom(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                bottom(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return version.offset.bottom * scale;
                 },
-                left(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                left(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return version.offset.left * scale;
                 },
             },
         }).addSelector({
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
-                top(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                top(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return version.offset.left * scale;
                 },
-                right(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                right(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return version.offset.bottom * scale;
                 },
-                bottom(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                bottom(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return version.offset.right * scale;
                 },
-                left(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                left(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return version.offset.top * scale;
                 },
             },
@@ -173,8 +172,8 @@ module.exports = function (sheetName) {
         }).addSelector({
             condition: ['trueScaling', 'scale', deviceversion, devicename].filter((e) => e),
             common: {
-                transform(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                transform(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
                 },
             },
@@ -191,8 +190,8 @@ module.exports = function (sheetName) {
             common: {
                 width: version.viewport.height,
                 height: version.viewport.width,
-                transform(obj, scene) {
-                    const scale = parseInt(obj.props.scale);
+                transform(obj) {
+                    const scale = parseInt(obj.props.scale, 10);
                     return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
                 },
             },
@@ -207,11 +206,11 @@ module.exports = function (sheetName) {
     const getStandardVariant = getStandard.variants[standardVariant];
 
     // not used
-    const getStandardValues = {
-        name: standardDevice,
-        version: standardVersion,
-        variant: standardVariant,
-    };
+    // const getStandardValues = {
+    //     name: standardDevice,
+    //     version: standardVersion,
+    //     variant: standardVariant,
+    // };
 
     getDeviceStyles(getStandardVersion, getStandardVariant);
 
@@ -242,64 +241,57 @@ module.exports = function (sheetName) {
 
         },
     });
-    for (let index in devices.devices) {
-        const device = devices.devices[index];
-        const deviceindex = index;
+    for (const deviceindex in devices.devices) {
+        if (devices.devices[deviceindex]) {
+            const device = devices.devices[deviceindex];
 
-        sheet.addCondition('device' + deviceindex).addProp({ device: deviceindex });
+            sheet.addCondition('device' + deviceindex).addProp({ device: deviceindex });
 
-        const standardDeviceVersion = device.standard.version;
-        const standardDeviceVariant = device.standard.variant;
+            const standardDeviceVersion = device.standard.version;
+            const standardDeviceVariant = device.standard.variant;
 
-        const versions = devices.devices[deviceindex].versions;
-        const variants = devices.devices[deviceindex].variants;
+            const versions = devices.devices[deviceindex].versions;
+            const variants = devices.devices[deviceindex].variants;
 
-        const getDeviceStandardVersion = device.versions[standardDeviceVersion];
-        const getDeviceStandardVariant = device.variants[standardDeviceVariant];
+            const getDeviceStandardVersion = device.versions[standardDeviceVersion];
+            const getDeviceStandardVariant = device.variants[standardDeviceVariant];
 
-        getDeviceStyles(getDeviceStandardVersion, getDeviceStandardVariant, {
-            name: deviceindex,
-            version: undefined,
-            variant: undefined,
-        });
+            for (const versionindex in versions) {
+                if (versions[versionindex]) {
+                    sheet.addCondition('version' + versionindex).addProp({ version: versionindex });
 
-        for (let index in versions) {
-            var versionindex = index;
-            sheet.addCondition('version' + versionindex).addProp({ version: versionindex });
+                    getDeviceStyles(versions[versionindex], getDeviceStandardVariant, {
+                        name: deviceindex,
+                        version: versionindex,
+                        variant: undefined,
+                    });
 
-            getDeviceStyles(versions[versionindex], getDeviceStandardVariant, {
-                name: deviceindex,
-                version: versionindex,
-                variant: undefined,
-            });
+                    for (const variantindex in variants) {
+                        if (variants[variantindex]) {
+                            sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
 
-            for (let index in variants) {
-                var variantindex = index;
+                            getDeviceStyles(versions[versionindex], variants[variantindex], {
+                                name: deviceindex,
+                                version: versionindex,
+                                variant: variantindex,
+                            });
+                        }
+                    }
+                }
+            }
 
-                sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
+            for (const variantindex in variants) {
+                if (variants[variantindex]) {
+                    sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
 
-                getDeviceStyles(versions[versionindex], variants[variantindex], {
-                    name: deviceindex,
-                    version: versionindex,
-                    variant: variantindex,
-                });
-
+                    getDeviceStyles(getDeviceStandardVersion, variants[variantindex], {
+                        name: deviceindex,
+                        version: undefined,
+                        variant: variantindex,
+                    });
+                }
             }
         }
-
-        for (let index in variants) {
-            var variantindex = index;
-
-            sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
-
-            getDeviceStyles(getDeviceStandardVersion, variants[variantindex], {
-                name: deviceindex,
-                version: undefined,
-                variant: variantindex,
-            });
-
-        }
-
     }
 
     return sheet;

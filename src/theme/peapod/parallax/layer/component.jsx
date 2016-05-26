@@ -6,30 +6,25 @@
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import Pod from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    static defaultProps = {
-        overlay: true,
+    static propType = {
+        children: React.PropTypes.any,
+        count: React.PropTypes.number,
+        level: React.PropTypes.number,
     }
 
     render() {
         const style = Pod_Styler.getStyle(this);
 
-        const modalBox = (
+        return (
             <div style={style.main}>
                 {this.props.children}
-                hahaha
             </div>
         );
-
-        return (this.props.overlay) ? (
-            <Pod.Overlay>
-                {modalBox}
-            </Pod.Overlay>
-        ) : modalBox;
     }
+
 };

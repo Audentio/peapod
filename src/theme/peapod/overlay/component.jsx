@@ -4,18 +4,10 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
+import Pod from 'utility/components.js';
 
-
-/**
-* Template component
-*
-* @element Pod_modal
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
@@ -24,9 +16,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         var style = Pod_Styler.getStyle(this);
         return (
             <div style={style.main}>
-                <Pod.center>
+                <Pod.Center>
                     {this.props.children}
-                </Pod.center>
+                </Pod.Center>
             </div>
         );
 

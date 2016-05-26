@@ -84,7 +84,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             >
                 <div style={style.main}>
                     <div style={style.calendar}>
-                        <Card>
+                        <Card styler={{ style: style.card }}>
                             <Calendar
                                 date={this.state.day}
                                 month={this.state.month}

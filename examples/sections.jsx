@@ -12,9 +12,12 @@ const exampleList = [];
 const addComponent = function (key, i, type) {
     componentsOutput.push(<SectionComponent noName={noName} name={key} key={`Section ${type}${i}`} />);
 
+    const route = (window.location.pathname !== '/') ? '/' : '#';
+    // const reverse = (route === '/');
+
     exampleList.push(
         <Pod.List_Item key={key} styler={{ style: { height: 'auto', padding: '6px 16px' } }}>
-            <Pod.Button styler={{ kind: 'base', type: 'text', dialog: true, style: { textAlign: 'left' } }} href={`http://localhost:3002#${key}`}>{key}</Pod.Button>
+            <Pod.Button styler={{ kind: 'base', type: 'text', dialog: true, style: { textAlign: 'left' } }} href={`http://localhost:3002${route}${key}`}>{key}</Pod.Button>
             <Pod.Block_Right>
                 <Pod.Button styler={{ kind: 'base', dialog: true, type: 'text' }} href={`/${key}`}>
                     <Pod.Icon>launch</Pod.Icon>

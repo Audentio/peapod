@@ -7,6 +7,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import Pod_Styler from 'utility/styler.js';
+import { Anchor } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -74,9 +75,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         // Anchor tag <a> if href specified
         if (href) {
             return (
-                <a ref="button" href={href} style={style.main} onClick={this.onClickHandler}>
+                <Anchor ref="button" to={href} styler={{ style:style.main }} onClick={this.onClickHandler}>
                     {children || label} {ripple}
-                </a>
+                </Anchor>
             );
         }
 

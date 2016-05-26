@@ -4,18 +4,30 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class ParallaxExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     render() {
         return (
-            <Pod.Parallax
-                background={(
+            <Pod.Parallax>
+                <Pod.Parallax_Layer>
+                    <Pod.Center>
+                        <Pod.Heading style={{ style: { color: 'white' } }}>Parallax</Pod.Heading>
+                    </Pod.Center>
+                </Pod.Parallax_Layer>
+                <Pod.Parallax_Layer>
+                    <Pod.Center>
+                        <Pod.Heading style={{ style: { color: 'white' } }}>Parallax</Pod.Heading>
+                    </Pod.Center>
+                </Pod.Parallax_Layer>
+                <Pod.Parallax_Layer>
+                    <Pod.Center>
+                        <Pod.Heading style={{ style: { color: 'white' } }}>Parallax</Pod.Heading>
+                    </Pod.Center>
+                </Pod.Parallax_Layer>
+
+                <Pod.Parallax_Layer>
                     <div style={{ width: '100%', height: '100%', backgroundImage: 'url(assets/media/bg2.jpg)', backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
-                )}
-            >
-                <Pod.Center>
-                    <Pod.Heading style={{ style: { color: 'white' } }}>Parallax</Pod.Heading>
-                </Pod.Center>
+                </Pod.Parallax_Layer>
             </Pod.Parallax>
         );
     }

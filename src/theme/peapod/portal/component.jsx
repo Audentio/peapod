@@ -1,10 +1,10 @@
-import ReactDOM, {findDOMNode} from 'react-dom';
+import ReactDOM, { findDOMNode } from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-import {Icon, Grid} from 'utility/components.js';
+import { Icon, Grid } from 'utility/components.js';
 
 
 function isNodeInRoot(node, root) {
@@ -131,7 +131,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
         let left = trigger.offsetLeft;
         let top = trigger.offsetTop + trigger.offsetHeight;
 
-        if ((triggerPos.bottom + nodePos.height) > windowHeight) {
+
+        if (
+            (triggerPos.bottom + nodePos.height) > windowHeight &&
+            (windowHeight) > nodePos.height + trigger.offsetTop
+        ) {
             top = trigger.offsetTop - nodePos.height;
         }
 
@@ -154,12 +158,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
             const arrow = (this.props.noArrow === true) ? '' : <Icon styler={{ style: { fontSize: '$font.size.large' } }}>{arrowIcon}</Icon>;
 
-            return <div style={{ display: 'inline-block' }} onClick={this.openPortal.bind(this, this.props)}>
+            return (<div style={{ display: 'inline-block' }} onClick={this.openPortal.bind(this, this.props)}>
                 <Grid styler={{ alignItems: 'center' }}>
                     {this.props.trigger}
                     {arrow}
                 </Grid>
-            </div>;
+            </div>);
         }
         return <div>Specify a trigger...</div>;
     }
@@ -170,10 +174,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
             e.stopPropagation();
         }
         this.trigger = e.currentTarget;
-        this.setState({ active: true });
-        this.renderPortal(props);
-        if (this.props.onOpen) {
-            this.props.onOpen(this.node);
+        if (!this.state.active) {
+            this.setState({ active: true });
+            this.renderPortal(props);
+            if (this.props.onOpen) {
+                this.props.onOpen(this.node);
+            }
         }
     }
 
@@ -200,8 +206,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     handleOutsideMouseClick(e) {
-        if (!this.state.active) { return; }
-        if (isNodeInRoot(e.target, findDOMNode(this.portal)) || e.target.tagName === 'HTML') { return; }
+        const isTrigger = findDOMNode(this.trigger) === e.target.closest('div[style*="inline-block"]');
+        if (
+            !this.state.active ||
+            isTrigger ||
+            isNodeInRoot(e.target, findDOMNode(this.portal)) ||
+            e.target.tagName === 'HTML'
+        ) { return; }
         e.stopPropagation();
         this.closePortal();
     }

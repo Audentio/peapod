@@ -5,7 +5,7 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class GridExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
     render() {
         const imageStyle = { width: '200px', height: '200px' };
         const imageStyleSmall = { width: '100px', height: '100px' };
@@ -101,4 +101,4 @@ module.exports = class GridExample extends React.Component {
             </div>
         );
     }
-}
+};
