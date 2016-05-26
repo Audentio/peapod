@@ -55,9 +55,9 @@ export default class Sections extends React.Component {
 
         return (
             <div>
-                <Pod.Pane>
+                {/* <Pod.Pane> */}
                     <Pod.Grid>
-                        <Pod.Grid_Cell styler={{ style: { padding: '0px 20px 0px 0px' }, md: 12, lg: 3, xl: 2 }}>
+                        <Pod.Grid_Cell styler={{ style: { padding: '0px 20px 0px 0px', width: '25%'}, md: 12, lg: 3, xl: 2 }}>
                             <Pod.FixedElement containerWidth alwaysFixed>
                                 <Pod.Card styler={{ style: { width: '100%' } }}>
 
@@ -75,13 +75,13 @@ export default class Sections extends React.Component {
                                 </Pod.Card>
                             </Pod.FixedElement>
                         </Pod.Grid_Cell>
-                        <Pod.Grid_Cell styler={{ md: 12, lg: 9, xl: 10 }}>
-                            <Pod.Pane>
+                        <Pod.Grid_Cell styler={{ md: 12, lg: 9, xl: 10, style: { width: '75%' } }}>
+                            {/* <Pod.Pane> */}
                                 {examples}
-                            </Pod.Pane>
+                            {/* </Pod.Pane> */}
                         </Pod.Grid_Cell>
                     </Pod.Grid>
-                </Pod.Pane>
+                {/* <Pod.Pane> */}
             </div>
         );
     }
