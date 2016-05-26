@@ -11,9 +11,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         id: React.PropTypes.number,
         subtitle: React.PropTypes.string,
         validation: React.PropTypes.func,
+        onClick: React.PropTypes.func,
         active: React.PropTypes.bool,
         title: React.PropTypes.string,
-        onStepTitleClick: React.PropTypes.func,
     }
 
     render() {
@@ -40,14 +40,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 <div
                     key={`step-${key}`}
                     style={styler}
-                    onClick={() => this.props.onStepTitleClick(key)}
+                    onClick={() => {
+                        return !this.props.clickable || this.props.onClick(key);
+                    }}
                 >
                     {parseInt(key, 10) + 1}
                 </div>
                 <div style={style.stepTitle}>
                     {this.props.title}
-                    {optional}
                     {subtitle}
+                    {optional}
                 </div>
             </div>
         );

@@ -92,6 +92,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const stepCount = this.props.children.length;
 
         const steps = [];
+        let prevValid = true;
 
         for (let i = 0; i < stepCount; i++) {
             const thisChild = this.props.children[i];
@@ -99,7 +100,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const subtitle = thisChild.props.subtitle;
             const option = thisChild.props.option;
             const validation = thisChild.props.validation;
-
+            
             steps.push(
                 <Stepper_StepTitle
                     key={i}
@@ -111,11 +112,19 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     below={this.props.titleBelow}
                     active={i === this.state.active}
                     validation={validation}
+                    clickable={prevValid}
                 />
             );
+
             if ((i + 1) !== stepCount) {
                 steps.push(<div key={`line-${i}`} style={style.stepLine}></div>);
             }
+
+            if (thisChild.props.validation && thisChild.props.validation() === false) {
+                prevValid = false;
+            }
+            console.log(thisChild.props.validation);
+
         }
 
         let i = 0;

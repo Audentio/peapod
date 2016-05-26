@@ -16,6 +16,7 @@ module.exports = function (sheetName) {
     // Conditions
     sheet.addCondition('hasSubTitle').addFunction(instance => !instance.props.validation || instance.props.subtitle);
     sheet.addCondition('positionBelow').addProp({ below: true });
+    sheet.addCondition('notClickable').addProp({ clickable: false });
 
     // Variables
     sheet.setValues({});
@@ -89,6 +90,11 @@ module.exports = function (sheetName) {
             //     background: '$palette.blue400',
             //     cursor: 'pointer',
             // },
+        },
+    }).addSelector({
+        condition: ['notClickable'],
+        common: {
+            cursor: 'not-allowed',
         },
     });
     activestep.addSelector({
