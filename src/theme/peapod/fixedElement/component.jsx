@@ -87,11 +87,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const doc = document.documentElement;
             const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-<<<<<<< HEAD
-        const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'relative';
-=======
-            const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'static';
->>>>>>> Audentio/master
+            const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'relative';
 
             let containerWidth = '100%';
 
@@ -131,9 +127,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
             );
         }
         return (
-                <div style={style.main}>
-                    {this.props.children}
-                </div>
-            );
+            <div style={style.main}>
+                {this.props.children}
+            </div>
+        );
     }
 };

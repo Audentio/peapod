@@ -13,7 +13,6 @@ import TusharDev from './pages/tusharDev.jsx';
 
 import Demo from './pages/demo.jsx';
 
-<<<<<<< HEAD
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 import fixedElems from './reducers';
@@ -21,31 +20,25 @@ import { addFixed } from './actions';
 
 const store = createStore(fixedElems);
 
-Perf.start();
-render((
-    <Provider store={store}>
-=======
+
 const measurePerf = false;
 
 if (measurePerf) Perf.start();
 
 render((
-    <AppContainer>
->>>>>>> Audentio/master
-        <Router history={browserHistory}>
-            <Route path="/" component={Sections} />
-            <Route path="/damion" component={DamionDev} />
-            <Route path="/kyler" component={KylerDev} />
-            <Route path="/tushar" component={TusharDev} />
-            <Route path="/demo" component={Demo} />
+    <Provider store={store}>
+        <AppContainer>
+            <Router history={browserHistory}>
+                <Route path="/" component={Sections} />
+                <Route path="/damion" component={DamionDev} />
+                <Route path="/kyler" component={KylerDev} />
+                <Route path="/tushar" component={TusharDev} />
+                <Route path="/demo" component={Demo} />
 
-            <Route path="/:componentName" component={Sections} />
-        </Router>
-<<<<<<< HEAD
+                <Route path="/:componentName" component={Sections} />
+            </Router>
+        </AppContainer>
     </Provider>
-=======
-    </AppContainer>
->>>>>>> Audentio/master
 ), document.getElementById('mainContainer'));
 
 if (measurePerf) {
