@@ -21,26 +21,57 @@ module.exports = componentName => class Pod_Component extends React.Component {
         super();
 
         this.onScroll = this.onScroll.bind(this);
-        document.addEventListener('scroll', this.onScroll, false);
+        // document.addEventListener('scroll', this.onScroll, false);
     }
 
-    onScroll(event) {
-        const element = this.refs.Parallax;
-        if (typeof(element) !== 'undefined' && element !== null) {
-            const rect = element.getBoundingClientRect();
-            this.setState({ height: (window.innerHeight / 2) - rect.top });
+    componentWillMount() {
+        let level = 0;
+        let count = this.props.children.length;
+
+        this.children = React.Children.map(this.props.children, child => {
+            const newChild = React.cloneElement(child, { count, level });
+            level++;
+            return newChild;
+        });
+    }
+
+    onScroll(parallax, windowHeight) {
+        document.addEventListener('scroll', function () {
+            const rect = parallax.getBoundingClientRect();
+            const scroll = ((rect.top) - (windowHeight / 2));
+            parallax.scrollTop = -scroll;
+        });
+    }
+
+    componentDidMount() {
+        const parallax = this.refs.Parallax;
+        const windowHeight = window.innerHeight;
+
+        if (window.IntersectionObserver) {
+            let observing = false;
+            const _this = this;
+            const iObserver = new IntersectionObserver(function () {
+                if (observing) { return; }
+                observing = true;
+
+                _this.onScroll(parallax, windowHeight);
+
+            }, { threshold: [0.0] });
+            iObserver.observe(parallax);
+        } else {
+            this.onScroll(parallax, windowHeight);
         }
+        this.onScroll(parallax, windowHeight);
     }
 
     render() {
         const style = Pod_Styler.getStyle(this);
-        style.back['transform'] = 'translateY(-'+String(this.state.height * 0.5)+'px)';
-        style.front['transform'] = 'translateY(-'+String((this.state.height * 1))+'px)';
 
         return (
-            <div style={style.main} onScroll={this.onScroll} ref="Parallax">
-                <div style={style.back}>{this.props.background}</div>
-                <div style={style.front}>{this.props.children}</div>
+            <div style={style.main} ref="Parallax">
+                <div style={style.group}>
+                    {this.children}
+                </div>
             </div>
         );
     }

@@ -3,8 +3,8 @@ import { Sheet } from 'utility/stylesheet.js';
 module.exports = function (sheetName) {
     var sheet = new Sheet(sheetName),
         main = sheet.addMain(),
-        front = sheet.addPart('front'),
-        back = sheet.addPart('back');
+        group = sheet.addPart('group'),
+        spacer = sheet.addPart('spacer');
 
     // Conditions
     // Variables
@@ -15,33 +15,28 @@ module.exports = function (sheetName) {
 
     main.addSelector({
         common: {
-            height: '$parallax.height',
-            width: '$parallax.width',
+            height: '100vh',
+            background: '#ddd',
+            margin: '100vh 0',
             overflow: 'hidden',
+            WebkitPerspective: '300px',
+            perspective: '300px',
+            WebkitPerspectiveOriginX: '100%',
+            perspectiveOriginX: '100%',
+        },
+    });
+    group.addSelector({
+        common: {
             position: 'relative',
-            zIndex: '$zIndex.level0',
+            height: '100vh',
+            WebkitTransformStyle: 'preserve-3d',
+            transformStyle: 'preserve-3d',
         },
     });
-    front.addSelector({
+    spacer.addSelector({
         common: {
-            height: `calc( ${Pod_Vars.get('parallax.height')} * 2)`,
-            width: '$parallax.width',
-            position: 'absolute',
-            zIndex: '$zIndex.level0',
-            top: 0, left: 0,
-            transform: '',
-            willChange: 'transform',
-        },
-    });
-    back.addSelector({
-        common: {
-            height: 'calc( ' + Pod_Vars.get('parallax.height') + ' * 2)',
-            width: '$parallax.width',
-            position: 'absolute',
-            zIndex: '$zIndex.level0',
-            top: 0, left: 0,
-            transform: '',
-            willChange: 'transform',
+            width: '100%',
+            height: '50%',
         },
     });
 

@@ -4,28 +4,26 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
-import { Block } from 'utility/components.js';
+import Pod_Styler from 'utility/styler.js';
 
-/**
-* Block_Left component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
     static propType = {
         children: React.PropTypes.any,
+        count: React.PropTypes.number,
+        level: React.PropTypes.number,
     }
 
     render() {
+        const style = Pod_Styler.getStyle(this);
+
         return (
-            <Block {...this.props} align="left">
+            <div style={style.main}>
                 {this.props.children}
-            </Block>
+            </div>
         );
     }
 

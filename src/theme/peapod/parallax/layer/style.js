@@ -7,7 +7,9 @@ module.exports = function (sheetName) {
     // Conditions
     sheet.addCondition('fore').addProp({ level: 0 });
     sheet.addCondition('base').addProp({ level: 1 });
-    sheet.addCondition('belowBase').addProp({ level: ['>', 1] });
+    sheet.addCondition('belowBase').addFunction((instance) => {
+        return parseInt(instance.props.level, 10) > 1;
+    });
 
     // Variables
     sheet.setValues({});
@@ -19,6 +21,7 @@ module.exports = function (sheetName) {
             left: '0',
             right: '0',
             bottom: '0',
+            height: '200%',
             WebkitTransformOriginX: '100%',
             transformOriginX: '100%',
         },
@@ -26,19 +29,27 @@ module.exports = function (sheetName) {
         condition: ['fore'],
         common: {
             transform: 'translateZ(100px) scale(.6666666)',
-            zIndex: '5', // count - level
+            zIndex(obj) {
+                return (obj.props.count - obj.props.level) + 1;
+            },
         },
     }).addSelector({
         condition: ['base'],
         common: {
             transform: 'translateZ(0)',
-            zIndex: '4', // count - level
+            zIndex(obj) {
+                return (obj.props.count - obj.props.level) + 1;
+            },
         },
     }).addSelector({
         condition: ['belowBase'],
         common: {
-            transform: `translateZ(-${/* 300 * level */}) scale(${/* level */})`,
-            zIndex: '3', // count - level
+            transform(obj) {
+                return `translateZ(-${300 * (obj.props.level - 1)}px) scale(${obj.props.level})`;
+            },
+            zIndex(obj) {
+                return (obj.props.count - obj.props.level) + 1;
+            },
         },
     });
 
