@@ -100,7 +100,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const subtitle = thisChild.props.subtitle;
             const option = thisChild.props.option;
             const validation = thisChild.props.validation;
-            
+
             steps.push(
                 <Stepper_StepTitle
                     key={i}
@@ -123,8 +123,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
             if (thisChild.props.validation && thisChild.props.validation() === false) {
                 prevValid = false;
             }
-            console.log(thisChild.props.validation);
-
         }
 
         let i = 0;

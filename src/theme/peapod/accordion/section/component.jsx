@@ -8,11 +8,18 @@ import Pod_Styler from 'utility/styler.js';
 import { Card, Icon } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
-    
+
     static displayName = componentName;
 
     static propTypes = {
         children: React.PropTypes.any,
+        id: React.PropTypes.number,
+        subtitle: React.PropTypes.string,
+        title: React.PropTypes.oneOfType([
+            React.PropTypes.array,
+            React.PropTypes.string,
+        ]),
+        onTitleClick: React.PropTypes.func,
     }
 
     constructor() {
@@ -51,7 +58,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         if (subtitleProp) {
             subtitle = [];
             for (let i = 0; i < subtitleProp.length; i++) {
-                subtitle.push(<div style={style.subtitle}>{subtitleProp[i]}</div>);
+                subtitle.push(<div key={i} style={style.subtitle}>{subtitleProp[i]}</div>);
             }
         }
 

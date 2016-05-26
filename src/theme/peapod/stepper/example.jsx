@@ -20,7 +20,7 @@ module.exports = class StepperExample extends React.Component {
     render() {
         return (
             <Pod.Card styler={{ style: { width: '700px', display: 'block' } }}>
-                <Pod.Stepper skippable singleForm titleBelow actionBar={(<div></div>)}>
+                <Pod.Stepper skippable singleForm >
                     <Pod.Stepper_Step title="Apples" validation={() => true}>
                         <Pod.Input
                             type="email"
@@ -43,7 +43,7 @@ module.exports = class StepperExample extends React.Component {
                         </Pod.Paragraph>
                     </Pod.Stepper_Step>
 
-                    <Pod.Stepper_Step title="Bananas" subtitle="Bananannannanana">
+                    <Pod.Stepper_Step title="Bananas" subtitle="Bananannannanana" validation={() => true}>
                         <Pod.Paragraph>Card Number</Pod.Paragraph>
                         <Pod.Input label="Hey" placeholder="***************"></Pod.Input>
                     </Pod.Stepper_Step>

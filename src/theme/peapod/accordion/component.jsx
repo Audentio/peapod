@@ -13,6 +13,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static propTypes = {
         children: React.PropTypes.any,
+        vertical: React.PropTypes.bool,
     }
 
     constructor() {
@@ -47,7 +48,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     isLast={(i + 1) === thisChildren.length}
                     isFirst={(i) === 0}
                     vertical={this.props.vertical}
-                    />
+                />
             );
             i = i + 1;
             return html;

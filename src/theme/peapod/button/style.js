@@ -180,63 +180,65 @@ module.exports = function (sheetName) {
     });
 
 
-    for (let index in buttons) {
-        const conditionName = `kind${index.charAt(0).toUpperCase() + index.slice(1)}`;
+    for (const index in buttons) {
+        if (buttons[index]) {
+            const conditionName = `kind${index.charAt(0).toUpperCase() + index.slice(1)}`;
 
-        sheet.addCondition(conditionName).addStyler({ kind: index });
+            sheet.addCondition(conditionName).addStyler({ kind: index });
 
-        // button
-        main.addSelector({
-            condition: [conditionName],
-            common: {
-                backgroundColor: buttons[index].primary,
-                color: buttons[index].secondary,
-            },
-        }).addSelector({
-            condition: [conditionName, 'notDisabled'],
-            common: {
-                ':hover': {
-                    backgroundColor: buttons[index].hover.primary,
-                    color: buttons[index].hover.secondary,
+            // button
+            main.addSelector({
+                condition: [conditionName],
+                common: {
+                    backgroundColor: buttons[index].primary,
+                    color: buttons[index].secondary,
                 },
-            },
-        })
-        // text
-        .addSelector({
-            condition: ['text', conditionName],
-            common: {
-                backgroundColor: 'transparent',
-                color: buttons[index].primary,
-            },
-        }).addSelector({
-            condition: ['text', conditionName, 'notDisabled'],
-            common: {
-                ':hover': {
+            }).addSelector({
+                condition: [conditionName, 'notDisabled'],
+                common: {
+                    ':hover': {
+                        backgroundColor: buttons[index].hover.primary,
+                        color: buttons[index].hover.secondary,
+                    },
+                },
+            })
+            // text
+            .addSelector({
+                condition: ['text', conditionName],
+                common: {
                     backgroundColor: 'transparent',
-                    color: buttons[index].hover.primary,
+                    color: buttons[index].primary,
                 },
-            },
-        })
-        // bordered text
-        .addSelector({
-            condition: ['bordered', conditionName],
-            common: {
-                backgroundColor: 'transparent',
-                color: buttons[index].primary,
-                borderWidth: '2px',
-                borderStyle: 'solid',
-                borderColor: buttons[index].primary,
-            },
-        }).addSelector({
-            condition: ['bordered', conditionName, 'notDisabled'],
-            common: {
-                ':hover': {
+            }).addSelector({
+                condition: ['text', conditionName, 'notDisabled'],
+                common: {
+                    ':hover': {
+                        backgroundColor: 'transparent',
+                        color: buttons[index].hover.primary,
+                    },
+                },
+            })
+            // bordered text
+            .addSelector({
+                condition: ['bordered', conditionName],
+                common: {
                     backgroundColor: 'transparent',
-                    color: buttons[index].hover.primary,
-                    borderColor: buttons[index].hover.primary,
+                    color: buttons[index].primary,
+                    borderWidth: '2px',
+                    borderStyle: 'solid',
+                    borderColor: buttons[index].primary,
                 },
-            },
-        });
+            }).addSelector({
+                condition: ['bordered', conditionName, 'notDisabled'],
+                common: {
+                    ':hover': {
+                        backgroundColor: 'transparent',
+                        color: buttons[index].hover.primary,
+                        borderColor: buttons[index].hover.primary,
+                    },
+                },
+            });
+        }
     }
 
     rippleContainer.addSelector({
