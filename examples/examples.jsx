@@ -11,8 +11,6 @@ import TusharDev from './pages/tusharDev.jsx';
 
 import Demo from './pages/demo.jsx';
 
-<<<<<<< HEAD
-
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 import fixedElems from './reducers';
@@ -20,9 +18,7 @@ import { addFixed } from './actions';
 
 const store = createStore(fixedElems);
 
-=======
 Perf.start();
->>>>>>> Audentio/master
 render((
     <Provider store={store}>
         <Router history={browserHistory}>

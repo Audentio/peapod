@@ -253,22 +253,9 @@ module.exports = function (sheetName) {
             const versions = devices.devices[deviceindex].versions;
             const variants = devices.devices[deviceindex].variants;
 
-<<<<<<< HEAD
             const getDeviceStandardVersion = device.versions[standardDeviceVersion];
             const getDeviceStandardVariant = device.variants[standardDeviceVariant];
-=======
-        for (let index in versions) {
-            var versionindex = index;
-            sheet.addCondition('version' + versionindex).addProp({ version: versionindex });
->>>>>>> Audentio/master
 
-            getDeviceStyles(getDeviceStandardVersion, getDeviceStandardVariant, {
-                name: deviceindex,
-                version: undefined,
-                variant: undefined,
-            });
-
-<<<<<<< HEAD
             for (const versionindex in versions) {
                 if (versions[versionindex]) {
                     sheet.addCondition('version' + versionindex).addProp({ version: versionindex });
@@ -292,24 +279,6 @@ module.exports = function (sheetName) {
                     }
                 }
             }
-=======
-            for (let index in variants) {
-                var variantindex = index;
-
-                sheet.addCondition('variant' + variantindex).addProp({ variant: variantindex });
-
-                getDeviceStyles(versions[versionindex], variants[variantindex], {
-                    name: deviceindex,
-                    version: versionindex,
-                    variant: variantindex,
-                });
-
-            }
-        }
-
-        for (let index in variants) {
-            var variantindex = index;
->>>>>>> Audentio/master
 
             for (const variantindex in variants) {
                 if (variants[variantindex]) {
