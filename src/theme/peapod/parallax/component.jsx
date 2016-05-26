@@ -26,8 +26,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     onScroll(event) {
         const element = this.refs.Parallax;
-        const rect = element.getBoundingClientRect();
-        this.setState({ height: (window.innerHeight / 2) - rect.top });
+        if (typeof(element) !== 'undefined' && element !== null) {
+            const rect = element.getBoundingClientRect();
+            this.setState({ height: (window.innerHeight / 2) - rect.top });
+        }
     }
 
     render() {

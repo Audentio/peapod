@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
 import Perf from 'react-addons-perf';
 
+import { AppContainer } from 'react-hot-loader';
+
 import Sections from './sections.jsx';
 
 import DamionDev from './pages/damionDev.jsx';
@@ -11,6 +13,7 @@ import TusharDev from './pages/tusharDev.jsx';
 
 import Demo from './pages/demo.jsx';
 
+<<<<<<< HEAD
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 import fixedElems from './reducers';
@@ -21,6 +24,14 @@ const store = createStore(fixedElems);
 Perf.start();
 render((
     <Provider store={store}>
+=======
+const measurePerf = false;
+
+if (measurePerf) Perf.start();
+
+render((
+    <AppContainer>
+>>>>>>> Audentio/master
         <Router history={browserHistory}>
             <Route path="/" component={Sections} />
             <Route path="/damion" component={DamionDev} />
@@ -30,9 +41,21 @@ render((
 
             <Route path="/:componentName" component={Sections} />
         </Router>
+<<<<<<< HEAD
     </Provider>
+=======
+    </AppContainer>
+>>>>>>> Audentio/master
 ), document.getElementById('mainContainer'));
-Perf.stop();
-Perf.printWasted();
-Perf.printInclusive();
-Perf.printExclusive();
+
+if (measurePerf) {
+    Perf.stop();
+    Perf.printWasted();
+    Perf.printInclusive();
+    Perf.printExclusive();
+}
+
+
+if (module.hot) {
+    module.hot.accept();
+}
