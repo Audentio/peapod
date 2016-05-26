@@ -215,7 +215,6 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        console.log('render!!')
         const style = Pod_Styler.getStyle(this);
         const { primitive, stateful, name, type } = this.props;
 
