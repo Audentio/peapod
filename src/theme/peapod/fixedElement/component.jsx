@@ -77,14 +77,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         let containerWidth = '100%';
 
-        if (this.props.containerWidth) {
+        if (this.props.containerWidth && positionStyle === 'fixed') {
             containerWidth = element.offsetWidth;
         }
 
-        this.setState({
-            position: positionStyle,
-            width: containerWidth,
-        });
+        if (this.state.position !== positionStyle || this.state.width !== containerWidth) {
+            this.setState({
+                position: positionStyle,
+                width: containerWidth,
+            });
+        }
     }
 
     render() {
