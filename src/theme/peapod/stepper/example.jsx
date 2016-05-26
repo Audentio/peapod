@@ -4,7 +4,7 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class StepperExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     constructor() {
         super();
@@ -20,7 +20,7 @@ module.exports = class StepperExample extends React.Component {
     render() {
         return (
             <Pod.Card styler={{ style: { width: '700px', display: 'block' } }}>
-                <Pod.Stepper skippable singleForm>
+                <Pod.Stepper skippable singleForm titleBelow actionBar={(<div></div>)}>
                     <Pod.Stepper_Step title="Apples" validation={() => true}>
                         <Pod.Input
                             type="email"

@@ -15,6 +15,7 @@ module.exports = function (sheetName) {
 
     // Conditions
     sheet.addCondition('hasSubTitle').addFunction(instance => !instance.props.validation || instance.props.subtitle);
+    sheet.addCondition('positionBelow').addProp({ below: true });
 
     // Variables
     sheet.setValues({});
@@ -56,6 +57,13 @@ module.exports = function (sheetName) {
             padding: '0 8px 0 0',
             display: 'inline-block',
             textAlign: 'left',
+        },
+    }).addSelector({
+        condition: ['positionBelow'],
+        common: {
+            padding: '5px 0 5px 0',
+            display: 'block',
+            textAlign: 'center',
         },
     });
 
