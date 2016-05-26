@@ -29,6 +29,8 @@ module.exports = class GridExample extends React.Component {
             },
         };
 
+        return (<div>Temporarily Disabled due to Performance</div>);
+
         return (
             <div>
                 <Pane>

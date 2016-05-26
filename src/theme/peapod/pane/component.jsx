@@ -90,6 +90,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     widthGet() {
         const element = this.refs.pane;
         if (typeof(element) !== 'undefined') {
+            // return window.innerWidth; // testing performance without element queries
             return element.offsetWidth;
         }
         return -1;
