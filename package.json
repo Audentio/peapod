@@ -6,6 +6,7 @@
   "scripts": {
     "install-cli": "cd peapod-cli | npm link",
     "examples-dev": "node devServer.js",
+    "examples": "NODE_ENV=production | node devServer.js",
     "doc": "node docServer.js",
     "lint": "eslint --color --format compact src",
     "lint-fix": "eslint --fix src",
@@ -36,6 +37,7 @@
     "eslint-plugin-react": "^5.1.1",
     "fs": "0.0.2",
     "json": "^9.0.3",
+    "react-addons-perf": "^15.1.0",
     "react-addons-shallow-compare": "^15.0.2",
     "react-hot-loader": "^1.3.0",
     "redux-devtools": "^3.3.1",
