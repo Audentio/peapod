@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
+import Perf from 'react-addons-perf';
 
 import Sections from './sections.jsx';
 
@@ -10,6 +11,7 @@ import TusharDev from './pages/tusharDev.jsx';
 
 import Demo from './pages/demo.jsx';
 
+Perf.start();
 render((
     <Router history={browserHistory}>
         <Route path="/" component={Sections} />
@@ -21,3 +23,7 @@ render((
         <Route path="/:componentName" component={Sections} />
     </Router>
 ), document.getElementById('mainContainer'));
+Perf.stop();
+Perf.printWasted();
+Perf.printInclusive();
+Perf.printExclusive();
