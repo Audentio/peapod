@@ -84,7 +84,7 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
     for (let componentNameIndex = 0, componentNameLen = componentNameKeys.length; componentNameIndex < componentNameLen; componentNameIndex++) {
         const componentName = componentNameKeys[componentNameIndex];
         let component = req(componentNames[componentName]);
-        if (typeof(component) === 'function' && !component.hasOwnProperty('arguments')) {
+        if (typeof(component) === 'function') {
             component = component(componentName);
             if (typeof(component) === 'undefined') {
                 throw new Error(`${componentName} is not returning or is returning undefined`);
