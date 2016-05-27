@@ -21,7 +21,7 @@ export default class DamionDev extends React.Component {
             console.log(elem, crap);
             this.setState({ loaded: crap[0].intersectionRatio > 0 });
 
-        }, { threshold: [0], rootMargin: '200% 0%' });
+        }, { threshold: [0], rootMargin: '10% 0%' });
         iObserver.observe(elem);
     }
 
