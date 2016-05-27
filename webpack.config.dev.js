@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     devtool: 'eval-cheap-module-source-map',
     entry: [
-        'webpack-dev-server/client?http://localhost:3002',
+        'webpack-dev-server/client?http://0.0.0.0:3002',
         'webpack/hot/only-dev-server',
         'react-hot-loader/patch',
         './examples/examples.jsx',

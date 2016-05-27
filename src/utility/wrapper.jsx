@@ -1,33 +1,24 @@
 import radium from 'radium';
-import React, { Component } from 'react';
+import React from 'react';
 import Lazy from 'theme/peapod/lazy/component.jsx';
 
-const enhance = ComposedComponent => class extends Component {
-    constructor(...args) {
-        super(...args);
-        this.state = this.state || {};
+const Pod_Enhance = function wrap(NewComponent) {
+    NewComponent = radium(NewComponent);
+
+    NewComponent.contextTypes._podPaneWidth = React.PropTypes.number; // add the pane width to the context
+
+    class Enhancer extends NewComponent {
+        static displayName = NewComponent.displayName;
+
+        render() {
+            if (this.props.lazy) {
+                return <Lazy>{super.render()}</Lazy>;
+            }
+            return super.render();
+        }
     }
 
-    static displayName = `${ComposedComponent.displayName}_Wrapper`;
-
-    componentDidMount() {
-        ComposedComponent.contextTypes = {
-            _podPaneWidth: React.PropTypes.number,
-        };
-    }
-
-    render() {
-        const component = <ComposedComponent {...this.props} />;
-        const wrapped = (this.props.lazy) ?
-            <Lazy>{component}</Lazy> :
-            component;
-
-        return wrapped;
-    }
+    return Enhancer;
 };
 
-const Pod_Wrapper = function wrap(NewComponent) {
-    return enhance(radium(NewComponent));
-};
-
-module.exports = Pod_Wrapper;
+module.exports = Pod_Enhance;
