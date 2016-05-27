@@ -17,7 +17,6 @@ module.exports = function (sheetName) {
         common: {
             height: '100vh',
             background: '#ddd',
-            margin: '100vh 0',
             overflow: 'hidden',
             WebkitPerspective: '300px',
             perspective: '300px',

@@ -48,20 +48,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const windowHeight = window.innerHeight;
 
         if (window.IntersectionObserver) {
-            let observing = false;
             const _this = this;
             const iObserver = new IntersectionObserver(function () {
-                if (observing) { return; }
-                observing = true;
-
                 _this.onScroll(parallax, windowHeight);
-
+                iObserver.unobserve(parallax);
             }, { threshold: [0.0] });
             iObserver.observe(parallax);
         } else {
             this.onScroll(parallax, windowHeight);
         }
-        this.onScroll(parallax, windowHeight);
     }
 
     render() {
