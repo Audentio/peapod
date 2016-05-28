@@ -20,7 +20,7 @@ module.exports = {
     // ../../wherever/module
     resolve: {
         unsafeCache: true,
-        modulesDirectories: ['node_modules', 'src', 'src/utility'],
+        modules: ['node_modules', 'src', 'src/utility'],
         extensions: ['', '.js', '.jsx', '.json'],
         alias: {
             react: path.resolve('./node_modules/react'),
@@ -29,7 +29,6 @@ module.exports = {
 
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
     ],
 
     module: {
