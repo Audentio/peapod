@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 // Peapod
-import Pod_Styler from 'styler';
-import Pod from 'components';
+import Pod_Styler from 'utility/styler.js';
+import Pod from 'utility/components.js';
 
 import Color from 'color';
 import Remarkable from 'remarkable';

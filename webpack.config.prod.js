@@ -17,20 +17,18 @@ const config = {
         libraryTarget: 'umd',
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', 'index.js', 'index.jsx', '.json', 'index.json'],
-        root: path.resolve('./src'),
+        extensions: ['', '.js', '.jsx', '.json'],
+        modules: ['node_modules', 'src', 'src/utility'],
         alias: {
             react: path.resolve('./node_modules/react'),
         },
     },
 
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            minimize: true,
+        new webpack.LoaderOptionsPlugin({
+            minimize: false,
+            debug: false,
         }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.DedupePlugin(),
         new CompressionPlugin({
             asset: '[path].gz[query]',
             algorithm: 'gzip',
@@ -48,8 +46,7 @@ const config = {
                 commonjs: 'react',
                 amd: 'react',
             },
-        },
-        {
+        }, {
             'react-dom': {
                 root: 'ReactDOM',
                 commonjs2: 'react-dom',
