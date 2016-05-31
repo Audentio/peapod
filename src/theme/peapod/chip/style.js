@@ -7,17 +7,16 @@ module.exports = function (sheetName) {
     const photo = sheet.addPart('photo');
 
     // Conditions
+    sheet.addCondition('hovered').addState({ hovered: true });
 
     // Functions
-    var half = (value) => {
-        return (parseFloat(Pod_Vars.get(value)) / 2);
-    };
+    const half = (value) => (parseFloat(Pod_Vars.get(value)) / 2);
 
     // Variables
     sheet.setValues({
         height: '32px',
         background: '$palette.grey100',
-        color: '#777', // needs to be 67% black
+        color: 'rgba(0,0,0,.67)',
         hover: {
             background: '$palette.grey600',
             color: '$palette.white',
@@ -36,7 +35,6 @@ module.exports = function (sheetName) {
             paddingRight: '$chip.paddingLeftRight',
             color: '$chip.color',
             borderRadius: '1000px',
-            marginRight: '10px', // for testing
 
             ':hover': {
                 background: '$chip.hover.background',
@@ -51,20 +49,27 @@ module.exports = function (sheetName) {
             height: half('chip.height'),
             lineHeight: half('chip.height') + 'px',
             width: half('chip.height'),
-            fontSize:'12px', // variable?
+            fontSize: '$font.size.caption',
             background: '$palette.grey500',
             color: '$chip.background',
-            textAlign:'center',
+            textAlign: 'center',
             float: 'right',
             marginLeft: '$chip.innerMargins',
             marginRight: (0 - half('chip.innerMargins')),
             marginTop: '$chip.innerMargins',
             borderRadius: half('chip.height'),
+            cursor: 'pointer',
 
             ':hover': {
                 background: '$chip.hover.color',
                 color: '$chip.hover.background',
             },
+        },
+    }).addSelector({
+        condition: ['hovered'],
+        common: {
+            background: '$chip.hover.color',
+            color: '$chip.hover.background',
         },
     });
 
@@ -74,7 +79,7 @@ module.exports = function (sheetName) {
             width: '$chip.height',
             borderRadius: half('chip.height'),
             float: 'left',
-            marginLeft: (0 - parseFloat(Pod_Vars.get('chip.paddingLeftRight'))), // needs to be minus
+            marginLeft: (0 - parseFloat(Pod_Vars.get('chip.paddingLeftRight'))),
             marginRight: '$chip.innerMargins',
         },
     });

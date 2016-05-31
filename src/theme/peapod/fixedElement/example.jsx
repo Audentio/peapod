@@ -4,12 +4,12 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class FixedElementExample extends React.Component {
 
-	    shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     render() {
         return (
             <div>
-                <Pod.FixedElement addToScroll styler={{ style: { top: 0, right: 0, width: '100%' } }} containerWidth>
+                <Pod.FixedElement addToScroll styler={{ style: { top: 0, right: 0, width: '100%', marginBottom: '200vh' } }} containerWidth>
                     <Pod.Toolbar>
                         <Pod.ContentWrap>
                             <Pod.Icon styler={{ style: { height: '32px', display: 'inline-block', lineHeight: '32px', width: '32px', float: 'left' } }}>menu</Pod.Icon>

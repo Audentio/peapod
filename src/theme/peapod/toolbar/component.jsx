@@ -7,12 +7,6 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-/**
-* Modal component
-*
-* @element Pod_modal
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;

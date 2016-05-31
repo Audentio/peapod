@@ -4,12 +4,12 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class AccordionExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     render() {
         return (
             <Pod.ContentWrap>
-                Example
+                <Pod.Aside>HTML Aside Element</Pod.Aside>
             </Pod.ContentWrap>
         );
     }

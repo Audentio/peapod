@@ -4,20 +4,11 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { addFixed } from '../../../../examples/actions';
 
-/**
-* Template component
-*
-* @element Pod_modal
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;

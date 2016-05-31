@@ -6,10 +6,6 @@ module.exports = function (sheetName) {
     const outer = sheet.addPart('outer');
     const inner = sheet.addPart('inner');
 
-    // Conditions
-
-    // Variables
-
     main.addSelector({
         common: {
             display: 'table',

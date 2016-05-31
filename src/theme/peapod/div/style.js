@@ -1,13 +1,13 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
-
-    // Conditions
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Variables
     sheet.setValues({});
+
+    main.addSelector({});
 
     return sheet;
 };

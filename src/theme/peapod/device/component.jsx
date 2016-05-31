@@ -15,8 +15,12 @@ import Pod_Styler from 'utility/styler.js';
 */
 module.exports = componentName => class Pod_Component extends React.Component {
 
-
     static displayName = componentName;
+
+    static propTypes = {
+        children: React.PropTypes.any,
+        overlay: React.PropTypes.bool,
+    }
 
     render() {
         const style = Pod_Styler.getStyle(this);

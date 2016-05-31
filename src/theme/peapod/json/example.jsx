@@ -4,12 +4,16 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class AccordionExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     render() {
         return (
             <Pod.ContentWrap>
-                Example
+                <Pod.Json
+                    json={{ Mark: {
+                        children: 'JSON Mark',
+                    } }}
+                ></Pod.Json>
             </Pod.ContentWrap>
         );
     }

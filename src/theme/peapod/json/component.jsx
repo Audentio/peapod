@@ -29,25 +29,27 @@ module.exports = componentName => class Pod_Component extends React.Component {
     parse(json) {
         const objs = [];
         for (let index in json) {
-            const Component = Pod[index];
-            let children = json[index].children;
-            const toParse = json[index].JsonParse;
+            if (json[index]) {
+                const Component = Pod[index];
+                const children = json[index].children;
+                const toParse = json[index].JsonParse;
 
-            if (toParse) {
-                for (let i = 0; i < toParse.length; i++) {
-                    json[index][toParse[i]] = this.parse(json[index][toParse[i]]);
+                if (toParse) {
+                    for (let i = 0; i < toParse.length; i++) {
+                        json[index][toParse[i]] = this.parse(json[index][toParse[i]]);
+                    }
+
+                    delete json[index].JsonParse;
                 }
 
-                delete json[index].JsonParse;
-            }
+                if (typeof children === 'object') {
+                    json[index].children = this.parse(children);
+                } else {
+                    json[index].children = children;
+                }
 
-            if (typeof children === 'object') {
-                json[index].children = this.parse(children);
-            } else {
-                json[index].children = children;
+                objs.push(<Component key={index} {...json[index]} />);
             }
-
-            objs.push(<Component key={index} {...json[index]} />);
         }
 
         return objs;

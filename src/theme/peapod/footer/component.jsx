@@ -8,18 +8,21 @@ import Pod_Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
-
     static displayName = componentName;
 
+    static propTypes = {
+        children: React.PropTypes.any,
+        styler: React.PropTypes.object,
+    }
+
     render() {
-        const {styler, children, ...other} = this.props;
+        const { styler, children, ...other } = this.props;
         const style = Pod_Styler.getStyle(this);
 
         return (
             <footer {...other} style={style.main}>
-                {this.props.children}
+                {children}
             </footer>
         );
     }
-
 };
