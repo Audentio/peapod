@@ -140,7 +140,11 @@ window.Pod_Styler = window.Pod_Styler || {
             const component = library.components[componentName];
 
             if (typeof(globalConditions) !== 'undefined') {
-                conditions = Object.assign({}, conditions, globalConditions); // merge in global conditions
+                if (conditions === {}) {
+                    conditions = globalConditions;
+                } else {
+                    conditions = Object.assign({}, conditions, globalConditions); // merge in global conditions
+                }
             }
 
             if (typeof(component) !== 'undefined') {
@@ -149,7 +153,11 @@ window.Pod_Styler = window.Pod_Styler || {
                 const partKeys = Object.keys(part);
 
                 // get all conditions for the component overwriting any defined in parents with those defined in children
-                conditions = Object.assign({}, conditions, componentConditions);
+                if (conditions === {}) {
+                    conditions = componentConditions;
+                } else {
+                    conditions = Object.assign({}, conditions, componentConditions);
+                }
 
                 // get all parts for the component overwriting any defined in parents with those defined in children
                 for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
