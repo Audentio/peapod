@@ -23,7 +23,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         children: React.PropTypes.any,
         actionBar: React.PropTypes.any,
         actionBarLocation: React.PropTypes.string,
-        title: React.PropTypes.string,
+        title: React.PropTypes.oneOfType([
+            React.PropTypes.bool,
+            React.PropTypes.string,
+        ]),
     }
 
     static defaultProps = {
