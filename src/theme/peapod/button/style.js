@@ -70,7 +70,6 @@ module.exports = function (sheetName) {
         },
     });
 
-
     main.addSelector({
         common: {
             display: 'inline-block',
