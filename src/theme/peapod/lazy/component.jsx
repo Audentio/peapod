@@ -4,35 +4,37 @@
 * LICENSE: <%= package.licence %>
 */
 
-// Dependencies
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+// import Pod_Styler from 'utility/styler.js';
 
-/**
-* Lazy component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    constructor() {
-        super();
+    constructor(props, context) {
+        super(props, context);
 
         this.state = {
-            visible: this.props.visible,
+            visible: props.visible,
+            width: false,
+            height: false,
         };
     }
 
     static defaultProps = {
         visible: false,
-        // distance: 100,
+        distance: 100,
         placeholder: false,
+        stay: true,
     }
 
     static propTypes = {
         placeholder: React.PropTypes.any,
+        distance: React.PropTypes.number,
         visible: React.PropTypes.bool,
+        stay: React.PropTypes.bool,
+        width: React.PropTypes.number,
+        height: React.PropTypes.number,
         children: React.PropTypes.any,
     }
 
@@ -40,56 +42,44 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const elem = this.refs.LazyElement;
 
         const iObserver = new IntersectionObserver((elemRect) => {
-            console.log(elemRect);
-            this.setState({ visible: elemRect[0].intersectionRatio > 0 });
-        }, { threshold: [0], rootMargin: '200% 0%' });
+            const visible = elemRect[0].intersectionRatio > 0;
+            const rect = elemRect[0].boundingClientRect;
+
+            if (visible !== this.state.visible) {
+                this.setState({ visible });
+            }
+
+            if (!this.state.visible && rect.width !== this.state.height) {
+                this.setState({
+                    width: rect.width,
+                    height: rect.height,
+                });
+            }
+
+            if (this.props.stay && this.state.visible) {
+                iObserver.unobserve(elem);
+            }
+        }, { threshold: [0], rootMargin: `${this.props.distance}% 0%` });
+
         iObserver.observe(elem);
     }
 
-    // componentDidMount() {
-    //
-    //     // initial check
-    //     this.lazyCheck();
-    //
-    //     // bind this to lazy check always
-    //     this.lazyCheck = this.lazyCheck.bind(this);
-    //
-    //     // start listening for viewport events
-    //     window.addEventListener('scroll', this.lazyCheck);
-    //     window.addEventListener('resize', this.lazyCheck);
-    //
-    // }
-    //
-    // lazyCheck() {
-    //     var element = this.refs.LazyElement;
-    //     var bounds = element.getBoundingClientRect();
-    //     var scrollTop = window.pageYOffset;
-    //     var top = bounds.top + scrollTop;
-    //     var height = bounds.bottom - bounds.top;
-    //     var distance = this.props.distance;
-    //
-    //     if (top === 0 || (top <= (scrollTop + window.innerHeight + distance) && (top + height + distance) > scrollTop)) {
-    //         this.setState({ visible: true });
-    //         this.removeListener(); // stop listening, the show is over
-    //     }
-    // }
-
-    // removeListener() {
-    //     window.removeEventListener('scroll', this.lazyCheck);
-    //     window.removeEventListener('resize', this.lazyCheck);
-    // }
-
     render() {
-        const style = Pod_Styler.getStyle(this);
+        // const style = Pod_Styler.getStyle(this);
 
-        const placeholder = (this.props.placeholder) ? this.props.placeholder : '';
-        const children = (this.state.visible) ? this.props.children : placeholder;
+        const placeholder = (this.props.placeholder) ?
+            this.props.placeholder : <div>&nbsp;</div>; // needed to allow scroll detection
 
-        const content = (this.state.visible) ? children : placeholder;
+        const height = this.state.height || this.props.height;
+        const width = this.state.width || this.props.width;
+        const newstyle = (!this.state.visible) ? { height, width } : {};
 
         return (
-            <div style={style.main} ref="LazyElement">
-                {content}
+            <div
+                style={newstyle}
+                ref="LazyElement"
+            >
+                {(this.state.visible) ? this.props.children : placeholder}
             </div>
         );
     }
