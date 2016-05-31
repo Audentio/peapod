@@ -1,14 +1,13 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Conditions
     sheet.addCondition('inline').addStyler({ inline: true });
     sheet.addCondition('indent').addStyler({ indent: ['!=', ''] });
     sheet.addCondition('outdent').addStyler({ outdent: ['!=', ''] });
-
 
     // Variables
     sheet.setValues({});
@@ -18,7 +17,7 @@ module.exports = function (sheetName) {
             marginTop: '8px',
             marginBottom: '8px',
             height: '1px',
-            background: '$palette.grey200', // 12% black
+            background: 'rgba(0,0,0,.12)',
         },
     }).addSelector({
         condition: ['inline'],

@@ -1,12 +1,12 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-        main = sheet.addMain(),
-        trigger = sheet.addPart('trigger'),
-        panel = sheet.addPart('panel'),
-        triggers = sheet.addPart('triggers'),
-        panels = sheet.addPart('panels');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const trigger = sheet.addPart('trigger');
+    const panel = sheet.addPart('panel');
+    const triggers = sheet.addPart('triggers');
+    const panels = sheet.addPart('panels');
 
     // Conditions
     sheet.addCondition('active').addStyler({ active: true });
@@ -29,7 +29,6 @@ module.exports = function (sheetName) {
             lineHeight: '48px',
             paddingRight: '$gutter.small',
             paddingLeft: '$gutter.small',
-            // backgroundColor: '$color.base.hover',
             color: '$color.base.hover',
             textDecoration: 'uppercase',
             marginRight: '1px',
@@ -55,8 +54,6 @@ module.exports = function (sheetName) {
     triggers.addSelector({
         common: {
             backgroundColor: '$color.base.table',
-            // marginTop: '{$gutter.internal}',
-            // padding: '0 {$gutter.internal}',
         },
     });
 

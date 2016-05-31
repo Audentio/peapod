@@ -1,8 +1,8 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Conditions
     sheet.addCondition('horizontal').addProp({ horizontal: true });
@@ -11,7 +11,6 @@ module.exports = function (sheetName) {
 
     // Variables
     sheet.setValues({});
-
 
     main.addSelector({
         common: {

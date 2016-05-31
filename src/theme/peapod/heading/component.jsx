@@ -4,24 +4,20 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-
-/**
-* Template component
-*
-* @element Pod_template
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
+    static propTypes = {
+        children: React.PropTypes.any,
+        kind: React.PropTypes.string,
+    }
+
     static defaultProps = {
-        kind: 'h1'
+        kind: 'h1',
     }
 
     render() {
@@ -33,6 +29,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
             tagname,
             { style: style[tagname] },
             this.props.children
-        )
+        );
     }
 };

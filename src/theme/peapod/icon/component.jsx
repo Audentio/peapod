@@ -3,7 +3,7 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import Pod_Helper from 'utility/helper.js';
 import Pod_Styler from 'utility/styler.js';
 

@@ -17,8 +17,8 @@ module.exports = function (sheetName) {
 
     main.addSelector({
         common: {
-            // cursor: 'default',
             fontSize: '$icon.font.size',
+            verticalAlign: 'middle',
         },
     }).addSelector({
         condition: ['sizeSet'],

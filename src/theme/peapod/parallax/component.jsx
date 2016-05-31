@@ -4,15 +4,9 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-/**
-* Parallax component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
@@ -21,12 +15,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
         super();
 
         this.onScroll = this.onScroll.bind(this);
-        // document.addEventListener('scroll', this.onScroll, false);
+    }
+
+    static propTypes = {
+        children: React.PropTypes.any,
     }
 
     componentWillMount() {
         let level = 0;
-        let count = this.props.children.length;
+        const count = this.props.children.length;
 
         this.children = React.Children.map(this.props.children, child => {
             const newChild = React.cloneElement(child, { count, level });
@@ -36,7 +33,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     onScroll(parallax, windowHeight) {
-        document.addEventListener('scroll', function () {
+        document.addEventListener('scroll', () => {
             const rect = parallax.getBoundingClientRect();
             const scroll = ((rect.top) - (windowHeight / 2));
             parallax.scrollTop = -scroll;
@@ -49,7 +46,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         if (window.IntersectionObserver) {
             const _this = this;
-            const iObserver = new IntersectionObserver(function () {
+            const iObserver = new IntersectionObserver(() => {
                 _this.onScroll(parallax, windowHeight);
                 iObserver.unobserve(parallax);
             }, { threshold: [0.0] });

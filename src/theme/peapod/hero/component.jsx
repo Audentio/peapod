@@ -4,18 +4,9 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-
-/**
-* Template component
-*
-* @element Pod_modal
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
@@ -23,6 +14,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static defaultProps = {
         overlay: true,
     };
+
+    static propTypes = {
+        children: React.PropTypes.any,
+    }
 
     render() {
         const style = Pod_Styler.getStyle(this);

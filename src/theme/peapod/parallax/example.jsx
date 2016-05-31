@@ -8,7 +8,7 @@ module.exports = class ParallaxExample extends React.Component {
 
     render() {
         return (
-            <Pod.Parallax styler={{ style:{ margin: '100vh 0' } }}>
+            <Pod.Parallax styler={{ style: { margin: '100vh 0' } }}>
                 <Pod.Parallax_Layer>
                     <Pod.Center>
                         <Pod.Heading style={{ style: { color: 'white' } }}>Parallax</Pod.Heading>
