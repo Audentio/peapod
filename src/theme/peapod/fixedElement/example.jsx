@@ -4,7 +4,7 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class FixedElementExample extends React.Component {
 
-	    shouldComponentUpdate = PureRender;
+	                                            shouldComponentUpdate = PureRender;
 
     render() {
         return (

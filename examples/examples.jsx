@@ -21,7 +21,7 @@ import { addFixed } from './actions';
 const store = createStore(fixedElems);
 
 
-const measurePerf = true;
+const measurePerf = false;
 
 if (measurePerf) Perf.start();
 

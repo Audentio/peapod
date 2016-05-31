@@ -13,21 +13,9 @@ export default class DamionDev extends React.Component {
         // this.onMouseLeave = this.onMouseLeave.bind(this);
     }
 
-    componentDidMount() {
-        const elem = this.refs.apples;
-
-        const iObserver = new IntersectionObserver((crap) => {
-
-            console.log(elem, crap);
-            this.setState({ loaded: crap[0].intersectionRatio > 0 });
-
-        }, { threshold: [0], rootMargin: '10% 0%' });
-        iObserver.observe(elem);
-    }
-
     render() {
 
-        const currentContent = (this.state.loaded) ? <div>
+        const currentContent = (<div>
             <Pod.Card styler={{ style: { width: '700px', display: 'block' } }}>
                 <Pod.Stepper skippable singleForm >
                     <Pod.Stepper_Step title="Apples" validation={() => true}>
@@ -82,7 +70,7 @@ export default class DamionDev extends React.Component {
                     </Pod.Stepper_Step>
                 </Pod.Stepper>
             </Pod.Card>
-        </div> : <div>Loading</div>;
+        </div>);
 
         return (
             <div key={'dev'} style={{ marginTop: '50px' }}>
@@ -90,10 +78,27 @@ export default class DamionDev extends React.Component {
                 <Pod.Section styler={{ mainStyle: { background: 'transparent' } }}>
                     <Pod.ContentWrap>
                         <div style={{
-                            margin: '100vh 0 0',
+                            margin: '300vh 0 0',
                         }} ref="apples"
                         >
-                            <Pod.Center>{currentContent}</Pod.Center>
+                            <Pod.Lazy stay={false}>
+                                <Pod.Center>{currentContent}</Pod.Center>
+                            </Pod.Lazy>
+                            <Pod.Lazy stay={false}>
+                                <Pod.Center>{currentContent}</Pod.Center>
+                            </Pod.Lazy>
+                            <Pod.Lazy stay={false}>
+                                <Pod.Center>{currentContent}</Pod.Center>
+                            </Pod.Lazy>
+                            <Pod.Lazy stay={false}>
+                                <Pod.Center>{currentContent}</Pod.Center>
+                            </Pod.Lazy>
+                            <Pod.Lazy stay={false}>
+                                <Pod.Center>{currentContent}</Pod.Center>
+                            </Pod.Lazy>
+                            <Pod.Lazy stay={false}>
+                                <Pod.Center>{currentContent}</Pod.Center>
+                            </Pod.Lazy>
                         </div>
 
                     </Pod.ContentWrap>
