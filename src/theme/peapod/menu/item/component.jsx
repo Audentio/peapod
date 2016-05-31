@@ -12,7 +12,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static propTypes = {
         children: React.PropTypes.any,
-        subtext: React.PropTypes.string,
+        subtext: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.object,
+        ]),
         href: React.PropTypes.string,
         style: React.PropTypes.string,
     }

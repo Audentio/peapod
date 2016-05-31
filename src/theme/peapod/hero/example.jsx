@@ -5,7 +5,8 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class HeroExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
+    
     render() {
         return (
             <div>

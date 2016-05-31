@@ -1,9 +1,9 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    icon = sheet.addPart('icon');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    // const icon = sheet.addPart('icon');
 
     // Variables
     sheet.setValues({
@@ -19,7 +19,10 @@ module.exports = function (sheetName) {
             color: '$label.color.text',
             backgroundColor: '$color.general.base',
             display: 'inline-block',
-            padding: '$gutter.internal',
+            paddingTop: '$gutter.extrasmall',
+            paddingBottom: '$gutter.extrasmall',
+            paddingLeft: '$gutter.internal',
+            paddingRight: '$gutter.internal',
         },
     }).addSelector({
         condition: ['round'],
@@ -28,8 +31,8 @@ module.exports = function (sheetName) {
         },
     });
 
-    var choices = ['success', 'danger', 'info', 'warning', 'secondary', 'base'];
-    for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
+    const choices = ['success', 'danger', 'info', 'warning', 'secondary', 'base'];
+    for (let choiceIndex = 0; choiceIndex < choices.length; choiceIndex++) { // loop through all choices
         sheet.addCondition('kind_' + choices[choiceIndex]).addStyler({ kind: choices[choiceIndex] });
         main.addSelector({
             condition: ['kind_' + choices[choiceIndex]],

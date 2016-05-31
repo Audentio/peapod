@@ -4,7 +4,7 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class TabsExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     render() {
         const tabs = [
@@ -33,10 +33,10 @@ module.exports = class TabsExample extends React.Component {
         return (
             <div>
                 <Pod.ContentWrap>
-                    <Pod.Tabs tabs={tabs} activeTab={1}></Pod.Tabs>
+                    <Pod.Tabs tabs={tabs} activeTab={1} />
                 </Pod.ContentWrap>
             </div>
         );
     }
 
-}
+};

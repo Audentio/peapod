@@ -33,6 +33,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         singleForm: React.PropTypes.bool,
         hideSteps: React.PropTypes.bool,
     }
+
     static defaultProps = {
         skippable: false,
         singleForm: false,

@@ -14,7 +14,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static propTypes = {
         children: React.PropTypes.any,
         id: React.PropTypes.number,
-        subtitle: React.PropTypes.string,
+        subtitle: React.PropTypes.oneOfType([
+            React.PropTypes.array,
+            React.PropTypes.string,
+        ]),
         title: React.PropTypes.oneOfType([
             React.PropTypes.array,
             React.PropTypes.string,

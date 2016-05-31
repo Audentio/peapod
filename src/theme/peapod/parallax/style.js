@@ -1,12 +1,10 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-        main = sheet.addMain(),
-        group = sheet.addPart('group'),
-        spacer = sheet.addPart('spacer');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const group = sheet.addPart('group');
 
-    // Conditions
     // Variables
     sheet.setValues({
         height: '100vh',
@@ -17,7 +15,6 @@ module.exports = function (sheetName) {
         common: {
             height: '100vh',
             background: '#ddd',
-            margin: '100vh 0',
             overflow: 'hidden',
             WebkitPerspective: '300px',
             perspective: '300px',
@@ -31,12 +28,6 @@ module.exports = function (sheetName) {
             height: '100vh',
             WebkitTransformStyle: 'preserve-3d',
             transformStyle: 'preserve-3d',
-        },
-    });
-    spacer.addSelector({
-        common: {
-            width: '100%',
-            height: '50%',
         },
     });
 

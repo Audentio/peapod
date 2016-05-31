@@ -1,17 +1,15 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    imageContainer = sheet.addPart('imageContainer'),
-    image = sheet.addPart('image'),
-    icon = sheet.addPart('icon'),
-    secondary = sheet.addPart('secondary');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const imageContainer = sheet.addPart('imageContainer');
+    const image = sheet.addPart('image');
+    const icon = sheet.addPart('icon');
+    const secondary = sheet.addPart('secondary');
 
     // Conditions
-    sheet.addCondition('secondary').addFunction((instance) => {
-        if (instance.props.secondary != undefined || instance.styler.imgSize == 'large') return true;
-    });
+    sheet.addCondition('secondary').addFunction((instance) => instance.props.secondary !== undefined || instance.styler.imgSize === 'large');
 
     sheet.addCondition('imageSmall').addStyler({ imgSize: 'small' });
     sheet.addCondition('imageMedium').addStyler({ imgSize: 'medium' });
@@ -23,12 +21,8 @@ module.exports = function (sheetName) {
     sheet.addCondition('iconRight').addStyler({ icon: 'right' });
 
     // Functions
-    var half = (value1) => {
-        return (parseFloat(Pod_Vars.get(value1)) / 2);
-    };
-    var minus = (value1, value2) => {
-        return (parseFloat(Pod_Vars.get(value1)) - parseFloat(Pod_Vars.get(value2)));
-    };
+    const half = (value1) => parseFloat(Pod_Vars.get(value1)) / 2;
+    const minus = (value1, value2) => parseFloat(Pod_Vars.get(value1)) - parseFloat(Pod_Vars.get(value2));
 
     // Variables
     sheet.setValues({

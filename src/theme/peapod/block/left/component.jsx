@@ -4,20 +4,14 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import { Block } from 'utility/components.js';
 
-/**
-* Block_Left component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    static propType = {
+    static propTypes = {
         children: React.PropTypes.any,
     }
 

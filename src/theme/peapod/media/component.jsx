@@ -4,15 +4,10 @@
 * LICENSE: <%= package.licence %>
 */
 
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Block, Heading, Photo } from 'utility/components.js';
 
-/**
-* Media component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;

@@ -1,10 +1,8 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
-
-    // Conditions
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Variables
     sheet.setValues({});
@@ -14,10 +12,6 @@ module.exports = function (sheetName) {
             maxHeight: 200,
             overflowX: 'hidden',
             overflowY: 'auto',
-            // marginLeft: '-16px',
-            // marginRight: '-16px',
-            // marginTop: '-16px',
-            // marginBottom: '-16px',
             borderTopWidth: '1px',
             borderBottomWidth: '1px',
             borderStyle: 'solid',

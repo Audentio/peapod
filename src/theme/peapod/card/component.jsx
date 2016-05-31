@@ -8,7 +8,7 @@
 // Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import { Heading } from 'utility/components.js'
+import { Heading } from 'utility/components.js';
 
 /**
 * Card component
@@ -19,35 +19,42 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
+    static propTypes = {
+        children: React.PropTypes.any,
+        actionBar: React.PropTypes.any,
+        actionBarLocation: React.PropTypes.string,
+        title: React.PropTypes.string,
+    }
+
     static defaultProps = {
         title: false,
         actionBar: false,
-        actionBarLocation: 'bottom'
+        actionBarLocation: 'bottom',
     }
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
 
-        var objectCheck = new Object(this.props);
+        const objectCheck = new Object(this.props);
 
-        var titleElement = (typeof objectCheck.title === "string") ?
-        (<Heading kind="h4" styler={{secondary:true}}>{this.props.title}</Heading>) :
+        const titleElement = (typeof objectCheck.title === 'string') ?
+        (<Heading kind="h4" styler={{ secondary: true }}>{this.props.title}</Heading>) :
         objectCheck.title;
 
-        var title = (objectCheck.title) ? (
+        const title = (objectCheck.title) ? (
             <div style={style.title}>
                 {titleElement}
             </div>
         ) : '';
 
-        var actionBar = (objectCheck.actionBar) ? (
+        let actionBar = (objectCheck.actionBar) ? (
             <div style={style.actionBar}>
                 {this.props.actionBar}
             </div>
         ) : '';
 
-        var actionBarTop = '';
-        if (this.props.actionBarLocation != 'bottom') {
+        let actionBarTop = '';
+        if (this.props.actionBarLocation !== 'bottom') {
             actionBarTop = actionBar;
             actionBar = '';
         }

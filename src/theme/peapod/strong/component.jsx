@@ -4,21 +4,15 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-
-/**
-* @element Strong
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
     static propTypes = {
-        children: PropTypes.any,
+        children: React.PropTypes.any,
     }
 
     render() {

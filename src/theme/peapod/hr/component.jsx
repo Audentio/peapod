@@ -4,15 +4,9 @@
 * LICENSE: <%= package.licence %>
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-/**
-* HR component
-*
-* @element Pod_hr
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;

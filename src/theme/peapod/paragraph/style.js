@@ -1,8 +1,8 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Conditions
     sheet.addCondition('secondary').addStyler({ secondary: true });
@@ -11,13 +11,13 @@ module.exports = function (sheetName) {
     sheet.setValues({});
 
     main.addSelector({
-        common:{
+        common: {
             marginBottom: '$font.margins.body1',
             fontSize: '$font.size.body1',
         },
     }).addSelector({
         condition: ['secondary'],
-        common:{
+        common: {
             marginBottom: '0px',
         },
     });
