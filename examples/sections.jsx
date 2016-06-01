@@ -12,12 +12,9 @@ const exampleList = [];
 const addComponent = function (key, i, type) {
     componentsOutput.push(<SectionComponent noName={noName} name={key} key={`Section ${type}${i}`} />);
 
-    const route = (window.location.pathname !== '/') ? '/' : '#';
-    // const reverse = (route === '/');
-
     exampleList.push(
         <Pod.List_Item key={key} styler={{ style: { height: 'auto', padding: '6px 16px' } }}>
-            <Pod.Button styler={{ kind: 'base', type: 'text', dialog: true, style: { textAlign: 'left' } }} href={`http://0.0.0.0:3002${route}${key}`}>{key}</Pod.Button>
+            <Pod.Button styler={{ kind: 'base', type: 'text', dialog: true, style: { textAlign: 'left' } }} href={`http://0.0.0.0:3002#${key}`}>{key}</Pod.Button>
             <Pod.Block_Right>
                 <Pod.Button styler={{ kind: 'base', dialog: true, type: 'text' }} href={`/${key}`}>
                     <Pod.Icon>launch</Pod.Icon>
@@ -58,33 +55,29 @@ export default class Sections extends React.Component {
 
         return (
             <div>
-                {/* <Pod.Pane> */}
-                    <Pod.Grid>
-                        <Pod.Grid_Cell styler={{ style: { padding: '0px 20px 0px 0px', width: '25%'}, md: 12, lg: 3, xl: 2 }}>
-                            <Pod.FixedElement containerWidth alwaysFixed>
-                                <Pod.Card styler={{ style: { width: '100%' } }}>
+                <Pod.Grid>
+                    <Pod.Grid_Cell styler={{ style: { padding: '0px 20px 0px 0px', width: '25%' }, md: 12, lg: 3, xl: 2 }}>
+                        <Pod.FixedElement containerWidth alwaysFixed>
+                            <Pod.Card styler={{ style: { width: '100%' } }}>
 
-                                    <Pod.Card_Section styler={{ kind: 'title-small' }}>
-                                        <Pod.Heading kind="h6" styler={{ secondary: true }}>
-                                            <Pod.Button styler={{ kind: 'general', dialog: true, type: 'text', style: { color: '$palette.black', fontSize: '$font.size.large' } }} href={'http://0.0.0.0:3002'}>Examples</Pod.Button>
-                                        </Pod.Heading>
-                                    </Pod.Card_Section>
+                                <Pod.Card_Section styler={{ kind: 'title-small' }}>
+                                    <Pod.Heading kind="h6" styler={{ secondary: true }}>
+                                        <Pod.Button styler={{ kind: 'general', dialog: true, type: 'text', style: { color: '$palette.black', fontSize: '$font.size.large' } }} href={'http://0.0.0.0:3002'}>Examples</Pod.Button>
+                                    </Pod.Heading>
+                                </Pod.Card_Section>
 
-                                    <Pod.List styler={{ style: { maxHeight: 'calc(100vh - 100px)' } }}>
-                                        <Pod.Scrollable>
-                                            {exampleList}
-                                        </Pod.Scrollable>
-                                    </Pod.List>
-                                </Pod.Card>
-                            </Pod.FixedElement>
-                        </Pod.Grid_Cell>
-                        <Pod.Grid_Cell styler={{ md: 12, lg: 9, xl: 10, style: { width: '75%' } }}>
-                            {/* <Pod.Pane> */}
-                                {examples}
-                            {/* </Pod.Pane> */}
-                        </Pod.Grid_Cell>
-                    </Pod.Grid>
-                {/* <Pod.Pane> */}
+                                <Pod.List styler={{ style: { maxHeight: 'calc(100vh - 100px)' } }}>
+                                    <Pod.Scrollable>
+                                        {exampleList}
+                                    </Pod.Scrollable>
+                                </Pod.List>
+                            </Pod.Card>
+                        </Pod.FixedElement>
+                    </Pod.Grid_Cell>
+                    <Pod.Grid_Cell styler={{ md: 12, lg: 9, xl: 10, style: { width: '75%' } }}>
+                        {examples}
+                    </Pod.Grid_Cell>
+                </Pod.Grid>
             </div>
         );
     }

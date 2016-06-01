@@ -2,10 +2,6 @@ import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Input, Portal, Calendar, Card, Button } from 'utility/components.js';
 
-/**
-* DatePicker component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
@@ -21,7 +17,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const date = (this.props.date) ? new Date(this.props.date) :
         new Date();
 
-        // const date = new Date();
         this.state = {
             date,
             day: date.getDate(),

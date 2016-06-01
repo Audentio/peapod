@@ -4,12 +4,12 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class PhotoExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     render() {
         return (
             <Pod.ContentWrap>
-                Example
+                <Pod.Photo src="/assets/media/profile.jpg"></Pod.Photo>
             </Pod.ContentWrap>
         );
     }

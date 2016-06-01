@@ -3,15 +3,10 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import Pod_Styler from 'utility/styler.js';
 import shallowCompare from 'react-addons-shallow-compare';
 
-/**
-*
-* RangeInput description
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
@@ -137,10 +132,24 @@ module.exports = componentName => class Pod_Component extends React.Component {
         return (
             <div ref="container" style={style.main}>
                 <div ref="track" style={style.track}>
-                    <input ref="input" type="text" style={style.input} name={this.props.name} defaultValue={this.props.value} />
-                    <div ref="handle" style={[style.handle, { left: this.state.handleLeft }]}></div>
-                </div>
+                    <div
+                        style={Object.assign({
+                            width: this.state.handleLeft,
+                        }, style.trackBackground)}
+                    ></div> {/* for track % */}
 
+                    <input ref="input" type="text" style={style.input} name={this.props.name} defaultValue={this.props.value} />
+
+                    <div
+                        ref="handle"
+                        style={[style.handle, { left: this.state.handleLeft }]}
+                    >
+                        <div style={style.handleFocus}>
+                            <div style={[style.handle, { left: '50%' }]}></div>
+                        </div>{/* for focused */}
+                    </div>
+                </div>
+                <br />
                 {this.state.value}
             </div>
         );

@@ -3,7 +3,7 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Input } from 'utility/components.js';
 

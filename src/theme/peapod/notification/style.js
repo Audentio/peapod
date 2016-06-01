@@ -7,6 +7,9 @@ module.exports = function (sheetName) {
     const title = sheet.addPart('title');
     const dismissIcon = sheet.addPart('dismissIcon');
 
+    sheet.addCondition('multiline').addProp({ multiline: true });
+    sheet.addCondition('full').addProp({ full: true });
+
     sheet.addCondition('kindGeneral').addStyler({ kind: 'general' });
     sheet.addCondition('kindInfo').addStyler({ kind: 'info' });
     sheet.addCondition('kindSuccess').addStyler({ kind: 'success' });
@@ -25,20 +28,39 @@ module.exports = function (sheetName) {
     });
 
     main.addSelector({
-        common: {},
+        common: {
+            bottom: '$gutter.internal',
+            right: '$gutter.internal',
+            position: 'fixed',
+        },
     });
 
     wrapper.addSelector({
         common: {
-            fontSize: '13px',
-            padding: '1.3rem 4rem 1.3rem 1.5rem',
-            borderRadius: '$border.radius.large',
-            position: 'fixed',
+            fontSize: '$font.size.body1',
+            borderRadius: '$border.radius.small',
             width: '300px',
-            bottom: '$gutter.internal',
-            right: '$gutter.internal',
+            height: '48px',
+            lineHeight: '48px',
+            padding: '0 24px',
             zIndex: '999',
             color: 'rgba(255,255,255,.8)',
+            backgroundColor: '#323232',
+        },
+    })
+    .addSelector({
+        condition: 'multiline',
+        common: {
+            height: '80px',
+            padding: '24px',
+            lineHeight: '1',
+        },
+    })
+    .addSelector({
+        condition: ['multiline', 'full'],
+        common: {
+            height: '112px',
+            lineHeight: '1',
         },
     })
     .addSelector({
@@ -75,27 +97,27 @@ module.exports = function (sheetName) {
     title.addSelector({
         common: {
             display: 'block',
-            marginBottom: '4px',
+            // marginBottom: '4px',
             color: 'white',
         },
     });
 
     dismissIcon.addSelector({
         common: {
-            position: 'absolute',
-            top: '12px',
-            right: '11px',
-            padding: '4px',
+            float: 'right',
             fontWeight: 'bold',
-            borderRadius: '50%',
-            fontSize: '1.4rem',
-            color: 'white',
-            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            color: '$palette.yellow500',
             cursor: 'pointer',
+            textTransform: 'uppercase',
+            marginLeft: '24px',
 
             ':hover': {
-                backgroundColor: 'rgba(255, 255, 255, 0.35)',
             },
+        },
+    }).addSelector({
+        condition: ['full'],
+        common: {
+            marginTop: '24px',
         },
     });
 

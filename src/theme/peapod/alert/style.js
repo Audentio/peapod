@@ -4,7 +4,7 @@ module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
     const main = sheet.addMain();
     const wrapper = sheet.addPart('wrapper');
-    const message = sheet.addPart('message');
+    // const message = sheet.addPart('message');
     const dismissIcon = sheet.addPart('dismissIcon');
 
     sheet.addDoc(`# Purpose
@@ -27,12 +27,17 @@ module.exports = function (sheetName) {
         },
     });
 
+    main.addSelector({});
+
     wrapper.addSelector({
         common: {
-            fontSize: '13px',
+            fontSize: '$font.size.body1',
             position: 'relative',
-            padding: '1.3rem 4rem 1.3rem 1.5rem',
-            borderRadius: '$border.radius.large',
+            paddingLeft: '$gutter.large',
+            paddingRight: '$gutter.large',
+            borderRadius: '$border.radius.small',
+            height: '$gutter.extralarge',
+            lineHeight: '$gutter.extralarge',
             marginBottom: '$gutter.internal',
         },
     })
@@ -69,14 +74,14 @@ module.exports = function (sheetName) {
 
     dismissIcon.addSelector({
         common: {
-            position: 'absolute',
-            top: '0px',
-            right: '0px',
-            padding: '1.5rem',
+            float: 'right',
             fontWeight: 'bold',
             fontSize: '1.5rem',
             color: 'rgba(0,0,0,0.4)',
             cursor: 'pointer',
+            marginLeft: '$gutter.extralarge',
+            lineHeight: '$gutter.extralarge',
+            height: '$gutter.extralarge',
 
             ':hover': {
                 color: 'rgba(0,0,0,0.7)',

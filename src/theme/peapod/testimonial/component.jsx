@@ -19,17 +19,26 @@ import { Icon, Photo, Anchor, BlockQuote } from 'utility/components.js';
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
-    render() {
-        var style = Pod_Styler.getStyle(this);
 
-        var image = (this.props.img) ? (
+    static propTypes = {
+        children: React.PropTypes.any,
+        img: React.PropTypes.string,
+        name: React.PropTypes.string,
+        comp: React.PropTypes.string,
+        link: React.PropTypes.string,
+    }
+
+    render() {
+        const style = Pod_Styler.getStyle(this);
+
+        const image = (this.props.img) ? (
             <Photo styler={{ mainStyle: style.photo, imageStyle: style.photo }} src={this.props.img} />
         ) : '';
 
-        var name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
-        var comp = (this.props.comp) ? (<div>{this.props.comp}</div>) : '';
+        const name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
+        const comp = (this.props.comp) ? (<div>{this.props.comp}</div>) : '';
 
-        var link = (this.props.link) ? (
+        const link = (this.props.link) ? (
             <Anchor to={this.props.link}>
                 {name}
                 {comp}
@@ -55,6 +64,5 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 {link}
             </div>
         );
-
     }
 };

@@ -417,6 +417,7 @@ const globalVars = {
 
         // Spacing
         gutter: {
+            extralarge: '48px',
             large: '32px',
             small: '24px',
             internal: '16px',
