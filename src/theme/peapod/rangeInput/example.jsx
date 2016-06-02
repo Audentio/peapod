@@ -9,7 +9,7 @@ module.exports = class AccordionExample extends React.Component {
     render() {
         return (
             <Pod.ContentWrap>
-                <Pod.RangeInput min={500} max={1000} value={500}></Pod.RangeInput>
+                <Pod.RangeInput min={500} max={1000}></Pod.RangeInput>
             </Pod.ContentWrap>
         );
     }

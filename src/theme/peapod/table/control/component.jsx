@@ -5,16 +5,20 @@
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import PureRender from 'utility/pureRender.js';
+// import PureRender from 'utility/pureRender.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    //shouldComponentUpdate = PureRender;
+    // shouldComponentUpdate = PureRender;
+
+    static propTypes = {
+        children: React.PropTypes.any,
+    }
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
 
         return (
             <div style={style.main}>

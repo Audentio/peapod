@@ -1,9 +1,9 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    footer = sheet.addPart('footer');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const footer = sheet.addPart('footer');
 
     // Variables
     sheet.setValues({
@@ -11,7 +11,7 @@ module.exports = function (sheetName) {
             lightRow: {
                 background: 'transparent',
                 color: '$color.text.dark',
-                hover: '#F5F6F7',
+                hover: '$palette.grey200',
             },
             darkRow: {
                 background: '$table.color.lightRow.background',
@@ -59,8 +59,8 @@ module.exports = function (sheetName) {
             headerSize: '$font.size.small',
             headerWeight: '$font.weight.medium',
         },
-        headerHeight: '5rem',
-        footerHeight: '5rem',
+        headerHeight: '64px',
+        footerHeight: '56px',
     });
 
     main.addSelector({

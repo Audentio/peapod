@@ -20,7 +20,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         this.state = {
             value: this.props.value,
-            handleLeft: `${value_percentage}%`,
+            handleLeft: value_percentage || 0,
         };
     }
 
@@ -38,7 +38,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static defaultProps = {
         min: 0,
         max: 100,
-        value: 0,
         step: 1,
     }
 
@@ -46,7 +45,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const value_percentage = (left / this.refs.track.offsetWidth) * 100;
 
         this.setState({
-            handleLeft: left,
+            handleLeft: left || 0,
             value: Math.round((value_percentage * (this.props.max - this.props.min) / 100) + this.props.min),
         });
     }
@@ -54,7 +53,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     update = (val) => {
         const left = ((val - this.props.min) * 100) / (this.props.max - this.props.min);
         this.setState({
-            handleLeft: `${left}%`,
+            handleLeft: left || 0,
             value: val,
         });
     }
@@ -109,6 +108,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.refs.handle.addEventListener('touchstart', this.startListening);
         this.refs.container.addEventListener('mousedown', this.trackHandler);
         this.refs.container.addEventListener('touchstart', this.trackHandler);
+
+        this.update(this.props.value);
     }
 
     componentWillUnmount() {
@@ -138,7 +139,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         }, style.trackBackground)}
                     ></div> {/* for track % */}
 
-                    <input ref="input" type="text" style={style.input} name={this.props.name} defaultValue={this.props.value} />
+                    <input ref="input" type="text" style={style.input} name={this.props.name} defaultValue={this.props.value || this.props.min} />
 
                     <div
                         ref="handle"

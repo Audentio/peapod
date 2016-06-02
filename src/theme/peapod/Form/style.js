@@ -1,12 +1,11 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    submit = sheet.addPart('submit'),
-    form = sheet.addPart('form'),
-    overlay = sheet.addPart('overlay');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const submit = sheet.addPart('submit');
+    const form = sheet.addPart('form');
+    const overlay = sheet.addPart('overlay');
 
     sheet.addCondition('disabled').addState({ disabled: true });
 

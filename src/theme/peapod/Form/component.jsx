@@ -8,11 +8,6 @@ import Pod_Styler from 'utility/styler.js';
 import Pod_Helper from 'utility/helper.js';
 import { Progress } from 'utility/components.js';
 
-/**
-*
-* Handle post/get requests with callback
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
@@ -123,7 +118,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     data = JSON.parse(res);
                 } catch (e) {
                     // no bueno
-                    console.error(`[Form] Unable to parse response. Please check endpoint ${source}`);
+                    // console.error(`[Form] Unable to parse response. Please check endpoint ${source}`);
                     return;
                 }
 
@@ -140,7 +135,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 });
             },
             error: () => {
-                console.error('Failed to fetch data. Please try reloading');
+                // console.error('Failed to fetch data. Please try reloading');
             },
         });
     }

@@ -13,6 +13,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
+    constructor(props, context) {
+        super(props, context);
+
+        this.onClickHandler = this.onClickHandler.bind(this);
+        this.ripple = this.ripple.bind(this);
+    }
+
     // Validate props
     static propTypes = {
         href: PropTypes.string,

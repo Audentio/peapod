@@ -19,7 +19,7 @@ const topButtonStyle = {
     paddingLeft: '$gutter.small',
     paddingRight: '$gutter.small',
     margin: '$gutter.internal',
-}
+};
 
 module.exports = componentName => class Pod_Component extends React.Component {
 

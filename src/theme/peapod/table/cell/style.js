@@ -1,8 +1,8 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Conditions
     sheet.addCondition('firstCell').addStyler({ firstCell: true });
@@ -18,8 +18,8 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             display: 'table-cell',
-            paddingTop: '$table.gutter.vertical',
-            paddingBottom: '$table.gutter.vertical',
+            // paddingTop: '$table.gutter.vertical',
+            // paddingBottom: '$table.gutter.vertical',
             paddingLeft: '$table.gutter.horizontal',
             paddingRight: '$table.gutter.horizontal',
             fontSize: 'inherit',
@@ -50,6 +50,7 @@ module.exports = function (sheetName) {
         common: {
             borderLeftWidth: 0,
             borderRightWidth: 0,
+            borderTopWidth: '1px',
         },
     })
     .addSelector({

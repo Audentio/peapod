@@ -13,7 +13,7 @@ module.exports = function (sheetName) {
     // Variables
     sheet.setValues({});
 
-    const rippleSteps = {
+    const spin = {
         '0%': {
             transform: 'rotate(0deg)',
         },
@@ -22,7 +22,7 @@ module.exports = function (sheetName) {
         },
     };
 
-    const spinAnimation = Radium.keyframes(rippleSteps, 'spinAnimation');
+    const spinAnimation = Radium.keyframes(spin, 'spinAnimation');
 
     main.addSelector({
         common: {

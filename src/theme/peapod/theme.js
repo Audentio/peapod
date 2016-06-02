@@ -301,18 +301,21 @@ const globalVars = {
                 code: 'monaco, monospace',
             },
             size: {
-                display4: '112px',
-                display3: '56px',
-                display2: '45px',
-                display1: '34px',
-                headline: '24px',
-                title: '20px',
-                subheading: '16px',
-                body2: '14px',
-                body1: '14px',
-                caption: '12px',
-                button: '14px',
+                display4: '11.2rem',
+                display3: '5.6rem',
+                display2: '4.5rem',
+                display1: '3.4rem',
+                headline: '2.4rem',
+                title: '2rem',
+                subheading: '1.6rem',
+                body2: '1.4rem',
+                body1: '1.4rem',
+                caption: '1.2rem',
+                button: '1.4rem',
+                // TODO: use root font size and scale from there. default 10px
+                // Use below naming 5 ether way
 
+                // old
                 xsmall: '1.1rem',
                 small: '13px',
                 normal: '14px',

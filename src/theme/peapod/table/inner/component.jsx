@@ -5,11 +5,9 @@
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import PureRender from 'utility/pureRender.js';
+// import PureRender from 'utility/pureRender.js';
 
 import { isFunction as _isFunction, isEqual as _isEqual } from 'lodash';
-
-
 import { Table_Row, Table_Header } from 'utility/components.js';
 
 
@@ -17,7 +15,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    //shouldComponentUpdate = PureRender;
+    // shouldComponentUpdate = PureRender;
 
     static propTypes = {
         columnNames: React.PropTypes.oneOfType([
@@ -50,23 +48,18 @@ module.exports = componentName => class Pod_Component extends React.Component {
             <div style={{ overflowX: 'auto' }}>
                 <div style={style.main}>
                     {_isFunction(columnNames) ? columnNames(columns) : <Table_Header config={columnNames} columns={columns} />}
-                    {
-                        data.map(
-                            (row, i) => {
-                                return (
-                                    <Table_Row key={(row[rowKey] || i) + '-row'}
-                                        row={row}
-                                        rowKey={rowKey}
-                                        i={i}
-                                        rowProps={rowProps}
-                                        hoveredRow={hoveredRow}
-                                        columns={columns}
-                                        data={data}
-                                    />
-                                );
-                            }
-                        )
-                    }
+                    {data.map((row, i) =>
+                        <Table_Row
+                            key={(row[rowKey] || i) + '-row'}
+                            row={row}
+                            rowKey={rowKey}
+                            i={i}
+                            rowProps={rowProps}
+                            hoveredRow={hoveredRow}
+                            columns={columns}
+                            data={data}
+                        />
+                    )}
                 </div>
                 {this.props.children}
             </div>

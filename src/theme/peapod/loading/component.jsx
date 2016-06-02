@@ -12,11 +12,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static displayName = componentName;
     static propTypes = {
         children: React.PropTypes.any,
+        show: React.PropTypes.bool,
     }
 
     static defaultProps = {
         loaded: 0,
-        loading: false,
+        show: false,
     }
 
     constructor() {
@@ -28,15 +29,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
             defaultLoaded: 50,
             hasLoaded: false,
         };
+        this.interval = '';
     }
 
-    componentWillReceiveProps() {
-        if (this.props.show) {
+    componentWillReceiveProps(nextProps) {
+        if (this.props.show && this.props.show !== this.state.show && !this.props.loaded) {
             this.setState({
-                loaded: 0,
-                progress: 0,
-                defaultLoaded: 50,
-                hasLoaded: false,
                 show: true,
             });
             let goingUp = true;
@@ -58,23 +56,25 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
                 this.setState({ defaultLoaded: val });
             }, 300);
+        }
 
-            // test code
-            setTimeout(() => {
-                this.setState({ hasLoaded: true });
+        if (!nextProps.show) {
+            this.setState({
+                show: false,
+                loaded: 0,
+                progress: 0,
+                defaultLoaded: 50,
+                hasLoaded: false,
+            });
+            clearInterval(this.interval);
+        }
 
-                clearInterval(this.interval);
-
-                this.interval = setInterval(() => {
-                    const loaded = (this.state.loaded < 100) ? this.state.loaded + 10 : 100;
-                    this.setState({ loaded });
-
-                    if (this.state.loaded >= 100) {
-                        clearInterval(this.interval);
-                        this.setState({ show: false });
-                    }
-                }, 1000);
-            }, 5000);
+        if (this.props.loaded) {
+            clearInterval(this.interval);
+            this.setState({
+                hasLoaded: true,
+                loaded: this.props.loaded,
+            });
         }
     }
 
@@ -94,7 +94,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         style: { transform: `scale(${scale})`, transition: 'transform .3s' },
                     }}
                     value={setVal}
-                    />
+                />
             </div>
         );
 
