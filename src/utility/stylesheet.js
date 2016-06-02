@@ -349,6 +349,7 @@ class Sheet {
         this.conditions = {};
         this.doc = '';
         this.docDefault = null;
+        this.stylesResolved = false;
         if (name === 'undefined') {
             Logger.error('Sheet created without a name specified.');
         }
@@ -356,6 +357,12 @@ class Sheet {
     }
 
     setValues(values = {}, scene = 'common', custom = false) {
+        if (typeof(this.resolveValues) === 'function') {
+            const globalVars = window.Pod_Vars.sources[0].common; // TODO fix this
+
+            values = this.resolveValues(globalVars);
+        }
+
         let variables = {
             [scene]: {
                 [this.name]: values,
@@ -410,7 +417,12 @@ class Sheet {
         this.docDefault = data;
     }
 
-    getAllStyling(instance, scene = 'normal', conditions) {
+    getAllStyling(instance, scene = 'normal', conditions, localVars, globalVars) {
+        if (typeof(this.resolveStyles) === 'function' && !this.stylesResolved) {
+            this.stylesResolved = true;
+            this.resolveStyles(localVars, globalVars);
+        }
+
         const source = {};
         const partKeys = Object.keys(this.parts);
         const activeConditions = this.getActiveConditions(instance, conditions);

@@ -9,7 +9,7 @@
     "examples-dev": "node devServer.js",
     "examples": "NODE_ENV=production | node devServer.js",
     "doc": "node docServer.js",
-    "lint": "eslint --color --format compact src",
+    "lint": "eslint --format compact src",
     "lint-fix": "eslint --fix src",
     "dev": "webpack -p --config webpack.config.prod.js --watch",
     "deploy": "webpack -p --config webpack.config.prod.js"

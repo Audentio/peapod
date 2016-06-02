@@ -198,7 +198,11 @@ window.Pod_Styler = window.Pod_Styler || {
             } else { // styling from style.js
                 const sourceSheet = library.components[componentName];
                 if (sourceSheet !== null && typeof(sourceSheet) !== 'undefined') {
-                    const sheetData = sourceSheet.getAllStyling(obj, scene, conditions); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+
+                    const localVars = window.Pod_Vars.sources[0].common.button; // TODO make this dynamic
+                    const globalVars = window.Pod_Vars.sources[0].common;
+
+                    const sheetData = sourceSheet.getAllStyling(obj, scene, conditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
                     source = sheetData.source;
 
                     for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
