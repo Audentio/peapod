@@ -4,28 +4,26 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-/**
-* Card component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    static defaultProps = {
-        mediaTitle: false
-    };
+    static propTypes = {
+        children: React.PropTypes.any,
+        mediaTitle: React.PropTypes.any,
+    }
 
+    static defaultProps = {
+        mediaTitle: false,
+    }
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
 
-        var mediaTitle = (this.props.mediaTitle) ? (
+        const mediaTitle = (this.props.mediaTitle) ? (
             <div style={style.mediaTitle}>
                 {this.props.mediaTitle}
             </div>

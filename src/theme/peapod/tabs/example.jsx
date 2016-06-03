@@ -7,35 +7,26 @@ module.exports = class TabsExample extends React.Component {
     shouldComponentUpdate = PureRender;
 
     render() {
-        const tabs = [
-            {
-                trigger: 'tab 1',
-                content: 'Tab 1 content',
-            },
-            {
-                trigger: 'tab 2',
-                content: 'Tab 2 content',
-            },
-            {
-                trigger: 'tab 3',
-                content: 'Tab 3 content',
-            },
-            {
-                trigger: 'tab 4',
-                content: 'Tab 4 content',
-            },
-            {
-                trigger: 'tab 5',
-                content: 'Tab 5 content',
-            },
-        ];
-
         return (
-            <div>
-                <Pod.ContentWrap>
-                    <Pod.Tabs tabs={tabs} activeTab={1} />
-                </Pod.ContentWrap>
-            </div>
+            <Pod.ContentWrap>
+                <Pod.Tabs activeTab={1}>
+                    <Pod.Tabs_Tab trigger="tab 1">
+                        Tab 1 content
+                    </Pod.Tabs_Tab>
+                    <Pod.Tabs_Tab trigger="tab 2">
+                        Tab 2 content
+                    </Pod.Tabs_Tab>
+                    <Pod.Tabs_Tab trigger="tab 3">
+                        Tab 3 content
+                    </Pod.Tabs_Tab>
+                    <Pod.Tabs_Tab trigger="tab 4">
+                        Tab 4 content
+                    </Pod.Tabs_Tab>
+                    <Pod.Tabs_Tab trigger="tab 5">
+                        Tab 5 content
+                    </Pod.Tabs_Tab>
+                </Pod.Tabs>
+            </Pod.ContentWrap>
         );
     }
 

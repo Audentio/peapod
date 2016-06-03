@@ -1,14 +1,14 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    wrapper_outer = sheet.addPart('wrapper_outer'),
-    wrapper_inner = sheet.addPart('wrapper_inner'),
-    radio_outer = sheet.addPart('radio_outer'),
-    radio_inner = sheet.addPart('radio_inner'),
-    radio_element = sheet.addPart('radio_element'),
-    label = sheet.addPart('label');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    // const wrapper_outer = sheet.addPart('wrapper_outer');
+    // const wrapper_inner = sheet.addPart('wrapper_inner');
+    const radio_outer = sheet.addPart('radio_outer');
+    const radio_inner = sheet.addPart('radio_inner');
+    const radio_element = sheet.addPart('radio_element');
+    const label = sheet.addPart('label');
 
     // Conditions
     sheet.addCondition('checked').addState({ checked: true });
@@ -21,7 +21,7 @@ module.exports = function (sheetName) {
         height: '$radio.width',
         color: {
             text: '$color.text.dark',
-            background: '$palette.grey50',
+            background: '$palette.grey500',
             backgroundChecked: '$color.primary.base',
             icon: '$color.text.white',
         },
@@ -29,7 +29,7 @@ module.exports = function (sheetName) {
             color: '$palette.grey200',
             colorChecked: '$radio.color.backgroundChecked',
             radius: '$border.radius.large',
-            width: '1px',
+            width: '2px',
             style: 'solid',
         },
         font: {
@@ -49,29 +49,29 @@ module.exports = function (sheetName) {
     main.addSelector({});
 
     radio_outer.addSelector({
-        common:{
+        common: {
             width: '$radio.width',
             height: '$radio.height',
-            background:'transparent',
-            border: '2px solid #ddd',
+            background: 'transparent',
+            borderWidth: '$radio.border.width',
+            borderStyle: '$radio.border.style',
+            borderColor: '$radio.color.background',
             display: 'inline-block',
             marginRight: '$gutter.extrasmall',
-            borderRadius: '50%',
+            borderRadius: '1000px',
             position: 'relative',
+            verticalAlign: 'middle',
         },
     });
     radio_inner.addSelector({
         condition: ['checked'],
         common: {
-            width: '$radio.width',
-            height: '$radio.height',
-            display: 'inline-block',
-            borderRadius: '50%',
-            border: '2px solid #ddd',
-            background: '#ddd',
-            boxShadow: 'inset 0 0 0 2px #fff',
+            display: 'block',
+            borderRadius: '1000px',
+            background: '$radio.color.background',
             position: 'absolute',
-            top: '-2px', left: '-2px',
+            top: '$radio.border.width', left: '$radio.border.width',
+            bottom: '$radio.border.width', right: '$radio.border.width',
         },
     });
     radio_element.addSelector({
@@ -81,9 +81,9 @@ module.exports = function (sheetName) {
     });
 
     label.addSelector({
-        condition: ['checked'],
         common: {
-            color: 'red',
+            fontSize: '$radio.font.size',
+            verticalAlign: 'middle',
         },
     });
 

@@ -7,10 +7,6 @@
 import React, { PropTypes } from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-/**
-* Code component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;

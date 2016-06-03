@@ -30,11 +30,20 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static propTypes = {
         placeholder: React.PropTypes.any,
-        distance: React.PropTypes.number,
+        distance: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number,
+        ]),
         visible: React.PropTypes.bool,
         stay: React.PropTypes.bool,
-        width: React.PropTypes.number,
-        height: React.PropTypes.number,
+        width: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number,
+        ]),
+        height: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number,
+        ]),
         children: React.PropTypes.any,
     }
 

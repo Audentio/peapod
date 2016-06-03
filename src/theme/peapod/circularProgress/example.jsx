@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { ContentWrap, Card, CircularProgress } from 'utility/components.js';
-import PureRender from 'utility/pureRender.js';
-
-const cardStyle = {
-    style: {
-        padding: 20,
-        userSelect: 'none',
-    },
-};
+// import PureRender from 'utility/pureRender.js';
 
 module.exports = class CircularProgressExample extends Component {
     constructor(props, context) {
@@ -50,8 +43,19 @@ module.exports = class CircularProgressExample extends Component {
     render() {
         return (
             <ContentWrap>
-                <Card onClick={this.getRandom} styler={cardStyle}>
+                <Card
+                    onClick={this.getRandom}
+                    styler={{
+                        style: {
+                            padding: 20,
+                            userSelect: 'none',
+                        },
+                    }}
+                >
                     {this.state.circles}
+
+                    <br /><br />
+                    Click anywhere in the container to see the animation
                 </Card>
             </ContentWrap>
         );

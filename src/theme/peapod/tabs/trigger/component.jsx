@@ -1,26 +1,23 @@
-/*! Peapod v<%= package.version %>
-*  Copyright Audentio <%= package.year %>
-*  LICENSE: <%= package.licence %>
-*/
-
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import { Input } from 'utility/components.js';
 
-/**
-*
-* Textarea description
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
+
+    static propTypes = {
+        children: React.PropTypes.any,
+        onClick: React.PropTypes.func,
+    }
 
     render() {
         const style = Pod_Styler.getStyle(this);
 
         return (
-            <Input {...this.props} style={style.main} type="textarea" />
+            <div onClick={this.props.onClick} style={style.main}>
+                {this.props.children}
+            </div>
         );
     }
+
 };

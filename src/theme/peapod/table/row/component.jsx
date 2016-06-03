@@ -14,8 +14,18 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    //shouldComponentUpdate = PureRender;
+    static propTypes = {
+        // TODO: Check these
+        children: React.PropTypes.any,
+        row: React.PropTypes.any,
+        i: React.PropTypes.any,
+        rowProps: React.PropTypes.any,
+        hoveredRow: React.PropTypes.any,
+        columns: React.PropTypes.any,
+        data: React.PropTypes.any,
+    }
 
+    // shouldComponentUpdate = PureRender;
     parseBooleans(content) {
         for (const item in content) {
             if (item === 'value') {
@@ -27,7 +37,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const row = this.props.row;
-        const rowKey = this.props.rowKey;
+        // const rowKey = this.props.rowKey;
         const i = this.props.i;
         const rowProps = this.props.rowProps;
         const hoveredRow = this.props.hoveredRow;

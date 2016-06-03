@@ -4,16 +4,10 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import { Link } from 'react-router';
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-/**
-* Anchor component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
@@ -22,6 +16,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
         super();
 
         this.onClick = this.onClick.bind(this);
+    }
+    static propTypes = {
+        children: React.PropTypes.any,
+        to: React.PropTypes.string,
+        internal: React.PropTypes.bool,
     }
 
     static defaultProps = {
@@ -39,8 +38,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
     onClick() {
         if (/#/g.test(this.props.to)) {
             const elem = document.querySelector(this.props.to.replace(/.+#/, '#'));
-
-
             const elemRectInit = elem.getBoundingClientRect();
 
             const origionalPosition = elemRectInit.top + window.scrollY;
@@ -61,8 +58,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const style = Pod_Styler.getStyle(this);
 
         const regex = /^(https?:\/\/|ftp:\/\/)/g;
+        let anchor;
         if (regex.test(this.props.to) && !this.props.internal) {
-            return (
+            anchor = (
                 <a
                     style={style.main}
                     href={this.props.to}
@@ -73,7 +71,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 </a>
             );
         } else {
-            return (
+            anchor = (
                 <Link
                     style={style.main}
                     to={`${this.props.to}`}
@@ -83,6 +81,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 </Link>
             );
         }
+
+        return anchor;
     }
 
 };

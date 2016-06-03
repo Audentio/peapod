@@ -5,13 +5,20 @@
 */
 
 
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Anchor } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
+
+    constructor(props, context) {
+        super(props, context);
+
+        this.onClickHandler = this.onClickHandler.bind(this);
+        this.ripple = this.ripple.bind(this);
+    }
 
     // Validate props
     static propTypes = {
@@ -29,7 +36,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         noRipple: false,
     }
 
-    onClickHandler = (e) => {
+    onClickHandler(e) {
         const { onClick, noRipple } = this.props;
 
         if (noRipple === false) {
@@ -72,10 +79,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const ripple = <span ref="rippleContainer" style={style.rippleContainer}>{this.state.ripples}</span>;
         const { children, label, href } = this.props;
 
-        // Anchor tag <a> if href specified
+        // Anchor tag <Anchor> if href specified
         if (href) {
             return (
-                <Anchor ref="button" to={href} styler={{ style:style.main }} onClick={this.onClickHandler}>
+                <Anchor ref="button" to={href} styler={{ style: style.main }} onClick={this.onClickHandler}>
                     {children || label} {ripple}
                 </Anchor>
             );

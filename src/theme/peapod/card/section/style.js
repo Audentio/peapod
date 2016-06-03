@@ -27,10 +27,10 @@ module.exports = function (sheetName) {
 
     main.addSelector({
         common: {
-            paddingTop: '16px',
-            paddingRight: '16px',
-            paddingBottom: '16px',
-            paddingLeft: '16px',
+            paddingTop: '$gutter.internal',
+            paddingRight: '$gutter.internal',
+            paddingBottom: '$gutter.internal',
+            paddingLeft: '$gutter.internal',
             clear: 'both',
             overflow: 'hidden',
             position: 'relative',
@@ -38,21 +38,21 @@ module.exports = function (sheetName) {
     }).addSelector({
         condition: ['titleLarge'],
         common: {
-            paddingTop: '24px',
-            paddingBottom: '24px',
+            paddingTop: '$gutter.small',
+            paddingBottom: '$gutter.small',
         },
     }).addSelector({
         condition: ['titleWithSupports'],
         common: {
-            paddingTop: '24px',
+            paddingTop: '$gutter.small',
         },
     }).addSelector({
         condition: ['actionBar'],
         common: {
-            paddingTop: '8px',
-            paddingRight: '8px',
-            paddingBottom: '8px',
-            paddingLeft: '8px',
+            paddingTop: '$gutter.extrasmall',
+            paddingRight: '$gutter.extrasmall',
+            paddingBottom: '$gutter.extrasmall',
+            paddingLeft: '$gutter.extrasmall',
         },
     }).addSelector({
         condition: ['supportingText'],
@@ -62,7 +62,7 @@ module.exports = function (sheetName) {
     }).addSelector({
         condition: ['media'],
         common: {
-            marginTop: '-8px',
+            marginTop: 0 - parseFloat(Pod_Vars.get('gutter.extrasmall')),
 
             paddingTop: '0px',
             paddingRight: '0px',
@@ -84,13 +84,13 @@ module.exports = function (sheetName) {
         common: {
             marginTop: '0px',
             float: 'right',
-            width: '48px',
+            width: '$gutter.extralarge',
 
             clear: 'none',
-            paddingTop: '8px',
-            paddingRight: '8px',
-            paddingBottom: '8px',
-            paddingLeft: '8px',
+            paddingTop: '$gutter.extrasmall',
+            paddingRight: '$gutter.extrasmall',
+            paddingBottom: '$gutter.extrasmall',
+            paddingLeft: '$gutter.extrasmall',
         },
     }).addSelector({
         condition: ['mediaArea'],
@@ -123,7 +123,6 @@ module.exports = function (sheetName) {
             background: 'rgba(0,0,0,.4)',
             color: 'white',
             width: '100%',
-            // padding: '16px'
         },
     }).addSelector({
         condition: ['light'],

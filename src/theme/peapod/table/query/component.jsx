@@ -4,13 +4,12 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
-import PureRender from 'utility/pureRender.js';
+// import Pod_Styler from 'utility/styler.js';
+// import PureRender from 'utility/pureRender.js';
 
 import { Button, Icon, Grid, Div, Portal } from 'utility/components.js';
 
-
-var topButtonStyle = {
+const topButtonStyle = {
     height: '2.5rem',
     lineHeight: '1.1rem',
     fontSize: '1.1rem',
@@ -23,13 +22,20 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    //shouldComponentUpdate = PureRender;
+    // shouldComponentUpdate = PureRender;
+
+    static propTypes = {
+        children: React.PropTypes.any,
+
+        queries: React.PropTypes.any,
+        removeQuery: React.PropTypes.any,
+    }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        // const style = Pod_Styler.getStyle(this);
 
         const queries = this.props.queries || [];
-        const removeQuery = this.props.removeQuery || function() {};
+        const removeQuery = this.props.removeQuery || function () {};
         const noQueries = (queries.length === 0) ? <div>No Queries</div> : null;
 
         const content = queries.map(

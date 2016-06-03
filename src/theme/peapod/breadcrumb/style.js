@@ -5,20 +5,27 @@ module.exports = function (sheetName) {
     const main = sheet.addMain();
     const listitem = sheet.addPart('listitem');
 
-    // Conditions
-
     // Variables
     sheet.setValues({});
 
-
     main.addSelector({
-        common: {},
+        common: {
+            height: '$gutter.extralarge',
+            lineHeight: '$gutter.extralarge',
+            background: 'white',
+            paddingLeft: '$gutter.extrasmall',
+            paddingRight: '$gutter.extrasmall',
+            borderRadius: '$border.radius.small',
+            color: '$palette.grey500',
+        },
     });
 
     listitem.addSelector({
         common: {
+            height: '$gutter.extralarge',
             display: 'inline-block',
-            padding: '8px',
+            paddingLeft: '$gutter.extrasmall',
+            paddingRight: '$gutter.extrasmall',
         },
     });
 
