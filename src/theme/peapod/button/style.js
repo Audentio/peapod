@@ -59,7 +59,7 @@ module.exports = function (sheetName) {
         denseLineHeight: '$button.denseHeight',
         font: {
             family: '$font.family.primary',
-            size: '$font.size.body1',
+            size: '$font.size.button',
             denseSize: '$font.size.small',
             weight: '$font.weight.medium',
         },

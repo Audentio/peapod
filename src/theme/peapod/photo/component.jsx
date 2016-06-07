@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Pod_Styler from 'utility/styler.js';
-import { Icon } from 'utility/components.js';
+import { Icon, Lazy } from 'utility/components.js';
 import Pod_Helper from 'utility/helper.js';
 
 const options = {
@@ -252,12 +252,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         return (
             <div style={style.main}>
-                <img
-                    onClick={showLightbox}
-                    src={this.state.visible ? this.imageURL : options.blankImage}
-                    alt={this.props.alt}
-                    style={style.image}
-                />
+                <Lazy>
+                    <img
+                        onClick={showLightbox}
+                        src={this.imageURL}
+                        alt={this.props.alt}
+                        style={style.image}
+                    />
+                </Lazy>
 
                 {this.props.caption &&
                     <span style={style.caption}>{this.props.caption}</span>

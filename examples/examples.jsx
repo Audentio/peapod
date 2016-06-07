@@ -20,7 +20,6 @@ import fixedElems from './reducers';
 
 const store = createStore(fixedElems);
 
-
 const measurePerf = false;
 
 if (measurePerf) Perf.start();

@@ -7,7 +7,7 @@ module.exports = function (sheetName) {
     // Variables
     sheet.setValues({
         maxWidth: '$site.maxWidth',
-        width: '95%',
+        width: '$site.width',
     });
 
     main.addSelector({
