@@ -8,11 +8,8 @@ module.exports = function (sheetName) {
     const quoteIconRight = sheet.addPart('quoteIconRight');
     const quoteIconLeft = sheet.addPart('quoteIconLeft');
 
-    sheet.addCondition('kindGeneral').addStyler({ kind: 'general' });
-    sheet.addCondition('kindInfo').addStyler({ kind: 'info' });
-    sheet.addCondition('kindSuccess').addStyler({ kind: 'success' });
-    sheet.addCondition('kindWarning').addStyler({ kind: 'warning' });
-    sheet.addCondition('kindDanger').addStyler({ kind: 'danger' });
+    const content = sheet.addPart('content');
+    const quote = sheet.addPart('quote');
 
     // Variables
     sheet.setValues({});
@@ -51,6 +48,12 @@ module.exports = function (sheetName) {
             color: 'rgba(0,0,0,.1)',
             transform: 'scaleX(-1)',
         },
+    });
+    quote.addSelector({
+        common: {},
+    });
+    content.addSelector({
+        common: {},
     });
     return sheet;
 };

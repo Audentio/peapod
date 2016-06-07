@@ -23,7 +23,6 @@ module.exports = function (sheetName) {
     function getScale(scale, width, height) {
         const largest = (width > height) ? width : height;
         const returnedscale = (scale > 100) ? (scale / largest) : scale;
-        console.log(returnedscale);
         return returnedscale;
     }
 
