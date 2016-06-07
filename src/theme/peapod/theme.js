@@ -353,7 +353,7 @@ const globalVars = {
         // Borders
         border: {
             color: 'transparent',
-            width: '0px',
+            width: '2px',
             style: 'solid',
             radius: {
                 small: '2px',

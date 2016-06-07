@@ -135,7 +135,7 @@ module.exports = function (sheetName) {
 
             lineHeight: '28px', // TODO: fix this
 
-            borderWidth: '2px',
+            borderWidth: '$border.width',
             borderStyle: 'solid',
             borderColor: '$button.color.base.background',
         },

@@ -32,10 +32,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         let returned;
         if (this.props.href && this.props.textstyle === 'button') {
-            returned = (<Button href={this.props.href} styler={{ kind: 'general' }}>
-                {this.props.children}
-                {subtext}
-            </Button>);
+            returned = (
+                <Button href={this.props.href} styler={{ kind: 'general' }}>
+                    {this.props.children}
+                    {subtext}
+                </Button>
+        );
         } else if (this.props.textstyle === 'button') {
             returned = (
                 <Button
@@ -44,6 +46,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         type: this.props.type || 'text',
                         dialog: this.props.dialog || false,
                         dense: this.props.dense || false,
+                        style: style.button,
                     }}
                 >
                     {this.props.children}
