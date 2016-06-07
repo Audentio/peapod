@@ -4,6 +4,7 @@ module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
     const main = sheet.addMain();
     const anchor = sheet.addPart('anchor');
+    const button = sheet.addPart('button');
     const subtext = sheet.addPart('subtext');
 
     // Conditions
@@ -43,9 +44,6 @@ module.exports = function (sheetName) {
 
     subtext.addSelector({
         common: {
-            // position: 'absolute',
-            // top: 0, right: '$gutter.small',
-            // float: 'right',
             display: 'inline-block',
             textAlign: 'right',
             paddingLeft: '$gutter.small',
@@ -66,6 +64,10 @@ module.exports = function (sheetName) {
                 color: 'inherit',
             },
         },
+    });
+
+    button.addSelector({
+        common: {},
     });
 
     return sheet;

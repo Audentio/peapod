@@ -18,6 +18,7 @@ module.exports = function (sheetName) {
             color: '$font.color.primary',
             lineHeight: '2.6rem',
             fontWeight: '$font.weight.light',
+            display: 'inline-block',
         },
     }).addSelector({
         condition: ['secondary'],
