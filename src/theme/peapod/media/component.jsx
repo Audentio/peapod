@@ -22,7 +22,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     // Validate props
     static propTypes = {
-        title: React.PropTypes.string,
+        title: React.PropTypes.any,
         figure: React.PropTypes.oneOfType([
             React.PropTypes.object,
             React.PropTypes.bool,

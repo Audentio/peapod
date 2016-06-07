@@ -19,8 +19,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const style = Pod_Styler.getStyle(this);
 
         return (
-            <div style={style.main}>
-                {this.props.children}
+            <div>
+                <div style={style.main}>
+                    {this.props.children}
+                </div>
             </div>
         );
     }

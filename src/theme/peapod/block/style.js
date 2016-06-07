@@ -7,6 +7,7 @@ module.exports = function (sheetName) {
     // Conditions
     sheet.addCondition('alignRight').addProp({ align: 'right' });
     sheet.addCondition('alignLeft').addProp({ align: 'left' });
+    sheet.addCondition('alignCenter').addProp({ align: 'center' });
 
     // Variables
     sheet.setValues({});
@@ -26,6 +27,11 @@ module.exports = function (sheetName) {
         common: {
             float: 'right',
             marginLeft: '$gutter.small',
+        },
+    }).addSelector({
+        condition: ['alignCenter'],
+        common: {
+            textAlign: 'center',
         },
     });
 
