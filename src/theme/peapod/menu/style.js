@@ -5,6 +5,7 @@ module.exports = function (sheetName) {
     const main = sheet.addMain();
     const portal = sheet.addPart('portal');
     const trigger = sheet.addPart('trigger');
+    const container = sheet.addPart('container');
 
     sheet.addCondition('level').addStyler({ level: 1 });
     sheet.addCondition('left').addStyler({ left: true });
@@ -19,6 +20,12 @@ module.exports = function (sheetName) {
         paddingBottom: '$gutter.internal',
         borderRadius: '$border.radius.small',
         zIndex: '$zIndex.level6',
+    });
+
+    container.addSelector({
+        common: {
+            display: 'inline-block',
+        },
     });
 
     main.addSelector({

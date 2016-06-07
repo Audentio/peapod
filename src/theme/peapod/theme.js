@@ -329,19 +329,24 @@ const globalVars = {
                 normal: '400',
                 medium: '500',
                 bold: '700',
+                black: '900',
             },
             margins: {
-                display4: '112px',
-                display3: '48px',
-                display2: '40px',
-                display1: '32px',
-                headline: '28px',
-                title: '28px',
-                subheading: '24px',
-                body2: '24px',
-                body1: '20px',
-                caption: '12px',
-                button: '14px',
+                display4: '11.2rem',
+                display3: '4.8rem',
+                display2: '4.0rem',
+                display1: '3.2rem',
+                headline: '2.8rem',
+                title: '2.8rem',
+                subheading: '2.4rem',
+                body2: '2.4rem',
+                body1: '2.0rem',
+                caption: '1.2rem',
+                button: '1.4rem',
+            },
+            color: {
+                primary: '#777',
+                secondary: '#000',
             },
         },
 
@@ -477,6 +482,7 @@ const globalVars = {
 
         site: {
             maxWidth: 1200,
+            width: '95%',
         },
 
         zIndex: {

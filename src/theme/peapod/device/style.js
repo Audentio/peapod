@@ -40,6 +40,8 @@ module.exports = function (sheetName) {
 
                 width: version.width,
                 height: version.height,
+
+                display: 'inline-block',
             },
         }).addSelector({
             condition: ['horizontal', deviceversion, devicename].filter((e) => e),

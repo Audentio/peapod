@@ -22,6 +22,7 @@ module.exports = function (sheetName) {
             borderBottomColor: '$section.borderColor',
             paddingTop: '$section.padding',
             paddingBottom: '$section.padding',
+            fontFamily: '$font.family.primary',
         },
     });
 
