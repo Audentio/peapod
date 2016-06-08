@@ -37,7 +37,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     {this.props.children}
                     {subtext}
                 </Button>
-        );
+            );
         } else if (this.props.textstyle === 'button') {
             returned = (
                 <Button
