@@ -18,6 +18,8 @@ module.exports = function (sheetName) {
 
     sheet.addCondition('dense').addStyler({ dense: true });
     sheet.addCondition('dialog').addStyler({ dialog: true });
+    sheet.addCondition('large').addStyler({ large: true });
+
 
     sheet.addCondition('icon').addStyler({ type: 'icon' });
     sheet.addCondition('text').addStyler({ type: 'text' });
@@ -100,6 +102,13 @@ module.exports = function (sheetName) {
 
             color: '$button.color.base.color',
             backgroundColor: '$button.color.base.background',
+        },
+    })
+    .addSelector({
+        condition: ['large'],
+        common: {
+            height: '42px',
+            lineHeight: '42px',
         },
     })
     .addSelector({
