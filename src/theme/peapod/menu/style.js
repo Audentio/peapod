@@ -9,6 +9,7 @@ module.exports = function (sheetName) {
 
     sheet.addCondition('level').addStyler({ level: 1 });
     sheet.addCondition('left').addStyler({ left: true });
+    sheet.addCondition('text').addProp({ style: 'text' });
 
     const add = (valueone, valuetwo) => (parseFloat(Pod_Vars.get(valueone)) + parseFloat(Pod_Vars.get(valuetwo)));
 
@@ -37,6 +38,12 @@ module.exports = function (sheetName) {
             borderRadius: '$menu.borderRadius',
             zIndex: '$menu.zIndex',
             position: 'absolute',
+        },
+    }).addSelector({
+        condition: ['text'],
+        common: {
+            background: 'transparent',
+            boxShadow: 'none',
         },
     }).addSelector({
         condition: ['level'],

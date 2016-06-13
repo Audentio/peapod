@@ -135,7 +135,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         } else {
             const orientation = this.props.orientation;
             returnedMenu = (
-                <div style={style.container}>
+                <div style={[style.container, style.main]}>
                     {React.Children.map(this.props.children, (element) => React.cloneElement(element, { textstyle: this.props.style || 'button', orientation }))}
                 </div>
             );
