@@ -3,6 +3,7 @@ import { Sheet } from 'utility/stylesheet.js';
 module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
     const main = sheet.addMain();
+    const scrolled = sheet.addPart('scrolled');
 
     // Variables
     main.addSelector({
@@ -10,6 +11,12 @@ module.exports = function (sheetName) {
             position: 'static',
             zIndex: '$zIndex.level5',
             willChange: 'position',
+        },
+    });
+
+    scrolled.addSelector({
+        common: {
+            transition: 'all .3s',
         },
     });
 

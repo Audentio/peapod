@@ -46,7 +46,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         this.origionalPosition = elemRectInit.top + window.scrollY;
         const origionalHeight = elementInit.scrollHeight;
-        const alwaysFixed = this.origionalPosition === 0 || this.props.alwaysFixed;
+        // const alwaysFixed = this.origionalPosition === 0 || this.props.alwaysFixed;
+        const alwaysFixed = this.props.alwaysFixed;
 
         this.state = {
             position: 'relative',
@@ -78,6 +79,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const doc = document.documentElement;
             const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
+            console.log(top, this.origionalPosition);
             const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'relative';
 
             let containerWidth = '100%';
@@ -103,6 +105,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
             style.main.width = this.state.width;
         }
 
+        const scrolledStyles = (this.state.position === 'fixed') ? Object.assign({}, style.main, style.scrolled) : style.main;
+
         const fixedStyle = {
             height: this.state.origionalHeight,
             // transform: 'translate3d(0, 0, 0)'
@@ -111,7 +115,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         if (this.props.onScroll) {
             return (
                 <div style={fixedStyle} ref={(ref) => { this.fixedElem = ref; }}>
-                    <div style={style.main} >
+                    <div style={scrolledStyles}>
                         {this.props.children}
                     </div>
                 </div>
