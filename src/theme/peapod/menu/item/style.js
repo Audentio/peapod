@@ -10,6 +10,7 @@ module.exports = function (sheetName) {
     // Conditions
     sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
     sheet.addCondition('hovered').addProp({ hovered: true });
+    sheet.addCondition('text').addProp({ textstyle: 'text' });
 
     // Variables
     sheet.setValues({});
@@ -23,6 +24,7 @@ module.exports = function (sheetName) {
             background: '$palette.white',
             // width: '100%',
             position: 'relative',
+            color: 'inherit',
 
             ':hover': {
                 background: '$palette.grey100',
@@ -32,6 +34,24 @@ module.exports = function (sheetName) {
         condition: ['hovered'],
         common: {
             background: '$palette.grey100',
+        },
+    }).addSelector({
+        condition: ['text'],
+        common: {
+            background: 'transparent',
+            paddingLeft: 0,
+            paddingRight: 0,
+
+            ':hover': {
+                background: 'transparent',
+            },
+        },
+    }).addSelector({
+        condition: ['hovered', 'text'],
+        common: {
+            background: 'transparent',
+            paddingLeft: 0,
+            paddingRight: 0,
         },
     }).addSelector({
         condition: ['horizontal'],

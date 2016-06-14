@@ -315,14 +315,15 @@ const globalVars = {
                 // TODO: use root font size and scale from there. default 10px
                 // Use below naming 5 ether way
 
-                // old
-                xsmall: '1.1rem',
-                small: '13px',
-                normal: '14px',
-                large: '16px',
-                xlarge: '1.8rem',
-                xxlarge: '2.4rem',
-                xxxlarge: '3.0rem',
+                xxxlarge: '6.4rem',
+                xxlarge: '4.7rem',
+                xlarge: '3.6rem',
+                large: '2.2rem',
+                normal: '1.8rem',
+                small: '1.6rem',
+                xsmall: '1.4rem',
+                xxsmall: '1.2rem',
+                xxxsmall: '1rem',
             },
             weight: {
                 light: '300',

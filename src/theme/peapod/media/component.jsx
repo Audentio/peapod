@@ -48,7 +48,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const figureLeft = (this.props.align === 'left') ? figure : '';
         const figureRight = (this.props.align === 'right') ? figure : '';
 
-        const titleContents = (typeof this.props.figure === React.PropTypes.string) ? (<Heading kind="h4">{this.props.title}</Heading>) : this.props.title;
+        const titleContents = (typeof this.props.title === 'string') ? (<Heading kind="h4">{this.props.title}</Heading>) : this.props.title;
         const title = (this.props.title) ? titleContents : '';
 
         return (
