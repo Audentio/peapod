@@ -11,12 +11,13 @@ module.exports = function (sheetName) {
             position: 'static',
             zIndex: '$zIndex.level5',
             willChange: 'position',
+            transition: 'all .3s',
         },
     });
 
     scrolled.addSelector({
         common: {
-            transition: 'all .3s',
+            // transition: 'all .3s',
         },
     });
 
