@@ -35,7 +35,7 @@ module.exports = function (sheetName) {
         },
         font: {
             family: 'inherit',
-            size: '$font.size.large',
+            size: '$font.size.small',
         },
     }).setValues({
         color: {
