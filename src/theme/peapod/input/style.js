@@ -9,6 +9,7 @@ module.exports = function (sheetName) {
     const placeholder = sheet.addPart('placeholder');
     const charCounter = sheet.addPart('charCounter');
     const evaluation = sheet.addPart('evaluation');
+    const wrapper = sheet.addPart('wrapper');
 
     const bouncy = {
         '0%': { transform: 'matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
@@ -60,10 +61,10 @@ module.exports = function (sheetName) {
         textIndent: 0,
         height: '$gutter.large',
         padding: {
-            top: '0px',
-            right: '0px',
-            bottom: '0px',
-            left: '0px',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
         },
         textareaPadding: {
             top: 10,
@@ -100,6 +101,12 @@ module.exports = function (sheetName) {
             color: '$palette.grey200',
         },
     }, 'dark');
+
+    wrapper.addSelector({
+        common: {
+            display: 'inline-block',
+        },
+    });
 
     main.addSelector({
         common: {

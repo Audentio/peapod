@@ -3,9 +3,9 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import Pod_Styler from 'utility/styler.js';
-import { Icon } from 'utility/components.js';
+// import { Icon } from 'utility/components.js';
 import Logger from 'utility/logger.js';
 
 
@@ -27,6 +27,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.state = {
             dismissed: this.isDismissed(),
         };
+
+        this.dismiss = this.dismiss.bind(this);
     }
 
     static propTypes = {
@@ -38,35 +40,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
             PropTypes.element,
             PropTypes.node,
         ]),
+        full: PropTypes.bool,
+        multiline: PropTypes.bool,
     }
 
     static defaultProps = {
         styler: {
             kind: 'general',
         },
-    }
-
-    render() {
-        const style = Pod_Styler.getStyle(this);
-
-        return (
-            <div style={style.main} id={this.props.id}>
-                {!this.state.dismissed &&
-
-                    <div style={style.wrapper}>
-
-                        {this.props.title && <strong style={style.title}>{this.props.title}</strong>}
-
-                        <span style={style.message}>
-                            {this.props.children}
-                        </span>
-                        {this.props.dismissable &&
-                            <Icon onClick={this.dismiss} styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon>
-                        }
-                    </div>
-                }
-            </div>
-        );
     }
 
     // Check if user dismissed the notification already
@@ -96,5 +77,34 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
     }
 
+    render() {
+        const style = Pod_Styler.getStyle(this);
+
+        const dismiss = (<div style={style.dismissIcon}>
+            {/* <Icon styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon> */}
+            <div onClick={this.dismiss}>{this.props.dismissable && 'Dismiss'}</div>
+        </div>);
+
+        const topIcon = (!this.props.full) ? dismiss : '';
+        const bottomIcon = (this.props.full) ? dismiss : '';
+
+        return (
+            <div style={style.main} id={this.props.id}>
+                {!this.state.dismissed &&
+
+                    <div style={style.wrapper}>
+                        {topIcon}
+
+                        {this.props.title && <strong style={style.title}>{this.props.title}</strong>}
+
+                        <span style={style.message}>
+                            {this.props.children}
+                        </span>
+                        {bottomIcon}
+                    </div>
+                }
+            </div>
+        );
+    }
 
 };

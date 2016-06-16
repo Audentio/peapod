@@ -1,16 +1,16 @@
 import { Sheet } from 'utility/stylesheet.js';
-import Radium from 'radium';
+// import Radium from 'radium';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    caption = sheet.addPart('caption'),
-    image = sheet.addPart('image'),
-    lightbox = sheet.addPart('lightbox'),
-    lightboxInner = sheet.addPart('lightboxInner'),
-    lightboxImage = sheet.addPart('lightboxImage'),
-    lightboxActions = sheet.addPart('lightboxActions'),
-    lightboxAction = sheet.addPart('lightboxAction');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const caption = sheet.addPart('caption');
+    const image = sheet.addPart('image');
+    const lightbox = sheet.addPart('lightbox');
+    const lightboxInner = sheet.addPart('lightboxInner');
+    const lightboxImage = sheet.addPart('lightboxImage');
+    const lightboxActions = sheet.addPart('lightboxActions');
+    const lightboxAction = sheet.addPart('lightboxAction');
 
     // Conditions
     sheet.addCondition('lightboxVisible').addState({ lightboxVisible: true });
@@ -29,32 +29,31 @@ module.exports = function (sheetName) {
     });
 
     // Animation keyframes
-    var smackKeyframes = Radium.keyframes({
-        '0%': { transform: 'matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '3.2%': { transform: 'matrix3d(0.673, 0.192, 0, 0, 0.126, 0.673, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '4.5%': { transform: 'matrix3d(0.743, 0.25, 0, 0, 0.163, 0.743, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '6.41%': { transform: 'matrix3d(0.836, 0.301, 0, 0, 0.196, 0.836, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '9.01%': { transform: 'matrix3d(0.94, 0.308, 0, 0, 0.201, 0.94, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '12.71%': { transform: 'matrix3d(1.032, 0.234, 0, 0, 0.154, 1.032, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '13.51%': { transform: 'matrix3d(1.044, 0.212, 0, 0, 0.14, 1.044, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '17.92%': { transform: 'matrix3d(1.07, 0.098, 0, 0, 0.066, 1.07, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '18.92%': { transform: 'matrix3d(1.069, 0.077, 0, 0, 0.052, 1.069, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '25.23%': { transform: 'matrix3d(1.038, -0.001, 0, 0, -0.001, 1.038, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '29.03%': { transform: 'matrix3d(1.016, -0.015, 0, 0, -0.01, 1.016, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '31.43%': { transform: 'matrix3d(1.006, -0.017, 0, 0, -0.011, 1.006, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '34.63%': { transform: 'matrix3d(0.997, -0.014, 0, 0, -0.01, 0.997, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '40.14%': { transform: 'matrix3d(0.992, -0.007, 0, 0, -0.005, 0.992, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '56.46%': { transform: 'matrix3d(1, 0.001, 0, 0, 0.001, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '62.36%': { transform: 'matrix3d(1.001, 0.001, 0, 0, 0, 1.001, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '81.48%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '84.68%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-        '100%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
-    }, 'smack');
+    // const smackKeyframes = Radium.keyframes({
+    //     '0%': { transform: 'matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '3.2%': { transform: 'matrix3d(0.673, 0.192, 0, 0, 0.126, 0.673, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '4.5%': { transform: 'matrix3d(0.743, 0.25, 0, 0, 0.163, 0.743, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '6.41%': { transform: 'matrix3d(0.836, 0.301, 0, 0, 0.196, 0.836, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '9.01%': { transform: 'matrix3d(0.94, 0.308, 0, 0, 0.201, 0.94, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '12.71%': { transform: 'matrix3d(1.032, 0.234, 0, 0, 0.154, 1.032, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '13.51%': { transform: 'matrix3d(1.044, 0.212, 0, 0, 0.14, 1.044, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '17.92%': { transform: 'matrix3d(1.07, 0.098, 0, 0, 0.066, 1.07, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '18.92%': { transform: 'matrix3d(1.069, 0.077, 0, 0, 0.052, 1.069, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '25.23%': { transform: 'matrix3d(1.038, -0.001, 0, 0, -0.001, 1.038, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '29.03%': { transform: 'matrix3d(1.016, -0.015, 0, 0, -0.01, 1.016, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '31.43%': { transform: 'matrix3d(1.006, -0.017, 0, 0, -0.011, 1.006, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '34.63%': { transform: 'matrix3d(0.997, -0.014, 0, 0, -0.01, 0.997, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '40.14%': { transform: 'matrix3d(0.992, -0.007, 0, 0, -0.005, 0.992, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '56.46%': { transform: 'matrix3d(1, 0.001, 0, 0, 0.001, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '62.36%': { transform: 'matrix3d(1.001, 0.001, 0, 0, 0, 1.001, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '81.48%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '84.68%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    //     '100%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
+    // }, 'smack');
 
     main.addSelector({
         common: {
             display: 'inline-block',
-            // position: 'relative' // was causing an issue with positioned elements
         },
     });
 
@@ -74,7 +73,6 @@ module.exports = function (sheetName) {
         common: {
             display: 'block',
             padding: '6px 10px',
-            // position: 'absolute',
             fontSize: '$font.size.small',
             bottom: 0,
             left: 0,
@@ -90,14 +88,12 @@ module.exports = function (sheetName) {
 
     lightbox.addSelector({
         common: {
-            display: 'table',
             position: 'fixed',
             zIndex: 999,
             backgroundColor: '$photo.color.lightboxBackground',
             width: '100%',
             height: '100%',
-            top: 0,
-            left: 0,
+            top: 0, left: 0,
             transition: '200ms',
             visibility: 'hidden',
             opacity: 0,

@@ -3,16 +3,10 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import moment from 'moment-timezone';
 import Pod_Styler from 'utility/styler.js';
 
-
-/**
-*
-* Create formatted & self-updating timestamps from dateTime.
-*
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
@@ -124,13 +118,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         // Decide Output style
         switch (this.props.output) {
-            case 'relative':
+        case 'relative':
             return this.state.timeElapsed;
 
-            case 'calendar':
+        case 'calendar':
             return timestamp.calendar();
 
-            default: // absolute
+        default: // absolute
             return timestamp.format(format);
         }
     }

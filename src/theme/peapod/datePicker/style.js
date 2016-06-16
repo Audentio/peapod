@@ -6,11 +6,6 @@ module.exports = function (sheetName) {
     const card = sheet.addPart('card');
     const calendar = sheet.addPart('calendar');
 
-    // Conditions
-    // Variables
-    sheet.setValues({
-    });
-
     main.addSelector({
         common: {
             display: 'inline-block',

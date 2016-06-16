@@ -14,9 +14,9 @@ import TusharDev from './pages/tusharDev.jsx';
 import Demo from './pages/demo.jsx';
 
 import { createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import fixedElems from './reducers';
-import { addFixed } from './actions';
+// import { addFixed } from './actions';
 
 const store = createStore(fixedElems);
 

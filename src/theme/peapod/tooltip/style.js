@@ -1,30 +1,30 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName);
-    var main = sheet.addMain();
-    var tooltip = sheet.addPart('tooltip');
-    var arrow = sheet.addPart('arrow');
-    var text = sheet.addPart('text');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const tooltip = sheet.addPart('tooltip');
+    const arrow = sheet.addPart('arrow');
+    // const text = sheet.addPart('text');
 
     // Conditions
-    sheet.addCondition('positionTop').addFunction(function (instance) {
-        return instance.styler.hasOwnProperty('position') && /^top/.exec(instance.styler.position);
-    });
+    sheet.addCondition('positionTop').addFunction((instance) =>
+        instance.styler.hasOwnProperty('position') && /^top/.exec(instance.styler.position)
+    );
     sheet.addCondition('positionTopRight').addStyler({ position: 'top-right' });
     sheet.addCondition('positionTopLeft').addStyler({ position: 'top-left' });
 
     sheet.addCondition('positionRight').addStyler({ position: undefined });
 
-    sheet.addCondition('positionBottom').addFunction(function (instance) {
-        return instance.styler.hasOwnProperty('position') && /^bottom/.exec(instance.styler.position);
-    });
+    sheet.addCondition('positionBottom').addFunction((instance) =>
+        instance.styler.hasOwnProperty('position') && /^bottom/.exec(instance.styler.position)
+    );
     sheet.addCondition('positionBottomRight').addStyler({ position: 'bottom-right' });
     sheet.addCondition('positionBottomLeft').addStyler({ position: 'bottom-left' });
 
-    sheet.addCondition('positionLeft').addFunction(function (instance) {
-        return instance.styler.hasOwnProperty('position') && /^left/.exec(instance.styler.position);
-    });
+    sheet.addCondition('positionLeft').addFunction((instance) =>
+        instance.styler.hasOwnProperty('position') && /^left/.exec(instance.styler.position)
+    );
 
 
     sheet.addCondition('mobile').addStyler({ mobile: true });
@@ -63,7 +63,7 @@ module.exports = function (sheetName) {
             lineHeight: '$tooltip.height',
             fontSize: '$tooltip.fontSize',
             background: '$palette.grey700',
-            color:'$tooltip.color',
+            color: '$tooltip.color',
             borderRadius: '$tooltip.borderRadius',
             opacity: '$tooltip.opacity',
             position: 'absolute',
@@ -146,6 +146,7 @@ module.exports = function (sheetName) {
         common: {
             left: 'auto',
             right: '100%',
+            top: '50%',
             marginLeft: 0, marginRight: '$tooltip.margin',
             transform: 'translateY(-50%)',
         },

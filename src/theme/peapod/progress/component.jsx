@@ -6,17 +6,10 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
-/**
-* Icon component
-*
-* @element Pod_icon
-* @param {number} [vaulue=-1] - Progress value. Negative values render indeterminate progress
-* @param {string} [max=100] - Max value. Default is 100 so `value` is basically a percentage unless max is changed
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
-
     static displayName = componentName;
+    
     constructor(props, context) {
         super(props, context);
         this.getScale = this.getScale.bind(this);
@@ -41,12 +34,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this)
+        const style = Pod_Styler.getStyle(this);
 
         return (
             <div style={style.main}>
                 <div style={[style.progress, this.getScale()]}></div>
             </div>
-        )
+        );
     }
 };

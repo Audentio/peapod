@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import PureRender from 'utility/pureRender.js';
+// import PureRender from 'utility/pureRender.js';
 
 import { isFunction, sortBy as _sorter, values as _values, reverse as _reverse, merge as _merge } from 'lodash';
 
@@ -29,8 +29,8 @@ import {
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
-    //shouldComponentUpdate = PureRender;
 
+    // shouldComponentUpdate = PureRender;
     constructor(props, context) {
         super(props, context);
 
@@ -163,7 +163,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
             this.setState({ data });
 
-            this.forceUpdate()
+            this.forceUpdate();
         }
     }
 
@@ -391,8 +391,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
                                         height: '$table.headerHeight',
                                         fontSize: '$font.size.xxlarge',
                                         lineHeight: '$table.headerHeight',
-                                        paddingLeft: '$gutter.extrasmall',
-                                        paddingRight: '$gutter.extrasmall',
+                                        paddingLeft: '10px',
+                                        paddingRight: '14px',
                                     },
                                 }}
                             >
@@ -431,10 +431,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
                             <Button
                                 styler={{
                                     kind: 'base',
+                                    dense: true,
                                     style: {
-                                        fontSize: '$font.size.xsmall',
-                                        height: '2.5rem',
-                                        lineHeight: '2.5rem',
+                                        // fontSize: '$font.size.xsmall',
+                                        // height: '2.5rem',
+                                        // lineHeight: '2.5rem',
 
                                     },
                                 }}

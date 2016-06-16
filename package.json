@@ -11,7 +11,7 @@
     "doc": "node docServer.js",
     "lint": "eslint --format compact src",
     "lint-fix": "eslint --fix src",
-    "dev": "webpack -p --config webpack.config.prod.js --watch",
+    "dev": "webpack --config webpack.config.prod.js --watch",
     "deploy": "webpack -p --config webpack.config.prod.js"
   },
   "repository": {

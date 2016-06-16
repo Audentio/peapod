@@ -122,8 +122,8 @@ module.exports = function (sheetName) {
             get denseLineHeight() { return component.denseHeight; },
             font: {
                 family: theme.font.family.primary,
-                size: '14px',
-                denseSize: '13px',
+                size: theme.font.size.body1,
+                denseSize: theme.font.size.small,
                 weight: theme.font.weight.medium,
             },
             transition: {
@@ -141,7 +141,7 @@ module.exports = function (sheetName) {
             common: {
                 display: 'inline-block',
                 borderRadius: component.border.radius,
-                border: 'none',
+                borderStyle: 'none',
                 position: 'relative',
                 overflow: 'hidden', // prevent ripple overflow
                 textDecoration: 'none',
@@ -191,6 +191,9 @@ module.exports = function (sheetName) {
             common: {
                 backgroundColor: 'transparent',
                 color: component.color.base.background,
+
+                lineHeight: '28px', // TODO: fix this
+
                 borderWidth: '2px',
                 borderStyle: 'solid',
                 borderColor: component.color.base.background,
@@ -234,7 +237,6 @@ module.exports = function (sheetName) {
                 borderRadius: '1000px',
             },
         });
-
 
         for (const index in buttonKinds) {
             if (buttonKinds[index]) {
@@ -287,8 +289,10 @@ module.exports = function (sheetName) {
                     common: {
                         ':hover': {
                             backgroundColor: 'transparent',
-                            color: component.color[buttonKinds[index]].hover.primary,
-                            borderColor: component.color[buttonKinds[index]].hover.primary,
+                            color: component.color[buttonKinds[index]].primary,
+                            borderWidth: '2px',
+                            borderStyle: 'solid',
+                            borderColor: component.color[buttonKinds[index]].primary,
                         },
                     },
                 });
@@ -298,15 +302,15 @@ module.exports = function (sheetName) {
         rippleContainer.addSelector({
             common: {
                 position: 'absolute',
-                top: 0,
-                left: 0,
+                top: 0, left: 0,
                 pointerEvents: 'none',
                 width: '100%',
                 height: '100%',
                 borderRadius: 'inherit',
-                WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // webkit bug with overflow & borderRadius
+                WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)',
             },
-        }).addSelector({
+        })
+        .addSelector({
             condition: 'disabled',
             common: {
                 display: 'none',

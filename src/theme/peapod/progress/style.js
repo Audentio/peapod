@@ -1,11 +1,11 @@
 import { Sheet } from 'utility/stylesheet.js';
 import Radium from 'radium';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    progress = sheet.addPart('progress');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const progress = sheet.addPart('progress');
 
     // Conditions
     sheet.addCondition('kindPrimary').addStyler({ kind: 'primary' });
@@ -19,10 +19,10 @@ module.exports = function (sheetName) {
 
     // Variables
     sheet.setValues({
-        height: 4,
+        height: 5,
     });
 
-    var indeterminateKeyframes = Radium.keyframes({
+    const indeterminateKeyframes = Radium.keyframes({
         '0%': {
             transform: 'translate3d(-100%, 0,0)',
         },
@@ -38,9 +38,9 @@ module.exports = function (sheetName) {
             zIndex: '1',
             width: '100%',
             height: '$progress.height',
-            marginBottom: '$gutter.internal',
+            // marginBottom: '$gutter.internal',
             overflow: 'hidden',
-            borderRadius: '2px',
+            // borderRadius: '2px',
             backgroundColor: '$palette.grey200',
         },
     }).addSelector({
@@ -53,7 +53,7 @@ module.exports = function (sheetName) {
     progress.addSelector({
         common: {
             transformOrigin: 'left',
-            backgroundColor: '$color.base.base',
+            backgroundColor: '$color.primary.base',
             fill: '$color.base.base',
             height: '100%',
             width: '100%',
@@ -97,9 +97,9 @@ module.exports = function (sheetName) {
         },
     });
 
-    var generateGradient = function (color) {
-        return 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)';
-    };
+    // const generateGradient = function (color) {
+    //     return 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)';
+    // };
 
     progress.addSelector({
         condition: 'indeterminate',
