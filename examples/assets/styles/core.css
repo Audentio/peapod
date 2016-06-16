@@ -5,3 +5,7 @@
 body, html {
     -webkit-tap-highlight: transparent;
 }
+
+body {
+    font-size: 1.6rem;
+}

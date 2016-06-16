@@ -1,7 +1,7 @@
 import { Sheet } from 'utility/stylesheet.js';
 import Radium from 'radium';
 
-const buttonKinds = ['base', 'general', 'primary', 'success', 'danger', 'warning', 'info'];
+const buttonKinds = ['base', 'general', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
 
 module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
@@ -19,6 +19,8 @@ module.exports = function (sheetName) {
 
     sheet.addCondition('dense').addStyler({ dense: true });
     sheet.addCondition('dialog').addStyler({ dialog: true });
+    sheet.addCondition('large').addStyler({ large: true });
+
 
     sheet.addCondition('icon').addStyler({ type: 'icon' });
     sheet.addCondition('text').addStyler({ type: 'text' });
@@ -77,6 +79,14 @@ module.exports = function (sheetName) {
                         get secondary() { return component.color.text.dark; },
                     },
                 },
+                secondary: {
+                    primary: theme.color.secondary.base,
+                    get secondary() { return component.color.text.light; },
+                    hover: {
+                        primary: theme.color.secondary.hover,
+                        get secondary() { return component.color.text.dark; },
+                    },
+                },
                 warning: {
                     primary: theme.color.warning.base,
                     get secondary() { return component.color.text.dark; },
@@ -122,7 +132,7 @@ module.exports = function (sheetName) {
             get denseLineHeight() { return component.denseHeight; },
             font: {
                 family: theme.font.family.primary,
-                size: theme.font.size.body1,
+                size: theme.font.size.button,
                 denseSize: theme.font.size.small,
                 weight: theme.font.weight.medium,
             },
@@ -133,6 +143,7 @@ module.exports = function (sheetName) {
         };
         return component;
     };
+
 
     sheet.setValues({});
 
@@ -160,9 +171,14 @@ module.exports = function (sheetName) {
                 userSelect: 'none',
                 verticalAlign: 'middle',
                 minWidth: '88px',
-
                 color: component.color.base.color,
                 backgroundColor: component.color.base.background,
+            },
+        }).addSelector({
+            condition: ['large'],
+            common: {
+                height: '42px',
+                lineHeight: '42px',
             },
         }).addSelector({
             condition: ['dense'],
@@ -193,8 +209,7 @@ module.exports = function (sheetName) {
                 color: component.color.base.background,
 
                 lineHeight: '28px', // TODO: fix this
-
-                borderWidth: '2px',
+                borderWidth: '$border.width',
                 borderStyle: 'solid',
                 borderColor: component.color.base.background,
             },

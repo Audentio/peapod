@@ -22,7 +22,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     // Validate props
     static propTypes = {
-        title: React.PropTypes.string,
+        title: React.PropTypes.any,
         figure: React.PropTypes.oneOfType([
             React.PropTypes.object,
             React.PropTypes.bool,
@@ -48,7 +48,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const figureLeft = (this.props.align === 'left') ? figure : '';
         const figureRight = (this.props.align === 'right') ? figure : '';
 
-        const title = (this.props.title) ? (<Heading kind="h4">{this.props.title}</Heading>) : '';
+        const titleContents = (typeof this.props.title === 'string') ? (<Heading kind="h4">{this.props.title}</Heading>) : this.props.title;
+        const title = (this.props.title) ? titleContents : '';
 
         return (
             <Block styler={{ mainStyle: style.main }}>

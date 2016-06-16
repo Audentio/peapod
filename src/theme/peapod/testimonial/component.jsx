@@ -26,6 +26,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         name: React.PropTypes.string,
         comp: React.PropTypes.string,
         link: React.PropTypes.string,
+        hideQuotes: React.PropTypes.bool,
     }
 
     render() {
@@ -54,14 +55,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
         return (
             <div style={style.main}>
                 {image}
-                <div>
-                    <Icon label="format_quote" styler={{ style: style.quoteIconRight }}>format_quote</Icon>
-                    <Icon label="format_quote" styler={{ style: style.quoteIconLeft }}>format_quote</Icon>
-                    <BlockQuote styler={{ mainStyle: style.blockQuote }}>
-                        {this.props.children}
-                    </BlockQuote>
+                <div style={style.content}>
+                    {this.props.hideQuotes || <Icon label="format_quote" styler={{ style: style.quoteIconRight }}>format_quote</Icon>}
+                    {this.props.hideQuotes || <Icon label="format_quote" styler={{ style: style.quoteIconLeft }}>format_quote</Icon>}
+                    <div style={style.quote}>
+                        <BlockQuote styler={{ mainStyle: style.blockQuote }}>
+                            {this.props.children}
+                        </BlockQuote>
+                        {link}
+                    </div>
                 </div>
-                {link}
             </div>
         );
     }

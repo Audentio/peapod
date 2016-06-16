@@ -18,6 +18,7 @@ module.exports = function (sheetName) {
             marginBottom: '8px',
             height: '1px',
             background: 'rgba(0,0,0,.12)',
+            display: 'inline-block',
         },
     }).addSelector({
         condition: ['inline'],
