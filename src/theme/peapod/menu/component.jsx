@@ -63,6 +63,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                                     key={i}
                                     href={childjson[i].href}
                                     subtext={childjson[i].subtext}
+                                    {...childjson[i].props}
                                 >
                                     {childjson[i].text}
                                 </Menu_Item>
