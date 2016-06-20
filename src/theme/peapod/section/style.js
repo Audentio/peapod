@@ -11,7 +11,7 @@ module.exports = function (sheetName) {
         borderWidth: '1px',
         borderStyle: 'solid',
         borderColor: '$palette.grey200',
-        padding: '$gutter.large',
+        padding: '$sitespcaing.medium',
     });
 
 

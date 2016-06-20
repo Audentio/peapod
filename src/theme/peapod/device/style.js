@@ -15,14 +15,27 @@ module.exports = function (sheetName) {
     sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
 
     sheet.addCondition('trueScaling').addProp({ trueScaling: true });
-    sheet.addCondition('scale').addProp({ scale: ['!=', undefined] });
+    // sheet.addCondition('scale').addProp({ scale: ['!=', undefined] });
+    sheet.addCondition('scale').addFunction((instance) => {
+        return instance.props.width || instance.props.height || instance.props.scale;
+    });
 
     // Variables
     sheet.setValues(devices);
 
-    function getScale(scale, width, height) {
-        const largest = (width > height) ? width : height;
-        const returnedscale = (scale > 100) ? (scale / largest) : scale;
+    function getScale(props, origWidth, origHeight) {
+
+        const { scale = undefined, width = undefined, height = undefined } = props;
+        let returnedscale;
+
+        if (scale) {
+            returnedscale = scale;
+        } else if (height) {
+            returnedscale = height / origHeight;
+        } else if (width) {
+            returnedscale = width / origWidth;
+        }
+
         return returnedscale;
     }
 
@@ -59,11 +72,12 @@ module.exports = function (sheetName) {
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
                 width(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    console.log('Apple');
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.width * scale) + 'px';
                 },
                 height(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.height * scale) + 'px';
                 },
             },
@@ -71,11 +85,11 @@ module.exports = function (sheetName) {
             condition: ['scale', 'horizontal', deviceversion, devicename].filter((e) => e),
             common: {
                 height(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.width * scale) + 'px';
                 },
                 width(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.height * scale) + 'px';
                 },
             },
@@ -101,11 +115,11 @@ module.exports = function (sheetName) {
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
                 width(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.width * scale);
                 },
                 height(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.height * scale) + 'px';
                 },
             },
@@ -134,19 +148,19 @@ module.exports = function (sheetName) {
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
                 top(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.top * scale;
                 },
                 right(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.right * scale;
                 },
                 bottom(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.bottom * scale;
                 },
                 left(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.left * scale;
                 },
             },
@@ -154,19 +168,19 @@ module.exports = function (sheetName) {
             condition: ['scale', 'horizontal', deviceversion, devicename].filter((e) => e),
             common: {
                 top(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.left * scale;
                 },
                 right(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.bottom * scale;
                 },
                 bottom(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.right * scale;
                 },
                 left(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.top * scale;
                 },
             },
@@ -182,7 +196,7 @@ module.exports = function (sheetName) {
             condition: ['trueScaling', 'scale', deviceversion, devicename].filter((e) => e),
             common: {
                 transform(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
                 },
             },
@@ -200,7 +214,7 @@ module.exports = function (sheetName) {
                 width: version.viewport.height,
                 height: version.viewport.width,
                 transform(obj) {
-                    const scale = getScale(obj.props.scale, version.width, version.height);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
                 },
             },

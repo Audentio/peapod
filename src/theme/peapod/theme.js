@@ -432,6 +432,12 @@ const globalVars = {
             internal: '16px',
             extrasmall: '8px',
         },
+        // Spacing around the site (e.g. section padding top)
+        sitespcaing: {
+            large: '120px',
+            medium: '80px',
+            small: '60px',
+        },
 
         // Transitions
         transition: {
