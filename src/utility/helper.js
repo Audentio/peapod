@@ -299,7 +299,7 @@ const Pod_Helper = {
 
     oneEm: Number(getComputedStyle(document.documentElement, null).fontSize.replace(/[^\d]/g, '')),
 
-    fontSize(ems, min = ems) {
+    responsiveFont(ems, min = ems) {
         const siteWidth = 1300;
 
         let vw = window.innerWidth;
