@@ -57,7 +57,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         };
 
         if (this.state.alwaysFixed) {
-            this.onScroll();
+            this.onScroll(elemRectInit);
         } else {
             document.addEventListener('scroll', this.onScroll);
         }
@@ -70,10 +70,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
     }
 
-    onScroll() {
+    onScroll(elemRect = null) {
         const element = this.fixedElem;
         if (typeof(element) !== 'undefined' && element !== null) {
-            const elemRect = element.getBoundingClientRect();
+            if (elemRect === null) {
+                elemRect = element.getBoundingClientRect();
+            }
 
             this.origionalPosition = elemRect.top + window.scrollY;
             const doc = document.documentElement;

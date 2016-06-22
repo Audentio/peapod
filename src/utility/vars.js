@@ -17,6 +17,7 @@ window.Pod_Vars = window.Pod_Vars || {
         if (level < 0) {
             sourceLevel = 0;
         }
+
         this.sources[sourceLevel] = _merge(this.sources[sourceLevel], vars);
     },
 
@@ -48,6 +49,10 @@ window.Pod_Vars = window.Pod_Vars || {
             }
         }
         return currentSource;
+    },
+
+    getNested(name, varSetOverride) {
+
     },
 
     get(name, varSetOverride, getDepth) {

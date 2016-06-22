@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const wrapper = sheet.addPart('wrapper');
     // const message = sheet.addPart('message');
@@ -16,78 +13,82 @@ module.exports = function (sheetName) {
     sheet.addCondition('kindWarning').addStyler({ kind: 'warning' });
     sheet.addCondition('kindDanger').addStyler({ kind: 'danger' });
 
-    // Variables
-    sheet.setValues({
-        background: {
-            general: '$palette.grey300',
-            success: '$palette.lightGreen100',
-            warning: '$palette.yellow100',
-            info: '$palette.blue100',
-            danger: '$palette.red100',
-        },
-    });
-
-    main.addSelector({});
-
-    wrapper.addSelector({
-        common: {
-            fontSize: '$font.size.body1',
-            position: 'relative',
-            paddingLeft: '$gutter.large',
-            paddingRight: '$gutter.large',
-            borderRadius: '$border.radius.small',
-            height: '$gutter.extralarge',
-            lineHeight: '$gutter.extralarge',
-            marginBottom: '$gutter.internal',
-        },
-    })
-    .addSelector({
-        condition: 'kindGeneral',
-        common: {
-            backgroundColor: '$alert.background.general',
-        },
-    })
-    .addSelector({
-        condition: 'kindSuccess',
-        common: {
-            backgroundColor: '$alert.background.success',
-        },
-    })
-    .addSelector({
-        condition: 'kindInfo',
-        common: {
-            backgroundColor: '$alert.background.info',
-        },
-    })
-    .addSelector({
-        condition: 'kindWarning',
-        common: {
-            backgroundColor: '$alert.background.warning',
-        },
-    })
-    .addSelector({
-        condition: 'kindDanger',
-        common: {
-            backgroundColor: '$alert.background.danger',
-        },
-    });
-
-    dismissIcon.addSelector({
-        common: {
-            float: 'right',
-            fontWeight: 'bold',
-            fontSize: '1.5rem',
-            color: 'rgba(0,0,0,0.4)',
-            cursor: 'pointer',
-            marginLeft: '$gutter.extralarge',
-            lineHeight: '$gutter.extralarge',
-            height: '$gutter.extralarge',
-
-            ':hover': {
-                color: 'rgba(0,0,0,0.7)',
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            background: {
+                general: theme.palette.grey300,
+                success: theme.palette.lightGreen100,
+                warning: theme.palette.yellow100,
+                info: theme.palette.blue100,
+                danger: theme.palette.red100,
             },
-        },
-    });
+        };
+        return component;
+    };
+
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({});
+
+        wrapper.addSelector({
+            common: {
+                fontSize: theme.font.size.body1,
+                position: 'relative',
+                paddingLeft: theme.gutter.large,
+                paddingRight: theme.gutter.large,
+                borderRadius: theme.border.radius.small,
+                height: theme.gutter.extralarge,
+                lineHeight: theme.gutter.extralarge,
+                marginBottom: theme.gutter.internal,
+            },
+        })
+        .addSelector({
+            condition: 'kindGeneral',
+            common: {
+                backgroundColor: component.background.general,
+            },
+        })
+        .addSelector({
+            condition: 'kindSuccess',
+            common: {
+                backgroundColor: component.background.success,
+            },
+        })
+        .addSelector({
+            condition: 'kindInfo',
+            common: {
+                backgroundColor: component.background.info,
+            },
+        })
+        .addSelector({
+            condition: 'kindWarning',
+            common: {
+                backgroundColor: component.background.warning,
+            },
+        })
+        .addSelector({
+            condition: 'kindDanger',
+            common: {
+                backgroundColor: component.background.danger,
+            },
+        });
+
+        dismissIcon.addSelector({
+            common: {
+                float: 'right',
+                fontWeight: 'bold',
+                fontSize: '1.5rem',
+                color: 'rgba(0,0,0,0.4)',
+                cursor: 'pointer',
+                marginLeft: theme.gutter.extralarge,
+                lineHeight: theme.gutter.extralarge,
+                height: theme.gutter.extralarge,
+
+                ':hover': {
+                    color: 'rgba(0,0,0,0.7)',
+                },
+            },
+        });
+    };
 
     return sheet;
 };

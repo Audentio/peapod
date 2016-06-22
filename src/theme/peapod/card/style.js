@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const actionBar = sheet.addPart('actionBar');
     const title = sheet.addPart('title');
@@ -13,73 +10,77 @@ module.exports = function (sheetName) {
     sheet.addCondition('actionBarLeft').addProp({ actionBarLocation: 'left' });
     sheet.addCondition('actionBarRight').addProp({ actionBarLocation: 'right' });
 
-    // Variables
-    sheet.setValues({
-        padding: {
-            large: '$gutter.internal',
-            small: '$gutter.extrasmall',
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            padding: {
+                large: theme.gutter.internal,
+                small: theme.gutter.extrasmall,
+            },
+        };
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            backgroundColor: '$palette.white',
-            borderRadius: '$border.radius.small',
-            boxShadow: '$shadows.d1',
-            margin: '$card.padding.small',
-            overflow: 'hidden',
-            display: 'inline-block',
-            textAlign: 'left',
-            verticalAlign: 'top',
-        },
-    }).addSelector({
-        condition: ['disguised'],
-        common: {
-            backgroundColor: 'transparent',
-            boxShadow: 'none',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                backgroundColor: theme.palette.white,
+                borderRadius: theme.border.radius.small,
+                boxShadow: theme.shadows.d1,
+                margin: component.padding.small,
+                overflow: 'hidden',
+                display: 'inline-block',
+                textAlign: 'left',
+                verticalAlign: 'top',
+            },
+        }).addSelector({
+            condition: ['disguised'],
+            common: {
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
+            },
+        });
 
-    title.addSelector({
-        common: {
-            paddingTop: '$card.padding.large',
-            paddingLeft: '$card.padding.large',
-            paddingRight: '$card.padding.large',
-            paddingBottom: '$card.padding.small',
-        },
-    });
+        title.addSelector({
+            common: {
+                paddingTop: component.padding.large,
+                paddingLeft: component.padding.large,
+                paddingRight: component.padding.large,
+                paddingBottom: component.padding.small,
+            },
+        });
 
-    content.addSelector({
-        common: {
-            overflow: 'hidden',
-        },
-    }).addSelector({
-        condition: ['padded'],
-        common: {
-            paddingLeft: '$card.padding.large',
-            paddingRight: '$card.padding.large',
-        },
-    });
+        content.addSelector({
+            common: {
+                overflow: 'hidden',
+            },
+        }).addSelector({
+            condition: ['padded'],
+            common: {
+                paddingLeft: component.padding.large,
+                paddingRight: component.padding.large,
+            },
+        });
 
-    actionBar.addSelector({
-        common: {
-            padding: '$card.padding.small',
-        },
-    }).addSelector({
-        condition: ['actionBarLeft'],
-        common: {
-            float: 'left',
-            maxWidth: '56px',
-            textAlign: 'center',
-        },
-    }).addSelector({
-        condition: ['actionBarRight'],
-        common: {
-            float: 'right',
-            maxWidth: '56px',
-            textAlign: 'center',
-        },
-    });
+        actionBar.addSelector({
+            common: {
+                padding: component.padding.small,
+            },
+        }).addSelector({
+            condition: ['actionBarLeft'],
+            common: {
+                float: 'left',
+                maxWidth: '56px',
+                textAlign: 'center',
+            },
+        }).addSelector({
+            condition: ['actionBarRight'],
+            common: {
+                float: 'right',
+                maxWidth: '56px',
+                textAlign: 'center',
+            },
+        });
+    };
 
     return sheet;
 };
