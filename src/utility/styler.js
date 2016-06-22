@@ -10,7 +10,7 @@ import Logger from './logger.js';
 window.Pod_Styler = window.Pod_Styler || {
     libraries: [],
     currentLibrary: 'peapod',
-    enableCache: true,
+    enableCache: false,
     enableVarCache: true,
     cache: {},
     varCache: {},
@@ -48,8 +48,8 @@ window.Pod_Styler = window.Pod_Styler || {
             const componentName = componentKeys[i];
             const stylesheet = requireFunc(componentFiles[componentName].fileName);
             if (typeof(stylesheet) === 'function') {
-                let sheetStyle = stylesheet(new Sheet(componentName));
-                
+                const sheetStyle = stylesheet(new Sheet(componentName));
+
                 if (typeof(sheetStyle) === 'undefined') {
                     throw new Error(`No Styling found for ${componentName}.  Does ${componentFiles[componentName].fileName} return 'sheet'?`);
                 } else {
@@ -201,7 +201,7 @@ window.Pod_Styler = window.Pod_Styler || {
                 if (sourceSheet !== null && typeof(sourceSheet) !== 'undefined') {
                     const globalVars = window.Pod_Vars.sources[0].common; // TODO multiple scenes
                     if (typeof(sourceSheet.resolveValues) === 'function' && !sourceSheet.variablesResolved) {
-                        sourceSheet.setValues(sourceSheet.resolveValues(globalVars), 'common'); // TODO multiple scenes
+                        sourceSheet.setValues(sourceSheet.resolveValues(globalVars), 'common');
                         sourceSheet.variablesResolved = true;
                     }
 
