@@ -14,6 +14,7 @@ module.exports = function (sheetName) {
             width: '100%',
             height: '100vh',
             backgroundPosition: 'center center',
+            fontFamily: '$font.family.primary',
         },
     }).addSelector({
         condition: ['cover'],

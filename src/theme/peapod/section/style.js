@@ -11,7 +11,7 @@ module.exports = function (sheetName) {
         borderWidth: '1px',
         borderStyle: 'solid',
         borderColor: '$palette.grey200',
-        padding: '$gutter.large',
+        padding: '$sitespcaing.medium',
     });
 
 
@@ -20,8 +20,13 @@ module.exports = function (sheetName) {
             borderBottomWidth: '$section.borderWidth',
             borderBottomStyle: '$section.borderStyle',
             borderBottomColor: '$section.borderColor',
-            paddingTop: '$section.padding',
-            paddingBottom: '$section.padding',
+            paddingTop(obj) {
+                return obj.props.padding || '$section.padding';
+            },
+            paddingBottom(obj) {
+                return obj.props.padding || '$section.padding';
+            },
+            fontFamily: '$font.family.primary',
         },
     });
 

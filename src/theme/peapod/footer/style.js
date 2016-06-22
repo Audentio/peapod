@@ -7,5 +7,7 @@ module.exports = function (sheetName) {
     // Variables
     sheet.setValues({});
 
+    main.addSelector({});
+
     return sheet;
 };

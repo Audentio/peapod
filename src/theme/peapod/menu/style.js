@@ -5,9 +5,11 @@ module.exports = function (sheetName) {
     const main = sheet.addMain();
     const portal = sheet.addPart('portal');
     const trigger = sheet.addPart('trigger');
+    const container = sheet.addPart('container');
 
     sheet.addCondition('level').addStyler({ level: 1 });
     sheet.addCondition('left').addStyler({ left: true });
+    sheet.addCondition('text').addProp({ style: ['!=', undefined] });
 
     const add = (valueone, valuetwo) => (parseFloat(Pod_Vars.get(valueone)) + parseFloat(Pod_Vars.get(valuetwo)));
 
@@ -21,6 +23,12 @@ module.exports = function (sheetName) {
         zIndex: '$zIndex.level6',
     });
 
+    container.addSelector({
+        common: {
+            display: 'inline-block',
+        },
+    });
+
     main.addSelector({
         common: {
             background: '$menu.background',
@@ -30,6 +38,15 @@ module.exports = function (sheetName) {
             borderRadius: '$menu.borderRadius',
             zIndex: '$menu.zIndex',
             position: 'absolute',
+        },
+    }).addSelector({
+        condition: ['text'],
+        common: {
+            background: 'transparent',
+            boxShadow: 'none',
+            position: 'static',
+            paddingTop: '0',
+            paddingBottom: '0',
         },
     }).addSelector({
         condition: ['level'],

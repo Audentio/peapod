@@ -1,11 +1,8 @@
 import ReactDOM, { findDOMNode } from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
-
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-
 import { Icon, Grid } from 'utility/components.js';
-
 
 function isNodeInRoot(node, root) {
     while (node) {
@@ -59,6 +56,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
+        if (typeof newProps.remove !== 'undefined') {
+            this.closePortal();
+        }
+
         // portal's 'is open' state is handled through the prop isOpened
         if (typeof newProps.isOpened !== 'undefined') {
             if (newProps.isOpened) {
@@ -158,12 +159,17 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
             const arrow = (this.props.noArrow === true) ? '' : <Icon styler={{ style: { fontSize: '$font.size.large' } }}>{arrowIcon}</Icon>;
 
-            return (<div style={{ display: 'inline-block' }} onClick={this.openPortal.bind(this, this.props)}>
-                <Grid styler={{ alignItems: 'center' }}>
-                    {this.props.trigger}
-                    {arrow}
-                </Grid>
-            </div>);
+            return (
+                <div
+                    style={{ display: 'inline-block' }}
+                    onClick={this.openPortal.bind(this, this.props)} // can't remove due to trigger
+                >
+                    <Grid styler={{ alignItems: 'center' }}>
+                        {this.props.trigger}
+                        {arrow}
+                    </Grid>
+                </div>
+            );
         }
         return <div>Specify a trigger...</div>;
     }
@@ -180,6 +186,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
             if (this.props.onOpen) {
                 this.props.onOpen(this.node);
             }
+        } else if (this.props.toggle) {
+            this.closePortal();
         }
     }
 

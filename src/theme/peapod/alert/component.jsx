@@ -25,12 +25,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.state = {
             dismissed: this.isDismissed(),
         };
+
+        this.dismiss = this.dismiss.bind(this);
+        this.isDismissed = this.isDismissed.bind(this);
     }
 
-    // Validate props
     static propTypes = {
         dismissable: React.PropTypes.bool,
         id: React.PropTypes.string,
+        children: React.PropTypes.any,
     }
 
     static defaultProps = {
@@ -39,7 +42,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
             kind: 'general',
         },
     }
-
 
     // Check if user dismissed the alert already
     isDismissed() {
@@ -50,7 +52,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         return false;
     }
-
 
     // @fucntion dismiss()
     // onDismiss handler
@@ -81,15 +82,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 {
                     !this.state.dismissed &&
 
-                    <div style={style.wrapper}>
-
-                        <span style={style.message}>
-                            {this.props.children}
-                        </span>
-                        {this.props.dismissable &&
-                            <Icon onClick={this.dismiss} styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon>
-                        }
-                    </div>
+                        <div style={style.wrapper}>
+                            {this.props.dismissable &&
+                                <Icon onClick={this.dismiss} styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon>
+                            }
+                            <span style={style.message}>
+                                {this.props.children}
+                            </span>
+                        </div>
                 }
             </div>
         );

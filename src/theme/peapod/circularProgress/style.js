@@ -40,7 +40,7 @@ module.exports = function (sheetName) {
             fontSize: '$circularProgress.size',
             display: 'inline-block',
             position: 'relative',
-            borderRadius: '50%',
+            borderRadius: '1000px',
             WebkitClipPath: 'circle(50% at 50% 50%)',
             clipPath: 'circle(50% at 50% 50%)',
             overflow: 'hidden',
@@ -109,7 +109,7 @@ module.exports = function (sheetName) {
             borderStyle: 'solid',
             borderColor: '$color.base.base',
             clip: 'rect(0 .5em 1em 0)',
-            borderRadius: '50%',
+            borderRadius: '1000px',
         }),
     })
     .addSelector({

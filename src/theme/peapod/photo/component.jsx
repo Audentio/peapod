@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Pod_Styler from 'utility/styler.js';
-import { Icon } from 'utility/components.js';
+import { Icon, Lazy } from 'utility/components.js';
 import Pod_Helper from 'utility/helper.js';
 
 const options = {
@@ -18,6 +18,7 @@ const options = {
     lazy: false,
 
     // load image if distance from viewport is smaller than this
+    // TODO: Convert to lazy load
     lazyDistance: 500,
 
     // Multi-dimensional array defining prefixes for different device pixeDensity
@@ -29,7 +30,7 @@ const options = {
 
     // Animate Lightbox entry-exit
     lightboxAnimation: true,
-}
+};
 
 
 /**
@@ -251,12 +252,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         return (
             <div style={style.main}>
-                <img
-                    onClick={showLightbox}
-                    src={this.state.visible ? this.imageURL : options.blankImage}
-                    alt={this.props.alt}
-                    style={style.image}
+                <Lazy>
+                    <img
+                        onClick={showLightbox}
+                        src={this.imageURL}
+                        alt={this.props.alt}
+                        style={style.image}
                     />
+                </Lazy>
 
                 {this.props.caption &&
                     <span style={style.caption}>{this.props.caption}</span>
@@ -270,7 +273,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                                 style={style.lightboxImage}
                                 src={this.state.visible ? this.imageURL : options.blankImage}
                                 role="presentation"
-                                />
+                            />
                         </div>
 
                         <div style={style.lightboxActions}>

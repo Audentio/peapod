@@ -1,10 +1,10 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    trigger = sheet.addPart('trigger'),
-    label = sheet.addPart('label');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const trigger = sheet.addPart('trigger');
+    const label = sheet.addPart('label');
 
     sheet.addCondition('onePage').addStyler({ onePage: true });
 
@@ -32,16 +32,18 @@ module.exports = function (sheetName) {
 
     trigger.addSelector({
         common: {
-            paddingLeft: '$gutter.internal',
-            paddingRight: '$gutter.internal',
+            paddingLeft: '10px',
+            paddingRight: '14px',
+            width: '48px',
+            textAlign: 'center',
             fontSize: '$paginator.font.triggerSize',
         },
     });
 
     label.addSelector({
         common: {
-            paddingLeft: '$gutter.internal',
-            paddingRight: '$gutter.internal',
+            paddingLeft: '32px',
+            paddingRight: '22px',
             /*
             borderColor: '$paginator.border.color',
             borderStyle: '$paginator.border.style',

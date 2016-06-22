@@ -301,51 +301,60 @@ const globalVars = {
                 code: 'monaco, monospace',
             },
             size: {
-                display4: '112px',
-                display3: '56px',
-                display2: '45px',
-                display1: '34px',
-                headline: '24px',
-                title: '20px',
-                subheading: '16px',
-                body2: '14px',
-                body1: '14px',
-                caption: '12px',
-                button: '14px',
+                display4: '11.2rem',
+                display3: '5.6rem',
+                display2: '4.5rem',
+                display1: '3.4rem',
+                headline: '2.4rem',
+                title: '2rem',
+                subheading: '1.6rem',
+                body2: '1.4rem',
+                body1: '1.4rem',
+                caption: '1.2rem',
+                button: '1.4rem',
+                // TODO: use root font size and scale from there. default 10px
+                // Use below naming 5 ether way
 
-                xsmall: '1.1rem',
-                small: '13px',
-                normal: '14px',
-                large: '16px',
-                xlarge: '1.8rem',
-                xxlarge: '2.4rem',
-                xxxlarge: '3.0rem',
+                xxxlarge: '6.4rem',
+                xxlarge: '4.7rem',
+                xlarge: '3.6rem',
+                large: '2.2rem',
+                normal: '1.8rem',
+                small: '1.6rem',
+                xsmall: '1.4rem',
+                xxsmall: '1.2rem',
+                xxxsmall: '1rem',
             },
             weight: {
                 light: '300',
                 normal: '400',
                 medium: '500',
                 bold: '700',
+                black: '900',
             },
             margins: {
-                display4: '112px',
-                display3: '48px',
-                display2: '40px',
-                display1: '32px',
-                headline: '28px',
-                title: '28px',
-                subheading: '24px',
-                body2: '24px',
-                body1: '20px',
-                caption: '12px',
-                button: '14px',
+                display4: '11.2rem',
+                display3: '4.8rem',
+                display2: '4.0rem',
+                display1: '3.2rem',
+                headline: '2.8rem',
+                title: '2.8rem',
+                subheading: '2.4rem',
+                body2: '2.4rem',
+                body1: '2.0rem',
+                caption: '1.2rem',
+                button: '1.4rem',
+            },
+            color: {
+                primary: '#777',
+                secondary: '#000',
             },
         },
 
         // Borders
         border: {
             color: 'transparent',
-            width: '0px',
+            width: '2px',
             style: 'solid',
             radius: {
                 small: '2px',
@@ -417,10 +426,17 @@ const globalVars = {
 
         // Spacing
         gutter: {
+            extralarge: '48px',
             large: '32px',
             small: '24px',
             internal: '16px',
             extrasmall: '8px',
+        },
+        // Spacing around the site (e.g. section padding top)
+        sitespcaing: {
+            large: '120px',
+            medium: '80px',
+            small: '60px',
         },
 
         // Transitions
@@ -473,6 +489,7 @@ const globalVars = {
 
         site: {
             maxWidth: 1200,
+            width: '95%',
         },
 
         zIndex: {

@@ -18,6 +18,8 @@ module.exports = function (sheetName) {
 
     sheet.addCondition('dense').addStyler({ dense: true });
     sheet.addCondition('dialog').addStyler({ dialog: true });
+    sheet.addCondition('large').addStyler({ large: true });
+
 
     sheet.addCondition('icon').addStyler({ type: 'icon' });
     sheet.addCondition('text').addStyler({ type: 'text' });
@@ -59,8 +61,8 @@ module.exports = function (sheetName) {
         denseLineHeight: '$button.denseHeight',
         font: {
             family: '$font.family.primary',
-            size: '14px',
-            denseSize: '13px',
+            size: '$font.size.button',
+            denseSize: '$font.size.small',
             weight: '$font.weight.medium',
         },
         transition: {
@@ -70,12 +72,10 @@ module.exports = function (sheetName) {
         },
     });
 
-
     main.addSelector({
         common: {
             display: 'inline-block',
             borderRadius: '$button.border.radius',
-            border: 'none',
             position: 'relative',
             overflow: 'hidden', // prevent ripple overflow
             textDecoration: 'none',
@@ -94,9 +94,21 @@ module.exports = function (sheetName) {
             userSelect: 'none',
             verticalAlign: 'middle',
             minWidth: '88px',
+            boxSizing: 'border-box',
+
+            borderWidth: '0px',
+            borderStyle: 'solid',
+            borderColor: 'transparent',
 
             color: '$button.color.base.color',
             backgroundColor: '$button.color.base.background',
+        },
+    })
+    .addSelector({
+        condition: ['large'],
+        common: {
+            height: '42px',
+            lineHeight: '42px',
         },
     })
     .addSelector({
@@ -129,7 +141,10 @@ module.exports = function (sheetName) {
         common: {
             backgroundColor: 'transparent',
             color: '$button.color.base.background',
-            borderWidth: '2px',
+
+            lineHeight: '28px', // TODO: fix this
+
+            borderWidth: '$border.width',
             borderStyle: 'solid',
             borderColor: '$button.color.base.background',
         },
@@ -179,7 +194,6 @@ module.exports = function (sheetName) {
         },
     });
 
-
     for (const index in buttons) {
         if (buttons[index]) {
             const conditionName = `kind${index.charAt(0).toUpperCase() + index.slice(1)}`;
@@ -224,8 +238,6 @@ module.exports = function (sheetName) {
                 common: {
                     backgroundColor: 'transparent',
                     color: buttons[index].primary,
-                    borderWidth: '2px',
-                    borderStyle: 'solid',
                     borderColor: buttons[index].primary,
                 },
             }).addSelector({
@@ -244,13 +256,12 @@ module.exports = function (sheetName) {
     rippleContainer.addSelector({
         common: {
             position: 'absolute',
-            top: 0,
-            left: 0,
+            top: 0, left: 0,
             pointerEvents: 'none',
             width: '100%',
             height: '100%',
             borderRadius: 'inherit',
-            WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)', // webkit bug with overflow & borderRadius
+            WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)',
         },
     })
     .addSelector({

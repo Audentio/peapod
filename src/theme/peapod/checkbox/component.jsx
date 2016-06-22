@@ -5,21 +5,9 @@
 */
 
 
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-
 import { Icon } from 'utility/components.js';
-
-/**
-* Checkbox component
-*
-* @element Checkbox
-*
-* @param {bool} [checked=false] - checkbox state
-* @param {string} [label] - checkbox label text
-*
-*/
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -31,6 +19,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.state = {
             checked: props.checked === true,
         };
+    }
+
+    static propTypes = {
+        children: React.PropTypes.any,
+        icon: React.PropTypes.string,
+        onChange: React.PropTypes.func,
+        name: React.PropTypes.string,
+        label: React.PropTypes.string,
+        checked: React.PropTypes.bool,
     }
 
     onChangeHandler = (e) => {
@@ -67,7 +64,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         if (typeof(this.props.onChange) !== 'undefined') this.props.onChange(this.state.checked);
     }
 
-    render(){
+    render() {
         const style = Pod_Styler.getStyle(this);
         const icon = (this.props.icon) ?
             <Icon styler={{ style: style.icon }}>{this.props.icon}</Icon> :

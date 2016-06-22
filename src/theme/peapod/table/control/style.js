@@ -1,10 +1,8 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
-
-    // Conditions
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     // Variables
     sheet.setValues({});
@@ -13,6 +11,8 @@ module.exports = function (sheetName) {
         common: {
             color: '$table.color.controls.color',
             background: '$table.color.controls.background',
+            // height: '64px',
+            // lineHeight: '64px',
         },
     });
 

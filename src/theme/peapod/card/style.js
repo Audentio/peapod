@@ -1,11 +1,11 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    actionBar = sheet.addPart('actionBar'),
-    title = sheet.addPart('title'),
-    content = sheet.addPart('content');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const actionBar = sheet.addPart('actionBar');
+    const title = sheet.addPart('title');
+    const content = sheet.addPart('content');
 
     // Conditions
     sheet.addCondition('disguised').addStyler({ disguised: true });
@@ -39,12 +39,6 @@ module.exports = function (sheetName) {
             boxShadow: 'none',
         },
     });
-    // .addSelector({
-    //     condition: ['padded'],
-    //     common: {
-    //         padding: '16px'
-    //     }
-    // })
 
     title.addSelector({
         common: {

@@ -4,12 +4,10 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+// import Pod_Styler from 'utility/styler.js';
 import PureRender from 'utility/pureRender.js';
 
-
 import { Portal, Button } from 'utility/components.js';
-
 
 const topButtonStyle = {
     display: 'inline-block',
@@ -19,7 +17,7 @@ const topButtonStyle = {
     paddingLeft: '$gutter.small',
     paddingRight: '$gutter.small',
     margin: '$gutter.internal',
-}
+};
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -33,6 +31,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.state = {
             presets: props.presets,
         };
+    }
+
+    static propTypes = {
+        children: React.PropTypes.any,
+        presets: React.PropTypes.any,
+        queries: React.PropTypes.any,
+        addQuery: React.PropTypes.any,
+        removeQuery: React.PropTypes.any,
+        addQueryOnePerColumn: React.PropTypes.any,
     }
 
     checkPresetConditions(index) {
@@ -86,10 +93,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        // const style = Pod_Styler.getStyle(this);
 
         const presets = this.state.presets;
-        const queries = this.props.queries;
+        // const queries = this.props.queries;
         const addQuery = this.props.addQuery;
         const removeQuery = this.props.removeQuery;
         const addQueryOnePerColumn = this.props.addQueryOnePerColumn;

@@ -4,38 +4,37 @@
 * LICENSE: <%= package.licence %>
 */
 
-
-// Dependencies
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Anchor } from 'utility/components.js';
 
-/**
-* Breadcrumbs component
-* @element Code
-*/
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
+    // Validate props
+    static propTypes = {
+        children: React.PropTypes.any,
+    }
+
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
 
-        var children = this.props.children;
+        let children = this.props.children;
 
-        if (typeof children == "string") {
-            children = this.props.childer.split('/')
+        if (typeof children === 'string') {
+            children = children.split('/');
         }
 
-        var breadcrumbshtml = [];
-        for (var i = 0; i < children.length; i++) {
-            var seperator = (i + 1 != children.length) ? '/' : '';
+        const breadcrumbshtml = [];
+        for (let i = 0; i < children.length; i++) {
+            const seperator = (i + 1 !== children.length) ? '/' : '';
             breadcrumbshtml.push(
-                <li key={i} style={{display: 'inline'}}>
-                    <Anchor styler={{style: style.listitem}}>{children[i]}</Anchor>
+                <li key={i} style={{ display: 'inline' }}>
+                    <Anchor styler={{ style: style.listitem }}>{children[i]}</Anchor>
                     {seperator}
                 </li>
-            )
+            );
         }
 
         return (
@@ -43,7 +42,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 {breadcrumbshtml}
             </ul>
         );
-
     }
 
 };

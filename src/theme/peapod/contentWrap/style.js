@@ -7,7 +7,8 @@ module.exports = function (sheetName) {
     // Variables
     sheet.setValues({
         maxWidth: '$site.maxWidth',
-        width: '95%',
+        width: '$site.width',
+        padding: '$gutter.internal',
     });
 
     main.addSelector({
@@ -15,6 +16,8 @@ module.exports = function (sheetName) {
             maxWidth: '$contentWrap.maxWidth',
             width: '$contentWrap.width',
             margin: '0 auto',
+            paddingLeft: '$contentWrap.padding',
+            paddingRight: '$contentWrap.padding',
         },
     });
 

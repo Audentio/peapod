@@ -12,8 +12,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
+    static propTypes = {
+        children: React.PropTypes.any,
+    }
+
     render() {
-        var style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getStyle(this);
         return (
             <div style={style.main}>
                 <Pod.Center>
@@ -21,6 +25,5 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 </Pod.Center>
             </div>
         );
-
     }
 };

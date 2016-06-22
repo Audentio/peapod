@@ -1,9 +1,9 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain(),
-    row = sheet.addPart('row');
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
+    const row = sheet.addPart('row');
 
     // Conditions
     sheet.addCondition('dark').addStyler({ dark: true });
@@ -27,6 +27,8 @@ module.exports = function (sheetName) {
             display: 'table-row',
             color: '$table.color.lightRow.color',
             background: '$table.color.lightRow.background',
+            height: '48px',
+            lineHeight: '48px',
         },
     }).addSelector({
         condition: ['dark'],
@@ -48,6 +50,8 @@ module.exports = function (sheetName) {
             fontFamily: '$table.font.headerFamily',
             fontSize: '$table.font.headerSize',
             fontWeight: '$table.font.headerWeight',
+            height: '56px',
+            lineHeight: '56px',
         },
     }).addSelector({
         condition: ['checked'],

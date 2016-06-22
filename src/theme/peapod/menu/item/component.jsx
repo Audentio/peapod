@@ -17,7 +17,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
             React.PropTypes.object,
         ]),
         href: React.PropTypes.string,
-        style: React.PropTypes.string,
+        textstyle: React.PropTypes.string,
+
+        kind: React.PropTypes.string,
+        type: React.PropTypes.string,
+        dialog: React.PropTypes.bool,
+        dense: React.PropTypes.bool,
     }
 
     render() {
@@ -26,16 +31,37 @@ module.exports = componentName => class Pod_Component extends React.Component {
         let subtext = (this.props.subtext) ? (<span style={style.subtext}>{this.props.subtext}</span>) : '';
 
         let returned;
-        if (this.props.href && this.props.style === 'button') {
-            returned = (<Button href={this.props.href} styler={{ kind: 'general' }}>
-                {this.props.children}
-                {subtext}
-            </Button>);
-        } else if (this.props.style === 'button') {
-            returned = (<Button styler={{ kind: 'general' }}>
-                {this.props.children}
-                {subtext}
-            </Button>);
+        if (this.props.href && this.props.textstyle === 'button') {
+            returned = (
+                <Button
+                    href={this.props.href}
+                    styler={{
+                        kind: this.props.kind || 'general',
+                        type: this.props.type || 'text',
+                        dialog: this.props.dialog || false,
+                        dense: this.props.dense || false,
+                        style: style.button,
+                    }}
+                >
+                    {this.props.children}
+                    {subtext}
+                </Button>
+            );
+        } else if (this.props.textstyle === 'button') {
+            returned = (
+                <Button
+                    styler={{
+                        kind: this.props.kind || 'general',
+                        type: this.props.type || 'text',
+                        dialog: this.props.dialog || false,
+                        dense: this.props.dense || false,
+                        style: style.button,
+                    }}
+                >
+                    {this.props.children}
+                    {subtext}
+                </Button>
+            );
         } else if (this.props.href) {
             returned = (<div style={style.main}>
                 <Anchor to={this.props.href} styler={{ style: style.anchor }}>

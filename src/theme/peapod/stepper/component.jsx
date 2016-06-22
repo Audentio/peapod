@@ -45,11 +45,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
             return false;
         }
 
-        // const thisstep = this.refs[`stepperStep${active}`];
-        // if (thisstep) {
-        //     console.log(thisstep.state);
-        // }
-
         this.setState({ active });
 
         return true;
@@ -82,10 +77,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         this.setState(stepValues);
     }
-
-    // componentWillReceiveProps() {
-    //     return false;
-    // }
 
     render() {
         const style = Pod_Styler.getStyle(this);

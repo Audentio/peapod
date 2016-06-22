@@ -1,13 +1,8 @@
 import { Sheet } from 'utility/stylesheet.js';
 
 module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
-
-    // Conditions
-
-    // Variables
-    sheet.setValues({});
+    const sheet = new Sheet(sheetName);
+    const main = sheet.addMain();
 
     main.addSelector({
         common: {

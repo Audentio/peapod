@@ -4,14 +4,13 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class ButtonExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     makeAlert = () => {
         alert('test'); // eslint-disable-line no-alert
     }
 
     render() {
-
         return (
             <div>
                 <Pod.ContentWrap>
@@ -27,23 +26,23 @@ module.exports = class ButtonExample extends React.Component {
                     <br /><br />
 
                     <Pod.Heading kind="h4">Text</Pod.Heading>
-                    <Pod.Button label="Default" styler={{ type:'text' }} />
-                    <Pod.Button label="Base" styler={{ type:'text', kind: 'base' }} />
-                    <Pod.Button label="General" styler={{ type:'text', kind: 'general' }} />
-                    <Pod.Button label="Primary" styler={{ type:'text', kind: 'primary' }} />
-                    <Pod.Button label="Success" styler={{ type:'text', kind: 'success' }} />
-                    <Pod.Button label="Danger" styler={{ type:'text', kind: 'danger' }} />
-                    <Pod.Button label="Warning" styler={{ type:'text', kind: 'warning' }} />
+                    <Pod.Button label="Default" styler={{ type: 'text' }} />
+                    <Pod.Button label="Base" styler={{ type: 'text', kind: 'base' }} />
+                    <Pod.Button label="General" styler={{ type: 'text', kind: 'general' }} />
+                    <Pod.Button label="Primary" styler={{ type: 'text', kind: 'primary' }} />
+                    <Pod.Button label="Success" styler={{ type: 'text', kind: 'success' }} />
+                    <Pod.Button label="Danger" styler={{ type: 'text', kind: 'danger' }} />
+                    <Pod.Button label="Warning" styler={{ type: 'text', kind: 'warning' }} />
 
                     <br /><br />
                     <Pod.Heading kind="h4">Bordered</Pod.Heading>
-                    <Pod.Button label="Default" styler={{ type:'bordered' }} />
-                    <Pod.Button label="Base" styler={{ type:'bordered', kind: 'base' }} />
-                    <Pod.Button label="General" styler={{ type:'bordered', kind: 'general' }} />
-                    <Pod.Button label="Primary" styler={{ type:'bordered', kind: 'primary' }} />
-                    <Pod.Button label="Success" styler={{ type:'bordered', kind: 'success' }} />
-                    <Pod.Button label="Danger" styler={{ type:'bordered', kind: 'danger' }} />
-                    <Pod.Button label="Warning" styler={{ type:'bordered', kind: 'warning' }} />
+                    <Pod.Button label="Default" styler={{ type: 'bordered' }} />
+                    <Pod.Button label="Base" styler={{ type: 'bordered', kind: 'base' }} />
+                    <Pod.Button label="General" styler={{ type: 'bordered', kind: 'general' }} />
+                    <Pod.Button label="Primary" styler={{ type: 'bordered', kind: 'primary' }} />
+                    <Pod.Button label="Success" styler={{ type: 'bordered', kind: 'success' }} />
+                    <Pod.Button label="Danger" styler={{ type: 'bordered', kind: 'danger' }} />
+                    <Pod.Button label="Warning" styler={{ type: 'bordered', kind: 'warning' }} />
 
                     <br /><br />
                     <br /><br />

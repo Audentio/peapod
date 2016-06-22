@@ -13,7 +13,12 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             marginBottom: '$font.margins.body1',
+            marginTop: 0,
             fontSize: '$font.size.body1',
+            color: '$font.color.primary',
+            lineHeight: '2.6rem',
+            fontWeight: '$font.weight.light',
+            display: 'inline-block',
         },
     }).addSelector({
         condition: ['secondary'],

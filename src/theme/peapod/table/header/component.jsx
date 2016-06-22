@@ -5,18 +5,16 @@
 
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import PureRender from 'utility/pureRender.js';
+// import PureRender from 'utility/pureRender.js';
 
 import { reduce as _reduce } from 'lodash';
-
 import { Icon, Table_Cell } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
-
     static displayName = componentName;
 
-    //shouldComponentUpdate = PureRender;
+    // shouldComponentUpdate = PureRender;
 
     static propTypes = {
         config: React.PropTypes.object,
@@ -55,8 +53,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         };
 
                         return (
-                            <Table_Cell key={i + '-header'} column={column} header {...columnHeader}>
-                                {column.header}{column.sort === 'desc' ? <Icon styler={arrowStyle}>arrow_downward</Icon> : ''}{column.sort === 'asc' ? <Icon styler={arrowStyle}>arrow_upward</Icon> : ''}
+                            <Table_Cell
+                                key={i + '-header'}
+                                column={column}
+                                header
+                                {...columnHeader}
+                                styler={{ style: { borderTopWidth: '1px' } }}
+                            >
+                                {column.header}
+                                {column.sort === 'desc' ? <Icon styler={arrowStyle}>arrow_downward</Icon> : ''}
+                                {column.sort === 'asc' ? <Icon styler={arrowStyle}>arrow_upward</Icon> : ''}
                             </Table_Cell>
                         );
                     })

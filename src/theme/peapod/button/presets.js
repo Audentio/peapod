@@ -26,6 +26,15 @@ const buttons = {
             secondary: '$button.color.text.dark',
         },
     },
+    secondary: {
+        primary: '$color.secondary.base',
+        secondary: '$button.color.text.light',
+
+        hover: {
+            primary: '$color.secondary.hover',
+            secondary: '$button.color.text.dark',
+        },
+    },
     warning: {
         primary: '$color.warning.base',
         secondary: '$button.color.text.dark',
@@ -63,4 +72,5 @@ const buttons = {
         },
     },
 };
+
 module.exports = buttons;

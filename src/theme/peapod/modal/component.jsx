@@ -12,6 +12,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
+    static propTypes = {
+        children: React.PropTypes.any,
+        overlay: React.PropTypes.bool,
+    }
+
     static defaultProps = {
         overlay: true,
     }

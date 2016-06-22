@@ -15,10 +15,29 @@ module.exports = function (sheetName) {
     sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
 
     sheet.addCondition('trueScaling').addProp({ trueScaling: true });
-    sheet.addCondition('scale').addProp({ scale: ['!=', undefined] });
+    // sheet.addCondition('scale').addProp({ scale: ['!=', undefined] });
+    sheet.addCondition('scale').addFunction((instance) => {
+        return instance.props.width || instance.props.height || instance.props.scale;
+    });
 
     // Variables
     sheet.setValues(devices);
+
+    function getScale(props, origWidth, origHeight) {
+
+        const { scale = undefined, width = undefined, height = undefined } = props;
+        let returnedscale;
+
+        if (scale) {
+            returnedscale = scale;
+        } else if (height) {
+            returnedscale = height / origHeight;
+        } else if (width) {
+            returnedscale = width / origWidth;
+        }
+
+        return returnedscale;
+    }
 
     // Set all variables for different devices
     const getDeviceStyles = function (version, variant, deviceVals) {
@@ -40,6 +59,8 @@ module.exports = function (sheetName) {
 
                 width: version.width,
                 height: version.height,
+
+                display: 'inline-block',
             },
         }).addSelector({
             condition: ['horizontal', deviceversion, devicename].filter((e) => e),
@@ -51,11 +72,12 @@ module.exports = function (sheetName) {
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
                 width(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    console.log('Apple');
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.width * scale) + 'px';
                 },
                 height(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.height * scale) + 'px';
                 },
             },
@@ -63,11 +85,11 @@ module.exports = function (sheetName) {
             condition: ['scale', 'horizontal', deviceversion, devicename].filter((e) => e),
             common: {
                 height(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.width * scale) + 'px';
                 },
                 width(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.height * scale) + 'px';
                 },
             },
@@ -93,11 +115,11 @@ module.exports = function (sheetName) {
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
                 width(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.width * scale);
                 },
                 height(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return (version.height * scale) + 'px';
                 },
             },
@@ -111,6 +133,7 @@ module.exports = function (sheetName) {
                 bottom: version.offset.bottom,
                 left: version.offset.left,
                 overflow: 'hidden',
+                textAlign: 'left',
                 background: 'white',
             },
         }).addSelector({
@@ -125,39 +148,39 @@ module.exports = function (sheetName) {
             condition: ['scale', deviceversion, devicename].filter((e) => e),
             common: {
                 top(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.top * scale;
                 },
                 right(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.right * scale;
                 },
                 bottom(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.bottom * scale;
                 },
                 left(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.left * scale;
                 },
             },
         }).addSelector({
-            condition: ['scale', deviceversion, devicename].filter((e) => e),
+            condition: ['scale', 'horizontal', deviceversion, devicename].filter((e) => e),
             common: {
                 top(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.left * scale;
                 },
                 right(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.bottom * scale;
                 },
                 bottom(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.right * scale;
                 },
                 left(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return version.offset.top * scale;
                 },
             },
@@ -173,7 +196,7 @@ module.exports = function (sheetName) {
             condition: ['trueScaling', 'scale', deviceversion, devicename].filter((e) => e),
             common: {
                 transform(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
                 },
             },
@@ -191,7 +214,7 @@ module.exports = function (sheetName) {
                 width: version.viewport.height,
                 height: version.viewport.width,
                 transform(obj) {
-                    const scale = parseInt(obj.props.scale, 10);
+                    const scale = getScale(obj.props, version.width, version.height);
                     return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
                 },
             },

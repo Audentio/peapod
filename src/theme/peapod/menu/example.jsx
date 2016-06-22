@@ -4,7 +4,7 @@ import PureRender from 'utility/pureRender.js';
 
 module.exports = class MenuExample extends React.Component {
 
-	shouldComponentUpdate = PureRender;
+    shouldComponentUpdate = PureRender;
 
     render() {
         return (
@@ -79,7 +79,11 @@ module.exports = class MenuExample extends React.Component {
                             { text: 'Hello World 36', href: '#',
                                 children: [
                                 { text: 'Hello World 387', href: '#' },
-                                { text: 'Hello World 123', href: '#', subtext: '2' },
+                                { text: 'Hello World 123', href: '#', subtext: '2', props: {
+                                    onClick: () => {
+                                        alert('I\'ve been clicked');
+                                    },
+                                } },
                                 ],
                             },
                             { text: 'Hello World 387', href: '#' },

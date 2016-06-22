@@ -7,6 +7,8 @@ module.exports = function (sheetName) {
     // Conditions
     sheet.addCondition('alignRight').addProp({ align: 'right' });
     sheet.addCondition('alignLeft').addProp({ align: 'left' });
+    sheet.addCondition('alignCenter').addProp({ align: 'center' });
+    sheet.addCondition('padded').addProp({ padded: ['!=', undefined] });
 
     // Variables
     sheet.setValues({});
@@ -14,6 +16,13 @@ module.exports = function (sheetName) {
     main.addSelector({
         common: {
             overflow: 'hidden',
+        },
+    }).addSelector({
+        condition: ['padded'],
+        common: {
+            padding(obj) {
+                return obj.props.padding || '$gutter.small';
+            },
         },
     }).addSelector({
         condition: ['alignLeft'],
@@ -26,6 +35,11 @@ module.exports = function (sheetName) {
         common: {
             float: 'right',
             marginLeft: '$gutter.small',
+        },
+    }).addSelector({
+        condition: ['alignCenter'],
+        common: {
+            textAlign: 'center',
         },
     });
 

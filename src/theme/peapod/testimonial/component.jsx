@@ -19,17 +19,27 @@ import { Icon, Photo, Anchor, BlockQuote } from 'utility/components.js';
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
-    render() {
-        var style = Pod_Styler.getStyle(this);
 
-        var image = (this.props.img) ? (
+    static propTypes = {
+        children: React.PropTypes.any,
+        img: React.PropTypes.string,
+        name: React.PropTypes.string,
+        comp: React.PropTypes.string,
+        link: React.PropTypes.string,
+        hideQuotes: React.PropTypes.bool,
+    }
+
+    render() {
+        const style = Pod_Styler.getStyle(this);
+
+        const image = (this.props.img) ? (
             <Photo styler={{ mainStyle: style.photo, imageStyle: style.photo }} src={this.props.img} />
         ) : '';
 
-        var name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
-        var comp = (this.props.comp) ? (<div>{this.props.comp}</div>) : '';
+        const name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
+        const comp = (this.props.comp) ? (<div>{this.props.comp}</div>) : '';
 
-        var link = (this.props.link) ? (
+        const link = (this.props.link) ? (
             <Anchor to={this.props.link}>
                 {name}
                 {comp}
@@ -45,16 +55,17 @@ module.exports = componentName => class Pod_Component extends React.Component {
         return (
             <div style={style.main}>
                 {image}
-                <div>
-                    <Icon label="format_quote" styler={{ style: style.quoteIconRight }}>format_quote</Icon>
-                    <Icon label="format_quote" styler={{ style: style.quoteIconLeft }}>format_quote</Icon>
-                    <BlockQuote styler={{ mainStyle: style.blockQuote }}>
-                        {this.props.children}
-                    </BlockQuote>
+                <div style={style.content}>
+                    {this.props.hideQuotes || <Icon label="format_quote" styler={{ style: style.quoteIconRight }}>format_quote</Icon>}
+                    {this.props.hideQuotes || <Icon label="format_quote" styler={{ style: style.quoteIconLeft }}>format_quote</Icon>}
+                    <div style={style.quote}>
+                        <BlockQuote styler={{ mainStyle: style.blockQuote }}>
+                            {this.props.children}
+                        </BlockQuote>
+                        {link}
+                    </div>
                 </div>
-                {link}
             </div>
         );
-
     }
 };

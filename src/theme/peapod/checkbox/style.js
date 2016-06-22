@@ -23,7 +23,7 @@ module.exports = function (sheetName) {
         color: {
             text: '$color.text.dark',
             background: '$palette.grey50',
-            backgroundChecked: '$palette.blue500',
+            backgroundChecked: '$palette.grey500',
             icon: '$color.text.white',
         },
         border: {
@@ -35,7 +35,7 @@ module.exports = function (sheetName) {
         },
         font: {
             family: 'inherit',
-            size: '$font.size.large',
+            size: '$font.size.small',
         },
     }).setValues({
         color: {
@@ -54,7 +54,7 @@ module.exports = function (sheetName) {
             width: '$checkbox.width',
             height: '$checkbox.height',
             display: 'inline-block',
-            backgroundColor: '$checkbox.color.background',
+            backgroundColor: 'transparent',
             borderRadius: '$checkbox.border.radius',
             borderWidth: '$checkbox.border.width',
             borderStyle: '$checkbox.border.style',

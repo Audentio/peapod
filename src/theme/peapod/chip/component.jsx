@@ -24,11 +24,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
         photo: false,
     }
 
-
     static propTypes = {
         children: React.PropTypes.any,
         deleteTrigger: React.PropTypes.bool,
-        photo: React.PropTypes.string,
+        photo: React.PropTypes.oneOfType([
+            React.PropTypes.bool,
+            React.PropTypes.string,
+        ]),
     }
 
     componentWillMount() {

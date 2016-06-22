@@ -63,6 +63,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                                     key={i}
                                     href={childjson[i].href}
                                     subtext={childjson[i].subtext}
+                                    {...childjson[i].props}
                                 >
                                     {childjson[i].text}
                                 </Menu_Item>
@@ -134,9 +135,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
             );
         } else {
             const orientation = this.props.orientation;
-            returnedMenu = (<div>
-                {React.Children.map(this.props.children, (element) => React.cloneElement(element, { style: 'button', orientation }))}
-            </div>);
+            returnedMenu = (
+                <div style={[style.container, style.main]}>
+                    {React.Children.map(this.props.children, (element) => React.cloneElement(element, { textstyle: this.props.style || 'button', orientation }))}
+                </div>
+            );
         }
 
         return returnedMenu;
