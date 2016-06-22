@@ -35,69 +35,9 @@ module.exports = function (sheet) {
             },
         });
 
-<<<<<<< HEAD
-    wrapper.addSelector({
-        common: {
-            fontSize: '$font.size.xsmall',
-            borderRadius: '$border.radius.small',
-            width: '300px',
-            height: '48px',
-            lineHeight: '48px',
-            padding: '0 24px',
-            zIndex: '999',
-            color: 'rgba(255,255,255,.8)',
-            backgroundColor: '#323232',
-        },
-    })
-    .addSelector({
-        condition: 'multiline',
-        common: {
-            height: '80px',
-            padding: '24px',
-            lineHeight: '1',
-        },
-    })
-    .addSelector({
-        condition: ['multiline', 'full'],
-        common: {
-            height: '112px',
-            lineHeight: '1',
-        },
-    })
-    .addSelector({
-        condition: 'kindGeneral',
-        common: {
-            backgroundColor: '$notification.background.general',
-        },
-    })
-    .addSelector({
-        condition: 'kindSuccess',
-        common: {
-            backgroundColor: '$notification.background.success',
-        },
-    })
-    .addSelector({
-        condition: 'kindInfo',
-        common: {
-            backgroundColor: '$notification.background.info',
-        },
-    })
-    .addSelector({
-        condition: 'kindWarning',
-        common: {
-            backgroundColor: '$notification.background.warning',
-        },
-    })
-    .addSelector({
-        condition: 'kindDanger',
-        common: {
-            backgroundColor: '$notification.background.danger',
-        },
-    });
-=======
         wrapper.addSelector({
             common: {
-                fontSize: theme.font.size.body1,
+                fontSize: theme.font.size.xsmall,
                 borderRadius: theme.border.radius.small,
                 width: '300px',
                 height: '48px',
@@ -153,7 +93,6 @@ module.exports = function (sheet) {
                 backgroundColor: component.background.danger,
             },
         });
->>>>>>> Audentio/master
 
         title.addSelector({
             common: {

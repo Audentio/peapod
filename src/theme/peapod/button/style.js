@@ -124,160 +124,13 @@ module.exports = function (sheet) {
                 width: theme.border.width,
                 style: theme.border.style,
             },
-<<<<<<< HEAD
-        },
-        border: {
-            color: '$border.color',
-            radius: '$border.radius.small',
-            width: '$border.width',
-            style: '$border.style',
-        },
-        height: '36px',
-        denseHeight: '32px',
-        lineHeight: '$button.height',
-        denseLineHeight: '$button.denseHeight',
-        font: {
-            family: '$font.family.primary',
-            size: '$font.size.xsmall',
-            denseSize: '$font.size.small',
-            weight: '$font.weight.medium',
-        },
-        transition: {
-            duration: '150ms',
-            scale: '0.92',
-
-        },
-    });
-
-    main.addSelector({
-        common: {
-            display: 'inline-block',
-            borderRadius: '$button.border.radius',
-            position: 'relative',
-            overflow: 'hidden', // prevent ripple overflow
-            textDecoration: 'none',
-            textTransform: 'uppercase',
-            fontFamily: '$button.font.family',
-            fontSize: '$button.font.size',
-            fontWeight: '$button.font.weight',
-            lineHeight: '$button.lineHeight',
-            paddingTop: '0px',
-            paddingBottom: '0px',
-            paddingLeft: '$gutter.internal',
-            paddingRight: '$gutter.internal',
-            height: '$button.height',
-            textAlign: 'center',
-            outline: 'none',
-            userSelect: 'none',
-            verticalAlign: 'middle',
-            minWidth: '88px',
-            boxSizing: 'border-box',
-
-            borderWidth: '0px',
-            borderStyle: 'solid',
-            borderColor: 'transparent',
-
-            color: '$button.color.base.color',
-            backgroundColor: '$button.color.base.background',
-        },
-    })
-    .addSelector({
-        condition: ['large'],
-        common: {
-            height: '42px',
-            lineHeight: '42px',
-        },
-    })
-    .addSelector({
-        condition: ['dense'],
-        common: {
-            height: '$button.denseHeight',
-            lineHeight: '$button.denseLineHeight',
-            fontSize: '$button.font.denseSize',
-        },
-    })
-    .addSelector({
-        condition: ['dialog'],
-        common: {
-            paddingLeft: '$gutter.extrasmall',
-            paddingRight: '$gutter.extrasmall',
-            marginLeft: '$gutter.extrasmall',
-            marginRight: '$gutter.extrasmall',
-            minWidth: '64px',
-        },
-    })
-    .addSelector({
-        condition: ['text'],
-        common: {
-            color: '$button.color.base.background',
-            backgroundColor: 'transparent',
-        },
-    })
-    .addSelector({
-        condition: ['bordered'],
-        common: {
-            backgroundColor: 'transparent',
-            color: '$button.color.base.background',
-
-            lineHeight: '28px', // TODO: fix this
-
-            borderWidth: '$border.width',
-            borderStyle: 'solid',
-            borderColor: '$button.color.base.background',
-        },
-    })
-    .addSelector({
-        condition: ['icon'],
-        common: {
-            paddingTop: '0px',
-            paddingBottom: '0px',
-            paddingLeft: '4px',
-            paddingRight: '4px',
-            minWidth: '0px',
-            color: '$button.color.base.background',
-            background: 'transparent',
-            fontSize: '$font.size.large',
-        },
-    })
-    .addSelector({
-        condition: ['notDisabled'],
-        common: {
-            cursor: 'pointer',
-        },
-    })
-    .addSelector({
-        condition: 'disabled',
-        common: {
-            cursor: 'not-allowed',
-            opacity: '$opacity.notAllowed',
-        },
-    })
-    .addSelector({
-        condition: ['raised'],
-        common: {
-            boxShadow: '$shadows.d1',
-        },
-    })
-    .addSelector({
-        condition: ['block'],
-        common: {
-            display: 'block',
-        },
-    })
-    .addSelector({
-        condition: ['round'],
-        common: {
-            borderRadius: '1000px',
-        },
-    });
-=======
             height: '36px',
             denseHeight: '32px',
             get lineHeight() { return component.height; },
             get denseLineHeight() { return component.denseHeight; },
             font: {
                 family: theme.font.family.primary,
-                size: theme.font.size.button,
+                size: theme.font.size.xsmall,
                 denseSize: theme.font.size.small,
                 weight: theme.font.weight.medium,
             },
@@ -349,10 +202,8 @@ module.exports = function (sheet) {
             common: {
                 backgroundColor: 'transparent',
                 color: component.color.base.background,
->>>>>>> Audentio/master
-
                 lineHeight: '28px', // TODO: fix this
-                borderWidth: '$border.width',
+                borderWidth: theme.border.width,
                 borderStyle: 'solid',
                 borderColor: component.color.base.background,
             },
@@ -366,7 +217,7 @@ module.exports = function (sheet) {
                 minWidth: '0px',
                 color: component.color.base.background,
                 background: 'transparent',
-                fontSize: theme.font.size.headline,
+                fontSize: theme.font.size.large,
             },
         }).addSelector({
             condition: ['notDisabled'],

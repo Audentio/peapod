@@ -54,19 +54,7 @@ module.exports = function (sheet) {
                 paddingRight: component.padding.right,
                 paddingTop: component.padding.top,
                 paddingBottom: component.padding.bottom,
-
-<<<<<<< HEAD
-            fontSize: '$font.size.small',
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            height: '$list_item.height.large',
-            lineHeight: 'auto',
-        },
-    });
-=======
-                fontSize: theme.font.size.subheading,
+                fontSize: theme.font.size.small,
             },
         }).addSelector({
             condition: ['secondary'],
@@ -75,7 +63,6 @@ module.exports = function (sheet) {
                 lineHeight: 'auto',
             },
         });
->>>>>>> Audentio/master
 
         imageContainer.addSelector({
             common: {
@@ -133,24 +120,14 @@ module.exports = function (sheet) {
             },
         });
 
-<<<<<<< HEAD
-    secondary.addSelector({
-        common: {
-            display: 'block',
-            fontSize: '$font.size.xsmall',
-            marginTop: '0px', // Clears a height issue
-        },
-    });
-=======
         secondary.addSelector({
             common: {
                 display: 'block',
-                fontSize: theme.font.size.body1,
+                fontSize: theme.font.size.xsmall,
                 marginTop: '0px', // Clears a height issue
             },
         });
     };
->>>>>>> Audentio/master
 
     return sheet;
 };

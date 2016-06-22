@@ -9,30 +9,12 @@ module.exports = function (sheet) {
         return component;
     };
 
-<<<<<<< HEAD
-    main.addSelector({
-        common: {
-            marginBottom: '$font.margins.xsmall',
-            marginTop: 0,
-            fontSize: '$font.size.xsmall',
-            color: '$font.color.primary',
-            lineHeight: '2.6rem',
-            fontWeight: '$font.weight.light',
-            display: 'inline-block',
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            marginBottom: '0px',
-        },
-    });
-=======
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         main.addSelector({
             common: {
-                marginBottom: theme.font.margins.body1,
+                marginBottom: theme.font.margins.xsmall,
                 marginTop: 0,
-                fontSize: theme.font.size.body1,
+                fontSize: theme.font.size.xsmall,
                 color: theme.font.color.primary,
                 lineHeight: '2.6rem',
                 fontWeight: theme.font.weight.light,
@@ -45,7 +27,6 @@ module.exports = function (sheet) {
             },
         });
     };
->>>>>>> Audentio/master
 
     return sheet;
 };

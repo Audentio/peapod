@@ -27,22 +27,13 @@ module.exports = function (sheet) {
             },
         });
 
-<<<<<<< HEAD
-    date.addSelector({
-        common: {
-            fontSize: '$font.size.xlarge',
-            color: 'white',
-        },
-    });
-=======
         date.addSelector({
             common: {
-                fontSize: theme.font.size.display1,
+                fontSize: theme.font.size.xlarge,
                 color: 'white',
             },
         });
     };
->>>>>>> Audentio/master
 
     return sheet;
 };

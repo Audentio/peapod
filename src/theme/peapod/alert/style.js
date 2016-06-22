@@ -29,53 +29,9 @@ module.exports = function (sheet) {
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         main.addSelector({});
 
-<<<<<<< HEAD
-    wrapper.addSelector({
-        common: {
-            fontSize: '$font.size.xsmall',
-            position: 'relative',
-            paddingLeft: '$gutter.large',
-            paddingRight: '$gutter.large',
-            borderRadius: '$border.radius.small',
-            height: '$gutter.extralarge',
-            lineHeight: '$gutter.extralarge',
-            marginBottom: '$gutter.internal',
-        },
-    })
-    .addSelector({
-        condition: 'kindGeneral',
-        common: {
-            backgroundColor: '$alert.background.general',
-        },
-    })
-    .addSelector({
-        condition: 'kindSuccess',
-        common: {
-            backgroundColor: '$alert.background.success',
-        },
-    })
-    .addSelector({
-        condition: 'kindInfo',
-        common: {
-            backgroundColor: '$alert.background.info',
-        },
-    })
-    .addSelector({
-        condition: 'kindWarning',
-        common: {
-            backgroundColor: '$alert.background.warning',
-        },
-    })
-    .addSelector({
-        condition: 'kindDanger',
-        common: {
-            backgroundColor: '$alert.background.danger',
-        },
-    });
-=======
         wrapper.addSelector({
             common: {
-                fontSize: theme.font.size.body1,
+                fontSize: theme.font.size.xsmall,
                 position: 'relative',
                 paddingLeft: theme.gutter.large,
                 paddingRight: theme.gutter.large,
@@ -115,7 +71,6 @@ module.exports = function (sheet) {
                 backgroundColor: component.background.danger,
             },
         });
->>>>>>> Audentio/master
 
         dismissIcon.addSelector({
             common: {

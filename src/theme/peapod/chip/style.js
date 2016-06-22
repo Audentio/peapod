@@ -42,31 +42,13 @@ module.exports = function (sheet) {
             },
         });
 
-<<<<<<< HEAD
-    deleteTrigger.addSelector({
-        common: {
-            display: 'inline-block',
-            height: half('chip.height'),
-            lineHeight: half('chip.height') + 'px',
-            width: half('chip.height'),
-            fontSize: '$font.size.xxsmall',
-            background: '$palette.grey500',
-            color: '$chip.background',
-            textAlign: 'center',
-            float: 'right',
-            marginLeft: '$chip.innerMargins',
-            marginRight: (0 - half('chip.innerMargins')),
-            marginTop: '$chip.innerMargins',
-            borderRadius: half('chip.height'),
-            cursor: 'pointer',
-=======
         deleteTrigger.addSelector({
             common: {
                 display: 'inline-block',
                 height: half(component.height),
                 lineHeight: half(component.height) + 'px',
                 width: half(component.height),
-                fontSize: theme.font.size.caption,
+                fontSize: theme.font.size.xxsmall,
                 background: theme.palette.grey500,
                 color: component.background,
                 textAlign: 'center',
@@ -76,7 +58,6 @@ module.exports = function (sheet) {
                 marginTop: component.innerMargins,
                 borderRadius: half(component.height),
                 cursor: 'pointer',
->>>>>>> Audentio/master
 
                 ':hover': {
                     background: component.hover.color,
