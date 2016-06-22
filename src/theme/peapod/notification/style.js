@@ -37,7 +37,7 @@ module.exports = function (sheetName) {
 
     wrapper.addSelector({
         common: {
-            fontSize: '$font.size.body1',
+            fontSize: '$font.size.xsmall',
             borderRadius: '$border.radius.small',
             width: '300px',
             height: '48px',

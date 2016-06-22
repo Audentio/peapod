@@ -49,7 +49,7 @@ module.exports = function (sheetName) {
             height: half('chip.height'),
             lineHeight: half('chip.height') + 'px',
             width: half('chip.height'),
-            fontSize: '$font.size.caption',
+            fontSize: '$font.size.xxsmall',
             background: '$palette.grey500',
             color: '$chip.background',
             textAlign: 'center',

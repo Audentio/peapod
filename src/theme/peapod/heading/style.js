@@ -50,8 +50,8 @@ module.exports = function (sheetName) {
 
     h1.addSelector({
         common: {
-            fontSize: '$font.size.display3',
-            marginBottom: getMargin('font.margins.display3', 'font.size.body2'),
+            fontSize: '$font.size.xxxlarge',
+            marginBottom: getMargin('font.margins.xxxlarge', 'font.size.xsmall'),
         },
     }).addSelector({
         condition: ['secondary'],
@@ -62,8 +62,8 @@ module.exports = function (sheetName) {
 
     h2.addSelector({
         common: {
-            fontSize: '$font.size.display2',
-            marginBottom: getMargin('font.margins.display2', 'font.size.body2'),
+            fontSize: '$font.size.xxlarge',
+            marginBottom: getMargin('font.margins.xxlarge', 'font.size.xsmall'),
         },
     }).addSelector({
         condition: ['secondary'],
@@ -74,8 +74,8 @@ module.exports = function (sheetName) {
 
     h3.addSelector({
         common: {
-            fontSize: '$font.size.display1',
-            marginBottom: getMargin('font.margins.display1', 'font.size.body2'),
+            fontSize: '$font.size.xlarge',
+            marginBottom: getMargin('font.margins.xlarge', 'font.size.xsmall'),
         },
     }).addSelector({
         condition: ['secondary'],
@@ -86,8 +86,8 @@ module.exports = function (sheetName) {
 
     h4.addSelector({
         common: {
-            fontSize: '$font.size.headline',
-            marginBottom: getMargin('font.margins.headline', 'font.size.body2'),
+            fontSize: '$font.size.large',
+            marginBottom: getMargin('font.margins.large', 'font.size.xsmall'),
         },
     }).addSelector({
         condition: ['secondary'],
@@ -98,8 +98,8 @@ module.exports = function (sheetName) {
 
     h5.addSelector({
         common: {
-            fontSize: '$font.size.title',
-            marginBottom: getMargin('font.margins.title', 'font.size.body2'),
+            fontSize: '$font.size.normal',
+            marginBottom: getMargin('font.margins.normal', 'font.size.xsmall'),
         },
     }).addSelector({
         condition: ['secondary'],
@@ -110,8 +110,8 @@ module.exports = function (sheetName) {
 
     h6.addSelector({
         common: {
-            fontSize: '$font.size.subheading',
-            marginBottom: getMargin('font.margins.subheading', 'font.size.body2'),
+            fontSize: '$font.size.small',
+            marginBottom: getMargin('font.margins.small', 'font.size.xsmall'),
         },
     }).addSelector({
         condition: ['secondary'],

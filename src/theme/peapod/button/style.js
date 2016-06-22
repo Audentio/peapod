@@ -61,7 +61,7 @@ module.exports = function (sheetName) {
         denseLineHeight: '$button.denseHeight',
         font: {
             family: '$font.family.primary',
-            size: '$font.size.button',
+            size: '$font.size.xsmall',
             denseSize: '$font.size.small',
             weight: '$font.weight.medium',
         },
@@ -159,7 +159,7 @@ module.exports = function (sheetName) {
             minWidth: '0px',
             color: '$button.color.base.background',
             background: 'transparent',
-            fontSize: '$font.size.headline',
+            fontSize: '$font.size.large',
         },
     })
     .addSelector({
