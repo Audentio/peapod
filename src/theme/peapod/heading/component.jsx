@@ -14,10 +14,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static propTypes = {
         children: React.PropTypes.any,
         kind: React.PropTypes.string,
+        weight: React.PropTypes.string,
+        upper: React.PropTypes.bool,
     }
 
     static defaultProps = {
         kind: 'h1',
+        weight: 'bold',
+        upper: false,
     }
 
     render() {

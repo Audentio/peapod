@@ -7,8 +7,20 @@ module.exports = function (sheet) {
     const h5 = sheet.addPart('h5');
     const h6 = sheet.addPart('h6');
 
+    const presets = {
+        main: {
+            weight: '700',
+            upper: false,
+        },
+    };
+
     // Conditions
     sheet.addCondition('secondary').addStyler({ secondary: true });
+    // sheet.addCondition('upper').addProp({ upper: true });
+    // sheet.addCondition('weight').addProp({ weight: ['!=', undefined] });
+    sheet.addCondition('upper').addFunction((instance) => {
+        return instance.props.upper || (instance.props.preset && presets[instance.props.preset].upper);
+    });
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {
@@ -23,11 +35,20 @@ module.exports = function (sheet) {
                 marginTop: 0,
                 // fontWeight: '$font.weight.black',
                 fontWeight(obj) {
-                    return obj.props.weight || theme.font.weight.black;
+                    let weight = theme.font.weight.black;
+                    if (obj.props.weight) {
+                        weight = obj.props.weight;
+                    }
+                    if ((obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].weight)) {
+                        weight = presets[obj.props.preset].weight;
+                    }
+                    return weight;
                 },
-                textTransform(obj) {
-                    return (obj.props.upper) ? 'uppercase' : 'none';
-                },
+            },
+        }).addSelector({
+            condition: ['upper'],
+            common: {
+                textTransform: 'uppercase',
             },
         });
 
@@ -35,8 +56,8 @@ module.exports = function (sheet) {
 
         h1.addSelector({
             common: {
-                fontSize: theme.font.size.display3,
-                marginBottom: getMargin(theme.font.margins.display3, theme.font.size.body2),
+                fontSize: theme.font.size.xxxlarge,
+                marginBottom: getMargin(theme.font.margins.xxxlarge, theme.font.size.xsmall),
             },
         }).addSelector({
             condition: ['secondary'],
@@ -47,8 +68,8 @@ module.exports = function (sheet) {
 
         h2.addSelector({
             common: {
-                fontSize: theme.font.size.display2,
-                marginBottom: getMargin(theme.font.margins.display2, theme.font.size.body2),
+                fontSize: theme.font.size.xxlarge,
+                marginBottom: getMargin(theme.font.margins.xxlarge, theme.font.size.xsmall),
             },
         }).addSelector({
             condition: ['secondary'],
@@ -59,8 +80,8 @@ module.exports = function (sheet) {
 
         h3.addSelector({
             common: {
-                fontSize: theme.font.size.display1,
-                marginBottom: getMargin(theme.font.margins.display1, theme.font.size.body2),
+                fontSize: theme.font.size.xlarge,
+                marginBottom: getMargin(theme.font.margins.xlarge, theme.font.size.xsmall),
             },
         }).addSelector({
             condition: ['secondary'],
@@ -71,8 +92,8 @@ module.exports = function (sheet) {
 
         h4.addSelector({
             common: {
-                fontSize: theme.font.size.headline,
-                marginBottom: getMargin(theme.font.margins.headline, theme.font.size.body2),
+                fontSize: theme.font.size.large,
+                marginBottom: getMargin(theme.font.margins.large, theme.font.size.xsmall),
             },
         }).addSelector({
             condition: ['secondary'],
@@ -83,8 +104,8 @@ module.exports = function (sheet) {
 
         h5.addSelector({
             common: {
-                fontSize: theme.font.size.title,
-                marginBottom: getMargin(theme.font.margins.title, theme.font.size.body2),
+                fontSize: theme.font.size.normal,
+                marginBottom: getMargin(theme.font.margins.normal, theme.font.size.xsmall),
             },
         }).addSelector({
             condition: ['secondary'],
@@ -95,8 +116,8 @@ module.exports = function (sheet) {
 
         h6.addSelector({
             common: {
-                fontSize: theme.font.size.subheading,
-                marginBottom: getMargin(theme.font.margins.subheading, theme.font.size.body2),
+                fontSize: theme.font.size.small,
+                marginBottom: getMargin(theme.font.margins.small, theme.font.size.xsmall),
             },
         }).addSelector({
             condition: ['secondary'],

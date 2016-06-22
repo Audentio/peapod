@@ -29,7 +29,7 @@ module.exports = function (sheet) {
 
         date.addSelector({
             common: {
-                fontSize: theme.font.size.display1,
+                fontSize: theme.font.size.xlarge,
                 color: 'white',
             },
         });

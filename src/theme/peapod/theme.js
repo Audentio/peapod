@@ -28,6 +28,7 @@ console.log(ret);
 */
 
 import { Sheet } from '../../utility/stylesheet.js';
+import Pod_Helper from '../../utility/helper.js';
 
 const themeName = 'peapod';
 const themeParent = 'root';
@@ -315,11 +316,11 @@ const globalVars = {
                 // TODO: use root font size and scale from there. default 10px
                 // Use below naming 5 ether way
 
-                xxxlarge: '6.4rem',
-                xxlarge: '4.7rem',
-                xlarge: '3.6rem',
-                large: '2.2rem',
-                normal: '1.8rem',
+                xxxlarge: '5.6rem',
+                xxlarge: '4.5rem',
+                xlarge: '3.4rem',
+                large: '2.4rem',
+                normal: '2rem',
                 small: '1.6rem',
                 xsmall: '1.4rem',
                 xxsmall: '1.2rem',
@@ -333,17 +334,15 @@ const globalVars = {
                 black: '900',
             },
             margins: {
-                display4: '11.2rem',
-                display3: '4.8rem',
-                display2: '4.0rem',
-                display1: '3.2rem',
-                headline: '2.8rem',
-                title: '2.8rem',
-                subheading: '2.4rem',
-                body2: '2.4rem',
-                body1: '2.0rem',
-                caption: '1.2rem',
-                button: '1.4rem',
+                xxxlarge: '5.6rem',
+                xxlarge: '4.5rem',
+                xlarge: '3.4rem',
+                large: '2.4rem',
+                normal: '2rem',
+                small: '1.6rem',
+                xsmall: '1.4rem',
+                xxsmall: '1.2rem',
+                xxxsmall: '1rem',
             },
             color: {
                 primary: '#777',

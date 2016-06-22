@@ -12,9 +12,9 @@ module.exports = function (sheet) {
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         main.addSelector({
             common: {
-                marginBottom: theme.font.margins.body1,
+                marginBottom: theme.font.margins.xsmall,
                 marginTop: 0,
-                fontSize: theme.font.size.body1,
+                fontSize: theme.font.size.xsmall,
                 color: theme.font.color.primary,
                 lineHeight: '2.6rem',
                 fontWeight: theme.font.weight.light,
