@@ -1,33 +1,33 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
-    // Variables
-    sheet.setValues({
-        color: {
-            base: '$color.primary.base',
-            hover: '$color.primary.hover',
-            active: '$color.primary.active',
-        },
-    });
-
-
-    main.addSelector({
-        common: {
-            color: '$anchor.color.base',
-            textDecoration: 'none',
-
-            ':hover': {
-                color: '$anchor.color.hover',
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            color: {
+                base: theme.color.primary.base,
+                hover: theme.color.primary.hover,
+                active: theme.color.primary.active,
             },
+        };
+        return component;
+    };
 
-            ':active': {
-                color: '$anchor.color.active',
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                color: component.color.base,
+                textDecoration: 'none',
+
+                ':hover': {
+                    color: component.color.hover,
+                },
+
+                ':active': {
+                    color: component.color.active,
+                },
             },
-        },
-    });
+        });
+    };
 
     return sheet;
 };

@@ -4,7 +4,7 @@
 */
 
 import { merge as _merge, isEqual as _isEqual } from 'lodash';
-import { Style } from './stylesheet.js';
+import { Style, Sheet } from './stylesheet.js';
 import Logger from './logger.js';
 
 window.Pod_Styler = window.Pod_Styler || {
@@ -48,7 +48,8 @@ window.Pod_Styler = window.Pod_Styler || {
             const componentName = componentKeys[i];
             const stylesheet = requireFunc(componentFiles[componentName].fileName);
             if (typeof(stylesheet) === 'function') {
-                const sheetStyle = stylesheet(componentName);
+                let sheetStyle = stylesheet(new Sheet(componentName));
+                
                 if (typeof(sheetStyle) === 'undefined') {
                     throw new Error(`No Styling found for ${componentName}.  Does ${componentFiles[componentName].fileName} return 'sheet'?`);
                 } else {
@@ -198,9 +199,18 @@ window.Pod_Styler = window.Pod_Styler || {
             } else { // styling from style.js
                 const sourceSheet = library.components[componentName];
                 if (sourceSheet !== null && typeof(sourceSheet) !== 'undefined') {
+                    const globalVars = window.Pod_Vars.sources[0].common; // TODO multiple scenes
+                    if (typeof(sourceSheet.resolveValues) === 'function' && !sourceSheet.variablesResolved) {
+                        sourceSheet.setValues(sourceSheet.resolveValues(globalVars), 'common'); // TODO multiple scenes
+                        sourceSheet.variablesResolved = true;
+                    }
 
-                    const localVars = window.Pod_Vars.sources[0].common.button; // TODO make this dynamic
-                    const globalVars = window.Pod_Vars.sources[0].common;
+                    if (typeof(sourceSheet.resolveSceneValues) === 'function' && !sourceSheet.scenesResolved) {
+                        //sourceSheet.setValues(sourceSheet.resolveValues(globalVars), 'common'); // TODO make this work scenes
+                        sourceSheet.scenesResolved = true;
+                    }
+
+                    const localVars = window.Pod_Vars.sources[0].common[sourceSheet.name]; // TODO multiple scenes
 
                     const sheetData = sourceSheet.getAllStyling(obj, scene, conditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
                     source = sheetData.source;

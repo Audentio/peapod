@@ -1,23 +1,24 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-        main = sheet.addMain();
+module.exports = function (sheet) {
+    const main = sheet.addMain();
 
     // Conditions
     sheet.addCondition('vertical').addProp({ vertical: true });
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        condition: ['vertical'],
-        common: {
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            condition: ['vertical'],
+            common: {
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'nowrap',
+            },
+        });
+    };
 
     return sheet;
 };

@@ -1,20 +1,21 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            color: '$table.color.controls.color',
-            background: '$table.color.controls.background',
-            // height: '64px',
-            // lineHeight: '64px',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                color: theme.table.color.controls.color,
+                background: theme.table.color.controls.background,
+                // height: '64px',
+                // lineHeight: '64px',
+            },
+        });
+    };
 
     return sheet;
 };

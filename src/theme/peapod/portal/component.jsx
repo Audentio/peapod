@@ -56,6 +56,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
+        if (typeof newProps.remove !== 'undefined') {
+            this.closePortal();
+        }
+
         // portal's 'is open' state is handled through the prop isOpened
         if (typeof newProps.isOpened !== 'undefined') {
             if (newProps.isOpened) {
@@ -182,6 +186,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
             if (this.props.onOpen) {
                 this.props.onOpen(this.node);
             }
+        } else if (this.props.toggle) {
+            this.closePortal();
         }
     }
 

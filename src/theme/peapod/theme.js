@@ -365,9 +365,9 @@ const globalVars = {
         // Colors
         color: {
             primary: {
-                base: '$palette.blue400',
-                hover: '$palette.blue300',
-                active: '$palette.blue700',
+                get base() { return globalVars.common.palette.blue400; },
+                get hover() { return globalVars.common.palette.blue300; },
+                get active() { return globalVars.common.palette.blue700; },
             },
             secondary: {
                 base: '#00ACDB',
@@ -375,37 +375,37 @@ const globalVars = {
                 active: '#0089af',
             },
             general: {
-                base: '$palette.grey400',
-                hover: '$palette.grey300',
-                active: '$palette.grey700',
+                get base() { return globalVars.common.palette.grey400; },
+                get hover() { return globalVars.common.palette.grey300; },
+                get active() { return globalVars.common.palette.grey700; },
             },
             warning: {
-                base: '$palette.yellow500',
-                table: '$palette.yellow50',
-                alert: '$palette.yellow100',
-                hover: '$palette.yellow300',
-                active: '$palette.yellow700',
+                get base() { return globalVars.common.palette.yellow500; },
+                get table() { return globalVars.common.palette.yellow50; },
+                get alert() { return globalVars.common.palette.yellow100; },
+                get hover() { return globalVars.common.palette.yellow300; },
+                get active() { return globalVars.common.palette.yellow700; },
             },
             info: {
-                base: '$palette.blue500',
-                table: '$palette.blue50',
-                alert: '$palette.blue100',
-                hover: '$palette.blue300',
-                active: '$palette.blue700',
+                get base() { return globalVars.common.palette.blue500; },
+                get table() { return globalVars.common.palette.blue50; },
+                get alert() { return globalVars.common.palette.blue100; },
+                get hover() { return globalVars.common.palette.blue300; },
+                get active() { return globalVars.common.palette.blue700; },
             },
             danger: {
-                base: '$palette.red500',
-                table: '$palette.red50',
-                alert: '$palette.red100',
-                hover: '$palette.red300',
-                active: '$palette.red700',
+                get base() { return globalVars.common.palette.red500; },
+                get table() { return globalVars.common.palette.red50; },
+                get alert() { return globalVars.common.palette.red100; },
+                get hover() { return globalVars.common.palette.red300; },
+                get active() { return globalVars.common.palette.red700; },
             },
             success: {
-                base: '$palette.lightGreen500',
-                table: '$palette.lightGreen50',
-                alert: '$palette.lightGreen100',
-                hover: '$palette.lightGreen300',
-                active: '$palette.lightGreen700',
+                get base() { return globalVars.common.palette.lightGreen500; },
+                get table() { return globalVars.common.palette.lightGreen50; },
+                get alert() { return globalVars.common.palette.lightGreen100; },
+                get hover() { return globalVars.common.palette.lightGreen300; },
+                get active() { return globalVars.common.palette.lightGreen700; },
             },
             base: {
                 base: '#435160',
@@ -420,7 +420,7 @@ const globalVars = {
                 lighter: 'rgb(137, 148, 158)',
                 base: '#30373E',
                 dark: '#2b3137',
-                white: '$palette.white',
+                get white() { return globalVars.common.palette.white; },
             },
         },
 
@@ -431,6 +431,12 @@ const globalVars = {
             small: '24px',
             internal: '16px',
             extrasmall: '8px',
+        },
+        // Spacing around the site (e.g. section padding top)
+        sitespcaing: {
+            large: '120px',
+            medium: '80px',
+            small: '60px',
         },
 
         // Transitions

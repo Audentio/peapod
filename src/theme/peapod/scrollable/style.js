@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
     // Conditions
@@ -9,33 +6,37 @@ module.exports = function (sheetName) {
     sheet.addCondition('height').addProp({ height: ['!=', undefined] });
     sheet.addCondition('center').addStyler({ center: true });
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            overflowX: 'hidden',
-            overflowY: 'auto',
-        },
-    }).addSelector({
-        condition: ['horizontal'],
-        common: {
-            overflowX: 'auto',
-            overflowY: 'hidden',
-            whiteSpace: 'nowrap',
-            height: '600px',
-        },
-    }).addSelector({
-        condition: ['center'],
-        common: {
-            textAlign: 'center',
-        },
-    }).addSelector({
-        condition: ['height'],
-        common: {
-            maxHeight: 'getProp:height',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                overflowX: 'hidden',
+                overflowY: 'auto',
+            },
+        }).addSelector({
+            condition: ['horizontal'],
+            common: {
+                overflowX: 'auto',
+                overflowY: 'hidden',
+                whiteSpace: 'nowrap',
+                height: '600px',
+            },
+        }).addSelector({
+            condition: ['center'],
+            common: {
+                textAlign: 'center',
+            },
+        }).addSelector({
+            condition: ['height'],
+            common: {
+                maxHeight: 'getProp:height',
+            },
+        });
+    };
 
     return sheet;
 };

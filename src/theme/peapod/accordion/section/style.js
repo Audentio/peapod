@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const title = sheet.addPart('title');
     const maintitle = sheet.addPart('maintitle');
@@ -20,170 +17,174 @@ module.exports = function (sheetName) {
     sheet.addCondition('notHorizontal').addProp({ horizontal: undefined });
     sheet.addCondition('open').addState({ open: true });
 
-    // Variables
-    sheet.setValues({
-        titleHeight: '42px',
-        border: {
-            width: '1px',
-            color: '$palette.grey400',
-        },
-        background: {
-            base: '#fff',
-            hover: '$palette.grey200',
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            titleHeight: '42px',
+            border: {
+                width: '1px',
+                color: theme.palette.grey400,
+            },
+            background: {
+                base: '#fff',
+                hover: theme.palette.grey200,
+            },
+        };
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            width: '100%',
-            marginTop: 0,
-            marginBottom: 0,
-            transition: 'margin .3s',
-        },
-    }).addSelector({
-        condition: ['open'],
-        common: {
-            width: '100%',
-            marginTop: '$gutter.internal',
-            marginBottom: '$gutter.internal',
-            transition: 'margin .3s',
-        },
-    }).addSelector({
-        condition: ['open', 'isFirst'],
-        common: {
-            marginTop: '0',
-            transition: 'margin .3s',
-        },
-    }).addSelector({
-        condition: ['open', 'isLast'],
-        common: {
-            marginBottom: '0',
-            transition: 'margin .3s',
-        },
-    }).addSelector({
-        condition: ['horizontal'],
-        common: {
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                width: '100%',
+                marginTop: 0,
+                marginBottom: 0,
+                transition: 'margin .3s',
+            },
+        }).addSelector({
+            condition: ['open'],
+            common: {
+                width: '100%',
+                marginTop: theme.gutter.internal,
+                marginBottom: theme.gutter.internal,
+                transition: 'margin .3s',
+            },
+        }).addSelector({
+            condition: ['open', 'isFirst'],
+            common: {
+                marginTop: '0',
+                transition: 'margin .3s',
+            },
+        }).addSelector({
+            condition: ['open', 'isLast'],
+            common: {
+                marginBottom: '0',
+                transition: 'margin .3s',
+            },
+        }).addSelector({
+            condition: ['horizontal'],
+            common: {
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'nowrap',
+            },
+        });
 
-    title.addSelector({
-        common: {
-            borderStyle: 'solid',
-            zIndex: '100',
-            position: 'relative',
-            background: '$accordion_section.background.base',
-            borderColor: '#ddd',
-            borderWidth: '1px 0 0',
-            paddingLeft: '$gutter.small',
-            paddingRight: '$gutter.internal',
-            height: '$accordion_section.titleHeight',
-            lineHeight: '$accordion_section.titleHeight',
-        },
-    }).addSelector({
-        condition: ['horizontal'],
-        common: {
-            borderBottomWidth: 1,
-            borderRightWidth: 0,
-        },
-    }).addSelector({
-        condition: ['horizontal', 'isLast', 'notActive'],
-        common: {
-            borderRightWidth: 1,
-        },
-    });
-    maintitle.addSelector({
-        common: {
-            color: '$palette.grey900',
-        },
-    });
-    subtitle.addSelector({
-        common: {
-            display: 'inline-block',
-            paddingRight: '$gutter.internal',
-            minWidth: '25%',
-            color: '$palette.grey600',
-        },
-    });
+        title.addSelector({
+            common: {
+                borderStyle: 'solid',
+                zIndex: '100',
+                position: 'relative',
+                background: component.background.base,
+                borderColor: '#ddd',
+                borderWidth: '1px 0 0',
+                paddingLeft: theme.gutter.small,
+                paddingRight: theme.gutter.internal,
+                height: component.titleHeight,
+                lineHeight: component.titleHeight,
+            },
+        }).addSelector({
+            condition: ['horizontal'],
+            common: {
+                borderBottomWidth: 1,
+                borderRightWidth: 0,
+            },
+        }).addSelector({
+            condition: ['horizontal', 'isLast', 'notActive'],
+            common: {
+                borderRightWidth: 1,
+            },
+        });
+        maintitle.addSelector({
+            common: {
+                color: theme.palette.grey900,
+            },
+        });
+        subtitle.addSelector({
+            common: {
+                display: 'inline-block',
+                paddingRight: theme.gutter.internal,
+                minWidth: '25%',
+                color: theme.palette.grey600,
+            },
+        });
 
-    icon.addSelector({
-        common: {
-            fontSize: '2em',
-            float: 'right',
-            height: '$accordion_section.titleHeight',
-            lineHeight: '$accordion_section.titleHeight',
-            transition: 'transform .3s',
-            color: '$palette.grey500',
-        },
-    }).addSelector({
-        condition: ['open'],
-        common: {
-            transform: 'rotate(180deg)',
-            transition: 'transform .3s',
-        },
-    });
+        icon.addSelector({
+            common: {
+                fontSize: '2em',
+                float: 'right',
+                height: component.titleHeight,
+                lineHeight: component.titleHeight,
+                transition: 'transform .3s',
+                color: theme.palette.grey500,
+            },
+        }).addSelector({
+            condition: ['open'],
+            common: {
+                transform: 'rotate(180deg)',
+                transition: 'transform .3s',
+            },
+        });
 
-    contentWrap.addSelector({
-        common: {
-            borderStyle: 'solid',
-            borderColor: '#ddd',
-            borderWidth: '0',
-            width: '100%',
-            overflow: 'hidden',
-            transitionProperty: 'max-height, border-width',
-            transitionDuration: '.3s, .3s',
-        },
-    }).addSelector({
-        condition: ['isLast'],
-        common: {
-            borderBottomWidth: '1px',
-        },
-    }).addSelector({
-        condition: ['open'],
-        common: {
-            borderTopWidth: '1px',
-        },
-    }).addSelector({
-        condition: ['horizontal'],
-        common: {
-            borderBottomWidth: 1,
-            borderRightWidth: 0,
-            width: 'auto',
-        },
-    }).addSelector({
-        condition: ['horizontal', 'isLast', 'isActive'],
-        common: {
-            borderRightWidth: 1,
-        },
-    }).addSelector({
-        condition: ['notHorizontal'],
-        common: {
-            maxHeight: 0,
-        },
-    }).addSelector({
-        condition: ['open', 'notHorizontal'],
-        common: {
-            maxHeight: '500px',
-        },
-    }).addSelector({
-        condition: ['horizontal'],
-        common: {
-            maxWidth: 0,
-        },
-    }).addSelector({
-        condition: ['open', 'horizontal'],
-        common: {
-            maxWidth: '500px',
-        },
-    });
+        contentWrap.addSelector({
+            common: {
+                borderStyle: 'solid',
+                borderColor: '#ddd',
+                borderWidth: '0',
+                width: '100%',
+                overflow: 'hidden',
+                transitionProperty: 'max-height, border-width',
+                transitionDuration: '.3s, .3s',
+            },
+        }).addSelector({
+            condition: ['isLast'],
+            common: {
+                borderBottomWidth: '1px',
+            },
+        }).addSelector({
+            condition: ['open'],
+            common: {
+                borderTopWidth: '1px',
+            },
+        }).addSelector({
+            condition: ['horizontal'],
+            common: {
+                borderBottomWidth: 1,
+                borderRightWidth: 0,
+                width: 'auto',
+            },
+        }).addSelector({
+            condition: ['horizontal', 'isLast', 'isActive'],
+            common: {
+                borderRightWidth: 1,
+            },
+        }).addSelector({
+            condition: ['notHorizontal'],
+            common: {
+                maxHeight: 0,
+            },
+        }).addSelector({
+            condition: ['open', 'notHorizontal'],
+            common: {
+                maxHeight: '500px',
+            },
+        }).addSelector({
+            condition: ['horizontal'],
+            common: {
+                maxWidth: 0,
+            },
+        }).addSelector({
+            condition: ['open', 'horizontal'],
+            common: {
+                maxWidth: '500px',
+            },
+        });
 
-    content.addSelector({
-        common: {
-            padding: '$gutter.small',
-        },
-    });
+        content.addSelector({
+            common: {
+                padding: theme.gutter.small,
+            },
+        });
+    };
 
     return sheet;
 };

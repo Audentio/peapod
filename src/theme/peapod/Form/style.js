@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const submit = sheet.addPart('submit');
     const form = sheet.addPart('form');
@@ -9,50 +6,57 @@ module.exports = function (sheetName) {
 
     sheet.addCondition('disabled').addState({ disabled: true });
 
-    form.addSelector({
-        common: {
-            position: 'relative',
-            paddingTop: 15,
-            WebkitFilter: 'none',
-            transition: '.2s',
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        condition: 'disabled',
-        common: {
-            WebkitFilter: 'blur(3px)',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        form.addSelector({
+            common: {
+                position: 'relative',
+                paddingTop: 15,
+                WebkitFilter: 'none',
+                transition: '.2s',
+            },
+        });
 
-    overlay.addSelector({
-        common: {
-            backgroundColor: 'rgba(255,255,255, 0)',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: 10,
-            visibility: 'hidden',
-            transition: '.2s',
-            opacity: 0,
-        },
-    });
+        main.addSelector({
+            condition: 'disabled',
+            common: {
+                WebkitFilter: 'blur(3px)',
+            },
+        });
 
-    overlay.addSelector({
-        condition: 'disabled',
-        common: {
-            visibility: 'visible',
-            opacity: 1,
-        },
-    });
+        overlay.addSelector({
+            common: {
+                backgroundColor: 'rgba(255,255,255, 0)',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: 10,
+                visibility: 'hidden',
+                transition: '.2s',
+                opacity: 0,
+            },
+        });
 
-    submit.addSelector({
-        common: {
-            display: 'none',
-        },
-    });
+        overlay.addSelector({
+            condition: 'disabled',
+            common: {
+                visibility: 'visible',
+                opacity: 1,
+            },
+        });
+
+        submit.addSelector({
+            common: {
+                display: 'none',
+            },
+        });
+    };
 
     return sheet;
 };

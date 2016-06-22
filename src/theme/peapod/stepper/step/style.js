@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const content = sheet.addPart('content');
 
@@ -9,29 +6,33 @@ module.exports = function (sheetName) {
     sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
     sheet.addCondition('hidden').addProp({ hidden: true });
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            padding: '$gutter.small',
-            width: '100%',
-            // background: '#fafafa',
-        },
-    }).addSelector({
-        condition: ['hidden'],
-        common: {
-            display: 'none',
-            // background: '#fafafa',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                padding: theme.gutter.small,
+                width: '100%',
+                // background: '#fafafa',
+            },
+        }).addSelector({
+            condition: ['hidden'],
+            common: {
+                display: 'none',
+                // background: '#fafafa',
+            },
+        });
 
-    content.addSelector({
-        common: {
-            width: '100%',
-            // background: '#fafafa',
-        },
-    });
+        content.addSelector({
+            common: {
+                width: '100%',
+                // background: '#fafafa',
+            },
+        });
+    };
 
     return sheet;
 };

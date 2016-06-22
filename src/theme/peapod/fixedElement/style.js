@@ -1,25 +1,28 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const scrolled = sheet.addPart('scrolled');
 
-    // Variables
-    main.addSelector({
-        common: {
-            position: 'static',
-            zIndex: '$zIndex.level5',
-            willChange: 'position',
-            transition: 'all .3s',
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    scrolled.addSelector({
-        common: {
-            // transition: 'all .3s',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                position: 'static',
+                zIndex: theme.zIndex.level5,
+                willChange: 'position',
+                transition: 'all .3s',
+            },
+        });
+
+        scrolled.addSelector({
+            common: {
+                // transition: 'all .3s',
+            },
+        });
+    };
 
     return sheet;
 };

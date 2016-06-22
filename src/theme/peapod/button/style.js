@@ -1,10 +1,8 @@
-import { Sheet } from 'utility/stylesheet.js';
 import Radium from 'radium';
 
 const buttonKinds = ['base', 'general', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
 
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const ripple = sheet.addPart('ripple');
     const rippleContainer = sheet.addPart('rippleContainer');
@@ -45,7 +43,7 @@ module.exports = function (sheetName) {
     const rippleAnimation = Radium.keyframes(rippleSteps, 'rippleAnimation');
 
     // Variables
-    sheet.resolveValues = function (theme) {
+    sheet.resolveValues = theme => {
         const component = {
             color: {
                 text: {
@@ -144,10 +142,7 @@ module.exports = function (sheetName) {
         return component;
     };
 
-
-    sheet.setValues({});
-
-    sheet.resolveStyles = function (component, theme) {
+    sheet.resolveStyles = (component, theme) => {
         main.addSelector({
             common: {
                 display: 'inline-block',

@@ -1,13 +1,14 @@
-import { Sheet } from 'utility/stylesheet.js';
+module.exports = function (sheet) {
+    const main = sheet.addMain();
 
-module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    // Conditions
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
 
-    // Variables
-    sheet.setValues({});
+    };
 
     return sheet;
 };

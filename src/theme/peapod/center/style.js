@@ -1,33 +1,37 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const outer = sheet.addPart('outer');
     const inner = sheet.addPart('inner');
 
-    main.addSelector({
-        common: {
-            display: 'table',
-            width: '100%',
-            height: '100%',
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    outer.addSelector({
-        common: {
-            display: 'table-cell',
-            verticalAlign: 'getProp:valign',
-            textAlign: 'getProp:align',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                display: 'table',
+                width: '100%',
+                height: '100%',
+            },
+        });
 
-    inner.addSelector({
-        common: {
-            textAlign: 'left',
-            display: 'inline-block',
-        },
-    });
+        outer.addSelector({
+            common: {
+                display: 'table-cell',
+                verticalAlign: 'getProp:valign',
+                textAlign: 'getProp:align',
+            },
+        });
+
+        inner.addSelector({
+            common: {
+                textAlign: 'left',
+                display: 'inline-block',
+            },
+        });
+    };
 
     return sheet;
 };

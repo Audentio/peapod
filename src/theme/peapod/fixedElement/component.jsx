@@ -81,7 +81,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const doc = document.documentElement;
             const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-            console.log(top, this.origionalPosition);
+            // console.log(top, this.origionalPosition);
             const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'relative';
 
             let containerWidth = '100%';

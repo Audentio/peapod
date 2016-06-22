@@ -349,6 +349,8 @@ class Sheet {
         this.conditions = {};
         this.doc = '';
         this.docDefault = null;
+        this.variablesResolved = false;
+        this.scenesResolved = false;
         this.stylesResolved = false;
         if (name === 'undefined') {
             Logger.error('Sheet created without a name specified.');
@@ -357,12 +359,6 @@ class Sheet {
     }
 
     setValues(values = {}, scene = 'common', custom = false) {
-        if (typeof(this.resolveValues) === 'function') {
-            const globalVars = window.Pod_Vars.sources[0].common; // TODO fix this
-
-            values = this.resolveValues(globalVars);
-        }
-
         let variables = {
             [scene]: {
                 [this.name]: values,
@@ -404,6 +400,9 @@ class Sheet {
     }
 
     addCondition(name) {
+        if (this.variablesResolved) {
+            Logger.error(`Attempting to add condition ${name} in ${this.name} after variables have been initialized.  This will not work.`);
+        }
         const condition = new Condition();
         this.conditions[name] = condition;
         return condition;
