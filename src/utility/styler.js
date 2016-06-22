@@ -10,7 +10,7 @@ import Logger from './logger.js';
 window.Pod_Styler = window.Pod_Styler || {
     libraries: [],
     currentLibrary: 'peapod',
-    enableCache: true,
+    enableCache: false,
     enableVarCache: true,
     cache: {},
     varCache: {},
