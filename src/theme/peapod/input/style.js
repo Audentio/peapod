@@ -1,8 +1,6 @@
-import { Sheet } from 'utility/stylesheet.js';
 import Radium from 'radium';
 
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const input = sheet.addPart('input');
     const pseudoInput = sheet.addPart('pseudoInput');
@@ -49,252 +47,263 @@ module.exports = function (sheetName) {
     sheet.addCondition('evaluation-invalid').addState({ evaluation: 'invalid' });
     sheet.addCondition('evaluation-empty').addState({ evaluation: 'empty' }); // only when "required" is true
 
-    // Variables
-    sheet.setValues({
-        color: {
-            text: '$color.text.base',
-            placeholder: 'rgba(0,0,0,0.3)',
-            background: 'transparent',
-            backgroundFocus: 'transparent',
-            icon: '$input.color.text',
-        },
-        textIndent: 0,
-        height: '$gutter.large',
-        padding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-        },
-        textareaPadding: {
-            top: 10,
-            right: 0,
-            bottom: 10,
-            left: 0,
-        },
-        border: {
-            color: '$palette.blue400',
-            radius: '0px',
-            width: '0px 0px 2px',
-            style: 'solid',
-        },
-        font: {
-            family: 'inherit',
-            size: '$font.size.large',
-        },
-    }).setValues({
-        color: {
-            background: 'transparent',
-        },
-        border: {
-            width: '0px 0px 1px 0px',
-        },
-    }, 'material').setValues({
-        color: {
-            text: '$color.text.white',
-            placeholder: '$input.color.text',
-            background: 'transparent',
-            backgroundFocus: 'rgba(255, 255, 255, 0.1)',
-            icon: '$input.color.text',
-        },
-        border: {
-            color: '$palette.grey200',
-        },
-    }, 'dark');
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            color: {
+                text: theme.color.text.base,
+                placeholder: 'rgba(0,0,0,0.3)',
+                background: 'transparent',
+                backgroundFocus: 'transparent',
+                get icon() { return component.color.text; },
+            },
+            textIndent: 0,
+            height: theme.gutter.large,
+            padding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+            },
+            textareaPadding: {
+                top: 10,
+                right: 0,
+                bottom: 10,
+                left: 0,
+            },
+            border: {
+                color: theme.palette.blue400,
+                radius: '0px',
+                width: '0px 0px 2px',
+                style: 'solid',
+            },
+            font: {
+                family: 'inherit',
+                size: theme.font.size.large,
+            },
+        };
+        return component;
+    };
 
-    wrapper.addSelector({
-        common: {
-            display: 'inline-block',
-        },
-    });
+    sheet.resolveSceneValues = (common, theme) => { // eslint-disable-line no-unused-vars
+        const component = {
+            dark: {
+                color: {
+                    text: theme.color.text.white,
+                    get placeholder() { return component.dark.color.text; },
+                    background: 'transparent',
+                    backgroundFocus: 'rgba(255, 255, 255, 0.1)',
+                    get icon() { return component.dark.color.text; },
+                },
+                border: {
+                    color: theme.palette.grey200,
+                },
+            },
+            material: {
+                color: {
+                    background: 'transparent',
+                },
+                border: {
+                    width: '0px 0px 1px 0px',
+                },
+            },
+        };
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            height: '$input.height',
-            display: 'inline-block',
-            // marginBottom: '$gutter.internal',
-            position: 'relative',
-            color: '$input.color.text',
-            backgroundColor: '$input.color.background',
-            borderWidth: '0px 0px 2px', // @kyler using a variable here breaks it
-            borderStyle: '$input.border.style',
-            borderColor: '$palette.grey300',
-            borderRadius: '$input.border.radius',
-            marginBottom: '$gutter.extrasmall',
-            transition: 'border-color 100ms',
-        },
-    })
-    .addSelector({
-        condition: 'type-textarea',
-        common: {
-            display: 'block',
-            width: '500px',
-            height: 'auto',
-        },
-    })
-    .addSelector({
-        condition: ['type-textarea', 'showCounter'],
-        common: {
-            marginBottom: 30,
-        },
-    })
-    .addSelector({
-        condition: 'focused',
-        common: {
-            borderColor: '$color.primary.base',
-            borderWidth: '0px 0px 2px 0px',
-        },
-    })
-    .addSelector({
-        condition: 'evaluation-valid',
-        common: {
-            backgroundColor: 'transparent',
-            borderColor: '$color.success.base',
-        },
-    })
-    .addSelector({
-        condition: ['evaluation-invalid'],
-        common: {
-            backgroundColor: 'transparent',
-            borderColor: '$color.danger.base',
-        },
-    })
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        wrapper.addSelector({
+            common: {
+                display: 'inline-block',
+            },
+        });
 
-    .addSelector({
-        condition: ['evaluation-empty'],
-        common: {
-            backgroundColor: 'transparent',
-            borderColor: '$color.danger.base',
-        },
-    });
+        main.addSelector({
+            common: {
+                height: component.height,
+                display: 'inline-block',
+                position: 'relative',
+                color: component.color.text,
+                backgroundColor: component.color.background,
+                borderWidth: '0px 0px 2px',
+                borderStyle: component.border.style,
+                borderColor: theme.palette.grey300,
+                borderRadius: component.border.radius,
+                marginBottom: theme.gutter.extrasmall,
+                transition: 'border-color 100ms',
+            },
+        })
+        .addSelector({
+            condition: 'type-textarea',
+            common: {
+                display: 'block',
+                width: '500px',
+                height: 'auto',
+            },
+        })
+        .addSelector({
+            condition: ['type-textarea', 'showCounter'],
+            common: {
+                marginBottom: 30,
+            },
+        })
+        .addSelector({
+            condition: 'focused',
+            common: {
+                borderColor: theme.color.primary.base,
+                borderWidth: '0px 0px 2px 0px',
+            },
+        })
+        .addSelector({
+            condition: 'evaluation-valid',
+            common: {
+                backgroundColor: 'transparent',
+                borderColor: theme.color.success.base,
+            },
+        })
+        .addSelector({
+            condition: ['evaluation-invalid'],
+            common: {
+                backgroundColor: 'transparent',
+                borderColor: theme.color.danger.base,
+            },
+        })
 
-    input.addSelector({
-        common: {
-            display: 'none',
-        },
-    });
+        .addSelector({
+            condition: ['evaluation-empty'],
+            common: {
+                backgroundColor: 'transparent',
+                borderColor: theme.color.danger.base,
+            },
+        });
 
-    pseudoInput.addSelector({
-        common: {
-            lineHeight: '$input.height',
-            height: '$input.height',
-            width: 150,
-            minWidth: '100%',
-            maxWidth: '100%',
-            paddingTop: '$input.padding.top',
-            paddingRight: '$input.padding.right',
-            paddingBottom: '$input.padding.bottom',
-            paddingLeft: '$input.padding.left',
-            verticalAlign: 'middle',
-            textIndent: '$input.textIndent',
-            background: 'transparent',
-            fontSize: '$font.size.large',
-            color: 'inherit',
-            appearance: 'none',
-            border: 'none',
-            outline: 'none',
-            position: 'relative',
-            zIndex: 2,
-            transition: 'padding 100ms',
-        },
-    }).addSelector({
-        condition: 'type-textarea',
-        common: {
-            maxWidth: '100%',
-            paddingTop: '$input.textareaPadding.top',
-            paddingBottom: '$input.textareaPadding.bottom',
-        },
-    }).addSelector({
-        condition: 'focused',
-        common: {
-            paddingLeft: '0px',
-        },
-    });
+        input.addSelector({
+            common: {
+                display: 'none',
+            },
+        });
 
-    placeholder.addSelector({
-        common: {
-            lineHeight: '$input.height',
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            paddingRight: '$input.padding.right',
-            paddingLeft: '$input.padding.left',
-            textIndent: '$input.textIndent',
-            zIndex: 1,
-            color: '$input.color.placeholder',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-            fontSize: '$font.size.large',
-            transition: 'padding 100ms',
-        },
-    })
-    .addSelector({
-        condition: 'type-textarea',
-        common: {
-            lineHeight: 'normal',
-            height: '100%',
-            paddingTop: '$input.textareaPadding.top',
-            paddingBottom: '$input.textareaPadding.bottom',
-        },
-    })
-    .addSelector({
-        condition: 'focused',
-        common: {
-            paddingLeft: '0px',
-        },
-    });
+        pseudoInput.addSelector({
+            common: {
+                lineHeight: component.height,
+                height: component.height,
+                width: 150,
+                minWidth: '100%',
+                maxWidth: '100%',
+                paddingTop: component.padding.top,
+                paddingRight: component.padding.right,
+                paddingBottom: component.padding.bottom,
+                paddingLeft: component.padding.left,
+                verticalAlign: 'middle',
+                textIndent: component.textIndent,
+                background: 'transparent',
+                fontSize: theme.font.size.large,
+                color: 'inherit',
+                appearance: 'none',
+                border: 'none',
+                outline: 'none',
+                position: 'relative',
+                zIndex: 2,
+                transition: 'padding 100ms',
+            },
+        }).addSelector({
+            condition: 'type-textarea',
+            common: {
+                maxWidth: '100%',
+                paddingTop: component.textareaPadding.top,
+                paddingBottom: component.textareaPadding.bottom,
+            },
+        }).addSelector({
+            condition: 'focused',
+            common: {
+                paddingLeft: '0px',
+            },
+        });
 
-    evaluation.addSelector({
-        common: {
-            display: 'block',
-            padding: '6px 0 0',
-            borderRadius: '$border.radius.small',
-            fontSize: '$font.size.xsmall',
-            // backgroundColor: '$palette.grey100',
-            // position: 'absolute',
-            // marginLeft: '$gutter.internal',
-            // marginTop: 7,
-            // left: '100%',
-            // top: 0,
-            color: '$palette.grey100',
-            // fontWeight: 'bold',
-            whiteSpace: 'nowrap',
-        },
-    })
-    .addSelector({
-        condition: 'evaluation-invalid',
-        common: {
-            animation: 'x 500ms 0s 1',
-            animationName: bounceKeyframes,
-            color: '$color.danger.base',
-        },
-    })
-    .addSelector({
-        condition: 'evaluation-empty',
-        common: {
-            animation: 'x 500ms 0s 1',
-            animationName: bounceKeyframes,
-            color: '$color.danger.base',
-        },
-    })
-    .addSelector({
-        condition: 'evaluation-valid',
-        common: {
-            animation: 'x 500ms 0s 1',
-            animationName: bounceKeyframes,
-            color: '$color.success.base',
-        },
-    });
+        placeholder.addSelector({
+            common: {
+                lineHeight: component.height,
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                paddingRight: component.padding.right,
+                paddingLeft: component.padding.left,
+                textIndent: component.textIndent,
+                zIndex: 1,
+                color: component.color.placeholder,
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                fontSize: theme.font.size.large,
+                transition: 'padding 100ms',
+            },
+        })
+        .addSelector({
+            condition: 'type-textarea',
+            common: {
+                lineHeight: 'normal',
+                height: '100%',
+                paddingTop: component.textareaPadding.top,
+                paddingBottom: component.textareaPadding.bottom,
+            },
+        })
+        .addSelector({
+            condition: 'focused',
+            common: {
+                paddingLeft: '0px',
+            },
+        });
 
-    charCounter.addSelector({
-        common: {
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            marginBottom: -25,
-        },
-    });
+        evaluation.addSelector({
+            common: {
+                display: 'block',
+                padding: '6px 0 0',
+                borderRadius: theme.border.radius.small,
+                fontSize: theme.font.size.xsmall,
+                // backgroundColor: '$palette.grey100',
+                // position: 'absolute',
+                // marginLeft: '$gutter.internal',
+                // marginTop: 7,
+                // left: '100%',
+                // top: 0,
+                color: theme.palette.grey100,
+                // fontWeight: 'bold',
+                whiteSpace: 'nowrap',
+            },
+        })
+        .addSelector({
+            condition: 'evaluation-invalid',
+            common: {
+                animation: 'x 500ms 0s 1',
+                animationName: bounceKeyframes,
+                color: theme.color.danger.base,
+            },
+        })
+        .addSelector({
+            condition: 'evaluation-empty',
+            common: {
+                animation: 'x 500ms 0s 1',
+                animationName: bounceKeyframes,
+                color: theme.color.danger.base,
+            },
+        })
+        .addSelector({
+            condition: 'evaluation-valid',
+            common: {
+                animation: 'x 500ms 0s 1',
+                animationName: bounceKeyframes,
+                color: theme.color.success.base,
+            },
+        });
+
+        charCounter.addSelector({
+            common: {
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                marginBottom: -25,
+            },
+        });
+    };
 
     return sheet;
 };

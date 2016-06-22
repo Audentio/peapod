@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 import { Sheet } from 'utility/stylesheet.js';
 import headings from './presets.js';
 
 module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
+=======
+module.exports = function (sheet) {
+>>>>>>> Audentio/master
     const main = sheet.addMain();
     const h1 = sheet.addPart('h1');
     const h2 = sheet.addPart('h2');
@@ -19,11 +23,14 @@ module.exports = function (sheetName) {
         return instance.props.upper || (instance.props.preset && headings[instance.props.preset].upper);
     });
 
-    // Variables
-    sheet.setValues({
-        textTransform: 'uppercase',
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            textTransform: 'uppercase',
+        };
+        return component;
+    };
 
+<<<<<<< HEAD
     main.addSelector({
         common: {
             marginTop: 0,
@@ -45,9 +52,25 @@ module.exports = function (sheetName) {
             textTransform: 'uppercase',
         },
     });
+=======
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                marginTop: 0,
+                // fontWeight: '$font.weight.black',
+                fontWeight(obj) {
+                    return obj.props.weight || theme.font.weight.black;
+                },
+                textTransform(obj) {
+                    return (obj.props.upper) ? 'uppercase' : 'none';
+                },
+            },
+        });
+>>>>>>> Audentio/master
 
-    const getMargin = (margin, font) => (parseFloat(Pod_Vars.get(margin)) - parseFloat(Pod_Vars.get(font))) + 'rem';
+        const getMargin = (margin, font) => (parseFloat(margin) - parseFloat(font)) + 'rem';
 
+<<<<<<< HEAD
     h1.addSelector({
         common: {
             fontSize: '$font.size.xxxlarge',
@@ -119,6 +142,80 @@ module.exports = function (sheetName) {
             marginBottom: '0px',
         },
     });
+=======
+        h1.addSelector({
+            common: {
+                fontSize: theme.font.size.display3,
+                marginBottom: getMargin(theme.font.margins.display3, theme.font.size.body2),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
+
+        h2.addSelector({
+            common: {
+                fontSize: theme.font.size.display2,
+                marginBottom: getMargin(theme.font.margins.display2, theme.font.size.body2),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
+
+        h3.addSelector({
+            common: {
+                fontSize: theme.font.size.display1,
+                marginBottom: getMargin(theme.font.margins.display1, theme.font.size.body2),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
+
+        h4.addSelector({
+            common: {
+                fontSize: theme.font.size.headline,
+                marginBottom: getMargin(theme.font.margins.headline, theme.font.size.body2),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
+
+        h5.addSelector({
+            common: {
+                fontSize: theme.font.size.title,
+                marginBottom: getMargin(theme.font.margins.title, theme.font.size.body2),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
+
+        h6.addSelector({
+            common: {
+                fontSize: theme.font.size.subheading,
+                marginBottom: getMargin(theme.font.margins.subheading, theme.font.size.body2),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
+    };
+>>>>>>> Audentio/master
 
     return sheet;
 };

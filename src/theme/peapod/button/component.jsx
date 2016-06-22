@@ -76,13 +76,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const style = Pod_Styler.getStyle(this);
-        const ripple = <span ref="rippleContainer" style={style.rippleContainer}>{this.state.ripples}</span>;
+        const ripple = <span ref="rippleContainer" className={style.classes.rippleContainer} style={style.rippleContainer}>{this.state.ripples}</span>;
         const { children, label, href } = this.props;
 
         // Anchor tag <Anchor> if href specified
         if (href) {
             return (
-                <Anchor ref="button" to={href} styler={{ style: style.main }} onClick={this.onClickHandler}>
+                <Anchor ref="button" to={href} className={style.classes.main} styler={{ style: style.main }} onClick={this.onClickHandler}>
                     {children || label} {ripple}
                 </Anchor>
             );
@@ -90,7 +90,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         // Default: <button> tag
         return (
-            <button ref="button" style={style.main} onClick={this.onClickHandler}>
+            <button ref="button" className={style.classes.main} style={style.main} onClick={this.onClickHandler}>
                 {children || label} {ripple}
             </button>
         );

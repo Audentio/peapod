@@ -1,32 +1,32 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const triggers = sheet.addPart('triggers');
     const panels = sheet.addPart('panels');
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    // Selectors
-    main.addSelector({
-        common: {
-            // borderLeft: '10px solid {$color.primary.base}',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                // borderLeft: '10px solid {$color.primary.base}',
+            },
+        });
 
-    triggers.addSelector({
-        common: {
-            backgroundColor: '$color.base.table',
-        },
-    });
+        triggers.addSelector({
+            common: {
+                backgroundColor: theme.color.base.table,
+            },
+        });
 
-    panels.addSelector({
-        common: {
-            padding: '{$gutter.internal}',
-        },
-    });
+        panels.addSelector({
+            common: {
+                padding: theme.gutter.internal,
+            },
+        });
+    };
 
     return sheet;
 };

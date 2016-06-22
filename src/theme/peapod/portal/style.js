@@ -1,25 +1,26 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
-    // Variables
-    sheet.setValues({
-        font: {
-            family: '$font.family.primary',
-        },
-        dropdown: {
-            width: '20rem',
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            font: {
+                family: theme.font.family.primary,
+            },
+            dropdown: {
+                width: '20rem',
+            },
+        };
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            fontFamily: '$portal.font.family',
-            width: '$portal.dropdown.width',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                fontFamily: component.font.family,
+                width: component.dropdown.width,
+            },
+        });
+    };
 
     return sheet;
 };
