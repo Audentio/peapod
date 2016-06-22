@@ -1,4 +1,5 @@
 import { Sheet } from 'utility/stylesheet.js';
+import headings from './presets.js';
 
 module.exports = function (sheetName) {
     const sheet = new Sheet(sheetName);
@@ -12,6 +13,11 @@ module.exports = function (sheetName) {
 
     // Conditions
     sheet.addCondition('secondary').addStyler({ secondary: true });
+    // sheet.addCondition('upper').addProp({ upper: true });
+    // sheet.addCondition('weight').addProp({ weight: ['!=', undefined] });
+    sheet.addCondition('upper').addFunction((instance) => {
+        return instance.props.upper || (instance.props.preset && headings[instance.props.preset].upper);
+    });
 
     // Variables
     sheet.setValues({
@@ -23,11 +29,20 @@ module.exports = function (sheetName) {
             marginTop: 0,
             // fontWeight: '$font.weight.black',
             fontWeight(obj) {
-                return obj.props.weight || Pod_Vars.get('font.weight.black');
+                let weight = Pod_Vars.get('font.weight.black');
+                if (obj.props.weight) {
+                    weight = obj.props.weight;
+                }
+                if ((obj.props.preset && headings[obj.props.preset].weight)) {
+                    weight = headings[obj.props.preset].weight;
+                }
+                return weight;
             },
-            textTransform(obj) {
-                return (obj.props.upper) ? 'uppercase' : 'none';
-            },
+        },
+    }).addSelector({
+        condition: ['upper'],
+        common: {
+            textTransform: 'uppercase',
         },
     });
 
