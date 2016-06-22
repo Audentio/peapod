@@ -7,23 +7,14 @@ module.exports = function (sheet) {
     const h5 = sheet.addPart('h5');
     const h6 = sheet.addPart('h6');
 
-    const presets = {
-        preset1: {
-            weight: '300',
-            upper: true,
-        },
-        preset2: {
-            weight: '100',
-            upper: true,
-        },
-    };
+    const presets = {};
 
     // Conditions
     sheet.addCondition('secondary').addStyler({ secondary: true });
     // sheet.addCondition('upper').addProp({ upper: true });
     // sheet.addCondition('weight').addProp({ weight: ['!=', undefined] });
     sheet.addCondition('upper').addFunction((instance) => {
-        return instance.props.upper || (instance.props.preset && headings[instance.props.preset].upper);
+        return instance.props.upper || (instance.props.preset && presets[instance.props.preset].upper);
     });
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
@@ -43,8 +34,8 @@ module.exports = function (sheet) {
                     if (obj.props.weight) {
                         weight = obj.props.weight;
                     }
-                    if ((obj.props.preset && headings[obj.props.preset].weight)) {
-                        weight = headings[obj.props.preset].weight;
+                    if ((obj.props.preset && presets[obj.props.preset].weight)) {
+                        weight = presets[obj.props.preset].weight;
                     }
                     return weight;
                 },
