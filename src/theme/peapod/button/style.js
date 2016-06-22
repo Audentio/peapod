@@ -130,7 +130,7 @@ module.exports = function (sheet) {
             get denseLineHeight() { return component.denseHeight; },
             font: {
                 family: theme.font.family.primary,
-                size: theme.font.size.button,
+                size: theme.font.size.xsmall,
                 denseSize: theme.font.size.small,
                 weight: theme.font.weight.medium,
             },
@@ -202,9 +202,8 @@ module.exports = function (sheet) {
             common: {
                 backgroundColor: 'transparent',
                 color: component.color.base.background,
-
                 lineHeight: '28px', // TODO: fix this
-                borderWidth: '$border.width',
+                borderWidth: theme.border.width,
                 borderStyle: 'solid',
                 borderColor: component.color.base.background,
             },
@@ -218,7 +217,7 @@ module.exports = function (sheet) {
                 minWidth: '0px',
                 color: component.color.base.background,
                 background: 'transparent',
-                fontSize: theme.font.size.headline,
+                fontSize: theme.font.size.large,
             },
         }).addSelector({
             condition: ['notDisabled'],

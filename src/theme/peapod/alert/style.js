@@ -31,7 +31,7 @@ module.exports = function (sheet) {
 
         wrapper.addSelector({
             common: {
-                fontSize: theme.font.size.body1,
+                fontSize: theme.font.size.xsmall,
                 position: 'relative',
                 paddingLeft: theme.gutter.large,
                 paddingRight: theme.gutter.large,

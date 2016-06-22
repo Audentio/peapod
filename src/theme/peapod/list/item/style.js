@@ -54,8 +54,7 @@ module.exports = function (sheet) {
                 paddingRight: component.padding.right,
                 paddingTop: component.padding.top,
                 paddingBottom: component.padding.bottom,
-
-                fontSize: theme.font.size.subheading,
+                fontSize: theme.font.size.small,
             },
         }).addSelector({
             condition: ['secondary'],
@@ -124,7 +123,7 @@ module.exports = function (sheet) {
         secondary.addSelector({
             common: {
                 display: 'block',
-                fontSize: theme.font.size.body1,
+                fontSize: theme.font.size.xsmall,
                 marginTop: '0px', // Clears a height issue
             },
         });

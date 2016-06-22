@@ -48,7 +48,7 @@ module.exports = function (sheet) {
                 height: half(component.height),
                 lineHeight: half(component.height) + 'px',
                 width: half(component.height),
-                fontSize: theme.font.size.caption,
+                fontSize: theme.font.size.xxsmall,
                 background: theme.palette.grey500,
                 color: component.background,
                 textAlign: 'center',
