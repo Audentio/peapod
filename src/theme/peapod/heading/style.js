@@ -7,7 +7,12 @@ module.exports = function (sheet) {
     const h5 = sheet.addPart('h5');
     const h6 = sheet.addPart('h6');
 
-    const presets = {};
+    const presets = {
+        main: {
+            weight: '700',
+            upper: false,
+        },
+    };
 
     // Conditions
     sheet.addCondition('secondary').addStyler({ secondary: true });
@@ -34,7 +39,7 @@ module.exports = function (sheet) {
                     if (obj.props.weight) {
                         weight = obj.props.weight;
                     }
-                    if ((obj.props.preset && presets[obj.props.preset].weight)) {
+                    if ((obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].weight)) {
                         weight = presets[obj.props.preset].weight;
                     }
                     return weight;
