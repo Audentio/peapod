@@ -24,6 +24,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         alwaysFixed: React.PropTypes.bool,
         addToScroll: React.PropTypes.bool,
         children: React.PropTypes.any,
+        isScrolled: React.PropTypes.func,
     }
 
     static defaultProps = {
@@ -94,6 +95,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     width: containerWidth,
                 });
             }
+        }
+
+        if (this.props.isScrolled) {
+            this.props.isScrolled(positionStyle === this.origionalPosition);
         }
     }
 
