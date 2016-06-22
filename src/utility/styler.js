@@ -10,7 +10,7 @@ import Logger from './logger.js';
 window.Pod_Styler = window.Pod_Styler || {
     libraries: [],
     currentLibrary: 'peapod',
-    enableCache: false,
+    enableCache: true,
     enableVarCache: true,
     cache: {},
     varCache: {},
@@ -168,6 +168,13 @@ window.Pod_Styler = window.Pod_Styler || {
             }
         }
 
+        // resolve global variables from each library
+        let globalVars = window.Pod_Vars.sources[0].common;
+        if (typeof(window.Pod_Vars.sources[0][scene]) !== 'undefined') {
+            globalVars = Object.assign({}, globalVars, window.Pod_Vars.sources[0][scene]);
+        }
+
+
         // collapse styling from each active library
         for (let i = 0, len = libraries.length; i < len; i++) {
             const library = libraries[i];
@@ -199,16 +206,25 @@ window.Pod_Styler = window.Pod_Styler || {
             } else { // styling from style.js
                 const sourceSheet = library.components[componentName];
                 if (sourceSheet !== null && typeof(sourceSheet) !== 'undefined') {
-                    const globalVars = window.Pod_Vars.sources[0].common; // TODO multiple scenes
+                    let sheetVals = {};
                     if (typeof(sourceSheet.resolveValues) === 'function' && !sourceSheet.variablesResolved) {
-                        sourceSheet.setValues(sourceSheet.resolveValues(globalVars), 'common');
+                        sheetVals = sourceSheet.resolveValues(globalVars);
                         sourceSheet.variablesResolved = true;
                     }
 
                     if (typeof(sourceSheet.resolveSceneValues) === 'function' && !sourceSheet.scenesResolved) {
-                        //sourceSheet.setValues(sourceSheet.resolveValues(globalVars), 'common'); // TODO make this work scenes
+                        const sceneVals = sourceSheet.resolveSceneValues(sheetVals, globalVars);
+                        if (typeof(sceneVals[scene]) !== 'undefined') {
+                            if (sheetVals === {}) {
+                                sheetVals = sceneVals;
+                            } else {
+                                sheetVals = Object.assign({}, sheetVals, sceneVals);
+                            }
+                        }
                         sourceSheet.scenesResolved = true;
                     }
+
+                    sourceSheet.setValues(sheetVals, 'common'); // TODO fix this Kyler
 
                     const localVars = window.Pod_Vars.sources[0].common[sourceSheet.name]; // TODO multiple scenes
 
@@ -401,8 +417,6 @@ window.Pod_Styler = window.Pod_Styler || {
         }
 
         const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
-
-        //console.log(style);
 
         style.classes = {};
         style.classes.main = "test1"; // TODO not hardcode this

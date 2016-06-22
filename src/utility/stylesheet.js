@@ -376,13 +376,27 @@ class Sheet {
     }
 
     addMain() {
-        const main = new Main();
-        this.parts.main = main;
+        let main = null;
+
+        if (typeof(this.parts.main) === 'undefined') {
+            main = new Main();
+            this.parts.main = main;
+        } else {
+            main = this.parts.main;
+        }
+
         return main;
     }
     addPart(name) {
-        const part = new Part(name);
-        this.parts[name] = part;
+        let part = null;
+
+        if (typeof(this.parts[name]) === 'undefined') {
+            part = new Part(name);
+            this.parts[name] = part;
+        } else {
+            part = this.parts[name];
+        }
+
         return part;
     }
 
