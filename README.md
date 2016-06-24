@@ -26,6 +26,11 @@ npm install
 
 *****
 
+**Build DLLs (common dependencies)**
+```
+npm run dll
+```
+
 **Build & watch examples**
 ```
 npm run examples-dev
