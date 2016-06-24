@@ -12,7 +12,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static displayName = componentName;
 
     static propTypes = {
-        children: PropTypes.string,
+        children: PropTypes.any,
     }
 
     render() {
