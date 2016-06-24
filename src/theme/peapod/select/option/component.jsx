@@ -4,7 +4,7 @@
 * LICENSE: <%= package.licence %>
 */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -12,18 +12,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static displayName = componentName;
 
     static propTypes = {
-        children: PropTypes.any,
+        children: React.PropTypes.any,
     }
 
     render() {
         const style = Pod_Styler.getStyle(this);
-        const { children: code } = this.props;
 
         return (
-            <code style={style.main}>
-                {code}
-            </code>
+            <strong style={[style.main, { fontWeight: 'bold' }]}>
+                {this.props.children}
+            </strong>
         );
     }
-
 };

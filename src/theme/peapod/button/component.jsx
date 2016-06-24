@@ -37,13 +37,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     onClickHandler(e) {
-        const { onClick, noRipple } = this.props;
+        const { onClick } = this.props;
+        if (onClick) onClick(e);
+    }
+
+    onMouseDownHandler = e => {
+        const { noRipple } = this.props;
 
         if (noRipple === false) {
             this.ripple(e.clientX, e.clientY);
         }
-
-        if (onClick) onClick(e);
     }
 
     ripple(clientX, clientY) {
@@ -82,7 +85,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         // Anchor tag <Anchor> if href specified
         if (href) {
             return (
-                <Anchor ref="button" to={href} className={style.classes.main} styler={{ style: style.main }} onClick={this.onClickHandler}>
+                <Anchor ref="button" to={href} className={style.classes.main} styler={{ style: style.main }} onMouseDown={this.onMouseDownHandler} onClick={this.onClickHandler}>
                     {children || label} {ripple}
                 </Anchor>
             );
@@ -90,7 +93,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         // Default: <button> tag
         return (
-            <button ref="button" className={style.classes.main} style={style.main} onClick={this.onClickHandler}>
+            <button ref="button" className={style.classes.main} style={style.main} onMouseDown={this.onMouseDownHandler} onClick={this.onClickHandler}>
                 {children || label} {ripple}
             </button>
         );

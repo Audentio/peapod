@@ -29,7 +29,6 @@ module.exports = function (sheet) {
             condition: ['colorSet'],
             common: {
                 color: (obj) => (obj.styler.color),
-                color: 'getStyler:color',
             },
         });
     };
