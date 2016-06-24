@@ -221,8 +221,7 @@ const Pod_Helper = {
         Logger.log('%cConfig: %o', 'font-weight:bold', opts);
         if (opts.data) Logger.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal');
         Logger.groupEnd(`[XHR] ${opts.method} ${opts.url}`);
-
-        console.log(opts.data)
+        
         xmlhttp.send(opts.data);
     },
 
