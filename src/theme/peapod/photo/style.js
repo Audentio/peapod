@@ -1,8 +1,6 @@
-import { Sheet } from 'utility/stylesheet.js';
 // import Radium from 'radium';
 
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const caption = sheet.addPart('caption');
     const image = sheet.addPart('image');
@@ -19,14 +17,132 @@ module.exports = function (sheetName) {
     sheet.addCondition('block').addStyler({ block: true });
     sheet.addCondition('hovered').addStyler({ hovered: true });
 
-    // Variables
-    sheet.setValues({
-        color: {
-            // captionBackground: 'rgba(255, 255, 255, 0.5)',
-            captionBackground: '$palette.grey200',
-            lightboxBackground: 'rgba(0,0,0,0.85)',
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            color: {
+                // captionBackground: 'rgba(255, 255, 255, 0.5)',
+                captionBackground: theme.palette.grey200,
+                lightboxBackground: 'rgba(0,0,0,0.85)',
+            },
+        };
+        return component;
+    };
+
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                display: 'inline-block',
+            },
+        });
+
+        image.addSelector({
+            common: {
+                display: 'block',
+                maxWidth: '100%',
+            },
+        }).addSelector({
+            condition: 'hasLightbox',
+            common: {
+                cursor: 'pointer',
+            },
+        });
+
+        caption.addSelector({
+            common: {
+                display: 'block',
+                padding: '6px 10px',
+                fontSize: theme.font.size.small,
+                bottom: 0,
+                left: 0,
+                backgroundColor: component.color.captionBackground,
+                width: '100%',
+            },
+        }).addSelector({
+            condition: 'hovered',
+            common: {
+                opacity: '1',
+            },
+        });
+
+        lightbox.addSelector({
+            common: {
+                position: 'fixed',
+                zIndex: 999,
+                backgroundColor: component.color.lightboxBackground,
+                width: '100%',
+                height: '100%',
+                top: 0, left: 0,
+                transition: '200ms',
+                visibility: 'hidden',
+                opacity: 0,
+                display: 'none',
+            },
+        }).addSelector({
+            condition: 'lightboxAnimation',
+            common: {
+                display: 'table',
+            },
+        }).addSelector({
+            condition: 'lightboxVisible',
+            common: {
+                display: 'table',
+                visibility: 'visible',
+                opacity: 1,
+            },
+        });
+
+        lightboxInner.addSelector({
+            common: {
+                display: 'table-cell',
+                textAlign: 'center',
+                verticalAlign: 'middle',
+            },
+        });
+
+        lightboxImage.addSelector({
+            common: {
+                maxWidth: '90%',
+                maxHeight: '90%',
+                maxWidth: '90vw',
+                maxHeight: '90vh',
+                transition: '.2s',
+            },
+        }).addSelector({
+            condition: ['lightboxAnimation'],
+            common: {
+                transform: 'scale(.9)',
+            },
+        }).addSelector({
+            condition: ['lightboxVisible', 'lightboxAnimation'],
+            common: {
+                transform: 'none',
+            },
+        });
+
+        lightboxActions.addSelector({
+            common: {
+                position: 'absolute',
+                top: '15px',
+                right: '15px',
+                fontSize: '24px',
+                color: 'white',
+            },
+        });
+
+        lightboxAction.addSelector({
+            common: {
+                display: 'inline-block',
+                opacity: '.5',
+                padding: '8px',
+                marginLeft: '2px',
+
+                ':hover': {
+                    cursor: 'pointer',
+                    opacity: '1',
+                },
+            },
+        });
+    };
 
     // Animation keyframes
     // const smackKeyframes = Radium.keyframes({
@@ -50,120 +166,6 @@ module.exports = function (sheetName) {
     //     '84.68%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
     //     '100%': { transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)' },
     // }, 'smack');
-
-    main.addSelector({
-        common: {
-            display: 'inline-block',
-        },
-    });
-
-    image.addSelector({
-        common: {
-            display: 'block',
-            maxWidth: '100%',
-        },
-    }).addSelector({
-        condition: 'hasLightbox',
-        common: {
-            cursor: 'pointer',
-        },
-    });
-
-    caption.addSelector({
-        common: {
-            display: 'block',
-            padding: '6px 10px',
-            fontSize: '$font.size.small',
-            bottom: 0,
-            left: 0,
-            backgroundColor: '$photo.color.captionBackground',
-            width: '100%',
-        },
-    }).addSelector({
-        condition: 'hovered',
-        common: {
-            opacity: '1',
-        },
-    });
-
-    lightbox.addSelector({
-        common: {
-            position: 'fixed',
-            zIndex: 999,
-            backgroundColor: '$photo.color.lightboxBackground',
-            width: '100%',
-            height: '100%',
-            top: 0, left: 0,
-            transition: '200ms',
-            visibility: 'hidden',
-            opacity: 0,
-            display: 'none',
-        },
-    }).addSelector({
-        condition: 'lightboxAnimation',
-        common: {
-            display: 'table',
-        },
-    }).addSelector({
-        condition: 'lightboxVisible',
-        common: {
-            display: 'table',
-            visibility: 'visible',
-            opacity: 1,
-        },
-    });
-
-    lightboxInner.addSelector({
-        common: {
-            display: 'table-cell',
-            textAlign: 'center',
-            verticalAlign: 'middle',
-        },
-    });
-
-    lightboxImage.addSelector({
-        common: {
-            maxWidth: '90%',
-            maxHeight: '90%',
-            maxWidth: '90vw',
-            maxHeight: '90vh',
-            transition: '.2s',
-        },
-    }).addSelector({
-        condition: ['lightboxAnimation'],
-        common: {
-            transform: 'scale(.9)',
-        },
-    }).addSelector({
-        condition: ['lightboxVisible', 'lightboxAnimation'],
-        common: {
-            transform: 'none',
-        },
-    });
-
-    lightboxActions.addSelector({
-        common: {
-            position: 'absolute',
-            top: '15px',
-            right: '15px',
-            fontSize: '24px',
-            color: 'white',
-        },
-    });
-
-    lightboxAction.addSelector({
-        common: {
-            display: 'inline-block',
-            opacity: '.5',
-            padding: '8px',
-            marginLeft: '2px',
-
-            ':hover': {
-                cursor: 'pointer',
-                opacity: '1',
-            },
-        },
-    });
 
     return sheet;
 };

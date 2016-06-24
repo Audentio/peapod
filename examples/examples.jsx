@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
 import Perf from 'react-addons-perf';
 
-import { AppContainer } from 'react-hot-loader';
+import { Root } from 'utility/components.js';
 
 import Sections from './sections.jsx';
 
@@ -26,7 +26,7 @@ if (measurePerf) Perf.start();
 
 render((
     <Provider store={store}>
-        <AppContainer>
+        <Root>
             <Router history={browserHistory}>
                 <Route path="/" component={Sections} />
                 <Route path="/damion" component={DamionDev} />
@@ -36,7 +36,7 @@ render((
 
                 <Route path="/:componentName" component={Sections} />
             </Router>
-        </AppContainer>
+        </Root>
     </Provider>
 ), document.getElementById('mainContainer'));
 

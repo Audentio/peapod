@@ -221,7 +221,7 @@ const Pod_Helper = {
         Logger.log('%cConfig: %o', 'font-weight:bold', opts);
         if (opts.data) Logger.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal');
         Logger.groupEnd(`[XHR] ${opts.method} ${opts.url}`);
-        
+
         xmlhttp.send(opts.data);
     },
 
@@ -294,6 +294,26 @@ const Pod_Helper = {
             }
         }
         return q.join('&');
+    },
+
+    oneEm: Number(getComputedStyle(document.documentElement, null).fontSize.replace(/[^\d]/g, '')),
+
+    responsiveFont(ems, min = ems) {
+        const siteWidth = 1300;
+
+        let vw = window.innerWidth;
+        vw = (vw < siteWidth) ? vw : siteWidth;
+
+        const oneTenth = siteWidth / this.oneEm;
+        const newSize = (vw / oneTenth);
+
+        const minEm = min * this.oneEm;
+        const maxEm = ems * newSize;
+        const newEm = (maxEm > minEm) ? maxEm : minEm;
+
+        const actualEm = newEm / this.oneEm;
+
+        return `${actualEm}rem`;
     },
 
     // some things are left to the reader's imagination

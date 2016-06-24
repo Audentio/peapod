@@ -1,31 +1,32 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
     // Conditions
     sheet.addCondition('secondary').addStyler({ secondary: true });
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            marginBottom: '$font.margins.body1',
-            marginTop: 0,
-            fontSize: '$font.size.body1',
-            color: '$font.color.primary',
-            lineHeight: '2.6rem',
-            fontWeight: '$font.weight.light',
-            display: 'inline-block',
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            marginBottom: '0px',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                marginBottom: theme.font.margins.xsmall,
+                marginTop: 0,
+                fontSize: theme.font.size.xsmall,
+                color: theme.font.color.primary,
+                lineHeight: '2.6rem',
+                fontWeight: theme.font.weight.light,
+                display: 'inline-block',
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
+    };
 
     return sheet;
 };

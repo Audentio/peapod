@@ -24,6 +24,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         alwaysFixed: React.PropTypes.bool,
         addToScroll: React.PropTypes.bool,
         children: React.PropTypes.any,
+        isScrolled: React.PropTypes.func,
     }
 
     static defaultProps = {
@@ -57,7 +58,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         };
 
         if (this.state.alwaysFixed) {
-            this.onScroll();
+            this.onScroll(elemRectInit);
         } else {
             document.addEventListener('scroll', this.onScroll);
         }
@@ -70,16 +71,18 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
     }
 
-    onScroll() {
+    onScroll(elemRect = null) {
         const element = this.fixedElem;
         if (typeof(element) !== 'undefined' && element !== null) {
-            const elemRect = element.getBoundingClientRect();
+            if (elemRect === null) {
+                elemRect = element.getBoundingClientRect();
+            }
 
             this.origionalPosition = elemRect.top + window.scrollY;
             const doc = document.documentElement;
             const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
-            console.log(top, this.origionalPosition);
+            // console.log(top, this.origionalPosition);
             const positionStyle = (top > this.origionalPosition || this.state.alwaysFixed) ? 'fixed' : 'relative';
 
             let containerWidth = '100%';
@@ -94,6 +97,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     width: containerWidth,
                 });
             }
+        }
+
+        if (this.props.isScrolled) {
+            this.props.isScrolled(positionStyle === this.origionalPosition);
         }
     }
 

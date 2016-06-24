@@ -4,19 +4,21 @@
 */
 
 import { merge as _merge, isEqual as _isEqual } from 'lodash';
-import { Style } from './stylesheet.js';
+import { Style, Sheet } from './stylesheet.js';
 import Logger from './logger.js';
 
 window.Pod_Styler = window.Pod_Styler || {
     libraries: [],
     currentLibrary: 'peapod',
     enableCache: false,
-    enableVarCache: false,
+    enableVarCache: true,
     cache: {},
     varCache: {},
-    maxCacheLength: 20,
+    maxCacheLength: 50,
+    stack: null,
 
     removeLibrary(libraryName) {
+        window.Pod_Styler.stack = null; // force recalculation of library stack;
         for (let i = 0, len = window.Pod_Styler.libraries.length; i < len; i++) {
             const library = window.Pod_Styler.libraries[i];
             if (library.name === libraryName) {
@@ -30,6 +32,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
     // registers a library
     addLibrary(parentName, libraryName, componentFiles, requireFunc, globalSheet) {
+        window.Pod_Styler.stack = null; // force recalculation of library stack;
         window.Pod_Styler.varCache = {}; // clear variable cache
         window.Pod_Styler.removeLibrary(libraryName); // remove and previous styling from library
         Logger.log(`Adding Library ${libraryName}`);
@@ -45,7 +48,8 @@ window.Pod_Styler = window.Pod_Styler || {
             const componentName = componentKeys[i];
             const stylesheet = requireFunc(componentFiles[componentName].fileName);
             if (typeof(stylesheet) === 'function') {
-                const sheetStyle = stylesheet(componentName);
+                const sheetStyle = stylesheet(new Sheet(componentName));
+
                 if (typeof(sheetStyle) === 'undefined') {
                     throw new Error(`No Styling found for ${componentName}.  Does ${componentFiles[componentName].fileName} return 'sheet'?`);
                 } else {
@@ -69,6 +73,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
     // changes the library in use, must be done after adding a child theme.
     setLibrary(name) {
+        window.Pod_Styler.stack = null; // force recalculation of library stack;
         window.Pod_Styler.currentLibrary = name;
     },
 
@@ -84,6 +89,10 @@ window.Pod_Styler = window.Pod_Styler || {
 
     // creates an ordered array of libraries currently applied
     getLibraryStack() {
+        if (window.Pod_Styler.stack !== null) {
+            return window.Pod_Styler.stack; // don't need to recalculate the stack;
+        }
+
         let currentName = window.Pod_Styler.currentLibrary;
         const stack = [];
         let depth = 0;
@@ -110,6 +119,8 @@ window.Pod_Styler = window.Pod_Styler || {
 
         if (depth >= 30) throw new Error('Maximum Library stack size reached.');
 
+        window.Pod_Styler.stack = stack;
+
         return stack;
     },
 
@@ -118,6 +129,7 @@ window.Pod_Styler = window.Pod_Styler || {
         const sources = [];
         const libraries = window.Pod_Styler.getLibraryStack(); // currently applying libraries
         let conditions = {}; // all conditions available to component
+        const activeConditions = [];
         const parts = {}; // all parts available to component
         const componentName = obj.componentName;
         const scene = obj.scene; // scene applying to object
@@ -129,7 +141,11 @@ window.Pod_Styler = window.Pod_Styler || {
             const component = library.components[componentName];
 
             if (typeof(globalConditions) !== 'undefined') {
-                conditions = Object.assign({}, conditions, globalConditions); // merge in global conditions
+                if (conditions === {}) {
+                    conditions = globalConditions;
+                } else {
+                    conditions = Object.assign({}, conditions, globalConditions); // merge in global conditions
+                }
             }
 
             if (typeof(component) !== 'undefined') {
@@ -138,7 +154,11 @@ window.Pod_Styler = window.Pod_Styler || {
                 const partKeys = Object.keys(part);
 
                 // get all conditions for the component overwriting any defined in parents with those defined in children
-                conditions = Object.assign({}, conditions, componentConditions);
+                if (conditions === {}) {
+                    conditions = componentConditions;
+                } else {
+                    conditions = Object.assign({}, conditions, componentConditions);
+                }
 
                 // get all parts for the component overwriting any defined in parents with those defined in children
                 for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
@@ -147,6 +167,13 @@ window.Pod_Styler = window.Pod_Styler || {
                 }
             }
         }
+
+        // resolve global variables from each library
+        let globalVars = window.Pod_Vars.sources[0].common;
+        if (typeof(window.Pod_Vars.sources[0][scene]) !== 'undefined') {
+            globalVars = Object.assign({}, globalVars, window.Pod_Vars.sources[0][scene]);
+        }
+
 
         // collapse styling from each active library
         for (let i = 0, len = libraries.length; i < len; i++) {
@@ -172,11 +199,41 @@ window.Pod_Styler = window.Pod_Styler || {
                     }
                 }
 
-                if (Object.keys(localStyle).length > 0) source = localStyle; // if a localStyle was applied, then make it the source
+                if (Object.keys(localStyle).length > 0) {
+                    source = localStyle; // if a localStyle was applied, then make it the source
+                    activeConditions.push(JSON.stringify(localStyle)); // TODO more efficient way of creating unique condition
+                }
             } else { // styling from style.js
                 const sourceSheet = library.components[componentName];
                 if (sourceSheet !== null && typeof(sourceSheet) !== 'undefined') {
-                    source = sourceSheet.getAllStyling(obj, scene, conditions); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+                    let sheetVals = {};
+                    if (typeof(sourceSheet.resolveValues) === 'function' && !sourceSheet.variablesResolved) {
+                        sheetVals = sourceSheet.resolveValues(globalVars);
+                        sourceSheet.variablesResolved = true;
+                    }
+
+                    if (typeof(sourceSheet.resolveSceneValues) === 'function' && !sourceSheet.scenesResolved) {
+                        const sceneVals = sourceSheet.resolveSceneValues(sheetVals, globalVars);
+                        if (typeof(sceneVals[scene]) !== 'undefined') {
+                            if (sheetVals === {}) {
+                                sheetVals = sceneVals;
+                            } else {
+                                sheetVals = Object.assign({}, sheetVals, sceneVals);
+                            }
+                        }
+                        sourceSheet.scenesResolved = true;
+                    }
+
+                    sourceSheet.setValues(sheetVals, 'common'); // TODO fix this Kyler
+
+                    const localVars = window.Pod_Vars.sources[0].common[sourceSheet.name]; // TODO multiple scenes
+
+                    const sheetData = sourceSheet.getAllStyling(obj, scene, conditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+                    source = sheetData.source;
+
+                    for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
+                        activeConditions.push(sheetData.activeConditions[conditionIndex]);
+                    }
                 }
             }
 
@@ -185,7 +242,7 @@ window.Pod_Styler = window.Pod_Styler || {
             }
         }
 
-        return sources;
+        return { sources, activeConditions };
     },
 
     // make inline css from sources array
@@ -196,7 +253,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
         // go through each source's styling
         for (let sourceIndex = 0, sourceLen = sources.length; sourceIndex < sourceLen; sourceIndex++) {
-            const source = sources[sourceIndex];
+            const source = sources[sourceIndex]; // source from buildSrouces
             const partKeys = Object.keys(source);
             for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) { // then through each part in the source
                 const partKey = partKeys[partIndex];
@@ -287,9 +344,20 @@ window.Pod_Styler = window.Pod_Styler || {
     },
 
     // make an object with information about component being styled
-    makeInstanceObj(instance, localStyler) {
-        const propsStyler = (typeof(instance) !== 'undefined' && typeof(instance.props) !== 'undefined' && typeof(instance.props.styler) !== 'undefined') ? instance.props.styler : {};
-        const styler = _merge(propsStyler, localStyler) || {};
+    makeInstanceObj(instance, localStyler = null) {
+        const propsStyler = (typeof(instance) !== 'undefined' && typeof(instance.props) !== 'undefined' && typeof(instance.props.styler) !== 'undefined') ? instance.props.styler : null;
+        const emptyPropsStyler = propsStyler === null;
+        const emptyLocalStyler = localStyler === null;
+        let styler = {};
+        if (emptyPropsStyler && emptyLocalStyler) {
+            styler = {};
+        } else if (emptyPropsStyler) {
+            styler = localStyler;
+        } else if (emptyLocalStyler) {
+            styler = propsStyler;
+        } else {
+            styler = _merge(propsStyler, localStyler);
+        }
         const componentName = styler.styleLike || instance.constructor.displayName; // name of the component
         const scene = styler.scene || 'normal';
         const obj = {
@@ -304,69 +372,58 @@ window.Pod_Styler = window.Pod_Styler || {
         return obj;
     },
 
-    getStyleFromCache(obj, componentName) {
+    getStyleFromCache(obj, sources) {
+        const componentName = obj.componentName;
+
         if (typeof(this.cache[componentName]) === 'undefined') this.cache[componentName] = [];
         for (let i = 0, len = this.cache[componentName].length; i < len; i++) {
             const cacheVal = this.cache[componentName][i];
-            if (this.checkCacheEquality(obj, cacheVal)) {
+            if (this.checkCacheEquality(sources, cacheVal)) {
                 return cacheVal.style;
             }
         }
+
         return false;
     },
 
-    addStyleToCache(obj, style) {
+    addStyleToCache(obj, sources, style) {
         const componentName = obj.componentName;
 
         if (typeof(window.Pod_Styler.cache[componentName]) === 'undefined') window.Pod_Styler.cache[componentName] = [];
 
         const len = window.Pod_Styler.cache[componentName].length;
-        for (let i = 0; i < len; i++) {
-            const cacheVal = window.Pod_Styler.cache[componentName][i];
-            if (window.Pod_Styler.checkCacheEquality(obj, cacheVal)) return false;
-        }
+
         if (len > window.Pod_Styler.maxCacheLength) window.Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
-        window.Pod_Styler.cache[componentName].push({ obj, style });
+        window.Pod_Styler.cache[componentName].push({ obj, sources, style });
 
         return true;
     },
 
-    checkCacheEquality(obj, cacheVal) {
-        const stylerEqual = _isEqual(obj.styler, cacheVal.styler);
-        const stateEqual = _isEqual(obj.state, cacheVal.state);
-        const propsEqual = _isEqual(obj.props, cacheVal.props);
-        const contextEqual = _isEqual(obj.context, cacheVal.context);
-        let radiumEqual = false;
-
-        if ((typeof(obj.state) === 'undefined') && (typeof(cacheVal.state) === 'undefined')) {
-            radiumEqual = true;
-        } else if ((obj.state == null) && (cacheVal.state == null)) {
-            radiumEqual = true;
-        } else if ((typeof(obj.state) === 'undefined' || obj.state == null) || (typeof(cacheVal.state) === 'undefined' || cacheVal.state == null)) {
-            radiumEqual = false;
-        } else {
-            radiumEqual = (obj.state._radiumStyleState === cacheVal.state._radiumStyleState);
-        }
-
-        return stylerEqual && stateEqual && propsEqual && contextEqual && radiumEqual;
+    checkCacheEquality(sources, cacheVal) {
+        return _isEqual(sources, cacheVal.sources);
     },
 
     // gets object of styling for parts of a component
     getStyle(instance, localStyler = {}) {
         const obj = window.Pod_Styler.makeInstanceObj(instance, localStyler);
 
+        const sourcesAndConditions = window.Pod_Styler.buildSources(obj); // build sources from libraries for component
+
         if (window.Pod_Styler.enableCache) { // use value from cache
-            const cacheVal = this.getStyleFromCache(obj, obj.componentName || '_');
+            const cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
             if (cacheVal !== false) {
                 return cacheVal;
             }
         }
 
-        const sources = window.Pod_Styler.buildSources(obj); // build sources from libraries for component
-        const style = window.Pod_Styler.processSources(obj, sources); // built style from sources
+        const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
+
+        style.classes = {};
+        style.classes.main = "test1"; // TODO not hardcode this
+        style.classes.rippleContainer = "test2";
 
         if (window.Pod_Styler.enableCache) { // save to cache
-            this.addStyleToCache(obj, style);
+            this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
         }
 
         return style;

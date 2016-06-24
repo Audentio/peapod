@@ -1,27 +1,31 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const card = sheet.addPart('card');
     const calendar = sheet.addPart('calendar');
 
-    main.addSelector({
-        common: {
-            display: 'inline-block',
-        },
-    });
-    card.addSelector({
-        common: {
-            marginTop: '$gutter.internal',
-            marginRight: 0,
-            marginBottom: 0,
-            marginLeft: 0,
-        },
-    });
-    calendar.addSelector({
-        common: {},
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
+
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                display: 'inline-block',
+            },
+        });
+        card.addSelector({
+            common: {
+                marginTop: theme.gutter.internal,
+                marginRight: 0,
+                marginBottom: 0,
+                marginLeft: 0,
+            },
+        });
+        calendar.addSelector({
+            common: {},
+        });
+    };
 
     return sheet;
 };

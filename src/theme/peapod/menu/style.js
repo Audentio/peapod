@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const portal = sheet.addPart('portal');
     const trigger = sheet.addPart('trigger');
@@ -11,82 +8,86 @@ module.exports = function (sheetName) {
     sheet.addCondition('left').addStyler({ left: true });
     sheet.addCondition('text').addProp({ style: ['!=', undefined] });
 
-    const add = (valueone, valuetwo) => (parseFloat(Pod_Vars.get(valueone)) + parseFloat(Pod_Vars.get(valuetwo)));
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            background: theme.palette.white,
+            boxShadow: theme.shadows.d1,
+            paddingTop: theme.gutter.internal,
+            paddingBottom: theme.gutter.internal,
+            borderRadius: theme.border.radius.small,
+            zIndex: theme.zIndex.level6,
+        };
+        return component;
+    };
 
-    // Variables
-    sheet.setValues({
-        background: '$palette.white',
-        boxShadow: '$shadows.d1',
-        paddingTop: '$gutter.internal',
-        paddingBottom: '$gutter.internal',
-        borderRadius: '$border.radius.small',
-        zIndex: '$zIndex.level6',
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        const add = (valueone, valuetwo) => (parseFloat(valueone) + parseFloat(valuetwo));
 
-    container.addSelector({
-        common: {
-            display: 'inline-block',
-        },
-    });
+        container.addSelector({
+            common: {
+                display: 'inline-block',
+            },
+        });
 
-    main.addSelector({
-        common: {
-            background: '$menu.background',
-            boxShadow: '$menu.boxShadow',
-            paddingTop: '$menu.paddingTop',
-            paddingBottom: '$menu.paddingBottom',
-            borderRadius: '$menu.borderRadius',
-            zIndex: '$menu.zIndex',
-            position: 'absolute',
-        },
-    }).addSelector({
-        condition: ['text'],
-        common: {
-            background: 'transparent',
-            boxShadow: 'none',
-            position: 'static',
-            paddingTop: '0',
-            paddingBottom: '0',
-        },
-    }).addSelector({
-        condition: ['level'],
-        common: {
-            whiteSpace: 'nowrap',
-            transform: 'translate(0, -' + add('gutter.large', 'menu.paddingTop') + 'px)',
-            left: '100%',
-        },
-    }).addSelector({
-        condition: ['left'],
-        common: {
-            left: 'auto',
-            right: '100%',
-        },
-    });
+        main.addSelector({
+            common: {
+                background: component.background,
+                boxShadow: component.boxShadow,
+                paddingTop: component.paddingTop,
+                paddingBottom: component.paddingBottom,
+                borderRadius: component.borderRadius,
+                zIndex: component.zIndex,
+                position: 'absolute',
+            },
+        }).addSelector({
+            condition: ['text'],
+            common: {
+                background: 'transparent',
+                boxShadow: 'none',
+                position: 'static',
+                paddingTop: '0',
+                paddingBottom: '0',
+            },
+        }).addSelector({
+            condition: ['level'],
+            common: {
+                whiteSpace: 'nowrap',
+                transform: 'translate(0, -' + add(theme.gutter.large, theme.menu.paddingTop) + 'px)',
+                left: '100%',
+            },
+        }).addSelector({
+            condition: ['left'],
+            common: {
+                left: 'auto',
+                right: '100%',
+            },
+        });
 
-    portal.addSelector({
-        common: {
-            background: '$menu.background',
-            boxShadow: '$menu.boxShadow',
-            paddingTop: '$menu.paddingTop',
-            paddingBottom: '$menu.paddingBottom',
-            borderRadius: '$menu.borderRadius',
-            zIndex: '$menu.zIndex',
-            position: 'relative',
-        },
-    });
+        portal.addSelector({
+            common: {
+                background: component.background,
+                boxShadow: component.boxShadow,
+                paddingTop: component.paddingTop,
+                paddingBottom: component.paddingBottom,
+                borderRadius: component.borderRadius,
+                zIndex: component.zIndex,
+                position: 'relative',
+            },
+        });
 
-    trigger.addSelector({
-        common: {
-            display: 'inline-block',
-            zIndex: '$menu.zIndex',
-            position: 'relative',
-        },
-    }).addSelector({
-        condition: ['level'],
-        common: {
-            display: 'block',
-        },
-    });
+        trigger.addSelector({
+            common: {
+                display: 'inline-block',
+                zIndex: component.zIndex,
+                position: 'relative',
+            },
+        }).addSelector({
+            condition: ['level'],
+            common: {
+                display: 'block',
+            },
+        });
+    };
 
     return sheet;
 };

@@ -1,20 +1,19 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function style(sheetName) {
-    let sheet = new Sheet(sheetName);
+module.exports = function style(sheet) {
     const main = sheet.addMain();
 
-  // Conditions
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-  // Variables
-    sheet.setValues({});
-
-    main.addSelector({
-        common: {
-            display: 'block',
-            width: '100%',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                display: 'block',
+                width: '100%',
+            },
+        });
+    };
 
     return sheet;
 };

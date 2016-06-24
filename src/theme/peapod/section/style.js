@@ -1,34 +1,32 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
-    // Conditions
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: theme.palette.grey200,
+            padding: theme.sitespcaing.medium,
+        };
+        return component;
+    };
 
-    // Variables
-    sheet.setValues({
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor: '$palette.grey200',
-        padding: '$gutter.large',
-    });
-
-
-    main.addSelector({
-        common: {
-            borderBottomWidth: '$section.borderWidth',
-            borderBottomStyle: '$section.borderStyle',
-            borderBottomColor: '$section.borderColor',
-            paddingTop(obj) {
-                return obj.props.padding || '$section.padding';
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                borderBottomWidth: theme.section.borderWidth,
+                borderBottomStyle: theme.section.borderStyle,
+                borderBottomColor: theme.section.borderColor,
+                paddingTop(obj) {
+                    return obj.props.padding || theme.section.padding;
+                },
+                paddingBottom(obj) {
+                    return obj.props.padding || theme.section.padding;
+                },
+                fontFamily: theme.font.family.primary,
             },
-            paddingBottom(obj) {
-                return obj.props.padding || '$section.padding';
-            },
-            fontFamily: '$font.family.primary',
-        },
-    });
+        });
+    };
 
     return sheet;
 };

@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const h1 = sheet.addPart('h1');
     const h2 = sheet.addPart('h2');
@@ -10,100 +7,125 @@ module.exports = function (sheetName) {
     const h5 = sheet.addPart('h5');
     const h6 = sheet.addPart('h6');
 
+    const presets = {
+        main: {
+            weight: '700',
+            upper: false,
+        },
+    };
+
     // Conditions
     sheet.addCondition('secondary').addStyler({ secondary: true });
-
-    // Variables
-    sheet.setValues({
-        textTransform: 'uppercase',
+    // sheet.addCondition('upper').addProp({ upper: true });
+    // sheet.addCondition('weight').addProp({ weight: ['!=', undefined] });
+    sheet.addCondition('upper').addFunction((instance) => {
+        return instance.props.upper || (instance.props.preset && presets[instance.props.preset].upper);
     });
 
-    main.addSelector({
-        common: {
-            marginTop: 0,
-            // fontWeight: '$font.weight.black',
-            fontWeight(obj) {
-                return obj.props.weight || Pod_Vars.get('font.weight.black');
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            textTransform: 'uppercase',
+        };
+        return component;
+    };
+
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                marginTop: 0,
+                // fontWeight: '$font.weight.black',
+                fontWeight(obj) {
+                    let weight = theme.font.weight.black;
+                    if (obj.props.weight) {
+                        weight = obj.props.weight;
+                    }
+                    if ((obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].weight)) {
+                        weight = presets[obj.props.preset].weight;
+                    }
+                    return weight;
+                },
             },
-            textTransform(obj) {
-                return (obj.props.upper) ? 'uppercase' : 'none';
+        }).addSelector({
+            condition: ['upper'],
+            common: {
+                textTransform: 'uppercase',
             },
-        },
-    });
+        });
 
-    const getMargin = (margin, font) => (parseFloat(Pod_Vars.get(margin)) - parseFloat(Pod_Vars.get(font))) + 'rem';
+        const getMargin = (margin, font) => (parseFloat(margin) - parseFloat(font)) + 'rem';
 
-    h1.addSelector({
-        common: {
-            fontSize: '$font.size.display3',
-            marginBottom: getMargin('font.margins.display3', 'font.size.body2'),
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            marginBottom: '0px',
-        },
-    });
+        h1.addSelector({
+            common: {
+                fontSize: theme.font.size.xxxlarge,
+                marginBottom: getMargin(theme.font.margins.xxxlarge, theme.font.size.xsmall),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
 
-    h2.addSelector({
-        common: {
-            fontSize: '$font.size.display2',
-            marginBottom: getMargin('font.margins.display2', 'font.size.body2'),
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            marginBottom: '0px',
-        },
-    });
+        h2.addSelector({
+            common: {
+                fontSize: theme.font.size.xxlarge,
+                marginBottom: getMargin(theme.font.margins.xxlarge, theme.font.size.xsmall),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
 
-    h3.addSelector({
-        common: {
-            fontSize: '$font.size.display1',
-            marginBottom: getMargin('font.margins.display1', 'font.size.body2'),
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            marginBottom: '0px',
-        },
-    });
+        h3.addSelector({
+            common: {
+                fontSize: theme.font.size.xlarge,
+                marginBottom: getMargin(theme.font.margins.xlarge, theme.font.size.xsmall),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
 
-    h4.addSelector({
-        common: {
-            fontSize: '$font.size.headline',
-            marginBottom: getMargin('font.margins.headline', 'font.size.body2'),
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            marginBottom: '0px',
-        },
-    });
+        h4.addSelector({
+            common: {
+                fontSize: theme.font.size.large,
+                marginBottom: getMargin(theme.font.margins.large, theme.font.size.xsmall),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
 
-    h5.addSelector({
-        common: {
-            fontSize: '$font.size.title',
-            marginBottom: getMargin('font.margins.title', 'font.size.body2'),
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            marginBottom: '0px',
-        },
-    });
+        h5.addSelector({
+            common: {
+                fontSize: theme.font.size.normal,
+                marginBottom: getMargin(theme.font.margins.normal, theme.font.size.xsmall),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
 
-    h6.addSelector({
-        common: {
-            fontSize: '$font.size.subheading',
-            marginBottom: getMargin('font.margins.subheading', 'font.size.body2'),
-        },
-    }).addSelector({
-        condition: ['secondary'],
-        common: {
-            marginBottom: '0px',
-        },
-    });
+        h6.addSelector({
+            common: {
+                fontSize: theme.font.size.small,
+                marginBottom: getMargin(theme.font.margins.small, theme.font.size.xsmall),
+            },
+        }).addSelector({
+            condition: ['secondary'],
+            common: {
+                marginBottom: '0px',
+            },
+        });
+    };
 
     return sheet;
 };

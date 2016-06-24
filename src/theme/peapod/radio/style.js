@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     // const wrapper_outer = sheet.addPart('wrapper_outer');
     // const wrapper_inner = sheet.addPart('wrapper_inner');
@@ -15,77 +12,90 @@ module.exports = function (sheetName) {
     sheet.addCondition('block').addStyler({ block: true });
     sheet.addCondition('hovered').addStyler({ hovered: true });
 
-    // Variables
-    sheet.setValues({
-        width: '1.5rem',
-        height: '$radio.width',
-        color: {
-            text: '$color.text.dark',
-            background: '$palette.grey500',
-            backgroundChecked: '$color.primary.base',
-            icon: '$color.text.white',
-        },
-        border: {
-            color: '$palette.grey200',
-            colorChecked: '$radio.color.backgroundChecked',
-            radius: '$border.radius.large',
-            width: '2px',
-            style: 'solid',
-        },
-        font: {
-            family: 'inherit',
-            size: '$font.size.normal',
-        },
-    }).setValues({
-        color: {
-            text: '$color.text.white',
-            background: 'transparent',
-        },
-        border: {
-            color: '$radio.color.text',
-        },
-    }, 'dark');
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            width: '1.5rem',
+            get height() { return component.width; },
+            color: {
+                text: theme.color.text.dark,
+                background: theme.palette.grey500,
+                backgroundChecked: theme.color.primary.base,
+                icon: theme.color.text.white,
+            },
+            border: {
+                color: theme.palette.grey200,
+                get colorChecked() { return component.color.backgroundChecked; },
+                radius: theme.border.radius.large,
+                width: '2px',
+                style: 'solid',
+            },
+            font: {
+                family: 'inherit',
+                size: theme.font.size.normal,
+            },
+        };
+        return component;
+    };
 
-    main.addSelector({});
+    sheet.resolveSceneValues = (common, theme) => { // eslint-disable-line no-unused-vars
+        const component = {
+            dark: {
+                color: {
+                    text: theme.color.text.white,
+                    background: 'transparent',
+                },
+                border: {
+                    get color() { return component.color.text; },
+                },
+            },
+        };
+        return component;
+    };
 
-    radio_outer.addSelector({
-        common: {
-            width: '$radio.width',
-            height: '$radio.height',
-            background: 'transparent',
-            borderWidth: '$radio.border.width',
-            borderStyle: '$radio.border.style',
-            borderColor: '$radio.color.background',
-            display: 'inline-block',
-            marginRight: '$gutter.extrasmall',
-            borderRadius: '1000px',
-            position: 'relative',
-            verticalAlign: 'middle',
-        },
-    });
-    radio_inner.addSelector({
-        condition: ['checked'],
-        common: {
-            display: 'block',
-            borderRadius: '1000px',
-            background: '$radio.color.background',
-            position: 'absolute',
-            top: '$radio.border.width', left: '$radio.border.width',
-            bottom: '$radio.border.width', right: '$radio.border.width',
-        },
-    });
-    radio_element.addSelector({
-        common: {
-            display: 'none',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({});
 
-    label.addSelector({
-        common: {
-            fontSize: '$radio.font.size',
-            verticalAlign: 'middle',
-        },
-    });
+        radio_outer.addSelector({
+            common: {
+                width: component.width,
+                height: component.height,
+                background: 'transparent',
+                borderWidth: component.border.width,
+                borderStyle: component.border.style,
+                borderColor: component.color.background,
+                display: 'inline-block',
+                marginRight: theme.gutter.extrasmall,
+                borderRadius: '1000px',
+                position: 'relative',
+                verticalAlign: 'middle',
+            },
+        });
+        radio_inner.addSelector({
+            condition: ['checked'],
+            common: {
+                display: 'block',
+                borderRadius: '1000px',
+                background: component.color.background,
+                position: 'absolute',
+                top: component.border.width,
+                left: component.border.width,
+                bottom: component.border.width,
+                right: component.border.width,
+            },
+        });
+        radio_element.addSelector({
+            common: {
+                display: 'none',
+            },
+        });
+
+        label.addSelector({
+            common: {
+                fontSize: component.font.size,
+                verticalAlign: 'middle',
+            },
+        });
+    };
 
     return sheet;
 };
