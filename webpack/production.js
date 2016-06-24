@@ -1,26 +1,36 @@
-var path = require('path'); // eslint-disable-line
-var webpack = require('webpack') // eslint-disable-line
-var CompressionPlugin = require("compression-webpack-plugin"); // eslint-disable-line
+const path = require('path'); // eslint-disable-line
+const webpack = require('webpack') // eslint-disable-line
+const CompressionPlugin = require("compression-webpack-plugin"); // eslint-disable-line
+const PATHS = {};
+PATHS.root = process.cwd();
+PATHS.base = path.join(PATHS.root, 'src');
+PATHS.util = path.join(PATHS.base, 'utility');
+PATHS.dist = path.join(PATHS.root, 'dist');
+PATHS.node_modules = path.join(PATHS.root, 'node_modules');
 
 const config = {
     entry: {
-        styler: [path.resolve('./src/utility/styler.js')],
-        components: [path.resolve('./src/utility/components.js')],
-        vars: [path.resolve('./src/utility/vars.js')],
-        sheet: [path.resolve('./src/utility/stylesheet.js')],
-        helper: [path.resolve('./src/utility/helper.js')],
+        styler: [path.join(PATHS.util, 'styler.js')],
+        components: [path.join(PATHS.util, 'components.js')],
+        vars: [path.join(PATHS.util, 'vars.js')],
+        sheet: [path.join(PATHS.util, 'stylesheet.js')],
+        helper: [path.join(PATHS.util, 'helper.js')],
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: PATHS.dist,
         filename: '[name].js',
         library: 'Peapod',
         libraryTarget: 'umd',
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.json'],
-        modules: ['node_modules', 'src', 'src/utility'],
+        modules: [
+            PATHS.node_modules,
+            PATHS.base,
+            PATHS.util,
+        ],
         alias: {
-            react: path.resolve('./node_modules/react'),
+            react: path.join(PATHS.node_modules, 'react'),
         },
     },
 
