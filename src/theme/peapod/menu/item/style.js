@@ -25,7 +25,6 @@ module.exports = function (sheet) {
                 // width: '100%',
                 position: 'relative',
                 color: 'inherit',
-
                 ':hover': {
                     background: theme.palette.grey100,
                 },
@@ -89,7 +88,6 @@ module.exports = function (sheet) {
         button.addSelector({
             common: {},
         });
-
     };
 
     return sheet;

@@ -6,6 +6,8 @@ module.exports = function (sheet) {
         return component;
     };
 
+    sheet.addCondition('noHighLight').addProp({ noHighLight: true });
+
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         main.addSelector({
             common: {
@@ -14,6 +16,13 @@ module.exports = function (sheet) {
                 padding: '1px 2px',
                 fontSize: '85%',
                 fontFamily: theme.font.family.code,
+            },
+        }).addSelector({
+            condition: 'noHighLight',
+            common: {
+                backgroundColor: 'transparent',
+                padding: '1px 0',
+                color: theme.palette.grey800,
             },
         });
     };

@@ -9,6 +9,10 @@ body, html {
 	line-height: 1.4;
 }
 
+body {
+    font-size: 1.4rem;
+}
+
 *::-webkit-clear-button,
 *::-webkit-calendar-picker-indicator {
     display: none;
