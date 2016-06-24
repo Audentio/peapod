@@ -25,6 +25,7 @@ module.exports = function (sheetName) {
             // width: '100%',
             position: 'relative',
             color: 'inherit',
+            cursor: 'default',
 
             ':hover': {
                 background: '$palette.grey100',
