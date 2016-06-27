@@ -54,7 +54,7 @@ module.exports = function (sheet) {
                 paddingRight: component.padding.right,
                 paddingTop: component.padding.top,
                 paddingBottom: component.padding.bottom,
-                fontSize: theme.font.size.small,
+                fontSize: theme.font.size.xsmall,
             },
         }).addSelector({
             condition: ['secondary'],

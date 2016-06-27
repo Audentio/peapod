@@ -65,7 +65,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     {this.props.children}
                     {secondary}
                 </div>
-                <Divider styler={dividerProps} />
+                {this.props.noDivider || <Divider styler={dividerProps} />}
             </div>
         );
     }
