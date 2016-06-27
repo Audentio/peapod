@@ -41,7 +41,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         ) : '';
 
         const bar = (!this.props.bar) ? (
-            <Divider styler={{ style: { width: '20%' } }} />
+            <Divider styler={{ style: { width: '60px' } }} />
         ) : '';
 
         const paragraph = (this.props.paragraph !== undefined) ? (
