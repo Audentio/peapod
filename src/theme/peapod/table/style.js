@@ -51,9 +51,9 @@ module.exports = function (sheet) {
             },
             font: {
                 family: 'inherit',
-                size: theme.font.size.normal,
+                size: theme.font.size.xsmall,
                 headerFamily: theme.font.family.primary,
-                headerSize: theme.font.size.small,
+                headerSize: theme.font.size.xsmall,
                 headerWeight: theme.font.weight.medium,
             },
             headerHeight: '64px',

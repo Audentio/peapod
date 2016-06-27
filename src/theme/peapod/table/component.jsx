@@ -123,6 +123,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         columns: React.PropTypes.any,
         presets: React.PropTypes.any,
         styler: React.PropTypes.object,
+        hasHeader: React.PropTypes.bool,
+    }
+    static defaultProps = {
+        hasHeader: true,
     }
 
     componentWillReceiveProps(nextProps) {
@@ -135,9 +139,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const headerConfig = this.state.header;
         const columns = this.state.columns;
         // return if you don't want a header
-        return (
-            <TableHeader config={headerConfig} columns={columns} />
-        );
+        const header = (this.props.hasHeader) ? <TableHeader config={headerConfig} columns={columns} /> : '';
+        return header;
     }
 
     hasCheckbox = () => {
@@ -365,7 +368,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             null;
 
         return (
-            <Card styler={_merge({ style: style.main }, this.props.styler)}>
+            <div styler={_merge({ style: style.main }, this.props.styler)}>
                 <TableControl>
                     <Grid styler={{ justifyContent: 'space-between', style: { height: '$table.headerHeight', lineHeight: '$table.headerHeight' } }}>
                         <div>
@@ -462,7 +465,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     </Grid>
                 </div>
 
-            </Card>
+            </div>
         );
     }
 
