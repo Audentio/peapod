@@ -38,7 +38,7 @@ const path = require('path');
 
 const app = express();
 app.use(rollup(config));
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(process.cwd(), 'static')));
 app.listen(3002);
 
 console.log('Listening at localhost:3002. This requires a browser with ES6 support (Chrome 52+).');
