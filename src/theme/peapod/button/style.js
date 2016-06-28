@@ -131,7 +131,7 @@ module.exports = function (sheet) {
             font: {
                 family: theme.font.family.primary,
                 size: theme.font.size.xsmall,
-                denseSize: theme.font.size.small,
+                denseSize: theme.font.size.xsmall,
                 weight: theme.font.weight.medium,
             },
             transition: {
