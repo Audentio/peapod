@@ -11,6 +11,7 @@ module.exports = function (sheet) {
     sheet.addCondition('imageSmall').addStyler({ imgSize: 'small' });
     sheet.addCondition('imageMedium').addStyler({ imgSize: 'medium' });
     sheet.addCondition('imageLarge').addStyler({ imgSize: 'large' });
+    sheet.addCondition('autoHeight').addStyler({ height: 'auto' });
 
     sheet.addCondition('imageLeft').addStyler({ image: 'left' });
     sheet.addCondition('imageRight').addStyler({ image: 'right' });
@@ -54,7 +55,12 @@ module.exports = function (sheet) {
                 paddingRight: component.padding.right,
                 paddingTop: component.padding.top,
                 paddingBottom: component.padding.bottom,
-                fontSize: theme.font.size.small,
+                fontSize: theme.font.size.xsmall,
+            },
+        }).addSelector({
+            condition: ['autoHeight'],
+            common: {
+                height: 'auto',
             },
         }).addSelector({
             condition: ['secondary'],

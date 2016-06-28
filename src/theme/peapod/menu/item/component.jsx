@@ -42,13 +42,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 <Button
                     href={href}
                     styler={{
-                        kind: kind || 'general',
-                        type: type || 'text',
-                        dialog: dialog || false,
-                        dense: dense || false,
+                        kind: this.props.kind || 'general',
+                        type: this.props.type || 'text',
+                        dialog: this.props.dialog || false,
+                        dense: this.props.dense || false,
                         style: style.button,
                     }}
-                    {...otherprops}
                 >
                     {children}
                     {subtext}
@@ -58,13 +57,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
             returned = (
                 <Button
                     styler={{
-                        kind: kind || 'general',
-                        type: type || 'text',
-                        dialog: dialog || false,
-                        dense: dense || false,
+                        kind: this.props.kind || 'general',
+                        type: this.props.type || 'text',
+                        dialog: this.props.dialog || false,
+                        dense: this.props.dense || false,
                         style: style.button,
                     }}
-                    {...otherprops}
                 >
                     {children}
                     {subtext}
@@ -72,7 +70,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             );
         } else if (href) {
             returned = (<div style={style.main}>
-                <Anchor to={href} styler={{ style: style.anchor }} {...otherprops}>
+                <Anchor to={href} styler={{ style: style.anchor }}>
                     {children}
                     {subtext}
                 </Anchor>
