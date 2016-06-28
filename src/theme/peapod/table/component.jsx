@@ -15,7 +15,7 @@ import {
     Icon,
     Paginator,
     Grid,
-    Card,
+    // Card,
     Div,
     Portal,
     Table_Query as TableQuery,
@@ -124,6 +124,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
         presets: React.PropTypes.any,
         styler: React.PropTypes.object,
         hasHeader: React.PropTypes.bool,
+        noControls: React.PropTypes.bool,
+        noFooter: React.PropTypes.bool,
     }
     static defaultProps = {
         hasHeader: true,
@@ -367,43 +369,92 @@ module.exports = componentName => class Pod_Component extends React.Component {
             :
             null;
 
+        const tableControls = (this.props.noControls) ? '' : (
+            <TableControl>
+                <Grid styler={{ justifyContent: 'space-between', style: { height: '$table.headerHeight', lineHeight: '$table.headerHeight' } }}>
+                    <div>
+                        <Div
+                            styler={{
+                                style: {
+                                    display: 'inline-block',
+                                    marginLeft: '$gutter.internal',
+                                    marginRight: '$gutter.internal',
+                                },
+                            }}
+                        >
+                            {checkAll_box}
+                        </Div>
+                        {presets}
+                    </div>
+                    <Grid>
+                        <TableQuery queries={queries} removeQuery={this.removeQuery} />
+
+                        <Icon
+                            styler={{
+                                style: {
+                                    height: '$table.headerHeight',
+                                    fontSize: '$font.size.xxlarge',
+                                    lineHeight: '$table.headerHeight',
+                                    paddingLeft: '10px',
+                                    paddingRight: '14px',
+                                },
+                            }}
+                        >
+                            more_vert
+                        </Icon>
+                    </Grid>
+                </Grid>
+            </TableControl>
+        );
+
+        const tableFooter = (this.props.noFooter) ? '' : (
+            <div style={style.footer}>
+                <Grid
+                    styler={{
+                        justifyContent: 'space-between',
+                        style: { height: '$table.footerHeight', lineHeight: '$table.footerHeight' },
+                    }}
+                >
+
+                    <Div styler={{ style: { marginLeft: '$gutter.small' } }}>
+                        <Button
+                            styler={{
+                                kind: 'base',
+                                dense: true,
+                                style: {
+                                    // fontSize: '$font.size.xsmall',
+                                    // height: '2.5rem',
+                                    // lineHeight: '2.5rem',
+
+                                },
+                            }}
+                        >
+                            <Portal closeOnEsc closeOnOutsideClick trigger={userActionsTrigger}>
+                                <div style={{ backgroundColor: '#CCC' }}>
+                                    <span>Pseudo Modal</span>
+                                    <Button styler={{ style: { display: 'block' } }}>Yep</Button>
+                                </div>
+                            </Portal>
+                        </Button>
+                    </Div>
+                    <Paginator
+                        page={paginated.page}
+                        pages={paginated.pages}
+                        perPage={paginated.perPage}
+                        total={paginated.total}
+                        clickPrevious={this.clickPrevious}
+                        clickNext={this.clickNext}
+                        styler={{
+                            onePage: paginated.pages === 1 && paginated.page === 0,
+                        }}
+                    />
+                </Grid>
+            </div>
+        );
+
         return (
             <div styler={_merge({ style: style.main }, this.props.styler)}>
-                <TableControl>
-                    <Grid styler={{ justifyContent: 'space-between', style: { height: '$table.headerHeight', lineHeight: '$table.headerHeight' } }}>
-                        <div>
-                            <Div
-                                styler={{
-                                    style: {
-                                        display: 'inline-block',
-                                        marginLeft: '$gutter.internal',
-                                        marginRight: '$gutter.internal',
-                                    },
-                                }}
-                            >
-                                {checkAll_box}
-                            </Div>
-                            {presets}
-                        </div>
-                        <Grid>
-                            <TableQuery queries={queries} removeQuery={this.removeQuery} />
-
-                            <Icon
-                                styler={{
-                                    style: {
-                                        height: '$table.headerHeight',
-                                        fontSize: '$font.size.xxlarge',
-                                        lineHeight: '$table.headerHeight',
-                                        paddingLeft: '10px',
-                                        paddingRight: '14px',
-                                    },
-                                }}
-                            >
-                                more_vert
-                            </Icon>
-                        </Grid>
-                    </Grid>
-                </TableControl>
+                {tableControls}
                 <TableInner
                     style={style.main}
                     data={paginated.data}
@@ -422,48 +473,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         {isFetching}
                     </div>
                 </TableInner>
-                <div style={style.footer}>
-                    <Grid
-                        styler={{
-                            justifyContent: 'space-between',
-                            style: { height: '$table.footerHeight', lineHeight: '$table.footerHeight' },
-                        }}
-                    >
-
-                        <Div styler={{ style: { marginLeft: '$gutter.small' } }}>
-                            <Button
-                                styler={{
-                                    kind: 'base',
-                                    dense: true,
-                                    style: {
-                                        // fontSize: '$font.size.xsmall',
-                                        // height: '2.5rem',
-                                        // lineHeight: '2.5rem',
-
-                                    },
-                                }}
-                            >
-                                <Portal closeOnEsc closeOnOutsideClick trigger={userActionsTrigger}>
-                                    <div style={{ backgroundColor: '#CCC' }}>
-                                        <span>Pseudo Modal</span>
-                                        <Button styler={{ style: { display: 'block' } }}>Yep</Button>
-                                    </div>
-                                </Portal>
-                            </Button>
-                        </Div>
-                        <Paginator
-                            page={paginated.page}
-                            pages={paginated.pages}
-                            perPage={paginated.perPage}
-                            total={paginated.total}
-                            clickPrevious={this.clickPrevious}
-                            clickNext={this.clickNext}
-                            styler={{
-                                onePage: paginated.pages === 1 && paginated.page === 0,
-                            }}
-                        />
-                    </Grid>
-                </div>
+                {tableFooter}
 
             </div>
         );
