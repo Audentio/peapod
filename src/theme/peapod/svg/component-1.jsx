@@ -48,7 +48,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        this.state = {};
+        this.state = {
+            file: undefined,
+        };
     }
 
     static displayName = componentName;
@@ -63,29 +65,27 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
-
-        let file;
-
+    componentDidMount() {
         Pod_Helper.xhr({
             url: this.props.file,
             success: (response) => {
-                file = response;
-                console.log(response.childNodes);
+                const file = response;
+                this.setState({ file });
             },
         });
+    }
+
+    render() {
+        const style = Pod_Styler.getStyle(this);
 
         const parser = new DOMParser();
-        const doc = parser.parseFromString(file, 'image/svg+xml');
+        const doc = parser.parseFromString(this.state.file, 'image/svg+xml');
         const T = React.createElement(doc, {}, 'Title');
 
-        console.log(file, doc);
         return (
             <div style={style.main}>
                 {T}
             </div>
         );
-
     }
 };
