@@ -54,8 +54,10 @@ module.exports = componentName => class Pod_Component extends Component {
     mapJSONtoItems(json) {
         const { propMap } = this.props;
         const itemprops = {};
+        let index = 0;
 
         return json.map(item => {
+            index++;
             for (const prop in item) {
                 if (propMap.hasOwnProperty(prop)) {
                     itemprops[propMap[prop]] = item[prop];
@@ -63,7 +65,7 @@ module.exports = componentName => class Pod_Component extends Component {
                     itemprops[prop] = item[prop];
                 }
             }
-            return <Menu_Item {...itemprops} />;
+            return <Menu_Item key={`Menu_Item_${index}`} {...itemprops} />;
         });
     }
 
