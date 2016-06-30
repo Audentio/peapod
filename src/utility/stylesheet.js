@@ -454,16 +454,11 @@ class Sheet {
                     if (typeof(ruleVal) === 'function') {
                         partRules[ruleKey] = ruleVal(instance);
                         activeConditions.push(`computed_${partName}_${ruleIndex}_${partRules[ruleKey]}`);
-                        //console.log(`adding computed_${partName}_${ruleIndex}_${partRules[ruleKey]}`);
                     }
                 }
             }
 
             source[partName] = partRules;
-        }
-
-        if (instance.componentName === 'Icon') {
-            //console.log(source);
         }
 
         return { source, activeConditions };
