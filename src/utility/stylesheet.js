@@ -453,7 +453,8 @@ class Sheet {
 
                     if (typeof(ruleVal) === 'function') {
                         partRules[ruleKey] = ruleVal(instance);
-                        //activeConditions.push(`computed_${ partName }_${ ruleIndex }` )
+                        activeConditions.push(`computed_${partName}_${ruleIndex}_${partRules[ruleKey]}`);
+                        //console.log(`adding computed_${partName}_${ruleIndex}_${partRules[ruleKey]}`);
                     }
                 }
             }
@@ -462,7 +463,7 @@ class Sheet {
         }
 
         if (instance.componentName === 'Icon') {
-            console.log(source);
+            //console.log(source);
         }
 
         return { source, activeConditions };
