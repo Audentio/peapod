@@ -20,12 +20,12 @@ module.exports = function (sheet) {
         }).addSelector({
             condition: ['height'],
             common: {
-                height: 'getProp:height',
+                height: (obj) => (obj.props.height),
             },
         }).addSelector({
             condition: ['width'],
             common: {
-                width: 'getProp:width',
+                width: (obj) => (obj.props.width),
             },
         });
     };

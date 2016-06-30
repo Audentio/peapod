@@ -30,7 +30,7 @@ module.exports = function (sheet) {
         figure.addSelector({
             common: {
                 alignSelf: 'flex-start',
-                minWidth: 'getProp:figureWidth',
+                minWidth: (obj) => (obj.props.figureWidth),
             },
         }).addSelector({
             condition: ['figureMiddle'],

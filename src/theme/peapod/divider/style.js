@@ -30,12 +30,12 @@ module.exports = function (sheet) {
         }).addSelector({
             condition: ['indent'],
             common: {
-                marginLeft: 'getStyler:indent',
+                marginLeft: (obj) => (obj.styler.indent),
             },
         }).addSelector({
             condition: ['outdent'],
             common: {
-                marginRight: 'getStyler:outdent',
+                marginRight: (obj) => (obj.styler.outdent),
             },
         });
     };

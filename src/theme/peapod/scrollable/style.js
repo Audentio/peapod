@@ -33,7 +33,7 @@ module.exports = function (sheet) {
         }).addSelector({
             condition: ['height'],
             common: {
-                maxHeight: 'getProp:height',
+                maxHeight: (obj) => (obj.props.height),
             },
         });
     };

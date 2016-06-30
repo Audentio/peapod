@@ -475,15 +475,8 @@ window.Pod_Styler = window.Pod_Styler || {
             } else {
                 computedVar = this.varCache[`${computedKey}_${scene}`]; // get variable from cache rather than parse string
             }
-        } else if (computedVar.indexOf('getProp:') > -1) {
-            computedVar = obj.props[computedVar.replace('getProp:', '')]; // get property from instance
-        } else if (computedVar.indexOf('getState:') > -1) {
-            computedVar = obj.state[computedVar.replace('getState:', '')]; // get state from instance
-        } else if (computedVar.indexOf('getStyler:') > -1) {
-            computedVar = obj.styler[computedVar.replace('getStyler:', '')]; // get styler from instance
-        } else if (computedVar.indexOf('getContext:') > -1) {
-            computedVar = obj.context[computedVar.replace('getContext:', '')]; // get context from instance
         }
+        
         return computedVar;
     },
 

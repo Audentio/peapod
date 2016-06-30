@@ -46,7 +46,7 @@ module.exports = function (sheet) {
         }).addSelector({
             condition: ['strokeSet'],
             common: {
-                height: 'getStyler:stroke',
+                height: (obj) => (obj.styler.stroke),
             },
         });
 

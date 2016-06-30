@@ -46,14 +46,14 @@ module.exports = function (sheet) {
         main.addSelector({
             condition: ['orderSet'],
             common: {
-                order: 'getStyler:order',
+                order: (obj) => (obj.styler.order),
             },
         });
 
         main.addSelector({
             condition: ['flexSet'],
             common: {
-                flex: 'getStyler:flex',
+                flex: (obj) => (obj.styler.flex),
             },
         });
 
