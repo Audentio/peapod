@@ -27,7 +27,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const modalBox = (
             <div style={style.main}>
                 {this.props.children}
-                hahaha
             </div>
         );
 

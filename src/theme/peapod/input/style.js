@@ -75,8 +75,8 @@ module.exports = function (sheet) {
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         wrapper.addSelector({
             common: {
-                paddingBottom: theme.gutter.extrasmall,
-                paddingTop: theme.gutter.internal,
+                paddingBottom: theme.gutter.internal,
+                // paddingTop: theme.gutter.extrasmall,
             },
         });
 
@@ -92,7 +92,7 @@ module.exports = function (sheet) {
                 borderStyle: component.border.style,
                 borderColor: theme.palette.grey300,
                 borderRadius: component.border.radius,
-                marginBottom: theme.gutter.extrasmall,
+                // marginBottom: theme.gutter.extrasmall,
                 transition: 'border-color 100ms',
             },
         })
@@ -107,7 +107,7 @@ module.exports = function (sheet) {
         .addSelector({
             condition: ['type-textarea', 'showCounter'],
             common: {
-                marginBottom: 30,
+                // marginBottom: 30,
             },
         })
         .addSelector({
@@ -143,6 +143,7 @@ module.exports = function (sheet) {
         input.addSelector({
             common: {
                 lineHeight: component.height,
+                textAlign: 'start',
                 // height: component.height,  // weird verticalAlign issue with placeholder and input text
                 width: 180,
                 minWidth: '100%',
@@ -181,6 +182,7 @@ module.exports = function (sheet) {
         placeholder.addSelector({
             common: {
                 position: 'absolute',
+                textAlign: 'start',
                 lineHeight: component.height,
                 height: component.height,
                 width: '100%',

@@ -1,12 +1,6 @@
 import React from 'react';
 import { ContentWrap, Icon, Select, Timestamp } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
-`<Select selected="anotheroption">
-    <Select_Option value="option1">option 1</Select_Option>
-    <Select_Option value="anotheroption">Another option</Select_Option>
-    <Select_Option value="fancy_option"><Strong>Fancy option</Strong></Select_Option>
-    <Select_Option value="lastopt">Last option</Select_Option>
-</Select>`;
 
 module.exports = class SelectExample extends React.Component {
 

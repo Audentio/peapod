@@ -12,7 +12,7 @@ PATHS.node_modules = path.join(PATHS.root, 'node_modules');
 
 module.exports = {
     cache: true,
-    devtool: buildMode === 'production' ? 'hidden-source-map' : 'cheap-eval-source-map',
+    devtool: buildMode === 'production' ? 'hidden-source-map' : 'eval', // 'cheap-eval-source-map',
     entry: [
         'webpack-dev-server/client?http://0.0.0.0:3002',
         'webpack/hot/only-dev-server',
