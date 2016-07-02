@@ -174,6 +174,9 @@ window.Pod_Styler = window.Pod_Styler || {
             globalVars = Object.assign({}, globalVars, window.Pod_Vars.sources[0][scene]);
         }
 
+        let mergedSheet = {
+
+        };
 
         // collapse styling from each active library
         for (let i = 0, len = libraries.length; i < len; i++) {

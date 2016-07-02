@@ -442,7 +442,27 @@ class Sheet {
 
         for (let i = 0, len = partKeys.length; i < len; i++) {
             const partName = partKeys[i];
-            source[partName] = this.parts[partName].getPartStyling(instance, scene, activeConditions, conditions);
+            const partRules = this.parts[partName].getPartStyling(instance, scene, activeConditions, conditions);
+
+            if (partRules !== null) {
+                const partRuleKeys = Object.keys(partRules);
+
+                for (let ruleIndex = 0, ruleLen = partRuleKeys.length; ruleIndex < ruleLen; ruleIndex++) {
+                    const ruleKey = partRuleKeys[ruleIndex];
+                    const ruleVal = partRules[ruleKey];
+
+                    if (typeof(ruleVal) === 'function') {
+                        partRules[ruleKey] = ruleVal(instance);
+                        //activeConditions.push(`computed_${ partName }_${ ruleIndex }` )
+                    }
+                }
+            }
+
+            source[partName] = partRules;
+        }
+
+        if (instance.componentName === 'Icon') {
+            console.log(source);
         }
 
         return { source, activeConditions };

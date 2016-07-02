@@ -55,6 +55,16 @@ window.Pod_Vars = window.Pod_Vars || {
 
     },
 
+    getScene(name = 'normal') {
+        let result = window.Pod_Vars.sources[0].common;
+
+        if (typeof(window.Pod_Vars.sources[0][name]) !== 'undefined') {
+            result = Object.assign({}, result, window.Pod_Vars.sources[0][name]);
+        }
+
+        return result;
+    },
+
     get(name, varSetOverride, getDepth) {
         const results = [];
         let onlyBase = true;
