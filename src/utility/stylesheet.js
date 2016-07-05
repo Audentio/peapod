@@ -440,6 +440,7 @@ class Sheet {
         const partKeys = Object.keys(this.parts);
         const activeConditions = this.getActiveConditions(instance, conditions);
 
+
         for (let i = 0, len = partKeys.length; i < len; i++) {
             const partName = partKeys[i];
             const partRules = this.parts[partName].getPartStyling(instance, scene, activeConditions, conditions);
@@ -460,6 +461,7 @@ class Sheet {
 
             source[partName] = partRules;
         }
+
 
         return { source, activeConditions };
     }

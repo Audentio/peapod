@@ -6,6 +6,7 @@
 import { merge as _merge, isEqual as _isEqual } from 'lodash';
 import { Style, Sheet } from './stylesheet.js';
 import Logger from './logger.js';
+import emoji from './emoji.js';
 
 window.Pod_Styler = window.Pod_Styler || {
     libraries: [],
@@ -14,8 +15,10 @@ window.Pod_Styler = window.Pod_Styler || {
     enableVarCache: true,
     cache: {},
     varCache: {},
-    maxCacheLength: 50,
+    maxCacheLength: 5000,
     stack: null,
+    classCount: 0,
+    styleRootEle: null,
 
     removeLibrary(libraryName) {
         window.Pod_Styler.stack = null; // force recalculation of library stack;
@@ -248,13 +251,32 @@ window.Pod_Styler = window.Pod_Styler || {
         return { sources, activeConditions };
     },
 
+    getUniqueClassName() {
+        let ret = 'ERROR_GENERATING_CLASSNAME';
+
+        if (window.Pod_Styler.classCount > emoji.length) {
+            ret = emoji[Math.floor(window.Pod_Styler.classCount / emoji.length)] + emoji[window.Pod_Styler.classCount % emoji.length];
+        } else {
+            ret = emoji[window.Pod_Styler.classCount];
+        }
+        window.Pod_Styler.classCount++;
+
+        return ret;
+    },
+
     // make inline css from sources array
     processSources(obj, sources) {
-        const style = {};
+        const style = {
+            classes: {},
+        };
+
         const scene = obj.scene;
-        const componentName = obj.displayName;
+        const componentName = obj.componentName;
 
         // go through each source's styling
+
+        const styleKeyBase = window.Pod_Styler.getUniqueClassName();
+
         for (let sourceIndex = 0, sourceLen = sources.length; sourceIndex < sourceLen; sourceIndex++) {
             const source = sources[sourceIndex]; // source from buildSrouces
             const partKeys = Object.keys(source);
@@ -331,6 +353,8 @@ window.Pod_Styler = window.Pod_Styler || {
                 }
 
                 style[partKey] = this.transform(style[partKey]);
+
+                style.classes[partKey] = `${componentName}_${partKey}_${styleKeyBase}`;
             }
         }
 
@@ -394,12 +418,44 @@ window.Pod_Styler = window.Pod_Styler || {
 
         if (typeof(window.Pod_Styler.cache[componentName]) === 'undefined') window.Pod_Styler.cache[componentName] = [];
 
-        const len = window.Pod_Styler.cache[componentName].length;
+        const cacheLen = window.Pod_Styler.cache[componentName].length;
 
-        if (len > window.Pod_Styler.maxCacheLength) window.Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
+        if (cacheLen > window.Pod_Styler.maxCacheLength) window.Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
         window.Pod_Styler.cache[componentName].push({ obj, sources, style });
 
+        const parts = Object.keys(style.classes);
+
+        if (window.Pod_Styler.styleRootEle === null) {
+            const sheet = document.createElement('style');
+
+            sheet.id = 'Peapod_Style';
+
+            window.Pod_Styler.styleRootEle = sheet;
+
+            document.head.appendChild(sheet);
+        }
+
+        for (let i = 0, len = parts.length; i < len; i++) {
+            const key = parts[i];
+            const val = style.classes[key];
+            const styleString = window.Pod_Styler.stringifyStyle(style[key]);
+
+            if (styleString !== '') {
+                window.Pod_Styler.styleRootEle.sheet.insertRule(`.${val} {${styleString}}\n`, window.Pod_Styler.styleRootEle.sheet.cssRules.length);
+            }
+        }
+
         return true;
+    },
+
+    stringifyStyle(obj) {
+        let ret = '';
+        const rules = Object.keys(obj);
+        for (let i = 0, len = rules.length; i < len; i++) {
+            const rule = rules[i];
+            ret += `${rule}: ${obj[rule]}; `;
+        }
+        return ret.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
     },
 
     checkCacheEquality(sources, cacheVal) {
@@ -421,13 +477,35 @@ window.Pod_Styler = window.Pod_Styler || {
 
         const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
 
-        style.classes = {};
-        style.classes.main = "test1"; // TODO not hardcode this
-        style.classes.rippleContainer = "test2";
+        if (window.Pod_Styler.enableCache) { // save to cache
+            this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
+        }
+
+        return style;
+    },
+
+    // gets object of styling for parts of a component
+    getClassStyle(instance, localStyler = {}) {
+        // return window.Pod_Styler.getStyle(instance, localStyler); // enable this line if not testing Git issue #98
+
+        const obj = window.Pod_Styler.makeInstanceObj(instance, localStyler);
+
+        const sourcesAndConditions = window.Pod_Styler.buildSources(obj); // build sources from libraries for component
+
+        if (window.Pod_Styler.enableCache) { // use value from cache
+            const cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
+            if (cacheVal !== false) {
+                return cacheVal;
+            }
+        }
+
+        let style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
 
         if (window.Pod_Styler.enableCache) { // save to cache
             this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
         }
+
+        style = { classes: style.classes };
 
         return style;
     },
@@ -476,7 +554,7 @@ window.Pod_Styler = window.Pod_Styler || {
                 computedVar = this.varCache[`${computedKey}_${scene}`]; // get variable from cache rather than parse string
             }
         }
-        
+
         return computedVar;
     },
 

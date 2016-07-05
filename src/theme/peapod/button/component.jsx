@@ -78,7 +78,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getClassStyle(this);
         const ripple = <span ref="rippleContainer" className={style.classes.rippleContainer} style={style.rippleContainer}>{this.state.ripples}</span>;
         const { children, label, href } = this.props;
 

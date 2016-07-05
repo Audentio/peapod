@@ -55,7 +55,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const style = Pod_Styler.getClassStyle(this);
 
         const regex = /^(https?:\/\/|ftp:\/\/)/g;
         let anchor;
@@ -63,6 +63,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             anchor = (
                 <a
                     style={style.main}
+                    className={style.classes.main}
                     href={this.props.to}
                     ref={(ref) => { this.anchor = ref; }}
                     onClick={(e) => { this.onClick(); e.preventDefault(); return false; }}
@@ -74,6 +75,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             anchor = (
                 <Link
                     style={style.main}
+                    className={style.classes.main}
                     to={`${this.props.to}`}
                     ref={(ref) => { this.anchor = ref; }}
                 >
