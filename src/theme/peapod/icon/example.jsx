@@ -28,6 +28,8 @@ module.exports = class IconExample extends React.Component {
                         <Pod.Icon styler={{ color: '#D53FD6' }}>question_answer</Pod.Icon>&nbsp;
                         <Pod.Icon styler={{ color: '#FF6044' }}>whatshot</Pod.Icon>
 
+                        <Pod.Icon styler={{ style: { color: '#FF6044' } }}>whatshot</Pod.Icon>
+
                         <br /><br />
 
                         <Pod.Icon styler={{ color: randomColor() }}>info_outline</Pod.Icon>

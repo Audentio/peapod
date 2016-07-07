@@ -437,25 +437,58 @@ window.Pod_Styler = window.Pod_Styler || {
 
         for (let i = 0, len = parts.length; i < len; i++) {
             const key = parts[i];
-            const val = style.classes[key];
-            const styleString = window.Pod_Styler.stringifyStyle(style[key]);
 
-            if (styleString !== '') {
-                window.Pod_Styler.styleRootEle.sheet.insertRule(`.${val} {${styleString}}\n`, window.Pod_Styler.styleRootEle.sheet.cssRules.length);
-            }
+            window.Pod_Styler.addToStylesheet(style.classes[key], style[key], window.Pod_Styler.styleRootEle.sheet);
         }
 
         return true;
     },
 
+    addToStylesheet(classKey, styleObj, sheetEle) {
+        const pseudoSelectors = window.Pod_Styler.stringifyStyle(styleObj);
+        const pseudoKeys = Object.keys(pseudoSelectors);
+
+        if (pseudoSelectors._default !== '') {
+            sheetEle.insertRule(`.${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first
+        }
+
+        for (let i = 0, len = pseudoKeys.length; i < len; i++) {
+            const pseudoKey = pseudoKeys[i];
+            if (pseudoKey === '_default') {
+                // don't add
+            } else if (pseudoKey.indexOf('@media') > -1) {
+                // TODO media queries
+            } else {
+                sheetEle.insertRule(`.${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
+            }
+        }
+    },
+
     stringifyStyle(obj) {
-        let ret = '';
+        const ret = {
+            _default: '',
+        };
         const rules = Object.keys(obj);
         for (let i = 0, len = rules.length; i < len; i++) {
             const rule = rules[i];
-            ret += `${rule}: ${obj[rule]}; `;
+            if (typeof(obj[rule]) === 'object') {
+                const pseudoKeys = Object.keys(obj[rule]);
+                ret[rule] = '';
+                for (let pseudoIndex = 0, pseudoLen = pseudoKeys.length; pseudoIndex < pseudoLen; pseudoIndex++) {
+                    const pseudoRule = pseudoKeys[pseudoIndex];
+                    ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}; `;
+                }
+            } else {
+                ret._default += `${rule}: ${obj[rule]}; `;
+            }
         }
-        return ret.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+
+        const pseudoKeys = Object.keys(ret);
+        for (let i = 0, len = pseudoKeys.length; i < len; i++) {
+            const pseudoKey = pseudoKeys[i];
+            ret[pseudoKey] = ret[pseudoKey].replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); // replace camelcase with hyphens
+        }
+        return ret;
     },
 
     checkCacheEquality(sources, cacheVal) {
@@ -493,8 +526,9 @@ window.Pod_Styler = window.Pod_Styler || {
         const sourcesAndConditions = window.Pod_Styler.buildSources(obj); // build sources from libraries for component
 
         if (window.Pod_Styler.enableCache) { // use value from cache
-            const cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
+            let cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
             if (cacheVal !== false) {
+                cacheVal = { classes: cacheVal.classes }; // this will stop inline styling
                 return cacheVal;
             }
         }
@@ -505,7 +539,7 @@ window.Pod_Styler = window.Pod_Styler || {
             this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
         }
 
-        style = { classes: style.classes };
+        style = { classes: style.classes }; // this will stop inline styling
 
         return style;
     },
