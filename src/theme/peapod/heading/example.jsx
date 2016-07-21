@@ -10,7 +10,7 @@ module.exports = class AccordionExample extends React.Component {
         return (
             <Pod.ContentWrap>
                 <Pod.Heading>Heading 1</Pod.Heading>
-                <Pod.Heading kind="h2">Heading 2</Pod.Heading>
+                <Pod.Heading kind="h2" preset="main">Heading 2</Pod.Heading>
                 <Pod.Heading kind="h3">Heading 3</Pod.Heading>
                 <Pod.Heading kind="h4">Heading 4</Pod.Heading>
                 <Pod.Heading kind="h5">Heading 5</Pod.Heading>
