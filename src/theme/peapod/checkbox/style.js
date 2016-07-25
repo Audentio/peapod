@@ -1,5 +1,3 @@
-import { Sheet } from 'utility/stylesheet.js';
-
 module.exports = function (sheet) {
     const main = sheet.addMain();
     const innerBox = sheet.addPart('innerBox');
@@ -17,7 +15,7 @@ module.exports = function (sheet) {
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {
-            width: '18px',
+            width: '16px',
             get height() { return component.width; },
             color: {
                 text: theme.color.text.dark,
@@ -34,7 +32,7 @@ module.exports = function (sheet) {
             },
             font: {
                 family: 'inherit',
-                size: theme.font.size.small,
+                size: theme.font.size.body1,
             },
         };
         return component;

@@ -90,6 +90,9 @@ module.exports = componentName => class Pod_Component extends Component {
         required: false,
         stateless: false,
         type: 'text',
+        styler: {
+            height: '32px',
+        },
     }
 
     // shouldComponentUpdate = PureRender;

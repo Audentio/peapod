@@ -1,11 +1,11 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Button, Anchor } from 'utility/components.js';
-import pureRender from 'utility/pureRender.js';
+import PureRender from 'utility/pureRender.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
-    shouldComponentUpdate = pureRender;
+    shouldComponentUpdate = PureRender;
 
     static displayName = componentName;
 

@@ -19,7 +19,7 @@ module.exports = function (sheet) {
                 get icon() { return component.color.text; },
             },
             textIndent: 0,
-            height: theme.gutter.large,
+            height: (obj) => (obj.styler.height),
             padding: {
                 top: 0,
                 right: 0,
@@ -40,7 +40,7 @@ module.exports = function (sheet) {
             },
             font: {
                 family: 'inherit',
-                size: theme.font.size.large,
+                size: theme.font.size.body1,
             },
         };
         return component;
@@ -210,12 +210,12 @@ module.exports = function (sheet) {
                 paddingBottom: component.textareaPadding.bottom,
             },
         })
-        .addSelector({
-            condition: 'focused',
-            common: {
-                paddingLeft: '0px',
-            },
-        });
+        // .addSelector({
+        //     condition: 'focused',
+        //     common: {
+        //         paddingLeft: '0px',
+        //     },
+        // });
 
         charCounter.addSelector({
             common: {
