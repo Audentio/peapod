@@ -66,7 +66,7 @@ module.exports = function (sheet) {
                 borderWidth: component.border.width,
                 borderStyle: component.border.style,
                 borderColor: component.border.color,
-                marginRight: '10px',
+                // marginRight: '10px',
                 verticalAlign: 'middle',
             },
         }).addSelector({
@@ -147,6 +147,7 @@ module.exports = function (sheet) {
         // Label
         label.addSelector({
             common: {
+                marginLeft: 10,
                 fontFamily: component.font.family,
                 fontSize: component.font.size,
                 color: component.color.text,
