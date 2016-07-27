@@ -23,7 +23,8 @@ const options = {
 
     // Multi-dimensional array defining prefixes for different device pixeDensity
     // set false to disable hiDPI loading
-    hidpi: [['1.5', '@2x']],
+    // [['1.5', '@2x']]
+    hidpi: false,
 
     // show enlarged image in lightbox
     lightbox: true,
