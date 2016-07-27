@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
     // Conditions
@@ -10,38 +7,42 @@ module.exports = function (sheetName) {
     sheet.addCondition('alignCenter').addProp({ align: 'center' });
     sheet.addCondition('padded').addProp({ padded: ['!=', undefined] });
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            overflow: 'hidden',
-        },
-    }).addSelector({
-        condition: ['padded'],
-        common: {
-            padding(obj) {
-                return obj.props.padding || '$gutter.small';
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                overflow: 'hidden',
             },
-        },
-    }).addSelector({
-        condition: ['alignLeft'],
-        common: {
-            float: 'left',
-            marginRight: '$gutter.small',
-        },
-    }).addSelector({
-        condition: ['alignRight'],
-        common: {
-            float: 'right',
-            marginLeft: '$gutter.small',
-        },
-    }).addSelector({
-        condition: ['alignCenter'],
-        common: {
-            textAlign: 'center',
-        },
-    });
+        }).addSelector({
+            condition: ['padded'],
+            common: {
+                padding(obj) {
+                    return obj.props.padding || theme.gutter.small;
+                },
+            },
+        }).addSelector({
+            condition: ['alignLeft'],
+            common: {
+                float: 'left',
+                marginRight: theme.gutter.small,
+            },
+        }).addSelector({
+            condition: ['alignRight'],
+            common: {
+                float: 'right',
+                marginLeft: theme.gutter.small,
+            },
+        }).addSelector({
+            condition: ['alignCenter'],
+            common: {
+                textAlign: 'center',
+            },
+        });
+    };
 
     return sheet;
 };

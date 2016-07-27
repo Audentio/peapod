@@ -1,8 +1,11 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Button, Anchor } from 'utility/components.js';
+import pureRender from 'utility/pureRender.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
+
+    shouldComponentUpdate = pureRender;
 
     static displayName = componentName;
 
@@ -28,13 +31,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
     render() {
         const style = Pod_Styler.getStyle(this);
 
-        let subtext = (this.props.subtext) ? (<span style={style.subtext}>{this.props.subtext}</span>) : '';
+        const { kind, type, dialog, dense, href, textstyle, children, subtext: subtextProp, ...otherprops } = this.props;
+
+        let subtext = (subtextProp) ? (<span style={style.subtext}>{subtextProp}</span>) : '';
 
         let returned;
-        if (this.props.href && this.props.textstyle === 'button') {
+
+        if (href && textstyle === 'button') {
             returned = (
                 <Button
-                    href={this.props.href}
+                    href={href}
                     styler={{
                         kind: this.props.kind || 'general',
                         type: this.props.type || 'text',
@@ -43,11 +49,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         style: style.button,
                     }}
                 >
-                    {this.props.children}
+                    {children}
                     {subtext}
                 </Button>
             );
-        } else if (this.props.textstyle === 'button') {
+        } else if (textstyle === 'button') {
             returned = (
                 <Button
                     styler={{
@@ -58,21 +64,21 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         style: style.button,
                     }}
                 >
-                    {this.props.children}
+                    {children}
                     {subtext}
                 </Button>
             );
-        } else if (this.props.href) {
+        } else if (href) {
             returned = (<div style={style.main}>
-                <Anchor to={this.props.href} styler={{ style: style.anchor }}>
-                    {this.props.children}
+                <Anchor to={href} styler={{ style: style.anchor }}>
+                    {children}
                     {subtext}
                 </Anchor>
             </div>);
         } else {
             returned = (
-                <div style={style.main}>
-                    {this.props.children}
+                <div style={style.main} {...otherprops}>
+                    {children}
                     {subtext}
                 </div>
             );

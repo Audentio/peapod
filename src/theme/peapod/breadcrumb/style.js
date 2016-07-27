@@ -1,33 +1,34 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const listitem = sheet.addPart('listitem');
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            height: '$gutter.extralarge',
-            lineHeight: '$gutter.extralarge',
-            background: 'white',
-            paddingLeft: '$gutter.extrasmall',
-            paddingRight: '$gutter.extrasmall',
-            borderRadius: '$border.radius.small',
-            color: '$palette.grey500',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                height: theme.gutter.extralarge,
+                lineHeight: theme.gutter.extralarge,
+                background: 'white',
+                paddingLeft: theme.gutter.extrasmall,
+                paddingRight: theme.gutter.extrasmall,
+                borderRadius: theme.border.radius.small,
+                color: theme.palette.grey500,
+            },
+        });
 
-    listitem.addSelector({
-        common: {
-            height: '$gutter.extralarge',
-            display: 'inline-block',
-            paddingLeft: '$gutter.extrasmall',
-            paddingRight: '$gutter.extrasmall',
-        },
-    });
+        listitem.addSelector({
+            common: {
+                height: theme.gutter.extralarge,
+                display: 'inline-block',
+                paddingLeft: theme.gutter.extrasmall,
+                paddingRight: theme.gutter.extrasmall,
+            },
+        });
+    };
 
     return sheet;
 };

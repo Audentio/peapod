@@ -1,8 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-import _ from 'lodash';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const circle = sheet.addPart('circle');
     const mask = sheet.addPart('mask');
@@ -27,133 +23,139 @@ module.exports = function (sheetName) {
     sheet.addCondition('sizeSet').addStyler({ size: ['>', '0'] });
     sheet.addCondition('strokeSet').addStyler({ stroke: ['>', '0'] });
 
-    // Variables
-    sheet.setValues({
-        stroke: 4,
-        size: 50,
-    });
-
-    main.addSelector({
-        common: {
-            width: '$circularProgress.size',
-            height: '$circularProgress.size',
-            fontSize: '$circularProgress.size',
-            display: 'inline-block',
-            position: 'relative',
-            borderRadius: '1000px',
-            WebkitClipPath: 'circle(50% at 50% 50%)',
-            clipPath: 'circle(50% at 50% 50%)',
-            overflow: 'hidden',
-        },
-    }).addSelector({
-        condition: 'sizeSet',
-        common: {
-            width: 'getStyler:size',
-            height: 'getStyler:size',
-            fontSize: 'getStyler:size',
-        },
-    });
-
-    content.addSelector({
-        common: {
-            display: 'table',
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            fontSize: '$font.size.normal',
-        },
-    });
-
-    contentInner.addSelector({
-        common: {
-            display: 'table-cell',
-            verticalAlign: 'middle',
-            textAlign: 'center',
-        },
-    });
-
-    track.addSelector({
-        common: {
-            width: '1em',
-            height: '1em',
-            position: 'absolute',
-            borderWidth: '$circularProgress.stroke',
-            borderStyle: 'solid',
-            borderColor: '$palette.grey200',
-            borderRadius: '50%',
-        },
-    }).addSelector({
-        condition: 'strokeSet',
-        common: {
-            borderWidth: 'getStyler:stroke',
-        },
-    });
-
-    const mask_circle = {
-        width: '1em',
-        height: '1em',
-        transition: 'transform .2s linear',
-        backfaceVisibility: 'hidden',
-        position: 'absolute',
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            stroke: 4,
+            size: 50,
+        };
+        return component;
     };
 
-    mask.addSelector({
-        common: _.merge({}, mask_circle, {
-            clip: 'rect(0 1em 1em .5em)',
-        }),
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                width: component.size,
+                height: component.size,
+                fontSize: component.size,
+                display: 'inline-block',
+                position: 'relative',
+                borderRadius: '1000px',
+                WebkitClipPath: 'circle(50% at 50% 50%)',
+                clipPath: 'circle(50% at 50% 50%)',
+                overflow: 'hidden',
+            },
+        }).addSelector({
+            condition: 'sizeSet',
+            common: {
+                width: 'getStyler:size',
+                height: 'getStyler:size',
+                fontSize: 'getStyler:size',
+            },
+        });
 
-    circle.addSelector({
-        common: _.merge({}, mask_circle, {
-            borderWidth: '$circularProgress.stroke',
-            borderStyle: 'solid',
-            borderColor: '$color.base.base',
-            clip: 'rect(0 .5em 1em 0)',
-            borderRadius: '1000px',
-        }),
-    })
-    .addSelector({
-        condition: 'strokeSet',
-        common: {
-            borderWidth: 'getStyler:stroke',
-        },
-    })
-    .addSelector({
-        condition: 'kindPrimary',
-        common: {
-            borderColor: '$color.primary.base',
-        },
-    })
-    .addSelector({
-        condition: 'kindSuccess',
-        common: {
-            borderColor: '$color.success.base',
-        },
-    })
-    .addSelector({
-        condition: 'kindInfo',
-        common: {
-            borderColor: '$color.info.base',
-        },
-    })
-    .addSelector({
-        condition: 'kindWarning',
-        common: {
-            borderColor: '$color.warning.active',
-        },
-    })
-    .addSelector({
-        condition: 'kindDanger',
-        common: {
-            borderColor: '$color.danger.base',
-        },
-    })
-    .addSelector({
-        condition: 'kindSecondary',
-        common: {
-            borderColor: '$color.secondary.base',
-        },
-    });
+        content.addSelector({
+            common: {
+                display: 'table',
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                fontSize: theme.font.size.normal,
+            },
+        });
+
+        contentInner.addSelector({
+            common: {
+                display: 'table-cell',
+                verticalAlign: 'middle',
+                textAlign: 'center',
+            },
+        });
+
+        track.addSelector({
+            common: {
+                width: '1em',
+                height: '1em',
+                position: 'absolute',
+                borderWidth: component.stroke,
+                borderStyle: 'solid',
+                borderColor: theme.palette.grey200,
+                borderRadius: '50%',
+            },
+        }).addSelector({
+            condition: 'strokeSet',
+            common: {
+                borderWidth: 'getStyler:stroke',
+            },
+        });
+
+        mask.addSelector({
+            common: {
+                width: '1em',
+                height: '1em',
+                transition: 'transform .2s linear',
+                backfaceVisibility: 'hidden',
+                position: 'absolute',
+                clip: 'rect(0 1em 1em .5em)',
+            },
+        });
+
+        circle.addSelector({
+            common: {
+                width: '1em',
+                height: '1em',
+                transition: 'transform .2s linear',
+                backfaceVisibility: 'hidden',
+                position: 'absolute',
+                borderWidth: component.stroke,
+                borderStyle: 'solid',
+                borderColor: theme.color.base.base,
+                clip: 'rect(0 .5em 1em 0)',
+                borderRadius: '1000px',
+            },
+        })
+        .addSelector({
+            condition: 'strokeSet',
+            common: {
+                borderWidth: 'getStyler:stroke',
+            },
+        })
+        .addSelector({
+            condition: 'kindPrimary',
+            common: {
+                borderColor: theme.color.primary.base,
+            },
+        })
+        .addSelector({
+            condition: 'kindSuccess',
+            common: {
+                borderColor: theme.color.success.base,
+            },
+        })
+        .addSelector({
+            condition: 'kindInfo',
+            common: {
+                borderColor: theme.color.info.base,
+            },
+        })
+        .addSelector({
+            condition: 'kindWarning',
+            common: {
+                borderColor: theme.color.warning.active,
+            },
+        })
+        .addSelector({
+            condition: 'kindDanger',
+            common: {
+                borderColor: theme.color.danger.base,
+            },
+        })
+        .addSelector({
+            condition: 'kindSecondary',
+            common: {
+                borderColor: theme.color.secondary.base,
+            },
+        });
+    };
 
     return sheet;
 };

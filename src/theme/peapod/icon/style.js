@@ -1,36 +1,37 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
-
-    // Variables
-    sheet.setValues({
-        font: {
-            size: 'inherit',
-        },
-        color: 'inherit',
-    });
 
     sheet.addCondition('sizeSet').addStyler({ size: ['!=', undefined] });
     sheet.addCondition('colorSet').addStyler({ color: ['!=', undefined] });
 
-    main.addSelector({
-        common: {
-            fontSize: '$icon.font.size',
-            verticalAlign: 'middle',
-        },
-    }).addSelector({
-        condition: ['sizeSet'],
-        common: {
-            fontSize: 'getStyler:size',
-        },
-    }).addSelector({
-        condition: ['colorSet'],
-        common: {
-            color: 'getStyler:color',
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {
+            font: {
+                size: 'inherit',
+            },
+            color: 'inherit',
+        };
+        return component;
+    };
+
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                fontSize: component.font.size,
+                verticalAlign: 'middle',
+            },
+        }).addSelector({
+            condition: ['sizeSet'],
+            common: {
+                fontSize: 'getStyler:size',
+            },
+        }).addSelector({
+            condition: ['colorSet'],
+            common: {
+                color: (obj) => (obj.styler.color),
+            },
+        });
+    };
 
     return sheet;
 };

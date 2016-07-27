@@ -222,7 +222,6 @@ const Pod_Helper = {
         if (opts.data) Logger.log(`%cData: %c${opts.data}`, 'font-weight:bold', 'font-weight:normal');
         Logger.groupEnd(`[XHR] ${opts.method} ${opts.url}`);
 
-        console.log(opts.data);
         xmlhttp.send(opts.data);
     },
 
@@ -312,7 +311,9 @@ const Pod_Helper = {
         const maxEm = ems * newSize;
         const newEm = (maxEm > minEm) ? maxEm : minEm;
 
-        return `${newEm}px`;
+        const actualEm = newEm / this.oneEm;
+
+        return `${actualEm}rem`;
     },
 
     // some things are left to the reader's imagination

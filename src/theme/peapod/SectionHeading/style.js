@@ -1,16 +1,20 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
-    main.addSelector({
-        common: {
-            marginBottom(obj) {
-                return obj.props.margin || '$sitespcaing.medium';
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
+
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                marginBottom(obj) {
+                    return obj.props.margin || theme.sitespcaing.medium;
+                },
             },
-        },
-    });
+        });
+    };
 
     return sheet;
 };

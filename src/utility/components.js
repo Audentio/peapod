@@ -14,13 +14,17 @@ window.Pod = {
     options: {},
 };
 
-const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
+const init = function *init(themeName = 'peapod', ignore = [], themeReq, req) {
     const themeKeys = themeReq.keys();
     const themeLen = themeKeys.length;
     const styleSheets = {};
     const componentNames = {};
     const examplePages = {};
     const fileNames = req.keys();
+    const exports = {
+        Examples: {},
+        Wrapper: wrapper,
+    };
 
     for (let fileIndex = 0, fileLen = fileNames.length; fileIndex < fileLen; fileIndex++) {
         const fileName = fileNames[fileIndex];
@@ -96,7 +100,8 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
             Logger.warn(`${componentName} is not a function`);
         }
 
-        module.exports[componentName] = wrapper(component);
+        exports[componentName] = wrapper(component);
+        yield(exports);
         // module.exports[`NoWrap_${componentName}`] = component;
 
         if (typeof(examplePages[componentName]) === 'undefined') {
@@ -105,18 +110,12 @@ const init = function init(themeName = 'peapod', ignore = [], themeReq, req) {
             }
         } else {
             const example = req(examplePages[componentName]);
-            module.exports.Examples[componentName] = wrapper(example);
+            exports.Examples[componentName] = wrapper(example);
         }
     }
 
-    return module.exports;
+    return exports;
 };
-
-/*
-if (module.hot) {
-    module.hot.accept();
-}
-*/
 
 const ignoreComponents = [
     '__template',
@@ -124,8 +123,18 @@ const ignoreComponents = [
     'Core',
 ];
 const themeReq = require.context('../theme', true, /theme\.js$/);
+
 const req = require.context('../theme', true, /(style\.js|example\.jsx|component\.jsx)$/);
 
-init('peapod', ignoreComponents, themeReq, req);
+const iterator = init('peapod', ignoreComponents, themeReq, req);
+
+let currentVal = { done: false };
+do {
+    currentVal = iterator.next();
+    if (typeof(currentVal.value) !== 'undefined') {
+        module.exports = currentVal.value;
+    }
+} while (!currentVal.done);
+
 
 module.exports.init = init;

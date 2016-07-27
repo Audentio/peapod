@@ -1,25 +1,26 @@
-import { Sheet } from 'utility/stylesheet.js';
+module.exports = function (sheet) {
+    const main = sheet.addMain();
 
-module.exports = function (sheetName) {
-    var sheet = new Sheet(sheetName),
-    main = sheet.addMain();
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    // Variables
-    sheet.setValues({});
-
-    main.addSelector({
-        common: {
-            background: '#fff',
-            boxShadow: '$shadows.d1',
-            padding: '16px 0',
-            borderRadius: '$border.radius.small',
-            zIndex: 3,
-            position: 'absolute',
-            whiteSpace: 'nowrap',
-            transform: 'translate(0, -48px)',
-            left: '100%',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                background: '#fff',
+                boxShadow: theme.shadows.d1,
+                padding: '16px 0',
+                borderRadius: theme.border.radius.small,
+                zIndex: 3,
+                position: 'absolute',
+                whiteSpace: 'nowrap',
+                transform: 'translate(0, -48px)',
+                left: '100%',
+            },
+        });
+    };
 
     return sheet;
 };

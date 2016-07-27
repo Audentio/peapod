@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
     // Conditions
@@ -9,54 +6,58 @@ module.exports = function (sheetName) {
     sheet.addCondition('header').addStyler({ header: true });
     sheet.addCondition('checked').addStyler({ checked: true });
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            display: 'table-row',
-            color: '$table.color.lightRow.color',
-            background: '$table.color.lightRow.background',
-        },
-    }).addSelector({
-        condition: ['dark'],
-        common: {
-            color: '$table.color.darkRow.color',
-            background: '$table.color.darkRow.background',
-        },
-    }).addSelector({
-        condition: ['!header'],
-        common: {
-            ':hover': {
-                background: '$table.color.lightRow.hover',
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                display: 'table-row',
+                color: theme.table.color.lightRow.color,
+                background: theme.table.color.lightRow.background,
             },
-        },
-    }).addSelector({
-        condition: ['dark', '!header'],
-        common: {
-            ':hover': {
-                background: '$table.color.darkRow.hover',
+        }).addSelector({
+            condition: ['dark'],
+            common: {
+                color: theme.table.color.darkRow.color,
+                background: theme.table.color.darkRow.background,
             },
-        },
-    }).addSelector({
-        condition: ['checked'],
-        common: {
-            color: '$table.color.checked.color',
-            background: '$table.color.checked.background',
-            ':hover': {
-                background: '$table.color.checked.hover',
+        }).addSelector({
+            condition: ['!header'],
+            common: {
+                ':hover': {
+                    background: theme.table.color.lightRow.hover,
+                },
             },
-        },
-    }).addSelector({
-        condition: ['header'],
-        common: {
-            color: '$table.color.header.color',
-            background: '$table.color.header.background',
-            ':hover': {
-                background: '$table.color.header.hover',
+        }).addSelector({
+            condition: ['dark', '!header'],
+            common: {
+                ':hover': {
+                    background: theme.table.color.darkRow.hover,
+                },
             },
-        },
-    });
+        }).addSelector({
+            condition: ['checked'],
+            common: {
+                color: theme.table.color.checked.color,
+                background: theme.table.color.checked.background,
+                ':hover': {
+                    background: theme.table.color.checked.hover,
+                },
+            },
+        }).addSelector({
+            condition: ['header'],
+            common: {
+                color: theme.table.color.header.color,
+                background: theme.table.color.header.background,
+                ':hover': {
+                    background: theme.table.color.header.hover,
+                },
+            },
+        });
+    };
 
     return sheet;
 };

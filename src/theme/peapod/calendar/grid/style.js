@@ -1,22 +1,23 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            listStyle: 'none',
-            width: '350px',
-            background: '#fff',
-            overflow: 'hidden',
-            padding: 0,
-            margin: '$gutter.extrasmall',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                listStyle: 'none',
+                width: '350px',
+                background: '#fff',
+                overflow: 'hidden',
+                padding: 0,
+                margin: theme.gutter.extrasmall,
+            },
+        });
+    };
 
     return sheet;
 };

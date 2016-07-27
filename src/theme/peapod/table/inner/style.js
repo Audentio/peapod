@@ -1,7 +1,4 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const row = sheet.addPart('row');
 
@@ -11,55 +8,59 @@ module.exports = function (sheetName) {
     sheet.addCondition('header').addStyler({ header: true });
     sheet.addCondition('checked').addStyler({ checked: true });
 
-    // Variables
-    sheet.setValues({});
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-            display: 'table',
-            width: '100%',
-            fontSize: '$table.font.size',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                display: 'table',
+                width: '100%',
+                fontSize: theme.table.font.size,
+            },
+        });
 
-    row.addSelector({
-        common: {
-            display: 'table-row',
-            color: '$table.color.lightRow.color',
-            background: '$table.color.lightRow.background',
-            height: '48px',
-            lineHeight: '48px',
-        },
-    }).addSelector({
-        condition: ['dark'],
-        common: {
-            color: '$table.color.darkRow.color',
-            background: '$table.color.darkRow.background',
-        },
-    }).addSelector({
-        condition: ['hovered'],
-        common: {
-            color: '$table.color.darkRow.color',
-            background: '$table.color.darkRow.hover',
-        },
-    }).addSelector({
-        condition: ['header'],
-        common: {
-            color: '$table.color.header.color',
-            background: '$table.color.header.background',
-            fontFamily: '$table.font.headerFamily',
-            fontSize: '$table.font.headerSize',
-            fontWeight: '$table.font.headerWeight',
-            height: '56px',
-            lineHeight: '56px',
-        },
-    }).addSelector({
-        condition: ['checked'],
-        common: {
-            color: '$table.color.checked.color',
-            background: '$table.color.checked.background',
-        },
-    });
+        row.addSelector({
+            common: {
+                display: 'table-row',
+                color: theme.table.color.lightRow.color,
+                background: theme.table.color.lightRow.background,
+                height: '48px',
+                lineHeight: '48px',
+            },
+        }).addSelector({
+            condition: ['dark'],
+            common: {
+                color: theme.table.color.darkRow.color,
+                background: theme.table.color.darkRow.background,
+            },
+        }).addSelector({
+            condition: ['hovered'],
+            common: {
+                color: theme.table.color.darkRow.color,
+                background: theme.table.color.darkRow.hover,
+            },
+        }).addSelector({
+            condition: ['header'],
+            common: {
+                color: theme.table.color.header.color,
+                background: theme.table.color.header.background,
+                fontFamily: theme.table.font.headerFamily,
+                fontSize: theme.table.font.headerSize,
+                fontWeight: theme.table.font.headerWeight,
+                height: '56px',
+                lineHeight: '56px',
+            },
+        }).addSelector({
+            condition: ['checked'],
+            common: {
+                color: theme.table.color.checked.color,
+                background: theme.table.color.checked.background,
+            },
+        });
+    };
 
     return sheet;
 };

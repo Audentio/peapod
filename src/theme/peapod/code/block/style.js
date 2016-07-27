@@ -1,38 +1,42 @@
-import { Sheet } from 'utility/stylesheet.js';
-
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+module.exports = function (sheet) {
     const main = sheet.addMain();
     const label = sheet.addPart('label');
     const code = sheet.addPart('code');
 
-    main.addSelector({
-        common: {
-            display: 'block',
-            marginBottom: '$gutter.internal',
-            fontFamily: '$font.family.code',
-            fontSize: '$font.size.small',
-            border: 0,
-        },
-    });
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    code.addSelector({
-        common: {
-            padding: '$gutter.internal',
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                display: 'block',
+                marginBottom: theme.gutter.internal,
+                fontFamily: theme.font.family.code,
+                fontSize: theme.font.size.small,
+                border: 0,
+            },
+        });
 
-    label.addSelector({
-        common: {
-            display: 'inline-block',
-            borderBottom: '2px solid {$color.general.base}',
-            padding: '0 10px 5px 1px',
-            textTransform: 'uppercase',
-            fontFamily: '$font.family.primary',
-            fontSize: '.9em',
-            fontWeight: '$font.weight.bold',
-        },
-    });
+        code.addSelector({
+            common: {
+                padding: theme.gutter.internal,
+            },
+        });
+
+        label.addSelector({
+            common: {
+                display: 'inline-block',
+                borderBottom: `2px solid ${theme.color.general.base}`,
+                padding: '0 10px 5px 1px',
+                textTransform: 'uppercase',
+                fontFamily: theme.font.family.primary,
+                fontSize: '.9em',
+                fontWeight: theme.font.weight.bold,
+            },
+        });
+    };
 
     return sheet;
 };

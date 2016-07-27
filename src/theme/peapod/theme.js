@@ -28,6 +28,7 @@ console.log(ret);
 */
 
 import { Sheet } from '../../utility/stylesheet.js';
+import Pod_Helper from '../../utility/helper.js';
 
 const themeName = 'peapod';
 const themeParent = 'root';
@@ -315,11 +316,11 @@ const globalVars = {
                 // TODO: use root font size and scale from there. default 10px
                 // Use below naming 5 ether way
 
-                xxxlarge: '6.4rem',
-                xxlarge: '4.7rem',
-                xlarge: '3.6rem',
-                large: '2.2rem',
-                normal: '1.8rem',
+                xxxlarge: '5.6rem',
+                xxlarge: '4.5rem',
+                xlarge: '3.4rem',
+                large: '2.4rem',
+                normal: '2rem',
                 small: '1.6rem',
                 xsmall: '1.4rem',
                 xxsmall: '1.2rem',
@@ -333,17 +334,15 @@ const globalVars = {
                 black: '900',
             },
             margins: {
-                display4: '11.2rem',
-                display3: '4.8rem',
-                display2: '4.0rem',
-                display1: '3.2rem',
-                headline: '2.8rem',
-                title: '2.8rem',
-                subheading: '2.4rem',
-                body2: '2.4rem',
-                body1: '2.0rem',
-                caption: '1.2rem',
-                button: '1.4rem',
+                xxxlarge: '5.6rem',
+                xxlarge: '4.5rem',
+                xlarge: '3.4rem',
+                large: '2.4rem',
+                normal: '2rem',
+                small: '1.6rem',
+                xsmall: '1.4rem',
+                xxsmall: '1.2rem',
+                xxxsmall: '1rem',
             },
             color: {
                 primary: '#777',
@@ -365,9 +364,9 @@ const globalVars = {
         // Colors
         color: {
             primary: {
-                base: '$palette.blue400',
-                hover: '$palette.blue300',
-                active: '$palette.blue700',
+                get base() { return globalVars.common.palette.blue400; },
+                get hover() { return globalVars.common.palette.blue300; },
+                get active() { return globalVars.common.palette.blue700; },
             },
             secondary: {
                 base: '#00ACDB',
@@ -375,37 +374,37 @@ const globalVars = {
                 active: '#0089af',
             },
             general: {
-                base: '$palette.grey400',
-                hover: '$palette.grey300',
-                active: '$palette.grey700',
+                get base() { return globalVars.common.palette.grey400; },
+                get hover() { return globalVars.common.palette.grey300; },
+                get active() { return globalVars.common.palette.grey700; },
             },
             warning: {
-                base: '$palette.yellow500',
-                table: '$palette.yellow50',
-                alert: '$palette.yellow100',
-                hover: '$palette.yellow300',
-                active: '$palette.yellow700',
+                get base() { return globalVars.common.palette.yellow500; },
+                get table() { return globalVars.common.palette.yellow50; },
+                get alert() { return globalVars.common.palette.yellow100; },
+                get hover() { return globalVars.common.palette.yellow300; },
+                get active() { return globalVars.common.palette.yellow700; },
             },
             info: {
-                base: '$palette.blue500',
-                table: '$palette.blue50',
-                alert: '$palette.blue100',
-                hover: '$palette.blue300',
-                active: '$palette.blue700',
+                get base() { return globalVars.common.palette.blue500; },
+                get table() { return globalVars.common.palette.blue50; },
+                get alert() { return globalVars.common.palette.blue100; },
+                get hover() { return globalVars.common.palette.blue300; },
+                get active() { return globalVars.common.palette.blue700; },
             },
             danger: {
-                base: '$palette.red500',
-                table: '$palette.red50',
-                alert: '$palette.red100',
-                hover: '$palette.red300',
-                active: '$palette.red700',
+                get base() { return globalVars.common.palette.red500; },
+                get table() { return globalVars.common.palette.red50; },
+                get alert() { return globalVars.common.palette.red100; },
+                get hover() { return globalVars.common.palette.red300; },
+                get active() { return globalVars.common.palette.red700; },
             },
             success: {
-                base: '$palette.lightGreen500',
-                table: '$palette.lightGreen50',
-                alert: '$palette.lightGreen100',
-                hover: '$palette.lightGreen300',
-                active: '$palette.lightGreen700',
+                get base() { return globalVars.common.palette.lightGreen500; },
+                get table() { return globalVars.common.palette.lightGreen50; },
+                get alert() { return globalVars.common.palette.lightGreen100; },
+                get hover() { return globalVars.common.palette.lightGreen300; },
+                get active() { return globalVars.common.palette.lightGreen700; },
             },
             base: {
                 base: '#435160',
@@ -420,7 +419,7 @@ const globalVars = {
                 lighter: 'rgb(137, 148, 158)',
                 base: '#30373E',
                 dark: '#2b3137',
-                white: '$palette.white',
+                get white() { return globalVars.common.palette.white; },
             },
         },
 

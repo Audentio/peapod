@@ -84,30 +84,18 @@ class Selector {
     }
 
     // check if all conditions for selector are true for component instance
-    checkConditions(instance, conditions) {
+    checkConditions(instance, activeConditions) {
         if (this.condition !== null) {
             for (let i = 0, len = this.condition.length; i < len; i++) {
-                const condition = this.checkCondition(instance, this.condition[i], conditions);
+                const condition = this.checkCondition(this.condition[i], activeConditions);
                 if (!condition) return false;
             }
         }
         return true;
     }
 
-    // check if a single condition is true
-    checkCondition(instance, conditionName, conditions) {
-        let condition = null;
-        if (conditionName.indexOf('!') > -1) {
-            condition = conditions[conditionName.replace('!', '')];
-        } else {
-            condition = conditions[conditionName];
-        }
-
-        if (typeof(condition) === 'undefined') {
-            Logger.warn(`No definition for condition:  ${conditionName}`);
-        }
-
-        return condition.isTrue(instance);
+    checkCondition(condition, activeConditions) {
+        return activeConditions.indexOf(condition) > -1;
     }
 
     // Gets the styling for a specified scene merged with the common scene
@@ -200,12 +188,12 @@ class Part {
         };
     }
 
-    getPartStyling(instance, scene, conditions) {
+    getPartStyling(instance, scene, activeConditions, conditions) {
         let styling = null;
 
         for (let i = 0, len = this.selectors.length; i < len; i++) {
             const selector = this.selectors[i];
-            if (selector.checkConditions(instance, conditions)) {
+            if (selector.checkConditions(instance, activeConditions)) {
                 const selectorStyling = selector.getSelector(instance, scene);
                 if (styling == null) {
                     styling = selectorStyling;
@@ -361,6 +349,9 @@ class Sheet {
         this.conditions = {};
         this.doc = '';
         this.docDefault = null;
+        this.variablesResolved = false;
+        this.scenesResolved = false;
+        this.stylesResolved = false;
         if (name === 'undefined') {
             Logger.error('Sheet created without a name specified.');
         }
@@ -385,13 +376,27 @@ class Sheet {
     }
 
     addMain() {
-        const main = new Main();
-        this.parts.main = main;
+        let main = null;
+
+        if (typeof(this.parts.main) === 'undefined') {
+            main = new Main();
+            this.parts.main = main;
+        } else {
+            main = this.parts.main;
+        }
+
         return main;
     }
     addPart(name) {
-        const part = new Part(name);
-        this.parts[name] = part;
+        let part = null;
+
+        if (typeof(this.parts[name]) === 'undefined') {
+            part = new Part(name);
+            this.parts[name] = part;
+        } else {
+            part = this.parts[name];
+        }
+
         return part;
     }
 
@@ -409,6 +414,9 @@ class Sheet {
     }
 
     addCondition(name) {
+        if (this.variablesResolved) {
+            Logger.error(`Attempting to add condition ${name} in ${this.name} after variables have been initialized.  This will not work.`);
+        }
         const condition = new Condition();
         this.conditions[name] = condition;
         return condition;
@@ -422,24 +430,38 @@ class Sheet {
         this.docDefault = data;
     }
 
-    getStyling(instance, part, scene = 'normal', conditions) {
-        const partObj = this.parts[part];
-        if (typeof(partObj) === 'undefined') {
-            throw new Error(`Could not find Part named ${part}.`);
+    getAllStyling(instance, scene = 'normal', conditions, localVars, globalVars) {
+        if (typeof(this.resolveStyles) === 'function' && !this.stylesResolved) {
+            this.stylesResolved = true;
+            this.resolveStyles(localVars, globalVars);
         }
-        return partObj.getPartStyling(instance, scene, conditions);
-    }
 
-    getAllStyling(instance, scene = 'normal', conditions) {
-        const result = {};
+        const source = {};
         const partKeys = Object.keys(this.parts);
+        const activeConditions = this.getActiveConditions(instance, conditions);
 
         for (let i = 0, len = partKeys.length; i < len; i++) {
             const partName = partKeys[i];
-            result[partName] = this.parts[partName].getPartStyling(instance, scene, conditions);
+            const partRules = this.parts[partName].getPartStyling(instance, scene, activeConditions, conditions);
+
+            if (partRules !== null) {
+                const partRuleKeys = Object.keys(partRules);
+
+                for (let ruleIndex = 0, ruleLen = partRuleKeys.length; ruleIndex < ruleLen; ruleIndex++) {
+                    const ruleKey = partRuleKeys[ruleIndex];
+                    const ruleVal = partRules[ruleKey];
+
+                    if (typeof(ruleVal) === 'function') {
+                        partRules[ruleKey] = ruleVal(instance);
+                        //activeConditions.push(`computed_${ partName }_${ ruleIndex }` )
+                    }
+                }
+            }
+
+            source[partName] = partRules;
         }
 
-        return result;
+        return { source, activeConditions };
     }
 
     getDoc() {
@@ -449,6 +471,23 @@ class Sheet {
     getDocDefault() {
         return this.docDefault;
     }
+
+    // check if a single condition is true
+    getActiveConditions(instance, conditions) {
+        const activeConditions = [];
+        const conditionNames = Object.keys(conditions);
+
+        for (let i = 0, len = conditionNames.length; i < len; i++) {
+            const conditionName = conditionNames[i];
+            const condition = conditions[conditionName];
+            if (condition.isTrue(instance)) {
+                activeConditions.push(conditionName);
+            }
+        }
+
+        return activeConditions;
+    }
+
 }
 
 module.exports = {
