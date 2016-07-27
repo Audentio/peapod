@@ -151,7 +151,7 @@ module.exports = function (sheet) {
                 position: 'relative',
                 overflow: 'hidden', // prevent ripple overflow
                 textDecoration: 'none',
-                textTransform: 'uppercase',
+                // textTransform: 'uppercase',
                 fontFamily: component.font.family,
                 fontSize: component.font.size,
                 fontWeight: component.font.weight,

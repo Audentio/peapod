@@ -3,7 +3,8 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import { merge as _merge, isEqual as _isEqual } from 'lodash';
+import _merge from 'lodash/merge';
+import _isEqual from 'lodash/isEqual';
 import { Style, Sheet } from './stylesheet.js';
 import Logger from './logger.js';
 
