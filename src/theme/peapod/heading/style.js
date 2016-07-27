@@ -44,15 +44,24 @@ module.exports = function (sheet) {
                 },
                 marginTop(obj) {
                     let margin = 0;
+<<<<<<< HEAD
 
                     if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginTop) !== 'undefined') {
                         margin = obj.presets[obj.props.preset].marginTop;
+=======
+                    if (obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].marginTop) {
+                        margin = presets[obj.props.preset].marginTop;
+>>>>>>> audentio/master
                     }
                     return margin;
                 },
                 marginBottom(obj) {
                     let margin = 0;
+<<<<<<< HEAD
                     if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginBottom) !== 'undefined') {
+=======
+                    if (obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].marginBottom) {
+>>>>>>> audentio/master
                         margin = presets[obj.props.preset].marginBottom;
                     }
                     return margin;
