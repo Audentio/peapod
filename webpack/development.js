@@ -10,6 +10,19 @@ PATHS.examples = path.join(PATHS.root, 'examples');
 PATHS.dll = path.join(PATHS.examples, 'dll'); // DLL under /examples because its contentBase for server
 PATHS.node_modules = path.join(PATHS.root, 'node_modules');
 
+let measurePerf = false;
+let componentNames = '*';
+
+for (let i = 2, len = process.argv.length; i < len; i++) {
+    const arg = process.argv[i];
+    const lastArg = process.argv[i - 1];
+    if (lastArg === '-components') {
+        componentNames = arg;
+    } else if (arg === '-perf') {
+        measurePerf = true;
+    }
+}
+
 module.exports = {
     cache: true,
     devtool: buildMode === 'production' ? 'hidden-source-map' : 'eval', // 'cheap-eval-source-map',
@@ -44,6 +57,12 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                measurePerf,
+                componentNames: JSON.stringify(componentNames),
+            },
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.DllReferencePlugin({
