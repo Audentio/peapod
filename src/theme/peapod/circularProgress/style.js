@@ -1,3 +1,5 @@
+import Radium from 'radium';
+
 module.exports = function (sheet) {
     const main = sheet.addMain();
     const circle = sheet.addPart('circle');
@@ -18,7 +20,7 @@ module.exports = function (sheet) {
     sheet.addCondition('kindWarning').addStyler({ kind: 'warning' });
     sheet.addCondition('kindDanger').addStyler({ kind: 'danger' });
     sheet.addCondition('kindSecondary').addStyler({ kind: 'secondary' });
-    sheet.addCondition('indeterminate').addProp({ value: ['<', '0'] });
+    sheet.addCondition('indeterminate').addProp({ indeterminate: true });
 
     sheet.addCondition('sizeSet').addStyler({ size: ['>', '0'] });
     sheet.addCondition('strokeSet').addStyler({ stroke: ['>', '0'] });
@@ -32,6 +34,15 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        const indeterminateKeyframes = Radium.keyframes({
+            '0%': {
+                transform: 'rotate(0deg)',
+            },
+            '100%': {
+                transform: 'rotate(360deg)',
+            },
+        }, 'indeterminate');
+
         main.addSelector({
             common: {
                 width: component.size,
@@ -44,12 +55,24 @@ module.exports = function (sheet) {
                 clipPath: 'circle(50% at 50% 50%)',
                 overflow: 'hidden',
             },
-        }).addSelector({
+        })
+        .addSelector({
             condition: 'sizeSet',
             common: {
                 width: 'getStyler:size',
                 height: 'getStyler:size',
                 fontSize: 'getStyler:size',
+            },
+        })
+        .addSelector({
+            condition: 'indeterminate',
+            common: {
+                // backgroundColor: 'transparent',
+                // WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)',
+                backfaceVisibility: 'hidden',
+                // width: '100%',
+                animation: 'x 500ms linear 0s infinite',
+                animationName: indeterminateKeyframes,
             },
         });
 

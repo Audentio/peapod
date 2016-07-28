@@ -1,4 +1,6 @@
-import { merge as _Merge, clone as _Clone } from 'lodash';
+
+import _Merge from 'lodash/merge';
+import _Clone from 'lodash/clone';
 import Pod_Vars from './vars.js';
 import Logger from './logger.js';
 

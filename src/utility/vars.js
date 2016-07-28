@@ -3,7 +3,7 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import { merge as _merge } from 'lodash';
+import _merge from 'lodash/merge';
 import Logger from './logger.js';
 
 const maxDepth = 30; // will attempt to resolve variables throug this many levels

@@ -17,7 +17,7 @@ module.exports = function (sheet) {
                 fontSize: theme.font.size.xsmall,
                 color: theme.font.color.primary,
                 lineHeight: '2.6rem',
-                fontWeight: theme.font.weight.light,
+                fontWeight: theme.font.weight.normal,
                 display: 'inline-block',
             },
         }).addSelector({

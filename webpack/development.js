@@ -25,7 +25,7 @@ for (let i = 2, len = process.argv.length; i < len; i++) {
 
 module.exports = {
     cache: true,
-    devtool: buildMode === 'production' ? 'hidden-source-map' : 'cheap-eval-source-map',
+    devtool: buildMode === 'production' ? 'hidden-source-map' : 'eval', // 'cheap-eval-source-map',
     entry: [
         'webpack-dev-server/client?http://0.0.0.0:3002',
         'webpack/hot/only-dev-server',

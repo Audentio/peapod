@@ -7,6 +7,8 @@ PATHS.base = path.join(PATHS.root, 'src');
 PATHS.util = path.join(PATHS.base, 'utility');
 PATHS.dist = path.join(PATHS.root, 'dist');
 PATHS.node_modules = path.join(PATHS.root, 'node_modules');
+PATHS.examples = path.join(PATHS.root, 'examples');
+PATHS.dll = path.join(PATHS.examples, 'dll'); // DLL under /examples because its contentBase for server
 
 let measurePerf = false;
 let componentNames = '*';
@@ -48,22 +50,20 @@ const config = {
     },
 
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                measurePerf,
-                componentNames: JSON.stringify(componentNames),
-            },
-        }),
         new webpack.LoaderOptionsPlugin({
             minimize: false,
             debug: false,
+            'process.env': {
+                measurePerf,
+                NODE_ENV: JSON.stringify('production'),
+            },
         }),
-        new CompressionPlugin({
-            asset: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.js$|\.html$/,
-            threshold: 10240,
-            minRatio: 0.8,
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false },
+            mangle: true,
+            minimize: true,
+            sourceMap: false,
+            comments: false,
         }),
     ],
 

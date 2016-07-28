@@ -9,11 +9,11 @@
     "examples-dev": "node server/development.js",
     "examples": "NODE_ENV=production | node server/development.js",
     "doc": "node sever/docs.js",
-    "dll": "webpack --config webpack/dll.js",
+    "dll": "./node_modules/.bin/webpack --config webpack/dll.js",
     "lint": "eslint --format compact src",
     "lint-fix": "eslint --fix src",
-    "dev": "webpack --config webpack/production.js --watch",
-    "deploy": "webpack -p --config webpack/production.js"
+    "dev": "./node_modules/.bin/webpack --config webpack/production.js --watch",
+    "deploy": "./node_modules/.bin/webpack --config webpack/production.js"
   },
   "repository": {
     "type": "git",

@@ -6,7 +6,8 @@
 
 import React, { Component, PropTypes } from 'react';
 import Pod_Styler from 'utility/styler.js';
-import PureRender from 'utility/pureRender.js';
+// import PureRender from 'utility/pureRender.js';
+import shallowEqual from 'shallowequal';
 import Logger from 'utility/logger.js';
 import { getSchema } from 'utility/validation/index.js';
 
@@ -36,18 +37,18 @@ module.exports = componentName => class Pod_Component extends Component {
         // Get schematics for this Input
         this.schema = getSchema(props);
 
-        if (props.validate !== true && !this.schema.validator) {
-            this.shouldValidate = false;
-        } else {
-            this.shouldValidate = props.validate;
-        }
+        // Should input validate?
+        // check validate prop and validator function existence
+        this.__shouldValidate = this.props.validate === true && !!this.schema.validator;
 
         // Maintain state
         if (!stateless) {
             // make sure value is string or number
             // else set empty string
-            const value = (typeof valueProp === 'string' || typeof valueProp === 'number') ? valueProp : '';
+            const value = valueProp;
             this.state = { value };
+        } else {
+            this.state = {};
         }
     }
 
@@ -85,13 +86,21 @@ module.exports = componentName => class Pod_Component extends Component {
     static defaultProps = {
         value: '',
         primitive: false,
-        validate: true,
+        validate: false,
         required: false,
         stateless: false,
         type: 'text',
+        styler: {
+            height: '32px',
+        },
     }
 
-    shouldComponentUpdate = PureRender;
+    // shouldComponentUpdate = PureRender;
+    shouldComponentUpdate(nextProps, nextState) {
+        const { stateless, value } = nextProps;
+
+        return !shallowEqual(this.state, nextState) || !(stateless && this.props.value === value);
+    }
 
     // Determines placeholder text
     // depending on placeholder and value props
@@ -112,30 +121,29 @@ module.exports = componentName => class Pod_Component extends Component {
     // Change handler
     // triggers onChange prop with value
     onChange = e => {
-        const { stateless, onChange: callback } = this.props;
+        const { stateless, onChange: callback, name } = this.props;
         const value = e.target.value;
 
         if (!stateless && this.state.value === value) return; // no Change
 
-        // missing callback on stateless Input. throw warning
+        // Missing callback on stateless Input. throw warning
         if (!callback && stateless) {
             Logger.warn('<Input> Unable to mutate controlled input. Use onChange callback or remove "stateless" prop.');
             return;
         }
 
-        // Validate
-        let validation;
-        if (this.state.validation) validation = this.validate(value);
+        // Validate new value
+        const validation = this.validate(value);
+
+        const newState = { validation };
 
         // Maintain value in state
-        if (!stateless) {
-            this.setState({ value, validation });
-        } else {
-            this.setState({ validation });
-        }
+        if (!stateless) newState.value = value;
+
+        this.setState(newState);
 
         // trigger onChange callback
-        if (callback) callback({ value, validation });
+        if (callback) callback({ value, validation, name });
     }
 
     onFocus = e => {
@@ -149,33 +157,31 @@ module.exports = componentName => class Pod_Component extends Component {
 
     onBlur = () => {
         const { stateless, name, onChange } = this.props;
-        const value = !stateless ? this.state.value : this.props.value;
+        const value = stateless ? this.props.value : this.state.value;
 
         // Validate
         const validation = this.validate(value);
 
-        if (!stateless) {
-            this.setState({
-                value,
-                focus: false,
-                validation,
-            });
-        } else {
-            this.setState({ focus: false, validation });
-        }
+        const newState = { focus: false, validation };
+
+        if (!stateless) newState.value = value;
+
+        this.setState(newState);
 
         // Trigger onChange callback if passed
-        if (onChange) onChange({ value, validation }, name);
+        if (onChange) onChange({ value, validation, name });
     }
 
     validate(value) {
         const { validator } = this.schema;
-        if (validator) return validator(value);
-        return {};
+
+        if (this.__shouldValidate) return validator(value);
+
+        return null;
     }
 
     getValidationMessage(validationState = this.state.validation) {
-        if (validationState !== undefined) {
+        if (validationState !== null) {
             const currentResponse = this.schema.responses[validationState];
             if (currentResponse) return currentResponse();
             // Logger.warn(`[Validation] Missing response for term "${validationState}". %o`, this.props.validationSchema);
@@ -183,33 +189,40 @@ module.exports = componentName => class Pod_Component extends Component {
         return false;
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { value, stateless } = nextProps;
+
+        // update state if component is stateful
+        if (!stateless) this.setState({ value });
+    }
+
     render() {
         const style = Pod_Styler.getStyle(this);
         const { validate, stateless, name, type, value: valueProp } = this.props;
 
+        // use value prop if stateless else use state
+        const value = stateless ? valueProp : this.state.value;
+
         // Decide input tagname based on type
         const InputTag = type === 'textarea' ? 'textarea' : 'input';
 
-        // use state.value if stateful. else use prop
-        const value = !stateless ? this.state.value : valueProp;
-
-
         const placeholder = this.getPlaceholder(value);
         const validationMessage = this.getValidationMessage();
+
+        // Logger.log('rendered: ', name);
 
         return (
             <div style={style.wrapper}>
                 <div style={style.main}>
 
-                    {placeholder &&
-                        <span style={style.placeholder}>{placeholder}</span>
-                    }
+                    {placeholder && <span style={style.placeholder}>{placeholder}</span>}
 
                     <InputTag
                         type={type}
                         name={name}
                         ref="input"
-                        value={value}
+                        // Make sure we pass empty string to render a controlled input in case value is not string/number
+                        value={(typeof value === 'string' || typeof value === 'number') ? value : ''}
                         style={style.input}
 
                         onBlur={this.onBlur}
