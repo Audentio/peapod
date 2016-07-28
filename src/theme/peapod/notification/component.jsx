@@ -27,8 +27,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.state = {
             dismissed: this.isDismissed(),
         };
-
-        this.dismiss = this.dismiss.bind(this);
     }
 
     static propTypes = {
@@ -51,7 +49,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     // Check if user dismissed the notification already
-    isDismissed() {
+    isDismissed = () => {
         const { id, dismissable } = this.props;
         const persistentState = localStorage[`Pod_notification_${id}_hidden`];
 
@@ -62,7 +60,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         return false;
     }
 
-    dismiss() {
+    dismiss = () => {
         this.setState({ dismissed: true });
 
         // set persistent state (localStorage)
@@ -81,7 +79,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const style = Pod_Styler.getStyle(this);
 
         const dismiss = (<div style={style.dismissIcon}>
-            {/* <Icon styler={{ style: style.dismissIcon }} color="#07ADD4">close</Icon> */}
             <div onClick={this.dismiss}>{this.props.dismissable && 'Dismiss'}</div>
         </div>);
 

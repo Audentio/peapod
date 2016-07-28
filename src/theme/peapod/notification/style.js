@@ -97,7 +97,8 @@ module.exports = function (sheet) {
         title.addSelector({
             common: {
                 display: 'block',
-                // marginBottom: '4px',
+                marginBottom: '4px',
+                fontWeight: theme.font.weight.medium,
                 color: 'white',
             },
         });
