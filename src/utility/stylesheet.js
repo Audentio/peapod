@@ -463,10 +463,6 @@ class Sheet {
             source[partName] = partRules;
         }
 
-        if (instance.componentName === 'Icon') {
-            // console.log(source);
-        }
-
         return { source, activeConditions };
     }
 

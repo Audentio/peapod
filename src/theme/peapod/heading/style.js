@@ -44,14 +44,15 @@ module.exports = function (sheet) {
                 },
                 marginTop(obj) {
                     let margin = 0;
-                    if (obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].marginTop) {
-                        margin = presets[obj.props.preset].marginTop;
+
+                    if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginTop) !== 'undefined') {
+                        margin = obj.presets[obj.props.preset].marginTop;
                     }
                     return margin;
                 },
                 marginBottom(obj) {
                     let margin = 0;
-                    if (obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].marginBottom) {
+                    if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginBottom) !== 'undefined') {
                         margin = presets[obj.props.preset].marginBottom;
                     }
                     return margin;
