@@ -85,6 +85,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     componentWillUnmount() {
         window.Pod_Panes.remove(this.paneIndex);
+
+        window.removeEventListener('resize', window.Pod_Panes.updateAll);
+        window.removeEventListener('DOMContentLoaded', window.Pod_Panes.updateAll);
     }
 
     widthGet() {

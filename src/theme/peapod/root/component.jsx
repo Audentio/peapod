@@ -19,11 +19,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const { styler, children, ...other } = this.props;
 
         return (
-            <AppContainer>
-                <div {...other} id="Peapod_Root">
-                    {this.props.children}
-                </div>
-            </AppContainer>
+            <div {...other} id="Peapod_Root">
+                {this.props.children}
+            </div>
         );
     }
 };

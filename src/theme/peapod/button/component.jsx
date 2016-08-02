@@ -18,6 +18,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         this.onClickHandler = this.onClickHandler.bind(this);
         this.ripple = this.ripple.bind(this);
+        this.rippleRemovers = [];
     }
 
     // Validate props
@@ -34,6 +35,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static defaultProps = {
         label: 'Submit',
         noRipple: false,
+    }
+
+    componentWillUnmount() {
+        this.rippleRemovers.forEach(item => {
+            clearTimeout(item);
+        });
     }
 
     onClickHandler(e) {
@@ -71,10 +78,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.setState({ ripples });
 
         // Remove ripple
-        setTimeout(() => {
-            ripples.splice(0, 1);
-            this.setState({ ripples });
-        }, 1000);
+        this.rippleRemovers.push(
+            setTimeout(() => {
+                ripples.splice(0, 1);
+                this.setState({ ripples });
+            }, 1000)
+        );
     }
 
     render() {
