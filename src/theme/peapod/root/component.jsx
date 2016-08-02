@@ -4,7 +4,6 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
 import { AppContainer } from 'react-hot-loader';
 
 

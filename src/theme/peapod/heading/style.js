@@ -18,9 +18,9 @@ module.exports = function (sheet) {
     sheet.addCondition('secondary').addStyler({ secondary: true });
     // sheet.addCondition('upper').addProp({ upper: true });
     // sheet.addCondition('weight').addProp({ weight: ['!=', undefined] });
-    sheet.addCondition('upper').addFunction((instance) => {
-        return instance.props.upper || (instance.props.preset && presets[instance.props.preset].upper);
-    });
+    sheet.addCondition('upper').addFunction(instance =>
+        instance.props.upper || (instance.props.preset && presets[instance.props.preset].upper)
+    );
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {
@@ -32,17 +32,30 @@ module.exports = function (sheet) {
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         main.addSelector({
             common: {
-                marginTop: 0,
-                // fontWeight: '$font.weight.black',
                 fontWeight(obj) {
                     let weight = theme.font.weight.black;
                     if (obj.props.weight) {
                         weight = obj.props.weight;
                     }
-                    if ((obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].weight)) {
+                    if (obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].weight) {
                         weight = presets[obj.props.preset].weight;
                     }
                     return weight;
+                },
+                marginTop(obj) {
+                    let margin = 0;
+
+                    if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginTop) !== 'undefined') {
+                        margin = obj.presets[obj.props.preset].marginTop;
+                    }
+                    return margin;
+                },
+                marginBottom(obj) {
+                    let margin = 0;
+                    if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginBottom) !== 'undefined') {
+                        margin = presets[obj.props.preset].marginBottom;
+                    }
+                    return margin;
                 },
             },
         }).addSelector({

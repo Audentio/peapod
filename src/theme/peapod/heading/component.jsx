@@ -31,7 +31,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         return React.createElement(
             tagname,
-            { style: Object.assign({}, style.main, style[tagname]) },
+            { style: Object.assign({}, style[tagname], style.main) },
             this.props.children
         );
     }

@@ -15,24 +15,34 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static propTypes = {
         children: React.PropTypes.any,
         overlay: React.PropTypes.bool,
+        closePortal: React.PropTypes.func,
     }
 
     static defaultProps = {
         overlay: true,
     }
 
+    overlayClick = (e) => {
+        const { closePortal } = this.props;
+        if (!closePortal) return;
+
+        const outsideClick = e.target !== this.refs.content && !this.refs.content.contains(e.target);
+        if (outsideClick) {
+            closePortal();
+        }
+    }
+
     render() {
         const style = Pod_Styler.getStyle(this);
 
         const modalBox = (
-            <div style={style.main}>
+            <div style={style.main} ref="content">
                 {this.props.children}
-                hahaha
             </div>
         );
 
         return (this.props.overlay) ? (
-            <Pod.Overlay>
+            <Pod.Overlay onClick={this.overlayClick}>
                 {modalBox}
             </Pod.Overlay>
         ) : modalBox;

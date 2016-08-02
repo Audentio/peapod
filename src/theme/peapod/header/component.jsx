@@ -13,6 +13,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static propTypes = {
         children: React.PropTypes.any,
         styler: React.PropTypes.object,
+        preset: React.PropTypes.string,
     }
 
     render() {

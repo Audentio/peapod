@@ -123,6 +123,7 @@ const ignoreComponents = [
     'Core',
 ];
 const themeReq = require.context('../theme', true, /theme\.js$/);
+
 const req = require.context('../theme', true, /(style\.js|example\.jsx|component\.jsx)$/);
 
 const iterator = init('peapod', ignoreComponents, themeReq, req);

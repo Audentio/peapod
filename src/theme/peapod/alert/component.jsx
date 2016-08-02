@@ -25,9 +25,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.state = {
             dismissed: this.isDismissed(),
         };
-
-        this.dismiss = this.dismiss.bind(this);
-        this.isDismissed = this.isDismissed.bind(this);
     }
 
     static propTypes = {
@@ -44,7 +41,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     // Check if user dismissed the alert already
-    isDismissed() {
+    isDismissed = () => {
         const persistentState = localStorage[`Pod_alert_${this.props.id}_hidden`];
         if (this.props.dismissable && persistentState && persistentState === 'true') {
             return true;
@@ -53,9 +50,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         return false;
     }
 
-    // @fucntion dismiss()
+    // @function dismiss()
     // onDismiss handler
-    dismiss() {
+    dismiss = () => {
         // set state
         this.setState({
             dismissed: true,

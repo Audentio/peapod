@@ -27,6 +27,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         color: PropTypes.string,
         onClick: PropTypes.func,
         style: PropTypes.object,
+        styler: PropTypes.object,
     }
 
 
@@ -40,12 +41,21 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
+<<<<<<< HEAD
         const style = Pod_Styler.getClassStyle(this);
         // const mergedStyle = Object.assign({}, style.main, this.props.style);
         const { label, children } = this.props;
 
         return (
             <i {...this.props} className={`material-icons ${style.classes.main}`} aria-label={label} title={label} style={style.main}>
+=======
+        const style = Pod_Styler.getStyle(this);
+        const mergedStyle = Object.assign({}, style.main, this.props.style);
+        const { label, children, styler, ...otherprops } = this.props; // eslint-disable-line no-unused-vars
+
+        return (
+            <i {...otherprops} className="material-icons" aria-label={label} title={label} style={mergedStyle}>
+>>>>>>> fix-child
                 {children}
             </i>
         );

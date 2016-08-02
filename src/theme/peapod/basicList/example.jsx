@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { ContentWrap, Input, BasicList } from 'utility/components.js';
-import dummyData from './dummyData.js';
+// import dummyData from './dummyData.js';
 
 class BasicListFilterExample extends Component {
 
@@ -34,7 +34,7 @@ class BasicListFilterExample extends Component {
                 />
                 <BasicList
                     filter={this.state.filter}
-                    json={dummyData[this.props.type]}
+                    json={{}}
                     render="menu"
                     propMap={{
                         name: 'children',
