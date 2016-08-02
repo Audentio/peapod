@@ -31,7 +31,6 @@ module.exports = function (sheet) {
             common: {
                 alignSelf: 'flex-start',
                 minWidth: 'getProp:figureWidth',
-                maxWidth: 'getProp:figureWidth',
             },
         }).addSelector({
             condition: ['figureMiddle'],

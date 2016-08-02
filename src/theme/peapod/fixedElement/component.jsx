@@ -7,7 +7,7 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 // import { connect } from 'react-redux';
-import { addFixed } from '../../../../examples/actions';
+// import { addFixed } from 'examples/actions';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -41,33 +41,49 @@ module.exports = componentName => class Pod_Component extends React.Component {
         return true;
     }
 
+    // componentDidMount() {
+    //     const elementInit = this.fixedElem;
+    //     const elemRectInit = elementInit.getBoundingClientRect();
+    //
+    //     this.origionalPosition = elemRectInit.top + window.scrollY;
+    //     const origionalHeight = elementInit.scrollHeight;
+    //     // const alwaysFixed = this.origionalPosition === 0 || this.props.alwaysFixed;
+    //     const alwaysFixed = this.props.alwaysFixed;
+    //
+    //     this.state = {
+    //         position: 'relative',
+    //         origionalHeight,
+    //         width: '100%',
+    //         alwaysFixed,
+    //     };
+    //
+    //     if (this.state.alwaysFixed) {
+    //         this.onScroll(elemRectInit);
+    //     } else {
+    //         document.addEventListener('scroll', this.onScroll);
+    //     }
+    //
+    //     window.addEventListener('resize', this.onScroll);
+    //
+    //     const { store } = this.context;
+    //     if (this.props.addToScroll) {
+    //         store.dispatch(addFixed(this.origionalPosition, origionalHeight));
+    //     }
+    // }
+
     componentDidMount() {
-        const elementInit = this.fixedElem;
-        const elemRectInit = elementInit.getBoundingClientRect();
+        const fixed = this.fixedElem;
+        const windowHeight = window.innerHeight;
 
-        this.origionalPosition = elemRectInit.top + window.scrollY;
-        const origionalHeight = elementInit.scrollHeight;
-        // const alwaysFixed = this.origionalPosition === 0 || this.props.alwaysFixed;
-        const alwaysFixed = this.props.alwaysFixed;
-
-        this.state = {
-            position: 'relative',
-            origionalHeight,
-            width: '100%',
-            alwaysFixed,
-        };
-
-        if (this.state.alwaysFixed) {
-            this.onScroll(elemRectInit);
+        if (window.IntersectionObserver) {
+            const _this = this;
+            const iObserver = new IntersectionObserver(() => {
+                _this.onScroll(fixed, windowHeight);
+                iObserver.unobserve(fixed);
+            }, { threshold: [0.0] });
+            iObserver.observe(fixed);
         } else {
-            document.addEventListener('scroll', this.onScroll);
-        }
-
-        window.addEventListener('resize', this.onScroll);
-
-        const { store } = this.context;
-        if (this.props.addToScroll) {
-            store.dispatch(addFixed(this.origionalPosition, origionalHeight));
+            this.onScroll(fixed, windowHeight);
         }
     }
 
