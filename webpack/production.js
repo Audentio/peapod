@@ -35,7 +35,6 @@ const config = {
         path: PATHS.dist,
         filename: '[name].js',
         library: 'Peapod',
-        libraryTarget: 'umd',
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.json'],
