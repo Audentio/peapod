@@ -4,7 +4,7 @@
 * LICENSE: <%= package.licence %>
 */
 
-import moment from 'moment-timezone';
+// import moment from 'moment-timezone';
 
 export const globals = {
     daysPerWeek: 7,
@@ -61,6 +61,7 @@ export function getMonthFromDate(date) {
 
 // get local month
 export function getLocalMonth(date) {
-    return moment(date).format('MMMM');
+    return date;
+    // return moment(date).format('MMMM');
     // return date.toLocaleDateString(globals.locale, { month: 'long' });
 }

@@ -8,7 +8,7 @@ import Pod_Styler from 'utility/styler.js';
 import PureRender from 'utility/pureRender.js';
 import { Icon, Progress } from 'utility/components.js';
 import Pod_Helper from 'utility/helper.js';
-import moment from 'moment';
+// import moment from 'moment';
 
 /**
 *
@@ -50,6 +50,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     durationString = (duration, reverse) => {
+        if (!this.state.momentLoaded) return '--';
+
         if (reverse) {
             const parts = duration.split(':');
             let seconds = 0;
@@ -68,7 +70,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             return seconds;
         }
 
-        return moment().startOf('day').seconds(duration)
+        return window.moment().startOf('day').seconds(duration)
                .format(this.durationFormat);
     }
 
@@ -225,6 +227,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
     // -- end
 
     componentDidMount() {
+        Pod_Helper.addScript({
+            id: 'moment',
+            url: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js',
+            callback: (script, status) => {
+                if (status === 200) this.setState({ momentLoaded: true });
+            },
+        });
         this.bindEvents();
     }
 
@@ -239,7 +248,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
             width: '100%',
             height: style.controls.height,
         };
-        const { volume: currentVolume, currentTime, duration: currentDuration, playing } = this.state;
+        const { 
+            volume: currentVolume, 
+            currentTime, 
+            duration: currentDuration, 
+            playing,
+        } = this.state;
 
         const playPauseIcon = (playing) ? 'pause' : 'play_arrow';
         let volumeIcon = (currentVolume > 0) ? 'volume_up' : 'volume_mute';
@@ -267,7 +281,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     <div style={style.seekbar}>
                         <div style={seekbar_table_style}>
                             <div style={style.seekbar_time}>
-                                {this.durationString(currentTime)}
+                                {this.durationString(currentDuration)}
                             </div>
 
                             <div style={style.seekbar_bar}>
