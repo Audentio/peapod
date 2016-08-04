@@ -1,6 +1,6 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
-import moment from 'moment-timezone';
+// import moment from 'moment-timezone';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -17,7 +17,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         return (
             <li style={style.main}>
                 {/* {date.toLocaleDateString(window.navigator.language, { weekday: 'narrow' })}*/}
-                {moment(date).format('dd')}
+                {date}
             </li>
         );
     }
