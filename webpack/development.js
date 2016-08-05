@@ -23,6 +23,8 @@ for (let i = 2, len = process.argv.length; i < len; i++) {
     }
 }
 
+const PeapodPlugin = require('./peapod.js');
+
 module.exports = {
     cache: true,
     devtool: buildMode === 'production' ? 'hidden-source-map' : 'eval', // 'cheap-eval-source-map',
@@ -57,6 +59,7 @@ module.exports = {
     },
 
     plugins: [
+        new PeapodPlugin({}),
         new webpack.DefinePlugin({
             'process.env': {
                 measurePerf,
