@@ -27,6 +27,36 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
+        const classes = Pod_Styler.getClassStyle(this);
+        const { children: innerContent, value } = this.props;
+
+        const maskTransformed = Object.assign({}, classes.style.mask, this.getTransform(value));
+        const circleTransformed = Object.assign({}, classes.style.circle, this.getTransform(value));
+
+        return (
+            <div className={classes.main} style={classes.style.main}>
+
+                <div className={classes.track}></div>
+
+                <div className={classes.maskTransformed}>
+                    <div style={circleTransformed}></div>
+                </div>
+                <div className={classes.mask}>
+                    <div style={circleTransformed}></div>
+                </div>
+
+                <div className={classes.content}>
+                    <div className={classes.contentInner}>
+                        {innerContent}
+                    </div>
+                </div>
+
+            </div>
+        );
+    }
+
+    /*
+    render() {
         const style = Pod_Styler.getStyle(this);
         const { children: innerContent, value } = this.props;
 
@@ -50,6 +80,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             </div>
         );
     }
+    */
 
     getTransform = (value) => ({ transform: `rotate(${value * 1.8}deg)` })
 

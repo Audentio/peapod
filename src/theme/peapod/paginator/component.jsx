@@ -8,7 +8,7 @@ const Paginator = componentName => class Pod_Component extends React.Component {
     static displayName = componentName;
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const page = this.props.page;
         const pages = this.props.pages;
@@ -18,17 +18,17 @@ const Paginator = componentName => class Pod_Component extends React.Component {
         const lastItem = ((page + 1) * perPage) > total ? total : (page + 1) * perPage;
         const nextTrigger = this.props.nextTrigger || <Icon>chevron_right</Icon>;
         const previousTrigger = this.props.previousTrigger || <Icon>chevron_left</Icon>;
-        const previous = page > 0 ? (<div key="previous" onClick={this.props.clickPrevious} style={style.trigger}>
+        const previous = page > 0 ? (<div key="previous" onClick={this.props.clickPrevious} className={classes.trigger}>
             {previousTrigger}
         </div>) : '';
-        const next = pages > page + 1 ? (<div key="next" onClick={this.props.clickNext} style={style.trigger}>
+        const next = pages > page + 1 ? (<div key="next" onClick={this.props.clickNext} className={classes.trigger}>
             {nextTrigger}
         </div>) : '';
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 <Grid>
-                    <div style={style.label}>
+                    <div className={classes.label}>
                         {firstItem}-{lastItem} of {total}
                     </div>
                     {previous}

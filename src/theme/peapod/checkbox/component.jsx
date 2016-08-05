@@ -65,20 +65,20 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         const icon = (this.props.icon) ?
-            <Icon styler={{ style: style.icon }}>{this.props.icon}</Icon> :
-            <Icon styler={{ style: style.icon }}>check</Icon>;
+            <Icon styler={{ style: classes.style.icon }}>{this.props.icon}</Icon> :
+            <Icon styler={{ style: classes.style.icon }}>check</Icon>;
 
         return (
-            <div style={style.main}>
-                <label style={style.wrapper}>
-                    <span style={style.box}>
-                        <input name={this.props.name} style={style.input} onChange={this.onChangeHandler} className="Pod_checkbox__input" type="checkbox" checked={this.state.checked} />
-                        <span style={style.innerBox}></span>
+            <div className={classes.main}>
+                <label className={classes.wrapper}>
+                    <span className={classes.box}>
+                        <input name={this.props.name} className={classes.input} onChange={this.onChangeHandler} type="checkbox" checked={this.state.checked} />
+                        <span className={classes.innerBox}></span>
                         {icon}
                     </span>
-                    <span style={style.label} >{this.props.label}</span>
+                    <span className={classes.label} >{this.props.label}</span>
                 </label>
             </div>
         );

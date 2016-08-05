@@ -11,11 +11,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         const date = new Date(this.props.date);
 
         return (
-            <li style={style.main}>
+            <li className={classes.main}>
                 {/* {date.toLocaleDateString(window.navigator.language, { weekday: 'narrow' })}*/}
                 {moment(date).format('dd')}
             </li>

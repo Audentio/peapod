@@ -16,10 +16,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         return (
-            <strong style={[style.main, { fontWeight: 'bold' }]}>
+            <strong className={classes.main}>
                 {this.props.children}
             </strong>
         );

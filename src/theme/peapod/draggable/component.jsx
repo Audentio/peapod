@@ -61,12 +61,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         return (
             <div
                 draggable
-                style={style.main}
+                className={classes.main}
                 onDragStart={this.onDragStart}
                 onDragEnter={this.onDragEnter}
                 onDrop={this.onDrop}

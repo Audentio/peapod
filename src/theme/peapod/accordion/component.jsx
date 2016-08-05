@@ -32,7 +32,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         // const { styler, children, ...other } = this.props;
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const thisChildren = (this.props.children.length) ? this.props.children : [this.props.children];
 
@@ -55,7 +55,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         });
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {children}
             </div>
         );

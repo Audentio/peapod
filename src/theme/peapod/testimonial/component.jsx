@@ -30,10 +30,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const image = (this.props.img) ? (
-            <Photo styler={{ mainStyle: style.photo, imageStyle: style.photo }} src={this.props.img} />
+            <Photo styler={{ mainStyle: classes.style.photo, imageStyle: classes.style.photo }} src={this.props.img} />
         ) : '';
 
         const name = (this.props.name) ? (<div>{this.props.name}</div>) : '';
@@ -53,13 +53,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {image}
-                <div style={style.content}>
-                    {this.props.hideQuotes || <Icon label="format_quote" styler={{ style: style.quoteIconRight }}>format_quote</Icon>}
-                    {this.props.hideQuotes || <Icon label="format_quote" styler={{ style: style.quoteIconLeft }}>format_quote</Icon>}
-                    <div style={style.quote}>
-                        <BlockQuote styler={{ mainStyle: style.blockQuote }}>
+                <div className={classes.content}>
+                    {this.props.hideQuotes || <Icon label="format_quote" styler={{ style: classes.style.quoteIconRight }}>format_quote</Icon>}
+                    {this.props.hideQuotes || <Icon label="format_quote" styler={{ style: classes.style.quoteIconLeft }}>format_quote</Icon>}
+                    <div className={classes.quote}>
+                        <BlockQuote styler={{ mainStyle: classes.style.blockQuote }}>
                             {this.props.children}
                         </BlockQuote>
                         {link}

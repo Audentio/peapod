@@ -16,10 +16,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         return (
-            <section varSet={this.props.varSet} style={style.main}>
+            <section scene={this.props.scene} className={classes.main}>
                 {this.props.children}
             </section>
         );

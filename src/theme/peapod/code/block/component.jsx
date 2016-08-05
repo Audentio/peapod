@@ -47,15 +47,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         const { label, children: code } = this.props;
 
         return (
-            <pre style={style.main}>
+            <pre className={classes.main}>
                 {label &&
-                    <div ref="label" style={style.label}>{label}</div>
+                    <div ref="label" className={classes.label}>{label}</div>
                 }
-                <code ref="codeContainer" style={style.code}>{code}</code>
+                <code ref="codeContainer" className={classes.code}>{code}</code>
             </pre>
         );
     }

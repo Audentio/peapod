@@ -1,7 +1,13 @@
-import { Sheet } from 'utility/stylesheet.js';
+module.exports = function (sheet) {
+    const main = sheet.addMain();
 
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        main.addSelector({
+            common: {
+                fontWeight: 'bold',
+            },
+        });
+    };
 
     return sheet;
 };

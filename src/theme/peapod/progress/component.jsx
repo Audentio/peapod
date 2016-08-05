@@ -9,7 +9,7 @@ import Pod_Styler from 'utility/styler.js';
 module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
-    
+
     constructor(props, context) {
         super(props, context);
         this.getScale = this.getScale.bind(this);
@@ -34,11 +34,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         return (
-            <div style={style.main}>
-                <div style={[style.progress, this.getScale()]}></div>
+            <div className={classes.main} style={classes.style.main}>
+                <div className={classes.progress} style={this.getScale()}></div>
             </div>
         );
     }

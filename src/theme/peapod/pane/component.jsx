@@ -111,10 +111,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const { styler, children, ...other } = this.props; // eslint-disable-line no-unused-vars
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         return (
-            <div {...other} style={style.main} ref="pane">
+            <div {...other} className={classes.main} ref="pane">
                 {this.props.children}
             </div>
         );

@@ -58,7 +58,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const activeDay = new Date(this.state.year, this.state.month, this.state.date);
 
@@ -74,10 +74,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const nextYear = dayAfter.getFullYear();
 
         return (
-            <div style={style.main}>
-                <div style={style.dateBar}>
-                    <div style={style.year}>{this.state.today.getFullYear()}</div>
-                    <div style={style.date}>{moment(this.state.today).format('Do, MMMM')}</div>
+            <div className={classes.main}>
+                <div className={classes.dateBar}>
+                    <div className={classes.year}>{this.state.today.getFullYear()}</div>
+                    <div className={classes.date}>{moment(this.state.today).format('Do, MMMM')}</div>
                 </div>
                 <Calendar_MonthBar
                     // get these down

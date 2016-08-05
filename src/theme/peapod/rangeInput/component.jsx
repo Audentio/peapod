@@ -128,25 +128,25 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         return (
-            <div ref="container" style={style.main}>
-                <div ref="track" style={style.track}>
+            <div ref="container" className={classes.main}>
+                <div ref="track" className={classes.track}>
                     <div
                         style={Object.assign({
                             width: this.state.handleLeft,
-                        }, style.trackBackground)}
+                        }, classes.style.trackBackground)}
                     ></div> {/* for track % */}
 
-                    <input ref="input" type="text" style={style.input} name={this.props.name} defaultValue={this.props.value || this.props.min} />
+                    <input ref="input" type="text" className={classes.input} name={this.props.name} defaultValue={this.props.value || this.props.min} />
 
                     <div
                         ref="handle"
-                        style={[style.handle, { left: this.state.handleLeft }]}
+                        style={[classes.style.handle, { left: this.state.handleLeft }]}
                     >
-                        <div style={style.handleFocus}>
-                            <div style={[style.handle, { left: '50%' }]}></div>
+                        <div className={classes.handleFocus}>
+                            <div style={[classes.style.handle, { left: '50%' }]}></div>
                         </div>{/* for focused */}
                     </div>
                 </div>

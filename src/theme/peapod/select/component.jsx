@@ -101,20 +101,20 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         const { menu, open, displayValue } = this.state;
 
         const trigger = (
-            <div style={style.trigger} onClick={this.toggle}>
+            <div className={classes.trigger} onClick={this.toggle}>
                 {displayValue}
-                <Icon style={style.triggerIcon}>{open ? 'arrow_drop_up' : 'arrow_drop_down'}</Icon>
+                <Icon style={classes.style.triggerIcon}>{open ? 'arrow_drop_up' : 'arrow_drop_down'}</Icon>
             </div>
         );
 
         return (
-            <div style={style.main} ref="main">
+            <div className={classes.main} ref="main">
                 {trigger}
-                {open && <Menu styler={{ style: style.menu }} json={menu} />}
+                {open && <Menu styler={{ style: classes.style.menu }} json={menu} />}
             </div>
         );
     }

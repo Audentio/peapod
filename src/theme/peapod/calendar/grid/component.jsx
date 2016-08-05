@@ -43,7 +43,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         let dates = [];
 
         const dateArray = this.props.dateArray;
@@ -82,7 +82,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             dates.push(<Calendar_Day date={addDays(dateArray[dateArray.length - 1], i + 1)} notActive key={'pull' + i} />);
         }
 
-        return (<ul style={style.main}>{dates}</ul>);
+        return (<ul className={classes.main}>{dates}</ul>);
     }
 
 };

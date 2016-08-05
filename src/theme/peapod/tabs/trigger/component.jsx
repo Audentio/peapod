@@ -11,10 +11,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         return (
-            <div onClick={this.props.onClick} style={style.main}>
+            <div onClick={this.props.onClick} className={classes.main}>
                 {this.props.children}
             </div>
         );

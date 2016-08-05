@@ -18,34 +18,27 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
-        let styler;
-
-        if (this.props.active) { // i not defined
-            styler = Object.assign({}, style.stepelem, style.activestep);
-        } else {
-            styler = style.stepelem;
-        }
+        const classes = Pod_Styler.getClassStyle(this);
 
         const optional = (!this.props.validation) ? (
-            <div style={style.stepSubTitle}>Optional</div>
+            <div className={classes.stepSubTitle}>Optional</div>
         ) : '';
         const subtitle = (this.props.subtitle) ? (
-            <div style={style.stepSubTitle}>{this.props.subtitle}</div>
+            <div className={classes.stepSubTitle}>{this.props.subtitle}</div>
         ) : '';
 
         const key = this.props.id;
 
         return (
-            <div style={style.step} key={`steps-${key}`}>
+            <div className={classes.step} key={`steps-${key}`}>
                 <div
                     key={`step-${key}`}
-                    style={styler}
+                    className={classes.stepelem}
                     onClick={() => !this.props.clickable || this.props.onClick(key)}
                 >
                     {parseInt(key, 10) + 1}
                 </div>
-                <div style={style.stepTitle}>
+                <div className={classes.stepTitle}>
                     {this.props.title}
                     {subtitle}
                     {optional}

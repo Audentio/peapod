@@ -33,10 +33,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const modalBox = (
-            <div style={style.main} ref="content">
+            <div className={classes.main} ref="content">
                 {this.props.children}
             </div>
         );

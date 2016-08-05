@@ -64,15 +64,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         return (
-            <div ref="main" style={style.wrapper_outer}>
-                <label style={style.wrapper_inner}>
-                    <span style={style.radio_outer}>
-                        <span style={style.radio_inner}></span>
-                        <input ref="input" type="radio" style={style.radio_element} onChange={this.onChangeHandler} name={this.props.group} {...this.props} />
+            <div ref="main" className={classes.wrapper_outer}>
+                <label className={classes.wrapper_inner}>
+                    <span className={classes.radio_outer}>
+                        <span className={classes.radio_inner}></span>
+                        <input ref="input" type="radio" className={classes.radio_element} onChange={this.onChangeHandler} name={this.props.group} {...this.props} />
                     </span>
-                    <span style={style.label} >{this.props.label}</span>
+                    <span className={classes.label} >{this.props.label}</span>
                 </label>
             </div>
         );

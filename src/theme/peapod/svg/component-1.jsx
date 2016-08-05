@@ -76,14 +76,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.state.file, 'image/svg+xml');
         const T = React.createElement(doc, {}, 'Title');
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {T}
             </div>
         );

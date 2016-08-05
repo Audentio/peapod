@@ -76,9 +76,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
-        const dismiss = (<div style={style.dismissIcon}>
+        const dismiss = (<div className={classes.dismissIcon}>
             <div onClick={this.dismiss}>{this.props.dismissable && 'Dismiss'}</div>
         </div>);
 
@@ -86,15 +86,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const bottomIcon = (this.props.full) ? dismiss : '';
 
         return (
-            <div style={style.main} id={this.props.id}>
+            <div className={classes.main} id={this.props.id}>
                 {!this.state.dismissed &&
 
-                    <div style={style.wrapper}>
+                    <div className={classes.wrapper}>
                         {topIcon}
 
-                        {this.props.title && <strong style={style.title}>{this.props.title}</strong>}
+                        {this.props.title && <strong className={classes.title}>{this.props.title}</strong>}
 
-                        <span style={style.message}>
+                        <span className={classes.message}>
                             {this.props.children}
                         </span>
                         {bottomIcon}

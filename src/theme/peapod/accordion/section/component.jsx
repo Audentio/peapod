@@ -50,7 +50,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         // const { styler, children, ...other } = this.props;
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         // const contentStyle = Object.assign({}, style.content, style.contentLast);
 
@@ -61,21 +61,21 @@ module.exports = componentName => class Pod_Component extends React.Component {
         if (subtitleProp) {
             subtitle = [];
             for (let i = 0; i < subtitleProp.length; i++) {
-                subtitle.push(<div key={i} style={style.subtitle}>{subtitleProp[i]}</div>);
+                subtitle.push(<div key={i} className={classes.subtitle}>{subtitleProp[i]}</div>);
             }
         }
 
         return (
-            <Card styler={{ style: style.main }}>
-                <div style={style.title} onClick={this.titleClick}>
-                    <Icon styler={{ style: style.icon }}>keyboard_arrow_down</Icon>
-                    <div style={Object.assign({}, style.subtitle, style.maintitle)}>
+            <Card styler={{ style: classes.style.main }}>
+                <div className={classes.title} onClick={this.titleClick}>
+                    <Icon styler={{ style: classes.style.icon }}>keyboard_arrow_down</Icon>
+                    <div className={`${classes.subtitle} ${classes.maintitle}`}>
                         {this.props.title}
                     </div>
                     {subtitle}
                 </div>
-                <div style={style.contentWrap}>
-                    <div style={style.content}>{this.props.children}</div>
+                <div className={classes.contentWrap}>
+                    <div className={classes.content}>{this.props.children}</div>
                 </div>
             </Card>
         );

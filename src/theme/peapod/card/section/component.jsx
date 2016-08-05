@@ -21,16 +21,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const mediaTitle = (this.props.mediaTitle) ? (
-            <div style={style.mediaTitle}>
+            <div className={classes.mediaTitle}>
                 {this.props.mediaTitle}
             </div>
         ) : '';
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {this.props.children}
                 {mediaTitle}
             </div>

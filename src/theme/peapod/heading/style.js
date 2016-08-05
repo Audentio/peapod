@@ -30,41 +30,6 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                fontWeight(obj) {
-                    let weight = theme.font.weight.black;
-                    if (obj.props.weight) {
-                        weight = obj.props.weight;
-                    }
-                    if (obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].weight) {
-                        weight = presets[obj.props.preset].weight;
-                    }
-                    return weight;
-                },
-                marginTop(obj) {
-                    let margin = 0;
-
-                    if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginTop) !== 'undefined') {
-                        margin = obj.presets[obj.props.preset].marginTop;
-                    }
-                    return margin;
-                },
-                marginBottom(obj) {
-                    let margin = 0;
-                    if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginBottom) !== 'undefined') {
-                        margin = presets[obj.props.preset].marginBottom;
-                    }
-                    return margin;
-                },
-            },
-        }).addSelector({
-            condition: ['upper'],
-            common: {
-                textTransform: 'uppercase',
-            },
-        });
-
         const getMargin = (margin, font) => (parseFloat(margin) - parseFloat(font)) + 'rem';
 
         h1.addSelector({
@@ -138,6 +103,44 @@ module.exports = function (sheet) {
                 marginBottom: '0px',
             },
         });
+
+        const parts = [h1, h2, h3, h4, h5, h6];
+        for (let i = 0, len = parts.length; i < len; i++) {
+            parts[i].addSelector({
+                common: {
+                    fontWeight(obj) {
+                        let weight = theme.font.weight.black;
+                        if (obj.props.weight) {
+                            weight = obj.props.weight;
+                        }
+                        if (obj.props.preset && presets[obj.props.preset] && presets[obj.props.preset].weight) {
+                            weight = presets[obj.props.preset].weight;
+                        }
+                        return weight;
+                    },
+                    marginTop(obj) {
+                        let margin = 0;
+
+                        if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginTop) !== 'undefined') {
+                            margin = obj.presets[obj.props.preset].marginTop;
+                        }
+                        return margin;
+                    },
+                    marginBottom(obj) {
+                        let margin = 0;
+                        if (typeof(obj.props.preset) !== 'undefined' && typeof(obj.presets) !== 'undefined' && typeof(obj.presets[obj.props.preset]) !== 'undefined' && typeof(obj.presets[obj.props.preset].marginBottom) !== 'undefined') {
+                            margin = presets[obj.props.preset].marginBottom;
+                        }
+                        return margin;
+                    },
+                },
+            }).addSelector({
+                condition: ['upper'],
+                common: {
+                    textTransform: 'uppercase',
+                },
+            });
+        }
     };
 
     return sheet;

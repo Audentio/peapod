@@ -100,11 +100,11 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const style = Styler.getStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         return (
             <Card styler={{ style: { width: 200, marginLeft: 0 } }}>
-                <ul style={style.main}>
+                <ul className={classes.main}>
                     {this.state.list}
                 </ul>
             </Card>

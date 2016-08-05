@@ -26,12 +26,12 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         const { icon, children, ...props } = this.props;
 
         return (
-            <span style={style.main} {...props}>
-                {icon && <Icon style={style.icon}>{icon}</Icon>}
+            <span className={classes.main} {...props}>
+                {icon && <Icon className={classes.icon}>{icon}</Icon>}
                 {children}
             </span>
         );

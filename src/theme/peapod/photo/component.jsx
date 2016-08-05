@@ -243,7 +243,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         const showLightbox = this.showLightbox.bind(this);
         const hideLightbox = this.hideLightbox.bind(this);
         const toggleFullscreen = this.toggleFullscreen.bind(this);
@@ -252,40 +252,40 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 <Lazy>
                     <img
                         onClick={showLightbox}
                         src={this.imageURL}
                         alt={this.props.alt}
-                        style={style.image}
+                        className={classes.image}
                     />
                 </Lazy>
 
                 {this.props.caption &&
-                    <span style={style.caption}>{this.props.caption}</span>
+                    <span className={classes.caption}>{this.props.caption}</span>
                 }
 
                 {((this.props.lightbox && this.state.lightboxVisible) || this.props.lightboxAnimation) &&
-                    <div style={style.lightbox}>
+                    <div className={classes.lightbox}>
 
-                        <div style={style.lightboxInner}>
+                        <div className={classes.lightboxInner}>
                             <img
-                                style={style.lightboxImage}
+                                className={classes.lightboxImage}
                                 src={this.state.visible ? this.imageURL : options.blankImage}
                                 role="presentation"
                             />
                         </div>
 
-                        <div style={style.lightboxActions}>
-                            <Icon styler={{ style: style.lightboxAction }} onClick={hideLightbox}>close</Icon>
+                        <div className={classes.lightboxActions}>
+                            <Icon styler={{ style: classes.style.lightboxAction }} onClick={hideLightbox}>close</Icon>
                             {Pod_Helper.fullscreen.isAvailable() &&
-                                <Icon styler={{ style: style.lightboxAction }} onClick={toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
+                                <Icon styler={{ style: classes.style.lightboxAction }} onClick={toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
                             }
 
-                            {this.props.allowDownload && <Icon onClick={downloadFile} styler={{ style: style.lightboxAction }}>file_download</Icon>}
+                            {this.props.allowDownload && <Icon onClick={downloadFile} styler={{ style: classes.style.lightboxAction }}>file_download</Icon>}
 
-                            <Icon onClick={openInNew} styler={{ style: style.lightboxAction }}>open_in_new</Icon>
+                            <Icon onClick={openInNew} styler={{ style: classes.style.lightboxAction }}>open_in_new</Icon>
 
                         </div>
                     </div>

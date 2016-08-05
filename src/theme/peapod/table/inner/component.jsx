@@ -35,7 +35,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const columnNames = this.props.columnNames;
         const data = this.props.data;
@@ -46,7 +46,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         return (
             <div style={{ overflowX: 'auto' }}>
-                <div style={style.main}>
+                <div className={classes.main}>
                     {_isFunction(columnNames) ? columnNames(columns) : <Table_Header config={columnNames} columns={columns} />}
                     {data.map((row, i) =>
                         <Table_Row

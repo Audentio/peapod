@@ -22,7 +22,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const icon = (this.props.icon !== undefined) ? (
             <img src={`assets/images/icons/${this.props.icon}.svg`} style={{ height: '50px', width: '50px', marginBottom: '20px' }} alt="" />
@@ -51,7 +51,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         ) : '';
 
         return (
-            <Block align="center" styler={{ style: style.main }}>
+            <Block align="center" styler={{ style: classes.style.main }}>
                 {icon}
 
                 {secondary}

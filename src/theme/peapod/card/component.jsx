@@ -29,7 +29,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const objectCheck = new Object(this.props);
 
@@ -38,13 +38,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
         objectCheck.title;
 
         const title = (objectCheck.title) ? (
-            <div style={style.title}>
+            <div className={classes.title}>
                 {titleElement}
             </div>
         ) : '';
 
         let actionBar = (objectCheck.actionBar) ? (
-            <div style={style.actionBar}>
+            <div className={classes.actionBar}>
                 {this.props.actionBar}
             </div>
         ) : '';
@@ -56,11 +56,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
 
         return (
-            <div style={style.main} {...this.props}>
+            <div className={classes.main} {...this.props}>
                 {actionBarTop}
                 {title}
 
-                <div style={style.content}>{this.props.children}</div>
+                <div className={classes.content}>{this.props.children}</div>
 
                 {actionBar}
             </div>

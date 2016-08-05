@@ -35,24 +35,24 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         return (
             <div>
                 <a
-                    style={style.button}
+                    className={classes.button}
                     onClick={this.prevButton}
                 >
-                    <Icon styler={{ style: style.icon }}>keyboard_arrow_left</Icon>
+                    <Icon styler={{ style: classes.style.icon }}>keyboard_arrow_left</Icon>
                 </a>
-                <div style={style.main}>
+                <div className={classes.main}>
                     {getLocalMonth(this.props.currentDate)} {this.props.currentDate.getFullYear()}
                 </div>
                 <a
-                    style={style.button}
+                    className={classes.button}
                     onClick={this.nextButton}
                 >
-                    <Icon styler={{ style: style.icon }}>keyboard_arrow_right</Icon>
+                    <Icon styler={{ style: classes.style.icon }}>keyboard_arrow_right</Icon>
                 </a>
             </div>
         );

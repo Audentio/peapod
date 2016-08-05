@@ -183,12 +183,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         const formattedTimestamp = this.format(this.timestamp, this.props.time);
         const timezone = (this.props.showTimezone && this.props.output === 'absolute') ? this.getTZdisplay() : null;
 
         return (
-            <span style={style.main} title={this.timestamp.format('MMMM Do YYYY, h:mm a')}>
+            <span className={classes.main} title={this.timestamp.format('MMMM Do YYYY, h:mm a')}>
                 {formattedTimestamp} {timezone}
             </span>
         );

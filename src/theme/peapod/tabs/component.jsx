@@ -28,7 +28,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const activeTab = this.state.activeTab;
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const triggers = [];
 
@@ -56,11 +56,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
         });
 
         return (
-            <div style={style.main}>
-                <div style={style.triggers}>
+            <div className={classes.main}>
+                <div className={classes.triggers}>
                     {triggers}
                 </div>
-                <div style={style.panels}>
+                <div className={classes.panels}>
                     {children}
                 </div>
             </div>

@@ -41,12 +41,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getClassStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         // const mergedStyle = Object.assign({}, style.main, this.props.style);
         const { label, children } = this.props;
 
         return (
-            <i {...this.props} className={`material-icons ${style.classes.main}`} aria-label={label} title={label} style={style.main}>
+            <i {...this.props} className={`material-icons ${classes.main}`} aria-label={label} title={label}>
                 {children}
             </i>
         );

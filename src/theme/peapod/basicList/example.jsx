@@ -34,7 +34,7 @@ class BasicListFilterExample extends Component {
                 />
                 <BasicList
                     filter={this.state.filter}
-                    json={{}}
+                    json={{key: "val"}}
                     render="menu"
                     propMap={{
                         name: 'children',
@@ -48,6 +48,8 @@ class BasicListFilterExample extends Component {
 module.exports = class BasicListExample extends React.Component {
 
     render() {
+        return <div>Fix this Tushar</div>
+
         return (
             <ContentWrap>
                 <BasicListFilterExample type="countries" />

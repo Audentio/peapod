@@ -57,19 +57,19 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
 
         const deleteTrigger = (this.props.deleteTrigger) ? (
-            <Icon styler={{ style: style.deleteTrigger }} onClick={() => { this.removeChip(); }}>close</Icon>
+            <Icon styler={{ style: classes.style.deleteTrigger }} onClick={() => { this.removeChip(); }}>close</Icon>
         ) : '';
 
         const photo = (this.props.photo) ? (
-            <img src={this.props.photo} style={style.photo} alt="" />
+            <img src={this.props.photo} className={classes.photo} alt="" />
         ) : '';
 
         if (this.state.showElement) {
             return (
-                <div style={style.main} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <div className={classes.main} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     {photo}
                     {deleteTrigger}
                     {this.props.children}

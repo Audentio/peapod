@@ -178,10 +178,6 @@ window.Pod_Styler = window.Pod_Styler || {
             globalVars = Object.assign({}, globalVars, window.Pod_Vars.sources[0][scene]);
         }
 
-        let mergedSheet = {
-
-        };
-
         // collapse styling from each active library
         for (let i = 0, len = libraries.length; i < len; i++) {
             const library = libraries[i];
@@ -266,10 +262,12 @@ window.Pod_Styler = window.Pod_Styler || {
     },
 
     // make inline css from sources array
-    processSources(obj, sources) {
-        const style = {
-            classes: {},
-        };
+    processSources(obj, sources, classRet) {
+        const style = {};
+
+        if (classRet) {
+            style.style = {};
+        }
 
         const scene = obj.scene;
         const componentName = obj.componentName;
@@ -347,22 +345,36 @@ window.Pod_Styler = window.Pod_Styler || {
                     }
                 }
 
-                if (typeof(style[partKey]) === 'undefined') {
-                    style[partKey] = partStyle;
-                } else {
-                    style[partKey] = Object.assign(style[partKey], partStyle);
-                }
+                if (classRet === true) {
+                    style[partKey] = `${componentName}_${partKey}_${styleKeyBase}`;
 
-                style.classes[partKey] = `${componentName}_${partKey}_${styleKeyBase}`;
+                    if (typeof(style.style[partKey]) === 'undefined') {
+                        style.style[partKey] = partStyle;
+                    } else {
+                        style.style[partKey] = Object.assign(style.style[partKey], partStyle);
+                    }
+                } else {
+                    if (typeof(style[partKey]) === 'undefined') {
+                        style[partKey] = partStyle;
+                    } else {
+                        style[partKey] = Object.assign(style[partKey], partStyle);
+                    }
+                }
             }
         }
 
         // remove any ! for important styling
-        const keys = Object.keys(style);
-        for (let i = 0, len = Object.keys(style).length; i < len; i++) {
+        const keys = (classRet === true) ? Object.keys(style.style) : Object.keys(style);
+        for (let i = 0, len = keys.length; i < len; i++) {
             const key = keys[i];
-            if (typeof(style[key]) === 'string') {
-                style[key] = style[key].replace('!', '');
+            if (classRet === true) {
+                if (typeof(style.style[key]) === 'string') {
+                    style.style[key] = style.style[key].replace('!', '');
+                }
+            } else {
+                if (typeof(style[key]) === 'string') {
+                    style[key] = style[key].replace('!', '');
+                }
             }
         }
 
@@ -422,7 +434,7 @@ window.Pod_Styler = window.Pod_Styler || {
         if (cacheLen > window.Pod_Styler.maxCacheLength) window.Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
         window.Pod_Styler.cache[componentName].push({ obj, sources, style });
 
-        const parts = Object.keys(style.classes);
+        const parts = Object.keys(style);
 
         if (window.Pod_Styler.styleRootEle === null) {
             const sheet = document.createElement('style');
@@ -437,7 +449,9 @@ window.Pod_Styler = window.Pod_Styler || {
         for (let i = 0, len = parts.length; i < len; i++) {
             const key = parts[i];
 
-            window.Pod_Styler.addToStylesheet(style.classes[key], style[key], window.Pod_Styler.styleRootEle.sheet);
+            if (key !== 'style') {
+                window.Pod_Styler.addToStylesheet(style[key], style.style[key], window.Pod_Styler.styleRootEle.sheet);
+            }
         }
 
         return true;
@@ -510,7 +524,7 @@ window.Pod_Styler = window.Pod_Styler || {
         const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
 
         if (window.Pod_Styler.enableCache) { // save to cache
-            this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
+            //this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
         }
 
         return style;
@@ -527,18 +541,15 @@ window.Pod_Styler = window.Pod_Styler || {
         if (window.Pod_Styler.enableCache) { // use value from cache
             let cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
             if (cacheVal !== false) {
-                cacheVal = { classes: cacheVal.classes }; // this will stop inline styling
                 return cacheVal;
             }
         }
 
-        let style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
+        const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources, true); // built style from sources
 
         if (window.Pod_Styler.enableCache) { // save to cache
             this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
         }
-
-        style = { classes: style.classes }; // this will stop inline styling
 
         return style;
     },

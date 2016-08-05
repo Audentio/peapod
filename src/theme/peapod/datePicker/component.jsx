@@ -61,7 +61,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         const trigger = (
             <div>
                 <Button styler={{ kind: 'primary' }}>
@@ -77,9 +77,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 closeOnOutsideClick
                 noArrow
             >
-                <div style={style.main}>
-                    <div style={style.calendar}>
-                        <Card styler={{ style: style.card }}>
+                <div className={classes.main}>
+                    <div className={classes.calendar}>
+                        <Card styler={{ style: classes.style.card }}>
                             <Calendar
                                 date={this.state.day}
                                 month={this.state.month}

@@ -64,12 +64,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Pod_Styler.getClassStyle(this);
         let components;
 
         if (this.state.components.length > 1) {
             components = (
-                <div style={style.main}>
+                <div className={classes.main}>
                     {this.state.components}
                 </div>
             );
