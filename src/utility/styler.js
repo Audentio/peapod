@@ -470,7 +470,9 @@ window.Pod_Styler = window.Pod_Styler || {
             if (pseudoKey === '_default') {
                 // don't add
             } else if (pseudoKey.indexOf('@media') > -1) {
-                // TODO media queries
+                sheetEle.insertRule(`${pseudoKey} { .${classKey} {${pseudoSelectors[pseudoKey]}} }\n`, sheetEle.cssRules.length);
+            } else if (pseudoKey.indexOf('@element') > -1) {
+                console.warn('Kyler, add in element queries');
             } else {
                 sheetEle.insertRule(`.${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
             }
