@@ -9,7 +9,30 @@ const pod_debug = false; // if true, will add a debug object to the inline style
 // actual Styling
 class Style {
     constructor(style) {
-        this.style = style;
+        this.style = this.processRules(style);
+    }
+
+    processRules(obj, depth = 0) {
+        const rules = Object.keys(obj);
+        for (let i = 0, len = rules.length; i < len; i++) {
+            const rule = rules[i];
+            const val = obj[rule];
+            if (typeof(val) === 'object') {
+                if (depth < 10) {
+                    obj[rule] = this.processRules(val, depth + 1);
+                } else {
+                    Logger.error('Depth of style too large');
+                }
+            } else {
+                const hyphenatedRule = rule.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+                if (rule !== hyphenatedRule) {
+                    obj[hyphenatedRule] = val;
+                    delete obj.rule;
+                }
+            }
+        }
+
+        return obj;
     }
 
     getStyle(instance) {

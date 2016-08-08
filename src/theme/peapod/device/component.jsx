@@ -21,19 +21,19 @@ module.exports = componentName => class Pod_Component extends React.Component {
         children: React.PropTypes.any,
         overlay: React.PropTypes.bool,
     }
-    
+
 
     render() {
         const classes = Pod_Styler.getClassStyle(this);
 
-        const overlay = (this.props.overlay) ? (<div style={classes.style.overlay}></div>) : '';
+        const overlay = (this.props.overlay) ? (<div className={classes.overlay}></div>) : '';
 
         return (
-            <div style={classes.style.main}>
-                <div style={classes.style.background}></div>
-                <div style={classes.style.innerscreen}>
+            <div className={classes.main}>
+                <div className={classes.background}></div>
+                <div className={classes.innerscreen}>
                     {overlay}
-                    <div style={classes.style.scrollable}>
+                    <div className={classes.scrollable}>
                         {this.props.children}
                     </div>
                 </div>

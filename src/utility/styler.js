@@ -459,10 +459,11 @@ window.Pod_Styler = window.Pod_Styler || {
 
     addToStylesheet(classKey, styleObj, sheetEle) {
         const pseudoSelectors = window.Pod_Styler.stringifyStyle(styleObj);
+
         const pseudoKeys = Object.keys(pseudoSelectors);
 
         if (pseudoSelectors._default !== '') {
-            sheetEle.insertRule(`.${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first
+            sheetEle.insertRule(`html .${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first
         }
 
         for (let i = 0, len = pseudoKeys.length; i < len; i++) {
@@ -470,11 +471,11 @@ window.Pod_Styler = window.Pod_Styler || {
             if (pseudoKey === '_default') {
                 // don't add
             } else if (pseudoKey.indexOf('@media') > -1) {
-                sheetEle.insertRule(`${pseudoKey} { .${classKey} {${pseudoSelectors[pseudoKey]}} }\n`, sheetEle.cssRules.length);
+                sheetEle.insertRule(`${pseudoKey} {html .${classKey} {${pseudoSelectors[pseudoKey]}} }\n`, sheetEle.cssRules.length);
             } else if (pseudoKey.indexOf('@element') > -1) {
                 console.warn('Kyler, add in element queries');
             } else {
-                sheetEle.insertRule(`.${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
+                sheetEle.insertRule(`html .${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
             }
         }
     },
@@ -491,18 +492,22 @@ window.Pod_Styler = window.Pod_Styler || {
                 ret[rule] = '';
                 for (let pseudoIndex = 0, pseudoLen = pseudoKeys.length; pseudoIndex < pseudoLen; pseudoIndex++) {
                     const pseudoRule = pseudoKeys[pseudoIndex];
-                    ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}; `;
+
+                    if (typeof(obj[rule][pseudoRule]) === 'number' && pseudoRule !== 'opacity') {
+                        ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}px; `;
+                    } else {
+                        ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}; `;
+                    }
                 }
             } else {
-                ret._default += `${rule}: ${obj[rule]}; `;
+                if (typeof(obj[rule]) === 'number' && rule !== 'opacity') {
+                    ret._default += `${rule}: ${obj[rule]}px; `;
+                } else {
+                    ret._default += `${rule}: ${obj[rule]}; `;
+                }
             }
         }
 
-        const pseudoKeys = Object.keys(ret);
-        for (let i = 0, len = pseudoKeys.length; i < len; i++) {
-            const pseudoKey = pseudoKeys[i];
-            ret[pseudoKey] = ret[pseudoKey].replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); // replace camelcase with hyphens
-        }
         return ret;
     },
 
@@ -524,10 +529,6 @@ window.Pod_Styler = window.Pod_Styler || {
         }
 
         const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
-
-        if (window.Pod_Styler.enableCache) { // save to cache
-            //this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
-        }
 
         return style;
     },
