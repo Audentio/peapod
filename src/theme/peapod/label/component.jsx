@@ -13,7 +13,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const icon = (typeof(this.props.icon) !== 'undefined' && this.props.icon.length) ? <Icon styler={{ style: classes.style.icon }}>{this.props.icon}</Icon> : null;
 

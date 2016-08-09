@@ -27,7 +27,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
         const { children: innerContent, value } = this.props;
 
         const maskTransformed = Object.assign({}, classes.style.mask, this.getTransform(value));

@@ -332,7 +332,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const columns = this.state.columns;
         const hoveredRow = this.state.hoveredRow;
@@ -340,7 +340,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const paginated = this.getTableData();
         const userActionsTrigger = <span>User Actions</span>;
 
-        const statusClasses = Styler.getClassStyle({ props: {
+        const statusClasses = Styler.getClasses({ props: {
             styler: {
                 styleLike: 'Table_Cell',
                 style: {

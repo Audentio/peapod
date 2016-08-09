@@ -28,7 +28,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             header: false,
         };
         const index = this.props.index;
-        const classes = Styler.getClassStyle({ props: {
+        const classes = Styler.getClasses({ props: {
             styler: {
                 styleLike: 'Table_Cell',
                 firstCell: index === 0,

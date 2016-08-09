@@ -8,7 +8,7 @@ const Paginator = componentName => class Pod_Component extends React.Component {
     static displayName = componentName;
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const page = this.props.page;
         const pages = this.props.pages;

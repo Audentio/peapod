@@ -43,7 +43,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const hoveredRow = this.props.hoveredRow;
         const columns = this.props.columns;
         const data = this.props.data;
-        const classes = Styler.getClassStyle({}, {
+        const classes = Styler.getClasses({}, {
             styleLike: 'Table_Inner',
             dark: i % 2 === 1,
             firstRow: i === 0,

@@ -242,7 +242,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
         const seekbar_table_style = {
             display: 'table',
             width: '100%',

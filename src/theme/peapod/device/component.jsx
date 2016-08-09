@@ -24,7 +24,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const overlay = (this.props.overlay) ? (<div className={classes.overlay}></div>) : '';
 

@@ -197,7 +197,7 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
         const { validate, stateless, name, type, value: valueProp } = this.props;
 
         // use value prop if stateless else use state

@@ -30,7 +30,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const image = (this.props.img) ? (
             <Photo styler={{ mainStyle: classes.style.photo, imageStyle: classes.style.photo }} src={this.props.img} />

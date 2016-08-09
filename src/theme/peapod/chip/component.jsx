@@ -57,7 +57,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const deleteTrigger = (this.props.deleteTrigger) ? (
             <Icon styler={{ style: classes.style.deleteTrigger }} onClick={() => { this.removeChip(); }}>close</Icon>

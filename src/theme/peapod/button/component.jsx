@@ -19,6 +19,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.onClickHandler = this.onClickHandler.bind(this);
         this.ripple = this.ripple.bind(this);
         this.rippleRemovers = [];
+
+        this.state = {};
     }
 
     // Validate props
@@ -87,7 +89,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
         const ripple = <span ref="rippleContainer" className={classes.rippleContainer} >{this.state.ripples}</span>;
         const { children, label, href } = this.props;
 

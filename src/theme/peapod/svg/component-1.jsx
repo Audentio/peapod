@@ -76,7 +76,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.state.file, 'image/svg+xml');

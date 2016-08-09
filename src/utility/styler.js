@@ -493,14 +493,14 @@ window.Styler = window.Styler || {
                 for (let pseudoIndex = 0, pseudoLen = pseudoKeys.length; pseudoIndex < pseudoLen; pseudoIndex++) {
                     const pseudoRule = pseudoKeys[pseudoIndex];
 
-                    if (typeof(obj[rule][pseudoRule]) === 'number' && pseudoRule !== 'opacity') {
+                    if (typeof(obj[rule][pseudoRule]) === 'number' && pseudoRule !== 'opacity' && pseudoRule !== 'font-weight') {
                         ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}px; `;
                     } else {
                         ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}; `;
                     }
                 }
             } else {
-                if (typeof(obj[rule]) === 'number' && rule !== 'opacity') {
+                if (typeof(obj[rule]) === 'number' && rule !== 'opacity' && rule !== 'font-weight') {
                     ret._default += `${rule}: ${obj[rule]}px; `;
                 } else {
                     ret._default += `${rule}: ${obj[rule]}; `;
@@ -534,7 +534,7 @@ window.Styler = window.Styler || {
     },
 
     // gets object of styling for parts of a component
-    getClassStyle(instance, localStyler = {}) {
+    getClasses(instance, localStyler = {}) {
         // return window.Styler.getStyle(instance, localStyler); // enable this line if not testing Git issue #98
 
         const obj = window.Styler.makeInstanceObj(instance, localStyler);

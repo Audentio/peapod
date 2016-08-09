@@ -13,8 +13,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static displayName = componentName;
 
-    constructor() {
+    constructor(props) {
         super();
+
+        this.state = {
+            position: 'relative',
+            origionalHeight: 0,
+            width: '100%',
+            alwaysFixed: props.alwaysFixed,
+        };
+
         this.onScroll = this.onScroll.bind(this);
     }
 
@@ -106,10 +114,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const style = Styler.getStyle(this);
-        style.main.position = this.state.position;
+        if (this.state !== null) {
+            if (this.state.position) {
+                style.main.position = this.state.position;
+            }
 
-        if (this.props.containerWidth) {
-            style.main.width = this.state.width;
+            if (this.props.containerWidth) {
+                style.main.width = this.state.width;
+            }
         }
 
         const scrolledStyles = (this.state.position === 'fixed') ? Object.assign({}, style.main, style.scrolled) : style.main;

@@ -18,7 +18,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const optional = (!this.props.validation) ? (
             <div className={classes.stepSubTitle}>Optional</div>

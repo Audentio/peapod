@@ -75,7 +75,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const activeDay = new Date(this.state.year, this.state.month, this.state.date);
 

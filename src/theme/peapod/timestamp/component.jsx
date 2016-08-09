@@ -205,7 +205,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         if (!this.state.loaded) return null;
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const formattedTimestamp = this.format(this.timestamp, this.props.time);
         const timezone = (this.props.showTimezone && this.props.output === 'absolute') ? this.getTZdisplay() : null;

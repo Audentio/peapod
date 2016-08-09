@@ -22,7 +22,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle({ props: {
+        const classes = Styler.getClasses({ props: {
             styler: {
                 styleLike: 'Table_Inner',
                 header: true,

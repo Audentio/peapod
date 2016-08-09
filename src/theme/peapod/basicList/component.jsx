@@ -100,7 +100,7 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         return (
             <Card styler={{ style: { width: 200, marginLeft: 0 } }}>

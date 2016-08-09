@@ -41,7 +41,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
         // const mergedStyle = Object.assign({}, style.main, this.props.style);
         const { label, children } = this.props;
 

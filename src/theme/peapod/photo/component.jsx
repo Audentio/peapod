@@ -243,7 +243,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
         const showLightbox = this.showLightbox.bind(this);
         const hideLightbox = this.hideLightbox.bind(this);
         const toggleFullscreen = this.toggleFullscreen.bind(this);

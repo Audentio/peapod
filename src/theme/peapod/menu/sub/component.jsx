@@ -20,7 +20,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        var classes = Styler.getClassStyle(this);
+        var classes = Styler.getClasses(this);
         var children = (this.state.show) ? this.props.children : '';
 
 

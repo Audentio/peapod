@@ -26,7 +26,7 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
         const { icon, children, ...props } = this.props;
 
         return (

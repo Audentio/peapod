@@ -28,7 +28,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const activeTab = this.state.activeTab;
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const triggers = [];
 

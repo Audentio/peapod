@@ -76,7 +76,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         const dismiss = (<div className={classes.dismissIcon}>
             <div onClick={this.dismiss}>{this.props.dismissable && 'Dismiss'}</div>

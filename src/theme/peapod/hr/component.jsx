@@ -12,7 +12,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static displayName = componentName;
 
     render() {
-        const classes = Styler.getClassStyle(this);
+        const classes = Styler.getClasses(this);
 
         return (
             <hr className={classes.main} />
