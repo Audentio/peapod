@@ -24,10 +24,10 @@ class Style {
                     Logger.error('Depth of style too large');
                 }
             } else {
-                const hyphenatedRule = rule.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+                const hyphenatedRule = rule.replace(/^([A-Z])/g, '-$1').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
                 if (rule !== hyphenatedRule) {
                     obj[hyphenatedRule] = val;
-                    delete obj.rule;
+                    //delete obj.rule;
                 }
             }
         }

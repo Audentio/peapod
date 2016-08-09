@@ -37,7 +37,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const classes = Pod_Styler.getClassStyle(this);
 
         return (
-            <div className={classes.main} style={classes.style.main}>
+            <div className={classes.main}>
                 <div className={classes.progress} style={this.getScale()}></div>
             </div>
         );
