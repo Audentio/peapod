@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import PureRender from 'utility/pureRender.js';
 
 import { isFunction as _isFunction, isEqual as _isEqual } from 'lodash';
@@ -35,7 +35,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         const columnNames = this.props.columnNames;
         const data = this.props.data;

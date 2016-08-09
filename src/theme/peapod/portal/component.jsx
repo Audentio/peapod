@@ -1,7 +1,7 @@
 import ReactDOM, { findDOMNode } from 'react-dom';
 import shallowCompare from 'react/lib/shallowCompare';
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Icon, Grid } from 'utility/components.js';
 
 function isNodeInRoot(node, root) {
@@ -99,7 +99,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     renderPortal(props) {
         const trigger = this.trigger;
-        const styler = Pod_Styler.getStyle({ props: {
+        const styler = Styler.getStyle({ props: {
             styler: {
                 styleLike: 'Portal',
             },

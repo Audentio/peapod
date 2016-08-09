@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -20,7 +20,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        var classes = Pod_Styler.getClassStyle(this);
+        var classes = Styler.getClassStyle(this);
         var children = (this.state.show) ? this.props.children : '';
 
 

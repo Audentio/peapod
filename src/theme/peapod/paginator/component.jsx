@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 import { Icon, Grid } from 'utility/components.js';
 
@@ -8,7 +8,7 @@ const Paginator = componentName => class Pod_Component extends React.Component {
     static displayName = componentName;
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         const page = this.props.page;
         const pages = this.props.pages;

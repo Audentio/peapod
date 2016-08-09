@@ -6,7 +6,7 @@
 
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Anchor } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -57,7 +57,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     ripple(clientX, clientY) {
-        const style = Pod_Styler.getStyle(this);
+        const style = Styler.getStyle(this);
         const ripples = this.state.ripples || [];
         const containerRect = this.refs.rippleContainer.getBoundingClientRect();
         const rippleSize = containerRect.width;
@@ -87,7 +87,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
         const ripple = <span ref="rippleContainer" className={classes.rippleContainer} >{this.state.ripples}</span>;
         const { children, label, href } = this.props;
 

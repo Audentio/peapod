@@ -6,7 +6,7 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 function pascalize(str) {
     return str.split('-').map(function (name) {
@@ -76,7 +76,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.state.file, 'image/svg+xml');

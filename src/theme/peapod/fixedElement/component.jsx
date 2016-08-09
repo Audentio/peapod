@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import { connect } from 'react-redux';
 import { addFixed } from '../../../../examples/actions';
 
@@ -105,7 +105,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const style = Styler.getStyle(this);
         style.main.position = this.state.position;
 
         if (this.props.containerWidth) {

@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-// import Pod_Styler from 'utility/styler.js';
+// import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -74,7 +74,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        // const style = Pod_Styler.getStyle(this);
+        // const style = Styler.getStyle(this);
 
         const placeholder = (this.props.placeholder) ?
             this.props.placeholder : <div>&nbsp;</div>; // needed to allow scroll detection

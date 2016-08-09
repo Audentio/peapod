@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Calendar_MonthBar, Calendar_Grid } from 'utility/components.js';
 import Pod_Helper from 'utility/helper';
 
@@ -75,7 +75,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         const activeDay = new Date(this.state.year, this.state.month, this.state.date);
 

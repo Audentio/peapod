@@ -4,7 +4,7 @@
 */
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import { Icon } from 'utility/components.js';
 import Logger from 'utility/logger.js';
 
@@ -76,7 +76,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         const dismiss = (<div className={classes.dismissIcon}>
             <div onClick={this.dismiss}>{this.props.dismissable && 'Dismiss'}</div>

@@ -4,7 +4,7 @@
 */
 
 import React, { Component } from 'react';
-import Pod_Styler from 'styler';
+import Styler from 'styler';
 import PureRender from 'pureRender';
 
 /**
@@ -17,7 +17,7 @@ module.exports = class {{%name%}} extends Component {
     shouldComponentUpdate: PureRender
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const style = Styler.getStyle(this);
 
         return (
             <span style={style.main}>Hello World!</span>

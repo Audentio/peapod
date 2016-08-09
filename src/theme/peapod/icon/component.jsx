@@ -5,7 +5,7 @@
 
 import React, { PropTypes } from 'react';
 import Pod_Helper from 'utility/helper.js';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 
 /**
@@ -41,7 +41,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
         // const mergedStyle = Object.assign({}, style.main, this.props.style);
         const { label, children } = this.props;
 

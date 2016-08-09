@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import PureRender from 'utility/pureRender.js';
 
 import { isFunction, sortBy as _sorter, values as _values, reverse as _reverse, merge as _merge } from 'lodash';
@@ -332,7 +332,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         const columns = this.state.columns;
         const hoveredRow = this.state.hoveredRow;
@@ -340,7 +340,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const paginated = this.getTableData();
         const userActionsTrigger = <span>User Actions</span>;
 
-        const statusClasses = Pod_Styler.getClassStyle({ props: {
+        const statusClasses = Styler.getClassStyle({ props: {
             styler: {
                 styleLike: 'Table_Cell',
                 style: {

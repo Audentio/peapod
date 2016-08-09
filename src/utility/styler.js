@@ -9,7 +9,7 @@ import { Style, Sheet } from './stylesheet.js';
 import Logger from './logger.js';
 import emoji from './emoji.js';
 
-window.Pod_Styler = window.Pod_Styler || {
+window.Styler = window.Styler || {
     libraries: [],
     currentLibrary: 'peapod',
     enableCache: true,
@@ -22,12 +22,12 @@ window.Pod_Styler = window.Pod_Styler || {
     styleRootEle: null,
 
     removeLibrary(libraryName) {
-        window.Pod_Styler.stack = null; // force recalculation of library stack;
-        for (let i = 0, len = window.Pod_Styler.libraries.length; i < len; i++) {
-            const library = window.Pod_Styler.libraries[i];
+        window.Styler.stack = null; // force recalculation of library stack;
+        for (let i = 0, len = window.Styler.libraries.length; i < len; i++) {
+            const library = window.Styler.libraries[i];
             if (library.name === libraryName) {
                 Logger.log(`Removing Library: ${libraryName}`);
-                window.Pod_Styler.libraries.splice(i, 1);
+                window.Styler.libraries.splice(i, 1);
                 len = len - 1;
                 i = i - 1;
             }
@@ -36,9 +36,9 @@ window.Pod_Styler = window.Pod_Styler || {
 
     // registers a library
     addLibrary(parentName, libraryName, componentFiles, requireFunc, globalSheet) {
-        window.Pod_Styler.stack = null; // force recalculation of library stack;
-        window.Pod_Styler.varCache = {}; // clear variable cache
-        window.Pod_Styler.removeLibrary(libraryName); // remove and previous styling from library
+        window.Styler.stack = null; // force recalculation of library stack;
+        window.Styler.varCache = {}; // clear variable cache
+        window.Styler.removeLibrary(libraryName); // remove and previous styling from library
         Logger.log(`Adding Library ${libraryName}`);
 
         const globalVars = globalSheet.getValues();
@@ -72,19 +72,19 @@ window.Pod_Styler = window.Pod_Styler || {
             globalConditions,
         };
 
-        window.Pod_Styler.libraries.push(library);
+        window.Styler.libraries.push(library);
     },
 
     // changes the library in use, must be done after adding a child theme.
     setLibrary(name) {
-        window.Pod_Styler.stack = null; // force recalculation of library stack;
-        window.Pod_Styler.currentLibrary = name;
+        window.Styler.stack = null; // force recalculation of library stack;
+        window.Styler.currentLibrary = name;
     },
 
     // gets the stack of libraries
     getLibrary(name) {
-        for (let i = 0, len = window.Pod_Styler.libraries.length; i < len; i++) {
-            const library = window.Pod_Styler.libraries[i];
+        for (let i = 0, len = window.Styler.libraries.length; i < len; i++) {
+            const library = window.Styler.libraries[i];
             if (library.name === name) return library;
         }
 
@@ -93,16 +93,16 @@ window.Pod_Styler = window.Pod_Styler || {
 
     // creates an ordered array of libraries currently applied
     getLibraryStack() {
-        if (window.Pod_Styler.stack !== null) {
-            return window.Pod_Styler.stack; // don't need to recalculate the stack;
+        if (window.Styler.stack !== null) {
+            return window.Styler.stack; // don't need to recalculate the stack;
         }
 
-        let currentName = window.Pod_Styler.currentLibrary;
+        let currentName = window.Styler.currentLibrary;
         const stack = [];
         let depth = 0;
 
         while (currentName !== 'root' && depth <= 30) {
-            const library = window.Pod_Styler.getLibrary(currentName);
+            const library = window.Styler.getLibrary(currentName);
             stack.unshift(library); // prepend
             currentName = library.parentName;
             depth = depth + 1;
@@ -123,7 +123,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
         if (depth >= 30) throw new Error('Maximum Library stack size reached.');
 
-        window.Pod_Styler.stack = stack;
+        window.Styler.stack = stack;
 
         return stack;
     },
@@ -131,7 +131,7 @@ window.Pod_Styler = window.Pod_Styler || {
     // collapses each active library into an array of parts and conditions specific to the component
     buildSources(obj) {
         const sources = [];
-        const libraries = window.Pod_Styler.getLibraryStack(); // currently applying libraries
+        const libraries = window.Styler.getLibraryStack(); // currently applying libraries
         let conditions = {}; // all conditions available to component
         const activeConditions = [];
         const parts = {}; // all parts available to component
@@ -251,12 +251,12 @@ window.Pod_Styler = window.Pod_Styler || {
     getUniqueClassName() {
         let ret = 'ERROR_GENERATING_CLASSNAME';
 
-        if (window.Pod_Styler.classCount > emoji.length) {
-            ret = emoji[Math.floor(window.Pod_Styler.classCount / emoji.length)] + emoji[window.Pod_Styler.classCount % emoji.length];
+        if (window.Styler.classCount > emoji.length) {
+            ret = emoji[Math.floor(window.Styler.classCount / emoji.length)] + emoji[window.Styler.classCount % emoji.length];
         } else {
-            ret = emoji[window.Pod_Styler.classCount];
+            ret = emoji[window.Styler.classCount];
         }
-        window.Pod_Styler.classCount++;
+        window.Styler.classCount++;
 
         return ret;
     },
@@ -274,7 +274,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
         // go through each source's styling
 
-        const styleKeyBase = window.Pod_Styler.getUniqueClassName();
+        const styleKeyBase = window.Styler.getUniqueClassName();
 
         for (let sourceIndex = 0, sourceLen = sources.length; sourceIndex < sourceLen; sourceIndex++) {
             const source = sources[sourceIndex]; // source from buildSrouces
@@ -288,7 +288,7 @@ window.Pod_Styler = window.Pod_Styler || {
                     const ruleKeys = Object.keys(part);
                     for (let ruleIndex = 0, ruleLen = ruleKeys.length; ruleIndex < ruleLen; ruleIndex++) { // then through each property in the part
                         const ruleKey = ruleKeys[ruleIndex];
-                        const computedRuleKey = window.Pod_Styler.parseVariableValue(ruleKey, obj, scene, ''); // resolve variables in the property key
+                        const computedRuleKey = window.Styler.parseVariableValue(ruleKey, obj, scene, ''); // resolve variables in the property key
                         let computedVar = part[ruleKey];
 
                         if (typeof(computedVar) === 'object') { // merge style objects
@@ -296,7 +296,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
                             for (let varIndex = 0, varLen = computedKeys.length; varIndex < varLen; varIndex++) { // then through each property in the rule
                                 const computedKey = computedKeys[varIndex];
-                                const resultVar = window.Pod_Styler.parseVariableValue(computedVar[computedKey], obj, scene, computedRuleKey); // resolve variables in the property
+                                const resultVar = window.Styler.parseVariableValue(computedVar[computedKey], obj, scene, computedRuleKey); // resolve variables in the property
 
                                 if (typeof(resultVar) === 'string') {
                                     if (resultVar.indexOf('!unset') === -1) {
@@ -319,7 +319,7 @@ window.Pod_Styler = window.Pod_Styler || {
                                 partStyle[computedRuleKey] = computedVar;
                             }
                         } else { // merge normal styliing
-                            const resultVar = window.Pod_Styler.parseVariableValue(computedVar, obj, scene, computedRuleKey);
+                            const resultVar = window.Styler.parseVariableValue(computedVar, obj, scene, computedRuleKey);
                             if (typeof(resultVar) === 'string') {
                                 if (typeof(partStyle[ruleKey]) === 'string' && partStyle[ruleKey].indexOf('!important') > -1) {
                                     if (resultVar.indexOf('!important') === -1) {
@@ -427,21 +427,21 @@ window.Pod_Styler = window.Pod_Styler || {
     addStyleToCache(obj, sources, style) {
         const componentName = obj.componentName;
 
-        if (typeof(window.Pod_Styler.cache[componentName]) === 'undefined') window.Pod_Styler.cache[componentName] = [];
+        if (typeof(window.Styler.cache[componentName]) === 'undefined') window.Styler.cache[componentName] = [];
 
-        const cacheLen = window.Pod_Styler.cache[componentName].length;
+        const cacheLen = window.Styler.cache[componentName].length;
 
-        if (cacheLen > window.Pod_Styler.maxCacheLength) window.Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
-        window.Pod_Styler.cache[componentName].push({ obj, sources, style });
+        if (cacheLen > window.Styler.maxCacheLength) window.Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
+        window.Styler.cache[componentName].push({ obj, sources, style });
 
         const parts = Object.keys(style);
 
-        if (window.Pod_Styler.styleRootEle === null) {
+        if (window.Styler.styleRootEle === null) {
             const sheet = document.createElement('style');
 
             sheet.id = 'Peapod_Style';
 
-            window.Pod_Styler.styleRootEle = sheet;
+            window.Styler.styleRootEle = sheet;
 
             document.head.appendChild(sheet);
         }
@@ -450,7 +450,7 @@ window.Pod_Styler = window.Pod_Styler || {
             const key = parts[i];
 
             if (key !== 'style') {
-                window.Pod_Styler.addToStylesheet(style[key], style.style[key], window.Pod_Styler.styleRootEle.sheet);
+                window.Styler.addToStylesheet(style[key], style.style[key], window.Styler.styleRootEle.sheet);
             }
         }
 
@@ -458,7 +458,7 @@ window.Pod_Styler = window.Pod_Styler || {
     },
 
     addToStylesheet(classKey, styleObj, sheetEle) {
-        const pseudoSelectors = window.Pod_Styler.stringifyStyle(styleObj);
+        const pseudoSelectors = window.Styler.stringifyStyle(styleObj);
 
         const pseudoKeys = Object.keys(pseudoSelectors);
 
@@ -517,40 +517,40 @@ window.Pod_Styler = window.Pod_Styler || {
 
     // gets object of styling for parts of a component
     getStyle(instance, localStyler = {}) {
-        const obj = window.Pod_Styler.makeInstanceObj(instance, localStyler);
+        const obj = window.Styler.makeInstanceObj(instance, localStyler);
 
-        const sourcesAndConditions = window.Pod_Styler.buildSources(obj); // build sources from libraries for component
+        const sourcesAndConditions = window.Styler.buildSources(obj); // build sources from libraries for component
 
-        if (window.Pod_Styler.enableCache) { // use value from cache
+        if (window.Styler.enableCache) { // use value from cache
             const cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
             if (cacheVal !== false) {
                 return cacheVal;
             }
         }
 
-        const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
+        const style = window.Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
 
         return style;
     },
 
     // gets object of styling for parts of a component
     getClassStyle(instance, localStyler = {}) {
-        // return window.Pod_Styler.getStyle(instance, localStyler); // enable this line if not testing Git issue #98
+        // return window.Styler.getStyle(instance, localStyler); // enable this line if not testing Git issue #98
 
-        const obj = window.Pod_Styler.makeInstanceObj(instance, localStyler);
+        const obj = window.Styler.makeInstanceObj(instance, localStyler);
 
-        const sourcesAndConditions = window.Pod_Styler.buildSources(obj); // build sources from libraries for component
+        const sourcesAndConditions = window.Styler.buildSources(obj); // build sources from libraries for component
 
-        if (window.Pod_Styler.enableCache) { // use value from cache
+        if (window.Styler.enableCache) { // use value from cache
             let cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
             if (cacheVal !== false) {
                 return cacheVal;
             }
         }
 
-        const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources, true); // built style from sources
+        const style = window.Styler.processSources(obj, sourcesAndConditions.sources, true); // built style from sources
 
-        if (window.Pod_Styler.enableCache) { // save to cache
+        if (window.Styler.enableCache) { // save to cache
             this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
         }
 
@@ -573,7 +573,7 @@ window.Pod_Styler = window.Pod_Styler || {
         }
 
         if (typeof(computedVar) === 'string') {
-            computedVar = window.Pod_Styler.processVariableString(computedVar, obj, scene);
+            computedVar = window.Styler.processVariableString(computedVar, obj, scene);
         }
         return computedVar;
     },
@@ -607,4 +607,4 @@ window.Pod_Styler = window.Pod_Styler || {
 
 };
 
-module.exports = window.Pod_Styler;
+module.exports = window.Styler;

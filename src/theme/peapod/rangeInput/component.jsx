@@ -4,7 +4,7 @@
 */
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import shallowCompare from 'react-addons-shallow-compare';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -128,7 +128,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         return (
             <div ref="container" className={classes.main}>

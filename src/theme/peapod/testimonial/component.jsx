@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Icon, Photo, Anchor, BlockQuote } from 'utility/components.js';
 
 
@@ -30,7 +30,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
 
         const image = (this.props.img) ? (
             <Photo styler={{ mainStyle: classes.style.photo, imageStyle: classes.style.photo }} src={this.props.img} />

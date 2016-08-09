@@ -71,14 +71,14 @@ const init = function *init(themeName = 'peapod', ignore = [], themeReq, req) {
     }
 
     window.Pod_Vars = window.Pod_Vars || Vars;
-    window.Pod_Styler = window.Pod_Styler || Styler;
+    window.Styler = window.Styler || Styler;
     let warnMissingExample = false;
 
     for (let themeIndex = 0; themeIndex < themeLen; themeIndex++) {
         const themeFileName = themeKeys[themeIndex];
         if (themeFileName.indexOf(`./${themeName}/`) > -1) {
             const theme = themeReq(themeFileName);
-            window.Pod_Styler.addLibrary(theme.themeParent, theme.themeName, styleSheets, req, theme.sheet);
+            window.Styler.addLibrary(theme.themeParent, theme.themeName, styleSheets, req, theme.sheet);
             warnMissingExample = theme.warnMissingExample;
         }
     }

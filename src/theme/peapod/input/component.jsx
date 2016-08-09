@@ -5,7 +5,7 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import PureRender from 'utility/pureRender.js';
 import shallowEqual from 'shallowequal';
 import Logger from 'utility/logger.js';
@@ -197,7 +197,7 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
         const { validate, stateless, name, type, value: valueProp } = this.props;
 
         // use value prop if stateless else use state

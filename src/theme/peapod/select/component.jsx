@@ -5,7 +5,7 @@
 */
 
 import React, { PropTypes, Component } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Button, Menu, Icon } from 'utility/components.js';
 
 /* SELECT component */
@@ -39,7 +39,7 @@ module.exports = componentName => class Pod_Component extends Component {
 
     createOptions(current = {}) {
         const options = [];
-        const style = Pod_Styler.getStyle(this);
+        const style = Styler.getStyle(this);
 
         this.props.children.forEach(item => {
             const { children, value } = item.props;
@@ -101,7 +101,7 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
         const { menu, open, displayValue } = this.state;
 
         const trigger = (

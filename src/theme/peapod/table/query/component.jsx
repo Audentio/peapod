@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-// import Pod_Styler from 'utility/styler.js';
+// import Styler from 'utility/styler.js';
 // import PureRender from 'utility/pureRender.js';
 
 import { Button, Icon, Grid, Div, Portal } from 'utility/components.js';
@@ -32,7 +32,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        // const style = Pod_Styler.getStyle(this);
+        // const style = Styler.getStyle(this);
 
         const queries = this.props.queries || [];
         const removeQuery = this.props.removeQuery || function () {};

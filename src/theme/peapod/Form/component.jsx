@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import Pod_Helper from 'utility/helper.js';
 import { Progress } from 'utility/components.js';
 
@@ -145,7 +145,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
         const hasDownloadProgress = (this.state.downloadProgress !== null) && !isNaN(this.state.downloadProgress);
 
         return (

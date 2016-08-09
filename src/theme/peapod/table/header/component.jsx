@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import PureRender from 'utility/pureRender.js';
 
 import { reduce as _reduce } from 'lodash';
@@ -22,7 +22,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle({ props: {
+        const classes = Styler.getClassStyle({ props: {
             styler: {
                 styleLike: 'Table_Inner',
                 header: true,

@@ -6,7 +6,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Icon, Lazy } from 'utility/components.js';
 import Pod_Helper from 'utility/helper.js';
 
@@ -243,7 +243,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const classes = Pod_Styler.getClassStyle(this);
+        const classes = Styler.getClassStyle(this);
         const showLightbox = this.showLightbox.bind(this);
         const hideLightbox = this.hideLightbox.bind(this);
         const toggleFullscreen = this.toggleFullscreen.bind(this);
