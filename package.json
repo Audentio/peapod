@@ -58,11 +58,8 @@
   "dependencies": {
     "babel-runtime": "^6.9.2",
     "color": "^0.11.0",
-    "highlight.js": "^9.3.0",
     "json-loader": "^0.5.4",
     "lodash": "^4.11.0",
-    "moment": "^2.10.6",
-    "moment-timezone": "^0.5.4",
     "radium": "0.15.3",
     "react": "^15.1.0",
     "react-addons-shallow-compare": "^15.1.0",

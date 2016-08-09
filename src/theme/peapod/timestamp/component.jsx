@@ -4,8 +4,9 @@
 */
 
 import React, { PropTypes } from 'react';
-import moment from 'moment-timezone';
+// import moment from 'moment-timezone';
 import Pod_Styler from 'utility/styler.js';
+import Pod_Helper from 'utility/helper';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -13,16 +14,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-
-        this.create();
-
-        if (props.output === 'relative') {
-            this.state = {
-                timeElapsed: this.timeElapsed(),
-            };
-        } else {
-            this.state = {};
-        }
+        this.state = {};
     }
 
     static propTypes = {
@@ -63,10 +55,20 @@ module.exports = componentName => class Pod_Component extends React.Component {
         // time: Math.floor( Date.now() / 1000 ), //current epoch time
         timezone: 'UTC',
         output: 'absolute',
-        outputTimezone: moment.tz.guess(), // user timezone
+        // outputTimezone: window.moment.tz.guess(), // user timezone
         showTime: true,
         showDate: true,
         showTimezone: false,
+    }
+
+    // fire up the component
+    init() {
+        this.create();
+        const newState = { loaded: true };
+
+        if (this.props.output === 'relative') newState.timeElapsed = this.timeElapsed();
+
+        this.setState(newState);
     }
 
     // Create moment object from time prop
@@ -74,6 +76,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     create() {
         let momentObject;
         let timestamp;
+        const { moment } = window;
         const { time, timezone } = this.props;
 
         if (!time) {
@@ -94,7 +97,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             );
             timestamp.add(momentObject.utcOffset() - timestamp.utcOffset(), 'minutes'); // adjust time difference
 
-            this.timestamp = timestamp.tz(this.props.outputTimezone); // Adjust timezone for output
+            this.timestamp = timestamp.tz(window.moment.tz.guess()); // Adjust timezone for output
         }
     }
 
@@ -131,12 +134,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     // Get timezone offset value (in minutes)
     getTzOffset(time, timezone) {
+        const { moment } = window;
         const _moment = moment(time).tz(timezone);
         return _moment.utcOffset();
     }
 
     // Get hour:minutes version of offset value
     getTzOffset_formatted(time, timezone) {
+        const { moment } = window;
         const offset = moment(time).tz(timezone).utcOffset() / 60;
         const hours = Math.floor(offset);
         const minutes = (offset - hours) * 60;
@@ -147,7 +152,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     // Timezone for display (UTC -06:00)
     getTZdisplay() {
-        const timezone = this.props.outputTimezone || this.props.timezone;
+        const timezone = window.moment.tz.guess() || this.props.timezone;
         const timezoneString = this.getTzOffset_formatted(this.timestamp.format(), timezone);
 
         return (
@@ -165,6 +170,22 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     componentDidMount() {
+        const { init } = this;
+
+        Pod_Helper.addScript({
+            id: 'moment',
+            url: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js',
+            callback: (script, status) => {
+                if (status === 200) {
+                    Pod_Helper.addScript({
+                        id: 'moment-tz',
+                        url: 'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.5/moment-timezone-with-data-2010-2020.min.js',
+                        callback: init,
+                    });
+                }
+            },
+        });
+
         if (this.props.output === 'relative') {
             const self = this;
 
@@ -183,7 +204,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
+        if (!this.state.loaded) return null;
         const classes = Pod_Styler.getClassStyle(this);
+
         const formattedTimestamp = this.format(this.timestamp, this.props.time);
         const timezone = (this.props.showTimezone && this.props.output === 'absolute') ? this.getTZdisplay() : null;
 

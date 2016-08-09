@@ -7,15 +7,15 @@
 import React, { PropTypes } from 'react';
 import Pod_Styler from 'utility/styler.js';
 import Pod_Helper from 'utility/helper.js';
-import Highlightjs from 'highlight.js/lib/highlight.js';
+// import Highlightjs from 'highlight.js/lib/highlight.js';
 import PureRender from 'utility/pureRender.js';
 
-const DefaultLanguages = ['cpp', 'cs', 'css', 'json', 'java', 'javascript', 'nginx', 'objectivec', 'perl', 'php', 'python', 'ruby', 'xml'];
+// const DefaultLanguages = ['cpp', 'cs', 'css', 'json', 'java', 'javascript', 'nginx', 'objectivec', 'perl', 'php', 'python', 'ruby', 'xml'];
 
 // import default languages
-DefaultLanguages.forEach((lang) => {
-    Highlightjs.registerLanguage(lang, require('highlight.js/lib/languages/'+lang)); // eslint-disable-line
-});
+// DefaultLanguages.forEach((lang) => {
+//     Highlightjs.registerLanguage(lang, require('highlight.js/lib/languages/'+lang)); // eslint-disable-line
+// });
 
 /**
 * Code block component
@@ -52,23 +52,27 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         return (
             <pre className={classes.main}>
-                {label &&
-                    <div ref="label" className={classes.label}>{label}</div>
-                }
+                {label && <div ref="label" className={classes.label}>{label}</div>}
                 <code ref="codeContainer" className={classes.code}>{code}</code>
             </pre>
         );
     }
 
-    componentWillMount() {
-        const { theme } = this.props;
-
-        // Load theme stylesheet
-        Pod_Helper.addStylesheet(`hljs_theme_${theme}`, `//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/${theme}.min.css`);
-    }
-
     componentDidMount() {
-        this.highlightCode();
+        const { theme } = this.props;
+        const { highlightCode } = this;
+
+        // HLJS
+        Pod_Helper.addScript({
+            id: 'hljs_core',
+            url: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js',
+            callback: (script, status) => {
+                if (status === 200) highlightCode();
+            },
+        });
+
+        // theme stylesheet
+        Pod_Helper.addStylesheet(`hljs_theme_${theme}`, `//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/${theme}.min.css`);
     }
 
     shouldComponentUpdate = PureRender
@@ -80,9 +84,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     highlightCode() {
         if (!this.props.highlight) return; // highlighting is disabled - Halt.
 
+        const { Highlightjs } = window;
+
         const { language, label } = this.props;
         const { codeContainer: container, label: labelContainer } = this.refs;
-        const registeredLanguages = Highlightjs.listLanguages();
 
         const highlightBlock = (lang) => {
             // Add passed language as className for highlightBlock()
@@ -94,10 +99,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
         };
 
         // Load language from CDN
-        // when it is explicity defined and missing
-        if (language &&                                                 // Language is passed
-            registeredLanguages.indexOf(language) === -1                // Not in library already
-        ) {
+        // when it is explicity defined
+        if (language) {
             Pod_Helper.addScript({
                 id: `hljs-lang-${language}`,
                 url: `//cdn.jsdelivr.net/highlight.js/9.2.0/languages/${language}.min.js`,
@@ -120,7 +123,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         } else if (label) {
             // Guess language
             // confined to default languages defined above (top of this file)
-            const bestGuess = Highlightjs.highlightAuto(container.innerText, registeredLanguages).language;
+            const bestGuess = Highlightjs.highlightAuto(container.innerText, Highlightjs.listLanguages()).language;
             labelContainer.innerText = bestGuess;
         }
 

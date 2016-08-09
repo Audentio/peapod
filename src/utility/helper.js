@@ -113,7 +113,8 @@ const Pod_Helper = {
 
     addScript: (params) => {
         if (document.getElementById(`Peapod_${params.id}_script`)) {
-            return false;
+            params.callback(true, 200);
+            return;
         }
 
         const addToPage = (cb) => {
@@ -123,7 +124,6 @@ const Pod_Helper = {
             script.src = params.url;
             if (cb) script.onload = (res, status) => cb(script, status);
             document.head.appendChild(script);
-            return true;
         };
 
         if (params.ajax) {
@@ -137,8 +137,6 @@ const Pod_Helper = {
         } else {
             addToPage(params.callback(false, 0));
         }
-
-        return true;
     },
 
     // XHR helper function

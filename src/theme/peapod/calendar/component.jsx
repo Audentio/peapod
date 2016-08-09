@@ -1,7 +1,7 @@
 import React from 'react';
 import Pod_Styler from 'utility/styler.js';
 import { Calendar_MonthBar, Calendar_Grid } from 'utility/components.js';
-import moment from 'moment-timezone';
+import Pod_Helper from 'utility/helper';
 
 import { addDays, getMonthFromDate } from './calendarHelper.js';
 
@@ -18,6 +18,23 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     componentWillMount() {
+        const { forceUpdate } = this;
+
+        // Load momentjs
+        Pod_Helper.addScript({
+            id: 'moment',
+            url: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js',
+            callback: (script, status) => {
+                if (status === 200) {
+                    Pod_Helper.addScript({
+                        id: 'moment-tz',
+                        url: 'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.5/moment-timezone-with-data-2010-2020.min.js',
+                        callback: forceUpdate,
+                    });
+                }
+            },
+        });
+
         const now = (this.props.date && this.props.month && this.props.year) ?
         new Date(this.props.year, this.props.month, this.props.date) :
         new Date();
@@ -77,7 +94,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             <div className={classes.main}>
                 <div className={classes.dateBar}>
                     <div className={classes.year}>{this.state.today.getFullYear()}</div>
-                    <div className={classes.date}>{moment(this.state.today).format('Do, MMMM')}</div>
+                    <div className={classes.date}>{this.state.momentLoaded ? window.moment(this.state.today).format('Do, MMMM') : null}</div>
                 </div>
                 <Calendar_MonthBar
                     // get these down
