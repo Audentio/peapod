@@ -13,7 +13,6 @@ import KylerDev from './pages/kylerDev.jsx';
 import TusharDev from './pages/tusharDev.jsx';
 
 import Demo from './pages/demo.jsx';
-*/
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -26,7 +25,6 @@ const measurePerf = process.env.measurePerf;
 
 if (measurePerf) Perf.start();
 
-/*
 render((
     <Provider store={store}>
         <Root>
@@ -44,7 +42,7 @@ render((
 ), document.getElementById('mainContainer'));
 */
 
-import Pod from 'utility/components.js';
+import { Button } from 'utility/components.js';
 
 render((
     <div>testing</div>
