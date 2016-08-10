@@ -8,7 +8,7 @@
 // Dependencies
 import React from 'react';
 import Styler from 'utility/styler.js';
-import Pod from 'utility/components.js';
+import * as Pod from 'utility/components.js';
 
 /**
 * Json component

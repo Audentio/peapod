@@ -1,16 +1,16 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Center, Paragraph } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class CenterExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Center styler={{ style: { width: '500px', height: '500px', background: '#fff' } }}>
-                    <Pod.Paragraph styler={{ style: { width: '250px' } }}>
+            <ContentWrap>
+                <Center styler={{ style: { width: '500px', height: '500px', background: '#fff' } }}>
+                    <Paragraph styler={{ style: { width: '250px' } }}>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         Ut enim ad minim veniam,
@@ -18,9 +18,9 @@ module.exports = class AccordionExample extends React.Component {
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident,
                         sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </Pod.Paragraph>
-                </Pod.Center>
-            </Pod.ContentWrap>
+                    </Paragraph>
+                </Center>
+            </ContentWrap>
         );
     }
 

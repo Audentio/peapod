@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Table } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class TableExample extends React.Component {
@@ -475,12 +475,12 @@ module.exports = class TableExample extends React.Component {
     render() {
         return (
             <div>
-                <Pod.ContentWrap>
-                    <Pod.Table
+                <ContentWrap>
+                    <Table
                         data={this.dummyData().rows}
                         columns={this.dummyData().columns}
                     />
-                </Pod.ContentWrap>
+                </ContentWrap>
             </div>
         );
     }

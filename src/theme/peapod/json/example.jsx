@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Json } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class AccordionExample extends React.Component {
@@ -8,13 +8,13 @@ module.exports = class AccordionExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Json
+            <ContentWrap>
+                <Json
                     json={{ Mark: {
                         children: 'JSON Mark',
                     } }}
-                ></Pod.Json>
-            </Pod.ContentWrap>
+                ></Json>
+            </ContentWrap>
         );
     }
 

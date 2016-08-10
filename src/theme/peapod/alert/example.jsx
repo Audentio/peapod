@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Paragraph, Button, Alert } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 
@@ -14,31 +14,31 @@ module.exports = class AlertExample extends React.Component {
 
         return (
             <div>
-                <Pod.ContentWrap>
-                    <Pod.Paragraph>
-                        <Pod.Button onClick={restoreAlerts} label="Restore all alerts" />
-                    </Pod.Paragraph>
+                <ContentWrap>
+                    <Paragraph>
+                        <Button onClick={restoreAlerts} label="Restore all alerts" />
+                    </Paragraph>
 
-                    <Pod.Alert dismissable id="generalAlert">
+                    <Alert dismissable id="generalAlert">
                         Jim quickly realized that the beautiful gowns are expensive.
-                    </Pod.Alert>
+                    </Alert>
 
-                    <Pod.Alert styler={{ kind: 'info' }} dismissable id="infoAlert">
+                    <Alert styler={{ kind: 'info' }} dismissable id="infoAlert">
                         Jim quickly realized that the beautiful gowns are expensive.
-                    </Pod.Alert>
+                    </Alert>
 
-                    <Pod.Alert styler={{ kind: 'success' }} dismissable id="successAlert">
+                    <Alert styler={{ kind: 'success' }} dismissable id="successAlert">
                         Jim quickly realized that the beautiful gowns are expensive.
-                    </Pod.Alert>
+                    </Alert>
 
-                    <Pod.Alert styler={{ kind: 'warning' }} dismissable id="warningAlert">
+                    <Alert styler={{ kind: 'warning' }} dismissable id="warningAlert">
                         Jim quickly realized that the beautiful gowns are expensive.
-                    </Pod.Alert>
+                    </Alert>
                     
-                    <Pod.Alert styler={{ kind: 'danger' }} dismissable id="dangerAlert">
+                    <Alert styler={{ kind: 'danger' }} dismissable id="dangerAlert">
                         Jim quickly realized that the beautiful gowns are expensive.
-                    </Pod.Alert>
-                </Pod.ContentWrap>
+                    </Alert>
+                </ContentWrap>
             </div>
         );
     }

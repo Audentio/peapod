@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Paragraph } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class AccordionExample extends React.Component {
@@ -8,8 +8,8 @@ module.exports = class AccordionExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Paragraph>
+            <ContentWrap>
+                <Paragraph>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -18,8 +18,8 @@ module.exports = class AccordionExample extends React.Component {
                     dolore eu fugiat nulla pariatur. Excepteur sint occaecat
                     cupidatat non proident, sunt in culpa qui officia deserunt
                     mollit anim id est laborum.
-                </Pod.Paragraph>
-            </Pod.ContentWrap>
+                </Paragraph>
+            </ContentWrap>
         );
     }
 

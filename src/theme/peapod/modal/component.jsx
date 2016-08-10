@@ -6,7 +6,7 @@
 
 import React from 'react';
 import Styler from 'utility/styler.js';
-import Pod from 'utility/components.js';
+import { Overlay } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -42,9 +42,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         );
 
         return (this.props.overlay) ? (
-            <Pod.Overlay onClick={this.overlayClick}>
+            <Overlay onClick={this.overlayClick}>
                 {modalBox}
-            </Pod.Overlay>
+            </Overlay>
         ) : modalBox;
     }
 };

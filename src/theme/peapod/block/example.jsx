@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Block, Heading, Paragraph, Block_Left, Block_Right } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class AccordionExample extends React.Component {
@@ -8,10 +8,10 @@ module.exports = class AccordionExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Block>
-                    <Pod.Heading kind="h4">Block</Pod.Heading>
-                    <Pod.Paragraph>
+            <ContentWrap>
+                <Block>
+                    <Heading kind="h4">Block</Heading>
+                    <Paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna
                         aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -20,12 +20,12 @@ module.exports = class AccordionExample extends React.Component {
                         esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
                         occaecat cupidatat non proident, sunt in culpa qui officia
                         deserunt mollit anim id est laborum.
-                    </Pod.Paragraph>
-                </Pod.Block>
+                    </Paragraph>
+                </Block>
 
-                <Pod.Block_Left>
-                    <Pod.Heading kind="h4">Block_Left</Pod.Heading>
-                    <Pod.Paragraph>
+                <Block_Left>
+                    <Heading kind="h4">Block_Left</Heading>
+                    <Paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna
                         aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -34,12 +34,12 @@ module.exports = class AccordionExample extends React.Component {
                         esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
                         occaecat cupidatat non proident, sunt in culpa qui officia
                         deserunt mollit anim id est laborum.
-                    </Pod.Paragraph>
-                </Pod.Block_Left>
+                    </Paragraph>
+                </Block_Left>
 
-                <Pod.Block_Right>
-                    <Pod.Heading kind="h4">Block_Right</Pod.Heading>
-                    <Pod.Paragraph>
+                <Block_Right>
+                    <Heading kind="h4">Block_Right</Heading>
+                    <Paragraph>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna
                         aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -48,9 +48,9 @@ module.exports = class AccordionExample extends React.Component {
                         esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
                         occaecat cupidatat non proident, sunt in culpa qui officia
                         deserunt mollit anim id est laborum.
-                    </Pod.Paragraph>
-                </Pod.Block_Right>
-            </Pod.ContentWrap>
+                    </Paragraph>
+                </Block_Right>
+            </ContentWrap>
         );
     }
 
