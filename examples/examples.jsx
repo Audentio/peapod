@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
 import Perf from 'react-addons-perf';
 
+/*
 import { Root } from 'utility/components.js';
 
 import Sections from './sections.jsx';
@@ -12,6 +13,7 @@ import KylerDev from './pages/kylerDev.jsx';
 import TusharDev from './pages/tusharDev.jsx';
 
 import Demo from './pages/demo.jsx';
+*/
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -24,6 +26,7 @@ const measurePerf = process.env.measurePerf;
 
 if (measurePerf) Perf.start();
 
+/*
 render((
     <Provider store={store}>
         <Root>
@@ -38,6 +41,13 @@ render((
             </Router>
         </Root>
     </Provider>
+), document.getElementById('mainContainer'));
+*/
+
+import Pod from 'utility/components.js';
+
+render((
+    <div>testing</div>
 ), document.getElementById('mainContainer'));
 
 if (measurePerf) {

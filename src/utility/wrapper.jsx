@@ -1,10 +1,7 @@
-//import radium from 'radium';
 import React from 'react';
 import Lazy from 'theme/peapod/lazy/component.jsx';
 
 const Pod_Enhance = function wrap(NewComponent) {
-    //NewComponent = radium(NewComponent);
-
     if (typeof(NewComponent.contextTypes) === 'undefined') {
         NewComponent.contextTypes = {};
     }

@@ -30,14 +30,14 @@ module.exports = function (sheet) {
                 xlarge: '1500',
             },
             xsmall: '@media (min-width: 1px)',
-            small: '@media (min-width: 610px)',
-            medium: '@media (min-width: 800px)',
-            large: '@media (min-width: 1024px)',
-            xlarge: '@media (min-width: 1500px)',
-            smallLt: '@media (max-width: 609px)',
-            mediumLt: '@media (max-width: 799px)',
-            largeLt: '@media (max-width: 1023px)',
-            xlargeLt: '@media (max-width: 1499px)',
+            get small() { return `@media (min-width: ${component.breakpoints.small}px)`; },
+            get medium() { return `@media (min-width: ${component.breakpoints.medium}px)`; },
+            get large() { return `@media (min-width: ${component.breakpoints.large}px)`; },
+            get xlarge() { return `@media (min-width: ${component.breakpoints.xlarge}px)`; },
+            get smallLt() { return `@media (min-width: ${component.breakpoints.small - 1}px)`; },
+            get mediumLt() { return `@media (min-width: ${component.breakpoints.medium - 1}px)`; },
+            get largeLt() { return `@media (min-width: ${component.breakpoints.large - 1}px)`; },
+            get xlargeLt() { return `@media (min-width: ${component.breakpoints.xlarge - 1}px)`; },
         };
         return component;
     };

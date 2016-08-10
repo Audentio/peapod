@@ -519,6 +519,9 @@ window.Styler = window.Styler || {
     getStyle(instance, localStyler = {}) {
         const obj = window.Styler.makeInstanceObj(instance, localStyler);
 
+        console.warn(`Using legacy styling in ${obj.componentName}.  This will be removed in the future`)
+
+
         const sourcesAndConditions = window.Styler.buildSources(obj); // build sources from libraries for component
 
         if (window.Styler.enableCache) { // use value from cache
