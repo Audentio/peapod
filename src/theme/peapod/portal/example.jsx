@@ -2,7 +2,7 @@ import React from 'react';
 import { ContentWrap, Portal, Card, Heading, Button } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class PortalExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 

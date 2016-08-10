@@ -93,7 +93,7 @@ const codeExample__jsx =
 
 </ContentWrap>`;
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class CodeExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 

@@ -8,9 +8,9 @@ module.exports = class DraggableExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
+            <ContentWrap>
                 Write this example
-            </Pod.ContentWrap>
+            </ContentWrap>
         );
     }
 

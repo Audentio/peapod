@@ -2,7 +2,7 @@ import React from 'react';
 import { ContentWrap, Radio } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class RadioExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 

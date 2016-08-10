@@ -8,9 +8,9 @@ module.exports = class SectionHeadingExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.SectionHeading />
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <SectionHeading />
+            </ContentWrap>
         );
     }
 

@@ -8,9 +8,9 @@ module.exports = class MainExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Main>HTML Main Element</Pod.Main>
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <Main>HTML Main Element</Main>
+            </ContentWrap>
         );
     }
 

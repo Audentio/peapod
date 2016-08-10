@@ -8,7 +8,6 @@ new WebpackDevServer(webpack(config), {
     contentBase: config.output.contentBase,
     publicPath: config.output.publicPath,
     hot: true,
-    compress: true,
     watchOptions: {
         aggregateTimeout: 300,
         poll: 10000

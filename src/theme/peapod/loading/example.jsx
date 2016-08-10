@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContentWrap, Loading, Center, Button } from 'utility/components.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class LoadingExample extends React.Component {
 
     // Constructor
     constructor(props, context) {

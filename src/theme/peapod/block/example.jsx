@@ -2,7 +2,7 @@ import React from 'react';
 import { ContentWrap, Block, Heading, Paragraph, Block_Left, Block_Right } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class BlockExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 

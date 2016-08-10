@@ -8,9 +8,9 @@ module.exports = class MarkExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Mark>HTML Mark Element</Pod.Mark>
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <Mark>HTML Mark Element</Mark>
+            </ContentWrap>
         );
     }
 

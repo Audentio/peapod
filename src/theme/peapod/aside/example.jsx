@@ -8,9 +8,9 @@ module.exports = class AsideExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Aside>HTML Aside Element</Pod.Aside>
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <Aside>HTML Aside Element</Aside>
+            </ContentWrap>
         );
     }
 

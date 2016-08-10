@@ -2,7 +2,7 @@ import React from 'react';
 import { ContentWrap, Testimonial } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class TestimonialExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 
