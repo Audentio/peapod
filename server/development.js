@@ -8,10 +8,6 @@ new WebpackDevServer(webpack(config), {
     contentBase: config.output.contentBase,
     publicPath: config.output.publicPath,
     hot: true,
-    watchOptions: {
-        aggregateTimeout: 300,
-        poll: 10000
-    },
     historyApiFallback: true
 }).listen(3002, '0.0.0.0', function (err, result) {
     if (err) console.log(err);

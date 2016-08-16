@@ -132,6 +132,7 @@ window.Styler = window.Styler || {
     buildSources(obj) {
         const sources = [];
         const libraries = window.Styler.getLibraryStack(); // currently applying libraries
+        console.log(libraries);
         let conditions = {}; // all conditions available to component
         const activeConditions = [];
         const parts = {}; // all parts available to component

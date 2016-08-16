@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
 import Perf from 'react-addons-perf';
 
+const measurePerf = process.env.measurePerf;
+
 /*
 import { Root } from 'utility/components.js';
 
@@ -20,8 +22,6 @@ import fixedElems from './reducers';
 // import { addFixed } from './actions';
 
 const store = createStore(fixedElems);
-
-const measurePerf = process.env.measurePerf;
 
 if (measurePerf) Perf.start();
 
@@ -42,10 +42,14 @@ render((
 ), document.getElementById('mainContainer'));
 */
 
-import { Button } from 'utility/components.js';
+import { Accordion, Accordion_Section } from 'utility/components.js';
+
 
 render((
-    <div>testing</div>
+    <Accordion>
+        <Accordion_Section>testing</Accordion_Section>
+        <Accordion_Section>testing</Accordion_Section>
+    </Accordion>
 ), document.getElementById('mainContainer'));
 
 if (measurePerf) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Lazy from 'theme/peapod/lazy/component.jsx';
+import Lazy from 'theme/peapod/Lazy/component.jsx';
 
 const Pod_Enhance = function wrap(NewComponent) {
     if (typeof(NewComponent.contextTypes) === 'undefined') {

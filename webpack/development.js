@@ -23,7 +23,7 @@ for (let i = 2, len = process.argv.length; i < len; i++) {
     }
 }
 
-const PeapodPlugin = require('./peapod.js');
+const PeapodPlugin = require('./plugin.js');
 
 module.exports = {
     cache: true,

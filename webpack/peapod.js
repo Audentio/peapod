@@ -1,21 +1,16 @@
-// MyPlugin.js
 
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-function MyPlugin(options) {
-    // Configure your plugin with options...
-}
-
-function recursiveReaddirSync(dir) {
-    var list = [];
-    var files = fs.readdirSync(dir);
-    var stats;
+function recursiveReadDirSync(dir) {
+    let list = [];
+    const files = fs.readdirSync(dir);
+    let stats;
 
     files.forEach(function (file) {
         stats = fs.lstatSync(path.join(dir, file));
-        if(stats.isDirectory()) {
-            list = list.concat(recursiveReaddirSync(path.join(dir, file)));
+        if (stats.isDirectory()) {
+            list = list.concat(recursiveReadDirSync(path.join(dir, file)));
         } else {
             list.push(path.join(dir, file));
         }
@@ -24,84 +19,133 @@ function recursiveReaddirSync(dir) {
     return list;
 }
 
-function compileExports(themeName, includeExamples) {
-    var themeBase = path.resolve(__dirname + '/../src/theme/' + themeName);
-    var utilityBase = path.resolve(__dirname + '/../src/utility');
+function directoryExists(dirPath) {
+    try {
+        return fs.statSync(dirPath).isDirectory();
+    } catch (err) {
+        return false;
+    }
+}
 
-    var themeFiles = recursiveReaddirSync(themeBase);
+function ensureDirectoryExistence(filePath) {
+    const dirname = path.dirname(filePath);
+    if (directoryExists(dirname)) {
+        return true;
+    }
+    ensureDirectoryExistence(dirname);
+    fs.mkdirSync(dirname);
+}
 
-    var componentExports = '';
-    var components = {};
+function compileExports(themePaths, includeExamples) {
+    themePaths = [{
+        path: path.resolve(__dirname + '/../src/theme/peapod'),
+        name: 'peapod',
+    }];
 
-    for (var themeFileIndex = 0, themeFileLen = themeFiles.length; themeFileIndex < themeFileLen; themeFileIndex++) {
-        var themeFile = themeFiles[themeFileIndex];
-        var themeFileSplit = themeFile.split('/');
-        var fileName = themeFileSplit[themeFileSplit.length - 1];
+    const utilityPath = path.resolve(__dirname + '/../src/utility');
+    const components = {};
+    const themes = [];
 
-        if (fileName === 'style.js' || fileName === 'component.jsx' || (fileName === 'example.jsx' && includeExamples)) {
-            var nameStartIndex = -1;
-            for (var i = 0, len = themeFileSplit.length; i < len; i++) {
-                if (themeFileSplit[i] === themeName) {
-                    nameStartIndex = i;
-                }
-            }
-            if (nameStartIndex >= 0) {
-                var componentName = "";
-                var componentPath = "";
-                var ignoreComponent = false;
+    for (let themeIndex = themePaths.length - 1; themeIndex >= 0; themeIndex--) {
+        const themePath = themePaths[themeIndex].path;
+        const themeName = themePaths[themeIndex].name;
 
-                for (var i = nameStartIndex + 1, len = themeFileSplit.length - 1; i < len; i++) {
-                    var currentFolder = themeFileSplit[i];
+        themes.push({
+            name: themeName,
+            themePath: themePath,
+        });
 
-                    if (currentFolder.indexOf('_') === -1) {
-                        var currentFolderPascal = themeFileSplit[i];
-                        if (currentFolder.length === 1) {
-                            currentFolderPascal = currentFolder.charAt(0).toUpperCase();
-                        } else {
-                            currentFolderPascal = currentFolder.charAt(0).toUpperCase() + currentFolder.slice(1);
-                        }
+        const themeFiles = recursiveReadDirSync(themePath);
 
-                        if (componentName == "") {
-                            componentName = currentFolderPascal;
-                        } else {
-                            componentName += '_' + currentFolderPascal;
-                        }
+        for (let themeFileIndex = 0, themeFileLen = themeFiles.length; themeFileIndex < themeFileLen; themeFileIndex++) {
+            const themeFile = themeFiles[themeFileIndex];
+            const themeFileSplit = themeFile.split('/');
+            const fileName = themeFileSplit[themeFileSplit.length - 1];
 
-                        componentPath += '/' + currentFolder;
-                    } else {
-                        ignoreComponent = true;
-                        break;
+            if (fileName === 'style.js' || fileName === 'component.jsx' || (fileName === 'example.jsx' && includeExamples)) {
+                let nameStartIndex = -1;
+                for (let i = 0, len = themeFileSplit.length; i < len; i++) {
+                    if (themeFileSplit[i] === themeName) {
+                        nameStartIndex = i;
                     }
                 }
+                if (nameStartIndex >= 0) {
+                    let componentName = '';
+                    let compiledPath = '';
+                    let ignoreComponent = false;
 
-                if (!ignoreComponent) {
-                    if (typeof(components[componentName]) === 'undefined') {
-                        components[componentName] = {
-                            hasComponent: false,
-                            hasStyle: false,
-                            hasExample: false,
-                            filePath: themeBase + componentPath,
-                        };
+                    for (let i = nameStartIndex + 1, len = themeFileSplit.length - 1; i < len; i++) {
+                        const currentFolder = themeFileSplit[i];
+
+                        if (currentFolder.indexOf('_') === -1) {
+                            let currentFolderPascal = themeFileSplit[i];
+                            if (currentFolder.length === 1) {
+                                currentFolderPascal = currentFolder.charAt(0).toUpperCase();
+                            } else {
+                                currentFolderPascal = currentFolder.charAt(0).toUpperCase() + currentFolder.slice(1);
+                            }
+
+                            if (componentName === '') {
+                                componentName = currentFolderPascal;
+                            } else {
+                                componentName += '_' + currentFolderPascal;
+                            }
+
+                            compiledPath += '/' + currentFolder;
+                        } else {
+                            ignoreComponent = true;
+                            break;
+                        }
                     }
 
-                    if (fileName === 'component.jsx') {
-                        components[componentName].hasComponent = true;
-                    }
+                    if (!ignoreComponent) {
+                        if (typeof(components[componentName]) === 'undefined') {
+                            components[componentName] = {
+                                componentPath: '',
+                                stylePaths: [],
+                                examplePath: '',
+                                compiledPath,
+                            };
+                        }
 
-                    if (fileName === 'style.js') {
-                        components[componentName].hasStyle = true;
-                    }
+                        if (fileName === 'component.jsx') {
+                            components[componentName].componentPath = themeFile;
+                        }
 
-                    if (fileName === 'example.jsx') {
-                        components[componentName].hasExample = true;
+                        if (fileName === 'example.jsx') {
+                            components[componentName].examplePath = themeFile;
+                        }
+
+                        if (fileName === 'style.js') {
+                            components[componentName].stylePaths.push(themeFile);
+                        }
                     }
                 }
             }
         }
-    }
 
-    var componentKeys = Object.keys(components);
-    for (var i = 0, len = componentKeys.length; i < len; i++) {
+        console.log(components);
+
+        const componentKeys = Object.keys(components);
+
+        for (let componentIndex = 0, componentLen = componentKeys.length; componentIndex < componentLen; componentIndex++) {
+            const componentKey = componentKeys[componentIndex];
+            const component = components[componentKey];
+            const compiledPath = path.resolve(__dirname + '/../src/compiled' + component.compiledPath);
+
+            let componentExports = '';
+
+            ensureDirectoryExistence(compiledPath + '/component_compiled.jsx');
+
+            fs.writeFileSync(compiledPath + '/component_compiled.jsx', componentExports, {flag: 'w+'});
+        }
+
+        /*
+
+        var componentExports = '';
+
+        var componentKeys = Object.keys(components);
+        for (var i = 0, len = componentKeys.length; i < len; i++) {
         var componentKey = componentKeys[i];
         var component = components[componentKey];
         var indexPath = component.filePath + '/index.js';
@@ -111,35 +155,21 @@ function compileExports(themeName, includeExamples) {
         var componentExport = '';
 
         if (component.hasExample || component.hasComponent) {
-            componentIndex += 'import wrapper from \'utility/wrapper.jsx\';\n';
-        }
-
-        if (component.hasComponent) {
-            componentIndex += 'import unwrappedComponent from \'./component.jsx\';\n';
-            componentIndex += 'const wrappedComponent = wrapper(unwrappedComponent(\'' + componentKey + '\'));\n\n'
-
-            if (componentExport !== '') {
-                componentExport += ', ';
-            }
-            componentExport += 'wrappedComponent as default';
+        componentIndex += 'import wrapper from \'utility/wrapper.jsx\';\n';
         }
 
         if (component.hasExample) {
-            componentIndex += 'import example from \'./example.jsx\';\n\n';
-
-            if (componentExport !== '') {
-                componentExport += ', ';
-            }
-            componentExport += 'example as example';
+        componentExports += 'export ' + componentKey + '_Example from \'' + component.filePath + '/example.jsx\';\n';
         }
 
-        if (component.hasStyle) {
-            componentIndex += 'import style from \'./style.js\';\n\n';
+        if (component.hasComponent) {
+        componentIndex += 'import unwrappedComponent from \'./component.jsx\';\n';
+        componentIndex += 'const wrappedComponent = wrapper(unwrappedComponent(\'' + componentKey + '\'));\n\n'
 
-            if (componentExport !== '') {
-                componentExport += ', ';
-            }
-            componentExport += 'style as style';
+        if (componentExport !== '') {
+        componentExport += ', ';
+        }
+        componentExport += 'wrappedComponent as default';
         }
 
         componentIndex += 'export { ' + componentExport + ' };\n';
@@ -147,51 +177,30 @@ function compileExports(themeName, includeExamples) {
 
 
         if (fs.exists(indexPath)) {
-            var componentIndexOld = fs.readFileSync(indexPath);
+        var componentIndexOld = fs.readFileSync(indexPath);
         } else {
-            var componentIndexOld = null;
+        var componentIndexOld = null;
         }
 
         if (componentIndex !== componentIndexOld) {
-            fs.writeFileSync(indexPath, componentIndex);
+        fs.writeFileSync(indexPath, componentIndex);
         }
 
-    }
+        }
 
-    var componentExportsOld = fs.readFileSync(utilityBase + '/components.js');
-    if (componentExportsOld != componentExports) {
+        componentExports += 'import Styler from \'' + utilityBase + '/styler.js\';\n';
+        componentExports += 'window.Styler = window.Styler || Styler;\n';
+        componentExports += 'import theme from \'' + themePath + '/theme.js\';\n'
+        componentExports += 'window.Styler.addLibrary(\'root\', \'peapod\', {}, null, theme.sheet);\n';
+
+        var componentExportsOld = fs.readFileSync(utilityBase + '/components.js');
+        if (componentExportsOld != componentExports) {
         fs.writeFileSync(utilityBase + '/components.js', componentExports);
         console.log('wrote updated compontents file');
+        }
+        */
     }
 }
 
-MyPlugin.prototype.apply = function(compiler) {
-    compiler.plugin("compile", function(params) {
-        console.log("The compiler is starting to compile...");
 
-        compileExports('peapod', true);
-    });
-
-    compiler.plugin("compilation", function(compilation) {
-        console.log("The compiler is starting a new compilation...");
-
-        compilation.plugin("optimize", function() {
-            console.log("The compilation is starting to optimize files...");
-        });
-
-        compilation.plugin('optimize-chunks', function(chunks) {
-            //unless you specified multiple entries in your config
-            //there's only one chunk at this point
-            chunks.forEach(function (chunk) {
-                //chunks have circular references to their modules
-            });
-        });
-    });
-
-    compiler.plugin("emit", function(compilation, callback) {
-        console.log("The compilation is going to emit files...");
-        callback();
-    });
-};
-
-module.exports = MyPlugin;
+module.exports = compileExports;

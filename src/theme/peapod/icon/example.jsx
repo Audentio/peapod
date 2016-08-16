@@ -4,13 +4,17 @@ import PureRender from 'utility/pureRender.js';
 
 import Pod_Vars from 'utility/vars.js';
 
-const colorPalette = Pod_Vars.get('palette');
+//const colorPalette = Pod_Vars.get('palette');
+const colorPalette = '';
 const colorKeys = Object.keys(colorPalette);
 const numColors = colorKeys.length;
 
 const randomColor = function () {
     const index = Math.floor((Math.random() * numColors));
-    return colorPalette[colorKeys[index]];
+    if (typeof(colorPalette) !== 'undefined') {
+        return colorPalette[colorKeys[index]];
+    }
+    return 'red';
 };
 
 module.exports = class IconExample extends React.Component {
