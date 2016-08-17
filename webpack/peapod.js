@@ -123,6 +123,17 @@ function compileExports() {
 
         const componentKeys = Object.keys(components);
 
+        let themeExport = `import { Sheet } from 'utility/stylesheet.js'
+let themesheet = new Sheet('peapod');`;
+        for (let themeVarIndex = 0, themeVarLen = themes.length; themeVarIndex < themeVarLen; themeVarIndex++) {
+            themeExport += `import theme_${themeVarIndex} from '${themes[themeVarIndex].themePath}/theme.js';
+themesheet = theme_${themeVarIndex}(themesheet);\n\n`;
+        }
+        themeExport += 'export default themesheet;'
+
+        fs.writeFileSync(utilityPath + '/themes.js', themeExport, {flag: 'w+'});
+
+
         let componentUtilityExport = '';
         let exampleUtilityExport = '';
 
@@ -135,14 +146,7 @@ function compileExports() {
 
             let componentExports = `const componentName = '${componentKey}';
 import { Sheet } from 'utility/stylesheet.js';
-let themesheet = new Sheet('peapod');
 let stylesheet = new Sheet(componentName);\n\n`;
-
-            for (let themeVarIndex = 0, themeVarLen = themes.length; themeVarIndex < themeVarLen; themeVarIndex++) {
-                componentExports += `import theme_${themeVarIndex} from '${themes[themeVarIndex].themePath}/theme.js';
-themesheet = theme_${themeVarIndex}(themesheet);\n\n`;
-            }
-
 
             for (let styleIndex = 0, styleLen = component.stylePaths.length; styleIndex < styleLen; styleIndex++) {
                 componentExports += `import sheet_${styleIndex} from '${component.stylePaths[styleIndex]}';
@@ -156,7 +160,7 @@ import sourceComponent from '${component.componentPath}';
 let component = null;
 
 if (typeof(sourceComponent) === 'function') {
-    component = wrapper(sourceComponent(componentName), stylesheet, themesheet);
+    component = wrapper(sourceComponent(componentName), stylesheet);
     if (typeof(component) === 'undefined') {
         throw new Error(componentName + ' is not returning or is returning undefined');
     }

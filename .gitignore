@@ -102,3 +102,4 @@ src/compiled
 
 src/utility/components.js
 src/utility/examples.js
+src/utility/themes.js
