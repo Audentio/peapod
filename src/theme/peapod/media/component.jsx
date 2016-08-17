@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Block, Heading, Photo } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -36,11 +36,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const image = (typeof this.props.figure === 'string') ? <Photo src={this.props.figure} /> : this.props.figure;
         const figure = (this.props.figure) ? (
-            <Block align={this.props.align} styler={{ mainStyle: style.figure }}>
+            <Block align={this.props.align} styler={{ mainStyle: classes.style.figure }}>
                 {image}
             </Block>
         ) : '';
@@ -52,9 +52,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const title = (this.props.title) ? titleContents : '';
 
         return (
-            <Block styler={{ mainStyle: style.main }}>
+            <Block styler={{ mainStyle: classes.style.main }}>
                 {figureLeft}
-                <Block styler={{ mainStyle: style.content }}>
+                <Block styler={{ mainStyle: classes.style.content }}>
                     {title}
                     {this.props.children}
                 </Block>

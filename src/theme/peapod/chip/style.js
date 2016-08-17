@@ -54,9 +54,9 @@ module.exports = function (sheet) {
                 textAlign: 'center',
                 float: 'right',
                 marginLeft: component.innerMargins,
-                marginRight: (0 - half(component.innerMargins)),
+                marginRight: (0 - half(component.innerMargins)) + 'px',
                 marginTop: component.innerMargins,
-                borderRadius: half(component.height),
+                borderRadius: half(component.height) + 'px',
                 cursor: 'pointer',
 
                 ':hover': {
@@ -76,9 +76,9 @@ module.exports = function (sheet) {
             common: {
                 height: component.height,
                 width: component.height,
-                borderRadius: half(component.height),
+                borderRadius: half(component.height) + 'px',
                 float: 'left',
-                marginLeft: (0 - parseFloat(component.paddingLeftRight)),
+                marginLeft: (0 - parseFloat(component.paddingLeftRight)) + 'px',
                 marginRight: component.innerMargins,
             },
         });

@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Heading, Paragraph, Code, Code_Block } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 import Pod_Helper from 'utility/helper.js'; // eslint-disable-line
 
@@ -74,48 +74,48 @@ pass
 ... prompt'''`;
 
 const codeExample__jsx =
-`<Pod.ContentWrap>
+`<ContentWrap>
 
-    <Pod.Heading kind="h4">Inline code</Pod.Heading>
-    <Pod.Paragraph>
-        Here is some <Pod.Code>Inline code</Pod.Code> and some text.
-    </Pod.Paragraph>
+    <Heading kind="h4">Inline code</Heading>
+    <Paragraph>
+        Here is some <Code>Inline code</Code> and some text.
+    </Paragraph>
 
-    <Pod.Heading kind="h4">Code Block</Pod.Heading>
-    <Pod.Paragraph>
+    <Heading kind="h4">Code Block</Heading>
+    <Paragraph>
         Language is auto-detected. Can be explicity defined as well
-    </Pod.Paragraph>
-    <Pod.Code_Block label="Javascript">{codeExample__javascript}</Pod.Code_Block>
-    <Pod.Code_Block label>{codeExample__html}</Pod.Code_Block>
-    <Pod.Code_Block label>{codeExample__css}</Pod.Code_Block>
-    <Pod.Code_Block label>{codeExample__cpp}</Pod.Code_Block>
-    <Pod.Code_Block label>{codeExample__python}</Pod.Code_Block>
+    </Paragraph>
+    <Code_Block label="Javascript">{codeExample__javascript}</Code_Block>
+    <Code_Block label>{codeExample__html}</Code_Block>
+    <Code_Block label>{codeExample__css}</Code_Block>
+    <Code_Block label>{codeExample__cpp}</Code_Block>
+    <Code_Block label>{codeExample__python}</Code_Block>
 
-</Pod.ContentWrap>`;
+</ContentWrap>`;
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class CodeExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Heading kind="h4">Inline code</Pod.Heading>
-                <Pod.Paragraph>
-                    Here is some <Pod.Code>Inline code</Pod.Code> and some text.
-                </Pod.Paragraph>
+            <ContentWrap>
+                <Heading kind="h4">Inline code</Heading>
+                <Paragraph>
+                    Here is some <Code>Inline code</Code> and some text.
+                </Paragraph>
 
-                <Pod.Heading kind="h4">Code Block</Pod.Heading>
-                <Pod.Paragraph>
+                <Heading kind="h4">Code Block</Heading>
+                <Paragraph>
                     Language is auto-detected (Can also be explicity defined).
-                </Pod.Paragraph>
-                <Pod.Code_Block label>{codeExample__javascript}</Pod.Code_Block>
-                <Pod.Code_Block label="JSX markup">{codeExample__jsx}</Pod.Code_Block>
-                <Pod.Code_Block label>{codeExample__css}</Pod.Code_Block>
-                <Pod.Code_Block label>{codeExample__cpp}</Pod.Code_Block>
-                <Pod.Code_Block label>{codeExample__python}</Pod.Code_Block>
+                </Paragraph>
+                <Code_Block label>{codeExample__javascript}</Code_Block>
+                <Code_Block label="JSX markup">{codeExample__jsx}</Code_Block>
+                <Code_Block label>{codeExample__css}</Code_Block>
+                <Code_Block label>{codeExample__cpp}</Code_Block>
+                <Code_Block label>{codeExample__python}</Code_Block>
 
-            </Pod.ContentWrap>
+            </ContentWrap>
         );
     }
 

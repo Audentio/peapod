@@ -59,9 +59,9 @@ module.exports = function (sheet) {
         .addSelector({
             condition: 'sizeSet',
             common: {
-                width: 'getStyler:size',
-                height: 'getStyler:size',
-                fontSize: 'getStyler:size',
+                width: (obj) => (obj.styler.size),
+                height: (obj) => (obj.styler.size),
+                fontSize: (obj) => (obj.styler.size),
             },
         })
         .addSelector({
@@ -107,7 +107,7 @@ module.exports = function (sheet) {
         }).addSelector({
             condition: 'strokeSet',
             common: {
-                borderWidth: 'getStyler:stroke',
+                borderWidth: (obj) => (obj.styler.stroke),
             },
         });
 
@@ -139,7 +139,7 @@ module.exports = function (sheet) {
         .addSelector({
             condition: 'strokeSet',
             common: {
-                borderWidth: 'getStyler:stroke',
+                borderWidth: (obj) => (obj.styler.stroke),
             },
         })
         .addSelector({

@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Stepper_StepTitle, Button } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -79,7 +79,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const stepCount = this.props.children.length;
 
@@ -109,7 +109,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             );
 
             if ((i + 1) !== stepCount) {
-                steps.push(<div key={`line-${i}`} style={style.stepLine}></div>);
+                steps.push(<div key={`line-${i}`} className={classes.stepLine}></div>);
             }
 
             if (thisChild.props.validation && thisChild.props.validation() === false) {
@@ -132,9 +132,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         /* should not be inline styles */
         const stepHeader = (!this.props.hideSteps) ? (
             <div style={{ position: 'relative', background: '#fff', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                <div style={style.progress}></div>
+                <div className={classes.progress}></div>
 
-                <div style={style.steps}>
+                <div className={classes.steps}>
                     {steps}
                 </div>
             </div>
@@ -143,12 +143,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const child = (this.props.singleForm) ? children : children[this.state.active];
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {stepHeader}
 
-                <div style={style.animate}>{child}</div>
+                <div className={classes.animate}>{child}</div>
 
-                {this.props.actionBar || (<div style={style.actionBar}>
+                {this.props.actionBar || (<div className={classes.actionBar}>
                     <Button label="Back" styler={{ dialog: true, disabled: this.state.active === 0 }} onClick={this.goToBackStep} />
 
                     <div style={{ float: 'right' }}>

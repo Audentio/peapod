@@ -1,16 +1,16 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Footer } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class FooterExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Footer>HTML Footer Element</Pod.Footer>
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <Footer>HTML Footer Element</Footer>
+            </ContentWrap>
         );
     }
 

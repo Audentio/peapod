@@ -14,6 +14,7 @@ module.exports = function (sheet) {
     sheet.addCondition('hasSubTitle').addFunction(instance => !instance.props.validation || instance.props.subtitle);
     sheet.addCondition('positionBelow').addProp({ below: true });
     sheet.addCondition('notClickable').addProp({ clickable: false });
+    sheet.addCondition('activeStep').addProp({active: true});
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {};
@@ -96,8 +97,8 @@ module.exports = function (sheet) {
             common: {
                 cursor: 'not-allowed',
             },
-        });
-        activestep.addSelector({
+        }).addSelector({
+            condition: 'activeStep',
             common: {
                 background: theme.palette.blue400,
                 ':hover': {

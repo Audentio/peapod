@@ -5,7 +5,7 @@
 
 import React, { PropTypes } from 'react';
 import Pod_Helper from 'utility/helper.js';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 
 /**
@@ -41,12 +41,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
-        const mergedStyle = Object.assign({}, style.main, this.props.style);
-        const { label, children, styler, ...otherprops } = this.props; // eslint-disable-line no-unused-vars
+        const classes = Styler.getClasses(this);
+        // const mergedStyle = Object.assign({}, style.main, this.props.style);
+        const { label, children } = this.props;
 
         return (
-            <i {...otherprops} className="material-icons" aria-label={label} title={label} style={mergedStyle}>
+            <i {...this.props} className={`material-icons ${classes.main}`} aria-label={label} title={label}>
                 {children}
             </i>
         );

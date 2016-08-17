@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -20,7 +20,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        var style = Pod_Styler.getStyle(this);
+        var classes = Styler.getClasses(this);
         var children = (this.state.show) ? this.props.children : '';
 
 
@@ -30,7 +30,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 onMouseLeave={this.mouseLeave.bind(this)}
                 >
                 {this.props.trigger}
-                <div style={style.main}>
+                <div className={classes.main}>
                     {children}
                 </div>
             </div>

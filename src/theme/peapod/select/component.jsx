@@ -5,7 +5,7 @@
 */
 
 import React, { PropTypes, Component } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Button, Menu, Icon } from 'utility/components.js';
 
 /* SELECT component */
@@ -39,7 +39,7 @@ module.exports = componentName => class Pod_Component extends Component {
 
     createOptions(current = {}) {
         const options = [];
-        const style = Pod_Styler.getStyle(this);
+        const style = Styler.getStyle(this);
 
         this.props.children.forEach(item => {
             const { children, value } = item.props;
@@ -101,20 +101,20 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const { menu, open, displayValue } = this.state;
 
         const trigger = (
-            <div style={style.trigger} onClick={this.toggle}>
+            <div className={classes.trigger} onClick={this.toggle}>
                 {displayValue}
-                <Icon style={style.triggerIcon}>{open ? 'arrow_drop_up' : 'arrow_drop_down'}</Icon>
+                <Icon style={classes.style.triggerIcon}>{open ? 'arrow_drop_up' : 'arrow_drop_down'}</Icon>
             </div>
         );
 
         return (
-            <div style={style.main} ref="main">
+            <div className={classes.main} ref="main">
                 {trigger}
-                {open && <Menu styler={{ style: style.menu }} json={menu} />}
+                {open && <Menu styler={{ style: classes.style.menu }} json={menu} />}
             </div>
         );
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import moment from 'moment-timezone';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -11,11 +11,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const date = new Date(this.props.date);
 
         return (
-            <li style={style.main}>
+            <li className={classes.main}>
                 {/* {date.toLocaleDateString(window.navigator.language, { weekday: 'narrow' })}*/}
                 {date}
             </li>

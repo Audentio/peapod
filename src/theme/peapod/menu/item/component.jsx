@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Button, Anchor } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
@@ -29,11 +29,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const { kind, type, dialog, dense, href, textstyle, children, subtext: subtextProp, ...otherprops } = this.props;
 
-        let subtext = (subtextProp) ? (<span style={style.subtext}>{subtextProp}</span>) : '';
+        let subtext = (subtextProp) ? (<span className={classes.subtext}>{subtextProp}</span>) : '';
 
         let returned;
 
@@ -46,7 +46,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         type: this.props.type || 'text',
                         dialog: this.props.dialog || false,
                         dense: this.props.dense || false,
-                        style: style.button,
+                        style: classes.style.button,
                     }}
                 >
                     {children}
@@ -61,7 +61,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         type: this.props.type || 'text',
                         dialog: this.props.dialog || false,
                         dense: this.props.dense || false,
-                        style: style.button,
+                        style: classes.style.button,
                     }}
                 >
                     {children}
@@ -69,15 +69,15 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 </Button>
             );
         } else if (href) {
-            returned = (<div style={style.main}>
-                <Anchor to={href} styler={{ style: style.anchor }}>
+            returned = (<div className={classes.main}>
+                <Anchor to={href} styler={{ style: classes.style.anchor }}>
                     {children}
                     {subtext}
                 </Anchor>
             </div>);
         } else {
             returned = (
-                <div style={style.main} {...otherprops}>
+                <div className={classes.main} {...otherprops}>
                     {children}
                     {subtext}
                 </div>

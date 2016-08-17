@@ -5,7 +5,7 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends Component {
 
@@ -35,7 +35,7 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getStyle(this);
         const { trigger, children } = this.props;
         const { visible } = this.state;
 
@@ -46,8 +46,8 @@ module.exports = componentName => class Pod_Component extends Component {
         }
 
         return (
-            <div style={style.main}>
-                <div style={style.trigger} onClick={this.toggle}>{toggler}</div>
+            <div className={classes.main}>
+                <div className={classes.trigger} onClick={this.toggle}>{toggler}</div>
                 {visible && children}
             </div>
         );

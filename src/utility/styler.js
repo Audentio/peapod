@@ -3,190 +3,35 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import _merge from 'lodash/merge';
 import _isEqual from 'lodash/isEqual';
 import { Style, Sheet } from './stylesheet.js';
 import Logger from './logger.js';
+import emoji from './emoji.js';
 
-window.Pod_Styler = window.Pod_Styler || {
-    libraries: [],
-    currentLibrary: 'peapod',
-    enableCache: false,
+window.Styler = window.Styler || {
+    enableCache: true,
     enableVarCache: true,
     cache: {},
     varCache: {},
-    maxCacheLength: 50,
-    stack: null,
+    maxCacheLength: 5000,
+    classCount: 0,
+    styleRootEle: null,
 
-    removeLibrary(libraryName) {
-        window.Pod_Styler.stack = null; // force recalculation of library stack;
-        for (let i = 0, len = window.Pod_Styler.libraries.length; i < len; i++) {
-            const library = window.Pod_Styler.libraries[i];
-            if (library.name === libraryName) {
-                Logger.log(`Removing Library: ${libraryName}`);
-                window.Pod_Styler.libraries.splice(i, 1);
-                len = len - 1;
-                i = i - 1;
-            }
-        }
-    },
-
-    // registers a library
-    addLibrary(parentName, libraryName, componentFiles, requireFunc, globalSheet) {
-        window.Pod_Styler.stack = null; // force recalculation of library stack;
-        window.Pod_Styler.varCache = {}; // clear variable cache
-        window.Pod_Styler.removeLibrary(libraryName); // remove and previous styling from library
-        Logger.log(`Adding Library ${libraryName}`);
-
-        const globalVars = globalSheet.getValues();
-        const globalConditions = globalSheet.getConditions();
-
-        window.Pod_Vars.register(globalVars); // add global variables to variable resolution
-
-        const components = {};
-        const componentKeys = Object.keys(componentFiles);
-        for (let i = 0, len = componentKeys.length; i < len; i++) {
-            const componentName = componentKeys[i];
-            const stylesheet = requireFunc(componentFiles[componentName].fileName);
-            if (typeof(stylesheet) === 'function') {
-                const sheetStyle = stylesheet(new Sheet(componentName));
-
-                if (typeof(sheetStyle) === 'undefined') {
-                    throw new Error(`No Styling found for ${componentName}.  Does ${componentFiles[componentName].fileName} return 'sheet'?`);
-                } else {
-                    components[componentFiles[componentName].componentName] = sheetStyle; // get the stylesheet for any components in the current library
-                }
-            }
-        }
-
-        const library = {
-            parentName,
-            componentFiles,
-            components,
-            name: libraryName,
-            type: 'normal',
-            globalVars,
-            globalConditions,
-        };
-
-        window.Pod_Styler.libraries.push(library);
-    },
-
-    // changes the library in use, must be done after adding a child theme.
-    setLibrary(name) {
-        window.Pod_Styler.stack = null; // force recalculation of library stack;
-        window.Pod_Styler.currentLibrary = name;
-    },
-
-    // gets the stack of libraries
-    getLibrary(name) {
-        for (let i = 0, len = window.Pod_Styler.libraries.length; i < len; i++) {
-            const library = window.Pod_Styler.libraries[i];
-            if (library.name === name) return library;
-        }
-
-        throw new Error(`Could not find library named: ${name}`);
-    },
-
-    // creates an ordered array of libraries currently applied
-    getLibraryStack() {
-        if (window.Pod_Styler.stack !== null) {
-            return window.Pod_Styler.stack; // don't need to recalculate the stack;
-        }
-
-        let currentName = window.Pod_Styler.currentLibrary;
-        const stack = [];
-        let depth = 0;
-
-        while (currentName !== 'root' && depth <= 30) {
-            const library = window.Pod_Styler.getLibrary(currentName);
-            stack.unshift(library); // prepend
-            currentName = library.parentName;
-            depth = depth + 1;
-        }
-
-        // apply local styling at the bottom of the stack
-        stack.push({
-            type: 'local',
-            components: {},
-            name: '_local',
-        });
-        // apply pre local styling to very beginning of stack
-        stack.unshift({
-            type: 'local',
-            components: {},
-            name: '_preLocal',
-        });
-
-        if (depth >= 30) throw new Error('Maximum Library stack size reached.');
-
-        window.Pod_Styler.stack = stack;
-
-        return stack;
-    },
-
-    // collapses each active library into an array of parts and conditions specific to the component
     buildSources(obj) {
         const sources = [];
-        const libraries = window.Pod_Styler.getLibraryStack(); // currently applying libraries
-        let conditions = {}; // all conditions available to component
         const activeConditions = [];
         const parts = {}; // all parts available to component
         const componentName = obj.componentName;
         const scene = obj.scene; // scene applying to object
+        const libraries = ['preLocal', 'sheet', 'local'];
 
-        // get information from libraries about current component
-        for (let libraryIndex = 0, libraryLen = libraries.length; libraryIndex < libraryLen; libraryIndex++) {
-            const library = libraries[libraryIndex];
-            const globalConditions = library.globalConditions;
-            const component = library.components[componentName];
-
-            if (typeof(globalConditions) !== 'undefined') {
-                if (conditions === {}) {
-                    conditions = globalConditions;
-                } else {
-                    conditions = Object.assign({}, conditions, globalConditions); // merge in global conditions
-                }
-            }
-
-            if (typeof(component) !== 'undefined') {
-                const componentConditions = component.getConditions();
-                const part = component.getParts();
-                const partKeys = Object.keys(part);
-
-                // get all conditions for the component overwriting any defined in parents with those defined in children
-                if (conditions === {}) {
-                    conditions = componentConditions;
-                } else {
-                    conditions = Object.assign({}, conditions, componentConditions);
-                }
-
-                // get all parts for the component overwriting any defined in parents with those defined in children
-                for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
-                    const key = partKeys[partIndex];
-                    parts[key] = key;
-                }
-            }
-        }
-
-        // resolve global variables from each library
-        let globalVars = window.Pod_Vars.sources[0].common;
-        if (typeof(window.Pod_Vars.sources[0][scene]) !== 'undefined') {
-            globalVars = Object.assign({}, globalVars, window.Pod_Vars.sources[0][scene]);
-        }
-
-        let mergedSheet = {
-
-        };
-
-        // collapse styling from each active library
         for (let i = 0, len = libraries.length; i < len; i++) {
             const library = libraries[i];
             let source = null;
-            if (library.type === 'local') { // special libraries to add local inline styling
+            if (library !== 'sheet') { // special libraries to add local inline styling
                 const localStyle = {};
                 const partKeys = Object.keys(parts);
-                const suffix = (library.name === '_preLocal') ? 'Pre' : '';
+                const suffix = (library === 'preLocal') ? 'Pre' : '';
 
                 // get local styling for any parts
                 for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
@@ -208,31 +53,26 @@ window.Pod_Styler = window.Pod_Styler || {
                     activeConditions.push(JSON.stringify(localStyle)); // TODO more efficient way of creating unique condition
                 }
             } else { // styling from style.js
-                const sourceSheet = library.components[componentName];
-                if (sourceSheet !== null && typeof(sourceSheet) !== 'undefined') {
-                    let sheetVals = {};
-                    if (typeof(sourceSheet.resolveValues) === 'function' && !sourceSheet.variablesResolved) {
-                        sheetVals = sourceSheet.resolveValues(globalVars);
-                        sourceSheet.variablesResolved = true;
-                    }
+                if (typeof(obj.stylesheet) !== 'undefined') {
+                    const themesheet = window.Styler.initializeSheet(obj.themesheet, scene, true);
+                    const globalVars = themesheet.getValues(scene);
+                    const globalConditions = themesheet.getConditions();
+                    const localsheet = window.Styler.initializeSheet(obj.stylesheet, scene, false, globalVars);
+                    const localVars = localsheet.getValues(scene)[componentName];
+                    const localConditions = localsheet.getConditions();
+                    let allConditions = {};
 
-                    if (typeof(sourceSheet.resolveSceneValues) === 'function' && !sourceSheet.scenesResolved) {
-                        const sceneVals = sourceSheet.resolveSceneValues(sheetVals, globalVars);
-                        if (typeof(sceneVals[scene]) !== 'undefined') {
-                            if (sheetVals === {}) {
-                                sheetVals = sceneVals;
-                            } else {
-                                sheetVals = Object.assign({}, sheetVals, sceneVals);
-                            }
+                    if (typeof(globalConditions) === 'undefined') {
+                        allConditions = localConditions;
+                    } else {
+                        if (typeof(localConditions) === 'undefined') {
+                            allConditions = globalConditions;
+                        } else {
+                            allConditions = Object.assign({}, globalConditions, localConditions);
                         }
-                        sourceSheet.scenesResolved = true;
                     }
 
-                    sourceSheet.setValues(sheetVals, 'common'); // TODO fix this Kyler
-
-                    const localVars = window.Pod_Vars.sources[0].common[sourceSheet.name]; // TODO multiple scenes
-
-                    const sheetData = sourceSheet.getAllStyling(obj, scene, conditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+                    const sheetData = localsheet.getAllStyling(obj, scene, allConditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
                     source = sheetData.source;
 
                     for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
@@ -249,13 +89,59 @@ window.Pod_Styler = window.Pod_Styler || {
         return { sources, activeConditions };
     },
 
+    initializeSheet(sheet, scene, isTheme, globalVars) {
+        if (sheet !== null && typeof(sheet) !== 'undefined') {
+            let sheetVals = {};
+            if (typeof(sheet.resolveValues) === 'function' && true) {
+                sheetVals = sheet.resolveValues(globalVars);
+                sheet.variablesResolved = true;
+            }
+
+            if (typeof(sheet.resolveSceneValues) === 'function' && !sheet.scenesResolved) {
+                const sceneVals = sheet.resolveSceneValues(sheetVals, globalVars);
+                if (typeof(sceneVals[scene]) !== 'undefined') {
+                    if (sheetVals === {}) {
+                        sheetVals = sceneVals;
+                    } else {
+                        sheetVals = Object.assign({}, sheetVals, sceneVals);
+                    }
+                }
+                sheet.scenesResolved = true;
+            }
+
+            sheet.setValues(sheetVals, 'common', isTheme); // TODO fix this Kyler
+        }
+        return sheet;
+    },
+
+    getUniqueClassName() {
+        let ret = 'ERROR_GENERATING_CLASSNAME';
+
+        if (window.Styler.classCount > emoji.length) {
+            ret = emoji[Math.floor(window.Styler.classCount / emoji.length)] + emoji[window.Styler.classCount % emoji.length];
+        } else {
+            ret = emoji[window.Styler.classCount];
+        }
+        window.Styler.classCount++;
+
+        return ret;
+    },
+
     // make inline css from sources array
-    processSources(obj, sources) {
+    processSources(obj, sources, classRet) {
         const style = {};
+
+        if (classRet) {
+            style.style = {};
+        }
+
         const scene = obj.scene;
-        const componentName = obj.displayName;
+        const componentName = obj.componentName;
 
         // go through each source's styling
+
+        const styleKeyBase = window.Styler.getUniqueClassName();
+
         for (let sourceIndex = 0, sourceLen = sources.length; sourceIndex < sourceLen; sourceIndex++) {
             const source = sources[sourceIndex]; // source from buildSrouces
             const partKeys = Object.keys(source);
@@ -268,7 +154,7 @@ window.Pod_Styler = window.Pod_Styler || {
                     const ruleKeys = Object.keys(part);
                     for (let ruleIndex = 0, ruleLen = ruleKeys.length; ruleIndex < ruleLen; ruleIndex++) { // then through each property in the part
                         const ruleKey = ruleKeys[ruleIndex];
-                        const computedRuleKey = window.Pod_Styler.parseVariableValue(ruleKey, obj, scene, ''); // resolve variables in the property key
+                        const computedRuleKey = window.Styler.parseVariableValue(ruleKey, obj, scene, ''); // resolve variables in the property key
                         let computedVar = part[ruleKey];
 
                         if (typeof(computedVar) === 'object') { // merge style objects
@@ -276,7 +162,7 @@ window.Pod_Styler = window.Pod_Styler || {
 
                             for (let varIndex = 0, varLen = computedKeys.length; varIndex < varLen; varIndex++) { // then through each property in the rule
                                 const computedKey = computedKeys[varIndex];
-                                const resultVar = window.Pod_Styler.parseVariableValue(computedVar[computedKey], obj, scene, computedRuleKey); // resolve variables in the property
+                                const resultVar = window.Styler.parseVariableValue(computedVar[computedKey], obj, scene, computedRuleKey); // resolve variables in the property
 
                                 if (typeof(resultVar) === 'string') {
                                     if (resultVar.indexOf('!unset') === -1) {
@@ -299,7 +185,7 @@ window.Pod_Styler = window.Pod_Styler || {
                                 partStyle[computedRuleKey] = computedVar;
                             }
                         } else { // merge normal styliing
-                            const resultVar = window.Pod_Styler.parseVariableValue(computedVar, obj, scene, computedRuleKey);
+                            const resultVar = window.Styler.parseVariableValue(computedVar, obj, scene, computedRuleKey);
                             if (typeof(resultVar) === 'string') {
                                 if (typeof(partStyle[ruleKey]) === 'string' && partStyle[ruleKey].indexOf('!important') > -1) {
                                     if (resultVar.indexOf('!important') === -1) {
@@ -325,22 +211,36 @@ window.Pod_Styler = window.Pod_Styler || {
                     }
                 }
 
-                if (typeof(style[partKey]) === 'undefined') {
-                    style[partKey] = partStyle;
-                } else {
-                    style[partKey] = Object.assign(style[partKey], partStyle);
-                }
+                if (classRet === true) {
+                    style[partKey] = `${componentName}_${partKey}_${styleKeyBase}`;
 
-                style[partKey] = this.transform(style[partKey]);
+                    if (typeof(style.style[partKey]) === 'undefined') {
+                        style.style[partKey] = partStyle;
+                    } else {
+                        style.style[partKey] = Object.assign(style.style[partKey], partStyle);
+                    }
+                } else {
+                    if (typeof(style[partKey]) === 'undefined') {
+                        style[partKey] = partStyle;
+                    } else {
+                        style[partKey] = Object.assign(style[partKey], partStyle);
+                    }
+                }
             }
         }
 
         // remove any ! for important styling
-        const keys = Object.keys(style);
-        for (let i = 0, len = Object.keys(style).length; i < len; i++) {
+        const keys = (classRet === true) ? Object.keys(style.style) : Object.keys(style);
+        for (let i = 0, len = keys.length; i < len; i++) {
             const key = keys[i];
-            if (typeof(style[key]) === 'string') {
-                style[key] = style[key].replace('!', '');
+            if (classRet === true) {
+                if (typeof(style.style[key]) === 'string') {
+                    style.style[key] = style.style[key].replace('!', '');
+                }
+            } else {
+                if (typeof(style[key]) === 'string') {
+                    style[key] = style[key].replace('!', '');
+                }
             }
         }
 
@@ -360,7 +260,7 @@ window.Pod_Styler = window.Pod_Styler || {
         } else if (emptyLocalStyler) {
             styler = propsStyler;
         } else {
-            styler = _merge(propsStyler, localStyler);
+            styler = Object.assign({}, propsStyler, localStyler);
         }
         const componentName = styler.styleLike || instance.constructor.displayName; // name of the component
         const scene = styler.scene || 'normal';
@@ -371,6 +271,8 @@ window.Pod_Styler = window.Pod_Styler || {
             styler,
             componentName,
             scene,
+            themesheet: instance.themesheet,
+            stylesheet: instance.stylesheet,
         };
 
         return obj;
@@ -393,14 +295,88 @@ window.Pod_Styler = window.Pod_Styler || {
     addStyleToCache(obj, sources, style) {
         const componentName = obj.componentName;
 
-        if (typeof(window.Pod_Styler.cache[componentName]) === 'undefined') window.Pod_Styler.cache[componentName] = [];
+        if (typeof(window.Styler.cache[componentName]) === 'undefined') window.Styler.cache[componentName] = [];
 
-        const len = window.Pod_Styler.cache[componentName].length;
+        const cacheLen = window.Styler.cache[componentName].length;
 
-        if (len > window.Pod_Styler.maxCacheLength) window.Pod_Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
-        window.Pod_Styler.cache[componentName].push({ obj, sources, style });
+        if (cacheLen > window.Styler.maxCacheLength) window.Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
+        window.Styler.cache[componentName].push({ obj, sources, style });
+
+        const parts = Object.keys(style);
+
+        if (window.Styler.styleRootEle === null) {
+            const sheet = document.createElement('style');
+
+            sheet.id = 'Peapod_Style';
+
+            window.Styler.styleRootEle = sheet;
+
+            document.head.appendChild(sheet);
+        }
+
+        for (let i = 0, len = parts.length; i < len; i++) {
+            const key = parts[i];
+
+            if (key !== 'style') {
+                window.Styler.addToStylesheet(style[key], style.style[key], window.Styler.styleRootEle.sheet);
+            }
+        }
 
         return true;
+    },
+
+    addToStylesheet(classKey, styleObj, sheetEle) {
+        const pseudoSelectors = window.Styler.stringifyStyle(styleObj);
+
+        const pseudoKeys = Object.keys(pseudoSelectors);
+
+        if (pseudoSelectors._default !== '') {
+            sheetEle.insertRule(`html .${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first
+        }
+
+        for (let i = 0, len = pseudoKeys.length; i < len; i++) {
+            const pseudoKey = pseudoKeys[i];
+            if (pseudoKey === '_default') {
+                // don't add
+            } else if (pseudoKey.indexOf('@media') > -1) {
+                sheetEle.insertRule(`${pseudoKey} {html .${classKey} {${pseudoSelectors[pseudoKey]}} }\n`, sheetEle.cssRules.length);
+            } else if (pseudoKey.indexOf('@element') > -1) {
+                console.warn('Kyler, add in element queries');
+            } else {
+                sheetEle.insertRule(`html .${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
+            }
+        }
+    },
+
+    stringifyStyle(obj) {
+        const ret = {
+            _default: '',
+        };
+        const rules = Object.keys(obj);
+        for (let i = 0, len = rules.length; i < len; i++) {
+            const rule = rules[i];
+            if (typeof(obj[rule]) === 'object') {
+                const pseudoKeys = Object.keys(obj[rule]);
+                ret[rule] = '';
+                for (let pseudoIndex = 0, pseudoLen = pseudoKeys.length; pseudoIndex < pseudoLen; pseudoIndex++) {
+                    const pseudoRule = pseudoKeys[pseudoIndex];
+
+                    if (typeof(obj[rule][pseudoRule]) === 'number' && pseudoRule !== 'opacity' && pseudoRule !== 'font-weight') {
+                        ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}px; `;
+                    } else {
+                        ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}; `;
+                    }
+                }
+            } else {
+                if (typeof(obj[rule]) === 'number' && rule !== 'opacity' && rule !== 'font-weight') {
+                    ret._default += `${rule}: ${obj[rule]}px; `;
+                } else {
+                    ret._default += `${rule}: ${obj[rule]}; `;
+                }
+            }
+        }
+
+        return ret;
     },
 
     checkCacheEquality(sources, cacheVal) {
@@ -409,24 +385,41 @@ window.Pod_Styler = window.Pod_Styler || {
 
     // gets object of styling for parts of a component
     getStyle(instance, localStyler = {}) {
-        const obj = window.Pod_Styler.makeInstanceObj(instance, localStyler);
+        const obj = window.Styler.makeInstanceObj(instance, localStyler);
 
-        const sourcesAndConditions = window.Pod_Styler.buildSources(obj); // build sources from libraries for component
+        console.warn(`Using legacy styling in ${obj.componentName}.  This will be removed in the future`)
 
-        if (window.Pod_Styler.enableCache) { // use value from cache
+
+        const sourcesAndConditions = window.Styler.buildSources(obj); // build sources from libraries for component
+
+        if (window.Styler.enableCache) { // use value from cache
             const cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
             if (cacheVal !== false) {
                 return cacheVal;
             }
         }
 
-        const style = window.Pod_Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
+        const style = window.Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
 
-        style.classes = {};
-        style.classes.main = "test1"; // TODO not hardcode this
-        style.classes.rippleContainer = "test2";
+        return style;
+    },
 
-        if (window.Pod_Styler.enableCache) { // save to cache
+    // gets object of styling for parts of a component
+    getClasses(instance, localStyler = {}) {
+        const obj = window.Styler.makeInstanceObj(instance, localStyler);
+
+        const sourcesAndConditions = window.Styler.buildSources(obj); // build sources from libraries for component
+
+        if (window.Styler.enableCache) { // use value from cache
+            let cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
+            if (cacheVal !== false) {
+                return cacheVal;
+            }
+        }
+
+        const style = window.Styler.processSources(obj, sourcesAndConditions.sources, true); // built style from sources
+
+        if (window.Styler.enableCache) { // save to cache
             this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
         }
 
@@ -449,7 +442,7 @@ window.Pod_Styler = window.Pod_Styler || {
         }
 
         if (typeof(computedVar) === 'string') {
-            computedVar = window.Pod_Styler.processVariableString(computedVar, obj, scene);
+            computedVar = window.Styler.processVariableString(computedVar, obj, scene);
         }
         return computedVar;
     },
@@ -476,199 +469,11 @@ window.Pod_Styler = window.Pod_Styler || {
             } else {
                 computedVar = this.varCache[`${computedKey}_${scene}`]; // get variable from cache rather than parse string
             }
-        } else if (computedVar.indexOf('getProp:') > -1) {
-            computedVar = obj.props[computedVar.replace('getProp:', '')]; // get property from instance
-        } else if (computedVar.indexOf('getState:') > -1) {
-            computedVar = obj.state[computedVar.replace('getState:', '')]; // get state from instance
-        } else if (computedVar.indexOf('getStyler:') > -1) {
-            computedVar = obj.styler[computedVar.replace('getStyler:', '')]; // get styler from instance
-        } else if (computedVar.indexOf('getContext:') > -1) {
-            computedVar = obj.context[computedVar.replace('getContext:', '')]; // get context from instance
         }
+
         return computedVar;
-    },
-
-    // transforms 0 to be 0px
-    addUnit(val) {
-        if (val === 0 || val === '0') {
-            return '0px';
-        }
-        return val;
-    },
-
-    transformKeys(styles, key, splitStyle, keyAppend) {
-        for (let i = 0, len = keyAppend.length; i < len; i++) {
-            let appendKey = keyAppend[i];
-            if (typeof(appendKey) === 'object') {
-                appendKey = appendKey[0];
-            } else {
-                appendKey = key + appendKey;
-            }
-            styles[appendKey] = splitStyle[i];
-        }
-        delete styles[key];
-        return styles;
-    },
-
-    // spreads an array of attributes out to be 4 (used for Top, Right, Bottom, Left)
-    spreadToFour(splitStyle) {
-        const splitStyleLen = splitStyle.length;
-
-        if (splitStyleLen === 1) {
-            splitStyle.push(splitStyle[0]);
-            splitStyle.push(splitStyle[0]);
-            splitStyle.push(splitStyle[0]);
-        } else if (splitStyleLen === 2) {
-            splitStyle.push(splitStyle[0]);
-            splitStyle.push(splitStyle[1]);
-        } else if (splitStyleLen === 3) {
-            splitStyle.push(splitStyle[1]);
-        }
-        return splitStyle;
-    },
-
-    // splits style based on regular expression passed in
-    splitStyle(style, expression = / +/) {
-        const splitStyle = style.trim().split(expression);
-        const splitStyleLen = splitStyle.length;
-
-        for (let splitIndex = 0; splitIndex < splitStyleLen; splitIndex++) {
-            splitStyle[splitIndex] = this.addUnit(splitStyle[splitIndex]);
-        }
-
-        return splitStyle;
-    },
-
-    // transforms shorthand to longhand
-    transform(styles, depth = 0) {
-        let newStyles = styles;
-
-        if (typeof(styles) === 'object' && styles !== undefined && styles !== null) {
-            const keys = Object.keys(styles);
-            for (let keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
-                const key = keys[keyIndex];
-                const style = newStyles[key];
-                const styleType = typeof(style);
-
-                if (styleType === 'string') {
-                    if (['padding', 'margin'].indexOf(key) > -1) {
-                        let splitStyle = this.splitStyle(newStyles[key]);
-                        splitStyle = this.spreadToFour(splitStyle);
-
-                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Top', 'Right', 'Bottom', 'Left']);
-                    } else if (['borderWidth', 'borderColor', 'borderStyle'].indexOf(key) > -1) {
-                        let splitStyle = this.splitStyle(newStyles[key]);
-                        splitStyle = this.spreadToFour(splitStyle);
-                        if (key === 'borderWidth') {
-                            newStyles = this.transformKeys(newStyles, key, splitStyle, [['borderTopWidth'], ['borderRightWidth'], ['borderBottomWidth'], ['borderLeftWidth']]);
-                        } else if (key === 'borderColor') {
-                            newStyles = this.transformKeys(newStyles, key, splitStyle, [['borderTopColor'], ['borderRightColor'], ['borderBottomColor'], ['borderLeftColor']]);
-                        } else if (key === 'borderStyle') {
-                            newStyles = this.transformKeys(newStyles, key, splitStyle, [['borderTopStyle'], ['borderRightStyle'], ['borderBottomStyle'], ['borderLeftStyle']]);
-                        }
-                    } else if (['border', 'borderTop', 'borderRight', 'borderBottom', 'borderLeft'].indexOf(key) > -1) {
-                        const splitStyle = this.splitStyle(newStyles[key]);
-                        const splitStyleLen = splitStyle.length;
-
-                        if (splitStyleLen === 1) {
-                            splitStyle.unshift(window.Pod_Vars.get('border.width'));
-                            splitStyle.push(window.Pod_Vars.get('border.color'));
-                        } else if (splitStyleLen === 2) {
-                            splitStyle.push(window.Pod_Vars.get('border.color'));
-                        }
-
-                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Width', 'Style', 'Color']);
-                    } else if (key === 'borderRadius') {
-                        let splitStyle = this.splitStyle(newStyles[key]);
-                        splitStyle = this.spreadToFour(splitStyle);
-
-                        newStyles = this.transformKeys(newStyles, key, splitStyle, [['borderTopLeftRadius'], ['borderTopRightRadius'], ['borderBottomRightRadius'], ['borderBottomLeftRadius']]);
-                    } else if (key === 'font') {
-                        const splitStyle = this.splitStyle(newStyles[key]);
-
-                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Style', 'Weight', 'Size', ['lineHeight'], 'Family']);
-                    } else if (key === 'background') {
-                        const splitStyle = this.splitStyle(newStyles[key]);
-                        const splitStyleLen = splitStyle.length;
-
-                        if (splitStyleLen === 1) {
-                            newStyles.backgroundColor = splitStyle[0];
-                            delete newStyles.background;
-                        } else {
-                            newStyles = this.transformKeys(newStyles, key, splitStyle, ['Color', 'Image', 'Repeat', 'Attachment', 'Position']);
-                        }
-                    } else if (key === 'flex') {
-                        const splitStyle = this.splitStyle(newStyles[key]);
-
-                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Grow', 'Shrink', 'Basis']);
-                    } else if (key === 'transition') {
-                        const commaSplit = this.splitStyle(newStyles[key], /,/);
-                        const commaSplitLen = commaSplit.length;
-                        const transitionProperty = [];
-                        const transitionDuration = [];
-                        const transitionTiming = [];
-                        const transitionDelay = [];
-
-                        for (let commaIndex = 0; commaIndex < commaSplitLen; commaIndex++) {
-                            const transitionSplit = this.splitStyle(commaSplit[commaIndex]);
-                            const transitionSplitLen = transitionSplit.length;
-
-                            if (transitionSplitLen === 1) {
-                                transitionProperty.push('all');
-                                transitionDuration.push(transitionSplit[0]);
-                                transitionTiming.push('linear');
-                                transitionDelay.push('0s');
-                            } else if (transitionSplitLen === 2) {
-                                transitionProperty.push(transitionSplit[0]);
-                                transitionDuration.push(transitionSplit[1]);
-                                transitionTiming.push('linear');
-                                transitionDelay.push('0s');
-                            } else if (transitionSplitLen === 3) {
-                                transitionProperty.push(transitionSplit[0]);
-                                transitionDuration.push(transitionSplit[1]);
-                                transitionTiming.push(transitionSplit[2]);
-                                transitionDelay.push('0s');
-                            } else if (transitionSplitLen === 4) {
-                                transitionProperty.push(transitionSplit[0]);
-                                transitionDuration.push(transitionSplit[1]);
-                                transitionTiming.push(transitionSplit[2]);
-                                transitionDelay.push(transitionSplit[3]);
-                            }
-                        }
-
-                        const splitStyle = [];
-
-                        for (let commaIndex = 0; commaIndex < commaSplitLen; commaIndex++) {
-                            if (splitStyle.length === 0) {
-                                splitStyle.push(transitionProperty[commaIndex]);
-                                splitStyle.push(transitionDuration[commaIndex]);
-                                splitStyle.push(transitionTiming[commaIndex]);
-                                splitStyle.push(transitionDelay[commaIndex]);
-                            } else {
-                                splitStyle[0] = `${splitStyle[0]}, ${transitionProperty[commaIndex]}`;
-                                splitStyle[1] = `${splitStyle[1]}, ${transitionDuration[commaIndex]}`;
-                                splitStyle[2] = `${splitStyle[2]}, ${transitionTiming[commaIndex]}`;
-                                splitStyle[3] = `${splitStyle[3]}, ${transitionDelay[commaIndex]}`;
-                            }
-                        }
-
-                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Property', 'Duration', 'TimingFunction', 'Delay']);
-                    } else if (key === 'listStyle') {
-                        const splitStyle = this.splitStyle(newStyles[key]);
-
-                        newStyles = this.transformKeys(newStyles, key, splitStyle, ['Type', 'Position', 'Image']);
-                    } else {
-                        newStyles[key] = this.addUnit(style);
-                    }
-                } else if (styleType === 'object') {
-                    newStyles[key] = this.transform(style, depth + 1);
-                }
-            }
-        }
-
-        return newStyles;
     },
 
 };
 
-module.exports = window.Pod_Styler;
+module.exports = window.Styler;

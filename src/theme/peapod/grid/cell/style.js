@@ -29,15 +29,15 @@ module.exports = function (sheet) {
                 large: '1024',
                 xlarge: '1500',
             },
-            xsmall: '@media (minWidth: 1px)',
-            small: '@media (minWidth: 610px)',
-            medium: '@media (minWidth: 800px)',
-            large: '@media (minWidth: 1024px)',
-            xlarge: '@media (minWidth: 1500px)',
-            smallLt: '@media (maxWidth: 609px)',
-            mediumLt: '@media (maxWidth: 799px)',
-            largeLt: '@media (maxWidth: 1023px)',
-            xlargeLt: '@media (maxWidth: 1499px)',
+            xsmall: '@media (min-width: 1px)',
+            get small() { return `@media (min-width: ${component.breakpoints.small}px)`; },
+            get medium() { return `@media (min-width: ${component.breakpoints.medium}px)`; },
+            get large() { return `@media (min-width: ${component.breakpoints.large}px)`; },
+            get xlarge() { return `@media (min-width: ${component.breakpoints.xlarge}px)`; },
+            get smallLt() { return `@media (min-width: ${component.breakpoints.small - 1}px)`; },
+            get mediumLt() { return `@media (min-width: ${component.breakpoints.medium - 1}px)`; },
+            get largeLt() { return `@media (min-width: ${component.breakpoints.large - 1}px)`; },
+            get xlargeLt() { return `@media (min-width: ${component.breakpoints.xlarge - 1}px)`; },
         };
         return component;
     };
@@ -46,14 +46,14 @@ module.exports = function (sheet) {
         main.addSelector({
             condition: ['orderSet'],
             common: {
-                order: 'getStyler:order',
+                order: (obj) => (obj.styler.order),
             },
         });
 
         main.addSelector({
             condition: ['flexSet'],
             common: {
-                flex: 'getStyler:flex',
+                flex: (obj) => (obj.styler.flex),
             },
         });
 

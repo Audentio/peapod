@@ -3,6 +3,11 @@ import { render } from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
 import Perf from 'react-addons-perf';
 
+const measurePerf = process.env.measurePerf;
+
+if (measurePerf) Perf.start();
+
+/*
 import { Root } from 'utility/components.js';
 
 import Sections from './sections.jsx';
@@ -20,10 +25,6 @@ import fixedElems from './reducers';
 
 const store = createStore(fixedElems);
 
-const measurePerf = process.env.measurePerf;
-
-if (measurePerf) Perf.start();
-
 render((
     <Provider store={store}>
         <Root>
@@ -38,6 +39,17 @@ render((
             </Router>
         </Root>
     </Provider>
+), document.getElementById('mainContainer'));
+*/
+
+import { Button, DatePicker } from 'utility/examples.js';
+
+
+render((
+    <div>
+        <Button />
+        <DatePicker />
+    </div>
 ), document.getElementById('mainContainer'));
 
 if (measurePerf) {

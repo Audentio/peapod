@@ -7,7 +7,6 @@ import React from 'react';
 import Radium from 'radium';
 
 import {merge as _merge} from 'lodash'
-import Pod_Styler from 'utility/styler.js';
 
 /**
 * Animation wrapper: Add animation prop to components
@@ -56,7 +55,7 @@ var anim = {
 
 var Pod_animation = ComposedComponent => class extends React.Component {
 
-    static displayName = `${ComposedComponent.displayName}_Animation`;
+    //static displayName = `${ComposedComponent.displayName}_Animation`;
 
     componentWillMount() {
 

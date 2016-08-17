@@ -20,8 +20,8 @@ module.exports = function (sheet) {
         outer.addSelector({
             common: {
                 display: 'table-cell',
-                verticalAlign: 'getProp:valign',
-                textAlign: 'getProp:align',
+                verticalAlign: (obj) => (obj.props.valign || 'middle'),
+                textAlign: (obj) => (obj.props.align || 'center'),
             },
         });
 

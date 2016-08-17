@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Breadcrump } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class BreadcrumbExample extends React.Component {
@@ -8,11 +8,9 @@ module.exports = class BreadcrumbExample extends React.Component {
 
     render() {
         return (
-            <div>
-                <Pod.ContentWrap>
-                    <Pod.Breadcrumb children={['Home', 'Forums', 'Subforums', 'Best way to handle these?']}></Pod.Breadcrumb>
-                </Pod.ContentWrap>
-            </div>
+            <ContentWrap>
+                <Breadcrumb children={['Home', 'Forums', 'Subforums', 'Best way to handle these?']}></Breadcrumb>
+            </ContentWrap>
         );
     }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -24,7 +24,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         let date = this.props.date;
 
@@ -34,6 +34,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
             date = '';
         }
 
-        return (<li onClick={this.print} style={style.main}>{date}</li>);
+        return (<li onClick={this.print} className={classes.main}>{date}</li>);
     }
 };

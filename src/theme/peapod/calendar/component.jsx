@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Calendar_MonthBar, Calendar_Grid } from 'utility/components.js';
 import Pod_Helper from 'utility/helper';
 
@@ -75,7 +75,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const activeDay = new Date(this.state.year, this.state.month, this.state.date);
 
@@ -91,10 +91,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const nextYear = dayAfter.getFullYear();
 
         return (
-            <div style={style.main}>
-                <div style={style.dateBar}>
-                    <div style={style.year}>{this.state.today.getFullYear()}</div>
-                    <div style={style.date}>{this.state.momentLoaded ? window.moment(this.state.today).format('Do, MMMM') : null}</div>
+            <div className={classes.main}>
+                <div className={classes.dateBar}>
+                    <div className={classes.year}>{this.state.today.getFullYear()}</div>
+                    <div className={classes.date}>{this.state.momentLoaded ? window.moment(this.state.today).format('Do, MMMM') : null}</div>
                 </div>
                 <Calendar_MonthBar
                     // get these down

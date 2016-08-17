@@ -7,8 +7,8 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
-import Pod from 'utility/components.js';
+import Styler from 'utility/styler.js';
+import * as Pod from 'utility/components.js';
 
 /**
 * Json component
@@ -64,12 +64,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         let components;
 
         if (this.state.components.length > 1) {
             components = (
-                <div style={style.main}>
+                <div className={classes.main}>
                     {this.state.components}
                 </div>
             );

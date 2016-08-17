@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Card, Card_Section, Heading, Paragraph, Button, Photo, Icon } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class CardExample extends React.Component {
@@ -9,32 +9,32 @@ module.exports = class CardExample extends React.Component {
     render() {
         return (
             <div>
-                <Pod.ContentWrap>
-                    <Pod.Card
+                <ContentWrap>
+                    <Card
                         styler={{
                             style: {
                                 width: '350px',
                             },
                         }}
                     >
-                        <Pod.Card_Section
+                        <Card_Section
                             styler={{
                                 kind: 'media-section',
                             }}
                             mediaTitle={
                                 <div>
-                                    <Pod.Card_Section styler={{ kind: 'title-small' }}>
-                                        <Pod.Heading kind="h4" styler={{ secondary: true }}>Hello there</Pod.Heading>
-                                        <Pod.Paragraph styler={{ secondary: true }}>Lorem ipsum dolor sit</Pod.Paragraph>
-                                    </Pod.Card_Section>
-                                    <Pod.Card_Section styler={{ kind: 'action-bar' }}>
-                                        <Pod.Button label="Agree" />
-                                        <Pod.Button label="Disagree" />
-                                    </Pod.Card_Section>
+                                    <Card_Section styler={{ kind: 'title-small' }}>
+                                        <Heading kind="h4" styler={{ secondary: true }}>Hello there</Heading>
+                                        <Paragraph styler={{ secondary: true }}>Lorem ipsum dolor sit</Paragraph>
+                                    </Card_Section>
+                                    <Card_Section styler={{ kind: 'action-bar' }}>
+                                        <Button label="Agree" />
+                                        <Button label="Disagree" />
+                                    </Card_Section>
                                 </div>
                             }
                         >
-                            <Pod.Photo
+                            <Photo
                                 src="assets/media/image.png"
                                 styler={{
                                     style: {
@@ -42,27 +42,27 @@ module.exports = class CardExample extends React.Component {
                                     },
                                 }}
                             />
-                        </Pod.Card_Section>
-                    </Pod.Card>
+                        </Card_Section>
+                    </Card>
 
-                    <Pod.Card
+                    <Card
                         styler={{
                             style: {
                                 width: '350px',
                             },
                         }}
                     >
-                        <Pod.Card_Section>
-                            <Pod.Card_Section styler={{ kind: 'media-area' }}>
-                                <Pod.Photo src="assets/media/image.png" />
-                            </Pod.Card_Section>
-                            <Pod.Card_Section styler={{ kind: 'media-area-icons' }}>
-                                <Pod.Button
+                        <Card_Section>
+                            <Card_Section styler={{ kind: 'media-area' }}>
+                                <Photo src="assets/media/image.png" />
+                            </Card_Section>
+                            <Card_Section styler={{ kind: 'media-area-icons' }}>
+                                <Button
                                     styler={{
                                         type: 'icon',
                                     }}
                                     label={(
-                                        <Pod.Icon
+                                        <Icon
                                             styler={{
                                                 style: {
                                                     lineHeight: 'inherit',
@@ -70,14 +70,14 @@ module.exports = class CardExample extends React.Component {
                                             }}
                                         >
                                             favorite
-                                        </Pod.Icon>
+                                        </Icon>
                                     )}
                                 />
 
-                                <Pod.Button
+                                <Button
                                     styler={{ type: 'icon' }}
                                     label={(
-                                        <Pod.Icon
+                                        <Icon
                                             styler={{
                                                 style: {
                                                     lineHeight: 'inherit',
@@ -85,92 +85,92 @@ module.exports = class CardExample extends React.Component {
                                             }}
                                         >
                                             bookmark
-                                        </Pod.Icon>
+                                        </Icon>
                                     )}
                                 />
 
-                                <Pod.Button
+                                <Button
                                     styler={{ type: 'icon' }}
                                     label={(
-                                        <Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.Icon>
+                                        <Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Icon>
                                     )}
                                 />
-                            </Pod.Card_Section>
-                        </Pod.Card_Section>
-                    </Pod.Card>
+                            </Card_Section>
+                        </Card_Section>
+                    </Card>
 
-                    <Pod.Card
+                    <Card
                         styler={{
                             style: {
                                 width: '350px',
                             },
                         }}
                     >
-                        <Pod.Card_Section styler={{ kind: 'media-section' }}>
-                            <Pod.Photo src="assets/media/image.png" />
-                        </Pod.Card_Section>
+                        <Card_Section styler={{ kind: 'media-section' }}>
+                            <Photo src="assets/media/image.png" />
+                        </Card_Section>
 
-                        <Pod.Card_Section styler={{ kind: 'action-bar' }}>
-                            <Pod.Button
+                        <Card_Section styler={{ kind: 'action-bar' }}>
+                            <Button
                                 styler={{ type: 'icon' }}
                                 label={(
-                                    <Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.Icon>
+                                    <Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Icon>
                                 )}
                             />
 
-                            <Pod.Button
+                            <Button
                                 styler={{ type: 'icon' }}
                                 label={(
-                                    <Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Pod.Icon>
+                                    <Icon styler={{ style: { lineHeight: 'inherit' } }}>bookmark</Icon>
                                 )}
                             />
 
-                            <Pod.Button
+                            <Button
                                 styler={{ type: 'icon' }}
                                 label={(
-                                    <Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.Icon>
+                                    <Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Icon>
                                 )}
                             />
-                        </Pod.Card_Section>
-                    </Pod.Card>
+                        </Card_Section>
+                    </Card>
 
-                    <Pod.Card styler={{ style: { width: '350px' } }}>
-                        <Pod.Card_Section styler={{ kind: 'title-supports' }}>
-                            <Pod.Card_Section styler={{ kind: 'media', float: 'right' }}>
-                                <Pod.Photo src="assets/media/image.png" styler={{ style: { width: '100px' } }} />
-                            </Pod.Card_Section>
+                    <Card styler={{ style: { width: '350px' } }}>
+                        <Card_Section styler={{ kind: 'title-supports' }}>
+                            <Card_Section styler={{ kind: 'media', float: 'right' }}>
+                                <Photo src="assets/media/image.png" styler={{ style: { width: '100px' } }} />
+                            </Card_Section>
 
-                            <Pod.Heading kind="h5" styler={{ secondary: true }}>Hello there</Pod.Heading>
-                            <Pod.Paragraph styler={{ secondary: true }}>Lorem ipsum dolor sit</Pod.Paragraph>
-                        </Pod.Card_Section>
+                            <Heading kind="h5" styler={{ secondary: true }}>Hello there</Heading>
+                            <Paragraph styler={{ secondary: true }}>Lorem ipsum dolor sit</Paragraph>
+                        </Card_Section>
 
-                        <Pod.Card_Section styler={{ kind: 'action-bar' }}>
-                            <Pod.Button label="Agree" />
-                            <Pod.Button label="Disagree" />
-                        </Pod.Card_Section>
-                    </Pod.Card>
+                        <Card_Section styler={{ kind: 'action-bar' }}>
+                            <Button label="Agree" />
+                            <Button label="Disagree" />
+                        </Card_Section>
+                    </Card>
 
-                    <Pod.Card styler={{ style: { width: '350px' } }}>
-                        <Pod.Card_Section styler={{ kind: 'title-supports' }}>
+                    <Card styler={{ style: { width: '350px' } }}>
+                        <Card_Section styler={{ kind: 'title-supports' }}>
 
-                            <Pod.Heading kind="h5" styler={{ secondary: true }}>Hello there</Pod.Heading>
-                            <Pod.Paragraph styler={{ secondary: true }}>Lorem ipsum dolor sit</Pod.Paragraph>
-                        </Pod.Card_Section>
+                            <Heading kind="h5" styler={{ secondary: true }}>Hello there</Heading>
+                            <Paragraph styler={{ secondary: true }}>Lorem ipsum dolor sit</Paragraph>
+                        </Card_Section>
 
-                        <Pod.Card_Section>
-                            <Pod.Paragraph>
+                        <Card_Section>
+                            <Paragraph>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
                                 nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </Pod.Paragraph>
-                        </Pod.Card_Section>
+                            </Paragraph>
+                        </Card_Section>
 
-                        <Pod.Card_Section styler={{ kind: 'action-bar' }}>
-                            <Pod.Button label="Agree" />
-                            <Pod.Button label="Disagree" />
-                        </Pod.Card_Section>
-                    </Pod.Card>
+                        <Card_Section styler={{ kind: 'action-bar' }}>
+                            <Button label="Agree" />
+                            <Button label="Disagree" />
+                        </Card_Section>
+                    </Card>
 
-                    <Pod.Card
+                    <Card
                         styler={{
                             padded: true,
                             style: {
@@ -180,51 +180,51 @@ module.exports = class CardExample extends React.Component {
                         title="Simple Card"
                         actionBar={(
                             <div>
-                                <Pod.Button
+                                <Button
                                     styler={{ type: 'icon' }}
                                     label={(
-                                        <Pod.Icon styler={{ style: { lineHeight: 'inherit' } }} >
+                                        <Icon styler={{ style: { lineHeight: 'inherit' } }} >
                                             bookmark
-                                        </Pod.Icon>
+                                        </Icon>
                                     )}
                                 />
-                                <Pod.Button
+                                <Button
                                     styler={{ type: 'icon' }}
                                     label={(
-                                        <Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>
+                                        <Icon styler={{ style: { lineHeight: 'inherit' } }}>
                                             get_app
-                                        </Pod.Icon>
+                                        </Icon>
                                     )}
                                 />
                             </div>
                         )}
                     >
-                        <Pod.Photo src="assets/media/image.png" />
-                    </Pod.Card>
+                        <Photo src="assets/media/image.png" />
+                    </Card>
 
-                    <Pod.Card
+                    <Card
                         styler={{ style: { width: '350px' } }}
                         actionBar={(
                             <div>
-                                <Pod.Button
+                                <Button
                                     styler={{ type: 'icon' }}
                                     label={(
-                                        <Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Pod.Icon>
+                                        <Icon styler={{ style: { lineHeight: 'inherit' } }}>favorite</Icon>
                                     )}
                                 />
-                                <Pod.Button
+                                <Button
                                     styler={{ type: 'icon' }}
                                     label={(
-                                        <Pod.Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Pod.Icon>
+                                        <Icon styler={{ style: { lineHeight: 'inherit' } }}>get_app</Icon>
                                     )}
                                 />
                             </div>
                         )}
                     >
-                        <Pod.Photo src="assets/media/image.png" />
-                    </Pod.Card>
+                        <Photo src="assets/media/image.png" />
+                    </Card>
 
-                    <Pod.Card
+                    <Card
                         styler={{
                             padded: true,
                             style: {
@@ -234,18 +234,18 @@ module.exports = class CardExample extends React.Component {
                         title="Simple Card"
                         actionBar={(
                             <div>
-                                <Pod.Button label="Button" />
-                                <Pod.Button label="Another Button" />
+                                <Button label="Button" />
+                                <Button label="Another Button" />
                             </div>
                         )}
                     >
-                        <Pod.Paragraph>
+                        <Paragraph>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                             laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </Pod.Paragraph>
-                    </Pod.Card>
+                        </Paragraph>
+                    </Card>
 
-                    <Pod.Card
+                    <Card
                         styler={{
                             padded: true,
                             style: {
@@ -254,12 +254,12 @@ module.exports = class CardExample extends React.Component {
                         }}
                         title="Simple Card"
                     >
-                        <Pod.Paragraph>
+                        <Paragraph>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
                             irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </Pod.Paragraph>
-                    </Pod.Card>
-                </Pod.ContentWrap>
+                        </Paragraph>
+                    </Card>
+                </ContentWrap>
             </div>
         );
     }

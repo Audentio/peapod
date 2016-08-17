@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import Pod_Helper from 'utility/helper.js';
 import { Progress } from 'utility/components.js';
 
@@ -145,16 +145,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const hasDownloadProgress = (this.state.downloadProgress !== null) && !isNaN(this.state.downloadProgress);
 
         return (
-            <form style={style.form} ref="form" method={this.props.method} action={this.props.action} onSubmit={this.submit}>
-                <div style={style.main}>
+            <form className={classes.form} ref="form" method={this.props.method} action={this.props.action} onSubmit={this.submit}>
+                <div className={classes.main}>
                     {this.state.fields}
-                    {this.props.renderSubmit && <input type="submit" style={style.submit} />}
+                    {this.props.renderSubmit && <input type="submit" className={classes.submit} />}
                 </div>
-                <div style={style.overlay}>
+                <div className={classes.overlay}>
                     {hasDownloadProgress && <Progress value={this.state.downloadProgress} />}
                 </div>
             </form>

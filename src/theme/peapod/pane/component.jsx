@@ -6,7 +6,7 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -48,36 +48,36 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         width: -1,
                     };
 
-                    window.Pod_Panes.items[window.Pod_Panes.count] = item;
-                    window.Pod_Panes.count += 1;
+                    this.items[this.count] = item;
+                    this.count += 1;
                 },
 
                 remove(index) {
-                    delete window.Pod_Panes.items[index];
+                    delete this.items[index];
                 },
 
                 getAll() {
-                    for (let i = 0, len = Object.keys(window.Pod_Panes.items).length; i < len; i++) {
-                        window.Pod_Panes.items[i].width = window.Pod_Panes.items[i].get();
+                    for (let i = 0, len = Object.keys(this.items).length; i < len; i++) {
+                        this.items[i].width = this.items[i].get();
                     }
                 },
 
                 setAll() {
-                    for (let i = 0, len = Object.keys(window.Pod_Panes.items).length; i < len; i++) {
-                        window.Pod_Panes.items[i].set(window.Pod_Panes.items[i].width);
+                    for (let i = 0, len = Object.keys(this.items).length; i < len; i++) {
+                        this.items[i].set(this.items[i].width);
                     }
                 },
 
                 updateAll() {
-                    for (let i = 0, len = Object.keys(window.Pod_Panes.items).length; i < len; i++) {
-                        window.Pod_Panes.items[i].set(window.Pod_Panes.items[i].get());
+                    for (let i = 0, len = Object.keys(this.items).length; i < len; i++) {
+                        this.items[i].set(this.items[i].get());
                     }
                 },
             };
 
-            window.addEventListener('resize', window.Pod_Panes.updateAll);
+            window.addEventListener('resize', this.updateAll);
 
-            document.addEventListener('DOMContentLoaded', window.Pod_Panes.updateAll);
+            document.addEventListener('DOMContentLoaded', this.updateAll);
         }
 
         this.paneIndex = window.Pod_Panes.add(this.widthGet.bind(this), this.widthSet.bind(this));
@@ -111,10 +111,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const { styler, children, ...other } = this.props; // eslint-disable-line no-unused-vars
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         return (
-            <div {...other} style={style.main} ref="pane">
+            <div {...other} className={classes.main} ref="pane">
                 {this.props.children}
             </div>
         );

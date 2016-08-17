@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Portal, Button as Pod_Menu, Menu_Item } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -41,7 +41,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         let childrencomonents = this.props.children;
 
@@ -92,7 +92,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         // Allow showing of children for non portal menus
         let children = (this.state.show) ? (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {newChildren}
             </div>
         ) : '';
@@ -105,7 +105,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     closeOnOutsideClick
                     noArrow
                 >
-                    <div style={style.portal}>
+                    <div className={classes.portal}>
                         {newChildren}
                     </div>
                 </Portal>
@@ -113,7 +113,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         } else if (this.props.trigger) {
             returnedMenu = (
                 <div
-                    style={style.trigger}
+                    className={classes.trigger}
                     onMouseOver={() => {
                         if (!this.props.click) {
                             this.mouseEnter();
@@ -138,7 +138,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const orientation = this.props.orientation;
 
             returnedMenu = (
-                <div style={[style.container, style.main]}>
+                <div className={classes.main}>
                     {React.Children.map(this.props.children, (element) => React.cloneElement(element, { textstyle: this.props.style || 'button', orientation }))}
                 </div>
             );

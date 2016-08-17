@@ -5,7 +5,7 @@
 
 import React, { PropTypes } from 'react';
 // import moment from 'moment-timezone';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import Pod_Helper from 'utility/helper';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -205,13 +205,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         if (!this.state.loaded) return null;
-        
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
+
         const formattedTimestamp = this.format(this.timestamp, this.props.time);
         const timezone = (this.props.showTimezone && this.props.output === 'absolute') ? this.getTZdisplay() : null;
 
         return (
-            <span style={style.main} title={this.timestamp.format('MMMM Do YYYY, h:mm a')}>
+            <span className={classes.main} title={this.timestamp.format('MMMM Do YYYY, h:mm a')}>
                 {formattedTimestamp} {timezone}
             </span>
         );

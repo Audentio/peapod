@@ -7,7 +7,7 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 /**
 * ImageContainer component
@@ -22,17 +22,18 @@ module.exports = componentName => class Pod_Component extends React.Component {
         overlay: React.PropTypes.bool,
     }
 
-    render() {
-        const style = Pod_Styler.getStyle(this);
 
-        const overlay = (this.props.overlay) ? (<div style={style.overlay}></div>) : '';
+    render() {
+        const classes = Styler.getClasses(this);
+
+        const overlay = (this.props.overlay) ? (<div className={classes.overlay}></div>) : '';
 
         return (
-            <div style={style.main}>
-                <div style={style.background}></div>
-                <div style={style.innerscreen}>
+            <div className={classes.main}>
+                <div className={classes.background}></div>
+                <div className={classes.innerscreen}>
                     {overlay}
-                    <div style={style.scrollable}>
+                    <div className={classes.scrollable}>
                         {this.props.children}
                     </div>
                 </div>

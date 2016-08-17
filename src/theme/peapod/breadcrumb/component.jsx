@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Anchor } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -18,7 +18,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         let children = this.props.children;
 
@@ -31,14 +31,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const seperator = (i + 1 !== children.length) ? '/' : '';
             breadcrumbshtml.push(
                 <li key={i} style={{ display: 'inline' }}>
-                    <Anchor styler={{ style: style.listitem }}>{children[i]}</Anchor>
+                    <Anchor styler={{ style: classes.style.listitem }}>{children[i]}</Anchor>
                     {seperator}
                 </li>
             );
         }
 
         return (
-            <ul style={style.main}>
+            <ul className={classes.main}>
                 {breadcrumbshtml}
             </ul>
         );

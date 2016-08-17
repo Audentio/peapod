@@ -5,8 +5,8 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
-import Pod from 'utility/components.js';
+import Styler from 'utility/styler.js';
+import { Overlay } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -33,18 +33,18 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const modalBox = (
-            <div style={style.main} ref="content">
+            <div className={classes.main} ref="content">
                 {this.props.children}
             </div>
         );
 
         return (this.props.overlay) ? (
-            <Pod.Overlay onClick={this.overlayClick}>
+            <Overlay onClick={this.overlayClick}>
                 {modalBox}
-            </Pod.Overlay>
+            </Overlay>
         ) : modalBox;
     }
 };

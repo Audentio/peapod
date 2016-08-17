@@ -5,8 +5,8 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
-import Pod from 'utility/components.js';
+import Styler from 'utility/styler.js';
+import { Center } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -17,12 +17,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         return (
-            <div style={style.main} {...this.props}>
-                <Pod.Center>
+            <div className={classes.main} {...this.props}>
+                <Center>
                     {this.props.children}
-                </Pod.Center>
+                </Center>
             </div>
         );
     }

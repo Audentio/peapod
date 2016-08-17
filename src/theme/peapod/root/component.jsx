@@ -4,7 +4,6 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
 import { AppContainer } from 'react-hot-loader';
 
 
@@ -18,12 +17,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const { styler, children, ...other } = this.props;
-        const style = Pod_Styler.getStyle(this);
 
         return (
-            <div {...other} id="Peapod_Root" style={style.main}>
-                    {this.props.children}
-                </div>
+            <div {...other} id="Peapod_Root">
+                {this.props.children}
+            </div>
         );
     }
 };

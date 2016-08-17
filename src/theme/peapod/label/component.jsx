@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 import { Icon } from 'utility/components.js';
 
@@ -13,12 +13,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
-        const icon = (typeof(this.props.icon) !== 'undefined' && this.props.icon.length) ? <Icon styler={{ style: style.icon }}>{this.props.icon}</Icon> : null;
+        const icon = (typeof(this.props.icon) !== 'undefined' && this.props.icon.length) ? <Icon styler={{ style: classes.style.icon }}>{this.props.icon}</Icon> : null;
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {icon} {this.props.children}
             </div>
         );

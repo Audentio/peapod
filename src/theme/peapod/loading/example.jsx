@@ -1,7 +1,7 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Loading, Center, Button } from 'utility/components.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class LoadingExample extends React.Component {
 
     // Constructor
     constructor(props, context) {
@@ -47,20 +47,20 @@ module.exports = class AccordionExample extends React.Component {
         };
 
         return (
-            <Pod.ContentWrap>
-                <Pod.Loading
+            <ContentWrap>
+                <Loading
                     show={this.state.show}
                     value="0"
                     loaded={this.state.loaded}
                     loading={this.state.loading}
                 >
                     <div style={style}>
-                        <Pod.Center>
-                            <Pod.Button onClick={this.onClick}>Show Loading</Pod.Button>
-                        </Pod.Center>
+                        <Center>
+                            <Button onClick={this.onClick}>Show Loading</Button>
+                        </Center>
                     </div>
-                </Pod.Loading>
-            </Pod.ContentWrap>
+                </Loading>
+            </ContentWrap>
         );
     }
 

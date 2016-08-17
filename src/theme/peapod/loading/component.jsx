@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { CircularProgress, Center } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -79,11 +79,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const scale = (this.state.hasLoaded) ? 1 : 0.5;
         const setVal = (this.state.hasLoaded) ? this.state.loaded : this.state.defaultLoaded;
-        const rotateStyle = (this.state.hasLoaded) ? {} : style.rotate;
+        const rotateStyle = (this.state.hasLoaded) ? {} : classes.style.rotate;
 
         const unloaded = (
             <div style={rotateStyle}>
@@ -101,9 +101,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         let loadinghtml = unloaded;
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {this.props.children}
-                <div style={style.spinner}>
+                <div className={classes.spinner}>
                     <Center>
                         {loadinghtml}
                     </Center>

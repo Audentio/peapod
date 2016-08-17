@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Chip } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class ChipExample extends React.Component {
@@ -9,12 +9,12 @@ module.exports = class ChipExample extends React.Component {
     render() {
         return (
             <div>
-                <Pod.ContentWrap>
-                    <Pod.Chip>This is a Chip</Pod.Chip> &nbsp;
-                    <Pod.Chip deleteTrigger>Chip with Delete</Pod.Chip> &nbsp;
-                    <Pod.Chip photo="assets/media/profile@2x.jpg">Chip with Photo</Pod.Chip> &nbsp;
-                    <Pod.Chip deleteTrigger photo="assets/media/profile@2x.jpg">Chip with Delete & Photo</Pod.Chip> &nbsp;
-                </Pod.ContentWrap>
+                <ContentWrap>
+                    <Chip>This is a Chip</Chip> &nbsp;
+                    <Chip deleteTrigger>Chip with Delete</Chip> &nbsp;
+                    <Chip photo="assets/media/profile@2x.jpg">Chip with Photo</Chip> &nbsp;
+                    <Chip deleteTrigger photo="assets/media/profile@2x.jpg">Chip with Delete & Photo</Chip> &nbsp;
+                </ContentWrap>
             </div>
         );
     }

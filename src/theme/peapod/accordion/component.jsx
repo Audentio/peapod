@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Accordion_Section } from 'utility/components.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -32,7 +32,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         // const { styler, children, ...other } = this.props;
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const thisChildren = (this.props.children.length) ? this.props.children : [this.props.children];
 
@@ -55,7 +55,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         });
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
                 {children}
             </div>
         );

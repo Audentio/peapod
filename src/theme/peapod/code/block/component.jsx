@@ -5,7 +5,7 @@
 */
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import Pod_Helper from 'utility/helper.js';
 // import Highlightjs from 'highlight.js/lib/highlight.js';
 import PureRender from 'utility/pureRender.js';
@@ -47,13 +47,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const { label, children: code } = this.props;
 
         return (
-            <pre style={style.main}>
-                {label && <div ref="label" style={style.label}>{label}</div>}
-                <code ref="codeContainer" style={style.code}>{code}</code>
+            <pre className={classes.main}>
+                {label && <div ref="label" className={classes.label}>{label}</div>}
+                <code ref="codeContainer" className={classes.code}>{code}</code>
             </pre>
         );
     }

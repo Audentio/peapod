@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import PureRender from 'utility/pureRender.js';
 
 import { reduce as _reduce } from 'lodash';
@@ -22,7 +22,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle({ props: {
+        const classes = Styler.getClasses({ props: {
             styler: {
                 styleLike: 'Table_Inner',
                 header: true,
@@ -33,7 +33,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const columns = this.props.columns;
 
         return (
-            <div style={style.row}>
+            <div className={classes.row}>
                 {columns.map(
                     (column, i) => {
                         // apply any onEvent specified to cell

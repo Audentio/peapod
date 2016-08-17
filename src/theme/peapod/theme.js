@@ -27,7 +27,6 @@ if (color.className.indexOf('main') == -1) ret = ret + '\n' + camelize(newLine) 
 console.log(ret);
 */
 
-import { Sheet } from '../../utility/stylesheet.js';
 import Pod_Helper from '../../utility/helper.js';
 
 const themeName = 'peapod';
@@ -508,15 +507,10 @@ const globalVars = {
     },
 };
 
-const sheet = new Sheet(themeName);
+module.exports = function (sheet) {
+    sheet.resolveValues = (theme) => { // eslint-disable-line no-unused-vars
+        return globalVars;
+    };
 
-sheet.setValues(globalVars, '', true);
-
-const warnMissingExample = true;
-
-module.exports = {
-    themeName,
-    themeParent,
-    sheet,
-    warnMissingExample,
-};
+    return sheet;
+}

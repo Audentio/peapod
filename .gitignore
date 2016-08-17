@@ -97,3 +97,9 @@ examples/pages/tusharDev.jsx
 examples/pages/damionDev.jsx
 examples/pages/kylerDev.jsx
 examples/dll
+
+src/compiled
+
+src/utility/components.js
+src/utility/examples.js
+src/utility/themes.js

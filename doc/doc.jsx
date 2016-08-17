@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 // Peapod
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import Pod from 'utility/components.js';
 
 import Color from 'color';
@@ -52,7 +52,7 @@ const jsonDoc = function (obj, scene, key, depth = 0) {
         }
 
         if (typeof(rawStyle) === 'string' && rawStyle.length > 1) {
-            parsedVariable = Pod_Styler.parseVariableValue(rawStyle, { styler: {}, state: {}, props: {}, context: {} }, key);
+            parsedVariable = Styler.parseVariableValue(rawStyle, { styler: {}, state: {}, props: {}, context: {} }, key);
             if (parsedVariable !== rawStyle) {
                 if (typeof(parsedVariable) === 'object') {
                     throw new Error('Variable of type object.');
@@ -405,7 +405,7 @@ class ComponentDoc extends React.Component {
 
 class LibrariesDoc extends React.Component {
     doc() {
-        const libraries = Pod_Styler.getLibraryStack();
+        const libraries = Styler.getLibraryStack();
         const libraryResult = [];
         for (let i = 0, len = libraries.length; i < len; i++) {
             const library = libraries[i];

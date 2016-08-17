@@ -7,7 +7,7 @@
 
 // Dependencies
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 import { Icon, Divider } from 'utility/components.js';
 
@@ -30,7 +30,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         let image = '';
         let icon = '';
         let secondary = '';
@@ -46,21 +46,21 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
 
         if (this.props.image) {
-            image = (<div style={style.imageContainer}><img src={this.props.image} style={style.image} alt="" /></div>);
+            image = (<div className={classes.imageContainer}><img src={this.props.image} className={classes.image} alt="" /></div>);
         }
 
         if (this.props.icon) {
-            icon = (<Icon styler={{ style: style.icon }} onClick={this.props.onIconClick}>{this.props.icon}</Icon>);
+            icon = (<Icon styler={{ style: classes.style.icon }} onClick={this.props.onIconClick}>{this.props.icon}</Icon>);
         }
 
         if (this.props.secondary) {
-            secondary = (<div style={style.secondary}>{this.props.secondary}</div>);
+            secondary = (<div className={classes.secondary}>{this.props.secondary}</div>);
         }
 
         return (
             <div>
                 {icon}
-                <div style={style.main} onClick={this.props.onClick}>
+                <div className={classes.main} onClick={this.props.onClick}>
                     {image}
                     {this.props.children}
                     {secondary}

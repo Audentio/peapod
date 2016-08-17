@@ -5,7 +5,7 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import PureRender from 'utility/pureRender.js';
 import shallowEqual from 'shallowequal';
 import Logger from 'utility/logger.js';
@@ -197,7 +197,7 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const { validate, stateless, name, type, value: valueProp } = this.props;
 
         // use value prop if stateless else use state
@@ -212,10 +212,10 @@ module.exports = componentName => class Pod_Component extends Component {
         // Logger.log('rendered: ', name);
 
         return (
-            <div style={style.wrapper}>
-                <div style={style.main}>
+            <div className={classes.wrapper}>
+                <div className={classes.main}>
 
-                    {placeholder && <span style={style.placeholder}>{placeholder}</span>}
+                    {placeholder && <span className={classes.placeholder}>{placeholder}</span>}
 
                     <InputTag
                         type={type}
@@ -223,7 +223,7 @@ module.exports = componentName => class Pod_Component extends Component {
                         ref="input"
                         // Make sure we pass empty string to render a controlled input in case value is not string/number
                         value={(typeof value === 'string' || typeof value === 'number') ? value : ''}
-                        style={style.input}
+                        className={classes.input}
 
                         onBlur={this.onBlur}
                         onFocus={this.onFocus}

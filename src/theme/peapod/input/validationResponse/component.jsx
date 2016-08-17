@@ -7,7 +7,7 @@
 
 // Dependencies
 import React, { Component, PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Icon } from 'utility/components.js';
 
 /**
@@ -26,12 +26,12 @@ module.exports = componentName => class Pod_Component extends Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const { icon, children, ...props } = this.props;
 
         return (
-            <span style={style.main} {...props}>
-                {icon && <Icon style={style.icon}>{icon}</Icon>}
+            <span className={classes.main} {...props}>
+                {icon && <Icon className={classes.icon}>{icon}</Icon>}
                 {children}
             </span>
         );

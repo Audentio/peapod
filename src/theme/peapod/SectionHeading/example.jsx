@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, SectionHeading } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class SectionHeadingExample extends React.Component {
@@ -8,9 +8,9 @@ module.exports = class SectionHeadingExample extends React.Component {
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.SectionHeading />
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <SectionHeading />
+            </ContentWrap>
         );
     }
 

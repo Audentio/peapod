@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 // import PureRender from 'utility/pureRender.js';
 
 import { isFunction, sortBy as _sorter, values as _values, reverse as _reverse, merge as _merge } from 'lodash';
@@ -332,7 +332,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const columns = this.state.columns;
         const hoveredRow = this.state.hoveredRow;
@@ -340,7 +340,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const paginated = this.getTableData();
         const userActionsTrigger = <span>User Actions</span>;
 
-        const statusStyle = Pod_Styler.getStyle({ props: {
+        const statusClasses = Styler.getClasses({ props: {
             styler: {
                 styleLike: 'Table_Cell',
                 style: {
@@ -354,8 +354,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
             },
         } });
 
-        const isFetching = (this.props.isFetching) ? <div style={statusStyle}>Loading Data...</div> : null;
-        const noData = (paginated.data.length === 0 && !this.props.isFetching) ? <div style={statusStyle}>No Data</div> : null;
+        const isFetching = (this.props.isFetching) ? <div className={statusClasses.main}>Loading Data...</div> : null;
+        const noData = (paginated.data.length === 0 && !this.props.isFetching) ? <div style={statusClasses.main}>No Data</div> : null;
         const presets = (typeof(this.state.presets) !== 'undefined') ? <TablePreset queries={queries} addQuery={this.addQuery} removeQuery={this.removeColumnQuery} addQueryOnePerColumn={this.addQueryOnePerColumn} presets={this.state.presets} /> : null;
 
         // only show checkAll when there is one
@@ -408,7 +408,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         );
 
         const tableFooter = (this.props.noFooter) ? '' : (
-            <div style={style.footer}>
+            <div className={classes.footer}>
                 <Grid
                     styler={{
                         justifyContent: 'space-between',
@@ -453,10 +453,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         );
 
         return (
-            <div styler={_merge({ style: style.main }, this.props.styler)}>
+            <div styler={_merge({ style: classes.style.main }, this.props.styler)}>
                 {tableControls}
                 <TableInner
-                    style={style.main}
+                    className={classes.main}
                     data={paginated.data}
                     columns={columns}
                     columnNames={this.makeHeader}

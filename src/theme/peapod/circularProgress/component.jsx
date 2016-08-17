@@ -4,7 +4,7 @@
 */
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -27,22 +27,26 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const { children: innerContent, value } = this.props;
 
-        style.maskTransformed = Object.assign({}, style.mask, this.getTransform(value));
-        style.circleTransformed = Object.assign({}, style.circle, this.getTransform(value));
+        const maskTransformed = Object.assign({}, classes.style.mask, this.getTransform(value));
+        const circleTransformed = Object.assign({}, classes.style.circle, this.getTransform(value));
 
         return (
-            <div style={style.main}>
+            <div className={classes.main}>
 
-                <div style={style.track}></div>
+                <div className={classes.track}></div>
 
-                <div style={style.maskTransformed}><div style={style.circleTransformed}></div></div>
-                <div style={style.mask}><div style={style.circleTransformed}></div></div>
+                <div className={classes.maskTransformed}>
+                    <div style={circleTransformed}></div>
+                </div>
+                <div className={classes.mask}>
+                    <div style={circleTransformed}></div>
+                </div>
 
-                <div style={style.content}>
-                    <div style={style.contentInner}>
+                <div className={classes.content}>
+                    <div className={classes.contentInner}>
                         {innerContent}
                     </div>
                 </div>

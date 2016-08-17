@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import PureRender from 'utility/pureRender.js';
 import { Icon, Progress } from 'utility/components.js';
 import Pod_Helper from 'utility/helper.js';
@@ -242,16 +242,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const seekbar_table_style = {
             display: 'table',
             width: '100%',
-            height: style.controls.height,
+            height: classes.style.controls.height,
         };
-        const { 
-            volume: currentVolume, 
-            currentTime, 
-            duration: currentDuration, 
+        const {
+            volume: currentVolume,
+            currentTime,
+            duration: currentDuration,
             playing,
         } = this.state;
 
@@ -261,10 +261,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         if (volumeIcon === 'volume_up' && currentVolume < 50) volumeIcon = 'volume_down';
 
         return (
-            <div ref="container" style={style.main} tabIndex={0}>
+            <div ref="container" className={classes.main} tabIndex={0}>
                 <video
                     ref="video"
-                    style={style.video}
+                    className={classes.video}
                     src={this.props.src}
                     controls={false}
                     autoPlay={this.props.autoplay}
@@ -273,25 +273,25 @@ module.exports = componentName => class Pod_Component extends React.Component {
                   Sorry, your browser doesn't support embedded videos
                 </video>
 
-                <div style={style.controls}>
-                    <div style={style.playpause} ref="playpause">
-                        <Icon style={style.playpauseIcon}>{playPauseIcon}</Icon>
+                <div className={classes.controls}>
+                    <div className={classes.playpause} ref="playpause">
+                        <Icon className={classes.playpauseIcon}>{playPauseIcon}</Icon>
                     </div>
 
-                    <div style={style.seekbar}>
+                    <div className={classes.seekbar}>
                         <div style={seekbar_table_style}>
-                            <div style={style.seekbar_time}>
+                            <div className={classes.seekbar_time}>
                                 {this.durationString(currentDuration)}
                             </div>
 
-                            <div style={style.seekbar_bar}>
-                                <Progress styler={style.seekbar_progress} value={currentTime} max={currentDuration} />
+                            <div className={classes.seekbar_bar}>
+                                <Progress styler={classes.style.seekbar_progress} value={currentTime} max={currentDuration} />
                             </div>
                         </div>
                     </div>
 
-                    <div style={style.morecontrols}>
-                        <Icon style={style.volumeIcon}>{volumeIcon}</Icon> {currentVolume}
+                    <div className={classes.morecontrols}>
+                        <Icon style={classes.style.volumeIcon}>{volumeIcon}</Icon> {currentVolume}
                     </div>
                 </div>
             </div>

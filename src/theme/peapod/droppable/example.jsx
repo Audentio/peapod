@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Droppable } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class DroppableExample extends React.Component {
@@ -23,9 +23,9 @@ module.exports = class DroppableExample extends React.Component {
 
         return (
             <div>
-                <Pod.ContentWrap>
-                    <Pod.Droppable onDrop={this.onDrop}>{dropped}</Pod.Droppable>
-                </Pod.ContentWrap>
+                <ContentWrap>
+                    <Droppable onDrop={this.onDrop}>{dropped}</Droppable>
+                </ContentWrap>
             </div>
         );
     }

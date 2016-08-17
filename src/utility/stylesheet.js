@@ -9,7 +9,30 @@ const pod_debug = false; // if true, will add a debug object to the inline style
 // actual Styling
 class Style {
     constructor(style) {
-        this.style = style;
+        this.style = this.processRules(style);
+    }
+
+    processRules(obj, depth = 0) {
+        const rules = Object.keys(obj);
+        for (let i = 0, len = rules.length; i < len; i++) {
+            const rule = rules[i];
+            const val = obj[rule];
+            if (typeof(val) === 'object') {
+                if (depth < 10) {
+                    obj[rule] = this.processRules(val, depth + 1);
+                } else {
+                    Logger.error('Depth of style too large');
+                }
+            } else {
+                const hyphenatedRule = rule.replace(/^([A-Z])/g, '-$1').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+                if (rule !== hyphenatedRule) {
+                    obj[hyphenatedRule] = val;
+                    // delete obj.rule;
+                }
+            }
+        }
+
+        return obj;
     }
 
     getStyle(instance) {
@@ -360,19 +383,25 @@ class Sheet {
         this.name = name;
     }
 
-    setValues(values = {}, scene = 'common', custom = false) {
-        let variables = {
-            [scene]: {
-                [this.name]: values,
-            },
-        };
+    reset() {
+        this.parts = {};
+        this.variablesResolved = false;
+        this.scenesResolved = false;
+        this.stylesResolved = false;
+    }
 
+    setValues(values = {}, scene = 'common', custom = false) {
         if (custom) {
-            variables = values;
+            this.values = values;
+        } else {
+            this.values = {
+                [scene]: {
+                    [this.name]: values,
+                },
+            };
         }
 
-        this.values = variables;
-        Pod_Vars.register(variables);
+        Pod_Vars.register(this.values);
 
         return this;
     }
@@ -405,8 +434,13 @@ class Sheet {
     getName() {
         return this.name;
     }
-    getValues() {
-        return this.values;
+    getValues(scene) {
+        if (typeof(scene) === 'undefined') {
+            return this.values;
+        } else if (scene === 'common') {
+            return this.values.common;
+        }
+        return Object.assign({}, this.values.common, this.values[scene]);
     }
     getParts() {
         return this.parts;
@@ -442,6 +476,7 @@ class Sheet {
         const partKeys = Object.keys(this.parts);
         const activeConditions = this.getActiveConditions(instance, conditions);
 
+
         for (let i = 0, len = partKeys.length; i < len; i++) {
             const partName = partKeys[i];
             const partRules = this.parts[partName].getPartStyling(instance, scene, activeConditions, conditions);
@@ -455,7 +490,7 @@ class Sheet {
 
                     if (typeof(ruleVal) === 'function') {
                         partRules[ruleKey] = ruleVal(instance);
-                        //activeConditions.push(`computed_${ partName }_${ ruleIndex }` )
+                        activeConditions.push(`computed_${partName}_${ruleIndex}_${partRules[ruleKey]}`);
                     }
                 }
             }

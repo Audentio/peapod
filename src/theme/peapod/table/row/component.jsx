@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 import { merge as _merge, reduce as _reduce, isPlainObject as _isPlainObject, isUndefined as _isUndefined } from 'lodash';
 
@@ -43,7 +43,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const hoveredRow = this.props.hoveredRow;
         const columns = this.props.columns;
         const data = this.props.data;
-        const style = Pod_Styler.getStyle({}, {
+        const classes = Styler.getClasses({}, {
             styleLike: 'Table_Inner',
             dark: i % 2 === 1,
             firstRow: i === 0,
@@ -55,7 +55,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         return (
             <div
                 {...rowProps(row, i)}
-                style={style.row}
+                className={classes.row}
             >
                 {
                     columns.map(

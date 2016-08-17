@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
@@ -28,7 +28,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             header: false,
         };
         const index = this.props.index;
-        const style = Pod_Styler.getStyle({ props: {
+        const classes = Styler.getClasses({ props: {
             styler: {
                 styleLike: 'Table_Cell',
                 firstCell: index === 0,
@@ -42,7 +42,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         } });
 
         return (
-            <div {...this.props} style={style.main}>
+            <div {...this.props} className={classes.main}>
                 {this.props.children}
             </div>
         );

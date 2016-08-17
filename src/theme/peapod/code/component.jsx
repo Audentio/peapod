@@ -5,7 +5,7 @@
 */
 
 import React, { PropTypes } from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
@@ -16,11 +16,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const { children: code } = this.props;
 
         return (
-            <code style={style.main}>
+            <code className={classes.main}>
                 {code}
             </code>
         );

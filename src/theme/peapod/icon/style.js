@@ -23,7 +23,7 @@ module.exports = function (sheet) {
         }).addSelector({
             condition: ['sizeSet'],
             common: {
-                fontSize: 'getStyler:size',
+                fontSize: (obj) => (obj.styler.size),
             },
         }).addSelector({
             condition: ['colorSet'],

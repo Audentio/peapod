@@ -1,16 +1,16 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Aside } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class AsideExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Aside>HTML Aside Element</Pod.Aside>
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <Aside>HTML Aside Element</Aside>
+            </ContentWrap>
         );
     }
 

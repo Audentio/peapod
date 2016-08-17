@@ -1,16 +1,16 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Strong } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class StrongExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Strong>Strong HTML Example</Pod.Strong>
-            </Pod.ContentWrap>
+            <ContentWrap>
+                <Strong>Strong HTML Example</Strong>
+            </ContentWrap>
         );
     }
 

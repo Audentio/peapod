@@ -1,20 +1,20 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Nav } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
-module.exports = class AccordionExample extends React.Component {
+module.exports = class NavExample extends React.Component {
 
     shouldComponentUpdate = PureRender;
 
     render() {
         return (
-            <Pod.ContentWrap>
-                <Pod.Nav>
+            <ContentWrap>
+                <Nav>
                     <ul>
                         <li>HTML Nav Element</li>
                     </ul>
-                </Pod.Nav>
-            </Pod.ContentWrap>
+                </Nav>
+            </ContentWrap>
         );
     }
 

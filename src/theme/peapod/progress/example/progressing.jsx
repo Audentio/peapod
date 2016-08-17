@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { Progress, CircularProgress,  } from 'utility/components.js';
 
 module.exports = class Progressing extends React.Component {
     constructor(props, context) {
@@ -70,21 +70,21 @@ module.exports = class Progressing extends React.Component {
         return (
             <div>
                 <p style={{ marginBottom: '8px' }}>Natural progression example [<a href="#" onClick={this.toggleLoop}>{this.state.btnText}</a>]</p>
-                <Pod.Progress value={this.state.value} />
+                <Progress value={this.state.value} />
                 <br />
-                <Pod.CircularProgress styler={{ size: 150 }} value={this.state.value}>
+                <CircularProgress styler={{ size: 150 }} value={this.state.value}>
                     <div style={{ fontSize: 30, fontWeight: 200 }}>{this.state.value}%</div>
                     <span style={{ color: '#aaa' }}>progress...</span>
-                </Pod.CircularProgress>
+                </CircularProgress>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <Pod.CircularProgress styler={{ size: 150, kind: 'success' }} value={this.state.uniformValue}>
+                <CircularProgress styler={{ size: 150, kind: 'success' }} value={this.state.uniformValue}>
                     <div style={{ fontSize: 26 }}>${this.state.uniformValue * 13}</div>
                     <span style={{ color: '#aaa' }}>Dollas!</span>
-                </Pod.CircularProgress>
+                </CircularProgress>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <Pod.CircularProgress styler={{ size: 150, kind: 'danger' }} value={this.state.uniformValue}>
+                <CircularProgress styler={{ size: 150, kind: 'danger' }} value={this.state.uniformValue}>
                     <span style={{ color: '#aaa' }}>{this.state.uniformValue * 3} bats</span>
-                </Pod.CircularProgress>
+                </CircularProgress>
             </div>
         );
     }

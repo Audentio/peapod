@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod from 'utility/components.js';
+import { ContentWrap, Scrollable, Paragraph } from 'utility/components.js';
 import PureRender from 'utility/pureRender.js';
 
 module.exports = class ScrollableExample extends React.Component {
@@ -9,14 +9,14 @@ module.exports = class ScrollableExample extends React.Component {
     render() {
         return (
             <div>
-                <Pod.ContentWrap>
-                    <Pod.Scrollable height="100px">
-                        <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.Paragraph>
-                        <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.Paragraph>
-                        <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.Paragraph>
-                        <Pod.Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Pod.Paragraph>
-                    </Pod.Scrollable>
-                </Pod.ContentWrap>
+                <ContentWrap>
+                    <Scrollable height="100px">
+                        <Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Paragraph>
+                        <Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Paragraph>
+                        <Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Paragraph>
+                        <Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis error dolore perspiciatis nesciunt asperiores nihil vero omnis, ut fuga explicabo perferendis, labore commodi sit quod? Enim, eligendi omnis sit quasi!</Paragraph>
+                    </Scrollable>
+                </ContentWrap>
             </div>
         );
     }

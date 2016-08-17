@@ -1,7 +1,7 @@
 import { globals, addDays, setDayOfWeek } from '../calendarHelper.js';
 
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 
 import { Calendar_DaysOfWeek, Calendar_Day } from 'utility/components.js';
 
@@ -43,7 +43,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     render() {
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         let dates = [];
 
         const dateArray = this.props.dateArray;
@@ -82,7 +82,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             dates.push(<Calendar_Day date={addDays(dateArray[dateArray.length - 1], i + 1)} notActive key={'pull' + i} />);
         }
 
-        return (<ul style={style.main}>{dates}</ul>);
+        return (<ul className={classes.main}>{dates}</ul>);
     }
 
 };

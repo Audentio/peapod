@@ -1,5 +1,5 @@
 import React from 'react';
-import Pod_Styler from 'utility/styler.js';
+import Styler from 'utility/styler.js';
 import { Tabs_Trigger as TabTrigger } from 'utility/components.js';
 
 
@@ -28,7 +28,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const activeTab = this.state.activeTab;
-        const style = Pod_Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
 
         const triggers = [];
 
@@ -56,11 +56,11 @@ module.exports = componentName => class Pod_Component extends React.Component {
         });
 
         return (
-            <div style={style.main}>
-                <div style={style.triggers}>
+            <div className={classes.main}>
+                <div className={classes.triggers}>
                     {triggers}
                 </div>
-                <div style={style.panels}>
+                <div className={classes.panels}>
                     {children}
                 </div>
             </div>
