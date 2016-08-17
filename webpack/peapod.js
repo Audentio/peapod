@@ -126,6 +126,7 @@ function compileExports(themePaths, includeExamples) {
         const componentKeys = Object.keys(components);
 
         let componentUtilityExport = '';
+        let exampleUtilityExport = '';
 
         for (let componentIndex = 0, componentLen = componentKeys.length; componentIndex < componentLen; componentIndex++) {
             const componentKey = componentKeys[componentIndex];
@@ -172,8 +173,10 @@ export default component;`;
             fs.writeFileSync(compiledPath + '/component_compiled.jsx', componentExports, {flag: 'w+'});
 
             if (component.examplePath !== '') {
-                let exampleExports = '';
+                let exampleExports = `export default from '${component.examplePath}';`;
                 fs.writeFileSync(compiledPath + '/example_compiled.jsx', exampleExports, {flag: 'w+'});
+
+                exampleUtilityExport += `export ${componentKey} from '${compiledPath}/example_compiled.jsx';\n`;
             }
 
             componentUtilityExport += `export ${componentKey} from '${compiledPath}/component_compiled.jsx';\n`;
@@ -181,6 +184,8 @@ export default component;`;
         }
 
         fs.writeFileSync(utilityPath + '/components.js', componentUtilityExport, {flag: 'w+'});
+
+        fs.writeFileSync(utilityPath + '/examples.js', exampleUtilityExport, {flag: 'w+'});
     }
 }
 

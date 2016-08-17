@@ -3,253 +3,19 @@
 *  LICENSE: <%= package.licence %>
 */
 
-import _merge from 'lodash/merge';
 import _isEqual from 'lodash/isEqual';
 import { Style, Sheet } from './stylesheet.js';
 import Logger from './logger.js';
 import emoji from './emoji.js';
 
 window.Styler = window.Styler || {
-    libraries: [],
-    currentLibrary: 'peapod',
     enableCache: true,
     enableVarCache: true,
     cache: {},
     varCache: {},
     maxCacheLength: 5000,
-    stack: null,
     classCount: 0,
     styleRootEle: null,
-
-    /*
-    removeLibrary(libraryName) {
-        window.Styler.stack = null; // force recalculation of library stack;
-        for (let i = 0, len = window.Styler.libraries.length; i < len; i++) {
-            const library = window.Styler.libraries[i];
-            if (library.name === libraryName) {
-                Logger.log(`Removing Library: ${libraryName}`);
-                window.Styler.libraries.splice(i, 1);
-                len = len - 1;
-                i = i - 1;
-            }
-        }
-    },
-
-    // registers a library
-    addLibrary(parentName, libraryName, componentFiles, requireFunc, globalSheet) {
-        window.Styler.stack = null; // force recalculation of library stack;
-        window.Styler.varCache = {}; // clear variable cache
-        window.Styler.removeLibrary(libraryName); // remove and previous styling from library
-        Logger.log(`Adding Library ${libraryName}`);
-
-        const globalVars = globalSheet.getValues();
-        const globalConditions = globalSheet.getConditions();
-
-        window.Pod_Vars.register(globalVars); // add global variables to variable resolution
-
-        const components = {};
-        const componentKeys = Object.keys(componentFiles);
-        for (let i = 0, len = componentKeys.length; i < len; i++) {
-            const componentName = componentKeys[i];
-            const stylesheet = requireFunc(componentFiles[componentName].fileName);
-            if (typeof(stylesheet) === 'function') {
-                const sheetStyle = stylesheet(new Sheet(componentName));
-
-                if (typeof(sheetStyle) === 'undefined') {
-                    throw new Error(`No Styling found for ${componentName}.  Does ${componentFiles[componentName].fileName} return 'sheet'?`);
-                } else {
-                    components[componentFiles[componentName].componentName] = sheetStyle; // get the stylesheet for any components in the current library
-                }
-            }
-        }
-
-        const library = {
-            parentName,
-            componentFiles,
-            components,
-            name: libraryName,
-            type: 'normal',
-            globalVars,
-            globalConditions,
-        };
-
-        window.Styler.libraries.push(library);
-    },
-
-    // changes the library in use, must be done after adding a child theme.
-    setLibrary(name) {
-        window.Styler.stack = null; // force recalculation of library stack;
-        window.Styler.currentLibrary = name;
-    },
-
-    // gets the stack of libraries
-    getLibrary(name) {
-        for (let i = 0, len = window.Styler.libraries.length; i < len; i++) {
-            const library = window.Styler.libraries[i];
-            if (library.name === name) return library;
-        }
-
-        throw new Error(`Could not find library named: ${name}`);
-    },
-
-    // creates an ordered array of libraries currently applied
-    getLibraryStack() {
-        if (window.Styler.stack !== null) {
-            return window.Styler.stack; // don't need to recalculate the stack;
-        }
-
-        let currentName = window.Styler.currentLibrary;
-        const stack = [];
-        let depth = 0;
-
-        while (currentName !== 'root' && depth <= 30) {
-            const library = window.Styler.getLibrary(currentName);
-            stack.unshift(library); // prepend
-            currentName = library.parentName;
-            depth = depth + 1;
-        }
-
-        // apply local styling at the bottom of the stack
-        stack.push({
-            type: 'local',
-            components: {},
-            name: '_local',
-        });
-        // apply pre local styling to very beginning of stack
-        stack.unshift({
-            type: 'local',
-            components: {},
-            name: '_preLocal',
-        });
-
-        if (depth >= 30) throw new Error('Maximum Library stack size reached.');
-
-        window.Styler.stack = stack;
-
-        return stack;
-    },
-
-    // collapses each active library into an array of parts and conditions specific to the component
-    buildSources(obj) {
-        const sources = [];
-        const libraries = window.Styler.getLibraryStack(); // currently applying libraries
-        console.log(libraries);
-        let conditions = {}; // all conditions available to component
-        const activeConditions = [];
-        const parts = {}; // all parts available to component
-        const componentName = obj.componentName;
-        const scene = obj.scene; // scene applying to object
-
-        // get information from libraries about current component
-        for (let libraryIndex = 0, libraryLen = libraries.length; libraryIndex < libraryLen; libraryIndex++) {
-            const library = libraries[libraryIndex];
-            const globalConditions = library.globalConditions;
-            const component = library.components[componentName];
-
-            if (typeof(globalConditions) !== 'undefined') {
-                if (conditions === {}) {
-                    conditions = globalConditions;
-                } else {
-                    conditions = Object.assign({}, conditions, globalConditions); // merge in global conditions
-                }
-            }
-
-            if (typeof(component) !== 'undefined') {
-                const componentConditions = component.getConditions();
-                const part = component.getParts();
-                const partKeys = Object.keys(part);
-
-                // get all conditions for the component overwriting any defined in parents with those defined in children
-                if (conditions === {}) {
-                    conditions = componentConditions;
-                } else {
-                    conditions = Object.assign({}, conditions, componentConditions);
-                }
-
-                // get all parts for the component overwriting any defined in parents with those defined in children
-                for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
-                    const key = partKeys[partIndex];
-                    parts[key] = key;
-                }
-            }
-        }
-
-        // resolve global variables from each library
-        let globalVars = window.Pod_Vars.sources[0].common;
-        if (typeof(window.Pod_Vars.sources[0][scene]) !== 'undefined') {
-            globalVars = Object.assign({}, globalVars, window.Pod_Vars.sources[0][scene]);
-        }
-
-        // collapse styling from each active library
-        for (let i = 0, len = libraries.length; i < len; i++) {
-            const library = libraries[i];
-            let source = null;
-            if (library.type === 'local') { // special libraries to add local inline styling
-                const localStyle = {};
-                const partKeys = Object.keys(parts);
-                const suffix = (library.name === '_preLocal') ? 'Pre' : '';
-
-                // get local styling for any parts
-                for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
-                    const part = partKeys[partIndex];
-
-                    if (part === 'main' && typeof(obj.styler.mainStyle) === 'undefined' && suffix === '') {
-                        if (typeof(obj.styler.style) !== 'undefined') { // special case for `styler.style` applying to main
-                            localStyle[part] = new Style(obj.styler.style).getStyle(); // process styling for media queries, shorthand, etc.
-                        }
-                    } else {
-                        if (typeof(obj.styler[`${part}Style${suffix}`]) !== 'undefined') { // any other inline styling that isn't `styler.style`
-                            localStyle[part] = new Style(obj.styler[`${part}Style${suffix}`]).getStyle(); // process styling for media queries, shorthand, etc.
-                        }
-                    }
-                }
-
-                if (Object.keys(localStyle).length > 0) {
-                    source = localStyle; // if a localStyle was applied, then make it the source
-                    activeConditions.push(JSON.stringify(localStyle)); // TODO more efficient way of creating unique condition
-                }
-            } else { // styling from style.js
-                const sourceSheet = library.components[componentName];
-                if (sourceSheet !== null && typeof(sourceSheet) !== 'undefined') {
-                    let sheetVals = {};
-                    if (typeof(sourceSheet.resolveValues) === 'function' && !sourceSheet.variablesResolved) {
-                        sheetVals = sourceSheet.resolveValues(globalVars);
-                        sourceSheet.variablesResolved = true;
-                    }
-
-                    if (typeof(sourceSheet.resolveSceneValues) === 'function' && !sourceSheet.scenesResolved) {
-                        const sceneVals = sourceSheet.resolveSceneValues(sheetVals, globalVars);
-                        if (typeof(sceneVals[scene]) !== 'undefined') {
-                            if (sheetVals === {}) {
-                                sheetVals = sceneVals;
-                            } else {
-                                sheetVals = Object.assign({}, sheetVals, sceneVals);
-                            }
-                        }
-                        sourceSheet.scenesResolved = true;
-                    }
-
-                    sourceSheet.setValues(sheetVals, 'common'); // TODO fix this Kyler
-
-                    const localVars = window.Pod_Vars.sources[0].common[sourceSheet.name]; // TODO multiple scenes
-
-                    const sheetData = sourceSheet.getAllStyling(obj, scene, conditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
-                    source = sheetData.source;
-
-                    for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
-                        activeConditions.push(sheetData.activeConditions[conditionIndex]);
-                    }
-                }
-            }
-
-            if (typeof(source) !== 'undefined' && source !== null) {
-                sources.push(source); // add styling from source if any was found in the library
-            }
-        }
-
-        return { sources, activeConditions };
-    },
-    */
 
     buildSources(obj) {
         const sources = [];
@@ -495,7 +261,7 @@ window.Styler = window.Styler || {
         } else if (emptyLocalStyler) {
             styler = propsStyler;
         } else {
-            styler = _merge(propsStyler, localStyler);
+            styler = Object.assign({}, propsStyler, localStyler);
         }
         const componentName = styler.styleLike || instance.constructor.displayName; // name of the component
         const scene = styler.scene || 'normal';

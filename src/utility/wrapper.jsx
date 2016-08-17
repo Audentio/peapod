@@ -11,8 +11,8 @@ const Pod_Enhance = function wrap(NewComponent, stylesheet, themesheet) {
     class Enhancer extends NewComponent {
         static displayName = NewComponent.displayName;
 
-        constructor() {
-            super();
+        constructor(props, context) {
+            super(props, context);
 
             if (typeof(stylesheet) !== 'undefined') {
                 this.stylesheet = stylesheet;

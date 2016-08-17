@@ -1,0 +1,1 @@
+export default from '/Users/kyler/repos/peapod/src/theme/peapod/Media/example.jsx';

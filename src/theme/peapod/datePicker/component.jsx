@@ -43,7 +43,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     onFocus(event) {
         event.preventDefault();
-        event.targetElem.blur();
+        event.nativeEvent.target.blur();
         return false;
     }
 

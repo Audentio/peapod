@@ -121,7 +121,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                 this.node.style[key] = styler[key];
             }
 
-            document.body.prependChild(this.node);
+            document.body.insertBefore(this.node, document.body.firstChild);
         }
         this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(this, React.cloneElement(props.children, { closePortal: this.closePortal }), this.node);
 

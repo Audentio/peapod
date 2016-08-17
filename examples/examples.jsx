@@ -42,16 +42,13 @@ render((
 ), document.getElementById('mainContainer'));
 */
 
-import { Accordion, Accordion_Section, Button } from 'utility/components.js';
+import { Button, DatePicker } from 'utility/examples.js';
 
 
 render((
     <div>
-        <Button label="Danger" styler={{ kind: 'danger' }} />
-        <Accordion>
-            <Accordion_Section>testing</Accordion_Section>
-            <Accordion_Section>testing</Accordion_Section>
-        </Accordion>
+        <Button />
+        <DatePicker />
     </div>
 ), document.getElementById('mainContainer'));
 

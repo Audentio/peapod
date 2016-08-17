@@ -1,0 +1,1 @@
+export default from '/Users/kyler/repos/peapod/src/theme/peapod/Section/example.jsx';
