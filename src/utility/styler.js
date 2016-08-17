@@ -253,12 +253,12 @@ window.Styler = window.Styler || {
 
     buildSources(obj) {
         const sources = [];
-        let conditions = {}; // all conditions available to component
         const activeConditions = [];
         const parts = {}; // all parts available to component
         const componentName = obj.componentName;
         const scene = obj.scene; // scene applying to object
         const libraries = ['preLocal', 'sheet', 'local'];
+
         for (let i = 0, len = libraries.length; i < len; i++) {
             const library = libraries[i];
             let source = null;
@@ -290,10 +290,24 @@ window.Styler = window.Styler || {
                 if (typeof(obj.stylesheet) !== 'undefined') {
                     const themesheet = window.Styler.initializeSheet(obj.themesheet, scene, true);
                     const globalVars = themesheet.getValues(scene);
-                    const sourcesheet = window.Styler.initializeSheet(obj.stylesheet, scene, false, globalVars);
-                    const localVars = sourcesheet.getValues(scene)[componentName];
+                    const globalConditions = themesheet.getConditions();
+                    const localsheet = window.Styler.initializeSheet(obj.stylesheet, scene, false, globalVars);
+                    const localVars = localsheet.getValues(scene)[componentName];
+                    const localConditions = localsheet.getConditions();
+                    let allConditions = {};
 
-                    const sheetData = sourcesheet.getAllStyling(obj, scene, conditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+                    if (typeof(globalConditions) === 'undefined') {
+                        allConditions = localConditions;
+                    } else {
+                        if (typeof(localConditions) === 'undefined') {
+                            allConditions = globalConditions;
+                        } else {
+                            allConditions = Object.assign({}, globalConditions, localConditions);
+                        }
+                    }
+
+
+                    const sheetData = localsheet.getAllStyling(obj, scene, allConditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
                     source = sheetData.source;
 
                     for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
