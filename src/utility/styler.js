@@ -21,6 +21,7 @@ window.Styler = window.Styler || {
     classCount: 0,
     styleRootEle: null,
 
+    /*
     removeLibrary(libraryName) {
         window.Styler.stack = null; // force recalculation of library stack;
         for (let i = 0, len = window.Styler.libraries.length; i < len; i++) {
@@ -248,6 +249,91 @@ window.Styler = window.Styler || {
 
         return { sources, activeConditions };
     },
+    */
+
+    buildSources(obj) {
+        const sources = [];
+        let conditions = {}; // all conditions available to component
+        const activeConditions = [];
+        const parts = {}; // all parts available to component
+        const componentName = obj.componentName;
+        const scene = obj.scene; // scene applying to object
+        const libraries = ['preLocal', 'sheet', 'local'];
+        for (let i = 0, len = libraries.length; i < len; i++) {
+            const library = libraries[i];
+            let source = null;
+            if (library !== 'sheet') { // special libraries to add local inline styling
+                const localStyle = {};
+                const partKeys = Object.keys(parts);
+                const suffix = (library === 'preLocal') ? 'Pre' : '';
+
+                // get local styling for any parts
+                for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
+                    const part = partKeys[partIndex];
+
+                    if (part === 'main' && typeof(obj.styler.mainStyle) === 'undefined' && suffix === '') {
+                        if (typeof(obj.styler.style) !== 'undefined') { // special case for `styler.style` applying to main
+                            localStyle[part] = new Style(obj.styler.style).getStyle(); // process styling for media queries, shorthand, etc.
+                        }
+                    } else {
+                        if (typeof(obj.styler[`${part}Style${suffix}`]) !== 'undefined') { // any other inline styling that isn't `styler.style`
+                            localStyle[part] = new Style(obj.styler[`${part}Style${suffix}`]).getStyle(); // process styling for media queries, shorthand, etc.
+                        }
+                    }
+                }
+
+                if (Object.keys(localStyle).length > 0) {
+                    source = localStyle; // if a localStyle was applied, then make it the source
+                    activeConditions.push(JSON.stringify(localStyle)); // TODO more efficient way of creating unique condition
+                }
+            } else { // styling from style.js
+                if (typeof(obj.stylesheet) !== 'undefined') {
+                    const themesheet = window.Styler.initializeSheet(obj.themesheet, scene, true);
+                    const globalVars = themesheet.getValues(scene);
+                    const sourcesheet = window.Styler.initializeSheet(obj.stylesheet, scene, false, globalVars);
+                    const localVars = sourcesheet.getValues(scene)[componentName];
+
+                    const sheetData = sourcesheet.getAllStyling(obj, scene, conditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+                    source = sheetData.source;
+
+                    for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
+                        activeConditions.push(sheetData.activeConditions[conditionIndex]);
+                    }
+                }
+            }
+
+            if (typeof(source) !== 'undefined' && source !== null) {
+                sources.push(source); // add styling from source if any was found in the library
+            }
+        }
+
+        return { sources, activeConditions };
+    },
+
+    initializeSheet(sheet, scene, isTheme, globalVars) {
+        if (sheet !== null && typeof(sheet) !== 'undefined') {
+            let sheetVals = {};
+            if (typeof(sheet.resolveValues) === 'function' && !sheet.variablesResolved) {
+                sheetVals = sheet.resolveValues(globalVars);
+                sheet.variablesResolved = true;
+            }
+
+            if (typeof(sheet.resolveSceneValues) === 'function' && !sheet.scenesResolved) {
+                const sceneVals = sheet.resolveSceneValues(sheetVals, globalVars);
+                if (typeof(sceneVals[scene]) !== 'undefined') {
+                    if (sheetVals === {}) {
+                        sheetVals = sceneVals;
+                    } else {
+                        sheetVals = Object.assign({}, sheetVals, sceneVals);
+                    }
+                }
+                sheet.scenesResolved = true;
+            }
+
+            sheet.setValues(sheetVals, 'common', isTheme); // TODO fix this Kyler
+        }
+        return sheet;
+    },
 
     getUniqueClassName() {
         let ret = 'ERROR_GENERATING_CLASSNAME';
@@ -406,6 +492,8 @@ window.Styler = window.Styler || {
             styler,
             componentName,
             scene,
+            themesheet: instance.themesheet,
+            stylesheet: instance.stylesheet,
         };
 
         return obj;
@@ -539,8 +627,6 @@ window.Styler = window.Styler || {
 
     // gets object of styling for parts of a component
     getClasses(instance, localStyler = {}) {
-        // return window.Styler.getStyle(instance, localStyler); // enable this line if not testing Git issue #98
-
         const obj = window.Styler.makeInstanceObj(instance, localStyler);
 
         const sourcesAndConditions = window.Styler.buildSources(obj); // build sources from libraries for component

@@ -1,7 +1,7 @@
 import React from 'react';
 import Lazy from 'theme/peapod/Lazy/component.jsx';
 
-const Pod_Enhance = function wrap(NewComponent) {
+const Pod_Enhance = function wrap(NewComponent, stylesheet, themesheet) {
     if (typeof(NewComponent.contextTypes) === 'undefined') {
         NewComponent.contextTypes = {};
     }
@@ -10,6 +10,18 @@ const Pod_Enhance = function wrap(NewComponent) {
 
     class Enhancer extends NewComponent {
         static displayName = NewComponent.displayName;
+
+        constructor() {
+            super();
+
+            if (typeof(stylesheet) !== 'undefined') {
+                this.stylesheet = stylesheet;
+            }
+
+            if (typeof(themesheet) !== 'undefined') {
+                this.themesheet = themesheet;
+            }
+        }
 
         render() {
             if (this.props.lazy) {

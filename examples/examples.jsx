@@ -5,6 +5,8 @@ import Perf from 'react-addons-perf';
 
 const measurePerf = process.env.measurePerf;
 
+if (measurePerf) Perf.start();
+
 /*
 import { Root } from 'utility/components.js';
 
@@ -23,8 +25,6 @@ import fixedElems from './reducers';
 
 const store = createStore(fixedElems);
 
-if (measurePerf) Perf.start();
-
 render((
     <Provider store={store}>
         <Root>
@@ -42,14 +42,17 @@ render((
 ), document.getElementById('mainContainer'));
 */
 
-import { Accordion, Accordion_Section } from 'utility/components.js';
+import { Accordion, Accordion_Section, Button } from 'utility/components.js';
 
 
 render((
-    <Accordion>
-        <Accordion_Section>testing</Accordion_Section>
-        <Accordion_Section>testing</Accordion_Section>
-    </Accordion>
+    <div>
+        <Button label="Danger" styler={{ kind: 'danger' }} />
+        <Accordion>
+            <Accordion_Section>testing</Accordion_Section>
+            <Accordion_Section>testing</Accordion_Section>
+        </Accordion>
+    </div>
 ), document.getElementById('mainContainer'));
 
 if (measurePerf) {

@@ -52,7 +52,7 @@ function compileExports(themePaths, includeExamples) {
 
         themes.push({
             name: themeName,
-            themePath: themePath,
+            themePath,
         });
 
         const themeFiles = recursiveReadDirSync(themePath);
@@ -76,7 +76,6 @@ function compileExports(themePaths, includeExamples) {
 
                     for (let i = nameStartIndex + 1, len = themeFileSplit.length - 1; i < len; i++) {
                         const currentFolder = themeFileSplit[i];
-
                         if (currentFolder.indexOf('_') === -1) {
                             let currentFolderPascal = themeFileSplit[i];
                             if (currentFolder.length === 1) {
@@ -124,81 +123,64 @@ function compileExports(themePaths, includeExamples) {
             }
         }
 
-        console.log(components);
-
         const componentKeys = Object.keys(components);
+
+        let componentUtilityExport = '';
 
         for (let componentIndex = 0, componentLen = componentKeys.length; componentIndex < componentLen; componentIndex++) {
             const componentKey = componentKeys[componentIndex];
             const component = components[componentKey];
             const compiledPath = path.resolve(__dirname + '/../src/compiled' + component.compiledPath);
 
-            let componentExports = '';
+            ensureDirectoryExistence(compiledPath + '/component_compiled.jsx'); // make the folder for the component if needed
 
-            ensureDirectoryExistence(compiledPath + '/component_compiled.jsx');
+            let componentExports = `const componentName = '${componentKey}';
+import { Sheet } from 'utility/stylesheet.js';
+let themesheet = new Sheet('peapod');
+let stylesheet = new Sheet(componentName);\n\n`;
 
+            for (let themeVarIndex = 0, themeVarLen = themes.length; themeVarIndex < themeVarLen; themeVarIndex++) {
+                componentExports += `import theme_${themeVarIndex} from '${themes[themeVarIndex].themePath}/theme.js';
+themesheet = theme_${themeVarIndex}(themesheet);\n\n`;
+            }
+
+
+            for (let styleIndex = 0, styleLen = component.stylePaths.length; styleIndex < styleLen; styleIndex++) {
+                componentExports += `import sheet_${styleIndex} from '${component.stylePaths[styleIndex]}';
+stylesheet = sheet_${styleIndex}(stylesheet);\n\n`;
+            }
+
+            componentExports += `import wrapper from 'utility/wrapper.jsx';
+
+import sourceComponent from '${component.componentPath}';
+
+let component = null;
+
+if (typeof(sourceComponent) === 'function') {
+    component = wrapper(sourceComponent(componentName), stylesheet, themesheet);
+    if (typeof(component) === 'undefined') {
+        throw new Error(componentName + ' is not returning or is returning undefined');
+    }
+    if (component.displayName !== componentName) {
+        throw new Error(componentName + ' is not setting the component name correctly');
+    }
+} else {
+    throw new Error(componentName + ' is not a function');
+}
+
+export default component;`;
             fs.writeFileSync(compiledPath + '/component_compiled.jsx', componentExports, {flag: 'w+'});
-        }
 
-        /*
+            if (component.examplePath !== '') {
+                let exampleExports = '';
+                fs.writeFileSync(compiledPath + '/example_compiled.jsx', exampleExports, {flag: 'w+'});
+            }
 
-        var componentExports = '';
-
-        var componentKeys = Object.keys(components);
-        for (var i = 0, len = componentKeys.length; i < len; i++) {
-        var componentKey = componentKeys[i];
-        var component = components[componentKey];
-        var indexPath = component.filePath + '/index.js';
-        componentExports += 'export ' + componentKey + ' from \'' + indexPath + '\';\n';
-
-        var componentIndex = '';
-        var componentExport = '';
-
-        if (component.hasExample || component.hasComponent) {
-        componentIndex += 'import wrapper from \'utility/wrapper.jsx\';\n';
-        }
-
-        if (component.hasExample) {
-        componentExports += 'export ' + componentKey + '_Example from \'' + component.filePath + '/example.jsx\';\n';
-        }
-
-        if (component.hasComponent) {
-        componentIndex += 'import unwrappedComponent from \'./component.jsx\';\n';
-        componentIndex += 'const wrappedComponent = wrapper(unwrappedComponent(\'' + componentKey + '\'));\n\n'
-
-        if (componentExport !== '') {
-        componentExport += ', ';
-        }
-        componentExport += 'wrappedComponent as default';
-        }
-
-        componentIndex += 'export { ' + componentExport + ' };\n';
-
-
-
-        if (fs.exists(indexPath)) {
-        var componentIndexOld = fs.readFileSync(indexPath);
-        } else {
-        var componentIndexOld = null;
-        }
-
-        if (componentIndex !== componentIndexOld) {
-        fs.writeFileSync(indexPath, componentIndex);
-        }
+            componentUtilityExport += `export ${componentKey} from '${compiledPath}/component_compiled.jsx';\n`;
 
         }
 
-        componentExports += 'import Styler from \'' + utilityBase + '/styler.js\';\n';
-        componentExports += 'window.Styler = window.Styler || Styler;\n';
-        componentExports += 'import theme from \'' + themePath + '/theme.js\';\n'
-        componentExports += 'window.Styler.addLibrary(\'root\', \'peapod\', {}, null, theme.sheet);\n';
-
-        var componentExportsOld = fs.readFileSync(utilityBase + '/components.js');
-        if (componentExportsOld != componentExports) {
-        fs.writeFileSync(utilityBase + '/components.js', componentExports);
-        console.log('wrote updated compontents file');
-        }
-        */
+        fs.writeFileSync(utilityPath + '/components.js', componentUtilityExport, {flag: 'w+'});
     }
 }
 

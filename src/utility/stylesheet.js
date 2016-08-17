@@ -383,19 +383,27 @@ class Sheet {
         this.name = name;
     }
 
-    setValues(values = {}, scene = 'common', custom = false) {
-        let variables = {
-            [scene]: {
-                [this.name]: values,
-            },
-        };
+    reset() {
+        this.values = {};
+        this.parts = {};
+        this.conditions = {};
+        this.variablesResolved = false;
+        this.scenesResolved = false;
+        this.stylesResolved = false;
+    }
 
+    setValues(values = {}, scene = 'common', custom = false) {
         if (custom) {
-            variables = values;
+            this.values = values;
+        } else {
+            this.values = {
+                [scene]: {
+                    [this.name]: values,
+                },
+            };
         }
 
-        this.values = variables;
-        Pod_Vars.register(variables);
+        Pod_Vars.register(this.values);
 
         return this;
     }
@@ -428,8 +436,13 @@ class Sheet {
     getName() {
         return this.name;
     }
-    getValues() {
-        return this.values;
+    getValues(scene) {
+        if (typeof(scene) === 'undefined') {
+            return this.values;
+        } else if (scene === 'common') {
+            return this.values.common;
+        }
+        return Object.assign({}, this.values.common, this.values[scene]);
     }
     getParts() {
         return this.parts;
