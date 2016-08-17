@@ -2,6 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const themePaths = require('../theme.js');
+
 function recursiveReadDirSync(dir) {
     let list = [];
     const files = fs.readdirSync(dir);
@@ -36,12 +38,8 @@ function ensureDirectoryExistence(filePath) {
     fs.mkdirSync(dirname);
 }
 
-function compileExports(themePaths, includeExamples) {
-    themePaths = [{
-        path: path.resolve(__dirname + '/../src/theme/peapod'),
-        name: 'peapod',
-    }];
-
+function compileExports() {
+    const includeExamples = true;
     const utilityPath = path.resolve(__dirname + '/../src/utility');
     const components = {};
     const themes = [];
@@ -186,8 +184,11 @@ export default component;`;
         fs.writeFileSync(utilityPath + '/components.js', componentUtilityExport, {flag: 'w+'});
 
         fs.writeFileSync(utilityPath + '/examples.js', exampleUtilityExport, {flag: 'w+'});
+
+        console.log('All files compiled\n\n');
     }
 }
 
+compileExports();
 
 module.exports = compileExports;

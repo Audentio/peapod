@@ -384,9 +384,7 @@ class Sheet {
     }
 
     reset() {
-        this.values = {};
         this.parts = {};
-        this.conditions = {};
         this.variablesResolved = false;
         this.scenesResolved = false;
         this.stylesResolved = false;

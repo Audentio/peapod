@@ -10,7 +10,7 @@ MyPlugin.prototype.apply = function(compiler) {
     compiler.plugin("compile", function(params) {
         //console.log("The compiler is starting to compile...");
 
-        compileExports('peapod', true);
+        //compileExports();
     });
 
     compiler.plugin("compilation", function(compilation) {
