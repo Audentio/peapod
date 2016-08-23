@@ -10,7 +10,9 @@ import Styler from 'utility/styler.js';
 
 module.exports = componentName => class Pod_Component extends React.Component {
 
-    static displayName = componentName;  constructor(props, context) {
+    static displayName = componentName;
+
+    constructor(props, context) {
         super(props, context);
 
         this.state = {
@@ -33,6 +35,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         };
     }
 
+    /*
     componentDidMount() {
         // initial check
         this.widthCheck();
@@ -108,6 +111,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     widthCheck() {
         this.widthSet(this.widthGet());
     }
+    */
 
     render() {
         const { styler, children, ...other } = this.props; // eslint-disable-line no-unused-vars

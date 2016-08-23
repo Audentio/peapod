@@ -7,5 +7,4 @@ require('react-redux');
 require('react-router');
 require('react-addons-perf');
 require('lodash');
-require('radium');
 require('shallowequal');
