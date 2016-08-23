@@ -14,14 +14,14 @@ module.exports = function (sheet) {
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         main.addSelector({
             common: {
-                borderBottomWidth: theme.section.borderWidth,
-                borderBottomStyle: theme.section.borderStyle,
-                borderBottomColor: theme.section.borderColor,
+                borderBottomWidth: component.borderWidth,
+                borderBottomStyle: component.borderStyle,
+                borderBottomColor: component.borderColor,
                 paddingTop(obj) {
-                    return obj.props.padding || theme.section.padding;
+                    return obj.props.padding || component.padding;
                 },
                 paddingBottom(obj) {
-                    return obj.props.padding || theme.section.padding;
+                    return obj.props.padding || component.padding;
                 },
                 fontFamily: theme.font.family.primary,
             },
