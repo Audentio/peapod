@@ -40,7 +40,8 @@ function ensureDirectoryExistence(filePath) {
 
 function compileExports() {
     const includeExamples = true;
-    const utilityPath = path.resolve(__dirname + '/../src/utility');
+    const basePath = path.resolve(__dirname + '/../src');
+    const utilityPath = path.resolve(basePath + '/utility');
     const components = {};
     const themes = [];
 
@@ -140,7 +141,7 @@ themesheet = theme_${themeVarIndex}(themesheet);\n\n`;
         for (let componentIndex = 0, componentLen = componentKeys.length; componentIndex < componentLen; componentIndex++) {
             const componentKey = componentKeys[componentIndex];
             const component = components[componentKey];
-            const compiledPath = path.resolve(__dirname + '/../src/compiled' + component.compiledPath);
+            const compiledPath = path.resolve(basePath + '/compiled' + component.compiledPath);
 
             ensureDirectoryExistence(compiledPath + '/component_compiled.jsx'); // make the folder for the component if needed
 
