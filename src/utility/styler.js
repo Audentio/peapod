@@ -110,7 +110,6 @@ window.Styler = window.Styler || {
             }
 
             sheet.setValues(sheetVals, 'common', isTheme); // TODO fix this Kyler
-            console.log(sheetVals);
         }
         return sheet;
     },
