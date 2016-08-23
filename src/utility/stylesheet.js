@@ -63,7 +63,7 @@ class Style {
                                     }
                                     delete style[key];
                                 } else {
-                                    Logger.warn(`Unsupported value for media query: ${style[key]}`);
+                                    //Logger.warn(`Unsupported value for media query: ${style[key]}`);
                                 }
                             }
                         } else {
