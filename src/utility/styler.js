@@ -20,7 +20,7 @@ window.Styler = window.Styler || {
     buildSources(obj) {
         const sources = [];
         const activeConditions = [];
-        const parts = {}; // all parts available to component
+        const parts = obj.stylesheet.getParts(); // all parts available to component
         const componentName = obj.componentName;
         const scene = obj.scene; // scene applying to object
         const libraries = ['preLocal', 'sheet', 'local'];
