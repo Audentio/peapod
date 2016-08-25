@@ -1,4 +1,4 @@
-import defaultSchema from 'utility/validation/defaultSchema.js';
+import defaultSchema from 'utility/validation/defaultSchema.jsx';
 
 function getValidator(props) {
     const { type, validator: validatorName, validationSchema } = props;

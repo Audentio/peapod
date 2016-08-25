@@ -29,13 +29,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
         ) : '';
 
         const secondary = (this.props.secondary !== undefined) ? (
-            <Heading kind="h6" weight="300" styler={{ secondary: true }} upper>
+            <Heading kind="h6" styler={{ h6Style: { fontWeight: 300 }, secondary: true }} upper>
                 {this.props.secondary}
             </Heading>
         ) : '';
 
         const main = (this.props.main !== undefined) ? (
-            <Heading kind="h4" weight="400" styler={{ secondary: true }} upper>
+            <Heading kind="h4" styler={{ h4Style: { fontWeight: 400 }, secondary: true }} upper>
                 {this.props.main}
             </Heading>
         ) : '';
