@@ -20,7 +20,7 @@ window.Styler = window.Styler || {
     buildSources(obj) {
         const sources = [];
         const activeConditions = [];
-        const parts = obj.stylesheet.getParts(); // all parts available to component
+        const parts = (typeof(obj.stylesheet) !== 'undefined') ? obj.stylesheet.getParts() : {}; // all parts available to component
         const componentName = obj.componentName;
         const scene = obj.scene; // scene applying to object
         const libraries = ['preLocal', 'sheet', 'local'];
@@ -40,10 +40,12 @@ window.Styler = window.Styler || {
                     if (part === 'main' && typeof(obj.styler.mainStyle) === 'undefined' && suffix === '') {
                         if (typeof(obj.styler.style) !== 'undefined') { // special case for `styler.style` applying to main
                             localStyle[part] = new Style(obj.styler.style).getStyle(); // process styling for media queries, shorthand, etc.
+                            //localStyle[part] = obj.styler.style;
                         }
                     } else {
                         if (typeof(obj.styler[`${part}Style${suffix}`]) !== 'undefined') { // any other inline styling that isn't `styler.style`
                             localStyle[part] = new Style(obj.styler[`${part}Style${suffix}`]).getStyle(); // process styling for media queries, shorthand, etc.
+                            //localStyle[part] = obj.styler[`${part}Style${suffix}`];
                         }
                     }
                 }

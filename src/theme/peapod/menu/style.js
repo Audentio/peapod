@@ -52,7 +52,7 @@ module.exports = function (sheet) {
             condition: ['level'],
             common: {
                 whiteSpace: 'nowrap',
-                transform: 'translate(0, -' + add(theme.gutter.large, theme.menu.paddingTop) + 'px)',
+                transform: 'translate(0, -' + add(theme.gutter.large, component.paddingTop) + 'px)',
                 left: '100%',
             },
         }).addSelector({
