@@ -26,9 +26,9 @@ npm install
 
 *****
 
-**Build DLLs (common dependencies)**
+**Build DLLs (common dependencies) and Imports**
 ```
-npm run dll
+npm run compile
 ```
 
 **Build & watch examples**
