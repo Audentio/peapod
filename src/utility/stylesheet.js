@@ -509,6 +509,42 @@ class Sheet {
         return this.docDefault;
     }
 
+    selector(selectors, styling) {
+        const splitSelectors = selectors.split(','); // allows chaining slectors with commas
+        for (let selectorsIndex = 0, selectorsLen = splitSelectors.length; selectorsIndex < selectorsLen; selectorsIndex++) {
+            const selector = splitSelectors[selectorsIndex];
+            const splitWords = selector.split(' '); // allows multiple words for descendent selectors
+            for (let wordIndex = 0, wordLen = splitWords.length; wordIndex < wordLen; wordIndex++) {
+                const word = splitWords[wordIndex];
+                const splitPseudo = word.split(':');
+                let pseudos = '';
+                for (let pseudoIndex = 1, pseudoLen = splitPseudo.length; pseudoIndex < pseudoLen; pseudoIndex++) {
+                    pseudos += ':' + splitPseudo[pseudoIndex];
+                }
+
+                if (pseudos !== '') {
+                    styling = {
+                        [pseudos]: styling,
+                    };
+                }
+
+                const splitConditions = splitPseudo[0].split('--'); // assumes pseudos come after modifiers
+                const part = splitConditions[0].replace('.', '');
+                const conditions = [];
+                for (let conditionIndex = 1, conditionLen = splitConditions.length; conditionIndex < conditionLen; conditionIndex++) {
+                    conditions.push(splitConditions[conditionIndex]);
+                }
+
+                this.addPart(part).addSelector({
+                    condition: conditions,
+                    common: styling,
+                });
+            }
+        }
+
+        return this;
+    }
+
     // check if a single condition is true
     getActiveConditions(instance, conditions) {
         const activeConditions = [];
