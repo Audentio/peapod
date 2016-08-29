@@ -15,7 +15,7 @@ module.exports = function (sheet) {
                 boxShadow: '0 1px 2px rgba(0,0,0,.2)',
                 display: 'inline-block',
                 textAlign: 'left',
-                maxWidth: '400px',
+                maxWidth: '450px',
             },
         });
     };
