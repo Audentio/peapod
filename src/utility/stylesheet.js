@@ -93,12 +93,17 @@ class Selector {
             this.condition = condition;
         }
 
+        this.prefix = [];
+        if (typeof(selector.prefix) !== 'undefined') {
+            this.prefix = selector.prefix;
+        }
+
         this.scenes = {};
 
         for (let i = 0, len = keys.length; i < len; i++) {
             const scene = keys[i];
 
-            if (scene !== 'condition') {
+            if (scene !== 'condition' && scene !== 'prefix') {
                 this.scenes[scene] = new Style(selector[scene]);
             }
         }
@@ -510,36 +515,70 @@ class Sheet {
     }
 
     selector(selectors, styling) {
+        const globalPattern = /:global\(.*\)/;
+
         const splitSelectors = selectors.split(','); // allows chaining slectors with commas
         for (let selectorsIndex = 0, selectorsLen = splitSelectors.length; selectorsIndex < selectorsLen; selectorsIndex++) {
             const selector = splitSelectors[selectorsIndex];
-            const splitWords = selector.split(' '); // allows multiple words for descendent selectors
-            for (let wordIndex = 0, wordLen = splitWords.length; wordIndex < wordLen; wordIndex++) {
-                const word = splitWords[wordIndex];
-                const splitPseudo = word.split(':');
-                let pseudos = '';
-                for (let pseudoIndex = 1, pseudoLen = splitPseudo.length; pseudoIndex < pseudoLen; pseudoIndex++) {
-                    pseudos += ':' + splitPseudo[pseudoIndex];
+            const globals = selector.match(globalPattern);
+            const splitGlobals = selector.split(globalPattern);
+            let result = ['html']; // start selectors with 'html'
+            let conditions = [];
+            let partName = 'ERROR';
+            for (let globalIndex = 0, globalLen = splitGlobals.length; globalIndex < globalLen; globalIndex++) {
+                const globalStr = splitGlobals[globalIndex];
+
+                if (globalIndex > 0) {
+                    const globalVal = globals[globalIndex - 1].substring(8, globals[globalIndex - 1].length - 1); // remove the surrounding ":global()"
+                    result.push(globalVal);
                 }
 
-                if (pseudos !== '') {
-                    styling = {
-                        [pseudos]: styling,
-                    };
-                }
+                const splitWords = globalStr.split(' '); // allows multiple words for descendent selectors
+                const splitWordsLen = splitWords.length;
+                for (let wordIndex = 0; wordIndex < splitWordsLen; wordIndex++) {
+                    result.push(' ');
 
-                const splitConditions = splitPseudo[0].split('--'); // assumes pseudos come after modifiers
-                const part = splitConditions[0].replace('.', '');
-                const conditions = [];
-                for (let conditionIndex = 1, conditionLen = splitConditions.length; conditionIndex < conditionLen; conditionIndex++) {
-                    conditions.push(splitConditions[conditionIndex]);
+                    const word = splitWords[wordIndex];
+                    const splitPseudos = word.split(':'); // split on pseudos to be able to later append them to the hashed selector
+                    for (let pseudoIndex = 0, pseudoLen = splitPseudos.length; pseudoIndex < pseudoLen; pseudoIndex++) {
+                        const pseudo = splitPseudos[pseudoIndex];
+                        if (pseudoIndex === 0) {
+                            const tagSplit = pseudo.split('.');
+                            for (let tagIndex = 0, tagLen = tagSplit.length; tagIndex < tagLen; tagIndex++) {
+                                const tag = tagSplit[tagIndex];
+                                if (tagIndex > 0) {
+                                    const splitConditions = tag.split('--');
+                                    for (let conditionIndex = 0, conditionLen = splitConditions.length; conditionIndex < conditionLen; conditionIndex++) {
+                                        const condition = splitConditions[conditionIndex];
+                                        if (conditionIndex === 0) {
+                                            conditions = [];
+                                            partName = condition.replace('.', '');
+                                            result.push(`.${this.name}__${partName}__`);
+                                            result.push('&'); // sentinal value for putting the instance's hash in
+                                        } else {
+                                            conditions.push(condition);
+                                        }
+                                    }
+                                } else if (tag !== '') {
+                                    result.push(tag);
+                                }
+                            }
+                        } else {
+                            result.push(`:${pseudo}`);
+                        }
+                    }
                 }
-
-                this.addPart(part).addSelector({
-                    condition: conditions,
-                    common: styling,
-                });
             }
+
+            result = result.join('');
+
+            this.addPart(partName).addSelector({
+                condition: conditions,
+                common: {
+                    [result]: styling,
+                },
+                selector: result,
+            });
         }
 
         return this;
