@@ -214,7 +214,7 @@ window.Styler = window.Styler || {
                 }
 
                 if (classRet === true) {
-                    style[partKey] = `${componentName}_${partKey}_${styleKeyBase}`;
+                    style[partKey] = `${componentName}__${partKey}__${styleKeyBase}`;
 
                     if (typeof(style.style[partKey]) === 'undefined') {
                         style.style[partKey] = partStyle;
@@ -333,9 +333,11 @@ window.Styler = window.Styler || {
         const pseudoKeys = Object.keys(pseudoSelectors);
 
         if (pseudoSelectors._default !== '') {
-            sheetEle.insertRule(`html .${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first
+            sheetEle.insertRule(`html .${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first for CSS Cascade
         }
 
+        const splitClassKey = classKey.split('__');
+        const unique = splitClassKey[splitClassKey.length - 1];
         for (let i = 0, len = pseudoKeys.length; i < len; i++) {
             const pseudoKey = pseudoKeys[i];
             if (pseudoKey === '_default') {
@@ -344,8 +346,12 @@ window.Styler = window.Styler || {
                 sheetEle.insertRule(`${pseudoKey} {html .${classKey} {${pseudoSelectors[pseudoKey]}} }\n`, sheetEle.cssRules.length);
             } else if (pseudoKey.indexOf('@element') > -1) {
                 console.warn('Kyler, add in element queries');
-            } else {
+            } else if (pseudoKey.indexOf(':') === 0) {
                 sheetEle.insertRule(`html .${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
+            } else {
+                const processedKey = pseudoKey.split('&').join(unique);
+                sheetEle.insertRule(`${processedKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length);
+                console.log(`${processedKey} {${pseudoSelectors[pseudoKey]}}\n`)
             }
         }
     },
