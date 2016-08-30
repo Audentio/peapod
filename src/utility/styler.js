@@ -333,7 +333,7 @@ window.Styler = window.Styler || {
         const pseudoKeys = Object.keys(pseudoSelectors);
 
         if (pseudoSelectors._default !== '') {
-            sheetEle.insertRule(`html .${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first for CSS Cascade
+            sheetEle.insertRule(`.${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first for CSS Cascade
         }
 
         const splitClassKey = classKey.split('__');
@@ -343,11 +343,11 @@ window.Styler = window.Styler || {
             if (pseudoKey === '_default') {
                 // don't add
             } else if (pseudoKey.indexOf('@media') > -1) {
-                sheetEle.insertRule(`${pseudoKey} {html .${classKey} {${pseudoSelectors[pseudoKey]}} }\n`, sheetEle.cssRules.length);
+                sheetEle.insertRule(`${pseudoKey} {.${classKey} {${pseudoSelectors[pseudoKey]}} }\n`, sheetEle.cssRules.length);
             } else if (pseudoKey.indexOf('@element') > -1) {
                 console.warn('Kyler, add in element queries');
             } else if (pseudoKey.indexOf(':') === 0) {
-                sheetEle.insertRule(`html .${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
+                sheetEle.insertRule(`.${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
             } else {
                 const processedKey = pseudoKey.split('&').join(unique);
                 sheetEle.insertRule(`${processedKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length);

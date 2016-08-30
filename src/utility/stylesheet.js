@@ -522,7 +522,7 @@ class Sheet {
             const selector = splitSelectors[selectorsIndex];
             const globals = selector.match(globalPattern);
             const splitGlobals = selector.split(globalPattern);
-            let result = ['html']; // start selectors with 'html'
+            let result = [];
             let conditions = [];
             let partName = 'ERROR';
             for (let globalIndex = 0, globalLen = splitGlobals.length; globalIndex < globalLen; globalIndex++) {
