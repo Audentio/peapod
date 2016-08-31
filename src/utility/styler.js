@@ -75,6 +75,11 @@ window.Styler = window.Styler || {
                     }
 
                     const sheetData = localsheet.getAllStyling(obj, scene, allConditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+
+                    console.log(sheetData);
+                    console.log(localsheet.getAllSelectors(obj, scene, allConditions, localVars, globalVars));
+                    console.log('=======');
+
                     source = sheetData.source;
 
                     for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {

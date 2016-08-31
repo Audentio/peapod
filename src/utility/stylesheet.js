@@ -77,6 +77,10 @@ class Style {
         }
         return this.style;
     }
+
+    getRawStyle() {
+        return this.style;
+    }
 }
 
 // A selector (condition and style)
@@ -144,6 +148,20 @@ class Selector {
 
     getSelector(instance, scene) {
         return this.getStyling(instance, scene);
+    }
+
+    // Gets styling for the specified scene, but in a raw form
+    getRawStyling(instance, scene) {
+        if (typeof(this.scenes.common) !== 'undefined') {
+            if (typeof(this.scenes[scene]) !== 'undefined') {
+                return _Merge({}, this.scenes.common.getRawStyle(instance), this.scenes[scene].getRawStyle(instance));
+            }
+            return this.scenes.common.getRawStyle(instance);
+        }
+        if (typeof(this.scenes[scene]) !== 'undefined') {
+            return this.scenes[scene].getRawStyle(instance);
+        }
+        return null;
     }
 }
 
@@ -244,6 +262,19 @@ class Part {
         }
         return styling;
     }
+
+    // will get an array of all selectors
+    getRawStyling(instance, scene) {
+        const styling = [];
+
+        for (let i = 0, len = this.selectors.length; i < len; i++) {
+            const selector = this.selectors[i].getRawStyling(instance, scene);
+            styling.push(selector);
+        }
+
+        return styling;
+    }
+
 }
 
 // Root part of a component
@@ -472,10 +503,7 @@ class Sheet {
     }
 
     getAllStyling(instance, scene = 'normal', conditions, localVars, globalVars) {
-        if (typeof(this.resolveStyles) === 'function' && !this.stylesResolved) {
-            this.stylesResolved = true;
-            this.resolveStyles(localVars, globalVars);
-        }
+        this.resolve(localVars, globalVars);
 
         const source = {};
         const partKeys = Object.keys(this.parts);
@@ -504,6 +532,46 @@ class Sheet {
         }
 
         return { source, activeConditions };
+    }
+
+    getAllSelectors(instance, scene = 'normal', conditions, localVars, globalVars) {
+        this.resolve(localVars, globalVars);
+
+        const source = {};
+        const partKeys = Object.keys(this.parts);
+        const activeConditions = this.getActiveConditions(instance, conditions);
+        const dynamicConditions = [];
+
+
+        for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
+            const partName = partKeys[partIndex];
+            const partSelectors = this.parts[partName].getRawStyling(instance, scene);
+
+            for (let selectorIndex = 0, selectorLen = partSelectors.length; selectorIndex < selectorLen; selectorIndex++) {
+                const selector = partSelectors[selectorIndex];
+                const selectorKeys = Object.keys(selector);
+                for (let ruleIndex = 0, ruleLen = selectorKeys.length; ruleIndex < ruleLen; ruleIndex++) {
+                    const ruleKey = selectorKeys[ruleIndex];
+                    const ruleVal = selector[ruleKey];
+
+                    if (typeof(ruleVal) === 'function') {
+                        partSelectors[selectorIndex][ruleKey] = ruleVal(instance);
+                        dynamicConditions.push(`computed_${partName}_${selectorIndex}_${ruleIndex}_${partSelectors[selectorIndex][ruleKey]}`);
+                    }
+                }
+            }
+
+            source[partName] = partSelectors;
+        }
+
+        return { source, dynamicConditions, activeConditions };
+    }
+
+    resolve(localVars, globalVars) { // resolveStyles, will only be run once
+        if (typeof(this.resolveStyles) === 'function' && !this.stylesResolved) {
+            this.stylesResolved = true;
+            this.resolveStyles(localVars, globalVars);
+        }
     }
 
     getDoc() {
@@ -553,10 +621,15 @@ class Sheet {
                                         if (conditionIndex === 0) {
                                             conditions = [];
                                             partName = condition.replace('.', '');
+                                        }
+                                        if (conditionLen === 1) {
                                             result.push(`.${this.name}__${partName}__`);
                                             result.push('&'); // sentinal value for putting the instance's hash in
-                                        } else {
+                                        } else if (conditionIndex > 0) {
                                             conditions.push(condition);
+                                            result.push(`.${this.name}__${partName}__`);
+                                            result.push('&'); // sentinal value for putting the instance's hash in
+                                            result.push(`--${condition}`);
                                         }
                                     }
                                 } else if (tag !== '') {
@@ -571,6 +644,12 @@ class Sheet {
             }
 
             result = result.join('');
+
+            /*
+            console.log(selectors);
+            console.log(result);
+            console.log('======')
+            */
 
             this.addPart(partName).addSelector({
                 condition: conditions,
