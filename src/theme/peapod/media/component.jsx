@@ -52,14 +52,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const title = (this.props.title) ? titleContents : '';
 
         return (
-            <Block className={classes.main}>
+            <div className={classes.main}>
                 {figureLeft}
-                <Block className={classes.content}>
+                <div className={classes.content}>
                     {title}
                     {this.props.children}
-                </Block>
+                </div>
                 {figureRight}
-            </Block>
+            </div>
         );
     }
 };

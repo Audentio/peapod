@@ -1,7 +1,7 @@
 module.exports = function (sheet) {
-    sheet.addCondition('textCenter').addFunction((obj) => {
-        return obj.props.textCenter;
-    })
+    sheet.addCondition('textCenter').addFunction((obj) => obj.props.textCenter);
+    sheet.addCondition('block').addFunction((obj) => obj.props.block);
+
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {};
@@ -26,6 +26,8 @@ module.exports = function (sheet) {
             display: 'inline-block',
         }).selector('.inner.--textCenter', {
             textAlign: 'center',
+        }).selector('.inner.--block', {
+            display: 'block',
         });
     };
 

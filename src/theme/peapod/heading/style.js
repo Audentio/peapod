@@ -22,6 +22,8 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        sheet.selector('.main', {});
+
         const parts = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
         const fontSizes = ['xxxlarge', 'xxlarge', 'xlarge', 'large', 'normal', 'small'];
         for (let i = 0, len = parts.length; i < len; i++) {
