@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     sheet.addCondition('orderSet').addStyler({ order: ['!=', undefined] });
     sheet.addCondition('flexSet').addStyler({ flex: ['!=', undefined] });
 
@@ -43,56 +41,31 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            condition: ['orderSet'],
-            common: {
-                order: (obj) => (obj.styler.order),
-            },
-        });
-
-        main.addSelector({
-            condition: ['flexSet'],
-            common: {
-                flex: (obj) => (obj.styler.flex),
-            },
+        sheet.selector('.main.--orderSet', {
+            order: (obj) => (obj.styler.order),
+        }).selector('.main.--flexSet', {
+            flex: (obj) => (obj.styler.flex),
         });
 
         for (let choiceIndex = 0; choiceIndex < flexChoices.length; choiceIndex++) { // loop through all choices
-            main.addSelector({
-                condition: ['alignSelf_' + flexChoices[choiceIndex]],
-                common: {
-                    alignSelf: flexChoices[choiceIndex],
-                },
+            sheet.selector(`.main.--alignSelf_${flexChoices[choiceIndex]}`, {
+                alignSelf: flexChoices[choiceIndex],
             });
         }
 
         for (let sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
             for (let i = 0; i < 13; i++) { // loop through size values
-                main.addSelector({
-                    condition: [[abbrevs[sizeIndex]] + '_' + i],
-
-                    common: {
-                        [component[sizes[sizeIndex]]]: { width: (100 * (i / 12)) + '%' },
+                sheet.selector(`.main.--${[abbrevs[sizeIndex]]}_${i}`, {
+                    [component[sizes[sizeIndex]]]: { width: (100 * (i / 12)) + '%' },
+                }).selector(`.main.--${[abbrevs[sizeIndex]]}Push_${i}`, {
+                    [component[sizes[sizeIndex]]]: {
+                        position: 'relative',
+                        left: (100 * (i / 12)) + '%',
                     },
-                });
-
-                main.addSelector({
-                    condition: [[abbrevs[sizeIndex]] + 'Push_' + i],
-                    common: {
-                        [component[sizes[sizeIndex]]]: {
-                            position: 'relative',
-                            left: (100 * (i / 12)) + '%',
-                        },
-                    },
-                });
-
-                main.addSelector({
-                    condition: [[abbrevs[sizeIndex]] + 'Pull_' + i],
-                    common: {
-                        [component[sizes[sizeIndex]]]: {
-                            position: 'relative',
-                            left: (-100 * (i / 12)) + '%',
-                        },
+                }).selector(`.main.--${[abbrevs[sizeIndex]]}Pull_${i}`, {
+                    [component[sizes[sizeIndex]]]: {
+                        position: 'relative',
+                        left: (-100 * (i / 12)) + '%',
                     },
                 });
             }

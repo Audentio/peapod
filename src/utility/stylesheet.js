@@ -27,7 +27,7 @@ class Style {
                 const hyphenatedRule = rule.replace(/^([A-Z])/g, '-$1').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
                 if (rule !== hyphenatedRule) {
                     obj[hyphenatedRule] = val;
-                    // delete obj.rule;
+                    delete obj[rule]; // Comment this to keep js rules
                 }
             }
         }
@@ -75,6 +75,10 @@ class Style {
 
             return style;
         }
+        return this.style;
+    }
+
+    getRawStyle() {
         return this.style;
     }
 }
@@ -144,6 +148,20 @@ class Selector {
 
     getSelector(instance, scene) {
         return this.getStyling(instance, scene);
+    }
+
+    // Gets styling for the specified scene, but in a raw form
+    getRawStyling(instance, scene) {
+        if (typeof(this.scenes.common) !== 'undefined') {
+            if (typeof(this.scenes[scene]) !== 'undefined') {
+                return _Merge({}, this.scenes.common.getRawStyle(instance), this.scenes[scene].getRawStyle(instance));
+            }
+            return this.scenes.common.getRawStyle(instance);
+        }
+        if (typeof(this.scenes[scene]) !== 'undefined') {
+            return this.scenes[scene].getRawStyle(instance);
+        }
+        return null;
     }
 }
 
@@ -244,6 +262,19 @@ class Part {
         }
         return styling;
     }
+
+    // will get an array of all selectors
+    getRawStyling(instance, scene) {
+        const styling = [];
+
+        for (let i = 0, len = this.selectors.length; i < len; i++) {
+            const selector = this.selectors[i].getRawStyling(instance, scene);
+            styling.push(selector);
+        }
+
+        return styling;
+    }
+
 }
 
 // Root part of a component
@@ -472,10 +503,7 @@ class Sheet {
     }
 
     getAllStyling(instance, scene = 'normal', conditions, localVars, globalVars) {
-        if (typeof(this.resolveStyles) === 'function' && !this.stylesResolved) {
-            this.stylesResolved = true;
-            this.resolveStyles(localVars, globalVars);
-        }
+        this.resolve(localVars, globalVars);
 
         const source = {};
         const partKeys = Object.keys(this.parts);
@@ -504,6 +532,106 @@ class Sheet {
         }
 
         return { source, activeConditions };
+    }
+
+    expandSelectors(selectors) {
+        const newSelectors = [];
+        for (let selectorIndex = 0, selectorLen = selectors.length; selectorIndex < selectorLen; selectorIndex++) {
+            const selector = selectors[selectorIndex];
+            const selectorKeys = Object.keys(selector);
+            for (let i = 0, len = selectorKeys.length; i < len; i++) {
+                const key = selectorKeys[i];
+                const style = selector[key];
+                const result = this.expandSelectorObjects(style, '', key, '', 0);
+                for (let resultIndex = 0, resultLen = result.length; resultIndex < resultLen; resultIndex++) {
+                    newSelectors.push(result[resultIndex]);
+                }
+            }
+        }
+        return newSelectors;
+    }
+
+    expandSelectorObjects(styleObj, prefix, name, suffix, depth = 0) {
+        const combinedName = `${prefix}${name}${suffix}`;
+        const result = [];
+        const newStyleObj = {};
+        if (depth < 20) {
+            const styleKeys = Object.keys(styleObj);
+            for (let styleIndex = 0, styleLen = styleKeys.length; styleIndex < styleLen; styleIndex++) {
+                const styleKey = styleKeys[styleIndex];
+                const style = styleObj[styleKey];
+
+                if (typeof(style) === 'object') {
+                    let newPrefix = '';
+                    let newSuffix = '';
+                    if (styleKey.indexOf('@media') >= 0) {
+                        newPrefix = styleKey + '|||'; // sentinal character to divide media query
+                    } else {
+                        newSuffix = styleKey;
+                    }
+
+                    const expandedStyle = this.expandSelectorObjects(style, newPrefix, combinedName, newSuffix, depth + 1);
+                    for (let expandedIndex = 0, expandedLen = expandedStyle.length; expandedIndex < expandedLen; expandedIndex++) {
+                        result.push(expandedStyle[expandedIndex]); // add as a separate selector
+                    }
+                } else {
+                    newStyleObj[styleKey] = style;
+                }
+            }
+
+            result.unshift({ [combinedName]: newStyleObj }); // add default styling first
+
+            return result;
+        }
+
+        throw new Error('Expanding selector depth exceeded 20');
+    }
+
+    getAllSelectors(instance, scene = 'normal', conditions, localVars, globalVars) {
+        this.resolve(localVars, globalVars);
+
+        const source = {};
+        const partKeys = Object.keys(this.parts);
+        const activeConditions = this.getActiveConditions(instance, conditions);
+        const dynamicConditions = [];
+
+        for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
+            const partName = partKeys[partIndex];
+            const partRawSelectors = this.parts[partName].getRawStyling(instance, scene);
+
+            const partSelectors = this.expandSelectors(partRawSelectors);
+
+            for (let selectorIndex = 0, selectorLen = partSelectors.length; selectorIndex < selectorLen; selectorIndex++) {
+                const selector = partSelectors[selectorIndex];
+                const selectorKeys = Object.keys(selector);
+                for (let ruleIndex = 0, ruleLen = selectorKeys.length; ruleIndex < ruleLen; ruleIndex++) {
+                    const selectorKey = selectorKeys[ruleIndex];
+                    const selectorVal = selector[selectorKey];
+                    const ruleKeys = Object.keys(selectorVal);
+
+                    for (let keyIndex = 0, keyLen = ruleKeys.length; keyIndex < keyLen; keyIndex++) {
+                        const ruleKey = ruleKeys[keyIndex];
+                        const ruleVal = selectorVal[ruleKey];
+
+                        if (typeof(ruleVal) === 'function' && ruleKey.indexOf('__') === -1) { // evaluate any getProp functions, ignore __Radium things
+                            partSelectors[selectorIndex][selectorKey][ruleKey] = ruleVal(instance);
+                            dynamicConditions.push(`computed_${instance.componentName}_${partName}_${selectorIndex}_${ruleIndex}_${keyIndex}_${partSelectors[selectorIndex][selectorKey][ruleKey]}`);
+                        }
+                    }
+                }
+            }
+
+            source[partName] = partSelectors;
+        }
+
+        return { source, dynamicConditions, activeConditions };
+    }
+
+    resolve(localVars, globalVars) { // resolveStyles, will only be run once
+        if (typeof(this.resolveStyles) === 'function' && !this.stylesResolved) {
+            this.stylesResolved = true;
+            this.resolveStyles(localVars, globalVars);
+        }
     }
 
     getDoc() {
@@ -550,13 +678,27 @@ class Sheet {
                                     const splitConditions = tag.split('--');
                                     for (let conditionIndex = 0, conditionLen = splitConditions.length; conditionIndex < conditionLen; conditionIndex++) {
                                         const condition = splitConditions[conditionIndex];
+                                        const tempPartName = condition.replace('.', '');
                                         if (conditionIndex === 0) {
                                             conditions = [];
-                                            partName = condition.replace('.', '');
+                                            if (tempPartName !== '') {
+                                                partName = tempPartName;
+                                            }
+                                        }
+                                        if (conditionLen === 1) {
                                             result.push(`.${this.name}__${partName}__`);
                                             result.push('&'); // sentinal value for putting the instance's hash in
-                                        } else {
+                                        } else if (conditionIndex > 0) {
                                             conditions.push(condition);
+                                            if (tempPartName === '') {
+                                                result.push(`.${this.name}__`);
+                                                result.push('&'); // sentinal value for putting the instance's hash in
+                                                result.push(`--${condition}`);
+                                            } else {
+                                                result.push(`.${this.name}__${partName}__`);
+                                                result.push('&'); // sentinal value for putting the instance's hash in
+                                                result.push(`--${condition}`);
+                                            }
                                         }
                                     }
                                 } else if (tag !== '') {
@@ -571,6 +713,8 @@ class Sheet {
             }
 
             result = result.join('');
+
+            styling._theme = 'peapod';
 
             this.addPart(partName).addSelector({
                 condition: conditions,

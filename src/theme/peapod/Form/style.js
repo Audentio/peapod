@@ -1,9 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const submit = sheet.addPart('submit');
-    const form = sheet.addPart('form');
-    const overlay = sheet.addPart('overlay');
-
     sheet.addCondition('disabled').addState({ disabled: true });
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
@@ -12,49 +7,35 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        form.addSelector({
-            common: {
-                position: 'relative',
-                paddingTop: 15,
-                WebkitFilter: 'none',
-                transition: '.2s',
-            },
+        sheet.selector('.main.--disabled', {
+            WebkitFilter: 'blur(3px)',
         });
 
-        main.addSelector({
-            condition: 'disabled',
-            common: {
-                WebkitFilter: 'blur(3px)',
-            },
+        sheet.selector('.form', {
+            position: 'relative',
+            paddingTop: 15,
+            WebkitFilter: 'none',
+            transition: '.2s',
         });
 
-        overlay.addSelector({
-            common: {
-                backgroundColor: 'rgba(255,255,255, 0)',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                zIndex: 10,
-                visibility: 'hidden',
-                transition: '.2s',
-                opacity: 0,
-            },
+        sheet.selector('.overlay', {
+            backgroundColor: 'rgba(255,255,255, 0)',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 10,
+            visibility: 'hidden',
+            transition: '.2s',
+            opacity: 0,
+        }).selector('.overlay.--disabled', {
+            visibility: 'visible',
+            opacity: 1,
         });
 
-        overlay.addSelector({
-            condition: 'disabled',
-            common: {
-                visibility: 'visible',
-                opacity: 1,
-            },
-        });
-
-        submit.addSelector({
-            common: {
-                display: 'none',
-            },
+        sheet.selector('.submit', {
+            display: 'none',
         });
     };
 

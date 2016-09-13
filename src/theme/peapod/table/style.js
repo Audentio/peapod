@@ -1,7 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const footer = sheet.addPart('footer');
-
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {
             color: {
@@ -64,20 +61,16 @@ module.exports = function (sheet) {
 
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                width: '100%',
-                display: 'block',
-                borderRadius: component.border.radius,
-                overflowX: 'auto',
-            },
+        sheet.selector('.main', {
+            width: '100%',
+            display: 'block',
+            borderRadius: component.border.radius,
+            overflowX: 'auto',
         });
 
-        footer.addSelector({
-            common: {
-                background: component.color.controls.background,
-                color: component.color.controls.color,
-            },
+        sheet.selector('.footer', {
+            background: component.color.controls.background,
+            color: component.color.controls.color,
         });
     };
 

@@ -55,103 +55,67 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        // Root
-        innerBox.addSelector({
-            common: {
-                width: component.width,
-                height: component.height,
-                display: 'inline-block',
-                backgroundColor: 'transparent',
-                borderRadius: component.border.radius,
-                borderWidth: component.border.width,
-                borderStyle: component.border.style,
-                borderColor: component.border.color,
-                // marginRight: '10px',
-                verticalAlign: 'middle',
-            },
-        }).addSelector({
-            condition: ['checked'],
-            common: {
-                backgroundColor: component.color.backgroundChecked,
-                borderColor: component.border.colorChecked,
-            },
-        }).addSelector({
-            condition: ['disabled'],
-            common: {
-                opacity: '0.6',
-                borderColor: component.border.colorChecked,
-            },
-        }).addSelector({
-            condition: ['disabled', 'checked'],
-            common: {
-                opacity: '0.6',
-                backgroundColor: component.color.backgroundChecked,
-                borderColor: component.border.colorChecked,
-            },
+        sheet.selector('.main', {
+            display: 'inline-block',
+        }).selector('.main.--block', {
+            display: 'block',
         });
 
-        // Outer Wrapper
-        main.addSelector({
-            common: {
-                display: 'inline-block',
-            },
-        }).addSelector({
-            condition: 'block',
-            common: {
-                display: 'block',
-            },
+        sheet.selector('.innerBox', {
+            width: component.width,
+            height: component.height,
+            display: 'inline-block',
+            backgroundColor: 'transparent',
+            borderRadius: component.border.radius,
+            borderWidth: component.border.width,
+            borderStyle: component.border.style,
+            borderColor: component.border.color,
+            // marginRight: '10px',
+            verticalAlign: 'middle',
+        }).selector('.innerBox.--checked', {
+            backgroundColor: component.color.backgroundChecked,
+            borderColor: component.border.colorChecked,
+        }).selector('.innerBox.--disabled', {
+            opacity: '0.6',
+            borderColor: component.border.colorChecked,
+        }).selector('.innerBox.--disabled.--checked', {
+            opacity: '0.6',
+            backgroundColor: component.color.backgroundChecked,
+            borderColor: component.border.colorChecked,
         });
 
-        // Wrapper
-        wrapper.addSelector({
-            common: {
-                display: 'flex',
-                alignItems: 'center',
-            },
+        sheet.selector('.wrapper', {
+            display: 'flex',
+            alignItems: 'center',
         });
 
-        // Box
-        box.addSelector({
-            common: {
-                position: 'relative',
-                cursor: 'pointer',
-            },
+        sheet.selector('.box', {
+            position: 'relative',
+            cursor: 'pointer',
         });
 
-        // Input
-        input.addSelector({
-            common: {
-                display: 'none',
-            },
+        sheet.selector('.input', {
+            display: 'none',
         });
 
-        // Icon
-        icon.addSelector({
-            common: {
-                color: component.color.icon,
-                position: 'absolute',
-                cursor: 'pointer',
-                top: '53%',
-                transform: 'translateY(-50%)',
-                left: '1px',
-                display: 'none',
-                fontSize: component.font.size,
-            },
-        }).addSelector({
-            condition: 'checked',
-            common: {
-                display: 'inline-block',
-            },
+        sheet.selector('.icon', {
+            color: component.color.icon,
+            position: 'absolute',
+            cursor: 'pointer',
+            top: '53%',
+            transform: 'translateY(-50%)',
+            left: '1px',
+            display: 'none',
+            fontSize: component.font.size,
+        }).selector('.icon.--checked', {
+            display: 'inline-block',
         });
 
-        // Label
-        label.addSelector({
-            common: {
-                marginLeft: 10,
-                fontFamily: component.font.family,
-                fontSize: component.font.size,
-                color: component.color.text,
-            },
+        sheet.selector('.label', {
+            marginLeft: 10,
+            fontFamily: component.font.family,
+            fontSize: component.font.size,
+            color: component.color.text,
         });
     };
 

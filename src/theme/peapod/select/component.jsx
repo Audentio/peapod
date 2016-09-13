@@ -107,14 +107,14 @@ module.exports = componentName => class Pod_Component extends Component {
         const trigger = (
             <div className={classes.trigger} onClick={this.toggle}>
                 {displayValue}
-                <Icon style={classes.style.triggerIcon}>{open ? 'arrow_drop_up' : 'arrow_drop_down'}</Icon>
+                <Icon className={classes.triggerIcon}>{open ? 'arrow_drop_up' : 'arrow_drop_down'}</Icon>
             </div>
         );
 
         return (
             <div className={classes.main} ref="main">
                 {trigger}
-                {open && <Menu styler={{ style: classes.style.menu }} json={menu} />}
+                {open && <Menu className={classes.menu} json={menu} />}
             </div>
         );
     }

@@ -1,11 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const input = sheet.addPart('input');
-    const track = sheet.addPart('track');
-    const trackBackground = sheet.addPart('trackBackground');
-    const handle = sheet.addPart('handle');
-    const handleFocus = sheet.addPart('handleFocus');
-
     sheet.addCondition('handleActive').addState({ handleActive: true });
     sheet.addCondition('valueZero').addState({ handleLeft: 0 });
 
@@ -21,100 +14,67 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                position: 'relative',
-                padding: '7px 0',
-                marginBottom: 15,
-            },
+        sheet.selector('.main', {
+            position: 'relative',
+            padding: '7px 0',
+            marginBottom: 15,
         });
 
-        input.addSelector({
-            common: {
-                display: 'none',
-            },
+        sheet.selector('.input', {
+            display: 'none',
         });
 
-        track.addSelector({
-            common: {
-                backgroundColor: component.trackColor,
-                width: '100%',
-                height: 4,
-                position: 'relative',
-                transition: 'backgroundColor .3s',
-            },
-        }).addSelector({
-            condition: ['handleActive'],
-            common: {
-                backgroundColor: component.trackFocusedColor,
-            },
-        });
-        trackBackground.addSelector({
-            common: {
-                backgroundColor: component.mainColor,
-                height: 4,
-                position: 'relative',
-            },
+        sheet.selector('.track', {
+            backgroundColor: component.trackColor,
+            width: '100%',
+            height: 4,
+            position: 'relative',
+            transition: 'backgroundColor .3s',
+        }).selector('.track.--handleActive', {
+            backgroundColor: component.trackFocusedColor,
         });
 
-        handle.addSelector({
-            common: {
-                cursor: 'pointer',
-                height: 14,
-                width: 14,
-                borderRadius: 100,
-                backgroundColor: component.mainColor,
-                // boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
-                position: 'absolute',
-                top: '50%',
-                marginLeft: -7,
-                marginTop: -7,
-                transition: 'backgroundColor .3s',
-            },
-        }).addSelector({
-            condition: ['valueZero'],
-            common: {
-                backgroundColor: component.trackColor,
-            },
-        }).addSelector({
-            condition: ['valueZero', 'handleActive'],
-            common: {
-                backgroundColor: component.trackFocusedColor,
-            },
+        sheet.selector('.trackBackground', {
+            backgroundColor: component.mainColor,
+            height: 4,
+            position: 'relative',
         });
 
-        handleFocus.addSelector({
-            common: {
-                position: 'absolute',
-                top: '-10px',
-                right: '-10px',
-                bottom: '-10px',
-                left: '-10px',
-                background: component.mainColor,
-                borderRadius: '1000px',
-                opacity: 0,
-                transition: 'opacity .3s',
-            },
-        }).addSelector({
-            condition: ['handleActive'],
-            common: {
-                opacity: 0.3,
-            },
-        }).addSelector({
-            condition: ['valueZero'],
-            common: {
-                background: component.trackColor,
-            },
-        }).addSelector({
-            condition: ['valueZero', 'handleActive'],
-            common: {
-                background: component.trackFocusedColor,
-            },
+        sheet.selector('.handle', {
+            cursor: 'pointer',
+            height: 14,
+            width: 14,
+            borderRadius: 100,
+            backgroundColor: component.mainColor,
+            // boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+            position: 'absolute',
+            top: '50%',
+            marginLeft: -7,
+            marginTop: -7,
+            transition: 'backgroundColor .3s',
+        }).selector('.handle.--valueZero', {
+            backgroundColor: component.trackColor,
+        }).selector('.handle.--valueZero.--handleActive', {
+            backgroundColor: component.trackFocusedColor,
         });
 
-        if ('ontouchstart' in window) {
-            handle.addSelector({});
-        }
+        sheet.selector('.handleFocus', {
+            position: 'absolute',
+            top: '-10px',
+            right: '-10px',
+            bottom: '-10px',
+            left: '-10px',
+            background: component.mainColor,
+            borderRadius: '1000px',
+            opacity: 0,
+            transition: 'opacity .3s',
+        }).selector('.handleFocus.--handleActive', {
+            opacity: 0.3,
+        }).selector('.handleFocus.--valueZero', {
+            background: component.trackColor,
+        }).selector('.handleFocus.--valueZero.--handleActive', {
+            background: component.trackFocusedColor,
+        });
     };
 
     return sheet;

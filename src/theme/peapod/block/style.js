@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     // Conditions
     sheet.addCondition('alignRight').addProp({ align: 'right' });
     sheet.addCondition('alignLeft').addProp({ align: 'left' });
@@ -13,34 +11,20 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                overflow: 'hidden',
+        sheet.selector('.main', {
+            overflow: 'hidden',
+        }).selector('.main.--padded', {
+            padding(obj) {
+                return obj.props.padding || theme.gutter.small;
             },
-        }).addSelector({
-            condition: ['padded'],
-            common: {
-                padding(obj) {
-                    return obj.props.padding || theme.gutter.small;
-                },
-            },
-        }).addSelector({
-            condition: ['alignLeft'],
-            common: {
-                float: 'left',
-                marginRight: theme.gutter.small,
-            },
-        }).addSelector({
-            condition: ['alignRight'],
-            common: {
-                float: 'right',
-                marginLeft: theme.gutter.small,
-            },
-        }).addSelector({
-            condition: ['alignCenter'],
-            common: {
-                textAlign: 'center',
-            },
+        }).selector('.main.--alignLeft', {
+            float: 'left',
+            marginRight: theme.gutter.small,
+        }).selector('.main.--alignRight', {
+            float: 'right',
+            marginLeft: theme.gutter.small,
+        }).selector('.main.--alignCenter', {
+            textAlign: 'center',
         });
     };
 

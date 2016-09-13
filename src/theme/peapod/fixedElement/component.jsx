@@ -141,7 +141,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             );
         }
         return (
-            <div style={style.main}>
+            <div className={style.main}>
                 {this.props.children}
             </div>
         );

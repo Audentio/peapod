@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {
             width: '100%',
@@ -13,14 +11,12 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                width: component.width,
-                height: component.height,
-                background: component.background,
-                padding: component.padding,
-                fontSize: component.fontSize,
-            },
+        sheet.selector('.main', {
+            width: component.width,
+            height: component.height,
+            background: component.background,
+            padding: component.padding,
+            fontSize: component.fontSize,
         });
     };
 

@@ -65,7 +65,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const trigger = (
             <div>
                 <Button styler={{ kind: 'primary' }}>
-                    <Input styler={{ style: { border: 'none', color: 'white', minWidth: 0, pointerEvents: 'none' } }} onFocus={this.onFocus} name={this.props.name} callback={this.onChange} type="date" value={this.state.value} />
+                    <Input style={{ border: 'none', color: 'white', minWidth: 0, pointerEvents: 'none' }} onFocus={this.onFocus} name={this.props.name} callback={this.onChange} type="date" value={this.state.value} />
                 </Button>
                 {this.props.children}
             </div>
@@ -79,7 +79,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             >
                 <div className={classes.main}>
                     <div className={classes.calendar}>
-                        <Card styler={{ style: classes.style.card }}>
+                        <Card className={classes.card}>
                             <Calendar
                                 date={this.state.day}
                                 month={this.state.month}

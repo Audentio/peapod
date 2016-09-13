@@ -1,9 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const actionBar = sheet.addPart('actionBar');
-    const title = sheet.addPart('title');
-    const content = sheet.addPart('content');
-
     // Conditions
     sheet.addCondition('disguised').addStyler({ disguised: true });
     sheet.addCondition('padded').addStyler({ padded: true });
@@ -21,64 +16,44 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                backgroundColor: theme.palette.white,
-                borderRadius: theme.border.radius.small,
-                boxShadow: theme.shadows.d1,
-                margin: component.padding.small,
-                overflow: 'hidden',
-                display: 'inline-block',
-                textAlign: 'left',
-                verticalAlign: 'top',
-            },
-        }).addSelector({
-            condition: ['disguised'],
-            common: {
-                backgroundColor: 'transparent',
-                boxShadow: 'none',
-            },
+        sheet.selector('.main', {
+            backgroundColor: theme.palette.white,
+            borderRadius: theme.border.radius.small,
+            boxShadow: theme.shadows.d1,
+            margin: component.padding.small,
+            overflow: 'hidden',
+            display: 'inline-block',
+            textAlign: 'left',
+            verticalAlign: 'top',
+        }).selector('.main.--disguised', {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
         });
 
-        title.addSelector({
-            common: {
-                paddingTop: component.padding.large,
-                paddingLeft: component.padding.large,
-                paddingRight: component.padding.large,
-                paddingBottom: component.padding.small,
-            },
+        sheet.selector('.title', {
+            paddingTop: component.padding.large,
+            paddingLeft: component.padding.large,
+            paddingRight: component.padding.large,
+            paddingBottom: component.padding.small,
         });
 
-        content.addSelector({
-            common: {
-                overflow: 'hidden',
-            },
-        }).addSelector({
-            condition: ['padded'],
-            common: {
-                paddingLeft: component.padding.large,
-                paddingRight: component.padding.large,
-            },
+        sheet.selector('.content', {
+            overflow: 'hidden',
+        }).selector('.content.--padded', {
+            paddingLeft: component.padding.large,
+            paddingRight: component.padding.large,
         });
 
-        actionBar.addSelector({
-            common: {
-                padding: component.padding.small,
-            },
-        }).addSelector({
-            condition: ['actionBarLeft'],
-            common: {
-                float: 'left',
-                maxWidth: '56px',
-                textAlign: 'center',
-            },
-        }).addSelector({
-            condition: ['actionBarRight'],
-            common: {
-                float: 'right',
-                maxWidth: '56px',
-                textAlign: 'center',
-            },
+        sheet.selector('.actionBar', {
+            padding: component.padding.small,
+        }).selector('.actionBar.--actionBarLeft', {
+            float: 'left',
+            maxWidth: '56px',
+            textAlign: 'center',
+        }).selector('.actionBar.--actionBarRight', {
+            float: 'right',
+            maxWidth: '56px',
+            textAlign: 'center',
         });
     };
 

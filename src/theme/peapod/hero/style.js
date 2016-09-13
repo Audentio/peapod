@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     // Conditions
     sheet.addCondition('cover').addStyler({ cover: true });
     sheet.addCondition('contain').addStyler({ contain: true });
@@ -11,24 +9,16 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                display: 'block',
-                width: '100%',
-                height: '100vh',
-                backgroundPosition: 'center center',
-                fontFamily: theme.font.family.primary,
-            },
-        }).addSelector({
-            condition: ['cover'],
-            common: {
-                backgroundSize: 'cover',
-            },
-        }).addSelector({
-            condition: ['contain'],
-            common: {
-                backgroundSize: 'contain',
-            },
+        sheet.selector('.main', {
+            display: 'block',
+            width: '100%',
+            height: '100vh',
+            backgroundPosition: 'center center',
+            fontFamily: theme.font.family.primary,
+        }).selector('main.--cover', {
+            backgroundSize: 'cover',
+        }).selector('.main.--contain', {
+            backgroundSize: 'contain',
         });
     };
 

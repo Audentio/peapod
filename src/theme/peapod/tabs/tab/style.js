@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     // Conditions
     sheet.addCondition('active').addProp({ active: true });
     sheet.addCondition('inactive').addProp({ active: false });
@@ -11,11 +9,8 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            condition: ['inactive'],
-            common: {
-                display: 'none',
-            },
+        sheet.selector('.main.--inactive', {
+            display: 'none',
         });
     };
 

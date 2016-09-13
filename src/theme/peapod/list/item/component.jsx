@@ -50,7 +50,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
 
         if (this.props.icon) {
-            icon = (<Icon styler={{ style: classes.style.icon }} onClick={this.props.onIconClick}>{this.props.icon}</Icon>);
+            icon = (<Icon className={classes.icon} onClick={this.props.onIconClick}>{this.props.icon}</Icon>);
         }
 
         if (this.props.secondary) {

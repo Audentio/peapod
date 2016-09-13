@@ -453,10 +453,9 @@ module.exports = componentName => class Pod_Component extends React.Component {
         );
 
         return (
-            <div styler={_merge({ style: classes.style.main }, this.props.styler)}>
+            <div className={classes.main}>
                 {tableControls}
                 <TableInner
-                    className={classes.main}
                     data={paginated.data}
                     columns={columns}
                     columnNames={this.makeHeader}

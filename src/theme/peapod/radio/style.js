@@ -1,12 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    // const wrapper_outer = sheet.addPart('wrapper_outer');
-    // const wrapper_inner = sheet.addPart('wrapper_inner');
-    const radio_outer = sheet.addPart('radio_outer');
-    const radio_inner = sheet.addPart('radio_inner');
-    const radio_element = sheet.addPart('radio_element');
-    const label = sheet.addPart('label');
-
     // Conditions
     sheet.addCondition('checked').addState({ checked: true });
     sheet.addCondition('block').addStyler({ block: true });
@@ -53,47 +45,42 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({});
+        sheet.selector('.main', {
 
-        radio_outer.addSelector({
-            common: {
-                width: component.width,
-                height: component.height,
-                background: 'transparent',
-                borderWidth: component.border.width,
-                borderStyle: component.border.style,
-                borderColor: component.color.background,
-                display: 'inline-block',
-                marginRight: theme.gutter.extrasmall,
-                borderRadius: '1000px',
-                position: 'relative',
-                verticalAlign: 'middle',
-            },
-        });
-        radio_inner.addSelector({
-            condition: ['checked'],
-            common: {
-                display: 'block',
-                borderRadius: '1000px',
-                background: component.color.background,
-                position: 'absolute',
-                top: component.border.width,
-                left: component.border.width,
-                bottom: component.border.width,
-                right: component.border.width,
-            },
-        });
-        radio_element.addSelector({
-            common: {
-                display: 'none',
-            },
         });
 
-        label.addSelector({
-            common: {
-                fontSize: component.font.size,
-                verticalAlign: 'middle',
-            },
+        sheet.selector('.radio_outer', {
+            width: component.width,
+            height: component.height,
+            background: 'transparent',
+            borderWidth: component.border.width,
+            borderStyle: component.border.style,
+            borderColor: component.color.background,
+            display: 'inline-block',
+            marginRight: theme.gutter.extrasmall,
+            borderRadius: '1000px',
+            position: 'relative',
+            verticalAlign: 'middle',
+        });
+
+        sheet.selector('.radio_inner.--checked', {
+            display: 'block',
+            borderRadius: '1000px',
+            background: component.color.background,
+            position: 'absolute',
+            top: component.border.width,
+            left: component.border.width,
+            bottom: component.border.width,
+            right: component.border.width,
+        });
+
+        sheet.selector('.radio_element', {
+            display: 'none',
+        });
+
+        sheet.selector('.label', {
+            fontSize: component.font.size,
+            verticalAlign: 'middle',
         });
     };
 

@@ -51,7 +51,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         ) : '';
 
         return (
-            <Block align="center" styler={{ style: classes.style.main }}>
+            <Block align="center" className={classes.main}>
                 {icon}
 
                 {secondary}

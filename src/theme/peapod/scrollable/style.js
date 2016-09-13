@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     // Conditions
     sheet.addCondition('horizontal').addProp({ horizontal: true });
     sheet.addCondition('height').addProp({ height: ['!=', undefined] });
@@ -12,29 +10,18 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                overflowX: 'hidden',
-                overflowY: 'auto',
-            },
-        }).addSelector({
-            condition: ['horizontal'],
-            common: {
-                overflowX: 'auto',
-                overflowY: 'hidden',
-                whiteSpace: 'nowrap',
-                height: '600px',
-            },
-        }).addSelector({
-            condition: ['center'],
-            common: {
-                textAlign: 'center',
-            },
-        }).addSelector({
-            condition: ['height'],
-            common: {
-                maxHeight: (obj) => (obj.props.height),
-            },
+        sheet.selector('.main', {
+            overflowX: 'hidden',
+            overflowY: 'auto',
+        }).selector('.main.--horizontal', {
+            overflowX: 'auto',
+            overflowY: 'hidden',
+            whiteSpace: 'nowrap',
+            height: '600px',
+        }).selector('.main.--center', {
+            textAlign: 'center',
+        }).selector('.main.--height', {
+            maxHeight: (obj) => (obj.props.height),
         });
     };
 

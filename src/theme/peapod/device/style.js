@@ -1,10 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const background = sheet.addPart('background');
-    const innerscreen = sheet.addPart('innerscreen');
-    const overlay = sheet.addPart('overlay');
-    const scrollable = sheet.addPart('scrollable');
-
     // Conditions
     sheet.addCondition('scrollable').addStyler({ scrollable: true });
     sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
@@ -306,171 +300,88 @@ module.exports = function (sheet) {
                 devicevariant = (deviceVals.variant) ? 'variant' + deviceVals.variant : undefined;
             }
 
-            main.addSelector({
-                condition: [deviceversion, devicename].filter((e) => e),
-                common: {
-                    position: 'relative',
-                    backgroundSize: '100% 100%',
-
-                    width: version.width,
-                    height: version.height,
-
-                    display: 'inline-block',
+            sheet.selector(`.main.--${deviceversion}.--${devicename}`, {
+                position: 'relative',
+                backgroundSize: '100% 100%',
+                width: version.width,
+                height: version.height,
+                display: 'inline-block',
+            }).selector(`.main.--horizontal.--${deviceversion}.--${devicename}`, {
+                width: version.height,
+                height: version.width,
+            }).selector(`.main.--scale.--${deviceversion}.--${devicename}`, {
+                width(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return (version.width * scale) + 'px';
                 },
-            }).addSelector({
-                condition: ['horizontal', deviceversion, devicename].filter((e) => e),
-                common: {
-                    width: version.height,
-                    height: version.width,
-                },
-            }).addSelector({
-                condition: ['scale', deviceversion, devicename].filter((e) => e),
-                common: {
-                    width(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return (version.width * scale) + 'px';
-                    },
-                    height(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return (version.height * scale) + 'px';
-                    },
-                },
-            }).addSelector({
-                condition: ['scale', 'horizontal', deviceversion, devicename].filter((e) => e),
-                common: {
-                    height(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return (version.width * scale) + 'px';
-                    },
-                    width(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return (version.height * scale) + 'px';
-                    },
+                height(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return (version.height * scale) + 'px';
                 },
             });
-            background.addSelector({
-                condition: [devicevariant, deviceversion, devicename].filter((e) => e),
-                common: {
-                    backgroundSize: '100% 100%',
-                    backgroundImage: variant,
-                    width: version.width,
-                    height: version.height,
-                    position: 'absolute',
+
+            sheet.selector(`.background.--${devicevariant}.--${deviceversion}.--${devicename}`, {
+                backgroundSize: '100% 100%',
+                backgroundImage: variant,
+                width: version.width,
+                height: version.height,
+                position: 'absolute',
+            }).selector(`.background.--horizontal.--${devicevariant}.--${deviceversion}.--${devicename}`, {
+                transform: 'translateX(-50%) translateY(50%) rotate(-90deg)',
+                transformOrigin: '50% 50%',
+                bottom: '50%',
+                left: '50%',
+            }).selector(`.background.--scale.--${deviceversion}.--${devicename}`, {
+                width(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return (version.width * scale);
                 },
-            }).addSelector({
-                condition: ['horizontal', devicevariant, deviceversion, devicename].filter((e) => e),
-                common: {
-                    transform: 'translateX(-50%) translateY(50%) rotate(-90deg)',
-                    transformOrigin: '50% 50%',
-                    bottom: '50%',
-                    left: '50%',
-                },
-            }).addSelector({
-                condition: ['scale', deviceversion, devicename].filter((e) => e),
-                common: {
-                    width(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return (version.width * scale);
-                    },
-                    height(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return (version.height * scale) + 'px';
-                    },
+                height(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return (version.height * scale) + 'px';
                 },
             });
-            innerscreen.addSelector({
-                condition: [deviceversion, devicename].filter((e) => e),
-                common: {
-                    position: 'absolute',
-                    top: version.offset.top,
-                    right: version.offset.right,
-                    bottom: version.offset.bottom,
-                    left: version.offset.left,
-                    overflow: 'hidden',
-                    textAlign: 'left',
-                    background: 'white',
+
+            sheet.selector(`.innerscreen.--${deviceversion}.--${devicename}`, {
+                position: 'absolute',
+                top: version.offset.top,
+                right: version.offset.right,
+                bottom: version.offset.bottom,
+                left: version.offset.left,
+                overflow: 'hidden',
+                textAlign: 'left',
+                background: 'white',
+            }).selector(`.innerscreen.--horizontal.--${deviceversion}.--${devicename}`, {
+                top: version.offset.left,
+                right: version.offset.bottom,
+                bottom: version.offset.right,
+                left: version.offset.top,
+            }).selector(`.innerscreen.--scale.--${deviceversion}.--${devicename}`, {
+                top(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return version.offset.top * scale;
                 },
-            }).addSelector({
-                condition: ['horizontal', deviceversion, devicename].filter((e) => e),
-                common: {
-                    top: version.offset.left,
-                    right: version.offset.bottom,
-                    bottom: version.offset.right,
-                    left: version.offset.top,
+                right(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return version.offset.right * scale;
                 },
-            }).addSelector({
-                condition: ['scale', deviceversion, devicename].filter((e) => e),
-                common: {
-                    top(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return version.offset.top * scale;
-                    },
-                    right(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return version.offset.right * scale;
-                    },
-                    bottom(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return version.offset.bottom * scale;
-                    },
-                    left(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return version.offset.left * scale;
-                    },
+                bottom(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return version.offset.bottom * scale;
                 },
-            }).addSelector({
-                condition: ['scale', 'horizontal', deviceversion, devicename].filter((e) => e),
-                common: {
-                    top(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return version.offset.left * scale;
-                    },
-                    right(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return version.offset.bottom * scale;
-                    },
-                    bottom(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return version.offset.right * scale;
-                    },
-                    left(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return version.offset.top * scale;
-                    },
+                left(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return version.offset.left * scale;
                 },
-            }).addSelector({
-                condition: ['trueScaling', deviceversion, devicename].filter((e) => e),
-                common: {
-                    width: version.viewport.width,
-                    height: version.viewport.height,
-                    transform: 'scale(' + ((version.width - version.offset.right - version.offset.left) / version.viewport.width) + ')', // should be 0.688
-                    transformOrigin: '0 0',
-                },
-            }).addSelector({
-                condition: ['trueScaling', 'scale', deviceversion, devicename].filter((e) => e),
-                common: {
-                    transform(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
-                    },
-                },
-            }).addSelector({
-                condition: ['trueScaling', 'horizontal', deviceversion, devicename].filter((e) => e),
-                common: {
-                    width: version.viewport.height,
-                    height: version.viewport.width,
-                    transform: 'scale(' + ((version.width - version.offset.right - version.offset.left) / version.viewport.width) + ')', // should be 0.688
-                    transformOrigin: '0 0',
-                },
-            }).addSelector({
-                condition: ['trueScaling', 'horizontal', 'scale', deviceversion, devicename].filter((e) => e),
-                common: {
-                    width: version.viewport.height,
-                    height: version.viewport.width,
-                    transform(obj) {
-                        const scale = getScale(obj.props, version.width, version.height);
-                        return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
-                    },
+            }).selector(`.innerscreen.--trueScaling.--${deviceversion}.--${devicename}`, {
+                width: version.viewport.width,
+                height: version.viewport.height,
+                transform: 'scale(' + ((version.width - version.offset.right - version.offset.left) / version.viewport.width) + ')', // should be 0.688
+                transformOrigin: '0 0',
+            }).selector(`.innerscreen.--trueScaling.--scale.--${deviceversion}.--${devicename}`, {
+                transform(obj) {
+                    const scale = getScale(obj.props, version.width, version.height);
+                    return 'scale(' + (((version.width * scale) - (version.offset.right * scale) - (version.offset.left * scale)) / version.viewport.width) + ')';
                 },
             });
         };
@@ -491,32 +402,25 @@ module.exports = function (sheet) {
 
         getDeviceStyles(getStandardVersion, getStandardVariant);
 
-        scrollable.addSelector({
-            common: {
-                width: '100%',
-                height: '100%',
-            },
-        }).addSelector({
-            condition: ['scrollable'],
-            common: {
-                overflowX: 'hidden',
-                overflowY: 'auto',
-                width: '100%',
-                height: '100%',
-            },
+        sheet.selector('.scrollale', {
+            width: '100%',
+            height: '100%',
+        }).selector('.scrollable.--scrollable', {
+            overflowX: 'hidden',
+            overflowY: 'auto',
+            width: '100%',
+            height: '100%',
         });
-        overlay.addSelector({
-            common: {
-                position: 'absolute',
-                pointerEvents: 'none',
-                top: 0, right: 0, bottom: 0, left: 0,
-                backgroundPosition: '-194.5% -50%',
-                backgroundSize: '380%',
 
-                backgroundImage: 'radial-gradient(ellipse at center, rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%)',
-                // radial-gradient(ellipse at center, rgba(255,255,255,0.43) 0%, rgb(255, 255, 255) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 100%)
+        sheet.selector('.overlay', {
+            position: 'absolute',
+            pointerEvents: 'none',
+            top: 0, right: 0, bottom: 0, left: 0,
+            backgroundPosition: '-194.5% -50%',
+            backgroundSize: '380%',
 
-            },
+            backgroundImage: 'radial-gradient(ellipse at center, rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%)',
+            // radial-gradient(ellipse at center, rgba(255,255,255,0.43) 0%, rgb(255, 255, 255) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 51%, rgba(255,255,255,0) 100%)
         });
 
         for (const deviceindex in component.devices) {

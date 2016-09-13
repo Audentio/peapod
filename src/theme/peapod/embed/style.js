@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     // Conditions
     sheet.addCondition('height').addProp({ height: ['!=', undefined] });
     sheet.addCondition('width').addProp({ width: ['!=', undefined] });
@@ -11,22 +9,14 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                display: 'block',
-                width: '100%',
-                height: '400px',
-            },
-        }).addSelector({
-            condition: ['height'],
-            common: {
-                height: (obj) => (obj.props.height),
-            },
-        }).addSelector({
-            condition: ['width'],
-            common: {
-                width: (obj) => (obj.props.width),
-            },
+        sheet.selector('.main', {
+            display: 'block',
+            width: '100%',
+            height: '400px',
+        }).selector('.main.--height', {
+            height: (obj) => (obj.props.height),
+        }).selector('.main.--width', {
+            width: (obj) => (obj.props.width),
         });
     };
 

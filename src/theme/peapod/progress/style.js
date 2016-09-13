@@ -1,9 +1,6 @@
 import Radium from 'radium';
 
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const progress = sheet.addPart('progress');
-
     // Conditions
     sheet.addCondition('kindPrimary').addStyler({ kind: 'primary' });
     sheet.addCondition('kindSuccess').addStyler({ kind: 'success' });
@@ -31,87 +28,45 @@ module.exports = function (sheet) {
             },
         }, 'indeterminate');
 
-
-        main.addSelector({
-            common: {
-                position: 'relative',
-                zIndex: '1',
-                width: '100%',
-                height: component.height,
-                // marginBottom: '$gutter.internal',
-                overflow: 'hidden',
-                // borderRadius: '2px',
-                backgroundColor: theme.palette.grey200,
-            },
-        }).addSelector({
-            condition: ['strokeSet'],
-            common: {
-                height: (obj) => (obj.styler.stroke),
-            },
+        sheet.selector('.main', {
+            position: 'relative',
+            zIndex: '1',
+            width: '100%',
+            height: component.height,
+            // marginBottom: '$gutter.internal',
+            overflow: 'hidden',
+            // borderRadius: '2px',
+            backgroundColor: theme.palette.grey200,
+        }).selector('.main.--strokeSet', {
+            height: (obj) => (obj.styler.stroke),
         });
 
-        progress.addSelector({
-            common: {
-                transformOrigin: 'left',
-                backgroundColor: theme.color.primary.base,
-                fill: theme.color.base.base,
-                height: '100%',
-                width: '100%',
-                transition: '.2s',
-            },
-        }).addSelector({
-            condition: 'kindPrimary',
-            common: {
-                fill: theme.color.primary.base,
-                backgroundColor: theme.color.primary.base,
-            },
-        }).addSelector({
-            condition: 'kindSuccess',
-            common: {
-                fill: theme.color.success.base,
-                backgroundColor: theme.color.success.base,
-            },
-        }).addSelector({
-            condition: 'kindInfo',
-            common: {
-                fill: theme.color.info.base,
-                backgroundColor: theme.color.info.base,
-            },
-        }).addSelector({
-            condition: 'kindWarning',
-            common: {
-                fill: theme.color.warning.active,
-                backgroundColor: theme.color.warning.active,
-            },
-        }).addSelector({
-            condition: 'kindDanger',
-            common: {
-                fill: theme.color.danger.base,
-                backgroundColor: theme.color.danger.base,
-            },
-        }).addSelector({
-            condition: 'kindSecondary',
-            common: {
-                fill: theme.color.secondary.base,
-                backgroundColor: theme.color.secondary.base,
-            },
+        sheet.selector('.progress', {
+            transformOrigin: 'left',
+            backgroundColor: theme.color.primary.base,
+            fill: theme.color.base.base,
+            height: '100%',
+            width: '100%',
+            transition: '.2s',
         });
 
-        // const generateGradient = function (color) {
-        //     return 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)';
-        // };
+        const kinds = ['Primary', 'Success', 'Info', 'Warning', 'Danger', 'Secondary'];
+        for (let i = 0, len = kinds.length; i < len; i++) {
+            const kind = kinds[i];
+            sheet.selector(`.progress.--kind${kind}`, {
+                fill: theme.color[kind.toLowerCase()].base,
+                backgroundColor: theme.color[kind.toLowerCase()].base,
+            });
+        }
 
-        progress.addSelector({
-            condition: 'indeterminate',
-            common: {
-                // backgroundColor: 'transparent',
-                WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)',
-                backfaceVisibility: 'hidden',
-                width: '100%',
-                // animation: 'x 1500ms cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s infinite',
-                animation: 'x 1500ms ease 0s infinite',
-                animationName: indeterminateKeyframes,
-            },
+        sheet.selector('.progress', {
+            // backgroundColor: 'transparent',
+            WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)',
+            backfaceVisibility: 'hidden',
+            width: '100%',
+            // animation: 'x 1500ms cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s infinite',
+            animation: 'x 1500ms ease 0s infinite',
+            animationName: indeterminateKeyframes,
         });
     };
 

@@ -40,7 +40,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         const image = (typeof this.props.figure === 'string') ? <Photo src={this.props.figure} /> : this.props.figure;
         const figure = (this.props.figure) ? (
-            <Block align={this.props.align} styler={{ mainStyle: classes.style.figure }}>
+            <Block align={this.props.align} className={classes.figure}>
                 {image}
             </Block>
         ) : '';
@@ -52,14 +52,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const title = (this.props.title) ? titleContents : '';
 
         return (
-            <Block styler={{ mainStyle: classes.style.main }}>
+            <div className={classes.main}>
                 {figureLeft}
-                <Block styler={{ mainStyle: classes.style.content }}>
+                <div className={classes.content}>
                     {title}
                     {this.props.children}
-                </Block>
+                </div>
                 {figureRight}
-            </Block>
+            </div>
         );
     }
 };

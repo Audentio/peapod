@@ -67,8 +67,8 @@ module.exports = componentName => class Pod_Component extends React.Component {
     render() {
         const classes = Styler.getClasses(this);
         const icon = (this.props.icon) ?
-            <Icon styler={{ style: classes.style.icon }}>{this.props.icon}</Icon> :
-            <Icon styler={{ style: classes.style.icon }}>check</Icon>;
+            <Icon className={classes.icon }>{this.props.icon}</Icon> :
+            <Icon className={classes.icon }>check</Icon>;
 
         return (
             <div className={classes.main}>

@@ -1,13 +1,6 @@
 import Radium from 'radium';
 
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const circle = sheet.addPart('circle');
-    const mask = sheet.addPart('mask');
-    const track = sheet.addPart('track');
-    const content = sheet.addPart('content');
-    const contentInner = sheet.addPart('contentInner');
-
     sheet.addDocDefault({
         value: Math.random() * 100,
         children: '%',
@@ -43,141 +36,87 @@ module.exports = function (sheet) {
             },
         }, 'indeterminate');
 
-        main.addSelector({
-            common: {
-                width: component.size,
-                height: component.size,
-                fontSize: component.size,
-                display: 'inline-block',
-                position: 'relative',
-                borderRadius: '1000px',
-                WebkitClipPath: 'circle(50% at 50% 50%)',
-                clipPath: 'circle(50% at 50% 50%)',
-                overflow: 'hidden',
-            },
-        })
-        .addSelector({
-            condition: 'sizeSet',
-            common: {
-                width: (obj) => (obj.styler.size),
-                height: (obj) => (obj.styler.size),
-                fontSize: (obj) => (obj.styler.size),
-            },
-        })
-        .addSelector({
-            condition: 'indeterminate',
-            common: {
-                // backgroundColor: 'transparent',
-                // WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)',
-                backfaceVisibility: 'hidden',
-                // width: '100%',
-                animation: 'x 500ms linear 0s infinite',
-                animationName: indeterminateKeyframes,
-            },
+        sheet.selector('.main', {
+            width: component.size,
+            height: component.size,
+            fontSize: component.size,
+            display: 'inline-block',
+            position: 'relative',
+            borderRadius: '1000px',
+            WebkitClipPath: 'circle(50% at 50% 50%)',
+            clipPath: 'circle(50% at 50% 50%)',
+            overflow: 'hidden',
+        }).selector('.main.--sizeSet', {
+            width: (obj) => (obj.styler.size),
+            height: (obj) => (obj.styler.size),
+            fontSize: (obj) => (obj.styler.size),
+        }).selector('.main.--indeterminate', {
+            // backgroundColor: 'transparent',
+            // WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.69) 9%,rgba(0,0,0,0.82) 22%,rgba(0,0,0,1) 50%,rgba(0,0,0,0.82) 78%,rgba(0,0,0,0.69) 91%,rgba(0,0,0,0) 100%)',
+            backfaceVisibility: 'hidden',
+            // width: '100%',
+            animation: 'x 500ms linear 0s infinite',
+            animationName: indeterminateKeyframes,
         });
 
-        content.addSelector({
-            common: {
-                display: 'table',
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                fontSize: theme.font.size.normal,
-            },
+        sheet.selector('.content', {
+            display: 'table',
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            fontSize: theme.font.size.normal,
         });
 
-        contentInner.addSelector({
-            common: {
-                display: 'table-cell',
-                verticalAlign: 'middle',
-                textAlign: 'center',
-            },
+        sheet.selector('.contentInner', {
+            display: 'table-cell',
+            verticalAlign: 'middle',
+            textAlign: 'center',
         });
 
-        track.addSelector({
-            common: {
-                width: '1em',
-                height: '1em',
-                position: 'absolute',
-                borderWidth: component.stroke,
-                borderStyle: 'solid',
-                borderColor: theme.palette.grey200,
-                borderRadius: '50%',
-            },
-        }).addSelector({
-            condition: 'strokeSet',
-            common: {
-                borderWidth: (obj) => (obj.styler.stroke),
-            },
+        sheet.selector('.track', {
+            width: '1em',
+            height: '1em',
+            position: 'absolute',
+            borderWidth: component.stroke,
+            borderStyle: 'solid',
+            borderColor: theme.palette.grey200,
+            borderRadius: '50%',
+        }).selector('.track.--strokeSet', {
+            borderWidth: (obj) => (obj.styler.stroke),
         });
 
-        mask.addSelector({
-            common: {
-                width: '1em',
-                height: '1em',
-                transition: 'transform .2s linear',
-                backfaceVisibility: 'hidden',
-                position: 'absolute',
-                clip: 'rect(0 1em 1em .5em)',
-            },
+        sheet.selector('.mask', {
+            width: '1em',
+            height: '1em',
+            transition: 'transform .2s linear',
+            backfaceVisibility: 'hidden',
+            position: 'absolute',
+            clip: 'rect(0 1em 1em .5em)',
         });
 
-        circle.addSelector({
-            common: {
-                width: '1em',
-                height: '1em',
-                transition: 'transform .2s linear',
-                backfaceVisibility: 'hidden',
-                position: 'absolute',
-                borderWidth: component.stroke,
-                borderStyle: 'solid',
-                borderColor: theme.color.base.base,
-                clip: 'rect(0 .5em 1em 0)',
-                borderRadius: '1000px',
-            },
-        })
-        .addSelector({
-            condition: 'strokeSet',
-            common: {
-                borderWidth: (obj) => (obj.styler.stroke),
-            },
-        })
-        .addSelector({
-            condition: 'kindPrimary',
-            common: {
-                borderColor: theme.color.primary.base,
-            },
-        })
-        .addSelector({
-            condition: 'kindSuccess',
-            common: {
-                borderColor: theme.color.success.base,
-            },
-        })
-        .addSelector({
-            condition: 'kindInfo',
-            common: {
-                borderColor: theme.color.info.base,
-            },
-        })
-        .addSelector({
-            condition: 'kindWarning',
-            common: {
-                borderColor: theme.color.warning.active,
-            },
-        })
-        .addSelector({
-            condition: 'kindDanger',
-            common: {
-                borderColor: theme.color.danger.base,
-            },
-        })
-        .addSelector({
-            condition: 'kindSecondary',
-            common: {
-                borderColor: theme.color.secondary.base,
-            },
+        sheet.selector('.circle', {
+            width: '1em',
+            height: '1em',
+            transition: 'transform .2s linear',
+            backfaceVisibility: 'hidden',
+            position: 'absolute',
+            borderWidth: component.stroke,
+            borderStyle: 'solid',
+            borderColor: theme.color.base.base,
+            clip: 'rect(0 .5em 1em 0)',
+            borderRadius: '1000px',
+        }).selector('.circle.--strokeSet', {
+            borderWidth: (obj) => (obj.styler.stroke),
         });
+
+        const kinds = ['Primary', 'Success', 'Info', 'Warning', 'Danger', 'Secondary'];
+
+        for (let i = 0, len = kinds.length; i < len; i++) {
+            const kind = kinds[i];
+            sheet.selector(`.circle.--kind${kind}`, {
+                borderColor: theme.color[kind.toLowerCase()].base,
+            });
+        }
     };
 
     return sheet;

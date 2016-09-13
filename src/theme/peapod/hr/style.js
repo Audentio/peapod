@@ -7,13 +7,11 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                height: '1px',
-                borderWidth: 0,
-                backgroundColor: theme.palette.grey300,
-                margin: `${theme.gutter.internal} auto`, // in case someone puts a width it will center
-            },
+        sheet.selector('.main', {
+            height: '1px',
+            borderWidth: 0,
+            backgroundColor: theme.palette.grey300,
+            margin: `${theme.gutter.internal} auto`, // in case someone puts a width it will center
         });
     };
 

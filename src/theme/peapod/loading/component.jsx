@@ -83,10 +83,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         const scale = (this.state.hasLoaded) ? 1 : 0.5;
         const setVal = (this.state.hasLoaded) ? this.state.loaded : this.state.defaultLoaded;
-        const rotateStyle = (this.state.hasLoaded) ? {} : classes.style.rotate;
+        const rotateClasses = (this.state.hasLoaded) ? '' : classes.rotate;
 
         const unloaded = (
-            <div style={rotateStyle}>
+            <div className={rotateClasses}>
                 <CircularProgress
                     styler={{
                         kind: 'info',

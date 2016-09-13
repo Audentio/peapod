@@ -1,9 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const wrapper = sheet.addPart('wrapper');
-    const title = sheet.addPart('title');
-    const dismissIcon = sheet.addPart('dismissIcon');
-
     sheet.addCondition('multiline').addProp({ multiline: true });
     sheet.addCondition('full').addProp({ full: true });
 
@@ -27,99 +22,55 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                bottom: theme.gutter.internal,
-                right: theme.gutter.internal,
-                position: 'fixed',
-            },
+        sheet.selector('.main', {
+            bottom: theme.gutter.internal,
+            right: theme.gutter.internal,
+            position: 'fixed',
         });
 
-        wrapper.addSelector({
-            common: {
-                fontSize: theme.font.size.xsmall,
-                borderRadius: theme.border.radius.small,
-                width: '300px',
-                height: '48px',
-                lineHeight: '48px',
-                padding: '0 24px',
-                zIndex: '999',
-                color: 'rgba(255,255,255,.8)',
-                backgroundColor: '#323232',
-            },
-        })
-        .addSelector({
-            condition: 'multiline',
-            common: {
-                height: '80px',
-                padding: '24px',
-                lineHeight: '1',
-            },
-        })
-        .addSelector({
-            condition: ['multiline', 'full'],
-            common: {
-                height: '112px',
-                lineHeight: '1',
-            },
-        })
-        .addSelector({
-            condition: 'kindGeneral',
-            common: {
-                backgroundColor: component.background.general,
-            },
-        })
-        .addSelector({
-            condition: 'kindSuccess',
-            common: {
-                backgroundColor: component.background.success,
-            },
-        })
-        .addSelector({
-            condition: 'kindInfo',
-            common: {
-                backgroundColor: component.background.info,
-            },
-        })
-        .addSelector({
-            condition: 'kindWarning',
-            common: {
-                backgroundColor: component.background.warning,
-            },
-        })
-        .addSelector({
-            condition: 'kindDanger',
-            common: {
-                backgroundColor: component.background.danger,
-            },
+        sheet.selector('.wrapper', {
+            fontSize: theme.font.size.xsmall,
+            borderRadius: theme.border.radius.small,
+            width: '300px',
+            height: '48px',
+            lineHeight: '48px',
+            padding: '0 24px',
+            zIndex: '999',
+            color: 'rgba(255,255,255,.8)',
+            backgroundColor: '#323232',
+        }).selector('.wrapper.--multiline', {
+            height: '80px',
+            padding: '24px',
+            lineHeight: '1',
+        }).selector('.wrapper.--multiline.--full', {
+            height: '112px',
+            lineHeight: '1',
         });
 
-        title.addSelector({
-            common: {
-                display: 'block',
-                marginBottom: '4px',
-                fontWeight: theme.font.weight.medium,
-                color: 'white',
-            },
+        const kinds = ['General', 'Success', 'Info', 'Warning', 'Danger'];
+        for (let i = 0, len = kinds.length; i < len; i++) {
+            const kind = kinds[i];
+            sheet.selector(`.wrapper.--kind${kind}`, {
+                backgroundColor: component.background[kind.toLowerCase()],
+            });
+        }
+
+        sheet.selector('.title', {
+            display: 'block',
+            marginBottom: '4px',
+            fontWeight: theme.font.weight.medium,
+            color: 'white',
         });
 
-        dismissIcon.addSelector({
-            common: {
-                float: 'right',
-                fontWeight: 'bold',
-                color: theme.palette.yellow500,
-                cursor: 'pointer',
-                textTransform: 'uppercase',
-                marginLeft: '24px',
-
-                ':hover': {
-                },
-            },
-        }).addSelector({
-            condition: ['full'],
-            common: {
-                marginTop: '24px',
-            },
+        sheet.selector('.dismissIcon', {
+            float: 'right',
+            fontWeight: 'bold',
+            color: theme.palette.yellow500,
+            cursor: 'pointer',
+            textTransform: 'uppercase',
+            marginLeft: '24px',
+        }).selector('.dismissIcon.--full', {
+            marginTop: '24px',
         });
     };
 

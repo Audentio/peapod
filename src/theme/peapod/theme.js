@@ -509,4 +509,4 @@ module.exports = function (sheet) {
     };
 
     return sheet;
-}
+};

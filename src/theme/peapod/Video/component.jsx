@@ -243,11 +243,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const classes = Styler.getClasses(this);
-        const seekbar_table_style = {
-            display: 'table',
-            width: '100%',
-            height: classes.style.controls.height,
-        };
         const {
             volume: currentVolume,
             currentTime,
@@ -279,19 +274,19 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     </div>
 
                     <div className={classes.seekbar}>
-                        <div style={seekbar_table_style}>
+                        <div className={classes.seekbar_table}>
                             <div className={classes.seekbar_time}>
                                 {this.durationString(currentDuration)}
                             </div>
 
                             <div className={classes.seekbar_bar}>
-                                <Progress styler={classes.style.seekbar_progress} value={currentTime} max={currentDuration} />
+                                <Progress className={{ main: classes.seekbar_main, progress: classes.seekbar_progress }} value={currentTime} max={currentDuration} />
                             </div>
                         </div>
                     </div>
 
                     <div className={classes.morecontrols}>
-                        <Icon style={classes.style.volumeIcon}>{volumeIcon}</Icon> {currentVolume}
+                        <Icon className={classes.volumeIcon}>{volumeIcon}</Icon> {currentVolume}
                     </div>
                 </div>
             </div>

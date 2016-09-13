@@ -1,7 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const content = sheet.addPart('content');
-
     // Conditions
     sheet.addCondition('horizontal').addProp({ orientation: 'horizontal' });
     sheet.addCondition('hidden').addProp({ hidden: true });
@@ -12,25 +9,15 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                padding: theme.gutter.small,
-                width: '100%',
-                // background: '#fafafa',
-            },
-        }).addSelector({
-            condition: ['hidden'],
-            common: {
-                display: 'none',
-                // background: '#fafafa',
-            },
+        sheet.selector('.main', {
+            padding: theme.gutter.small,
+            width: '100%',
+        }).selector('.main.--hidden', {
+            display: 'none',
         });
 
-        content.addSelector({
-            common: {
-                width: '100%',
-                // background: '#fafafa',
-            },
+        sheet.selector('.content', {
+            width: '100%',
         });
     };
 

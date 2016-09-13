@@ -1,9 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const tooltip = sheet.addPart('tooltip');
-    const arrow = sheet.addPart('arrow');
-    // const text = sheet.addPart('text');
-
     // Conditions
     sheet.addCondition('positionTop').addFunction((instance) =>
         instance.styler.hasOwnProperty('position') && /^top/.exec(instance.styler.position)
@@ -47,114 +42,70 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                // position: 'relative',
-                // display: 'inline'
-            },
+        sheet.selector('.main', {});
+
+        sheet.selector('.tooltip', {
+            paddingLeft: component.padding,
+            paddingRight: component.padding,
+            height: component.height,
+            lineHeight: component.height,
+            fontSize: component.fontSize,
+            background: theme.palette.grey700,
+            color: component.color,
+            borderRadius: component.borderRadius,
+            opacity: component.opacity,
+            position: 'absolute',
+            whiteSpace: 'nowrap',
+        }).selector('.tooltip.--mobile', {
+            paddingLeft: component.mobile.padding,
+            paddingRight: component.mobile.padding,
+            height: component.mobile.height,
+            lineHeight: component.mobile.height,
+            fontSize: component.mobile.fontSize,
+        }).selector('.tooltip.--positionTop', {
+            left: '50%',
+            top: 'auto',
+            bottom: '100%',
+            marginLeft: 0,
+            marginBottom: component.margin,
+            transform: 'translateX(-50%)',
+        }).selector('.tooltip.--positionTopRight', {
+            right: '0',
+            left: 'auto',
+            transform: 'none',
+        }).selector('.tooltip.--positionTopLeft', {
+            right: 'auto',
+            left: '0',
+            transform: 'none',
+        }).selector('.tooltip.--positionRight', {
+            left: '100%',
+            top: '50%',
+            marginLeft: component.margin,
+            transform: 'translateY(-50%)',
+        }).selector('.tooltip.--positionBottom', {
+            left: '50%',
+            top: '100%',
+            marginLeft: 0,
+            marginTop: component.margin,
+            transform: 'translateX(-50%)',
+        }).selector('.tooltip.--positionBottomRight', {
+            right: '0',
+            left: 'auto',
+            transform: 'none',
+        }).selector('.tooltip.--positionBottomLeft', {
+            right: 'auto',
+            left: '0',
+            transform: 'none',
+        }).selector('.tooltip.--positionLeft', {
+            left: 'auto',
+            right: '100%',
+            top: '50%',
+            marginLeft: 0,
+            marginRight: component.margin,
+            transform: 'translateY(-50%)',
         });
 
-        tooltip.addSelector({
-            common: {
-                paddingLeft: component.padding,
-                paddingRight: component.padding,
-                height: component.height,
-                lineHeight: component.height,
-                fontSize: component.fontSize,
-                background: theme.palette.grey700,
-                color: component.color,
-                borderRadius: component.borderRadius,
-                opacity: component.opacity,
-                position: 'absolute',
-                whiteSpace: 'nowrap',
-            },
-        }).addSelector({
-            condition: ['mobile'],
-            common: {
-                paddingLeft: component.mobile.padding,
-                paddingRight: component.mobile.padding,
-                height: component.mobile.height,
-                lineHeight: component.mobile.height,
-                fontSize: component.mobile.fontSize,
-            },
-        })
-        // top
-        .addSelector({
-            condition: ['positionTop'],
-            common: {
-                left: '50%',
-                top: 'auto',
-                bottom: '100%',
-                marginLeft: 0,
-                marginBottom: component.margin,
-                transform: 'translateX(-50%)',
-            },
-        }).addSelector({
-            condition: ['positionTopRight'],
-            common: {
-                right: '0',
-                left: 'auto',
-                transform: 'none',
-            },
-        }).addSelector({
-            condition: ['positionTopLeft'],
-            common: {
-                right: 'auto',
-                left: '0',
-                transform: 'none',
-            },
-        })
-        // right
-        .addSelector({
-            condition: ['positionRight'],
-            common: {
-                left: '100%',
-                top: '50%',
-                marginLeft: component.margin,
-                transform: 'translateY(-50%)',
-            },
-        })
-        // bottom
-        .addSelector({
-            condition: ['positionBottom'],
-            common: {
-                left: '50%',
-                top: '100%',
-                marginLeft: 0,
-                marginTop: component.margin,
-                transform: 'translateX(-50%)',
-            },
-        }).addSelector({
-            condition: ['positionBottomRight'],
-            common: {
-                right: '0',
-                left: 'auto',
-                transform: 'none',
-            },
-        }).addSelector({
-            condition: ['positionBottomLeft'],
-            common: {
-                right: 'auto',
-                left: '0',
-                transform: 'none',
-            },
-        })
-        // left
-        .addSelector({
-            condition: ['positionLeft'],
-            common: {
-                left: 'auto',
-                right: '100%',
-                top: '50%',
-                marginLeft: 0,
-                marginRight: component.margin,
-                transform: 'translateY(-50%)',
-            },
-        });
-
-        arrow.addSelector({
-            common: {},
-        });
+        sheet.selector('.arrow', {});
     };
 
     return sheet;
