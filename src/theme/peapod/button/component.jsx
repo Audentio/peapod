@@ -59,7 +59,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     }
 
     ripple(clientX, clientY) {
-        const style = Styler.getStyle(this);
+        const classes = Styler.getClasses(this);
         const ripples = this.state.ripples || [];
         const containerRect = this.refs.rippleContainer.getBoundingClientRect();
         const rippleSize = containerRect.width;
@@ -73,7 +73,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
         if (this.rippleCount === undefined) this.rippleCount = 0;
 
-        ripples.push(<span key={this.rippleCount} style={[style.ripple, calculatedStyle]}></span>);
+        ripples.push(<span key={this.rippleCount} className={classes.ripple} style={calculatedStyle}></span>);
 
         this.rippleCount++;
 
@@ -96,7 +96,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         // Anchor tag <Anchor> if href specified
         if (href) {
             return (
-                <Anchor ref="button" to={href} className={classes.main} styler={{ style: classes.style.main }} onMouseDown={this.onMouseDownHandler} onClick={this.onClickHandler}>
+                <Anchor ref="button" to={href} className={classes.main} onMouseDown={this.onMouseDownHandler} onClick={this.onClickHandler}>
                     {children || label} {ripple}
                 </Anchor>
             );

@@ -278,14 +278,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         </div>
 
                         <div className={classes.lightboxActions}>
-                            <Icon styler={{ style: classes.style.lightboxAction }} onClick={hideLightbox}>close</Icon>
+                            <Icon className={classes.lightboxAction} onClick={hideLightbox}>close</Icon>
                             {Pod_Helper.fullscreen.isAvailable() &&
-                                <Icon styler={{ style: classes.style.lightboxAction }} onClick={toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
+                                <Icon className={classes.lightboxAction} onClick={toggleFullscreen}>{this.state.fullscreenIcon}</Icon>
                             }
 
-                            {this.props.allowDownload && <Icon onClick={downloadFile} styler={{ style: classes.style.lightboxAction }}>file_download</Icon>}
+                            {this.props.allowDownload && <Icon onClick={downloadFile} className={classes.lightboxAction}>file_download</Icon>}
 
-                            <Icon onClick={openInNew} styler={{ style: classes.style.lightboxAction }}>open_in_new</Icon>
+                            <Icon onClick={openInNew} className={classes.lightboxAction}>open_in_new</Icon>
 
                         </div>
                     </div>

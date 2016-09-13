@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     // Conditions
     sheet.addCondition('firstCell').addStyler({ firstCell: true });
     sheet.addCondition('centered').addStyler({ centered: true });
@@ -15,60 +13,38 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                display: 'table-cell',
-                // paddingTop: '$table.gutter.vertical',
-                // paddingBottom: '$table.gutter.vertical',
-                paddingLeft: theme.table.gutter.horizontal,
-                paddingRight: theme.table.gutter.horizontal,
-                fontSize: 'inherit',
-                fontFamily: theme.table.font.family,
-                borderStyle: theme.table.border.style,
-                borderColor: theme.table.border.color,
-                borderBottomWidth: theme.table.border.width,
-                borderLeftWidth: 0,
-                borderTopWidth: 0,
-                borderRightWidth: 0,
-            },
-        })
-        .addSelector({
-            condition: ['centered'],
-            common: {
-                textAlign: 'center',
-            },
-        })
-        .addSelector({
-            condition: ['hovered', 'sortable'],
-            common: {
-                color: theme.table.color.columnHovered.color,
-                background: theme.table.color.columnHovered.background,
-            },
-        })
-        .addSelector({
-            condition: ['header'],
-            common: {
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                borderTopWidth: '1px',
-            },
-        })
-        .addSelector({
-            condition: ['header', 'hovered', 'sortable'],
-            common: {
-                color: theme.table.color.columnHovered.headerColor,
-                background: theme.table.color.columnHovered.headerBackground,
-                cursor: 'pointer',
-            },
-        })
-        .addSelector({
-            condition: ['noData'],
-            common: {
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                borderBottomWidth: 0,
-                borderTopWidth: 0,
-            },
+        sheet.selector('.main', {
+            display: 'table-cell',
+            // paddingTop: '$table.gutter.vertical',
+            // paddingBottom: '$table.gutter.vertical',
+            paddingLeft: theme.table.gutter.horizontal,
+            paddingRight: theme.table.gutter.horizontal,
+            fontSize: 'inherit',
+            fontFamily: theme.table.font.family,
+            borderStyle: theme.table.border.style,
+            borderColor: theme.table.border.color,
+            borderBottomWidth: theme.table.border.width,
+            borderLeftWidth: 0,
+            borderTopWidth: 0,
+            borderRightWidth: 0,
+        }).selector('.main.--centered', {
+            textAlign: 'center',
+        }).selector('.main.--sortable:hover', {
+            color: theme.table.color.columnHovered.color,
+            background: theme.table.color.columnHovered.background,
+        }).selector('.main.--header', {
+            borderLeftWidth: 0,
+            borderRightWidth: 0,
+            borderTopWidth: '1px',
+        }).selector('.main.--header.--sortable:hover', {
+            color: theme.table.color.columnHovered.headerColor,
+            background: theme.table.color.columnHovered.headerBackground,
+            cursor: 'pointer',
+        }).selector('.main.--noData', {
+            borderLeftWidth: 0,
+            borderRightWidth: 0,
+            borderBottomWidth: 0,
+            borderTopWidth: 0,
         });
     };
 

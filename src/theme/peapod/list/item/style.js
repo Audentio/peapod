@@ -1,10 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const imageContainer = sheet.addPart('imageContainer');
-    const image = sheet.addPart('image');
-    const icon = sheet.addPart('icon');
-    const secondary = sheet.addPart('secondary');
-
     // Conditions
     sheet.addCondition('secondary').addFunction((instance) => instance.props.secondary !== undefined || instance.styler.imgSize === 'large');
 
@@ -47,91 +41,60 @@ module.exports = function (sheet) {
         const half = (value1) => parseFloat(value1) / 2;
         const minus = (value1, value2) => parseFloat(value1) - parseFloat(value2);
 
-        main.addSelector({
-            common: {
-                height: component.height.small,
-                lineHeight: '1',
-                paddingLeft: component.padding.left,
-                paddingRight: component.padding.right,
-                paddingTop: component.padding.top,
-                paddingBottom: component.padding.bottom,
-                fontSize: theme.font.size.xsmall,
-            },
-        }).addSelector({
-            condition: ['autoHeight'],
-            common: {
-                height: 'auto',
-            },
-        }).addSelector({
-            condition: ['secondary'],
-            common: {
-                height: component.height.large,
-                lineHeight: 'auto',
-            },
+        sheet.selector('.main', {
+            height: component.height.small,
+            lineHeight: '1',
+            paddingLeft: component.padding.left,
+            paddingRight: component.padding.right,
+            paddingTop: component.padding.top,
+            paddingBottom: component.padding.bottom,
+            fontSize: theme.font.size.xsmall,
+        }).selector('.main.--autoHeight', {
+            height: 'auto',
+        }).selector('.main.--secondary', {
+            height: component.height.large,
+            lineHeight: 'auto',
         });
 
-        imageContainer.addSelector({
-            common: {
-                width: minus(component.height.large, component.padding.left),
-                float: 'left',
-            },
-        }).addSelector({
-            condition: ['imageRight'],
-            common: {
-                width: minus(component.height.large, component.padding.left),
-                textAlign: 'right',
-                float: 'right',
-            },
-        }).addSelector({
-            condition: ['secondary'],
-            common: {
-                height: '52px',
-            },
+        sheet.selector('.imageContainer', {
+            width: minus(component.height.large, component.padding.left),
+            float: 'left',
+        }).selector('.imageContainer.--imageRight', {
+            width: minus(component.height.large, component.padding.left),
+            textAlign: 'right',
+            float: 'right',
+        }).selector('.imageContainer.--secondary', {
+            height: '52px',
         });
 
-        image.addSelector({
-            common: {
-                height: component.image.large,
-                width: component.image.large,
-                borderRadius: half(component.image.large),
-            },
-        }).addSelector({
-            condition: ['imageSmall'],
-            common: {
-                height: component.image.small,
-                width: component.image.small,
-                borderRadius: half(component.image.small),
-            },
+        sheet.selector('.image', {
+            height: component.image.large,
+            width: component.image.large,
+            borderRadius: half(component.image.large),
+        }).selector('.image.--imageSmall', {
+            height: component.image.small,
+            width: component.image.small,
+            borderRadius: half(component.image.small),
         });
 
-        icon.addSelector({
-            common: {
-                float: 'right',
-                width: minus(component.height.large, component.padding.left),
-                textAlign: 'right',
-                marginTop: '16px',
-                marginLeft: '16px',
-                marginRight: '16px',
-            },
-        }).addSelector({
-            condition: ['iconLeft'],
-            common: {
-                float: 'left',
-                textAlign: 'left',
-            },
-        }).addSelector({
-            condition: ['secondary'],
-            common: {
-                height: '36px',
-            },
+        sheet.selector('.icon', {
+            float: 'right',
+            width: minus(component.height.large, component.padding.left),
+            textAlign: 'right',
+            marginTop: '16px',
+            marginLeft: '16px',
+            marginRight: '16px',
+        }).selector('.icon.--iconLeft', {
+            float: 'left',
+            textAlign: 'left',
+        }).selector('.icon.--secondary', {
+            height: '36px',
         });
 
-        secondary.addSelector({
-            common: {
-                display: 'block',
-                fontSize: theme.font.size.xsmall,
-                marginTop: '0px', // Clears a height issue
-            },
+        sheet.selector('.secondary', {
+            display: 'block',
+            fontSize: theme.font.size.xsmall,
+            marginTop: '0px', // Clears a height issue
         });
     };
 

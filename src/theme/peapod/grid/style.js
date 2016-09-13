@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     sheet.addCondition('orderSet').addStyler({ order: ['!=', undefined] });
     sheet.addCondition('flexSet').addStyler({ flex: ['!=', undefined] });
 
@@ -46,82 +44,52 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'flex-start',
-                alignItems: 'stretch',
-                alignContent: 'stretch',
-            },
-        });
-
-        main.addSelector({
-            condition: ['orderSet'],
-            common: {
-                order: (obj) => (obj.styler.order),
-            },
-        });
-
-        main.addSelector({
-            condition: ['flexSet'],
-            common: {
-                flex: (obj) => (obj.styler.flex),
-            },
+        sheet.selector('.main', {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-start',
+            alignItems: 'stretch',
+            alignContent: 'stretch',
+        }).selector('.main.--orderSet', {
+            order: (obj) => (obj.styler.order),
+        }).selector('.main.--flexSet', {
+            flex: (obj) => (obj.styler.flex),
         });
 
         for (let choiceIndex = 0; choiceIndex < directionChoices.length; choiceIndex++) { // loop through all choices
-            main.addSelector({
-                condition: ['flexDirection_' + directionChoices[choiceIndex]],
-                common: {
-                    flexDirection: directionChoices[choiceIndex],
-                },
+            sheet.selector(`.main.--flexDirection_${directionChoices[choiceIndex]}`, {
+                flexDirection: directionChoices[choiceIndex],
             });
         }
 
         for (let choiceIndex = 0; choiceIndex < wrapChoices.length; choiceIndex++) { // loop through all choices
-            main.addSelector({
-                condition: ['flexWrap_' + wrapChoices[choiceIndex]],
-                common: {
-                    flexWrap: wrapChoices[choiceIndex],
-                },
+            sheet.selector(`.main.--flexWrap_${wrapChoices[choiceIndex]}`, {
+                flexWrap: wrapChoices[choiceIndex],
             });
         }
 
         for (let choiceIndex = 0; choiceIndex < justifyChoices.length; choiceIndex++) { // loop through all choices
-            main.addSelector({
-                condition: ['justifyContent_' + justifyChoices[choiceIndex]],
-                common: {
-                    justifyContent: justifyChoices[choiceIndex],
-                },
+            sheet.selector(`.main.--justifyContent_${justifyChoices[choiceIndex]}`, {
+                justifyContent: justifyChoices[choiceIndex],
             });
         }
 
         for (let choiceIndex = 0; choiceIndex < alignChoices.length; choiceIndex++) { // loop through all choices
-            main.addSelector({
-                condition: ['alignItems_' + alignChoices[choiceIndex]],
-                common: {
-                    alignItems: alignChoices[choiceIndex],
-                },
+            sheet.selector(`.main.--alignItems_${alignChoices[choiceIndex]}`, {
+                alignItems: alignChoices[choiceIndex],
             });
         }
 
         for (let choiceIndex = 0; choiceIndex < contentChoices.length; choiceIndex++) { // loop through all choices
-            main.addSelector({
-                condition: ['alignContent_' + contentChoices[choiceIndex]],
-                common: {
-                    alignContent: contentChoices[choiceIndex],
-                },
+            sheet.selector(`.main.--alignContent_${contentChoices[choiceIndex]}`, {
+                alignContent: contentChoices[choiceIndex],
             });
         }
 
         for (let choiceIndex = 0; choiceIndex < selfChoices.length; choiceIndex++) { // loop through all choices
-            main.addSelector({
-                condition: ['alignSelf_' + selfChoices[choiceIndex]],
-                common: {
-                    alignSelf: selfChoices[choiceIndex],
-                },
+            sheet.selector(`.main.--alignSelf_${selfChoices[choiceIndex]}`, {
+                alignSelf: selfChoices[choiceIndex],
             });
         }
     };

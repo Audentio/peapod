@@ -143,200 +143,128 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => {
-        main.addSelector({
-            common: {
-                display: 'inline-block',
-                borderRadius: component.border.radius,
-                borderStyle: 'none',
-                position: 'relative',
-                overflow: 'hidden', // prevent ripple overflow
-                textDecoration: 'none',
-                // textTransform: 'uppercase',
-                fontFamily: component.font.family,
-                fontSize: component.font.size,
-                fontWeight: component.font.weight,
-                lineHeight: component.lineHeight,
-                paddingTop: '0px',
-                paddingBottom: '0px',
-                paddingLeft: theme.gutter.internal,
-                paddingRight: theme.gutter.internal,
-                height: component.height,
-                textAlign: 'center',
-                outline: 'none',
-                userSelect: 'none',
-                verticalAlign: 'middle',
-                minWidth: '88px',
-                color: component.color.base.color,
-                backgroundColor: component.color.base.background,
-            },
-        }).addSelector({
-            condition: ['large'],
-            common: {
-                height: '42px',
-                lineHeight: '42px',
-            },
-        }).addSelector({
-            condition: ['dense'],
-            common: {
-                height: component.denseHeight,
-                lineHeight: component.denseLineHeight,
-                fontSize: component.font.denseSize,
-            },
-        }).addSelector({
-            condition: ['dialog'],
-            common: {
-                paddingLeft: theme.gutter.extrasmall,
-                paddingRight: theme.gutter.extrasmall,
-                marginLeft: theme.gutter.extrasmall,
-                marginRight: theme.gutter.extrasmall,
-                minWidth: '64px',
-            },
-        }).addSelector({
-            condition: ['text'],
-            common: {
-                color: component.color.base.background,
-                backgroundColor: 'transparent',
-            },
-        }).addSelector({
-            condition: ['bordered'],
-            common: {
-                backgroundColor: 'transparent',
-                color: component.color.base.background,
-                lineHeight: '28px', // TODO: fix this
-                borderWidth: theme.border.width,
-                borderStyle: 'solid',
-                borderColor: component.color.base.background,
-            },
-        }).addSelector({
-            condition: ['icon'],
-            common: {
-                paddingTop: '0px',
-                paddingBottom: '0px',
-                paddingLeft: '4px',
-                paddingRight: '4px',
-                minWidth: '0px',
-                color: component.color.base.background,
-                background: 'transparent',
-                fontSize: theme.font.size.large,
-            },
-        }).addSelector({
-            condition: ['notDisabled'],
-            common: {
-                cursor: 'pointer',
-            },
-        }).addSelector({
-            condition: 'disabled',
-            common: {
-                cursor: 'not-allowed',
-                opacity: theme.opacity.notAllowed,
-            },
-        }).addSelector({
-            condition: ['raised'],
-            common: {
-                boxShadow: theme.shadows.d1,
-            },
-        }).addSelector({
-            condition: ['block'],
-            common: {
-                display: 'block',
-            },
-        }).addSelector({
-            condition: ['round'],
-            common: {
-                borderRadius: '1000px',
-            },
+        sheet.selector('.main', {
+            display: 'inline-block',
+            borderRadius: component.border.radius,
+            borderStyle: 'none',
+            position: 'relative',
+            overflow: 'hidden', // prevent ripple overflow
+            textDecoration: 'none',
+            // textTransform: 'uppercase',
+            fontFamily: component.font.family,
+            fontSize: component.font.size,
+            fontWeight: component.font.weight,
+            lineHeight: component.lineHeight,
+            paddingTop: '0px',
+            paddingBottom: '0px',
+            paddingLeft: theme.gutter.internal,
+            paddingRight: theme.gutter.internal,
+            height: component.height,
+            textAlign: 'center',
+            outline: 'none',
+            userSelect: 'none',
+            verticalAlign: 'middle',
+            minWidth: '88px',
+            color: component.color.base.color,
+            backgroundColor: component.color.base.background,
+        }).selector('.main.--large', {
+            height: '42px',
+            lineHeight: '42px',
+        }).selector('.main.--dense', {
+            height: component.denseHeight,
+            lineHeight: component.denseLineHeight,
+            fontSize: component.font.denseSize,
+        }).selector('.main.--dialog', {
+            paddingLeft: theme.gutter.extrasmall,
+            paddingRight: theme.gutter.extrasmall,
+            marginLeft: theme.gutter.extrasmall,
+            marginRight: theme.gutter.extrasmall,
+            minWidth: '64px',
+        }).selector('.main.--text', {
+            color: component.color.base.background,
+            backgroundColor: 'transparent',
+        }).selector('.main.--bordered', {
+            backgroundColor: 'transparent',
+            color: component.color.base.background,
+            lineHeight: '28px', // TODO: fix this
+            borderWidth: theme.border.width,
+            borderStyle: 'solid',
+            borderColor: component.color.base.background,
+        }).selector('.main.--icon', {
+            paddingTop: '0px',
+            paddingBottom: '0px',
+            paddingLeft: '4px',
+            paddingRight: '4px',
+            minWidth: '0px',
+            color: component.color.base.background,
+            background: 'transparent',
+            fontSize: theme.font.size.large,
+        }).selector('.main.--notDisabled', {
+            cursor: 'pointer',
+        }).selector('.main.--disabled', {
+            cursor: 'not-allowed',
+            opacity: theme.opacity.notAllowed,
+        }).selector('.main.--raised', {
+            boxShadow: theme.shadows.d1,
+        }).selector('.main.--block', {
+            display: 'block',
+        }).selector('.main.--round', {
+            borderRadius: '1000px',
         });
 
         for (const index in buttonKinds) {
             if (buttonKinds[index]) {
                 const conditionName = `kind${buttonKinds[index].charAt(0).toUpperCase() + buttonKinds[index].slice(1)}`;
 
-                // button
-                main.addSelector({
-                    condition: [conditionName],
-                    common: {
-                        backgroundColor: component.color[buttonKinds[index]].primary,
-                        color: component.color[buttonKinds[index]].secondary,
-                    },
-                }).addSelector({
-                    condition: [conditionName, 'notDisabled'],
-                    common: {
-                        ':hover': {
-                            backgroundColor: component.color[buttonKinds[index]].hover.primary,
-                            color: component.color[buttonKinds[index]].hover.secondary,
-                        },
-                    },
-                })
-                // text
-                .addSelector({
-                    condition: ['text', conditionName],
-                    common: {
-                        backgroundColor: 'transparent',
-                        color: component.color[buttonKinds[index]].primary,
-                    },
-                }).addSelector({
-                    condition: ['text', conditionName, 'notDisabled'],
-                    common: {
-                        ':hover': {
-                            backgroundColor: 'transparent',
-                            color: component.color[buttonKinds[index]].hover.primary,
-                        },
-                    },
-                })
-                // bordered text
-                .addSelector({
-                    condition: ['bordered', conditionName],
-                    common: {
-                        backgroundColor: 'transparent',
-                        color: component.color[buttonKinds[index]].primary,
-                        borderWidth: '2px',
-                        borderStyle: 'solid',
-                        borderColor: component.color[buttonKinds[index]].primary,
-                    },
-                }).addSelector({
-                    condition: ['bordered', conditionName, 'notDisabled'],
-                    common: {
-                        ':hover': {
-                            backgroundColor: 'transparent',
-                            color: component.color[buttonKinds[index]].primary,
-                            borderWidth: '2px',
-                            borderStyle: 'solid',
-                            borderColor: component.color[buttonKinds[index]].primary,
-                        },
-                    },
+                sheet.selector(`.main.--${conditionName}`, {
+                    backgroundColor: component.color[buttonKinds[index]].primary,
+                    color: component.color[buttonKinds[index]].secondary,
+                }).selector(`.main.--${conditionName}.--notDisabled:hover`, {
+                    backgroundColor: component.color[buttonKinds[index]].hover.primary,
+                    color: component.color[buttonKinds[index]].hover.secondary,
+                }).selector(`.main.--test.--${conditionName}`, {
+                    backgroundColor: 'transparent',
+                    color: component.color[buttonKinds[index]].primary,
+                }).selector(`.main.--text.--${conditionName}.--notDisabled:hover`, {
+                    backgroundColor: 'transparent',
+                    color: component.color[buttonKinds[index]].hover.primary,
+                }).selector(`.main.--bordered.--${conditionName}`, {
+                    backgroundColor: 'transparent',
+                    color: component.color[buttonKinds[index]].primary,
+                    borderWidth: '2px',
+                    borderStyle: 'solid',
+                    borderColor: component.color[buttonKinds[index]].primary,
+                }).selector(`.main.--bordered.--${conditionName}.--notDisabled:hover`, {
+                    backgroundColor: 'transparent',
+                    color: component.color[buttonKinds[index]].primary,
+                    borderWidth: '2px',
+                    borderStyle: 'solid',
+                    borderColor: component.color[buttonKinds[index]].primary,
                 });
             }
         }
 
-        rippleContainer.addSelector({
-            common: {
-                position: 'absolute',
-                top: 0, left: 0,
-                pointerEvents: 'none',
-                width: '100%',
-                height: '100%',
-                borderRadius: 'inherit',
-                WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)',
-            },
-        })
-        .addSelector({
-            condition: 'disabled',
-            common: {
-                display: 'none',
-            },
+        sheet.selector('.rippleContainer', {
+            position: 'absolute',
+            top: 0, left: 0,
+            pointerEvents: 'none',
+            width: '100%',
+            height: '100%',
+            borderRadius: 'inherit',
+            WebkitMaskImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)',
+        }).selector('.rippleContainer.--disabled', {
+            display: 'none',
         });
 
-        ripple.addSelector({
-            common: {
-                backgroundColor: 'rgba(0,0,0,0.2)',
-                borderRadius: '100%',
-                transform: 'scale(0)',
-                transformOrigin: 'center 50%',
-                display: 'block',
-                position: 'absolute',
-                animation: 'x 850ms ease-out',
-                animationName: rippleAnimation,
-            },
+        sheet.selector('.ripple', {
+            backgroundColor: 'rgba(0,0,0,0.2)',
+            borderRadius: '100%',
+            transform: 'scale(0)',
+            transformOrigin: 'center 50%',
+            display: 'block',
+            position: 'absolute',
+            animation: 'x 850ms ease-out',
+            animationName: rippleAnimation,
         });
     };
 

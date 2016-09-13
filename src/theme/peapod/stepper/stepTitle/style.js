@@ -1,20 +1,9 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
-    const step = sheet.addPart('step');
-    const stepFirst = sheet.addPart('stepFirst');
-    const stepLast = sheet.addPart('stepLast');
-    const stepTitle = sheet.addPart('stepTitle');
-    const stepSubTitle = sheet.addPart('stepSubTitle');
-    const stepelem = sheet.addPart('stepelem');
-    const activestep = sheet.addPart('activestep');
-
-
     // Conditions
     sheet.addCondition('hasSubTitle').addFunction(instance => !instance.props.validation || instance.props.subtitle);
     sheet.addCondition('positionBelow').addProp({ below: true });
     sheet.addCondition('notClickable').addProp({ clickable: false });
-    sheet.addCondition('activeStep').addProp({active: true});
+    sheet.addCondition('activeStep').addProp({ active: true });
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {};
@@ -22,88 +11,61 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                padding: theme.gutter.small,
-                width: '100%',
-            },
+        sheet.selector('.main', {
+            padding: theme.gutter.small,
+            width: '100%',
         });
 
-
-        step.addSelector({
-            common: {
-                display: 'block',
-                textAlign: 'center',
-                flex: '1 1 auto',
-            },
-        });
-        stepFirst.addSelector({
-            common: {
-                textAlign: 'left',
-            },
-        });
-        stepLast.addSelector({
-            common: {
-                textAlign: 'right',
-            },
-        });
-        stepTitle.addSelector({
-            common: {
-                padding: '5px 8px 5px 0',
-                display: 'inline-block',
-                textAlign: 'left',
-            },
-        }).addSelector({
-            condition: ['hasSubTitle'],
-            common: {
-                padding: '0 8px 0 0',
-                display: 'inline-block',
-                textAlign: 'left',
-            },
-        }).addSelector({
-            condition: ['positionBelow'],
-            common: {
-                padding: '5px 0 5px 0',
-                display: 'block',
-                textAlign: 'center',
-            },
+        sheet.selector('.step', {
+            display: 'block',
+            textAlign: 'center',
+            flex: '1 1 auto',
         });
 
-        stepSubTitle.addSelector({
-            common: {
-                fontSize: '10px',
-            },
+        sheet.selector('.stepFirst', {
+            textAlign: 'left',
         });
-        stepelem.addSelector({
-            common: {
-                display: 'inline-block',
-                borderRadius: '100px',
-                width: '30px',
-                height: '30px',
-                lineHeight: '30px',
-                textAlign: 'center',
-                background: '#9E9E9E',
-                color: 'white',
-                marginLeft: '8px',
-                marginRight: '8px',
-                verticalAlign: 'top',
-                // ':hover': {
-                //     background: theme.palette.blue400,
-                //     cursor: 'pointer',
-                // },
-            },
-        }).addSelector({
-            condition: ['notClickable'],
-            common: {
-                cursor: 'not-allowed',
-            },
-        }).addSelector({
-            condition: 'activeStep',
-            common: {
+
+        sheet.selector('.stepLast', {
+            textAlign: 'right',
+        });
+
+        sheet.selector('.stepTitle', {
+            padding: '5px 8px 5px 0',
+            display: 'inline-block',
+            textAlign: 'left',
+        }).selector('.stepTitle.--hasSubTitle', {
+            padding: '0 8px 0 0',
+            display: 'inline-block',
+            textAlign: 'left',
+        }).selector('.stepTitle.--positionBelow', {
+            padding: '5px 0 5px 0',
+            display: 'block',
+            textAlign: 'center',
+        });
+
+        sheet.selector('.stepSubTitle', {
+            fontSize: '10px',
+        });
+
+        sheet.selector('stepelem', {
+            display: 'inline-block',
+            borderRadius: '100px',
+            width: '30px',
+            height: '30px',
+            lineHeight: '30px',
+            textAlign: 'center',
+            background: '#9E9E9E',
+            color: 'white',
+            marginLeft: '8px',
+            marginRight: '8px',
+            verticalAlign: 'top',
+        }).selector('.stepelem.--notClickable', {
+            cursor: 'not-allowed',
+        }).selector('.stepelem.--activeStep', {
+            background: theme.palette.blue400,
+            ':hover': {
                 background: theme.palette.blue400,
-                ':hover': {
-                    background: theme.palette.blue400,
-                },
             },
         });
     };

@@ -30,19 +30,16 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const classes = Styler.getClasses(this);
         const { children: innerContent, value } = this.props;
 
-        const maskTransformed = Object.assign({}, classes.style.mask, this.getTransform(value));
-        const circleTransformed = Object.assign({}, classes.style.circle, this.getTransform(value));
-
         return (
             <div className={classes.main}>
 
                 <div className={classes.track}></div>
 
                 <div className={classes.maskTransformed}>
-                    <div style={circleTransformed}></div>
+                    <div className={classes.mask} style={this.getTransform(value)}></div>
                 </div>
                 <div className={classes.mask}>
-                    <div style={circleTransformed}></div>
+                    <div classNam={classes.circle} style={this.getTransform(value)}></div>
                 </div>
 
                 <div className={classes.content}>

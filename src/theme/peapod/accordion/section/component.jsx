@@ -66,10 +66,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
 
         return (
-            <Card styler={{ style: classes.style.main }}>
+            <Card className={classes.main}>
                 <div className={classes.title} onClick={this.titleClick}>
-                    <Icon styler={{ style: classes.style.icon }}>keyboard_arrow_down</Icon>
-                    <div className={`${classes.subtitle} ${classes.maintitle}`}>
+                    <Icon className={classes.icon}>keyboard_arrow_down</Icon>
+                    <div className={`${classes.subtitle} ${classes.mainTitle}`}>
                         {this.props.title}
                     </div>
                     {subtitle}

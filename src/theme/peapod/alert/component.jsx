@@ -81,7 +81,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
                         <div className={classes.wrapper}>
                             {this.props.dismissable &&
-                                <Icon onClick={this.dismiss} styler={{ style: classes.style.dismissIcon }} color="#07ADD4">close</Icon>
+                                <Icon onClick={this.dismiss} className={classes.dismissIcon} color="#07ADD4">close</Icon>
                             }
                             <span className={classes.message}>
                                 {this.props.children}

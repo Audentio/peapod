@@ -12,14 +12,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static propTypes = {
         children: React.PropTypes.any,
-        varSet: React.PropTypes.any,
     }
 
     render() {
         const classes = Styler.getClasses(this);
 
         return (
-            <section scene={this.props.scene} className={classes.main}>
+            <section className={classes.main}>
                 {this.props.children}
             </section>
         );

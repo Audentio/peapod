@@ -4,7 +4,7 @@
 */
 
 import _isEqual from 'lodash/isEqual';
-import { Style, Sheet } from './stylesheet.js';
+import { Style } from './stylesheet.js';
 import Logger from './logger.js';
 import emoji from './emoji.js';
 
@@ -16,10 +16,13 @@ window.Styler = window.Styler || {
     maxCacheLength: 5000,
     classCount: 0,
     styleRootEle: null,
+    rootEle: '#mainContainer', // container ID for higher specificity selectors
 
-    buildSources(obj) {
+    buildSources(obj, allSelectors) {
         const sources = [];
         const activeConditions = [];
+        const dynamicConditions = [];
+        const combinedConditions = [];
         const parts = (typeof(obj.stylesheet) !== 'undefined') ? obj.stylesheet.getParts() : {}; // all parts available to component
         const componentName = obj.componentName;
         const scene = obj.scene; // scene applying to object
@@ -52,7 +55,13 @@ window.Styler = window.Styler || {
 
                 if (Object.keys(localStyle).length > 0) {
                     source = localStyle; // if a localStyle was applied, then make it the source
-                    activeConditions.push(JSON.stringify(localStyle)); // TODO more efficient way of creating unique condition
+                    const conditionContent = JSON.stringify(localStyle);
+                    if (allSelectors) { // new styling
+                        dynamicConditions.push(conditionContent);
+                        combinedConditions.push(conditionContent);
+                    } else {
+                        activeConditions.push(conditionContent); // TODO more efficient way of creating unique condition
+                    }
                 }
             } else { // styling from style.js
                 if (typeof(obj.stylesheet) !== 'undefined') {
@@ -74,16 +83,61 @@ window.Styler = window.Styler || {
                         }
                     }
 
-                    const sheetData = localsheet.getAllStyling(obj, scene, allConditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+                    if (allSelectors) { // new styling
+                        const sheetData = localsheet.getAllSelectors(obj, scene, allConditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
 
-                    console.log(sheetData);
-                    console.log(localsheet.getAllSelectors(obj, scene, allConditions, localVars, globalVars));
-                    console.log('=======');
+                        source = sheetData.source;
 
-                    source = sheetData.source;
+                        for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
+                            activeConditions.push(sheetData.activeConditions[conditionIndex]);
+                            combinedConditions.push(sheetData.activeConditions[conditionIndex]);
+                        }
 
-                    for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
-                        activeConditions.push(sheetData.activeConditions[conditionIndex]);
+                        for (let conditionIndex = 0, conditionLen = sheetData.dynamicConditions.length; conditionIndex < conditionLen; conditionIndex++) {
+                            dynamicConditions.push(sheetData.dynamicConditions[conditionIndex]);
+                            combinedConditions.push(sheetData.dynamicConditions[conditionIndex]);
+                        }
+
+                        let style = obj.props.style;
+                        if (typeof(style) === 'object') {
+                            let partKeys = Object.keys(style);
+
+                            if (partKeys.indexOf('main') === -1) { // allow for not specifying main part
+                                style = { main: style };
+                                partKeys = Object.keys(style);
+                            }
+
+                            for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
+                                const partKey = partKeys[partIndex];
+                                const styling = {};
+
+                                const styleSource = style[partKey];
+                                if (typeof(styleSource) !== 'undefined') {
+                                    const rules = Object.keys(styleSource);
+                                    for (let ruleIndex = 0, ruleLen = rules.length; ruleIndex < ruleLen; ruleIndex++) {
+                                        const ruleKey = rules[ruleIndex];
+                                        const ruleKeyProcessed = ruleKey.replace(/^([A-Z])/g, '-$1').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+                                        const ruleVal = styleSource[ruleKey];
+                                        styling[ruleKeyProcessed] = ruleVal;
+                                    }
+
+                                    dynamicConditions.push(`inline_${obj.componentName}_${partKey}_${JSON.stringify(styling)}`); // add a dynamic condition for the styling passed
+                                }
+
+                                const newKey = `${this.rootEle} .${obj.componentName}__${partKey}__&`;
+
+                                source[partKey].push({ [newKey]: styling });
+                            }
+                        }
+                    } else {
+                        const sheetData = localsheet.getAllStyling(obj, scene, allConditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
+
+                        source = sheetData.source;
+
+                        for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
+                            activeConditions.push(sheetData.activeConditions[conditionIndex]);
+                            combinedConditions.push(sheetData.activeConditions[conditionIndex]);
+                        }
                     }
                 }
             }
@@ -93,7 +147,7 @@ window.Styler = window.Styler || {
             }
         }
 
-        return { sources, activeConditions };
+        return { sources, activeConditions, dynamicConditions, combinedConditions };
     },
 
     initializeSheet(sheet, scene, isTheme, globalVars) {
@@ -134,21 +188,95 @@ window.Styler = window.Styler || {
         return ret;
     },
 
+    makeClassString(obj, partKey, activeConditions, unique) {
+        let partClassString = `${obj.componentName}__${partKey}__${unique}`;
+        if (typeof(activeConditions) !== 'undefined') {
+            for (let activeConditionIndex = 0, activeConditionLen = activeConditions.length; activeConditionIndex < activeConditionLen; activeConditionIndex++) {
+                const activeCondition = activeConditions[activeConditionIndex];
+                partClassString += ` ${obj.componentName}__${partKey}__${unique}--${activeCondition}`;
+            }
+        }
+
+        let source = null;
+        if (typeof(obj.props.className) === 'string') {
+            if (partKey === 'main') {
+                source = obj.props.className;
+            }
+        } else if (typeof(obj.props.className) === 'object') {
+            if (typeof(obj.props.className[partKey]) !== 'undefined') {
+                source = obj.props.className[partKey];
+            }
+        }
+        if (source !== null) {
+            const sourceBlocks = source.split('__');
+            const lastBlock = sourceBlocks[sourceBlocks.length - 1];
+            const blockModifiers = lastBlock.split('--');
+            const firstModifier = blockModifiers[0];
+            const modifierPseudos = firstModifier.split(':');
+            const inlineUnique = modifierPseudos[0];
+
+            partClassString += ` ${this.makeInlineClass(source, inlineUnique)}`;
+        }
+
+        return partClassString;
+    },
+
     // make inline css from sources array
-    processSources(obj, sources, classRet) {
+    processSources(obj, sourcesAndConditions, classRet = 0) {
         const style = {};
 
-        if (classRet) {
+        if (classRet == 1) {
             style.style = {};
         }
 
         const scene = obj.scene;
         const componentName = obj.componentName;
+        const sources = sourcesAndConditions.sources;
 
         // go through each source's styling
 
         const styleKeyBase = window.Styler.getUniqueClassName();
 
+        if (classRet === 2) {
+            const rules = [];
+            const activeConditions = sourcesAndConditions.activeConditions;
+            const parts = {};
+
+            for (let sourceIndex = 0, sourceLen = sources.length; sourceIndex < sourceLen; sourceIndex++) {
+                const source = sources[sourceIndex]; // source from buildSrouces
+                const partKeys = Object.keys(source);
+                for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) { // then through each part in the source
+                    const partKey = partKeys[partIndex];
+                    const part = source[partKey];
+
+                    style[partKey] = {
+                        selectors: part,
+                        activeConditions: sourcesAndConditions.activeConditions,
+                        dynamicConditions: sourcesAndConditions.dynamicConditions,
+                        componentName: obj.componentName,
+                        partKey,
+                    };
+
+                    for (let selectorsIndex = 0, selectorsLen = part.length; selectorsIndex < selectorsLen; selectorsIndex++) {
+                        const selectors = part[selectorsIndex];
+                        const selectorKeys = Object.keys(selectors);
+                        for (let selectorIndex = 0, selectorLen = selectorKeys.length; selectorIndex < selectorLen; selectorIndex++) {
+                            const selectorKey = selectorKeys[selectorIndex];
+                            const selectorStyle = selectors[selectorKey];
+                            rules.push({ key: selectorKey, style: selectorStyle });
+                        }
+                    }
+
+                    const partClassString = this.makeClassString(obj, partKey, activeConditions, styleKeyBase);
+
+                    parts[partKey] = partClassString;
+                }
+            }
+
+            return { selectors: rules, parts, style, unique: styleKeyBase };
+        }
+
+        // Old method of processing sources
         for (let sourceIndex = 0, sourceLen = sources.length; sourceIndex < sourceLen; sourceIndex++) {
             const source = sources[sourceIndex]; // source from buildSrouces
             const partKeys = Object.keys(source);
@@ -218,7 +346,7 @@ window.Styler = window.Styler || {
                     }
                 }
 
-                if (classRet === true) {
+                if (classRet > 0) {
                     style[partKey] = `${componentName}__${partKey}__${styleKeyBase}`;
 
                     if (typeof(style.style[partKey]) === 'undefined') {
@@ -237,10 +365,10 @@ window.Styler = window.Styler || {
         }
 
         // remove any ! for important styling
-        const keys = (classRet === true) ? Object.keys(style.style) : Object.keys(style);
+        const keys = (classRet > 0) ? Object.keys(style.style) : Object.keys(style);
         for (let i = 0, len = keys.length; i < len; i++) {
             const key = keys[i];
-            if (classRet === true) {
+            if (classRet > 0) {
                 if (typeof(style.style[key]) === 'string') {
                     style.style[key] = style.style[key].replace('!', '');
                 }
@@ -285,18 +413,48 @@ window.Styler = window.Styler || {
         return obj;
     },
 
-    getStyleFromCache(obj, sources) {
+    getStyleFromCache(obj, sources, dynamicOnly) {
         const componentName = obj.componentName;
 
         if (typeof(this.cache[componentName]) === 'undefined') this.cache[componentName] = [];
         for (let i = 0, len = this.cache[componentName].length; i < len; i++) {
             const cacheVal = this.cache[componentName][i];
-            if (this.checkCacheEquality(sources, cacheVal)) {
-                return cacheVal.style;
+            if (dynamicOnly) {
+                if (this.checkCacheEquality(sources.dynamicConditions, cacheVal.sources.dynamicConditions)) {
+                    const partKeys = Object.keys(cacheVal.style.parts);
+                    const result = {};
+                    for (let partIndex = 0, partLen = partKeys.length; partIndex < partLen; partIndex++) {
+                        const partKey = partKeys[partIndex];
+                        result[partKey] = this.makeClassString(obj, partKey, sources.activeConditions, cacheVal.style.unique);
+                    }
+
+                    return result; // return new class string with the active conditions
+                }
+            } else {
+                if (this.checkCacheEquality(sources, cacheVal.sources)) {
+                    return cacheVal.style;
+                }
             }
         }
 
         return false;
+    },
+
+    // will create Peapod's stylesheet if it doesn't exist
+    checkCreateStylesheet() {
+        if (window.Styler.styleRootEle === null) {
+            const sheet = document.createElement('style');
+            const sheetInline = document.createElement('style');
+
+            sheet.id = 'Peapod_Style';
+            sheetInline.id = 'Peapod_Style_Inline';
+
+            window.Styler.styleRootEle = sheet;
+            window.Styler.styleInlineEle = sheetInline;
+
+            document.head.appendChild(sheet);
+            document.head.appendChild(sheetInline);
+        }
     },
 
     addStyleToCache(obj, sources, style) {
@@ -311,15 +469,7 @@ window.Styler = window.Styler || {
 
         const parts = Object.keys(style);
 
-        if (window.Styler.styleRootEle === null) {
-            const sheet = document.createElement('style');
-
-            sheet.id = 'Peapod_Style';
-
-            window.Styler.styleRootEle = sheet;
-
-            document.head.appendChild(sheet);
-        }
+        this.checkCreateStylesheet();
 
         for (let i = 0, len = parts.length; i < len; i++) {
             const key = parts[i];
@@ -330,6 +480,80 @@ window.Styler = window.Styler || {
         }
 
         return true;
+    },
+
+    createCachedStyle(obj, sources, style) {
+        const componentName = obj.componentName;
+
+        if (typeof(window.Styler.cache[componentName]) === 'undefined') window.Styler.cache[componentName] = [];
+
+        const cacheLen = window.Styler.cache[componentName].length;
+
+        if (cacheLen > window.Styler.maxCacheLength) window.Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
+        window.Styler.cache[componentName].push({ obj, sources, style });
+
+        const selectors = style.selectors;
+
+        this.checkCreateStylesheet();
+
+        for (let selectorIndex = 0, selectorLen = selectors.length; selectorIndex < selectorLen; selectorIndex++) {
+            const selector = selectors[selectorIndex];
+
+            this.addToStylesheetRaw(selector.key, selector.style, window.Styler.styleRootEle, style.unique);
+        }
+
+        return true;
+    },
+
+    stringifySelector(selector) {
+        const selectorKeys = Object.keys(selector);
+        let ret = '';
+        for (let selectorIndex = 0, selectorLen = selectorKeys.length; selectorIndex < selectorLen; selectorIndex++) {
+            const key = selectorKeys[selectorIndex];
+            const value = selector[key];
+
+            if (typeof(value) === 'number' && key !== 'opacity' && key !== 'font-weight') {
+                ret += `${key}: ${value}px; `;
+            } else {
+                ret += `${key}: ${value}; `;
+            }
+        }
+
+        return ret;
+    },
+
+    makeInlineClass(selector, unique = '&') {
+        return selector.split(unique).join(`${unique}--inline`);
+    },
+
+    makeInlineSelector(selector) {
+        return this.rootEle + ' ' + this.makeInlineClass(selector);
+    },
+
+    makeUniqueSelector(selector, unique) {
+        return selector.split('&').join(unique);
+    },
+
+    addToStylesheetRaw(selector, style, sheetEle, unique) {
+        const styleString = this.stringifySelector(style, unique);
+        const processedSelector = this.makeUniqueSelector(selector, unique);
+
+        let sheetString = '';
+        if (selector.indexOf('@media') === -1) {
+            const processedInlineSelector = this.makeUniqueSelector(this.makeInlineSelector(selector), unique);
+            sheetString = `${processedSelector}, ${processedInlineSelector} {${styleString}}\n`;
+        } else {
+            const splitMedia = processedSelector.split('|||');
+            const processedInlineSelector = this.makeUniqueSelector(this.makeInlineSelector(splitMedia[1]), unique);
+            sheetString = `${splitMedia[0]} {${splitMedia[1]}, ${processedInlineSelector} {${styleString}}}\n`;
+        }
+
+
+        if (false) { // DEBUG OUTPUT
+            sheetEle.innerHTML += sheetString;
+        } else {
+            sheetEle.sheet.insertRule(sheetString, sheetEle.sheet.cssRules.length);
+        }
     },
 
     addToStylesheet(classKey, styleObj, sheetEle) {
@@ -356,7 +580,6 @@ window.Styler = window.Styler || {
             } else {
                 const processedKey = pseudoKey.split('&').join(unique);
                 sheetEle.insertRule(`${processedKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length);
-                console.log(`${processedKey} {${pseudoSelectors[pseudoKey]}}\n`)
             }
         }
     },
@@ -393,7 +616,7 @@ window.Styler = window.Styler || {
     },
 
     checkCacheEquality(sources, cacheVal) {
-        return _isEqual(sources, cacheVal.sources);
+        return _isEqual(sources, cacheVal);
     },
 
     // gets object of styling for parts of a component
@@ -402,17 +625,16 @@ window.Styler = window.Styler || {
 
         console.warn(`Using legacy styling in ${obj.componentName}.  This will be removed in the future.`);
 
-
         const sourcesAndConditions = window.Styler.buildSources(obj); // build sources from libraries for component
 
         if (window.Styler.enableCache) { // use value from cache
-            const cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
+            const cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.combinedConditions);
             if (cacheVal !== false) {
                 return cacheVal;
             }
         }
 
-        const style = window.Styler.processSources(obj, sourcesAndConditions.sources); // built style from sources
+        const style = window.Styler.processSources(obj, sourcesAndConditions); // built style from sources
 
         return style;
     },
@@ -421,22 +643,22 @@ window.Styler = window.Styler || {
     getClasses(instance, localStyler = {}) {
         const obj = window.Styler.makeInstanceObj(instance, localStyler);
 
-        const sourcesAndConditions = window.Styler.buildSources(obj); // build sources from libraries for component
+        const sourcesAndConditions = window.Styler.buildSources(obj, true); // build sources from libraries for component
 
         if (window.Styler.enableCache) { // use value from cache
-            let cacheVal = this.getStyleFromCache(obj, sourcesAndConditions.activeConditions);
+            const cacheVal = this.getStyleFromCache(obj, sourcesAndConditions, true);
             if (cacheVal !== false) {
                 return cacheVal;
             }
         }
 
-        const style = window.Styler.processSources(obj, sourcesAndConditions.sources, true); // built style from sources
+        const style = window.Styler.processSources(obj, sourcesAndConditions, 2); // built style from sources
 
         if (window.Styler.enableCache) { // save to cache
-            this.addStyleToCache(obj, sourcesAndConditions.activeConditions, style);
+            this.createCachedStyle(obj, sourcesAndConditions, style);
         }
 
-        return style;
+        return style.parts;
     },
 
     // will resolve a string to it's actual computed value

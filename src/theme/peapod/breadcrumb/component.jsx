@@ -31,7 +31,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
             const seperator = (i + 1 !== children.length) ? '/' : '';
             breadcrumbshtml.push(
                 <li key={i} style={{ display: 'inline' }}>
-                    <Anchor styler={{ style: classes.style.listitem }}>{children[i]}</Anchor>
+                    <Anchor className={classes.listItem}>{children[i]}</Anchor>
                     {seperator}
                 </li>
             );

@@ -56,7 +56,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         }
 
         return (
-            <div className={classes.main} {...this.props}>
+            <div {...this.props} className={classes.main}>
                 {actionBarTop}
                 {title}
 

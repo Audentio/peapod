@@ -13,18 +13,14 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                color: component.color.base,
-                textDecoration: 'none',
-
-                ':hover': {
-                    color: component.color.hover,
-                },
-
-                ':active': {
-                    color: component.color.active,
-                },
+        sheet.selector('.main', {
+            color: component.color.base,
+            textDecoration: 'none',
+            ':hover': {
+                color: component.color.hover,
+            },
+            ':active': {
+                color: component.color.active,
             },
         });
     };

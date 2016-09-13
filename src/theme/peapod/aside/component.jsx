@@ -12,11 +12,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     static propTypes = {
         children: React.PropTypes.any,
-        styler: React.PropTypes.object,
     }
 
     render() {
-        const { styler, children, ...other } = this.props;
+        const { children, ...other } = this.props;
         const classes = Styler.getClasses(this);
 
         return (

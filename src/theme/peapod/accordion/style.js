@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     // Conditions
     sheet.addCondition('vertical').addProp({ vertical: true });
 
@@ -10,13 +8,10 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            condition: ['vertical'],
-            common: {
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'nowrap',
-            },
+        sheet.selector('.main.--vertical', {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
         });
     };
 

@@ -41,12 +41,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
             returned = (
                 <Button
                     href={href}
+                    className={classes.button}
                     styler={{
                         kind: this.props.kind || 'general',
                         type: this.props.type || 'text',
                         dialog: this.props.dialog || false,
                         dense: this.props.dense || false,
-                        style: classes.style.button,
                     }}
                 >
                     {children}
@@ -56,12 +56,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
         } else if (textstyle === 'button') {
             returned = (
                 <Button
+                    className={classes.button}
                     styler={{
                         kind: this.props.kind || 'general',
                         type: this.props.type || 'text',
                         dialog: this.props.dialog || false,
                         dense: this.props.dense || false,
-                        style: classes.style.button,
                     }}
                 >
                     {children}
@@ -70,14 +70,14 @@ module.exports = componentName => class Pod_Component extends React.Component {
             );
         } else if (href) {
             returned = (<div className={classes.main}>
-                <Anchor to={href} styler={{ style: classes.style.anchor }}>
+                <Anchor to={href} className={classes.anchor}>
                     {children}
                     {subtext}
                 </Anchor>
             </div>);
         } else {
             returned = (
-                <div className={classes.main} {...otherprops}>
+                <div {...otherprops} className={classes.main}>
                     {children}
                     {subtext}
                 </div>

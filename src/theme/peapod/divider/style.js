@@ -1,6 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
     // Conditions
     sheet.addCondition('inline').addStyler({ inline: true });
     sheet.addCondition('indent').addStyler({ indent: ['!=', ''] });
@@ -12,31 +10,20 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                marginTop: '8px',
-                marginBottom: '8px',
-                height: '1px',
-                background: 'rgba(0,0,0,.12)',
-                display: 'inline-block',
-                width: '100%',
-            },
-        }).addSelector({
-            condition: ['inline'],
-            common: {
-                marginTop: '0px',
-                marginBottom: '0px',
-            },
-        }).addSelector({
-            condition: ['indent'],
-            common: {
-                marginLeft: (obj) => (obj.styler.indent),
-            },
-        }).addSelector({
-            condition: ['outdent'],
-            common: {
-                marginRight: (obj) => (obj.styler.outdent),
-            },
+        sheet.selector('.main', {
+            marginTop: '8px',
+            marginBottom: '8px',
+            height: '1px',
+            background: 'rgba(0,0,0,.12)',
+            display: 'inline-block',
+            width: '100%',
+        }).selector('.main.--inline', {
+            marginTop: '0px',
+            marginBottom: '0px',
+        }).selector('.main.--indent', {
+            marginLeft: (obj) => (obj.styler.indent),
+        }).selector('.main.--outdent', {
+            marginRight: (obj) => (obj.styler.outdent),
         });
     };
 

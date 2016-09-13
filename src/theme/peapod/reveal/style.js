@@ -1,20 +1,18 @@
 import { Sheet } from 'utility/stylesheet.js';
 
-module.exports = function (sheetName) {
-    const sheet = new Sheet(sheetName);
-    const main = sheet.addMain();
-    const trigger = sheet.addPart('trigger');
+module.exports = function (sheet) {
+    sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
+        const component = {};
+        return component;
+    };
 
-    main.addSelector({
-        common: {
-        },
-    });
+    sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
+        sheet.selector('.main', {});
 
-    trigger.addSelector({
-        common: {
+        sheet.selector('.trigger', {
             cursor: 'pointer',
-        },
-    });
+        });
+    };   
 
     return sheet;
 };

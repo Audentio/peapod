@@ -8,32 +8,31 @@ module.exports = componentName => class Pod_Component extends React.Component {
         super();
 
         this.state = {
-            show: false
-        }
+            show: false,
+        };
     }
 
     mouseEnter() {
-        this.setState({show: true})
+        this.setState({ show: true });
     }
     mouseLeave() {
-        this.setState({show: false})
+        this.setState({ show: false });
     }
 
     render() {
-        var classes = Styler.getClasses(this);
-        var children = (this.state.show) ? this.props.children : '';
-
+        const classes = Styler.getClasses(this);
+        const children = (this.state.show) ? this.props.children : '';
 
         return (
             <div
                 onMouseEnter={this.mouseEnter.bind(this)}
                 onMouseLeave={this.mouseLeave.bind(this)}
-                >
+            >
                 {this.props.trigger}
                 <div className={classes.main}>
                     {children}
                 </div>
             </div>
-        )
+        );
     }
 };

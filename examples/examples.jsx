@@ -42,13 +42,14 @@ render((
 ), document.getElementById('mainContainer'));
 */
 
-import { Button, DatePicker } from 'utility/examples.js';
+import { Accordion as Example } from 'utility/examples.js';
 
+import { Button as Component } from 'utility/components.js';
 
 render((
     <div>
-        <Button />
-        <DatePicker />
+        <Example />
+        <Component />
     </div>
 ), document.getElementById('mainContainer'));
 

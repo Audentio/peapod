@@ -8,25 +8,21 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                height: theme.gutter.extralarge,
-                lineHeight: theme.gutter.extralarge,
-                background: 'white',
-                paddingLeft: theme.gutter.extrasmall,
-                paddingRight: theme.gutter.extrasmall,
-                borderRadius: theme.border.radius.small,
-                color: theme.palette.grey500,
-            },
+        sheet.selector('.main', {
+            height: theme.gutter.extralarge,
+            lineHeight: theme.gutter.extralarge,
+            background: 'white',
+            paddingLeft: theme.gutter.extrasmall,
+            paddingRight: theme.gutter.extrasmall,
+            borderRadius: theme.border.radius.small,
+            color: theme.palette.grey500,
         });
 
-        listitem.addSelector({
-            common: {
-                height: theme.gutter.extralarge,
-                display: 'inline-block',
-                paddingLeft: theme.gutter.extrasmall,
-                paddingRight: theme.gutter.extrasmall,
-            },
+        sheet.selector('.listItem', {
+            height: theme.gutter.extralarge,
+            display: 'inline-block',
+            paddingLeft: theme.gutter.extrasmall,
+            paddingRight: theme.gutter.extrasmall,
         });
     };
 

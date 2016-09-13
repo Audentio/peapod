@@ -1,8 +1,6 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-
-    sheet.addCondition('sizeSet').addStyler({ size: ['!=', undefined] });
-    sheet.addCondition('colorSet').addStyler({ color: ['!=', undefined] });
+    sheet.addCondition('sizeSet').addProp({ size: ['!=', undefined] });
+    sheet.addCondition('colorSet').addProp({ color: ['!=', undefined] });
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {
@@ -15,21 +13,13 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                fontSize: component.font.size,
-                verticalAlign: 'middle',
-            },
-        }).addSelector({
-            condition: ['sizeSet'],
-            common: {
-                fontSize: (obj) => (obj.styler.size),
-            },
-        }).addSelector({
-            condition: ['colorSet'],
-            common: {
-                color: (obj) => (obj.styler.color),
-            },
+        sheet.selector('.main', {
+            fontSize: component.font.size,
+            verticalAlign: 'middle',
+        }).selector('.main.--sizeSet', {
+            fontSize: (obj) => (obj.props.size),
+        }).selector('.main.--colorSet', {
+            color: (obj) => (obj.props.color),
         });
     };
 

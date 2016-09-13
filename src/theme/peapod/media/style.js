@@ -1,8 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const figure = sheet.addPart('figure');
-    const content = sheet.addPart('content');
-
     // Conditions
     sheet.addCondition('figureTop').addProp({ figureVertical: 'top' });
     sheet.addCondition('figureMiddle').addProp({ figureVertical: 'middle' });
@@ -18,47 +14,26 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                display: 'flex',
-                verticalAlign: 'bottom',
-                alignItems: 'center',
-                justifyContent: 'center',
-            },
+        sheet.selector('.main', {
+            display: 'flex',
+            verticalAlign: 'bottom',
+            alignItems: 'center',
+            justifyContent: 'center',
         });
 
-        figure.addSelector({
-            common: {
+        const parts = ['figure', 'content'];
+
+        for (let i = 0, len = parts.length; i < len; i++) {
+            const part = parts[i];
+            sheet.selector(`.${part}`, {
                 alignSelf: 'flex-start',
                 minWidth: (obj) => (obj.props.figureWidth),
-            },
-        }).addSelector({
-            condition: ['figureMiddle'],
-            common: {
+            }).selector(`.${part}.--${part}Middle`, {
                 alignSelf: 'flex-center',
-            },
-        }).addSelector({
-            condition: ['figureBottom'],
-            common: {
+            }).selector(`.${part}.--${part}Bottom`, {
                 alignSelf: 'flex-end',
-            },
-        });
-
-        content.addSelector({
-            common: {
-                alignSelf: 'flex-start',
-            },
-        }).addSelector({
-            condition: ['contentMiddle'],
-            common: {
-                alignSelf: 'flex-center',
-            },
-        }).addSelector({
-            condition: ['contentBottom'],
-            common: {
-                alignSelf: 'flex-end',
-            },
-        });
+            });
+        }
     };
 
     return sheet;

@@ -43,7 +43,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     className={classes.button}
                     onClick={this.prevButton}
                 >
-                    <Icon styler={{ style: classes.style.icon }}>keyboard_arrow_left</Icon>
+                    <Icon className={classes.icon}>keyboard_arrow_left</Icon>
                 </a>
                 <div className={classes.main}>
                     {getLocalMonth(this.props.currentDate)} {this.props.currentDate.getFullYear()}
@@ -52,7 +52,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                     className={classes.button}
                     onClick={this.nextButton}
                 >
-                    <Icon styler={{ style: classes.style.icon }}>keyboard_arrow_right</Icon>
+                    <Icon className={classes.icon}>keyboard_arrow_right</Icon>
                 </a>
             </div>
         );

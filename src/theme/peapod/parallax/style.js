@@ -1,7 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const group = sheet.addPart('group');
-
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {
             height: '100vh',
@@ -11,24 +8,21 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({
-            common: {
-                height: component.height,
-                background: '#ddd',
-                overflow: 'hidden',
-                WebkitPerspective: '300px',
-                perspective: '300px',
-                WebkitPerspectiveOriginX: '100%',
-                perspectiveOriginX: '100%',
-            },
+        sheet.selector('.main', {
+            height: component.height,
+            background: '#ddd',
+            overflow: 'hidden',
+            WebkitPerspective: '300px',
+            perspective: '300px',
+            WebkitPerspectiveOriginX: '100%',
+            perspectiveOriginX: '100%',
         });
-        group.addSelector({
-            common: {
-                position: 'relative',
-                height: component.height,
-                WebkitTransformStyle: 'preserve-3d',
-                transformStyle: 'preserve-3d',
-            },
+
+        sheet.selector('.group', {
+            position: 'relative',
+            height: component.height,
+            WebkitTransformStyle: 'preserve-3d',
+            transformStyle: 'preserve-3d',
         });
     };
 

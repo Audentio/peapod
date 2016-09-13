@@ -1,9 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const wrapper = sheet.addPart('wrapper');
-    // const message = sheet.addPart('message');
-    const dismissIcon = sheet.addPart('dismissIcon');
-
     sheet.addDoc(`# Purpose
     A component to make alerts.`);
 
@@ -27,65 +22,37 @@ module.exports = function (sheet) {
     };
 
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
-        main.addSelector({});
-
-        wrapper.addSelector({
-            common: {
-                fontSize: theme.font.size.xsmall,
-                position: 'relative',
-                paddingLeft: theme.gutter.large,
-                paddingRight: theme.gutter.large,
-                borderRadius: theme.border.radius.small,
-                height: theme.gutter.extralarge,
-                lineHeight: theme.gutter.extralarge,
-                marginBottom: theme.gutter.internal,
-            },
-        })
-        .addSelector({
-            condition: 'kindGeneral',
-            common: {
-                backgroundColor: component.background.general,
-            },
-        })
-        .addSelector({
-            condition: 'kindSuccess',
-            common: {
-                backgroundColor: component.background.success,
-            },
-        })
-        .addSelector({
-            condition: 'kindInfo',
-            common: {
-                backgroundColor: component.background.info,
-            },
-        })
-        .addSelector({
-            condition: 'kindWarning',
-            common: {
-                backgroundColor: component.background.warning,
-            },
-        })
-        .addSelector({
-            condition: 'kindDanger',
-            common: {
-                backgroundColor: component.background.danger,
-            },
+        sheet.selector('.wrapper', {
+            fontSize: theme.font.size.xsmall,
+            position: 'relative',
+            paddingLeft: theme.gutter.large,
+            paddingRight: theme.gutter.large,
+            borderRadius: theme.border.radius.small,
+            height: theme.gutter.extralarge,
+            lineHeight: theme.gutter.extralarge,
+            marginBottom: theme.gutter.internal,
         });
 
-        dismissIcon.addSelector({
-            common: {
-                float: 'right',
-                fontWeight: 'bold',
-                fontSize: '1.5rem',
-                color: 'rgba(0,0,0,0.4)',
-                cursor: 'pointer',
-                marginLeft: theme.gutter.extralarge,
-                lineHeight: theme.gutter.extralarge,
-                height: theme.gutter.extralarge,
+        const kinds = ['General', 'Success', 'Info', 'Warning', 'Danger'];
+        for (let i = 0, len = kinds.length; i < len; i++) {
+            const kind = kinds[i];
+            sheet.selector(`.wrapper.--kind${kind}`, {
+                backgroundColor: component.background[kind.toLowerCase()],
+            });
+        }
 
-                ':hover': {
-                    color: 'rgba(0,0,0,0.7)',
-                },
+        sheet.selector('.dismissIcon', {
+            float: 'right',
+            fontWeight: 'bold',
+            fontSize: '1.5rem',
+            color: 'rgba(0,0,0,0.4)',
+            cursor: 'pointer',
+            marginLeft: theme.gutter.extralarge,
+            lineHeight: theme.gutter.extralarge,
+            height: theme.gutter.extralarge,
+
+            ':hover': {
+                color: 'rgba(0,0,0,0.7)',
             },
         });
     };

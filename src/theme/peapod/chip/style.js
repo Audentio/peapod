@@ -1,8 +1,4 @@
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const deleteTrigger = sheet.addPart('deleteTrigger');
-    const photo = sheet.addPart('photo');
-
     // Conditions
     sheet.addCondition('hovered').addState({ hovered: true });
 
@@ -24,63 +20,51 @@ module.exports = function (sheet) {
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         const half = (value) => (parseFloat(value) / 2);
 
-        main.addSelector({
-            common: {
-                backgroundColor: component.background,
-                display: 'inline-block',
-                height: component.height,
-                lineHeight: component.height,
-                paddingLeft: component.paddingLeftRight,
-                paddingRight: component.paddingLeftRight,
-                color: component.color,
-                borderRadius: '1000px',
+        sheet.selector('.main', {
+            backgroundColor: component.background,
+            display: 'inline-block',
+            height: component.height,
+            lineHeight: component.height,
+            paddingLeft: component.paddingLeftRight,
+            paddingRight: component.paddingLeftRight,
+            color: component.color,
+            borderRadius: '1000px',
 
-                ':hover': {
-                    background: component.hover.background,
-                    color: component.hover.color,
-                },
+            ':hover': {
+                background: component.hover.background,
+                color: component.hover.color,
             },
         });
 
-        deleteTrigger.addSelector({
-            common: {
-                display: 'inline-block',
-                height: half(component.height),
-                lineHeight: half(component.height) + 'px',
-                width: half(component.height),
-                fontSize: theme.font.size.xxsmall,
-                background: theme.palette.grey500,
-                color: component.background,
-                textAlign: 'center',
-                float: 'right',
-                marginLeft: component.innerMargins,
-                marginRight: (0 - half(component.innerMargins)) + 'px',
-                marginTop: component.innerMargins,
-                borderRadius: half(component.height) + 'px',
-                cursor: 'pointer',
+        sheet.selector('.deleteTrigger', {
+            display: 'inline-block',
+            height: half(component.height),
+            lineHeight: half(component.height) + 'px',
+            width: half(component.height),
+            fontSize: theme.font.size.xxsmall,
+            background: theme.palette.grey500,
+            color: component.background,
+            textAlign: 'center',
+            float: 'right',
+            marginLeft: component.innerMargins,
+            marginRight: (0 - half(component.innerMargins)) + 'px',
+            marginTop: component.innerMargins,
+            borderRadius: half(component.height) + 'px',
+            cursor: 'pointer',
 
-                ':hover': {
-                    background: component.hover.color,
-                    color: component.hover.background,
-                },
-            },
-        }).addSelector({
-            condition: ['hovered'],
-            common: {
+            ':hover': {
                 background: component.hover.color,
                 color: component.hover.background,
             },
         });
 
-        photo.addSelector({
-            common: {
-                height: component.height,
-                width: component.height,
-                borderRadius: half(component.height) + 'px',
-                float: 'left',
-                marginLeft: (0 - parseFloat(component.paddingLeftRight)) + 'px',
-                marginRight: component.innerMargins,
-            },
+        sheet.selector('.photo', {
+            height: component.height,
+            width: component.height,
+            borderRadius: half(component.height) + 'px',
+            float: 'left',
+            marginLeft: (0 - parseFloat(component.paddingLeftRight)) + 'px',
+            marginRight: component.innerMargins,
         });
     };
 
