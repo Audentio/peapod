@@ -10,7 +10,7 @@ module.exports = function (sheet) {
     sheet.addCondition('secondary').addStyler({ secondary: true });
     // sheet.addCondition('upper').addProp({ upper: true });
     // sheet.addCondition('weight').addProp({ weight: ['!=', undefined] });
-    sheet.addCondition('upper').addFunction(instance =>
+    sheet.addCondition('upper', instance =>
         instance.props.upper || (instance.props.preset && presets[instance.props.preset].upper)
     );
 

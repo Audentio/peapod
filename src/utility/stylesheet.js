@@ -286,12 +286,12 @@ class Main extends Part {
 
 // A condition to apply styling
 class Condition {
-    constructor() {
+    constructor(func = null) {
         this.styler = null;
         this.state = null;
         this.props = null;
         this.contest = null;
-        this.func = null;
+        this.func = func;
     }
 
     addStyler(obj) {
@@ -485,11 +485,11 @@ class Sheet {
         return this.conditions;
     }
 
-    addCondition(name) {
+    addCondition(name, func) {
         if (this.variablesResolved) {
             Logger.error(`Attempting to add condition ${name} in ${this.name} after variables have been initialized.  This will not work.`);
         }
-        const condition = new Condition();
+        const condition = new Condition(func);
         this.conditions[name] = condition;
         return condition;
     }

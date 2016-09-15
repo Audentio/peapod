@@ -5,9 +5,9 @@ module.exports = function (sheet) {
 
     sheet.addCondition('trueScaling').addProp({ trueScaling: true });
     // sheet.addCondition('scale').addProp({ scale: ['!=', undefined] });
-    sheet.addCondition('scale').addFunction((instance) => {
-        return instance.props.width || instance.props.height || instance.props.scale;
-    });
+    sheet.addCondition('scale', instance =>
+        instance.props.width || instance.props.height || instance.props.scale
+    );
 
     const devices = {
         iphone: {
