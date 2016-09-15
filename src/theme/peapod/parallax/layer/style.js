@@ -2,9 +2,7 @@ module.exports = function (sheet) {
     // Conditions
     sheet.addCondition('fore').addProp({ level: 0 });
     sheet.addCondition('base').addProp({ level: 1 });
-    sheet.addCondition('belowBase').addFunction((instance) => {
-        return parseInt(instance.props.level, 10) > 1;
-    });
+    sheet.addCondition('belowBase', instance => parseInt(instance.props.level, 10) > 1);
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {};

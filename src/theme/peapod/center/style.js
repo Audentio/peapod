@@ -1,6 +1,6 @@
 module.exports = function (sheet) {
-    sheet.addCondition('textCenter').addFunction((obj) => obj.props.textCenter);
-    sheet.addCondition('block').addFunction((obj) => obj.props.block);
+    sheet.addCondition('textCenter', obj => obj.props.textCenter);
+    sheet.addCondition('block', obj => obj.props.block);
 
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars

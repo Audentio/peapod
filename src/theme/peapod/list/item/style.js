@@ -1,6 +1,6 @@
 module.exports = function (sheet) {
     // Conditions
-    sheet.addCondition('secondary').addFunction((instance) => instance.props.secondary !== undefined || instance.styler.imgSize === 'large');
+    sheet.addCondition('secondary', instance => instance.props.secondary !== undefined || instance.styler.imgSize === 'large');
 
     sheet.addCondition('imageSmall').addStyler({ imgSize: 'small' });
     sheet.addCondition('imageMedium').addStyler({ imgSize: 'medium' });

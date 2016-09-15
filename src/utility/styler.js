@@ -512,7 +512,7 @@ window.Styler = window.Styler || {
             const key = selectorKeys[selectorIndex];
             const value = selector[key];
 
-            if (typeof(value) === 'number' && key !== 'opacity' && key !== 'font-weight') {
+            if (typeof(value) === 'number' && key !== 'opacity' && key !== 'z-index' && key !== 'font-weight') {
                 ret += `${key}: ${value}px; `;
             } else {
                 ret += `${key}: ${value}; `;

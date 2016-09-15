@@ -1,6 +1,6 @@
 module.exports = function (sheet) {
     // Conditions
-    sheet.addCondition('positionTop').addFunction((instance) =>
+    sheet.addCondition('positionTop', (instance) =>
         instance.styler.hasOwnProperty('position') && /^top/.exec(instance.styler.position)
     );
     sheet.addCondition('positionTopRight').addStyler({ position: 'top-right' });
@@ -8,13 +8,13 @@ module.exports = function (sheet) {
 
     sheet.addCondition('positionRight').addStyler({ position: undefined });
 
-    sheet.addCondition('positionBottom').addFunction((instance) =>
+    sheet.addCondition('positionBottom', (instance) =>
         instance.styler.hasOwnProperty('position') && /^bottom/.exec(instance.styler.position)
     );
     sheet.addCondition('positionBottomRight').addStyler({ position: 'bottom-right' });
     sheet.addCondition('positionBottomLeft').addStyler({ position: 'bottom-left' });
 
-    sheet.addCondition('positionLeft').addFunction((instance) =>
+    sheet.addCondition('positionLeft', (instance) =>
         instance.styler.hasOwnProperty('position') && /^left/.exec(instance.styler.position)
     );
 

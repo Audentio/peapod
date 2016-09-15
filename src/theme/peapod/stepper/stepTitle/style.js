@@ -1,6 +1,6 @@
 module.exports = function (sheet) {
     // Conditions
-    sheet.addCondition('hasSubTitle').addFunction(instance => !instance.props.validation || instance.props.subtitle);
+    sheet.addCondition('hasSubTitle', instance => !instance.props.validation || instance.props.subtitle);
     sheet.addCondition('positionBelow').addProp({ below: true });
     sheet.addCondition('notClickable').addProp({ clickable: false });
     sheet.addCondition('activeStep').addProp({ active: true });
