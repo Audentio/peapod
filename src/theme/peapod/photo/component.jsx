@@ -107,7 +107,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
         this.setState({ lightboxVisible: true });
 
         // enable scrolling
-        Pod_Helper.scrolling(false);
+        //Pod_Helper.scrolling(false);
 
         // add keyboard listener
         window.addEventListener('keydown', this.keyHandler);
@@ -250,7 +250,6 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const downloadFile = this.downloadFile.bind(this);
         const openInNew = this.openInNew.bind(this);
 
-
         return (
             <div className={classes.main}>
                 <Lazy>
@@ -272,7 +271,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
                         <div className={classes.lightboxInner}>
                             <img
                                 className={classes.lightboxImage}
-                                src={this.state.visible ? this.imageURL : options.blankImage}
+                                src={(this.state.visible || true) ? this.imageURL : options.blankImage}
                                 role="presentation"
                             />
                         </div>

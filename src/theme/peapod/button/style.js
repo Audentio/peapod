@@ -3,10 +3,6 @@ import Radium from 'radium';
 const buttonKinds = ['base', 'general', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
 
 module.exports = function (sheet) {
-    const main = sheet.addMain();
-    const ripple = sheet.addPart('ripple');
-    const rippleContainer = sheet.addPart('rippleContainer');
-
     // Conditions
     sheet.addCondition('raised').addStyler({ raised: true });
     sheet.addCondition('block').addStyler({ block: true });

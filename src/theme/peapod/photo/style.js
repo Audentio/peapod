@@ -93,6 +93,7 @@ module.exports = function (sheet) {
             opacity: '.5',
             padding: '8px',
             marginLeft: '2px',
+            fontSize: '2rem',
 
             ':hover': {
                 cursor: 'pointer',

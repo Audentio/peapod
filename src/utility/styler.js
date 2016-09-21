@@ -535,7 +535,7 @@ window.Styler = window.Styler || {
     },
 
     addToStylesheetRaw(selector, style, sheetEle, unique) {
-        const styleString = this.stringifySelector(style, unique);
+        const styleString = (typeof(style) === 'string') ? style : this.stringifySelector(style, unique);
         const processedSelector = this.makeUniqueSelector(selector, unique);
 
         let sheetString = '';
@@ -544,8 +544,11 @@ window.Styler = window.Styler || {
             sheetString = `${processedSelector}, ${processedInlineSelector} {${styleString}}\n`;
         } else {
             const splitMedia = processedSelector.split('|||');
-            const processedInlineSelector = this.makeUniqueSelector(this.makeInlineSelector(splitMedia[1]), unique);
-            sheetString = `${splitMedia[0]} {${splitMedia[1]}, ${processedInlineSelector} {${styleString}}}\n`;
+            const splitMediaInline = selector.split('|||');
+            const processedSelectorMedia = this.makeUniqueSelector(this.makeInlineSelector(splitMedia[1]), unique);
+            const processedSelectorMediaInline = this.makeUniqueSelector(this.makeInlineSelector(splitMediaInline[1]), unique);
+
+            sheetString = `${splitMedia[0]} {${splitMedia[1]}, ${processedSelectorMedia}, ${processedSelectorMediaInline} {${styleString}}}\n`;
         }
 
 
