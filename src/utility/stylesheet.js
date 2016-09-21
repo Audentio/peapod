@@ -3,13 +3,18 @@ import _Merge from 'lodash/merge';
 import _Clone from 'lodash/clone';
 import Pod_Vars from './vars.js';
 import Logger from './logger.js';
+//import css from 'css';
 
 const pod_debug = false; // if true, will add a debug object to the inline style produced
 
 // actual Styling
 class Style {
-    constructor(style) {
-        this.style = this.processRules(style);
+    constructor(style, styleString = false) {
+        if (styleString) {
+            this.style = style; // for css strings don't need to hyphenate
+        } else {
+            this.style = this.processRules(style);
+        }
     }
 
     processRules(obj, depth = 0) {
@@ -107,8 +112,8 @@ class Selector {
         for (let i = 0, len = keys.length; i < len; i++) {
             const scene = keys[i];
 
-            if (scene !== 'condition' && scene !== 'prefix') {
-                this.scenes[scene] = new Style(selector[scene]);
+            if (scene !== 'condition' && scene !== 'prefix' && scene !== 'styleString' && scene !== 'themeName') {
+                this.scenes[scene] = new Style(selector[scene], selector.styleString);
             }
         }
     }
@@ -413,10 +418,18 @@ class Sheet {
         this.variablesResolved = false;
         this.scenesResolved = false;
         this.stylesResolved = false;
+        this.themeName = 'peapod';
         if (name === 'undefined') {
             Logger.error('Sheet created without a name specified.');
         }
         this.name = name;
+    }
+
+    css(fileText) {
+        console.log(fileText);
+        //const rawCss = fileText.toString();
+        //const parsedCss = css.parse(rawCss);
+        //console.log(parsedCss);
     }
 
     reset() {
@@ -542,9 +555,13 @@ class Sheet {
             for (let i = 0, len = selectorKeys.length; i < len; i++) {
                 const key = selectorKeys[i];
                 const style = selector[key];
-                const result = this.expandSelectorObjects(style, '', key, '', 0);
-                for (let resultIndex = 0, resultLen = result.length; resultIndex < resultLen; resultIndex++) {
-                    newSelectors.push(result[resultIndex]);
+                if (style.length) {
+                    newSelectors.push({ [key]: style }); // add string selector, TODO extend to expand selectors too
+                } else {
+                    const result = this.expandSelectorObjects(style, '', key, '', 0);
+                    for (let resultIndex = 0, resultLen = result.length; resultIndex < resultLen; resultIndex++) {
+                        newSelectors.push(result[resultIndex]);
+                    }
                 }
             }
         }
@@ -603,19 +620,33 @@ class Sheet {
 
             for (let selectorIndex = 0, selectorLen = partSelectors.length; selectorIndex < selectorLen; selectorIndex++) {
                 const selector = partSelectors[selectorIndex];
+
                 const selectorKeys = Object.keys(selector);
                 for (let ruleIndex = 0, ruleLen = selectorKeys.length; ruleIndex < ruleLen; ruleIndex++) {
                     const selectorKey = selectorKeys[ruleIndex];
                     const selectorVal = selector[selectorKey];
-                    const ruleKeys = Object.keys(selectorVal);
+                    const selectorValLen = selectorVal.length;
+                    if (selectorValLen > 0) {
+                        for (let arrIndex = 0; arrIndex < selectorValLen; arrIndex++) {
+                            const arrVal = selectorVal[arrIndex];
+                            if (typeof(arrVal) === 'function') { // evaluate any getProp functions
+                                partSelectors[selectorIndex][selectorKey][arrIndex] = arrVal(instance);
+                                dynamicConditions.push(`computed_${instance.componentName}_${partName}_${selectorIndex}_${ruleIndex}_${arrIndex}_${partSelectors[selectorIndex][selectorKey][arrIndex]}`);
+                            }
+                        }
 
-                    for (let keyIndex = 0, keyLen = ruleKeys.length; keyIndex < keyLen; keyIndex++) {
-                        const ruleKey = ruleKeys[keyIndex];
-                        const ruleVal = selectorVal[ruleKey];
+                        partSelectors[selectorIndex][selectorKey] = partSelectors[selectorIndex][selectorKey].join('');
+                    } else {
+                        const ruleKeys = Object.keys(selectorVal);
 
-                        if (typeof(ruleVal) === 'function' && ruleKey.indexOf('__') === -1) { // evaluate any getProp functions, ignore __Radium things
-                            partSelectors[selectorIndex][selectorKey][ruleKey] = ruleVal(instance);
-                            dynamicConditions.push(`computed_${instance.componentName}_${partName}_${selectorIndex}_${ruleIndex}_${keyIndex}_${partSelectors[selectorIndex][selectorKey][ruleKey]}`);
+                        for (let keyIndex = 0, keyLen = ruleKeys.length; keyIndex < keyLen; keyIndex++) {
+                            const ruleKey = ruleKeys[keyIndex];
+                            const ruleVal = selectorVal[ruleKey];
+
+                            if (typeof(ruleVal) === 'function' && ruleKey.indexOf('__') === -1) { // evaluate any getProp functions, ignore __Radium things
+                                partSelectors[selectorIndex][selectorKey][ruleKey] = ruleVal(instance);
+                                dynamicConditions.push(`computed_${instance.componentName}_${partName}_${selectorIndex}_${ruleIndex}_${keyIndex}_${partSelectors[selectorIndex][selectorKey][ruleKey]}`);
+                            }
                         }
                     }
                 }
@@ -642,7 +673,15 @@ class Sheet {
         return this.docDefault;
     }
 
-    selector(selectors, styling) {
+    selector(selectors, styling, ...stylingArray) {
+        let styleString = false;
+
+        if (stylingArray.length > 0 || typeof(styling) === 'string' || typeof(styling) === 'function') {
+            stylingArray.unshift(styling);
+            styleString = true;
+        }
+
+
         const globalPattern = /:global\(.*\)/;
 
         const splitSelectors = selectors.split(','); // allows chaining slectors with commas
@@ -714,14 +753,15 @@ class Sheet {
 
             result = result.join('');
 
-            styling._theme = 'peapod';
+            const processedStyling = (styleString) ? stylingArray : styling;
 
             this.addPart(partName).addSelector({
                 condition: conditions,
                 common: {
-                    [result]: styling,
+                    [result]: processedStyling,
                 },
-                selector: result,
+                styleString,
+                themeName: this.themeName, // will attribute styling to the theme that added it if debug mode enabled
             });
         }
 

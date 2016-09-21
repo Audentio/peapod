@@ -101,6 +101,7 @@ function compileExports() {
                             components[componentName] = {
                                 componentPath: '',
                                 stylePaths: [],
+                                themeNames: [],
                                 examplePath: '',
                                 compiledPath,
                             };
@@ -116,6 +117,7 @@ function compileExports() {
 
                         if (fileName === 'style.js') {
                             components[componentName].stylePaths.push(themeFile);
+                            components[componentName].themeNames.push(themeName);
                         }
                     }
                 }
@@ -151,6 +153,7 @@ let stylesheet = new Sheet(componentName);\n\n`;
 
             for (let styleIndex = 0, styleLen = component.stylePaths.length; styleIndex < styleLen; styleIndex++) {
                 componentExports += `import sheet_${styleIndex} from '${component.stylePaths[styleIndex]}';
+stylesheet.themeName = '${component.themeNames[styleIndex]}';
 stylesheet = sheet_${styleIndex}(stylesheet);\n\n`;
             }
 

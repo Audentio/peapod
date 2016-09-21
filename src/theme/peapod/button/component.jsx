@@ -91,15 +91,23 @@ module.exports = componentName => class Pod_Component extends React.Component {
     render() {
         const classes = Styler.getClasses(this);
         const ripple = <span ref="rippleContainer" className={classes.rippleContainer} >{this.state.ripples}</span>;
-        const { children, label, href } = this.props;
+        const { children, label, href, external } = this.props;
 
         // Anchor tag <Anchor> if href specified
         if (href) {
-            return (
-                <Anchor ref="button" to={href} className={classes.main} onMouseDown={this.onMouseDownHandler} onClick={this.onClickHandler}>
-                    {children || label} {ripple}
-                </Anchor>
-            );
+            if (external) {
+                return (
+                    <a ref="button" href={href} className={classes.main} onMouseDown={this.onMouseDownHandler} onClick={this.onClickHandler}>
+                        {children || label} {ripple}
+                    </a>
+                );
+            } else {
+                return (
+                    <Anchor ref="button" to={href} className={classes.main} onMouseDown={this.onMouseDownHandler} onClick={this.onClickHandler}>
+                        {children || label} {ripple}
+                    </Anchor>
+                );
+            }
         }
 
         // Default: <button> tag
