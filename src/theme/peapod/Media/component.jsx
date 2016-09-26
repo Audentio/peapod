@@ -39,11 +39,23 @@ module.exports = componentName => class Pod_Component extends React.Component {
         const classes = Styler.getClasses(this);
 
         const image = (typeof this.props.figure === 'string') ? <Photo src={this.props.figure} /> : this.props.figure;
-        const figure = (this.props.figure) ? (
-            <Block align={this.props.align} className={classes.figure}>
-                {image}
-            </Block>
-        ) : '';
+        let figure = '';
+        if (this.props.figure) {
+
+            if (this.props.borderFigure) {
+                figure = (
+                    <Block align={this.props.align} className={classes.figure}>
+                        {image}
+                    </Block>
+                )
+            } else {
+                figure = (
+                    <Block align={this.props.align} className={classes.figure}>
+                        {image}
+                    </Block>
+                )
+            }
+        }
 
         const figureLeft = (this.props.align === 'left') ? figure : '';
         const figureRight = (this.props.align === 'right') ? figure : '';

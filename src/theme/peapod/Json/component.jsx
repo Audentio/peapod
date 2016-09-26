@@ -8,7 +8,11 @@
 // Dependencies
 import React from 'react';
 import Styler from 'utility/styler.js';
-import * as Pod from 'utility/components.js';
+import { Button, Heading, Icon } from 'utility/components.js';
+
+const Pod = {
+    Button, Heading, Icon,
+};
 
 /**
 * Json component
