@@ -457,31 +457,6 @@ window.Styler = window.Styler || {
         }
     },
 
-    addStyleToCache(obj, sources, style) {
-        const componentName = obj.componentName;
-
-        if (typeof(window.Styler.cache[componentName]) === 'undefined') window.Styler.cache[componentName] = [];
-
-        const cacheLen = window.Styler.cache[componentName].length;
-
-        if (cacheLen > window.Styler.maxCacheLength) window.Styler.cache[componentName].shift(); // prune more than 20 elements to conserve memory
-        window.Styler.cache[componentName].push({ obj, sources, style });
-
-        const parts = Object.keys(style);
-
-        this.checkCreateStylesheet();
-
-        for (let i = 0, len = parts.length; i < len; i++) {
-            const key = parts[i];
-
-            if (key !== 'style') {
-                window.Styler.addToStylesheet(style[key], style.style[key], window.Styler.styleRootEle.sheet);
-            }
-        }
-
-        return true;
-    },
-
     createCachedStyle(obj, sources, style) {
         const componentName = obj.componentName;
 
@@ -550,7 +525,6 @@ window.Styler = window.Styler || {
 
             sheetString = `${splitMedia[0]} {${splitMedia[1]}, ${processedSelectorMedia}, ${processedSelectorMediaInline} {${styleString}}}\n`;
         }
-
 
         if (false) { // DEBUG OUTPUT
             sheetEle.innerHTML += sheetString;

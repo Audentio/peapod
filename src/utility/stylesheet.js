@@ -17,6 +17,13 @@ class Style {
         }
     }
 
+    ensureQuoted(str) {
+        if (str.indexOf('"') === -1 && str.indexOf('\'') === -1) {
+            return `\"${str}\"`;
+        }
+        return str;
+    }
+
     processRules(obj, depth = 0) {
         const rules = Object.keys(obj);
         for (let i = 0, len = rules.length; i < len; i++) {
@@ -33,6 +40,9 @@ class Style {
                 if (rule !== hyphenatedRule) {
                     obj[hyphenatedRule] = val;
                     delete obj[rule]; // Comment this to keep js rules
+                }
+                if (hyphenatedRule === 'content') {
+                    obj[hyphenatedRule] = this.ensureQuoted(obj[hyphenatedRule]);
                 }
             }
         }
