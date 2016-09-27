@@ -1,6 +1,8 @@
 import Radium from 'radium';
+// import _upperFirst from 'lodash/upperFirst';
+import colorjs from 'color';
 
-const buttonKinds = ['base', 'general', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
+const kinds = ['base', 'general', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
 
 module.exports = function (sheet) {
     // Conditions
@@ -20,13 +22,10 @@ module.exports = function (sheet) {
     sheet.addCondition('text').addStyler({ type: 'text' });
     sheet.addCondition('bordered').addStyler({ type: 'bordered' });
 
-    for (const index in buttonKinds) {
-        if (buttonKinds[index]) {
-            const conditionName = `kind${buttonKinds[index].charAt(0).toUpperCase() + buttonKinds[index].slice(1)}`;
-
-            sheet.addCondition(conditionName).addStyler({ kind: buttonKinds[index] });
-        }
-    }
+    // Add condition for each kind
+    kinds.forEach(kind => {
+        sheet.addCondition(`kind_${kind}`, instance => instance.props.kind === kind);
+    });
 
     const rippleSteps = {
         '100%': {
@@ -46,74 +45,30 @@ module.exports = function (sheet) {
                     light: theme.color.text.white,
                     dark: theme.color.text.dark,
                 },
-                base: {
-                    background: theme.color.primary.base,
-                    color: theme.color.text.white,
-                    active: theme.color.primary.active,
-                    get primary() { return component.color.base.background; },
-                    get secondary() { return component.color.base.color; },
-                    hover: {
-                        primary: theme.color.base.hover,
-                        get secondary() { return component.color.text.light; },
-                    },
-                },
-                general: {
-                    primary: theme.color.general.base,
-                    secondary: 'white',
-                    hover: {
-                        primary: theme.color.general.hover,
-                        get secondary() { return component.color.text.dark; },
-                    },
-                },
-                primary: {
-                    primary: theme.color.primary.base,
-                    get secondary() { return component.color.text.light; },
-                    hover: {
-                        primary: theme.color.primary.hover,
-                        get secondary() { return component.color.text.dark; },
-                    },
-                },
-                secondary: {
-                    primary: theme.color.secondary.base,
-                    get secondary() { return component.color.text.light; },
-                    hover: {
-                        primary: theme.color.secondary.hover,
-                        get secondary() { return component.color.text.dark; },
-                    },
-                },
-                warning: {
-                    primary: theme.color.warning.base,
-                    get secondary() { return component.color.text.dark; },
-                    hover: {
-                        primary: theme.color.warning.hover,
-                        get secondary() { return component.color.text.dark; },
-                    },
-                },
-                info: {
-                    primary: theme.color.info.base,
-                    get secondary() { return component.color.text.light; },
-                    hover: {
-                        primary: theme.color.info.hover,
-                        get secondary() { return component.color.text.dark; },
-                    },
-                },
-                danger: {
-                    primary: theme.color.danger.base,
-                    get secondary() { return component.color.text.light; },
-                    hover: {
-                        primary: theme.color.danger.hover,
-                        get secondary() { return component.color.text.dark; },
-                    },
-                },
-                success: {
-                    primary: theme.color.success.base,
-                    get secondary() { return component.color.text.light; },
-                    hover: {
-                        primary: theme.color.success.hover,
-                        get secondary() { return component.color.text.dark; },
-                    },
-                },
             },
+        };
+
+        // Add variables for each kind
+        kinds.forEach(kind => {
+            const currentColor = colorjs(theme.color[kind].base);
+
+            component.color[kind] = {
+                base: {
+                    background: theme.color[kind].base,
+
+                    // Text color. named "color" so this whole object can be directly applied
+                    color: currentColor.luminosity() < 0.5 ? 'white' : 'black',
+                },
+                hover: {
+                    background: currentColor.lighten(0.1).rgbString(),
+                },
+                active: {
+                    background: currentColor.darken(0.1).rgbString(),
+                },
+            };
+        });
+
+        Object.assign(component, {
             border: {
                 color: theme.border.color,
                 radius: theme.border.radius.small,
@@ -134,7 +89,8 @@ module.exports = function (sheet) {
                 duration: '150ms',
                 scale: '0.92',
             },
-        };
+        });
+
         return component;
     };
 
@@ -163,6 +119,7 @@ module.exports = function (sheet) {
             minWidth: '88px',
             color: component.color.base.color,
             backgroundColor: component.color.base.background,
+            transition: '150ms',
         }).selector('.main.--large', {
             height: '42px',
             lineHeight: '42px',
@@ -208,37 +165,13 @@ module.exports = function (sheet) {
             borderRadius: '1000px',
         });
 
-        for (const index in buttonKinds) {
-            if (buttonKinds[index]) {
-                const conditionName = `kind${buttonKinds[index].charAt(0).toUpperCase() + buttonKinds[index].slice(1)}`;
-
-                sheet.selector(`.main.--${conditionName}`, {
-                    backgroundColor: component.color[buttonKinds[index]].primary,
-                    color: component.color[buttonKinds[index]].secondary,
-                }).selector(`.main.--${conditionName}.--notDisabled:hover`, {
-                    backgroundColor: component.color[buttonKinds[index]].hover.primary,
-                    color: component.color[buttonKinds[index]].hover.secondary,
-                }).selector(`.main.--test.--${conditionName}`, {
-                    backgroundColor: 'transparent',
-                    color: component.color[buttonKinds[index]].primary,
-                }).selector(`.main.--text.--${conditionName}.--notDisabled:hover`, {
-                    backgroundColor: 'transparent',
-                    color: component.color[buttonKinds[index]].hover.primary,
-                }).selector(`.main.--bordered.--${conditionName}`, {
-                    backgroundColor: 'transparent',
-                    color: component.color[buttonKinds[index]].primary,
-                    borderWidth: '2px',
-                    borderStyle: 'solid',
-                    borderColor: component.color[buttonKinds[index]].primary,
-                }).selector(`.main.--bordered.--${conditionName}.--notDisabled:hover`, {
-                    backgroundColor: 'transparent',
-                    color: component.color[buttonKinds[index]].primary,
-                    borderWidth: '2px',
-                    borderStyle: 'solid',
-                    borderColor: component.color[buttonKinds[index]].primary,
-                });
-            }
-        }
+        kinds.forEach(kind => {
+            sheet.selector(`.main.--kind_${kind}`, {
+                ...component.color[kind].base,
+                ':hover': component.color[kind].hover,
+                ':active': component.color[kind].active,
+            });
+        });
 
         sheet.selector('.rippleContainer', {
             position: 'absolute',

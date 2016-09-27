@@ -37,6 +37,7 @@ module.exports = componentName => class Pod_Component extends React.Component {
     static defaultProps = {
         label: 'Submit',
         noRipple: false,
+        kind: 'primary',
     }
 
     componentWillUnmount() {
