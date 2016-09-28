@@ -33,12 +33,13 @@ module.exports = componentName => class Pod_Component extends React.Component {
         contentVertical: React.PropTypes.string,
         figureWidth: React.PropTypes.string,
         children: React.PropTypes.any,
+        lightbox: React.PropTypes.bool,
     }
 
     render() {
         const classes = Styler.getClasses(this);
 
-        const image = (typeof this.props.figure === 'string') ? <Photo lightbox={this.props.lightbox} className={classes.photo} src={this.props.figure} /> : this.props.figure;
+        const image = (typeof this.props.figure === 'string') ? <Photo lightbox={this.props.lightbox} src={this.props.figure} /> : this.props.figure;
         let figure = '';
         if (this.props.figure) {
 
