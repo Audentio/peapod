@@ -178,6 +178,11 @@ window.Styler = window.Styler || {
     getUniqueClassName() {
         let ret = 'ERROR_GENERATING_CLASSNAME';
 
+        if (process.env.podHash) {
+            window.Styler.classCount++;
+            return window.Styler.classCount;
+        }
+
         if (window.Styler.classCount > emoji.length) {
             ret = emoji[Math.floor(window.Styler.classCount / emoji.length)] + emoji[window.Styler.classCount % emoji.length];
         } else {
@@ -526,7 +531,9 @@ window.Styler = window.Styler || {
             sheetString = `${splitMedia[0]} {${splitMedia[1]}, ${processedSelectorMedia}, ${processedSelectorMediaInline} {${styleString}}}\n`;
         }
 
-        if (false) { // DEBUG OUTPUT
+        const debugEnabled = (process.env.podDebug) ? process.env.podDebug : false;
+
+        if (debugEnabled) { // DEBUG OUTPUT
             sheetEle.innerHTML += sheetString;
         } else {
             sheetEle.sheet.insertRule(sheetString, sheetEle.sheet.cssRules.length);

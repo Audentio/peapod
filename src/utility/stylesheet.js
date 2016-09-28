@@ -9,11 +9,11 @@ const pod_debug = false; // if true, will add a debug object to the inline style
 
 // actual Styling
 class Style {
-    constructor(style, styleString = false) {
+    constructor(style, styleString = false, themeName = 'peapod') {
         if (styleString) {
             this.style = style; // for css strings don't need to hyphenate
         } else {
-            this.style = this.processRules(style);
+            this.style = this.processRules(style, themeName);
         }
     }
 
@@ -24,18 +24,19 @@ class Style {
         return str;
     }
 
-    processRules(obj, depth = 0) {
+    processRules(obj, themeName, depth = 0) {
         const rules = Object.keys(obj);
         for (let i = 0, len = rules.length; i < len; i++) {
             const rule = rules[i];
             const val = obj[rule];
             if (typeof(val) === 'object') {
                 if (depth < 10) {
-                    obj[rule] = this.processRules(val, depth + 1);
+                    obj[rule] = this.processRules(val, themeName, depth + 1);
                 } else {
                     Logger.error('Depth of style too large');
                 }
             } else {
+                obj._theme = `"${themeName}"`;
                 const hyphenatedRule = rule.replace(/^([A-Z])/g, '-$1').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
                 if (rule !== hyphenatedRule) {
                     obj[hyphenatedRule] = val;
@@ -123,7 +124,7 @@ class Selector {
             const scene = keys[i];
 
             if (scene !== 'condition' && scene !== 'prefix' && scene !== 'styleString' && scene !== 'themeName') {
-                this.scenes[scene] = new Style(selector[scene], selector.styleString);
+                this.scenes[scene] = new Style(selector[scene], selector.styleString, selector.themeName);
             }
         }
     }
