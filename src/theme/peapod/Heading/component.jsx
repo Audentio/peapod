@@ -26,16 +26,12 @@ module.exports = componentName => class Pod_Component extends React.Component {
 
     render() {
         const classes = Styler.getClasses(this);
-
-        const tagname = this.props.kind;
         const Tagname = this.props.kind;
 
         return (
-            <div className={classes.main}>
-                <Tagname className={classes[tagname]}>
-                    {this.props.children}
-                </Tagname>
-            </div>
+            <Tagname className={classes.main}>
+                {this.props.children}
+            </Tagname>
         );
     }
 };

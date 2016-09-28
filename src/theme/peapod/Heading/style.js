@@ -1,4 +1,5 @@
 module.exports = function (sheet) {
+    const kinds = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
     const presets = {
         main: {
             weight: '700',
@@ -6,13 +7,13 @@ module.exports = function (sheet) {
         },
     };
 
-    // Conditions
     sheet.addCondition('secondary').addStyler({ secondary: true });
-    // sheet.addCondition('upper').addProp({ upper: true });
-    // sheet.addCondition('weight').addProp({ weight: ['!=', undefined] });
     sheet.addCondition('upper', instance =>
         instance.props.upper || (instance.props.preset && presets[instance.props.preset].upper)
     );
+    kinds.forEach(kind => {
+        sheet.addCondition(kind, instance => instance.props.kind === kind);
+    });
 
     sheet.resolveValues = theme => { // eslint-disable-line no-unused-vars
         const component = {
@@ -24,13 +25,18 @@ module.exports = function (sheet) {
     sheet.resolveStyles = (component, theme) => { // eslint-disable-line no-unused-vars
         sheet.selector('.main', {});
 
-        const parts = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-        const fontSizes = ['xxxlarge', 'xxlarge', 'xlarge', 'large', 'normal', 'small'];
-        for (let i = 0, len = parts.length; i < len; i++) {
-            const part = parts[i];
+        const fontSize = {
+            h1: 'xxxlarge',
+            h2: 'xxlarge',
+            h3: 'xlarge',
+            h4: 'large',
+            h5: 'normal',
+            h6: 'small',
+        };
 
-            sheet.selector(`.${part}`, {
-                fontSize: theme.font.size[fontSizes[i]],
+        kinds.forEach(kind => {
+            sheet.selector(`.main.--${kind}`, {
+                fontSize: theme.font.size[fontSize[kind]],
                 fontWeight(obj) {
                     let weight = theme.font.weight.black;
                     if (obj.props.weight) {
@@ -56,10 +62,12 @@ module.exports = function (sheet) {
                     }
                     return margin;
                 },
-            }).selector(`.${part}.--upper`, {
-                textTransform: 'uppercase',
             });
-        }
+        });
+
+        sheet.selector('.main.--upper', {
+            textTransform: 'uppercase',
+        });
     };
 
     return sheet;
