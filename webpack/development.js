@@ -20,6 +20,10 @@ for (let i = 2, len = process.argv.length; i < len; i++) {
         componentNames = arg;
     } else if (arg === '-perf') {
         measurePerf = true;
+    } else if (arg == '-debug') {
+        debug = true;
+    } else if (arg == '-hash') {
+        hash = true;
     }
 }
 
@@ -64,6 +68,8 @@ module.exports = {
             'process.env': {
                 measurePerf,
                 componentNames: JSON.stringify(componentNames),
+                podDebug: debug,
+                podHash: hash,
             },
         }),
         new webpack.HotModuleReplacementPlugin(),
