@@ -533,65 +533,6 @@ window.Styler = window.Styler || {
         }
     },
 
-    addToStylesheet(classKey, styleObj, sheetEle) {
-        const pseudoSelectors = window.Styler.stringifyStyle(styleObj);
-
-        const pseudoKeys = Object.keys(pseudoSelectors);
-
-        if (pseudoSelectors._default !== '') {
-            sheetEle.insertRule(`.${classKey} {${pseudoSelectors._default}}\n`, sheetEle.cssRules.length); // insert nonpseudo selector first for CSS Cascade
-        }
-
-        const splitClassKey = classKey.split('__');
-        const unique = splitClassKey[splitClassKey.length - 1];
-        for (let i = 0, len = pseudoKeys.length; i < len; i++) {
-            const pseudoKey = pseudoKeys[i];
-            if (pseudoKey === '_default') {
-                // don't add
-            } else if (pseudoKey.indexOf('@media') > -1) {
-                sheetEle.insertRule(`${pseudoKey} {.${classKey} {${pseudoSelectors[pseudoKey]}} }\n`, sheetEle.cssRules.length);
-            } else if (pseudoKey.indexOf('@element') > -1) {
-                console.warn('Kyler, add in element queries');
-            } else if (pseudoKey.indexOf(':') === 0) {
-                sheetEle.insertRule(`.${classKey}${pseudoKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length); // TODO fix this
-            } else {
-                const processedKey = pseudoKey.split('&').join(unique);
-                sheetEle.insertRule(`${processedKey} {${pseudoSelectors[pseudoKey]}}\n`, sheetEle.cssRules.length);
-            }
-        }
-    },
-
-    stringifyStyle(obj) {
-        const ret = {
-            _default: '',
-        };
-        const rules = Object.keys(obj);
-        for (let i = 0, len = rules.length; i < len; i++) {
-            const rule = rules[i];
-            if (typeof(obj[rule]) === 'object') {
-                const pseudoKeys = Object.keys(obj[rule]);
-                ret[rule] = '';
-                for (let pseudoIndex = 0, pseudoLen = pseudoKeys.length; pseudoIndex < pseudoLen; pseudoIndex++) {
-                    const pseudoRule = pseudoKeys[pseudoIndex];
-
-                    if (typeof(obj[rule][pseudoRule]) === 'number' && pseudoRule !== 'opacity' && pseudoRule !== 'font-weight') {
-                        ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}px; `;
-                    } else {
-                        ret[rule] += `${pseudoRule}: ${obj[rule][pseudoRule]}; `;
-                    }
-                }
-            } else {
-                if (typeof(obj[rule]) === 'number' && rule !== 'opacity' && rule !== 'font-weight') {
-                    ret._default += `${rule}: ${obj[rule]}px; `;
-                } else {
-                    ret._default += `${rule}: ${obj[rule]}; `;
-                }
-            }
-        }
-
-        return ret;
-    },
-
     checkCacheEquality(sources, cacheVal) {
         return _isEqual(sources, cacheVal);
     },

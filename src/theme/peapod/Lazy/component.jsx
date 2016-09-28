@@ -14,8 +14,10 @@ module.exports = componentName => class Pod_Component extends React.Component {
     constructor(props, context) {
         super(props, context);
 
+        const visible = (typeof (IntersectionObserver) === 'undefined') ? true : props.visible;
+
         this.state = {
-            visible: props.visible,
+            visible,
             width: false,
             height: false,
         };
@@ -50,27 +52,29 @@ module.exports = componentName => class Pod_Component extends React.Component {
     componentDidMount() {
         const elem = this.refs.LazyElement;
 
-        const iObserver = new IntersectionObserver((elemRect) => {
-            const visible = elemRect[0].intersectionRatio > 0;
-            const rect = elemRect[0].boundingClientRect;
+        if (typeof (IntersectionObserver) !== 'undefined') {
+            const iObserver = new IntersectionObserver((elemRect) => {
+                const visible = elemRect[0].intersectionRatio > 0;
+                const rect = elemRect[0].boundingClientRect;
 
-            if (visible !== this.state.visible) {
-                this.setState({ visible });
-            }
+                if (visible !== this.state.visible) {
+                    this.setState({ visible });
+                }
 
-            if (!this.state.visible && rect.width !== this.state.height) {
-                this.setState({
-                    width: rect.width,
-                    height: rect.height,
-                });
-            }
+                if (!this.state.visible && rect.width !== this.state.height) {
+                    this.setState({
+                        width: rect.width,
+                        height: rect.height,
+                    });
+                }
 
-            if (this.props.stay && this.state.visible) {
-                iObserver.unobserve(elem);
-            }
-        }, { threshold: [0], rootMargin: `${this.props.distance}% 0%` });
+                if (this.props.stay && this.state.visible) {
+                    iObserver.unobserve(elem);
+                }
+            }, { threshold: [0], rootMargin: `${this.props.distance}% 0%` });
 
-        iObserver.observe(elem);
+            iObserver.observe(elem);
+        }
     }
 
     render() {
