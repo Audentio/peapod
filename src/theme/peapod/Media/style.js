@@ -23,6 +23,10 @@ module.exports = function (sheet) {
             justifyContent: 'center',
         });
 
+        sheet.selector('.photo', {
+            display: 'block',
+        });
+
         const parts = ['figure', 'content'];
 
         for (let i = 0, len = parts.length; i < len; i++) {
