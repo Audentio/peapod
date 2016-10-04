@@ -3,6 +3,7 @@ import _Merge from 'lodash/merge';
 import _Clone from 'lodash/clone';
 import Pod_Vars from './vars.js';
 import Logger from './logger.js';
+import processStyle from './processStyle.js'
 //import css from 'css';
 
 const pod_debug = false; // if true, will add a debug object to the inline style produced
@@ -13,86 +14,10 @@ class Style {
         if (styleString) {
             this.style = style; // for css strings don't need to hyphenate
         } else {
-            this.style = this.processRules(style, themeName);
+            this.style = processStyle(style, themeName);
         }
     }
 
-    ensureQuoted(str) {
-        if (str.indexOf('"') === -1 && str.indexOf('\'') === -1) {
-            return `\"${str}\"`;
-        }
-        return str;
-    }
-
-    processRules(obj, themeName, depth = 0) {
-        const rules = Object.keys(obj);
-        for (let i = 0, len = rules.length; i < len; i++) {
-            const rule = rules[i];
-            const val = obj[rule];
-            if (typeof(val) === 'object') {
-                if (depth < 10) {
-                    obj[rule] = this.processRules(val, themeName, depth + 1);
-                } else {
-                    Logger.error('Depth of style too large');
-                }
-            } else {
-                obj._theme = `"${themeName}"`;
-                const hyphenatedRule = rule.replace(/^([A-Z])/g, '-$1').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-                if (rule !== hyphenatedRule) {
-                    obj[hyphenatedRule] = val;
-                    delete obj[rule]; // Comment this to keep js rules
-                }
-                if (hyphenatedRule === 'content') {
-                    obj[hyphenatedRule] = this.ensureQuoted(obj[hyphenatedRule]);
-                }
-            }
-        }
-
-        return obj;
-    }
-
-    getStyle(instance) {
-        if (instance !== undefined && instance.componentName === 'Grid_Cell') {
-            let style = _Clone(this.style);
-
-            if (typeof(style) === 'object') {
-                const keys = Object.keys(style);
-                for (let keyIndex = 0, keyLen = keys.length; keyIndex < keyLen; keyIndex++) {
-                    const key = keys[keyIndex];
-                    if (key.indexOf('@media') === 0) {
-                        const keySize = key.split(' ').join('').replace('@media(', '')
-                        .replace('px)', '')
-                        .split(':');
-                        if (keySize.length === 2) {
-                            const paneWidth = instance.context._podPaneWidth;
-                            const queryType = keySize[0];
-                            const queryValue = keySize[1];
-                            if (typeof(paneWidth) === 'number') {
-                                if (queryType === 'minWidth') {
-                                    if (paneWidth >= queryValue) {
-                                        style = _Merge({}, style, style[key]);
-                                    }
-                                    delete style[key];
-                                } else if (queryType === 'maxWidth') {
-                                    if (paneWidth < queryValue) {
-                                        style = _Merge({}, style, style[key]);
-                                    }
-                                    delete style[key];
-                                } else {
-                                    //Logger.warn(`Unsupported value for media query: ${style[key]}`);
-                                }
-                            }
-                        } else {
-                            throw new Error(`Invalid media query: ${style[key]}`);
-                        }
-                    }
-                }
-            }
-
-            return style;
-        }
-        return this.style;
-    }
 
     getRawStyle() {
         return this.style;
@@ -148,24 +73,6 @@ class Selector {
         return activeConditions.indexOf(condition) > -1;
     }
 
-    // Gets the styling for a specified scene merged with the common scene
-    getStyling(instance, scene) {
-        if (typeof(this.scenes.common) !== 'undefined') {
-            if (typeof(this.scenes[scene]) !== 'undefined') {
-                return _Merge({}, this.scenes.common.getStyle(instance), this.scenes[scene].getStyle(instance));
-            }
-            return this.scenes.common.getStyle(instance);
-        }
-        if (typeof(this.scenes[scene]) !== 'undefined') {
-            return this.scenes[scene].getStyle(instance);
-        }
-        return null;
-    }
-
-    getSelector(instance, scene) {
-        return this.getStyling(instance, scene);
-    }
-
     // Gets styling for the specified scene, but in a raw form
     getRawStyling(instance, scene) {
         if (typeof(this.scenes.common) !== 'undefined') {
@@ -198,85 +105,6 @@ class Part {
 
     getSelectors() {
         return this.selectors;
-    }
-
-    getDebug(instance, scene, conditions) {
-        const debugApplied = [];
-        const debugAll = [];
-
-        for (let i = 0, len = this.selectors.length; i < len; i++) {
-            const selector = this.selectors[i];
-            const debugStyling = selector.getStyling(scene);
-            const selectorConditions = selector.checkConditions(instance, conditions);
-            const selectorCondition = selector.getCondition();
-            const selectorValid = [];
-
-            if (selectorCondition !== null) {
-                for (let conditionIndex = 0, conditionLen = selectorCondition.length; conditionIndex < conditionLen; conditionIndex++) {
-                    const conditionName = conditionIndex[conditionIndex];
-                    const condition = conditions[conditionName];
-                    const conditionValid = selector.checkCondition(condition);
-                    selectorValid.push({
-                        name: conditionName,
-                        condition,
-                        valid: conditionValid,
-                        instance: {
-                            styler: instance.styler || 'Error: Styler not Set',
-                            state: instance.state || 'Error: state not set',
-                            props: instance.props || 'Error: props not set',
-                            context: instance.context || 'Error: context not set',
-                        },
-                    });
-                }
-            }
-
-            const info = {
-                selectorPart: this.name,
-                selectorScene: scene,
-                selectorIndex: i,
-                selectorCondition: selector.getCondition(),
-                selectorValid,
-                selectorApplied: selectorConditions,
-                selectorStyling: debugStyling,
-            };
-
-            if (selectorConditions) {
-                debugApplied.push(info);
-            }
-            debugAll.push(info);
-        }
-
-        return {
-            all: debugAll,
-            applied: debugApplied,
-        };
-    }
-
-    getPartStyling(instance, scene, activeConditions, conditions) {
-        let styling = null;
-
-        for (let i = 0, len = this.selectors.length; i < len; i++) {
-            const selector = this.selectors[i];
-            if (selector.checkConditions(instance, activeConditions)) {
-                const selectorStyling = selector.getSelector(instance, scene);
-                if (styling == null) {
-                    styling = selectorStyling;
-                } else if (selectorStyling !== null) {
-                    styling = _Merge({}, styling, selectorStyling);
-                }
-            }
-        }
-
-        if (pod_debug) {
-            const debug = this.getDebug(instance, scene, conditions);
-
-            styling.debug = {
-                all: debug.all,
-                appliedOnly: debug.applied,
-                result: styling,
-            };
-        }
-        return styling;
     }
 
     // will get an array of all selectors
@@ -524,38 +352,6 @@ class Sheet {
 
     addDocDefault(data) {
         this.docDefault = data;
-    }
-
-    getAllStyling(instance, scene = 'normal', conditions, localVars, globalVars) {
-        this.resolve(localVars, globalVars);
-
-        const source = {};
-        const partKeys = Object.keys(this.parts);
-        const activeConditions = this.getActiveConditions(instance, conditions);
-
-
-        for (let i = 0, len = partKeys.length; i < len; i++) {
-            const partName = partKeys[i];
-            const partRules = this.parts[partName].getPartStyling(instance, scene, activeConditions, conditions);
-
-            if (partRules !== null) {
-                const partRuleKeys = Object.keys(partRules);
-
-                for (let ruleIndex = 0, ruleLen = partRuleKeys.length; ruleIndex < ruleLen; ruleIndex++) {
-                    const ruleKey = partRuleKeys[ruleIndex];
-                    const ruleVal = partRules[ruleKey];
-
-                    if (typeof(ruleVal) === 'function') {
-                        partRules[ruleKey] = ruleVal(instance);
-                        activeConditions.push(`computed_${partName}_${ruleIndex}_${partRules[ruleKey]}`);
-                    }
-                }
-            }
-
-            source[partName] = partRules;
-        }
-
-        return { source, activeConditions };
     }
 
     expandSelectors(selectors) {

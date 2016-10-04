@@ -56,7 +56,9 @@ module.exports = function (sheet) {
         for (let sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) { // loop through all choices
             for (let i = 0; i < 13; i++) { // loop through size values
                 sheet.selector(`.main.--${[abbrevs[sizeIndex]]}_${i}`, {
-                    [component[sizes[sizeIndex]]]: { width: (100 * (i / 12)) + '%' },
+                    [component[sizes[sizeIndex]]]: {
+                        width: `${(100 * (i / 12))}%`,
+                    },
                 }).selector(`.main.--${[abbrevs[sizeIndex]]}Push_${i}`, {
                     [component[sizes[sizeIndex]]]: {
                         position: 'relative',

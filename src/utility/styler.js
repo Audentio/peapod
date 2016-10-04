@@ -129,15 +129,6 @@ window.Styler = window.Styler || {
                                 source[partKey].push({ [newKey]: styling });
                             }
                         }
-                    } else {
-                        const sheetData = localsheet.getAllStyling(obj, scene, allConditions, localVars, globalVars); // pass in collapsed conditions, allows conditions to be overwritten in child themes.  All styling returned will have it's conditions true
-
-                        source = sheetData.source;
-
-                        for (let conditionIndex = 0, conditionLen = sheetData.activeConditions.length; conditionIndex < conditionLen; conditionIndex++) {
-                            activeConditions.push(sheetData.activeConditions[conditionIndex]);
-                            combinedConditions.push(sheetData.activeConditions[conditionIndex]);
-                        }
                     }
                 }
             }
