@@ -1,13 +1,9 @@
 # Peapod #
 *Framework for future projects.*
 
-[Info (google docs)](https://docs.google.com/document/d/1RKFhEU76kpXBHOnvb6ZaBhkcybudp5kcNoiw24PhwCM/edit)
-
 ### Getting your hands dirty ###
 
 *Requires nodejs installed*
-
-[download here](nodejs.org)
 
 Homebrew users can `brew install node`
 
